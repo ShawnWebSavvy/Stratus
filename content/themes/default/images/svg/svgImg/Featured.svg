@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="30px" height="30px" viewBox="0 0 30 30" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <title>Icon/Featured</title>
+    <g id="Local-HUB-(FB)" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="Home/Local-Hub/Main-Featured-Hashtags" transform="translate(-1146.000000, -164.000000)">
+            <g id="Icon/Featured" transform="translate(1146.000000, 164.000000)">
+                <rect id="Rectangle" x="0" y="0" width="30" height="30"></rect>
+                <g id="Medal" transform="translate(5.000000, 5.000000)" fill="#1269FF">
+                    <path d="M3,12 L0.7,14.3 C0.318857124,14.6888435 0.318857124,15.3111565 0.7,15.7 L4.3,19.3 C4.68884351,19.6811429 5.31115649,19.6811429 5.7,19.3 L9.1,15.9 C6.5769453,15.6021002 4.32928796,14.1650734 3,12 Z" id="Path" opacity="0.3"></path>
+                    <path d="M19.3,14.3 L17,12 C15.670712,14.1650734 13.4230547,15.6021002 10.9,15.9 L14.3,19.3 C14.6888435,19.6811429 15.3111565,19.6811429 15.7,19.3 L19.3,15.7 C19.6811429,15.3111565 19.6811429,14.6888435 19.3,14.3 Z" id="Path" opacity="0.3"></path>
+                    <circle id="Oval" cx="10" cy="8" r="8"></circle>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>

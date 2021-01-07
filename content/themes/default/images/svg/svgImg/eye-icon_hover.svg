@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="30px" height="30px" viewBox="0 0 30 30" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <title>Icon/Eye Copy 3</title>
+    <g id="Icon/Eye-Copy-3" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <rect id="Rectangle" x="0" y="0" width="30" height="30"></rect>
+        <g id="Eyeball_on" transform="translate(5.000000, 9.000000)">
+            <path d="M19.5,5.4 C18.3,3.9 14.8,0 10,0 C5.2,0 1.7,3.9 0.5,5.4 C0.194427191,5.74164079 0.194427191,6.25835921 0.5,6.6 C1.7,8.1 5.2,12 10,12 C14.8,12 18.3,8.1 19.5,6.6 C19.8055728,6.25835921 19.8055728,5.74164079 19.5,5.4 Z M10,9 C8.34314575,9 7,7.65685425 7,6 C7,4.34314575 8.34314575,3 10,3 C11.6568542,3 13,4.34314575 13,6 C13.028236,6.80397338 12.721242,7.58355099 12.1523965,8.15239652 C11.583551,8.72124205 10.8039734,9.02823599 10,9 Z" id="Shape" fill="#1269FF" opacity="0.3"></path>
+            <circle id="Oval" fill="#0659FD" cx="10" cy="6" r="3"></circle>
+        </g>
+    </g>
+</svg>

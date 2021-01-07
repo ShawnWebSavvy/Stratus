@@ -1,0 +1,6 @@
+{__("Hi")} {$receiver['user_firstname']} {$receiver['user_lastname']},
+
+{$user->_data['user_firstname']} {$user->_data['user_lastname']} {$notification['message']}
+{$notification['url']}
+
+{$system['system_title']} {__("Team")}

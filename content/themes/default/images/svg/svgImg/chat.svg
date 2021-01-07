@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="18px" height="18px" viewBox="0 0 18 18" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <title>message</title>
+    <defs>
+        <path d="M1.8,2 L16.2,2 C17.1941125,2 18,2.80588745 18,3.8 L18,14.6 C18,15.5941125 17.1941125,16.4 16.2,16.4 L1.8,16.4 C0.801,16.4 0,15.59 0,14.6 L0,3.8 C0,2.801 0.801,2 1.8,2 L1.8,2 Z M9,8.3 L16.2,3.8 L1.8,3.8 L9,8.3 L9,8.3 Z M1.8,14.6 L16.2,14.6 L16.2,5.933 L9,10.424 L1.8,5.933 L1.8,14.6 Z" id="path-1"></path>
+    </defs>
+    <g id="message" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <mask id="mask-2" fill="white">
+            <use xlink:href="#path-1"></use>
+        </mask>
+        <use id="Shape" fill="#1E1F20" xlink:href="#path-1"></use>
+    </g>
+</svg>

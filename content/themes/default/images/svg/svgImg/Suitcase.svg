@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="20px" height="18px" viewBox="0 0 20 18" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <title>Travel/Suitcase</title>
+    <g id="Style-Guide/Icons" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="Style-Guide-Copy" transform="translate(-1339.000000, -711.000000)" fill="#000000" fill-rule="nonzero">
+            <g id="Group" transform="translate(1337.000000, 708.000000)">
+                <rect id="Rectangle" x="2" y="6" width="20" height="15" rx="1"></rect>
+                <g id="Path-2" opacity="0.400000006" transform="translate(8.000000, 3.000000)">
+                    <path d="M1,0 L7,0 C7.55228475,0 8,0.44771525 8,1 L8,3 L0,3 L0,1 C0,0.44771525 0.44771525,0 1,0 Z" id="Path"></path>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>

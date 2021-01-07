@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="18px" height="18px" viewBox="0 0 18 18" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <title>Icon/Plus</title>
+    <defs>
+        <polygon id="path-1" points="16 10 10 10 10 16 8 16 8 10 2 10 2 8 8 8 8 2 10 2 10 8 16 8"></polygon>
+    </defs>
+    <g id="Icon/Plus" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <mask id="mask-2" fill="white">
+            <use xlink:href="#path-1"></use>
+        </mask>
+        <use id="Shape" fill="#1E1F20" xlink:href="#path-1"></use>
+    </g>
+</svg>

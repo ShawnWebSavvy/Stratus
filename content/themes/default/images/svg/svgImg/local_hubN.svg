@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="30px" height="30px" viewBox="0 0 30 30" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <title>local_hub</title>
+    <defs>
+        <radialGradient cx="6.9700972%" cy="10.3987043%" fx="6.9700972%" fy="10.3987043%" r="200.305979%" gradientTransform="translate(0.069701,0.103987),scale(1.000000,0.454545),rotate(79.771909),translate(-0.069701,-0.103987)" id="radialGradient-1">
+            <stop stop-color="#6FC1FF" offset="0%"></stop>
+            <stop stop-color="#6FC1FF" offset="46.2742752%"></stop>
+            <stop stop-color="#7BB1FF" offset="100%"></stop>
+        </radialGradient>
+        <linearGradient x1="66.1738044%" y1="0.862281604%" x2="35.6871704%" y2="108.104127%" id="linearGradient-2">
+            <stop stop-color="#69BFFF" offset="0%"></stop>
+            <stop stop-color="#4545EA" offset="100%"></stop>
+        </linearGradient>
+    </defs>
+    <g id="local_hub" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="Thumbs_up" transform="translate(5.000000, 6.000000)">
+            <path d="M15,7 L19,7 C19.5522847,7 20,7.44771525 20,8 L20,17 C20,17.5522847 19.5522847,18 19,18 L15,18 L15,7 Z" id="Path" fill="url(#radialGradient-1)"></path>
+            <path d="M14,7 C10.2,7 10,2.8 10,2 C10,0.8954305 9.1045695,0 8,0 C6.8954305,0 6,0.8954305 6,2 C5.99936795,3.73806471 6.41060259,5.45154236 7.2,7 L1.3,7 C0.973526881,6.98483525 0.660244622,7.13016273 0.460975821,7.38921217 C0.261707021,7.64826161 0.201600447,7.98833962 0.3,8.3 L2.8,17.3 C2.93574747,17.7333092 3.3463999,18.0207659 3.8,18 L15,18 L15,7 L14,7 Z" id="Path" fill="url(#linearGradient-2)"></path>
+        </g>
+    </g>
+</svg>

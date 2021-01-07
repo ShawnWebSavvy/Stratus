@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="19px" height="23px" viewBox="0 0 19 23" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <title>Post</title>
+    <g id="Local-HUB-(FB)" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="Home/Local-Hub/PopUp-windows" transform="translate(-837.000000, -657.000000)" fill="#1269FF">
+            <g id="-pop-up-Create" transform="translate(796.000000, 557.000000)">
+                <g id="Group-26" transform="translate(26.000000, 87.000000)">
+                    <g id="Group" transform="translate(9.000000, 9.000000)">
+                        <g id="Edit" transform="translate(6.000000, 4.000000)">
+                            <path d="M17,21 C17.5522847,21 18,21.4477153 18,22 C18,22.5522847 17.5522847,23 17,23 L1,23 C0.44771525,23 6.76353751e-17,22.5522847 0,22 C-6.76353751e-17,21.4477153 0.44771525,21 1,21 L17,21 Z M10.8787,1.70705 C12.0503,0.535476 13.9498,0.535476 15.1214,1.70705 L15.1214,1.70705 L17.2929,3.87862 C18.4645,5.0502 18.4645,6.94969 17.2929,8.12126 L17.2929,8.12126 L16.4142,8.99997 L10,2.58576 Z" id="Combined-Shape" opacity="0.3"></path>
+                            <path d="M1.08576,11.5 L7.5,17.9142 L7,18.4142 C6.62493,18.7893 6.11622,19 5.58579,19 L5.58579,19 L2,19 C0.89543,19 0,18.1045 0,17 L0,17 L0,13.4142 C0,12.8838 0.21071,12.375 0.58579,12 L0.58579,12 L1.08576,11.5 Z M8.5858,4 L15,10.4142 L8.9142,16.5 L2.5,10.0858 L8.5858,4 Z" id="Combined-Shape"></path>
+                        </g>
+                    </g>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>

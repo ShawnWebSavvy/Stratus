@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="30px" height="30px" viewBox="0 0 30 30" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <title>ad_hub</title>
+    <defs>
+        <linearGradient x1="50.187741%" y1="0%" x2="49.8598185%" y2="120.835053%" id="linearGradient-1">
+            <stop stop-color="#5E5E5E" offset="0%"></stop>
+            <stop stop-color="#161514" offset="100%"></stop>
+        </linearGradient>
+        <linearGradient x1="59.2330556%" y1="-13.1887226%" x2="50%" y2="100%" id="linearGradient-2">
+            <stop stop-color="#FFEB99" offset="0%"></stop>
+            <stop stop-color="#FF9632" offset="100%"></stop>
+        </linearGradient>
+        <linearGradient x1="62.015425%" y1="0%" x2="41.028383%" y2="120.835053%" id="linearGradient-3">
+            <stop stop-color="#5E5E5E" offset="0%"></stop>
+            <stop stop-color="#161514" offset="100%"></stop>
+        </linearGradient>
+    </defs>
+    <g id="ad_hub" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g transform="translate(7.000000, 3.000000)" id="Flag">
+            <path d="M0,1 C0,0.447716 0.44772,0 1,0 C1.55228,0 2,0.447715 2,1 L2,23 C2,23.5523 1.55228,24 1,24 C0.44772,24 0,23.5523 0,23 L0,1 Z" id="Path" fill="url(#linearGradient-1)"></path>
+            <path d="M8,5 C8,4.44772 8.4477,4 9,4 L15.382,4 C16.1253,4 16.6088,4.78231 16.2764,5.44721 L14.2236,9.55279 C14.0828,9.83431 14.0828,10.1657 14.2236,10.4472 L16.2764,14.5528 C16.6088,15.2177 16.1253,16 15.382,16 L10,16 C8.8954,16 8,15.1046 8,14 L8,5 Z" id="Path" fill="url(#linearGradient-2)"></path>
+            <path d="M2,2 L8,2 C9.1046,2 10,2.89543 10,4 L10,13 C10,13.5523 9.5523,14 9,14 L2,14 L2,2 Z" id="Path" fill="url(#linearGradient-3)"></path>
+        </g>
+    </g>
+</svg>

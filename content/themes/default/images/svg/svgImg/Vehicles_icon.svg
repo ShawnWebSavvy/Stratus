@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="30px" height="30px" viewBox="0 0 30 30" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <title>Vehicles_icon</title>
+    <defs>
+        <filter id="filter-1">
+            <feColorMatrix in="SourceGraphic" type="matrix" values="0 0 0 0 0.654902 0 0 0 0 0.705882 0 0 0 0 0.796078 0 0 0 1.000000 0"></feColorMatrix>
+        </filter>
+        <filter id="filter-2">
+            <feColorMatrix in="SourceGraphic" type="matrix" values="0 0 0 0 0.086000 0 0 0 0 0.086000 0 0 0 0 0.122000 0 0 0 1.000000 0"></feColorMatrix>
+        </filter>
+    </defs>
+    <g id="Vehicles_icon" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="Icon/Plus-Square" transform="translate(3.000000, 4.000000)">
+            <g filter="url(#filter-1)" id="Group-2" opacity="0.6">
+                <g>
+                    <path d="M21.5802457,7 C22.9166391,7 24,8.08336089 24,9.41975428 L24,12 C24,14.209139 22.209139,16 20,16 L4,16 C1.790861,16 2.705415e-16,14.209139 0,12 L0,10.0469958 C2.38004507e-16,8.36418648 1.36418648,7 3.04699578,7 L21.5802457,7 Z M4,10 C2.8954305,10 2,10.8954305 2,12 C2,13.1045695 2.8954305,14 4,14 C5.1045695,14 6,13.1045695 6,12 C6,10.8954305 5.1045695,10 4,10 Z M20,10 C18.8954305,10 18,10.8954305 18,12 C18,13.1045695 18.8954305,14 20,14 C21.1045695,14 22,13.1045695 22,12 C22,10.8954305 21.1045695,10 20,10 Z" id="Combined-Shape" fill="#D8D8D8"></path>
+                    <path d="M15.5934852,0 C16.9995811,2.32283607e-15 18.2170213,0.97659596 18.5220464,2.34920863 L20,9 L4,9 L5.47795364,2.34920863 C5.78297868,0.97659596 7.00041887,1.14647405e-15 8.40651482,0 L15.5934852,0 Z M14.1576708,1.5 L9.84232922,1.5 C8.46572629,1.5 7.26577697,2.43689212 6.93190172,3.77239312 L6.93190172,3.77239312 L6,7.5 L18,7.5 L17.0680983,3.77239312 C16.734223,2.43689212 15.5342737,1.5 14.1576708,1.5 L14.1576708,1.5 Z" id="Combined-Shape" fill="#D8D8D8"></path>
+                </g>
+            </g>
+            <g filter="url(#filter-2)" id="Group">
+                <g transform="translate(2.000000, 2.000000)">
+                    <rect id="Rectangle" fill="#D8D8D8" x="7" y="0" width="6" height="2" rx="1"></rect>
+                    <rect id="Rectangle" fill="#D8D8D8" x="0" y="15" width="4" height="5" rx="1"></rect>
+                    <rect id="Rectangle-Copy-2" fill="#D8D8D8" x="16" y="15" width="4" height="5" rx="1"></rect>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>

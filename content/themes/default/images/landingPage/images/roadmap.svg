@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="1511px" height="116px" viewBox="0 0 1511 116" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <title>roadmap</title>
+    <g id="Desktop" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="Home_1440" transform="translate(25.000000, -11058.000000)">
+            <g id="Roadmap" transform="translate(-25.000000, 10810.000000)">
+                <g transform="translate(0.000000, 248.000000)" id="roadmap">
+                    <g transform="translate(0.000300, 0.019359)">
+                        <text id="2020" font-family="Helvetica" font-size="43.2656" font-weight="normal" letter-spacing="0.02" fill="#1269FF">
+                            <tspan x="110.5632" y="42">2020</tspan>
+                        </text>
+                        <line x1="140.457" y1="99.9404408" x2="418.448" y2="99.9404408" id="Stroke-3" stroke="#1269FF" stroke-width="1.573"></line>
+                        <line x1="418.4482" y1="99.9404408" x2="751.8772" y2="99.9404408" id="Stroke-4" stroke="#9C9C9C" stroke-width="1.573"></line>
+                        <line x1="779.4482" y1="99.9404408" x2="1509.4997" y2="99.4806408" id="Stroke-4-Copy" stroke="#9C9C9C" stroke-width="1.573"></line>
+                        <line x1="0.4997" y1="99.4806408" x2="112.481" y2="99.9404408" id="Stroke-8" stroke="#1269FF" stroke-width="1.573"></line>
+                        <path d="M126.2969,85.7813408 L126.2969,85.7813408 C118.4769,85.7813408 112.1379,92.1203408 112.1379,99.9403408 C112.1379,107.760341 118.4769,114.100341 126.2969,114.100341 C134.1169,114.100341 140.4569,107.760341 140.4569,99.9403408 C140.4569,92.1203408 134.1169,85.7813408 126.2969,85.7813408 Z" id="Stroke-10" stroke="#1269FF" stroke-width="2.46"></path>
+                        <text id="2021" font-family="Helvetica" font-size="43.2656" font-weight="normal" letter-spacing="0.02" fill="#9C9C9C">
+                            <tspan x="749.1061" y="42">2021</tspan>
+                        </text>
+                        <path d="M764.8398,85.7813408 L764.8398,85.7813408 C757.0198,85.7813408 750.6798,92.1203408 750.6798,99.9403408 C750.6798,107.760341 757.0198,114.100341 764.8398,114.100341 C772.6598,114.100341 778.9988,107.760341 778.9988,99.9403408 C778.9988,92.1203408 772.6598,85.7813408 764.8398,85.7813408 Z" id="Stroke-13" stroke="#9C9C9C" stroke-width="2.46"></path>
+                    </g>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>

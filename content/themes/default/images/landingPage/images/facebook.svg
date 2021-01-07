@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="12px" height="21px" viewBox="0 0 12 21" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <title>facebook</title>
+    <g id="Desktop" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="Home_1440" transform="translate(-146.000000, -11356.000000)" fill="#1269FF">
+            <g id="Roadmap" transform="translate(-25.000000, 10810.000000)">
+                <g transform="translate(0.000000, 248.000000)" id="Group-64">
+                    <g transform="translate(124.000000, 296.853000)">
+                        <path d="M50.8978,12.6361 L47.7868,12.6361 L47.7868,8.9651 L50.8978,8.9651 L50.8978,6.0621 C50.8978,4.5261 51.3268,3.3351 52.1858,2.4891 C53.0518,1.6431 54.1908,1.2191 55.6168,1.2191 C56.7748,1.2191 57.7178,1.2721 58.4408,1.3821 L58.4408,4.6431 L56.5078,4.6431 C55.7788,4.6431 55.2848,4.8061 55.0108,5.1311 C54.7958,5.3981 54.6918,5.8341 54.6918,6.4201 L54.6918,8.9651 L58.1158,8.9651 L57.6338,12.6361 L54.6918,12.6361 L54.6918,21.8711 L50.8978,21.8711 L50.8978,12.6361 Z" id="facebook"></path>
+                    </g>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>

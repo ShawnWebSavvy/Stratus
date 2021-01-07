@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="30px" height="30px" viewBox="0 0 30 30" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <title>Icon/Search2</title>
+    <g id="Icon/Search2" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="Bubble-Race" transform="translate(4.000000, 6.000000)">
+            <path d="M22,5.5 C22,8.5376 19.5376,11 16.5,11 C13.4624,11 11,8.5376 11,5.5 C11,2.46243 13.4624,0 16.5,0 C19.5376,0 22,2.46243 22,5.5 Z" id="Path" fill="#16161F"></path>
+            <path d="M7,5.5 C7,7.433 5.433,9 3.5,9 C1.567,9 0,7.433 0,5.5 C0,3.567 1.567,2 3.5,2 C5.433,2 7,3.567 7,5.5 Z" id="Path" fill="#A7B4CB" opacity="0.4"></path>
+            <path d="M12,14 C12,16.2091 10.2091,18 8,18 C5.79086,18 4,16.2091 4,14 C4,11.7909 5.79086,10 8,10 C10.2091,10 12,11.7909 12,14 Z" id="Path" fill="#A7B4CB" opacity="0.4"></path>
+        </g>
+    </g>
+</svg>

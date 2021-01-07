@@ -1,0 +1,776 @@
+*, ::after, ::before {
+    box-sizing: border-box;
+    text-decoration: none;
+}
+h1, h2, h3, h4, h5, h6 {
+    margin-top: 0;
+    margin-bottom: .5rem;
+}
+body.login-index-body {
+    /* background-image:url(../images/cloud20082020.png); */
+    background-position: top left;
+    background-repeat: no-repeat;
+    background-size: cover;
+    display: inline-block;
+    width: 100%;
+    min-height: calc(100vh - 0px);
+    margin: 0;
+    font-family: "TT Hoves", sans-serif;
+}
+
+
+.mainloginBlock {
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    width: 100%;
+    position: relative;
+    overflow: hidden;
+}
+
+.login-index-body .mainloginBlock {
+    background: rgb(115, 171, 221);
+    background: linear-gradient( 157deg, rgba(115, 171, 221, 1) 0%, rgba(115, 171, 221, 1) 21%, rgba(125, 192, 241, 1) 38%, rgba(132, 206, 248, 1) 100% );
+}
+
+.main-wrapper {
+    width: 100%;
+    min-width: 260px;
+    min-height: auto;
+    z-index: 1;
+    position: relative;
+    display: flex;
+    flex-wrap: wrap;
+    align-content: space-between;
+}
+
+@media (min-width: 1200px){
+body.n_chat .main-header, body.n_chat .main-wrapper, body.n_chat .top-bar {
+    padding-right: 0;
+}
+}
+.header_footer_hide .main-wrapper, .header_footer_hide .footer {
+    display: none !important;
+}
+
+.main-header {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 98px;
+    background: var(--header-bg-color);
+    z-index: 1001;
+    -webkit-box-shadow: 0px 3px 15px 0px rgba(0, 0, 0, 0.1);
+    -moz-box-shadow: 0px 3px 15px 0px rgba(0, 0, 0, 0.1);
+    box-shadow: 0px 3px 15px 0px rgba(0, 0, 0, 0.1);
+    padding: 15px 0px;
+
+}
+@media (min-width: 1200px){
+body.n_chat .main-header, body.n_chat .main-wrapper, body.n_chat .top-bar {
+    padding-right: 0;
+}
+}
+body.login-index-body .main-header {
+    background: transparent;
+    box-shadow: none;
+}
+.right-sidebar.headerTopBarSetting {
+    width: 100%;
+    max-width: 290px;
+    position: fixed;
+    top: 84px;
+    right: 142px;
+    z-index: 1002;
+    border-radius: 10px;
+    box-shadow: 0px 3px 15px 0px rgba(0, 0, 0, 0.1);
+}
+.right-sidebar {
+    overflow-y: auto;
+}
+.right-sidebar.headerTopBarSetting .right-sidebar-inner-ant {
+    border-radius: 10px;
+}
+.right-sidebar .right-sidebar-inner-ant.blacksidebarclassadd {
+    display: none;
+}
+.right-sidebar .right-sidebar-inner-ant {
+    position: relative !important;
+    left: 0 !important;
+    top: 0 !important;
+    transform: none !important;
+    padding: 14px 12px !important;
+    background-color: #fff;
+    border-radius: 10px 0 0 10px;
+}
+.mainloginBlock .cloud_imgs::before {
+    content: "";
+    background-image: url(../images/movingCloud.png);
+    background-position: center;
+    background-size: contain;
+    background-repeat: no-repeat;
+    display: inline-block;
+    height: 309px;
+    width: 474px;
+    position: absolute;
+    left: 25px;
+    bottom: 33px;
+    animation: movingCloud 10s infinite;
+    transition: all ease-in-out 0.5s;
+    z-index: 4;
+}
+.login-index-body .mainloginBlock .cloud_imgs::after {
+    content: '';
+    background-image: url(../images/planeCloud.png);
+    background-position: center;
+    background-size: contain;
+    background-repeat: no-repeat;
+    display: inline-block;
+    height: 309px;
+    width: 474px;
+    position: absolute;
+    right: 32%;
+    top: 33px;
+    animation: movingCloudSmall 20s linear infinite;
+}
+.mainloginBlock .card-register {
+    max-width: 550px;
+}
+.mainloginBlock .card-register {
+    border-radius: 32px;
+    background-color: #ffffff;
+    box-shadow: 0 29px 24px 0 rgba(0, 0, 0, 0.21);
+    overflow: hidden;
+    margin-right: 50px;
+    margin-top: 30px;
+    margin-bottom: 30px;
+    min-width: 400px;
+    position: relative;
+    z-index: 99;
+}
+.card {
+    border: 0px solid rgba(255, 255, 255, 0.3);
+    margin-bottom: 20px;
+    background: #ffffff;
+    display: flex;
+    flex-direction: column;
+}
+@media (max-height: 800px){
+.card-register .card-header {
+    padding: 25px 40px 0px;
+}
+}
+.card-header:first-child {
+    border-radius: calc(.25rem - 1px) calc(.25rem - 1px) 0 0;
+}
+.card-header {
+    padding: 25px 25px 10px;
+    border-bottom: none;
+    background-color: #fff;
+    border-color: #fff;
+    
+}
+@media (max-height: 800px){
+    
+.card-register .card-header h2 {
+    font-size: 19px;
+}
+}
+
+
+.card-register .card-header .card-title {
+    position: relative;
+    color: #a7b4cb;
+    font-size: 14px;
+    font-weight: 500;
+    letter-spacing: 0;
+    line-height: 18px;
+    margin-bottom: 0px;
+}
+body.global-profile-landingpage-localhub {
+    padding-top: 0px !important;
+}
+@media (max-height: 800px){
+body.login-index-body .card .js_panel .card-body {
+    padding-bottom: 30px;
+}
+}
+body.login-index-body .card .js_panel .card-body {
+    padding: 40px;
+    padding-top: 15px;
+}
+a {
+    color: var(--link-color);
+}
+.label {
+    margin-bottom: 0;
+    color: #1e1f20;
+    font-size: 12px;
+    font-weight: bold;
+    letter-spacing: 1px;
+    line-height: 20px;
+    display: inline-block;
+}
+@media (max-height: 800px){
+.card-register .form-control {
+    margin-bottom: 4px;
+}
+}
+.form-control {
+    height: 42px;
+    margin-top: 6px;
+    margin-bottom: 8px;
+    box-shadow: none;
+    background: #fff !important;
+    color: #a7b4cb;
+    font-size: 14px;
+    font-weight: 500;
+    transition: none;
+    letter-spacing: 0;
+    line-height: 18px;
+    border: 2px solid rgba(143, 143, 161, 0.2);
+    border-radius: 4px !important;
+}
+.form-control:focus {
+    color: #495057;
+    background-color: #fff;
+    border-color: #80bdff;
+    outline: 0;
+    box-shadow:unset;
+}
+.loginbutton {
+    border-radius: 12px;
+    background-color: #0659fd;
+    border: 1px solid #0659fd;
+    color: #ffffff !important;
+    font-size: 14px;
+    font-weight: bold;
+    letter-spacing: 0;
+    line-height: 20px;
+    text-align: center;
+    padding: 15px;
+    margin-top: 20px;
+}
+.mb10 {
+    margin-bottom: 10px !important;
+}
+.mt20 {
+    margin-top: 20px !important;
+}
+.custom-control {
+    position: relative;
+    display: block;
+    min-height: 1.5rem;
+    padding-left: 2.5rem;
+}
+@media (max-height: 800px){
+.card-register .loginbutton {
+    margin-top: 10px;
+}
+}
+.loginbuttonWhite {
+    border-radius: 12px;
+    background-color: #fff;
+    border: 2px solid rgba(143, 143, 161, 0.2) !important;
+    color: #1e1f20 !important;
+    font-size: 14px;
+    font-weight: bold;
+    letter-spacing: 0;
+    line-height: 20px;
+    text-align: center;
+    padding: 15px;
+}
+
+.form-control::-webkit-input-placeholder {
+    color: rgba(51, 51, 51, 0.5) !important;
+}
+
+.form-control:-moz-placeholder {
+    color: rgba(51, 51, 51, 0.5) !important;
+}
+
+.form-control:-ms-input-placeholder {
+    color: rgba(51, 51, 51, 0.5) !important;
+}
+.card-register .card-header {
+    padding: 25px 40px 15px;
+}
+.card-register .card-header .card-title {
+    position: relative;
+    color: #a7b4cb;
+    font-size: 14px;
+    font-weight: 500;
+    letter-spacing: 0;
+    line-height: 18px;
+    margin-bottom: 0px;
+}
+.card-register .card-header h2 {
+    color: #000000;
+    font-size: 22px;
+    font-weight: bold;
+    letter-spacing: 0;
+    line-height: 24px;
+    margin-bottom: .5rem;
+}
+.card-register .form-control {
+    border-radius: 18px;
+    background: #f7f7f7;
+    display: block;
+    width: 100%;
+    padding: .375rem .75rem;
+}
+.modal {
+    z-index: 999999;
+    top: 20px;
+}
+.alert {
+    padding: 16px 24px;
+}
+.alert-danger {
+    color: #fff;
+    border-color: #f75676;
+    background-color: #f75676;
+    
+}
+.card-header {
+    background: #f1f1f1;
+}
+.custom-control-label {
+    padding-top: 2px;
+    font-size: 13px;
+}
+.card {
+    border: 0px solid rgba(255, 255, 255, 0.3);
+    margin-bottom: 20px;
+    background: #ffffff;
+}
+.card-header {
+    background-color: #fff;
+    border-color: #fff;
+}
+
+.x-hidden {
+    display: none;
+}
+form.js_ajax-forms a,.registered_link {
+    color: #8f92a1;
+    font-size: 14px;
+    letter-spacing: 0;
+    line-height: 22px;
+    text-align: center;
+}
+.notRegistered {
+    color: #a7b4cb;
+    font-size: 14px;
+    font-weight: 500;
+    letter-spacing: 0;
+    line-height: 18px;
+}
+.header_footer_hide {
+    padding-top: 0px;
+}
+
+.header_footer_hide .main-wrapper,.header_footer_hide .footer {
+    display: none !important;
+}
+
+.mainloginBlock {
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    width: 100%;
+    position: relative;
+    overflow: hidden;
+}
+
+.mainloginBlock .card-register {
+    border-radius: 32px;
+    background-color: #ffffff;
+    box-shadow: 0 29px 24px 0 rgba(0, 0, 0, 0.21);
+    overflow: hidden;
+    margin-right: 50px;
+    margin-top: 30px;
+    margin-bottom: 30px;
+    min-width: 400px;
+    position: relative;
+    z-index: 99;
+}
+@keyframes movingCloud {
+    0% {
+        left: 3%;
+        bottom: 0px;
+    }
+
+    50% {
+        left: 23%;
+        bottom: 0px;
+    }
+
+    100% {
+        left: 3%;
+        bottom: 0px;
+    }
+}
+
+@keyframes movingCloudsmallDesktop {
+    0% {
+        left: 1%;
+        bottom: 0px;
+    }
+
+    50% {
+        left: 15%;
+        bottom: 0px;
+    }
+
+    100% {
+        left: 1%;
+        bottom: 0px;
+    }
+}
+
+.mainloginBlock .cloud_imgs::before {
+    content: "";
+    background-image: url(../images/movingCloud.png);
+    background-position: center;
+    background-size: contain;
+    background-repeat: no-repeat;
+    display: inline-block;
+    height: 309px;
+    width: 474px;
+    position: absolute;
+    left: 25px;
+    bottom: 33px;
+    animation: movingCloud 10s infinite;
+    transition: all ease-in-out 0.5s;
+    z-index: 4;
+}
+
+@keyframes movingCloudSmall {
+    0% {
+        right: 32%;
+        top: 33px;
+    }
+
+    50% {
+        right: 10%;
+        top: 33px;
+    }
+
+    100% {
+        right: 32%;
+        top: 33px;
+    }
+}
+
+
+
+@keyframes movingCloudBig {
+    0% {
+        right: 40%;
+        top: -160px;
+    }
+
+    50% {
+        right: 17%;
+        top: -160px;
+    }
+
+    100% {
+        right: 40%;
+        top: -160px;
+    }
+}
+
+
+@keyframes movingCloudBigdesktopmini {
+    0% {
+        right: 60%;
+        top: -160px;
+    }
+
+    50% {
+        right: 40%;
+        top: -160px;
+    }
+
+    100% {
+        right: 60%;
+        top: -160px;
+    }
+}
+
+.login-index-body .mainloginBlock::before {
+    content: "";
+    background-image: url(../images/login_logo.png);
+    background-position: center;
+    background-size: contain;
+    background-repeat: no-repeat;
+    display: inline-block;
+    height: 122%;
+    width: 73%;
+    position: absolute;
+    right: 38%;
+    top: -160px;
+    z-index: 3;
+    animation: movingCloudBig 20s  linear infinite;
+    -webkit-animation: movingCloudBig 20s linear infinite;
+    -moz-animation: movingCloudBig 20s linear  infinite;
+    -o-animation: movingCloudBig 20s linear  infinite;
+}
+@media screen and (max-width:1199px) {
+    @keyframes movingCloudBig {
+        0% {
+            right: 50%;
+            top: -0px;
+        }
+    
+        50% {
+            right: 35%;
+            top: -0px;
+        }
+    
+        100% {
+            right: 50%;
+            top: -0px;
+        }
+    }
+    .login-index-body .mainloginBlock::before {
+       height: 100%;
+        animation: movingCloudBig 10s  linear infinite;
+        -webkit-animation: movingCloudBig 10s linear infinite;
+        -moz-animation: movingCloudBig 10s linear  infinite;
+        -o-animation: movingCloudBig 10s linear  infinite;
+        width: 65%;
+
+    }
+    @keyframes movingCloud {
+        0% {
+            left: 7%;
+            bottom: 0px;
+        }
+    
+        50% {
+            left: 15%;
+            bottom: 0px;
+        }
+    
+        100% {
+            left: 7%;
+            bottom: 0px;
+        }
+    }
+
+    @keyframes movingCloudSmall {
+        0% {
+            right:50%;
+            top: 10px;
+        }
+    
+        50% {
+            right:  30%;
+            top: 10px;
+        }
+    
+        100% {
+            right: 50%;
+            top: 10px;
+        }
+    }
+    .login-index-body .mainloginBlock .cloud_imgs::after {
+ 
+    animation: movingCloudSmall 10s infinite;
+}
+    }
+
+.cc-window.cc-floating {
+    padding: 15px 15px !important;
+    max-width: 100% !important;
+    flex-direction: row !important;
+    align-items: center;
+    left: 50%;
+    justify-content: space-between;
+    transform: translateX(-50%);
+    width: 80% !important;
+    border-radius: 10px;
+}
+.cc-color-override-1420035967.cc-window {
+    color: rgb(255, 255, 255);
+    background-color: rgb(30, 35, 33);
+}
+.cc-window.cc-floating {
+    padding: 15px 15px !important;
+    max-width: 100% !important;
+    flex-direction: row !important;
+    align-items: center;
+    left: 50%;
+    justify-content: space-between;
+    transform: translateX(-50%);
+    width: 80% !important;
+    border-radius: 10px;
+}
+.cc-floating.cc-theme-edgeless .cc-message {
+    margin: 0 !important;
+    margin-right: 15px !important;
+}
+.cc-window.cc-floating .cc-compliance {
+    flex: unset !important;
+    border-radius: 10px;
+    overflow: hidden;
+}
+.cc-color-override-1420035967 .cc-btn {
+    color: rgb(255, 255, 255);
+    border-color: transparent;
+    background-color: rgb(51, 103, 214);
+}
+@media (max-width: 991px){
+.cc-window.cc-floating {
+    padding: 15px 15px !important;
+    max-width: 100% !important;
+    flex-direction: row !important;
+    transform: translateX(0);
+    width: 100% !important;
+    border-radius: 10px 10px 0 0;
+    bottom: 0;
+    left: 0;
+}
+.cc-message {
+    font-size: 12px;
+    line-height: 14px;
+}
+.cc-compliance {
+    width: 100px;
+    min-width: 100px;
+}
+}
+
+@media screen and (max-width: 900px){
+.cc-btn {
+    white-space: normal;
+}
+}
+/* @media screen and (max-width:1199px){
+.login-index-body .mainloginBlock::before {
+
+    right: 0%;
+  
+}
+} */
+@media screen and (max-width:767px){
+    .login-index-body .mainloginBlock::before {
+    
+        height: 235px;
+        width: 100%;
+      
+        right: auto;
+        top: -20px;
+     
+        animation: unset;
+        left: 43%;
+        transform: translate(-50%, 0);
+    }
+    .cloud_imgs{
+        display: none;
+    }
+    .mainloginBlock .card-register{
+        margin-right: 0;
+    }
+    .mainloginBlock{
+        justify-content: center;
+    }
+    .mainloginBlock{
+        justify-content: center;
+    }
+    .login-index-body .mainloginBlock {
+        padding:100px   15px 0;
+    }
+    .card-register .card-header {
+        padding: 25px 15px 15px;
+    }
+    body.login-index-body .card .js_panel .card-body {
+        padding: 15px  15px 30px;
+    }
+}
+
+.login-index-body .rightSideBarScroll {
+    overflow: hidden!important;
+    height: auto !important;
+}
+.form-control:focus {
+    color: #495057;
+    background-color: #fff;
+    border-color: #80bdff;
+    outline: 0;
+    box-shadow:unset;
+}
+
+.form-group {
+    margin-bottom: 1rem;
+}   
+.row {
+    display: -ms-flexbox;
+    display: flex;
+    -ms-flex-wrap: wrap;
+    flex-wrap: wrap;
+    margin-right: -15px;
+    margin-left: -15px;
+}
+input[type=checkbox], input[type=radio] {
+    box-sizing: border-box;
+    padding: 0;
+}
+.custom-control-input {
+    position: absolute;
+    left: 0;
+    z-index: -1;
+    width: 1rem;
+    height: 1.25rem;
+    opacity: 0;
+}
+button, input {
+    overflow: visible;
+}
+button, input, optgroup, select, textarea {
+    margin: 0;
+    font-family: inherit;
+    font-size: inherit;
+    line-height: inherit;
+}
+.custom-control-label {
+    position: relative;
+    margin-bottom: 0;
+    vertical-align: top;
+}
+.btn-block {
+    display: block;
+    width: 100%;
+}
+.btn:not(:disabled):not(.disabled) {
+    cursor: pointer;
+}
+.custom-checkbox .custom-control-label::before {
+    border-radius: .25rem;
+}
+.custom-control-label::before, .custom-file-label, .custom-select {
+    transition: background-color .15s ease-in-out,border-color .15s ease-in-out,box-shadow .15s ease-in-out;
+}
+.custom-control-label::before {
+    position: absolute;
+    top: .25rem;
+    left: -1.5rem;
+    display: block;
+    width: 1rem;
+    height: 1rem;
+    pointer-events: none;
+    content: "";
+    background-color: #fff;
+    border: #adb5bd solid 1px;
+}
+.border-0 {
+    border: 0!important;
+}
+.btn{    transition: color .15s ease-in-out,background-color .15s ease-in-out,border-color .15s ease-in-out,box-shadow .15s ease-in-out;
+}}

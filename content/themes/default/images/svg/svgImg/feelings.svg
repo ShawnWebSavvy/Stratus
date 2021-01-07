@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="19px" height="18px" viewBox="0 0 19 18" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <title>Icon/Plus Square</title>
+    <g id="Local-HUB-(FB)" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="Home/Local-Hub/PopUp-windows" transform="translate(-942.000000, -401.000000)" fill="#16161f">
+            <g id="Group-32-Copy" transform="translate(658.000000, 175.000000)">
+                <g id="Bottom/Emojis" transform="translate(269.500000, 211.000000)">
+                    <g id="Icon/Plus-Square" transform="translate(15.000000, 15.000000)">
+                        <circle id="Oval" opacity="0.3" cx="9" cy="9" r="9"></circle>
+                        <circle id="Oval" cx="5.42677824" cy="7.56903766" r="1.428159"></circle>
+                        <circle id="Oval" cx="12.5676569" cy="7.56903766" r="1.428159"></circle>
+                        <path d="M11.7316736,11.4104603 C11.4958159,11.0943933 11.0483682,11.0293724 10.7323013,11.265272 C10.7186192,11.2754812 10.7053556,11.2861506 10.6924268,11.2973222 L10.6924268,11.2973222 C9.68259414,12.0348954 8.31175732,12.0348954 7.30192469,11.2973222 C7.00355649,11.0394142 6.55259414,11.0722594 6.29472803,11.3706276 C6.03682008,11.6689958 6.06966527,12.1199582 6.36803347,12.3778243 C6.3809205,12.3889958 6.39422594,12.3996653 6.40790795,12.4098745 C7.93640167,13.578159 10.0579498,13.578159 11.5864435,12.4098745 C11.9025523,12.1739749 11.9675732,11.7265272 11.7316736,11.4104603 Z" id="Path"></path>
+                    </g>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>

@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="34px" height="34px" viewBox="0 0 34 34" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <title>Group 5</title>
+    <defs>
+        <rect id="path-1" x="0" y="0" width="28" height="28" rx="10"></rect>
+    </defs>
+    <g id="Local-HUB-(FB)" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="Home/Local-Hub/Main-Featured-Hashtags" transform="translate(-299.000000, -251.000000)">
+            <g id="Add-Story-Copy-2" transform="translate(251.000000, 139.000000)">
+                <g id="Group-5" transform="translate(51.000000, 115.000000)">
+                    <g id="Rectangle-Copy-2">
+                        <use fill="#FFFFFF" xlink:href="#path-1"></use>
+                        <rect stroke="#FFFFFF" stroke-width="3" fill="#1269FF" x="-1.5" y="-1.5" width="31" height="31" rx="10"></rect>
+                    </g>
+                    <line x1="14" y1="8" x2="14" y2="20" id="Line-3-Copy" stroke="#FFFFFF" stroke-width="1.5" stroke-linecap="square"></line>
+                    <line x1="14" y1="8" x2="14" y2="20" id="Line-3-Copy-2" stroke="#FFFFFF" stroke-width="1.5" stroke-linecap="square" transform="translate(14.000000, 14.000000) rotate(-90.000000) translate(-14.000000, -14.000000) "></line>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>

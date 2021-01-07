@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="75px" height="11px" viewBox="0 0 75 11" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <title>Line</title>
+    <g id="Symbols" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="ReadMore/Button" transform="translate(-186.000000, -13.000000)" fill="#979797" fill-rule="nonzero">
+            <g transform="translate(0.000000, -2.000000)" id="Line">
+                <path d="M251.809343,15.3190816 L252.245131,15.5642122 L260.245131,20.0642122 L261.019864,20.5 L260.245131,20.9357878 L252.245131,25.4357878 L251.809343,25.6809184 L251.319082,24.8093429 L251.754869,24.5642122 L258.089,21 L186,21 L186,20 L258.093,20 L251.754869,16.4357878 L251.319082,16.1906571 L251.809343,15.3190816 Z"></path>
+            </g>
+        </g>
+    </g>
+</svg>

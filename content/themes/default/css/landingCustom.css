@@ -1,0 +1,10 @@
+.learn-btn{text-decoration:none!important;margin:0 auto;display:flex;align-items:center;justify-content:center}
+
+@media (max-width:991px){
+.road-map .main-heading{margin-bottom:0}
+.road-map .col-line{margin-top:15px;text-align:center;margin-bottom:30px;justify-content:center}
+.landing-menu.secounBlockMobile  .signup-btn {display: inline-block;}
+}
+@media (max-width:767px){
+.road-map .col-line{display:inline-block}
+}

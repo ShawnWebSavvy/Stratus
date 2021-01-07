@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="30px" height="30px" viewBox="0 0 30 30" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <title>Electronics_icon</title>
+    <g id="Electronics_icon" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="Group" transform="translate(6.000000, 3.000000)">
+            <path d="M1.1452,13.4145 L10.5015,0.459709 C11.1203,-0.397195 12.4723,0.16696 12.2985,1.2096 L11.0001,9.00001 L16.0444,9.00001 C16.8601,9.00001 17.3327,9.92417 16.855,10.5855 L7.4988,23.5403 C6.87992,24.3972 5.52795,23.8331 5.70172,22.7904 L7.0001,15 L1.95588,15 C1.14011,15 0.66757,14.0758 1.1452,13.4145 Z" id="Path" fill="#A7B4CB" opacity="0.6"></path>
+            <path d="M1.1452,13.4145 L10.5015,0.459694 C11.1203,-0.397211 12.4723,0.166944 12.2985,1.20958 L11.0001,9 L7.0001,15 L1.95588,15 C1.14011,15 0.66757,14.0758 1.1452,13.4145 Z" id="Path" fill="#16161F"></path>
+        </g>
+    </g>
+</svg>

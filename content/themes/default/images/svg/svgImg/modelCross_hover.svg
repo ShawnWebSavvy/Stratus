@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="20px" height="20px" viewBox="0 0 20 20" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <title>Icon/Plus Square</title>
+    <g id="Local-HUB-(FB)" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="Home/Local-Hub/PopUp-windows" transform="translate(-569.000000, -62.000000)">
+            <g id="Create-new-post" transform="translate(44.000000, 48.000000)">
+                <g id="Bottom/Icon-Copy-5" transform="translate(511.000000, 0.000000)">
+                    <g id="Close-Circle" transform="translate(14.000000, 14.000000)">
+                        <path d="M10,20 C15.5228,20 20,15.5228 20,10 C20,4.47715 15.5228,0 10,0 C4.47715,0 0,4.47715 0,10 C0,15.5228 4.47715,20 10,20 Z" id="Path" fill="#0659FD" opacity="0.3"></path>
+                        <path d="M7.70711,6.29289 C7.31658,5.90237 6.68342,5.90237 6.29289,6.29289 C5.90237,6.68342 5.90237,7.31658 6.29289,7.70711 L8.5858,10 L6.29289,12.2929 C5.90237,12.6834 5.90237,13.3166 6.29289,13.7071 C6.68342,14.0976 7.31658,14.0976 7.70711,13.7071 L10,11.4142 L12.2929,13.7071 C12.6834,14.0976 13.3166,14.0976 13.7071,13.7071 C14.0976,13.3166 14.0976,12.6834 13.7071,12.2929 L11.4142,10 L13.7071,7.70711 C14.0976,7.31658 14.0976,6.68342 13.7071,6.29289 C13.3166,5.90237 12.6834,5.90237 12.2929,6.29289 L10,8.5858 L7.70711,6.29289 Z" id="Path" fill="#0659FD"></path>
+                    </g>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>

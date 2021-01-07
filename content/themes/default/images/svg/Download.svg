@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="22px" height="18px" viewBox="0 0 22 18" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <title>Download</title>
+    <g id="Symbols" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="!Icons/2.-Icons/Download" transform="translate(-4.000000, -6.000000)">
+            <g id="Download" transform="translate(4.000000, 6.000000)">
+                <path d="M1,18 C0.44772,18 0,17.5523 0,17 C0,16.4477 0.44772,16 1,16 L21,16 C21.5523,16 22,16.4477 22,17 C22,17.5523 21.5523,18 21,18 L1,18 Z" id="Path" fill="#A7B4CB" opacity="0.6"></path>
+                <path d="M12,1 C12,0.44772 11.5523,0 11,0 C10.4477,0 10,0.44772 10,1 L10,10.5858 L8.70711,9.2929 C8.31658,8.9024 7.68342,8.9024 7.29289,9.2929 C6.90237,9.6834 6.90237,10.3166 7.29289,10.7071 L10.2929,13.7071 C10.6834,14.0976 11.3166,14.0976 11.7071,13.7071 L14.7071,10.7071 C15.0976,10.3166 15.0976,9.6834 14.7071,9.2929 C14.3166,8.9024 13.6834,8.9024 13.2929,9.2929 L12,10.5858 L12,1 Z" id="Path" fill="#16161F"></path>
+            </g>
+        </g>
+    </g>
+</svg>

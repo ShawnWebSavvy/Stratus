@@ -1,0 +1,66 @@
+.btn.focus,.btn:focus{outline:0;box-shadow:none}
+.btn.disabled,.btn:disabled{box-shadow:none}
+.btn-group-lg>.btn,.btn-lg{font-size:14px;padding:16px 96px}
+.btn-group-md>.btn,.btn-md{font-size:12px;padding:16px 56px}
+.btn-group-sm>.btn,.btn-sm{border-radius:10px;padding:10px 30px}
+.btn{border:0 solid}
+._cmn_btn{padding:12px 25px;transition:all .3s ease-in-out;color:#1e1f20}
+button.btn:hover img.btn_image_{display:none}
+button.btn:hover img.btn_image_hover{display:block}
+img.btn_image_hover{display:none}
+button.btn.js_friend-cancel{background-color:#e5f0ff!important;border:0!important;color:#1e1f20;font-size:0;border-radius:10px}
+button.btn.js_friend-cancel img.btn_image_{display:inline-block!important}
+.people-friends-page .float-right._user_action_ .btn{font-size:20px;padding:6px 25px;transition:all .1s linear;border-radius:10px;font-weight:500;display:inline-block}
+.people-friends-page .float-right._user_action_ .btn.js_friend-cancel{font-size:0;min-height:42px}
+.js_friend-remove span.btn_image_hover{display:none}
+.cmn_btn, .js_event-invite, .js_friend-add, .js_friend-remove, .js_go-event, .js_group-invite, .js_interest-event, .js_join-group, .js_leave-group, .js_like-page, .js_page-invite, .js_ungo-event, .js_uninterest-event, .js_unlike-page, .publishBtn, .viewProfileButton, div#modal .float-right._user_action button.js_friend-add, div#modal .float-right._user_action_ button.js_friend-remove{white-space:nowrap;border-radius:10px;background-color:#e5f0ff!important;border:0!important;color:#1e1f20;display:flex;align-items:center;justify-content:center;height:50px!important;width:100%!important;font-size:14px;font-weight:500}
+div#modal .float-right._user_action_ button.js_friend-remove:hover { background-color: #fb646b !important;}
+.buttonWrapPopOver button.js_friend-add{background-color:#e5f0ff}
+._cmn_btn:hover{background-color:#e5f0ff;color:#1e1f20}
+.js_friend-cancel,.js_friend-remove{background-color:#e5f0ff;color:#1e1f20}
+.js_boost-page,.profile_name_sec .profile-buttons-wrapper button.js_boost-page{width:100%}
+.profile-localhub .profile-button-style .js_friend-remove img{width:35px;padding:0 5px}
+.profile-localhub .profile-button-style .js_friend-remove img.btn_image{display:none!important}
+.js_friend-remove:hover,.people-friends-page .float-right._user_action_ .js_friend-remove:hover{background-color:#fb646b!important}
+.js_friend-remove:hover span.btn_image_hover{display:block}
+.js_friend-remove span{color:#1e1f20!important}
+.js_friend-remove:hover span.btn_image_{display:none}
+button.btn:hover .btn_image{display:none}
+.btn img{width:18px;height:18px;margin-right:8px}
+.friendsSearchbtn.btn img{width:30px;height:30px}
+button.js_like-page{padding:5px 15px}
+button.js_like-page img{padding:0!important;height:30px!important;width:30px!important;background-color:transparent!important;transition:all ease-in-out .5s}
+button.js_unlike-page{padding:5px 15px}
+.rightSideBarScroll button, .profileUpdatesDesign button {
+    font-size: 0 !important;
+    line-height: normal !important;
+    height: auto !important;
+    min-height: 37px;
+}
+button.js_unlike-page img{transform:rotateX(180deg);padding:0!important;height:30px!important;width:30px!important;background-color:transparent!important;transition:all ease-in-out .5s}
+.explore_page_lists .js_interest-event .svg-container img{padding:0;background-color:transparent}
+.explore_page_lists .js_uninterest-event img{padding:0!important;background-color:transparent!important}
+.explore_page_lists .js_interest-event .svg-container{display:flex;align-items:center}
+.js_interest-event .svg-container .whiteicon{display:none}
+.addBio{font-size:13px;background-color:#e5f0ff;padding:5px 10px;color:#1e1f20;border-radius:5px}
+.addBio:hover{background-color:#1269ff;color:#fff}
+.js_interest-event:hover{background-color:#1269ff!important}
+.js_interest-event:hover .svg-container .whiteicon{display:block}
+.js_interest-event:hover .svg-container .blackicon{display:none}
+.friendsSearchbtn{display:flex;align-items:center;justify-content:center;height:50px!important;width:100%!important;font-size:14px;font-weight:500}
+._request_sec ._findfriendsdiv_ .feeds-item .data-container,.people-friend-list-section ._friend_list_items .feeds-item .data-container,.people-friend-list-section .globle_frnd_sgg ul .feeds-item .data-container,.people-friend-list-section ul .feeds-item .data-container{position:relative;padding-bottom:80px}
+._findfriendsdiv_ .col-lg-6.col-xl-4 ul li.feeds-item .data-container button,._findfriendsdiv_ .feeds-item .data-container ._user_action_ button,._request_sec .globle_frnd_sgg .feeds-item .data-container ._user_action_ button,.people-friend-list-section ._friend_list_items .feeds-item .data-container ._user_action_ button,.people-friend-list-section .globle_frnd_sgg .feeds-item .data-container ._user_action_ button{position:absolute;width:90%!important;max-width:90%;left:50%;bottom:10px;transform:translateX(-50%)}
+.profileUpdatesDesign button,.rightSideBarScroll button{font-size:0!important;line-height:normal!important;height:auto!important;min-height:37px}
+.profileUpdatesDesign button img{margin-right:0}
+.alert-post.see-more{margin-bottom:50px!important;margin-top:50px}
+.post_images__ img{max-width:20px;flex:0 0 20px;width:20px;height:20px}
+#search-history button.btn.js_friend-cancel,#search-results button.btn.js_friend-cancel{border:0!important;color:#1e1f20;font-size:0}
+#search-history .data-container .data-content div.float-right,#search-results .data-container .data-content div.float-right{width:50px;display:flex;align-items:center;justify-content:center;height:50px}
+#search-history.dropdown-search button,#search-results.dropdown-search button{padding:.375rem .75rem!important;width:inherit!important;height:inherit!important;margin:0!important;background-color:#e5f0ff}
+#search-history.dropdown-search button.js_friend-remove,#search-results.dropdown-search button.js_friend-remove{background-color:transparent!important}
+#search-history.dropdown-search button img,#search-results.dropdown-search button img{margin:0!important}
+#search-history .dropdown-widget-body.custom-scrollbar,#search-results .dropdown-widget-body.custom-scrollbar{max-height:390px;overflow-y:auto}
+.whoreactModal .feeds-item .usernamesWrapBlock ._user_action_ .js_friend-add img{margin-right:0}
+#search-history.dropdown-search button.js_friend-add:hover,#search-results.dropdown-search button.js_friend-add:hover,#search-results.dropdown-search button.js_interest-event:hover,.btn.btn-info.js_event-invite:hover,.buttonWrapPopOver button.js_friend-add:hover,.js_friend-add:hover,.js_join-group:hover,.js_leave-group:hover,.js_page-invite:hover,.publishBtn:hover,button.js_group-invite:hover,div#modal .float-right._user_action_ button.js_friend-add:hover{background-color:#1269ff!important;color:#1e1f20}
+#search-history.dropdown-search button.js_friend-add img,#search-results.dropdown-search button.js_friend-add img{width:100%}
+div#modal .whoreactModal .float-right._user_action_ button.js_friend-remove img{ margin: 0 !important; }

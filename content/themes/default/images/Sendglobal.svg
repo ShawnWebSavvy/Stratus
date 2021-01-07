@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="30px" height="30px" viewBox="0 0 30 30" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <title>Icon/Send Copy</title>
+    <g id="Icon/Send-Copy" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="Airplane" transform="translate(4.000000, 5.000000)">
+            <path d="M21,-7.81597009e-14 L21,17.6 C20.9834569,17.9088449 20.8249354,18.1926547 20.5706415,18.3687044 C20.3163476,18.544754 19.994902,18.593229 19.7,18.5 L19.7,18.5 L12,15.7 L21,-7.81597009e-14 Z M21,-3.90798505e-14 L7,14 L1.5,12.6 C1.1189423,12.5000562 0.832069573,12.1857021 0.767305188,11.7971158 C0.702540803,11.4085295 0.87195423,11.0181278 1.2,10.8 L1.2,10.8 L21,-3.90798505e-14 Z" id="Combined-Shape" fill="#1269FF" opacity="0.3"></path>
+            <path d="M7,14 L8.3,18.7 C8.3851164,19.1299973 8.74034928,19.4544392 9.17628139,19.5003268 C9.61221351,19.5462144 10.0272155,19.3028498 10.2,18.9 L12,15.7 L21,0 L7,14 Z" id="Path" fill="#0659FD"></path>
+        </g>
+    </g>
+</svg>

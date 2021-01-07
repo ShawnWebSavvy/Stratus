@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="20px" height="20px" viewBox="0 0 20 20" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <title>Hat Chef</title>
+    <g id="-" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="!Icons/2.-Icons/Hat-Chef" transform="translate(-5.000000, -5.000000)">
+            <g id="Hat-Chef" transform="translate(5.000000, 5.000000)">
+                <path d="M14.0645,2.08737 C14.3676,2.03001 14.6803,2 15,2 C17.7614,2 20,4.23858 20,7 C20,9.0503 18.7659,10.8124 17,11.584 L17,16 L3,16 L3,11.584 C1.2341,10.8124 0,9.0503 0,7 C0,4.23858 2.23858,2 5,2 C5.31972,2 5.63244,2.03001 5.93548,2.08736 C6.84287,0.82336 8.3253,0 10,0 C11.6747,0 13.1571,0.82336 14.0645,2.08737 Z" id="Path" fill="#A7B4CB" opacity="0.6"></path>
+                <path d="M3,16 C3,15.4477 3.44772,15 4,15 L16,15 C16.5523,15 17,15.4477 17,16 L17,18 C17,19.1046 16.1046,20 15,20 L5,20 C3.89543,20 3,19.1046 3,18 L3,16 Z" id="Path" fill="#16161F"></path>
+            </g>
+        </g>
+    </g>
+</svg>

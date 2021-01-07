@@ -1,0 +1,4 @@
+a,span{display: inline-block;}
+button.btn span.share_sign_img img { width: auto;height: auto;}
+span.pages_icons img {margin-right: 5px; }
+.card.main-side-nav-card .svg-container {flex: 0 0 70px;max-width: 70px;}

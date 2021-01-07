@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="333px" height="69px" viewBox="0 0 333 69" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <title>2020-line</title>
+    <g id="Mobile" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="Home_375" transform="translate(-47.000000, -14083.000000)">
+            <g id="Roadmap" transform="translate(0.000000, 13991.000000)">
+                <g id="2020-line" transform="translate(47.000000, 92.386576)">
+                    <text id="2020" font-family="Helvetica" font-size="25.3751" font-weight="normal" letter-spacing="0.02" fill="#1269FF">
+                        <tspan x="0" y="25">2020</tspan>
+                    </text>
+                    <line x1="17.6753" y1="59.2702241" x2="332.5" y2="59.1134241" id="Stroke-4-Copy" stroke="#1269FF" stroke-width="1.5"></line>
+                    <path d="M9.2285,50.3113241 L9.2285,50.3113241 C4.6425,50.3113241 0.9245,54.0293241 0.9245,58.6163241 C0.9245,63.2023241 4.6425,66.9193241 9.2285,66.9193241 C13.8155,66.9193241 17.5335,63.2023241 17.5335,58.6163241 C17.5335,54.0293241 13.8155,50.3113241 9.2285,50.3113241 Z" id="Stroke-7" stroke="#1269FF" stroke-width="1.5"></path>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>

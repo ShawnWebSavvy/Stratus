@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="16px" height="16px" viewBox="0 0 16 16" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <title>Icon</title>
+    <defs>
+        <path d="M9,1 C11.209139,1 13,2.790861 13,5 C13,7.209139 11.209139,9 9,9 C6.790861,9 5,7.209139 5,5 C5,2.790861 6.790861,1 9,1 L9,1 Z M9,3 C7.8954305,3 7,3.8954305 7,5 C7,6.1045695 7.8954305,7 9,7 C10.1045695,7 11,6.1045695 11,5 C11,3.8954305 10.1045695,3 9,3 L9,3 Z M9,10 C11.67,10 17,11.33 17,14 L17,17 L1,17 L1,14 C1,11.33 6.33,10 9,10 L9,10 Z M9,11.9 C6.03,11.9 2.9,13.36 2.9,14 L2.9,15.1 L15.1,15.1 L15.1,14 C15.1,13.36 11.97,11.9 9,11.9 Z" id="path-1"></path>
+    </defs>
+    <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="Group" transform="translate(-1.000000, -1.000000)">
+            <mask id="mask-2" fill="white">
+                <use xlink:href="#path-1"></use>
+            </mask>
+            <use id="Shape" fill="#16161F" xlink:href="#path-1"></use>
+        </g>
+    </g>
+</svg>

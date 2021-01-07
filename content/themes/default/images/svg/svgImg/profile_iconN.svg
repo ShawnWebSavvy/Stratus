@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="30px" height="30px" viewBox="0 0 30 30" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <title>profile_icon</title>
+    <defs>
+        <linearGradient x1="74.1010258%" y1="0.862281604%" x2="28.6720634%" y2="108.104127%" id="linearGradient-1">
+            <stop stop-color="#69BFFF" offset="0%"></stop>
+            <stop stop-color="#4545EA" offset="100%"></stop>
+        </linearGradient>
+        <radialGradient cx="6.9700972%" cy="10.3987043%" fx="6.9700972%" fy="10.3987043%" r="112.424594%" gradientTransform="translate(0.069701,0.103987),scale(0.523798,1.000000),rotate(52.843638),translate(-0.069701,-0.103987)" id="radialGradient-2">
+            <stop stop-color="#6FC1FF" offset="0%"></stop>
+            <stop stop-color="#6FC1FF" offset="46.2742752%"></stop>
+            <stop stop-color="#7BB1FF" offset="100%"></stop>
+        </radialGradient>
+    </defs>
+    <g id="profile_icon" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="User" transform="translate(6.000000, 4.000000)">
+            <path d="M14,5 C14,7.76142 11.7614,10 9,10 C6.23858,10 4,7.76142 4,5 C4,2.23858 6.23858,0 9,0 C11.7614,0 14,2.23858 14,5 Z" id="Path" fill="url(#linearGradient-1)"></path>
+            <path d="M15.818,13.1248 C15.2016,12.4101 14.1428,12.4469 13.3149,12.9001 C12.0338,13.6013 10.5635,14 9,14 C7.4365,14 5.96618,13.6013 4.68505,12.9001 C3.85717,12.4469 2.79841,12.4101 2.182,13.1248 C0.82222,14.7014 0,16.7547 0,19 L0,20 C0,21.1045 0.89543,22 2,22 L16,22 C17.1046,22 18,21.1045 18,20 L18,19 C18,16.7547 17.1778,14.7014 15.818,13.1248 Z" id="Path" fill="url(#radialGradient-2)"></path>
+        </g>
+    </g>
+</svg>

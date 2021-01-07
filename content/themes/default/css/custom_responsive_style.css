@@ -1,0 +1,503 @@
+@import "../css/buttonCustom.css";
+.addproductWrap .colored-text-wrapper .js_publisher-scraper {height: 25px !important;}
+.comment-data{align-items:flex-start;justify-content:space-between;flex-direction:column}
+.comment-data .comment-replies{width:100%}
+.comment-data .commentDataActionWrap{display:flex;width:100%;justify-content:space-between;align-items:flex-start;position:relative}
+.comment-data .commentDataActionWrap .comment-inner-wrapper .comment-inner .comment-replace{flex-direction:column}
+.commentDataActionWrap .comment-btn.dropdown{position:absolute;top:0;right:0}
+.newUserSearchMessage .dropdown-menu.auto-complete{width:100%;min-width:258px;height:calc(100vh - 338px);min-height:200px;overflow-x:auto}
+.newUserSearchMessage ul li .js_tag-add .data-avatar img{font-size:0}
+.chat-message-add-new .x-form-tools-post{display:inline-block}
+.bootstrap-datetimepicker-widget{min-width:300px;min-height:300px}
+.comment-replace{display:flex;justify-content:flex-start}
+.comment-inner-wrapper{width:100%}
+.comment-inner{width:100%}
+.videoCountWrap{display:flex;align-items:center}
+.js_see-more .text-link{display:flex;align-items:center;justify-content:center}
+.comment-voice-notes{display:none}
+.js_live-messages-alt .tab-content .data-avatar img{height:31px;width:31px;min-height:31px}
+.reactions-container{top:-46px!important;position:absolute;left:0!important}
+.chat-widget-content .feed-message .feed-message-userName .chat-message-user-section .time.js_moment{font-size:12px;position:static;right:10px;color:#555;top:6px}
+.chat-widget-content .feed-message .feed-message-userName .chat-message-user-section{position:static}
+.main-notification-info-Wrap .notificationinfoWrap{display:flex;align-items:center}
+.main-notification-info-Wrap .notificationinfoWrap i.fa.fa-comment{height:23px;width:22px}
+.js_posts_stream .noDataWrapImage{align-items:center;justify-content:center;flex-flow:unset;align-content:unset;counter-reset:unset}
+.js_posts-filter .dropdown-menu{max-height:500px;overflow-x:auto}
+.right-sidebar .right-sidebar-inner-ant .rightSideBarScroll{padding-bottom:50px}
+.buttonSidebar{width:20px;height:20px;min-width:20px;position:relative}
+.buttonSidebar svg{position:absolute;height:20px;width:20px;top:-2px;left:0}
+.people-friends-page ._frnd_rqst_sec ._user__data{width:100%}
+.notifications_soundWrap .switch.sm .slider:before{left:1px;bottom:1px}
+.market-localhub .modal-dialog{max-width:600px;width:calc(100% - 40px)}
+.market-localhub .modal-dialog .modal-body{overflow-y:auto}
+.modal-open .modal{padding-bottom:30px}
+.js_story-deleter{position:absolute;z-index:2;background-color:transparent;color:#fff;left:255px;top:-2px;padding:0!important}
+.body.group-localhub .js_leave-group{width:100%!important}
+.publisher-focus{overflow:hidden}
+.rightSideBarScroll button img{margin-right:0}
+.market-localhub .add-new-product-section .custom_modal_style .publisher-message .wrapFooterDiv{display:none!important}
+.people-friend-list-section ul.requstSectionwrap .feeds-item .data-container{padding-bottom:0}
+.people-friend-list-section ._findfriendsdiv_ ul.requstSectionwrap .feeds-item .data-container{padding-bottom:80px}
+.people-friend-list-section .globle_frnd_sgg ul.requstSectionwrap .feeds-item .data-container{padding-bottom:80px}
+.right-sidebar .right-sidebar-inner-ant .mini-footer .links li:nth-child(5){display:none}
+.right-sidebar{width:28%;max-width:430px;padding:0;border-radius:20px 0 0 20px;position:fixed;top:118px;right:0;z-index:2}
+.right-sidebar.open-side-bar{top:116px;z-index:0}
+.right-sidebar.open-side-bar .right-sidebar-inner-ant.blacksidebarclassadd{height:0;transition:all ease-in-out .5s}
+.rightbarHiddMessageSection .nonBlackSidebarShowHidd{height:0}
+.rightbarHiddMessageSection .nonBlackSidebarShowHidd .rightSideBarScroll,.rightbarHiddMessageSection .nonBlackSidebarShowHidd::before{display:none}
+.right-sidebar .right-sidebar-inner-ant.rightBlackSidebar::before{background:#1e1f20}
+.rightBlackSidebar .rightSideBarScroll .card.rightUserDetails .card-header{color:#fff}
+.rightbarHiddMessageSection .blacksidebarclassadd.rightBlackSidebar{display:block}
+.right-sidebar .right-sidebar-inner-ant.blacksidebarclassadd.rightBlackSidebar{display:block}
+.right-sidebar .right-sidebar-inner-ant.blacksidebarclassadd{display:none}
+.right-sidebar .right-sidebar-inner-ant.blacksidebarclassadd .rightSideBarScroll{padding-bottom:0}
+.right-sidebar .right-sidebar-inner-ant{position:relative!important;left:0!important;top:0!important;transform:none!important;padding:14px 12px!important;background-color:#fff;border-radius:10px 0 0 10px;z-index:0;-webkit-transform:none!important;-moz-transform:none!important;-ms-transform:none!important;-o-transform:none!important;}
+.right-sidebar .right-sidebar-inner-ant .nameSection{padding-bottom:11px}
+.right-sidebar .right-sidebar-inner-ant.blacksidebarclassadd .rightSideBarScroll{display:none}
+.right-sidebar .right-sidebar-inner-ant.blacksidebarclassadd::before{height:0}
+.right-sidebar .right-sidebar-inner-ant.blacksidebarclassadd.rightBlackSidebar{background-color:#fff}
+.right-sidebar .right-sidebar-inner-ant.blacksidebarclassadd.rightBlackSidebar::before{height:100%}
+.right-sidebar .right-sidebar-inner-ant.blacksidebarclassadd.rightBlackSidebar .rightSideBarScroll{display:block}
+.walletRightTabsSection .nav-pills{justify-content:space-between;flex-wrap:nowrap}
+.walletRightTabsSection .nav-pills .nav-item{flex:1 1 auto}
+.right-sidebar.headerTopBarSetting{width:100%;max-width:290px;position:fixed;top:84px;right:142px;z-index:1002;border-radius:10px;box-shadow:0 3px 15px 0 rgba(0,0,0,.1)}
+.right-sidebar.headerTopBarSetting .right-sidebar-inner-ant{border-radius:10px}
+.rightUserDetails .headingModal{font-size:22px;color:#1e1f20;font-weight:700;padding:10px 15px}
+.rightUserDetails ul li a{color:#000;font-size:16px;font-weight:700;letter-spacing:0;line-height:22px;display:flex;align-items:center;justify-content:flex-start;margin-bottom:20px}
+.rightUserDetails ul li a .settingsIcons{height:45px;width:45px;display:flex;align-items:center;justify-content:center;background-color:transparent;border-radius:10px;margin-right:15px}
+.rightUserDetails ul li a .settingsIcons img{width:30px;height:30px;border-radius:0;margin-right:0;background-color:transparent}
+.rightUserDetails ul li a .settingsIcons .whiteicon{display:block}
+.rightUserDetails ul li a .settingsIcons .blackicon{display:none}
+.rightUserDetails ul li.active a .settingsIcons .blackicon,.rightUserDetails ul li:hover a .settingsIcons .blackicon{display:block}
+.rightUserDetails ul li.active a .settingsIcons .whiteicon,.rightUserDetails ul li:hover a .settingsIcons .whiteicon{display:none}
+.rightUserDetails ul li.active a .settingsIcons,.rightUserDetails ul li:hover a .settingsIcons{background-color:rgba(18,105,255,.1)}
+.notificationinfoWrap .fa.fa-rss,.notificationinfoWrap .fa.fa-user-plus{height:18px;width:18px;margin-right:5px;font-size:15px;display:flex;align-items:center;justify-content:center}
+.notificationWrapSectionMain>div{padding:10px 10px}
+.notificationWrapSectionMain .data-container{padding:5px 5px;margin-bottom:5px}
+.mini-footer{padding-bottom:10px;position:absolute;bottom:0;left:0;background-color:#fff;padding-top:10px;padding-left:25px!important;width:100%;display:inline-block}
+.rightSideBarScroll .card .feeds-item .data-container .data-content .name{max-width:calc(100% - 60px);width:100%}
+.rightSideBarScroll .card .feeds-item .data-container .data-content .name a{word-break:break-all;text-align:left}
+.rightSideBarScroll .card .card-body ul li.feeds-item .data-container{align-items:flex-start}
+.explore_page_lists .ui-box a{word-break:break-all}
+.profile-name-wrapper a{word-break:break-all}
+.right-sidebar-inner-ant .js_user-popover a{text-align:left}
+.post-meta img{width:18px;height:18px}
+.profile-name-wrapper .badge.badge-warning{line-height:normal;margin-left:10px;font-size:15px}
+.marketSection{overflow-x:auto;display:inline-block;height:calc(100vh - 145px)}
+.marketSection>.card{min-height:724px}
+.blogAftrLogin ul.row>div{padding-bottom:30px}
+.addproductWrap{width:100%}
+.addproductWrap .divAppendTextarea{margin:0!important}
+.addproductWrap .colored-text-wrapper{display:flex;align-items:center}
+.child-post-first-li .post-media{border:0 solid transparent}
+.about_list_text a{word-break:break-all}
+.people-friends-page ._frnd_rqst_sec ._user__data .mainFullWidthWrap .feeds-item{width:100%}
+.membersGroupSetting .feeds-item .searchSectionWrap ._user_detail_sec{flex:0 0 60%;max-width:60%}
+.membersGroupSetting .feeds-item .searchSectionWrap .usernamesWrapBlock{flex:0 0 40%;max-width:40%}
+.membersGroupSetting .feeds-item .searchSectionWrap .usernamesWrapBlock button{margin:2px}
+#search-history .dropdown-widget-body .feeds-item .data-container .data-content,#search-results .dropdown-widget-body .feeds-item .data-container .data-content{display:flex;flex-direction:row-reverse;align-items:center;justify-content:space-between}
+#search-history .dropdown-widget-body .feeds-item .data-container .data-content .name a,#search-results .dropdown-widget-body .feeds-item .data-container .data-content .name a{word-break:break-word}
+#search-history .dropdown-widget-body ul li .searchSectionWrap,#search-results .dropdown-widget-body ul li .searchSectionWrap{justify-content:space-between}
+#search-history .dropdown-widget-body ul li .searchSectionWrap .usernamesWrapBlock,#search-results .dropdown-widget-body ul li .searchSectionWrap .usernamesWrapBlock{width:auto}
+.lessMore::before{content:'Less options'!important}
+.explore_page_lists .ui-box.uiBoxPosition .js_join-group img{background-color:transparent;padding:0}
+.tooltip{z-index:99999}
+.feeds_post .post .post-body .post-edit .comment-form .x-form-tools .js_update-post{opacity:0}
+.pageSettingOptions li a{align-items:center}
+.profileUpdatesDesign .card .feeds-item ._user_detail_sec ._user_details .name{max-width:calc(100% - 15px)}
+.PageUserCount ul li .searchSectionWrap{flex-direction:column;align-items:flex-start}
+.PageUserCount ul li .searchSectionWrap .usernamesWrapBlock{justify-content:flex-end}
+@media(min-width:1680px){.home-page-middel-block .desk_chg{flex:0 0 calc(100% / 6)!important;max-width:calc(100% / 6)!important}
+}
+@media (max-width:1645px){.panel-photos .feedPhotosWrap .global-profile-feeds-photo .pg_photo{width:100px;height:100px}
+}
+@media (max-width:1680px){.boosted-icon,.post .boosted-icon{right:44px;top:14px}
+body.group-localhub .profile-mobile-layout .profileUpdatesDesign .row.no-gutters .col-3{flex:0 0 calc(100% / 3);max-width:calc(100% / 3)}
+}
+@media (max-width:1600px){.right-sidebar{width:350px}
+.right-sidebar.headerTopBarSetting{right:65px}
+}
+@media (max-width:1444px){.__user_action_panel h3{font-size:1.2rem}
+}
+@media (max-width:1380px){.right-sidebar .right-sidebar-inner-ant .rightSideBarScroll{padding-bottom:78px}
+.right-sidebar{width:300px}
+.right-sidebar.headerTopBarSetting{right:5px}
+}
+@media (max-width:1300px){.panel-photos .feedPhotosWrap .global-profile-feeds-photo .pg_photo{width:70px;height:70px;border-radius:20px}
+.feedPhotosWrap .global-profile-feeds-photo{padding:3px}
+.profileUpdatesDesign .global-profile-feeds-photo a{height:100px;width:100px}
+}
+@media (max-width:1280px){.market-categories-section-right-side .card .side-nav li a{font-size:14px}
+.profile-name-wrapper{padding-top:15px}
+.profile-name-wrapper a{font-size:20px}
+.add-new-product-section .wrapFooterDiv.wrapFootershowHide.wrapFooterDiv-old{display:none}
+body.group-localhub .button-profile-option .btn-light,body.profile-localhub .button-profile-option .btn-light{height:38px;width:38px;display:flex;align-items:center;justify-content:center}
+body.group-localhub .button-profile-option .btn-light i{font-size:14px}
+.publisher-message{flex-wrap:wrap}
+.add-new-product-section .publisher-message{flex-wrap:nowrap}
+.wrapFooterDiv.wrapFootershowHide.wrapFooterDiv-old{flex:0 0 100%;max-width:100%;padding:0 15px}
+.__user_action_panel h3{font-size:1.2rem}
+.group-localhub .js_posts_stream .feeds_post_ul .feeds_post,.profile-localhub .js_posts_stream .feeds_post_ul .feeds_post{width:100%}
+.profileUpdatesDesign{padding:15px}
+}
+@media (max-width:1199px) and (min-width:991px){.sec_cstm_w{max-width:70%!important;flex:0 0 70%!important}
+.profile_top_sec+.col-lg-3{-ms-flex:0 0 30%;flex:0 0 30%;max-width:30%}
+._friend_list_items .feeds-item{max-width:calc(100% / 1);flex:0 0 calc(100% / 1)}
+.main-header .search-wrapper{margin-right:10px}
+}
+@media (max-width:1199px){.profileUpdatesDesign{padding:20px}
+.row.right-side-content-ant.mobileMessageWrap.users{flex-wrap:wrap}
+.data-content .btn i{font-size:13px;margin:0 6px 0 0!important}
+.walletIconMoneyText{width:auto}
+.publisher-message.popup-publishBtn .addPostUserName{display:none}
+.post-actions .action-btn{padding:4px}
+.wrapFooterDiv.wrapFootershowHide.wrapFooterDiv-old{margin-left:0}
+.publisher-message.popup-publishBtn .colored-text-wrapper textarea{padding:0}
+.people-friends-page ._frnd_rqst_sec ._user__data ._user_action_ button.btn-delete.js_friend-remove img{left:10px}
+.index-localhub ._toggle_btn,.landingpage-localhub ._toggle_btn{display:none!important}
+.navbar-wrapper>ul>li.dropdown.js_live-notifications>a{background-color:transparent!important}
+.footer_bar_show .btn.leftSidebarButton{display:block!important}
+.about_content_sec .card{margin-top:20px!important}
+div.profile-avatar-wrapper img{width:140px!important;height:140px!important}
+body.group-localhub .profile-mobile-layout .profileUpdatesDesign .row.no-gutters .col-3{flex:0 0 calc(100% / 2);max-width:calc(100% / 2)}
+}
+@media (max-width:1024px){.global-profile-localhub .js_posts_stream .feeds_post_ul .feeds_post{width:100%}
+.wrapFooterDiv .btn-publisher img{height:auto;max-width:100%}
+.wrapFooterDiv .btn-publisher img{height:38px}
+.global-profile-timeline-localhub .__no_data_contet__{justify-content:center;align-items:center;align-content:center}
+.profileUpdatesDesign{padding:10px}
+.about_list_img{flex:0 0 20px;max-width:20px}
+.profileUpdatesDesign .card-body{padding:0!important}
+}
+@media (max-width:991px){.aboutSectionWidth{flex:0 0 50%;max-width:50%}
+.people-friend-list-section ul .feeds-item{width:50%}
+.__mob-icons_,._mob-icons{display:flex!important}
+.search-localhub .js_friend-add{font-size:0}
+.login-index-body .rightSideBarScroll{height:calc(100vh - 400px)!important;overflow-x:hidden}
+.openInNewTab{display:none!important}
+.card-header.bg-transparent{font-size:14px;line-height:normal}
+.leftSidebarButton{padding:0;font-size:19px;display:inline-block}
+.mini-footer{display:none}
+.chat-typing{padding-bottom:0}
+body.publisher-focus .custom_modal_style{background-color:#fff}
+body.publisher-focus .publisher.globalpublishrmodalwidth,body.publisher-focus .publisher.loclpublishrmodalwidth{max-width:100%;display:inline-block}
+#feelings-menu.dropdown-menu{max-width:100%;min-width:100%;max-height:unset;overflow:auto}
+.profile-button-style .btn{width:100%!important}
+.message-user-image-section .imageSection img{width:32px;height:32px}
+.message-user-image-section .nameSection a{font-size:19px}
+body{padding-top:78px}
+.main-header{height:78px}
+.settingNavHidd.hidd{display:none}
+.settingDetailBlock.hidd{display:none}
+.addPostText{font-size:0}
+body.publisher-focus .publisher.globalpublishrmodalwidth{max-width:100%}
+body.footer_bar_show .left_sidebar_{height:calc(100vh - 200px)!important;padding-bottom:200px}
+.post_images__,.post_images__ img{max-width:20px;flex:0 0 20px;width:20px;height:20px}
+.lightbox-container{display:flex;flex-direction:column;margin-bottom:50px}
+.lightbox-data,.lightbox-preview{width:100%;max-width:unset;display:inline-block}
+.lightbox-post{height:100%}
+.add-new-product-section{background-color:transparent}
+.publisher-focus .x-form.publisher .modal-content{padding-top:62px}
+.publisher-tools-tabs li .class-publisher-text{font-weight:600;color:#1e1f20;font-size:14px;white-space:nowrap}
+body.publisher-focus .popup-publishBtn .colored-text-wrapper textarea{min-height:70px}
+body.publisher-focus .publisher .addpostHeadFocussed{position:fixed;top:0;left:0;width:100%;z-index:9;background:#fff}
+body.publisher-focus .popup-publishBtn .colored-text-wrapper{flex:0 0 100%;max-width:100%;border:0 solid}
+body.publisher-focus .publisher-tools-tabs{width:auto;padding:0!important;border:0 solid rgb(167,180,203,.3)}
+.publisher-tools-tabs-ulDropDown{position:relative;bottom:unset;right:unset;width:100%;border-radius:0;background:0 0;box-shadow:none;transition:all ease-in-out .5s}
+.backBtnMobile .btn{border-radius:10px;padding:8px;line-height:normal;background:0 0;border:2px solid #f0f3f8;color:#13131d;box-shadow:none;transition:all ease .4s}
+.profile-header .profile-buttons-wrapper .button-profile-option{margin-top:15px}
+.usersectionHeaderMobile .navbar-wrapper>ul>li.mob_resposive_>a .svg-container{height:auto!important;width:auto!important}
+.dropdown-menu.dropdown-menu-right.dropdown-widget.with-arrow.js_dropdown-keepopen.show ul{display:block}
+.offcanvas-sidebar+.offcanvas-mainbar>.row{margin:0}
+.footer_mobile{height:83px}
+.m-nav{justify-content:space-around}
+.profileUpdatesDesign .about-list li{margin:0 8px}
+.profileUpdatesDesign .about-list{display:flex;flex-wrap:wrap}
+div.profile-avatar-wrapper img{width:200px;height:200px;max-width:200px;margin:0 auto;object-fit:contain;background-color:#d0e1ff}
+body.profile-localhub .profile-header-tabs.for-mobile+.row .order-2{order:0}
+.profile-localhub .usersectionHeaderMobile .nameSection .navbar-wrapper{width:95%}
+.row.right-side-content-ant.mobileMessageWrap{flex-direction:row!important}
+body .add-story{position:relative;display:inline-block;width:100%;max-width:120px;height:170px;max-height:190px;margin-bottom:0}
+body .addStroryPlusIcon{position:absolute;bottom:35px;left:50%;height:35px;width:35px;transform:translateX(-50%);display:flex;align-items:center;justify-content:center}
+body .addStroryText{display:block}
+div.stories.carousel .story{display:inline-block!important;width:150px!important;max-width:120px!important;max-height:170px;height:170px;position:relative;margin:0 0 0 15px!important;background:0 0}
+div.storyTopImage-ant{width:100%;height:168px;left:0;top:1px;border-color:#fff;box-shadow:0 0 0 1px #00aafe;background-size:cover}
+body .add-story{flex-shrink:0}
+._request_sec ._user__data .feeds-item{flex:0 0 50%;max-width:50%;padding:0 15px!important;margin-bottom:30px!important}
+._search_sec{flex:0 0 290px;max-width:290px}
+._search_sec label{font-size:20px}
+.sort_by{flex:0 0 100%;max-width:162px;padding:5px 0}
+._search_sec input{width:70%!important}
+.right-sidebar.js_sticky-sidebar{display:none}
+.explore_cmn_style ._toggle_btn{top:0;display:flex;align-items:center;justify-content:center}
+.explore_cmn_style .content-tabs{padding-right:40px;padding-left:0}
+.explore_cmn_style ._toggle_btn{display:block;top:0}
+.explore_page_cmn._toggle_ .right-sidebar{display:block;max-width:calc(100% - 0px);top:139px}
+.explore_page_cmn .right-sidebar .rightSideBarScroll{display:block}
+.explore_page_cmn .right-sidebar .js_scroller.rightSideBarScroll{display:block;height:auto}
+.explore_page_cmn .right-sidebar .mini-footer.mtb20.plr10{display:none}
+.explore_page_cmn .right-sidebar-inner-ant::before{content:"";background:#fff;position:absolute;top:0;right:0;width:100%;height:100%;border-top-left-radius:20px;border-bottom-left-radius:20px}
+.explore_page_cmn .right-sidebar .right-sidebar-inner-ant{height:301px;background-color:#fff}
+.footer_mobile .leftSidebarButton{position:static;transform:none;line-height:normal}
+.footer_mobile .sidebar.mobileLogo{position:static;transform:none;padding:0}
+.footer_mobile .leftSidebarButton{line-height:0}
+.footer_mobile.hideShow_footerNav{bottom:0!important}
+.footer_mobile i{font-size:20px}
+.footer_mobile ul.m-nav li{position:relative;background:rgba(247,247,247,.2);width:38px;height:38px;border-radius:8px;text-align:center;box-sizing:border-box;padding-top:7px;align-items:center;display:flex;justify-content:center;padding:0;line-height:0}
+.mobileLogo .logo-wrapper{flex:0 0 30%!important;max-width:30%!important;position:static!important;transform:none!important;text-align:center;list-style:none;transform:none!important;display:flex!important;align-items:center!important;justify-content:center!important}
+.post-actions{position:relative}
+.footer_mobile{background-color:#fff}
+ul.m-nav li .counter.blue{background:#0659fd}
+.logo-wrapper.desk_logo{display:none!important}
+.index-localhub .main-header{display:flex;align-items:center}
+.footer_mobile li.sidebar.mobileLogo{display:block!important}
+.people-friends-page .float-right._user_action_ .btn{font-size:14px}
+.people-friends-page .js_user-popover a{color:#1e1f20;font-size:14px;font-weight:500;letter-spacing:0;line-height:22px;text-align:center}
+.settings-localhub .backBtnMobile{display:block!important}
+.settings-localhub .usersectionHeaderMobile .navbar-wrapper>ul>li>a{display:flex!important}
+.explore_cmn_style .custom-tabs ul{display:flex;flex-wrap:wrap;width:100%}
+.explore_cmn_style .content-tabs.custom-tabs{display:flex}
+.explore_page_cmn li.open_right_sidebar_btn._toggle_btn{display:block}
+li.open_right_sidebar_btn .open_right_sidebar.backBtn{background-color:#dbe1eb;left:0;top:0;box-shadow:none;border-color:#dbe1eb;color:#000!important}
+.explore_page_cmn .custom-tabs ul{display:flex;flex-wrap:wrap}
+.explore_page_lists{margin-bottom:30px}
+.walletIconMoneyText{background-position:left}
+.wallet_page_tabledata .row:nth-child(2)>div{display:block;width:100%;overflow-x:auto;-webkit-overflow-scrolling:touch}
+#DataTables_Table_0_wrapper .col-sm-12.col-md-6{max-width:50%!important;flex:0 0 50%!important}
+.wallet_page_tabledata .row:nth-child(3)>div{flex:0 0 50%;max-width:50%}
+body.global-profile-landingpage-localhub.login-index-body{padding-bottom:0}
+.login-index-body .card.card-register>.js_panel{border-bottom-right-radius:32px;border-bottom-left-radius:32px}
+.login-index-body .card.card-register{min-width:auto;border-radius:32px!important}
+.profile-localhub .card.panel-photos+.card+.card{display:none}
+.profile-localhub .profile-mobile-layout>.col-lg-3{width:100%!important;min-width:100%!important;padding-right:0;overflow:hidden}
+.profile-localhub .profile-mobile-layout>.col-lg-9{width:100%!important;min-width:100%!important}
+.profile-localhub .card.panel-photos+.card+.card+.card{display:none}
+.group-localhub .js_posts_stream .feeds_post_ul .feeds_post,.profile-localhub .js_posts_stream .feeds_post_ul .feeds_post{width:100%;flex:0 0 50%;max-width:50%}
+.profile-localhub .js_posts_stream .feeds_post_ul{display:flex;flex-flow:row wrap;align-content:space-between;counter-reset:items}
+.profile-header-tabs.for-mobile{padding:15px 0}
+._toggle_btn{background-color:transparent;border:none;font-size:20px;color:#000;padding:10px;transition:all .3s linear;position:absolute;right:20px;top:20px}
+body .btn._toggle_btn{position:relative!important;top:0;left:0}
+._toggle_btn .fas.fa-times{display:none}
+._toggle_ ._toggle_btn .fas.fa-times{display:block}
+._toggle_ ._toggle_btn .fas.fa-ellipsis-v{display:none}
+._toggle_btn:focus{outline:0}
+._toggle_btn:hover{color:#dbe1eb}
+.about_content_sec{display:none}
+._toggle_ .about_content_sec{display:block}
+.profileUpdatesDesign{position:relative!important}
+.about_content_sec .about-list{flex-direction:column}
+.adsbuttonSection{display:flex;flex-wrap:wrap}
+.adsbuttonSection .adsButton{display:flex;flex:0 0 50%;max-width:calc(50% - 30px);margin:15px;padding:15px;font-size:15px}
+.ads_page_tables #DataTables_Table_0_wrapper .row:nth-child(3) .col-sm-12{max-width:50%;flex:0 0 50%}
+.adsWalletSidebar{width:100%;max-width:290px;padding:20px}
+.addNewCampaign{width:calc(100% - 310px)}
+.walletIconMoneyAmount{bottom:60px;left:12px}
+.people-friend-list-section ._search_sec+._toggle_btn{display:none}
+._toggle_ .right-side-content-ant .settingleftWrap{opacity:1;left:0}
+.side-nav{padding:0 10px}
+.main-header .usersectionHeaderMobile{display:flex;align-items:center;justify-content:flex-end;min-width:199px}
+.main-header .row{display:flex;align-items:center;flex-direction:row;flex-wrap:nowrap}
+.people-localhub.people-friends-page ._toggle_btn{display:none}
+.people-friends-page ._frnd_rqst_sec ._user__data ._heading1_{font-size:18px;margin:0}
+.__no_data_contet__ p{font-size:20px}
+.__no_data_contet__ img{max-width:90%}
+.group-localhub .js_posts_stream .feeds_post_ul .feeds_post,.profile-localhub .js_posts_stream .feeds_post_ul .feeds_post{width:100%;flex:0 0 100%;max-width:100%}
+.explore_cmn_style .content-tabs{padding-right:60px}
+.profile-localhub .js_posts_stream .feeds_post_ul{padding:0 15px}
+.profile-localhub .mobileLogo{display:flex!important}
+._share-dropdown_.dropdown-menu.fade.show{left:-48px!important}
+.global-profile-localhub .no_data_img_{transform:none;width:100%}
+.global-profile-localhub .no_data_img_ img{max-width:50%}
+.global-profile-localhub .__no_data_contet__ img{max-width:50%}
+.leftSideChatBar .custom-scrollbar .js_scroller{height:calc(100vh - 365px)!important}
+body.login-index-body .mainloginBlock{display:flex;padding-bottom:60px;height:100vh!important;align-items:center}
+.js_posts-filter .dropdown-menu{max-height:400px;overflow-x:auto}
+.js_story-deleter{left:234px;top:0}
+.publisher-focus{overflow:auto;padding-top:0}
+.sec_cstm_w{max-width:100%!important;flex:0 0 100%!important}
+.profile-avatar-wrapper img{width:140px;height:140px}
+.PostFollowerWrap{margin:10px 0;margin-bottom:0}
+.button_action .profile-buttons-wrapper{padding-top:2px}
+.about_sec,.profile_top_sec+.col-lg-3{position:absolute;top:0;left:0;width:70%;background-color:#fff;box-shadow:1px 2px 10px 4px rgba(0,0,0,.07);z-index:99;height:100%;overflow-x:auto;transition:all .2s linear;opacity:0;pointer-events:none}
+.profile_top_sec+.col-lg-3{max-height:500px}
+._toggle_ .about_sec,._toggle_ .profile_top_sec+.col-lg-3{opacity:1;pointer-events:all}
+.profile_top_sec ._toggle_btn{display:block}
+.about_list_img{flex:0 0 40px;max-width:40px}
+.profileUpdatesDesign .global-profile-feeds-photo{width:calc(100% / 2)}
+.profileUpdatesDesign .searchSectionWrap ._user_detail_sec ._user_details{width:100%}
+.mainloginBlock .cloud_imgs::before{display:none;}
+/* .staticPageWrap{height:calc(100vh - 330px);}
+ */
+}
+@media (max-width:767px){.global-profile-localhub .col-12.cardBodyHeight .card-body .row>div{flex:0 0 calc(100% / 2 - 30px);max-width:calc(100% / 2 - 30px)}
+.headingAdsManager h5{font-size:20px}
+.post-meta .dropdown-menu{max-height:214px;max-width:185px;min-width:185px}
+.mainWrapDivideSection .walletIconSectionAffiliate{width:100%;min-width:unset}
+.mainWrapDivideSection{flex-direction:column}
+.mainWrapDivideSection .affiliateMainWrap{padding-right:0}
+.card-register .card-header h2{font-size:19px}
+.card-register .card-header h2 br{display:none}
+.card-register .card-body .sign-up-form .form-group{margin-bottom:5px}
+.card-register .form-control{margin-bottom:4px}
+.card-register .card-body .custom-control.custom-checkbox.mb10{margin-bottom:5px!important}
+.card-register .loginbutton{margin-top:10px}
+body.login-index-body .card .js_panel .card-body{padding-bottom:30px}
+.message-user-image-section .nameSection a{font-size:14px}
+.chat-voice-notes{padding:0 7px 0 0}
+.chat-message-add-new .chat-voice-notes .btn-voice-start{padding:8px 10px}
+.chat-message-add-new .chat-voice-notes .btn-voice-start i{font-size:15px}
+.chat-message-add-new .chat-form{margin-left:10px;min-height:28px}
+.chat-message-add-new{padding:20px 0 0}
+.messages-localhub .chat-message-add-new .chat-form .x-form-tools{padding-right:0}
+.chatBoxBlock .card-body .chat-conversations{height:calc(100vh - 280px)!important}
+.deleteAccountChanges img{width:100%}
+.deleteAccountChanges{text-align:center}
+.deleteAccountChanges>div{text-align:center;font-size:13px!important}
+.comment-data .img-fluid{max-width:100%}
+.pg_photo{width:90px;height:90px;margin-bottom:25px!important;margin-right:25px}
+.comment-form textarea{min-height:62px}
+.js_posts_stream .feeds_post_ul .feeds_post,.post-section-new .feeds_post_ul .feeds_post{padding:0 0}
+.viewProfileButton{padding:0 6px}
+.people-friend-list-section ._search_sec+._toggle_btn{display:block!important}
+.panel-messages .conversation-body{max-width:-moz-calc(100% - 0px);max-width:-webkit-calc(100% - 0px);max-width:-o-calc(100% - 0px);max-width:calc(100% - 0px)}
+.directry_img .img{display:inline-block;width:120px;height:120px;margin-bottom:10px}
+.directory-card{padding:15px}
+.lightbox-container .reactions-container{width:336px}
+.blogPostSection .post-media.list{width:100%}
+.blogs-localhub .article .ctm_action_btn{display:flex;flex-direction:column;align-items:center;justify-content:center}
+.blogs-localhub .article .ctm_action_btn .post-meta{text-align:center}
+.blogs.blogs-localhub .offcanvas-mainbar>.row{padding:0;margin:0}
+.main-header .mobileLogo{flex:unset;max-width:50%}
+.profile-localhub .main-header .mobileLogo{width:auto!important;flex:auto}
+.main-header .row{justify-content:space-between}
+.usersectionHeaderMobile .navbar-wrapper>ul>li.mob_resposive_ .dropdown-menu{width:100%;max-width:360px;min-height:360px;top:45px}
+.index-localhub .right-sidebar.js_sticky-sidebar{display:none}
+div.stories.carousel .story{flex-shrink:0}
+body .btn._toggle_btn{position:relative!important;top:0;left:0}
+._toggle_btn:focus{outline:0}
+._toggle_btn:hover{color:#dbe1eb}
+._search_sec{flex:0 0 100%;max-width:calc(100% - 100px);margin-bottom:15px}
+.people-friends-page ._frnd_rqst_sec .page_topbar{flex-wrap:wrap}
+.discover_sec{display:none}
+button._toggle_btn{display:block}
+._toggle_ .discover_sec{display:block;position:absolute;top:66px;z-index:9;width:100%;left:0;height:auto;-webkit-box-shadow:0 2px 19px 0 rgba(0,0,0,.34);-moz-box-shadow:0 2px 19px 0 rgba(0,0,0,.34);box-shadow:0 8px 16px 0 rgba(0,0,0,.34);padding-bottom:30px;border-radius:0;overflow:hidden;background-color:#fff}
+._toggle_btn .fas.fa-times{display:none}
+._toggle_ ._toggle_btn .fas.fa-times{display:block}
+._toggle_ ._toggle_btn .fas.fa-ellipsis-v{display:none}
+body.index-localhub .post-actions .action-btn{position:static}
+.footer_mobile ul.m-nav li.sidebar.mobileLogo{display:flex!important}
+._findfriendsdiv_ .col-lg-6.col-xl-4 ul li.feeds-item{flex:0 0 calc(100% / 2);max-width:calc(100% / 2);margin-bottom:30px}
+li.open_right_sidebar_btn .open_right_sidebar.backBtn{background-color:#dbe1eb;left:-50px;top:-10px;box-shadow:none;border-color:#dbe1eb;color:#000!important}
+.btnSectionWallet button{padding:10px 30px}
+.walletIconMoneyText{width:auto;height:150px}
+.pagination li:first-child{width:auto!important;border:1px solid #dee2e6!important;padding-left:.75rem!important}
+#DataTables_Table_0_filter::before{z-index:9}
+#DataTables_Table_0_wrapper .col-sm-12.col-md-6{max-width:25%;flex:25%}
+.group-localhub .js_posts_stream .feeds_post_ul .feeds_post,.profile-localhub .js_posts_stream .feeds_post_ul .feeds_post{width:100%;flex:0 0 100%;max-width:100%;padding:0}
+.share_icon_list .-list_items li label .__list_icon{margin-right:20px;display:inline-block;width:32px;height:32px;text-align:center;flex:0 0 30px;margin-right:8px!important}
+.share_icon_list .-list_items li label .__list_icon img{max-width:100%}
+.share_icon_list .-list_items li label{font-size:11px!important}
+.share_icon_list .-list_items li{padding:0 10px!important}
+.share_icon_list .-list_items li{padding:0 10px!important}
+.share_icon_list .-list_items li label{padding:5px 0!important}
+body.group-localhub .profile-header-tabs ul li a,body.profile-localhub .profile-header-tabs ul li a{font-size:12px!important}
+body.group-localhub .profile-header-tabs ul li,body.profile-localhub .profile-header-tabs ul li{margin:0 6px!important}
+.ads_page_tables table{display:block;width:100%;overflow-x:auto;-webkit-overflow-scrolling:touch}
+#DataTables_Table_0_wrapper #DataTables_Table_0_filter label{text-align:left;position:static;top:0;width:auto;right:0;background:#fff}
+.adsWalletSidebar{left:-100%!important;opacity:0}
+._toggle_ .adsWalletSidebar{left:0!important;opacity:1}
+.adsWalletSidebar{position:absolute;top:0;left:0;width:70%;height:auto;background-color:#fff;box-shadow:1px 2px 10px 4px rgba(0,0,0,.07);padding-left:45px;padding-bottom:50px;padding-top:50px;z-index:9999;padding-right:20px;transition:all 1s ease-in-out}
+.adsSidebarSection ._toggle_btn{top:28px}
+.addNewCampaign{width:calc(100%)}
+.addNewCampaign .headingAdsManager+.float-right{margin-right:50px}
+body.group-localhub .profile-mobile-layout .profileUpdatesDesign .row.no-gutters .col-3{flex:0 0 calc(100% / 3);max-width:calc(100% / 3)}
+.card-register .card-header h2{color:#000;font-size:16px;font-weight:700;letter-spacing:0;line-height:19px}
+.login-index-body .card.card-register{width:85%!important}
+.settings-localhub ._toggle_btn{display:none!important}
+.__no_data_contet__ p{font-size:24px}
+.__no_data_contet__ p{font-size:20px}
+.noMsgHeading{font-size:20px}
+.forums-localhub .__no_data_contet__,.search-localhub .__no_data_contet__{position:relative;width:100%;height:100%}
+.__no_data_contet__ img{max-width:80%}
+body.global-profile-landingpage-localhub .mainloginBlock{height:auto!important}
+.usersectionHeaderMobile .navbar-wrapper>ul>li.mob_resposive_ .dropdown-menu{width:100%;max-width:360px;min-width:235px;min-height:360px;top:57px!important;left:97%;transform:translateX(-97%)}
+body.login-index-body .mainloginBlock{height:100vh!important;align-items:flex-end}
+.walletSectionMobileWrap{padding-left:0;padding-right:0;padding-top:0}
+.profileUpdatesDesign .global-profile-feeds-photo{width:calc(100% / 2)}
+.searchSectionWrap{justify-content:space-between}
+.searchSectionWrap .usernamesWrapBlock ._user_action_,.searchSectionWrap .usernamesWrapBlock ._user_action_ button{width:100%}
+.searchSectionWrap .usernamesWrapBlock{max-width:150px}
+.searchSectionWrap ._user_detail_sec{flex:unset;max-width:unset}
+.profileUpdatesDesign .searchSectionWrap ._user_detail_sec{flex:0 0 80%;max-width:80%}
+.aboutSectionWidth{flex:0 0 70%;max-width:70%}
+}
+@media (max-width:575px){.chat-message-add-new .chat-form .chat-form-message{padding-right:5px;padding-left:5px}
+.people-friends-page ._frnd_rqst_sec .page_topbar{flex-wrap:wrap}
+._search_sec{margin:0 10px 10px 0}
+.btnSectionWallet+.col-md-8 .transactionTableChangeHeading span{top:0}
+.adsbuttonSection .adsButton img{margin-right:10px;width:25px}
+.adsbuttonSection .adsButton i{font-size:21px}
+.adsbuttonSection .adsButton{display:flex;flex:0 0 50%;max-width:calc(50% - 12px);margin:6px;padding:8px;font-size:12px;align-items:center}
+.explore_page_cmn .content-tabs>ul>li>a{padding:10px 6px}
+.login-index-body .rightSideBarScroll{min-height:200px!important}
+body .container.offcanvas{padding-bottom:20px}
+.post-product-wrapper{padding:0;font-size:12px}
+.people-friends-page ._user__data ._user_detail_sec .user__imgs{max-width:40px;padding:0 0;flex:unset}
+.people-friends-page ._user__data ._user_detail_sec .user__imgs .data-avatar{border-radius:10px}
+.chatBoxBlock .card{background-color:transparent}
+.x-form-tools>li{padding:4px 0}
+.post-footer.post-comment-content-div{background-color:transparent;padding:0 0 30px}
+.lightbox .post-footer.post-comment-content-div{padding:0 15px 25px}
+.ads_page_tables #DataTables_Table_0_wrapper .row:nth-child(3){flex-direction:column;justify-content:center;align-items:center}
+div.dataTables_wrapper div.dataTables_paginate ul.pagination{justify-content:center!important}
+.global-profile-feeds-photo{width:50%}
+.ads_page_tables #DataTables_Table_0_wrapper .row:nth-child(3) .col-sm-12{max-width:100%;flex:0 0 100%}
+.global-profile-localhub .col-12.cardBodyHeight .card-body .row>div{flex:0 0 calc(100% / 1 - 30px);max-width:calc(100% / 1 - 30px)}
+.profile_avatar_img{max-width:100%;flex:0 0 100%}
+.profile_name_sec{flex:0 0 100%;max-width:100%}
+.profile-name-wrapper+.profile-buttons-wrapper{margin:0 auto}
+.profile_name_sec .profile-buttons-wrapper{justify-content:center}
+.cstm_bts_w,.profile_avatar_img .profle-date-wrapper{margin:0 auto}
+}
+@media (max-width:576px){.mainloginBlock .custom-control{padding-left:15px!important;display:flex;justify-content:flex-start}
+.mainloginBlock .custom-control .custom-control-input{min-width:16px}
+.js_comment-form .comment-avatar.feed-comment{display:none}
+.js_comment-form .comment-data,.js_comment-form .comment-edit{margin-left:10px;margin-right:40px}
+.comment-form.commentFormChanges .x-form-tools{right:5px}
+.comment-form.commentFormChanges .x-form-tools .js_post-comment{position:absolute;right:-42px}
+.comment-form textarea{padding-right:95px}
+.profile-localhub .js_posts_stream .feeds_post_ul{padding:0 00px}
+.profile-mobile-layout .offcanvas-mainbar{padding-left:5px}
+.profile_sec{flex-wrap:wrap}
+.profile_avatar_img .profile-avatar-wrapper{max-width:140px;margin:0 auto}
+.profile_name_sec{flex:0 0 100%;max-width:100%;text-align:center}
+.profile_name_sec .PostFollowerWrap{text-align:center;justify-content:center}
+.button_action .profile-button-style,.profile_name_sec .profile-name-wrapper{justify-content:center;margin:0 auto}
+}
+@media (max-width:480px){.chatBoxBlock .card-body .chat-conversations{height:calc(100vh - 240px)!important}
+body.login-index-body .mainloginBlock{padding-bottom:40px}
+body.group-localhub .profile-header-tabs ul li,body.profile-localhub .profile-header-tabs ul li{margin-bottom:20px!important}
+.chat-typing{bottom:36px;right:0}
+.aboutSectionWidth{flex:0 0 80%;max-width:80%;width:80%!important}
+.aboutSectionWidth .profileUpdatesDesign{padding:30px 10px!important}
+.profile_top_sec ._toggle_btn{right:10px}
+}
+@media (max-width:475px){.lightbox-container .reactions-container,.reactions-container{width:207px;border-radius:20px;transform:scale(.8);bottom:3px!important;position:absolute;left:0!important;top:auto!important}
+._findfriendsdiv_ .col-lg-6.col-xl-4 ul li.feeds-item{flex:0 0 calc(100%);max-width:calc(100%);margin-bottom:30px}
+.people-friends-page ._frnd_rqst_sec ._user__data .feeds-item{max-width:100%;flex:unset}
+.explore_cmn_style .content-tabs{padding-right:25px}
+}
+@media (min-width:991px){.lightbox-data .post .post-body .post-actions .reactions-container{top:-38px!important;left:0!important;position:absolute}
+.__mob-icons_{display:none}
+}
+@media (max-height:500px){body.login-index-body .mainloginBlock{height:auto!important;min-height:200px!important}
+}
+@media (max-height:800px){.card-register .card-header h2{font-size:19px}
+.card-register .card-header h2 br{display:none}
+.card-register .card-body .sign-up-form .form-group{margin-bottom:5px}
+.card-register .form-control{margin-bottom:4px}
+.card-register .card-body .custom-control.custom-checkbox.mb10{margin-bottom:5px!important}
+.card-register .loginbutton{margin-top:10px}
+.card-register .card-header{padding:25px 40px 0}
+body.login-index-body .card .js_panel .card-body{padding-bottom:30px}
+}

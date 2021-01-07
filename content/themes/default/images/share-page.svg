@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="18px" height="18px" viewBox="0 0 18 18" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <title>Options</title>
+    <defs>
+        <path d="M16.2,3.6 C16.722,3.6 17.145,3.78 17.478,4.131 C17.82,4.5 18,4.905 18,5.4 L18,15.3 C18,15.795 17.82,16.2 17.478,16.569 C17.145,16.92 16.722,17.1 16.2,17.1 L1.8,17.1 C1.278,17.1 0.855,16.92 0.522,16.569 C0.18,16.2 0,15.795 0,15.3 L0,5.4 C0,4.905 0.18,4.5 0.522,4.131 C0.855,3.78 1.278,3.6 1.8,3.6 L5.4,3.6 L5.4,1.8 C5.4,1.278 5.58,0.855 5.922,0.522 C6.255,0.18 6.678,0 7.2,0 L10.8,0 C11.322,0 11.745,0.18 12.078,0.522 C12.42,0.855 12.6,1.278 12.6,1.8 L12.6,3.6 L16.2,3.6 L16.2,3.6 Z M1.8,5.4 L1.8,15.3 L16.2,15.3 L16.2,5.4 L1.8,5.4 L1.8,5.4 Z M10.8,3.6 L10.8,1.8 L7.2,1.8 L7.2,3.6 L10.8,3.6 Z" id="path-1"></path>
+    </defs>
+    <g id="Selected" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="02-Home-LocalHub-Post-Comment--Share" transform="translate(-639.000000, -758.000000)">
+            <g id="Group-4" transform="translate(598.000000, 584.000000)">
+                <g id="Button/Icon" transform="translate(31.000000, 164.000000)">
+                    <rect id="Background-Color" x="0" y="0" width="38" height="38" rx="12"></rect>
+                    <g id="Group" transform="translate(10.000000, 10.000000)">
+                        <mask id="mask-2" fill="white">
+                            <use xlink:href="#path-1"></use>
+                        </mask>
+                        <use id="Shape" fill="#16161F" xlink:href="#path-1"></use>
+                    </g>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>

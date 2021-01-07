@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Generator: Adobe Illustrator 21.0.0, SVG Export Plug-In . SVG Version: 6.00 Build 0)  -->
+<svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+	 viewBox="0 0 21 24" style="enable-background:new 0 0 21 24;" xml:space="preserve">
+<style type="text/css">
+	.st0{fill:#FFFFFF;}
+	.st1{fill:#1E1F20;}
+</style>
+<g>
+	<path id="path-1" class="st0" d="M15.7,17.7H5.4v-7.4c0-2.8,2.3-5.1,5.1-5.1s5.1,2.3,5.1,5.1V17.7z M17.9,16.5v-6.3
+		c0-3.5-2.4-6.4-5.7-7.2V2.3c0-0.9-0.8-1.7-1.7-1.7c-0.9,0-1.7,0.8-1.7,1.7v0.8c-3.3,0.8-5.7,3.7-5.7,7.2v6.3l-2.3,2.3V20h19.3v-1.1
+		L17.9,16.5z M10.6,23.4c1.3,0,2.3-1,2.3-2.3H8.3C8.3,22.4,9.3,23.4,10.6,23.4z"/>
+</g>
+<title>Icon</title>
+<g id="Selected">
+	<g id="_x30_1-Home-Settings" transform="translate(-1003.000000, -308.000000)">
+		<g id="Right" transform="translate(925.000000, 0.000000)">
+			<g id="Button" transform="translate(65.000000, 296.000000)">
+				<g id="Icon" transform="translate(12.631579, 12.631579)">
+					<g id="Shape">
+						<path id="path-1_1_" class="st1" d="M16,17.1H5.8V9.7c0-2.8,2.3-5.1,5.1-5.1S16,6.8,16,9.7V17.1z M18.3,15.9V9.7
+							c0-3.5-2.4-6.4-5.7-7.2V1.7c0-0.9-0.8-1.7-1.7-1.7C10,0,9.2,0.8,9.2,1.7v0.8C6,3.3,3.5,6.2,3.5,9.7v6.3l-2.3,2.3v1.1h19.3
+							v-1.1L18.3,15.9z M10.9,22.7c1.3,0,2.3-1,2.3-2.3H8.7C8.7,21.7,9.7,22.7,10.9,22.7z"/>
+					</g>
+				</g>
+			</g>
+		</g>
+	</g>
+</g>
+</svg>

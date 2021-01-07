@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="16px" height="24px" viewBox="0 0 16 24" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <title>Microphone</title>
+    <g id="Symbols" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="!Icons/2.-Icons/Microphone" transform="translate(-7.000000, -3.000000)">
+            <g id="Microphone" transform="translate(7.000000, 3.000000)">
+                <path d="M1,9 C1.55228,9 2,9.44771 2,10 L2,11 C2,14.3137 4.68629,17 8,17 C11.3137,17 14,14.3137 14,11 L14,10 C14,9.44771 14.4477,9 15,9 C15.5523,9 16,9.44771 16,10 L16,11 C16,15.0796 12.9463,18.446 9,18.9381 L9,22 L12,22 C12.5523,22 13,22.4477 13,23 C13,23.5523 12.5523,24 12,24 L9,24 L7,24 L4,24 C3.44772,24 3,23.5523 3,23 C3,22.4477 3.44772,22 4,22 L7,22 L7,18.9381 C3.05369,18.446 0,15.0796 0,11 L0,10 C0,9.44771 0.44772,9 1,9 Z" id="Path" fill="#A7B4CB" opacity="0.6"></path>
+                <path d="M4,4 C4,1.79086 5.79086,0 8,0 C10.2091,0 12,1.79086 12,4 L12,11 C12,13.2091 10.2091,15 8,15 C5.79086,15 4,13.2091 4,11 L4,4 Z" id="Path" fill="#16161F"></path>
+            </g>
+        </g>
+    </g>
+</svg>

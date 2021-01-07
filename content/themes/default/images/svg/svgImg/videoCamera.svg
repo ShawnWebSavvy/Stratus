@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="18px" height="18px" viewBox="0 0 18 18" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <title>Icon/Video-Camera</title>
+    <g id="Icon/Video-Camera" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <path d="M14,7.5 L14,4 C14,3.44771525 13.5522847,3 13,3 L1,3 C0.44771525,3 0,3.44771525 0,4 L0,14 C0,14.5522847 0.44771525,15 1,15 L13,15 C13.5522847,15 14,14.5522847 14,14 L14,10.5 L18,14.5 L18,3.5 L14,7.5 Z" id="Path" fill="#1E1F20"></path>
+    </g>
+</svg>

@@ -1,0 +1,355 @@
+/* .settingleftWrap .side-nav li.active a i */
+.settingleftWrap .side-nav li ul {
+  margin-left: 30px;
+}
+
+.settingleftWrap .side-nav li a i.icon {
+  background-repeat: no-repeat;
+  background-position: center;
+  margin-right: 15px;
+}
+
+.settingleftWrap .side-nav li a i.icon.icon-accountSetting {
+  background-image: url(https://cdn1.stratus.co/content/themes/default/images/svg/svgImg/settings_icon.svg);
+}
+
+.settingleftWrap .side-nav li a i.icon.icon-editProfile {
+  background-image: url(https://cdn1.stratus.co/content/themes/default/images/svg/svgImg/edit_icon.svg);
+}
+
+.settingleftWrap .side-nav li a i.icon.icon-securitySetting {
+  background-image: url(https://cdn1.stratus.co/content/themes/default/images/svg/svgImg/security_icon.svg);
+}
+
+.settingleftWrap .side-nav li a i.icon.icon-privacy {
+  background-image: url(https://cdn1.stratus.co/content/themes/default/images/svg/svgImg/lock_icon.svg);
+}
+
+.settingleftWrap .side-nav li a i.icon.icon-notifications {
+  background-image: url(https://cdn1.stratus.co/content/themes/default/images/svg/svgImg/notifications-icon.svg);
+}
+
+.settingleftWrap .side-nav li a i.icon.icon-linkedAccounts {
+  background-image: url(https://cdn1.stratus.co/content/themes/default/images/svg/svgImg/settings_icon.svg);
+}
+
+.settingleftWrap .side-nav li a i.icon.icon-membership {
+  background-image: url(https://cdn1.stratus.co/content/themes/default/images/svg/svgImg/settings_icon.svg);
+}
+
+.settingleftWrap .side-nav li a i.icon.icon-affiliates {
+  background-image: url(https://cdn1.stratus.co/content/themes/default/images/svg/svgImg/settings_icon.svg);
+}
+
+.settingleftWrap .side-nav li a i.icon.icon-points {
+  background-image: url(https://cdn1.stratus.co/content/themes/default/images/svg/svgImg/giftbox_icon.svg);
+}
+
+.settingleftWrap .side-nav li a i.icon.icon-coinPayments {
+  background-image: url(https://cdn1.stratus.co/content/themes/default/images/svg/svgImg/settings_icon.svg);
+}
+
+.settingleftWrap .side-nav li a i.icon.icon-BankTransfers {
+  background-image: url(https://cdn1.stratus.co/content/themes/default/images/svg/svgImg/settings_icon.svg);
+}
+
+.settingleftWrap .side-nav li a i.icon.icon-Verification {
+  background-image: url(https://cdn1.stratus.co/content/themes/default/images/svg/svgImg/ok_icon.svg);
+}
+
+.settingleftWrap .side-nav li a i.icon.icon-Blocking {
+  background-image: url(https://cdn1.stratus.co/content/themes/default/images/svg/svgImg/block_icon.svg);
+}
+
+.settingleftWrap .side-nav li a i.icon.icon-YourInformation {
+  background-image: url(https://cdn1.stratus.co/content/themes/default/images/svg/svgImg/at_icon.svg);
+}
+
+.settingleftWrap .side-nav li a i.icon.icon-Apps {
+  background-image: url(https://cdn1.stratus.co/content/themes/default/images/svg/svgImg/apps_icon.svg);
+}
+
+.settingleftWrap .side-nav li a i.icon.icon-deleteAccount {
+  background-image: url(https://cdn1.stratus.co/content/themes/default/images/svg/svgImg/delete_icon.svg);
+}
+
+.settingleftWrap .side-nav li a i.icon.icon-YourInformation {
+  background-image: url(https://cdn1.stratus.co/content/themes/default/images/svg/svgImg/settings_icon.svg);
+}
+
+.settingleftWrap .side-nav li.active a, .settingleftWrap .side-nav li:hover a {
+  font-weight: 700;
+}
+
+.settingleftWrap .side-nav li.active a i.icon.icon-accountSetting, .settingleftWrap .side-nav li:hover a i.icon.icon-accountSetting {
+  background-image: url(https://cdn1.stratus.co/content/themes/default/images/svg/svgImg/settings_icon_hover.svg);
+}
+
+.settingleftWrap .side-nav li.active a i.icon.icon-editProfile, .settingleftWrap .side-nav li:hover a i.icon.icon-editProfile {
+  background-image: url(https://cdn1.stratus.co/content/themes/default/images/svg/svgImg/edit_icon_hover.svg);
+}
+
+.settingleftWrap .side-nav li.active a i.icon.icon-securitySetting, .settingleftWrap .side-nav li:hover a i.icon.icon-securitySetting {
+  background-image: url(https://cdn1.stratus.co/content/themes/default/images/svg/svgImg/security_icon_hover.svg);
+}
+
+.settingleftWrap .side-nav li.active a i.icon.icon-privacy, .settingleftWrap .side-nav li:hover a i.icon.icon-privacy {
+  background-image: url(https://cdn1.stratus.co/content/themes/default/images/svg/svgImg/lock_icon_hover.svg);
+}
+
+.settingleftWrap .side-nav li.active a i.icon.icon-notifications, .settingleftWrap .side-nav li:hover a i.icon.icon-notifications {
+  background-image: url(https://cdn1.stratus.co/content/themes/default/images/svg/svgImg/notifications_icon_hover.svg);
+}
+
+.settingleftWrap .side-nav li.active a i.icon.icon-linkedAccounts, .settingleftWrap .side-nav li:hover a i.icon.icon-linkedAccounts {
+  background-image: url(https://cdn1.stratus.co/content/themes/default/images/svg/svgImg/settings_icon_hover.svg);
+}
+
+.settingleftWrap .side-nav li.active a i.icon.icon-membership, .settingleftWrap .side-nav li:hover a i.icon.icon-membership {
+  background-image: url(https://cdn1.stratus.co/content/themes/default/images/svg/svgImg/settings_icon_hover.svg);
+}
+
+.settingleftWrap .side-nav li.active a i.icon.icon-affiliates, .settingleftWrap .side-nav li:hover a i.icon.icon-affiliates {
+  background-image: url(https://cdn1.stratus.co/content/themes/default/images/svg/svgImg/settings_icon_hover.svg);
+}
+
+.settingleftWrap .side-nav li.active a i.icon.icon-points, .settingleftWrap .side-nav li:hover a i.icon.icon-points {
+  background-image: url(https://cdn1.stratus.co/content/themes/default/images/svg/svgImg/giftbox_icon_hover.svg);
+}
+
+.settingleftWrap .side-nav li.active a i.icon.icon-coinPayments, .settingleftWrap .side-nav li:hover a i.icon.icon-coinPayments {
+  background-image: url(https://cdn1.stratus.co/content/themes/default/images/svg/svgImg/settings_icon_hover.svg);
+}
+
+.settingleftWrap .side-nav li.active a i.icon.icon-BankTransfers, .settingleftWrap .side-nav li:hover a i.icon.icon-BankTransfers {
+  background-image: url(https://cdn1.stratus.co/content/themes/default/images/svg/svgImg/settings_icon_hover.svg);
+}
+
+.settingleftWrap .side-nav li.active a i.icon.icon-Verification, .settingleftWrap .side-nav li:hover a i.icon.icon-Verification {
+  background-image: url(https://cdn1.stratus.co/content/themes/default/images/svg/svgImg/ok_icon_hover.svg);
+}
+
+.settingleftWrap .side-nav li.active a i.icon.icon-Blocking, .settingleftWrap .side-nav li:hover a i.icon.icon-Blocking {
+  background-image: url(https://cdn1.stratus.co/content/themes/default/images/svg/svgImg/block_icon_hover.svg);
+}
+
+.settingleftWrap .side-nav li.active a i.icon.icon-YourInformation, .settingleftWrap .side-nav li:hover a i.icon.icon-YourInformation {
+  background-image: url(https://cdn1.stratus.co/content/themes/default/images/svg/svgImg/at_icon_hover.svg);
+}
+
+.settingleftWrap .side-nav li.active a i.icon.icon-Apps, .settingleftWrap .side-nav li:hover a i.icon.icon-Apps {
+  background-image: url(https://cdn1.stratus.co/content/themes/default/images/svg/svgImg/apps_icon_hover.svg);
+}
+
+.settingleftWrap .side-nav li.active a i.icon.icon-deleteAccount, .settingleftWrap .side-nav li:hover a i.icon.icon-deleteAccount {
+  background-image: url(https://cdn1.stratus.co/content/themes/default/images/svg/svgImg/delete_icon_hover.svg);
+}
+
+.settingleftWrap .side-nav li.active a i.icon.icon-YourInformation, .settingleftWrap .side-nav li:hover a i.icon.icon-YourInformation {
+  background-image: url(https://cdn1.stratus.co/content/themes/default/images/svg/svgImg/settings_icon_hover.svg);
+}
+
+.settingleftWrap .side-nav li.active ul, .settingleftWrap .side-nav li:hover ul {
+  margin-left: 30px;
+}
+
+.settingleftWrap .side-nav li.active ul li a, .settingleftWrap .side-nav li:hover ul li a {
+  font-weight: 400;
+}
+
+body.index-localhub .post-actions .action-btn, body.profile-localhub .post-actions .action-btn {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+}
+
+body.index-localhub .post-actions .action-btn span, body.profile-localhub .post-actions .action-btn span {
+  font-weight: 600;
+}
+
+body.index-localhub .post-actions .action-btn i.icon-post, body.profile-localhub .post-actions .action-btn i.icon-post {
+  width: 30px;
+  height: 30px;
+  display: inline-block;
+}
+
+body.index-localhub .post-actions .action-btn i.icon-post.icon_like, body.profile-localhub .post-actions .action-btn i.icon-post.icon_like {
+  background: url(https://cdn1.stratus.co/content/themes/default/images/svg/svgImg/nav_icon_localhub-active.svg) no-repeat center;
+}
+
+body.index-localhub .post-actions .action-btn i.icon-post.icon_comment, body.profile-localhub .post-actions .action-btn i.icon-post.icon_comment {
+  background: url(https://cdn1.stratus.co/content/themes/default/images/svg/svgImg/nav_icon_nav_icon_messages_hover.svg) no-repeat center;
+}
+
+body.index-localhub .post-actions .action-btn i.icon-post.icon_share, body.profile-localhub .post-actions .action-btn i.icon-post.icon_share {
+  background: url(https://cdn1.stratus.co/content/themes/default/images/Shareglobal.svg) no-repeat center;
+}
+
+.publisher-tools-tabs {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+}
+
+@media (max-width: 990px) {
+  .publisher-tools-tabs {
+    -webkit-box-orient: vertical;
+    -webkit-box-direction: normal;
+        -ms-flex-direction: column;
+            flex-direction: column;
+    -webkit-box-pack: start;
+        -ms-flex-pack: start;
+            justify-content: flex-start;
+    width: 100%;
+    -webkit-box-align: left;
+        -ms-flex-align: left;
+            align-items: left;
+  }
+}
+
+.publisher-tools-tabs li {
+  margin: 0 2px;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  overflow: hidden;
+}
+
+@media (max-width: 990px) {
+  .publisher-tools-tabs li {
+    width: 100%;
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-align: center;
+        -ms-flex-align: center;
+            align-items: center;
+  }
+}
+
+.publisher-tools-tabs li i {
+  width: 25px;
+  height: 25px;
+  font-size: 13px;
+  background: #eee;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+}
+
+@media (max-width: 990px) {
+  .publisher-tools-tabs li i {
+    width: 38px;
+    height: 38px;
+    font-size: 16px;
+    border-radius: 4px;
+    position: relative;
+    left: -4px;
+    -webkit-box-pack: center;
+        -ms-flex-pack: center;
+            justify-content: center;
+    -webkit-box-align: center;
+        -ms-flex-align: center;
+            align-items: center;
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    background-color: #000;
+    color: #fff;
+  }
+}
+
+.publisher-tools-tabs li .class-publisher-text {
+  display: none;
+}
+
+@media (max-width: 990px) {
+  .publisher-tools-tabs li .class-publisher-text {
+    display: block;
+    font-weight: 700;
+    color: #000;
+  }
+}
+
+a.s-more {
+  width: 15px;
+  position: relative;
+  z-index: 1;
+  margin-left: 21px;
+  font-size: 0;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: justify;
+  -ms-flex-pack: justify;
+  justify-content: space-between;
+  height: 30px;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+}
+
+@media (max-width: 990px) {
+  a.s-more {
+    -ms-flex-item-align: start;
+        align-self: flex-start;
+    width: 38px;
+    height: 38px;
+    -webkit-box-align: center;
+        -ms-flex-align: center;
+            align-items: center;
+    border: 2px solid #eee;
+    border-radius: 6px;
+    padding: 6.5px;
+    position: relative;
+    margin-left: 5px;
+    margin-top: 10px;
+  }
+  a.s-more:before {
+    position: absolute;
+    content: 'More options';
+    color: #900;
+    left: 49px;
+    font-size: 13px;
+    white-space: nowrap;
+    color: #000;
+    font-weight: 700;
+  }
+}
+
+a.s-more span {
+  width: 3px;
+  height: 3px;
+  background: #8e92a2;
+}
+
+ul.publisher-tools-tabs-ul-newDesign {
+  margin: 0px;
+  padding: 0px;
+}
+
+@media (max-width: 991px) {
+  ul.publisher-tools-tabs-ul-newDesign {
+    text-align: left;
+    width: 100%;
+  }
+}
+
+ul.publisher-tools-tabs-ul-newDesign li.show-item {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+}
+/*# sourceMappingURL=setting_nav.css.map */

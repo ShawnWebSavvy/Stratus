@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="17px" height="23px" viewBox="0 0 17 23" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <title>Icon/Plus Square</title>
+    <g id="Local-HUB-(FB)" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="Home/Local-Hub/PopUp-windows" transform="translate(-85.000000, -695.000000)">
+            <g id="Pop-up_Your-Post-Options" transform="translate(44.000000, 557.000000)">
+                <g id="menu-copy-2" transform="translate(25.000000, 126.000000)">
+                    <g id="Group" transform="translate(9.000000, 9.000000)">
+                        <g id="Flag" transform="translate(7.000000, 3.000000)">
+                            <path d="M0,16 L0,9 L0,2 L14.7387,2 C16.0202,2 16.7116,3.50318 15.8776,4.47619 L12,9 L15.8776,13.5238 C16.7116,14.4968 16.0202,16 14.7387,16 L0,16 Z" id="Path" fill="#1269FF" opacity="0.3"></path>
+                            <path d="M0,0.958333333 C0,0.429061167 0.44772,0 1,0 L1,0 C1.55228,0 2,0.429060208 2,0.958333333 L2,22.0416667 C2,22.5709542 1.55228,23 1,23 L1,23 C0.44772,23 0,22.5709542 0,22.0416667 L0,0.958333333 Z" id="Path" fill="#1269FF"></path>
+                        </g>
+                    </g>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>

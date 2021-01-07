@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="30px" height="30px" viewBox="0 0 30 30" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <title>Icon/Delete</title>
+    <g id="Icon/Delete" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <rect id="Rectangle" x="0" y="0" width="30" height="30"></rect>
+        <path d="M7,22.5551839 L7,8 L23,8 L23,22.5551839 C23,23.1995572 22.729168,23.7681136 22.1875,24.2608696 C21.645832,24.7536256 21.020836,25 20.3125,25 L9.6875,25 C8.9791632,25 8.3541692,24.7536256 7.8125,24.2608696 C7.2708308,23.7681136 7,23.1995572 7,22.5551839 Z" id="Path" fill="#A7B4CB" opacity="0.6"></path>
+        <polygon id="Path" fill="#16161F" points="25 6.3125 25 9 5 9 5 6.3125 9.96644295 6.3125 11.442953 5 18.557047 5 20.033557 6.3125"></polygon>
+    </g>
+</svg>

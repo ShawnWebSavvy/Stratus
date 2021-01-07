@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="20px" height="20px" viewBox="0 0 20 20" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <title>Close Circle</title>
+    <g id="Symbols" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="!Icons/Used/UI-Elements/Block" transform="translate(-5.000000, -5.000000)" fill="#000000" fill-rule="nonzero">
+            <g id="Close-Circle" transform="translate(5.000000, 5.000000)">
+                <path d="M10,20 C15.5228,20 20,15.5228 20,10 C20,4.47715 15.5228,0 10,0 C4.47715,0 0,4.47715 0,10 C0,15.5228 4.47715,20 10,20 Z" id="Path"></path>
+            </g>
+        </g>
+    </g>
+</svg>

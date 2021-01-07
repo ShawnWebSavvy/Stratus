@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="329px" height="68px" viewBox="0 0 329 68" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <title>2021-line</title>
+    <g id="Mobile" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="Home_375" transform="translate(-48.000000, -14396.000000)">
+            <g id="Roadmap" transform="translate(0.000000, 13991.000000)">
+                <g id="2021-line" transform="translate(48.143600, 405.043776)">
+                    <line x1="17.5317" y1="58.6130241" x2="327.3564" y2="58.4562241" id="Stroke-4" stroke="#9C9C9C" stroke-width="1.4"></line>
+                    <text id="2021" font-family="Helvetica" font-size="25.3751" font-weight="normal" letter-spacing="0.02" fill="#9C9C9C">
+                        <tspan x="0" y="25">2021</tspan>
+                    </text>
+                    <path d="M9.227,50.3093241 L9.227,50.3093241 C4.641,50.3093241 0.922,54.0273241 0.922,58.6133241 C0.922,63.2003241 4.641,66.9173241 9.227,66.9173241 C13.813,66.9173241 17.532,63.2003241 17.532,58.6133241 C17.532,54.0273241 13.813,50.3093241 9.227,50.3093241 Z" id="Stroke-10" stroke="#9C9C9C" stroke-width="1.4"></path>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>

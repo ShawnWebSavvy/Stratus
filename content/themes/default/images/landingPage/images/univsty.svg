@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="20px" height="20px" viewBox="0 0 20 20" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <title>univsty</title>
+    <g id="Style-Guide/Icons" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="Style-Guide-Copy" transform="translate(-755.000000, -560.000000)">
+            <g id="Group" transform="translate(750.000000, 555.000000)">
+                <g id="Bank" transform="translate(5.000000, 5.000000)">
+                    <path d="M2,8 L6,8 L6,15 L8,15 L8,8 L12,8 L12,15 L14,15 L14,8 L18,8 L18,15 C19.1046,15 20,15.8954 20,17 L20,18 C20,19.1046 19.1046,20 18,20 L2,20 C0.89543,20 0,19.1046 0,18 L0,17 C0,15.8954 0.89543,15 2,15 L2,8 Z" id="Path" fill="#A7B4CB" opacity="0.6"></path>
+                    <path d="M0,5.35405 C0,4.53624 0.4979,3.80083 1.25722,3.4971 L9.2572,0.2971 C9.734,0.10637 10.266,0.10637 10.7428,0.2971 L18.7428,3.4971 C19.5021,3.80083 20,4.53624 20,5.35405 L20,5.99999 C20,7.10456 19.1046,7.99999 18,7.99999 L2,7.99999 C0.89543,7.99999 0,7.10456 0,5.99999 L0,5.35405 Z" id="Path" fill="#1E1F20"></path>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>
