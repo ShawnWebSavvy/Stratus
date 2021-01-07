@@ -1,5 +1,6 @@
 <?php
-
+ini_set("zlib.output_compression", 1);
+ob_start("ob_gzhandler");
 /**
  * index
  *
@@ -45,6 +46,7 @@ try {
 	// }
 	// die;
 	// check user logged in
+
 	if (!$user->_logged_in) {
 
 		// page header

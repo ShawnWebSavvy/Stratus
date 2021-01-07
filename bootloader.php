@@ -24,11 +24,11 @@ if ($user->_logged_in) {
     /* get search log */
     $user->_data['search_log'] = $user->get_search_log();
     /* get conversations */
-    $user->_data['conversations'] = $user->get_conversations();
+    //$user->_data['conversations'] = $user->get_conversations();
     /* get conversations */
-    $userGlobal->_data['conversations'] = $userGlobal->get_conversations();
+    //$userGlobal->_data['conversations'] = $userGlobal->get_conversations();
     /* get notifications */
-    $user->_data['notifications'] = $user->get_notifications();
+    //$user->_data['notifications'] = $user->get_notifications();
     /* get online & offline friends */
     require_once(ABSPATH . 'includes/libs/MobileDetect/Mobile_Detect.php');
     $detect = new Mobile_Detect;
