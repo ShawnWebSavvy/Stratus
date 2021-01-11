@@ -431,7 +431,12 @@ class User
             return $friends;
         }
         $limit_statement = ($get_all) ? "" : sprintf("LIMIT %s, %s", secure($offset, 'int', false), secure($system['min_results_even'], 'int', false));
-        $userFriends = sprintf('SELECT users.user_id, users.user_picture_id, picture_photo.source as user_picture_full, users.user_name, users.user_firstname, users.user_lastname, users.user_gender, users.user_picture, users.user_subscribed, users.user_verified FROM friends INNER JOIN users ON (friends.user_one_id = users.user_id AND friends.user_one_id != %1$s) OR (friends.user_two_id = users.user_id AND friends.user_two_id != %1$s) LEFT JOIN posts_photos as picture_photo ON users.user_picture_id = picture_photo.photo_id WHERE status = 1 and users.user_firstname != "" AND (user_one_id = %1$s OR user_two_id = %1$s) ' . $limit_statement, secure($user_id, 'int'));
+
+        if ($this->_logged_in) {
+            $userFriends = sprintf('SELECT users.user_id, users.user_picture_id, picture_photo.source as user_picture_full, users.user_name, users.user_firstname, users.user_lastname, users.user_gender, users.user_picture, users.user_subscribed, users.user_verified, (SELECT COUNT(*) as count FROM friends WHERE status = -1 AND (user_one_id = %2$s AND user_two_id = users.user_id) OR (user_one_id = users.user_id AND user_two_id = %2$s)) as count FROM friends INNER JOIN users ON (friends.user_one_id = users.user_id AND friends.user_one_id != %1$s) OR (friends.user_two_id = users.user_id AND friends.user_two_id != %1$s) LEFT JOIN posts_photos as picture_photo ON users.user_picture_id = picture_photo.photo_id WHERE status = 1 and users.user_firstname != "" AND (user_one_id = %1$s OR user_two_id = %1$s) ' . $limit_statement, secure($user_id, 'int'), secure($this->_data['user_id'], 'int'));
+        } else {
+            $userFriends = sprintf('SELECT users.user_id, users.user_picture_id, picture_photo.source as user_picture_full, users.user_name, users.user_firstname, users.user_lastname, users.user_gender, users.user_picture, users.user_subscribed, users.user_verified FROM friends INNER JOIN users ON (friends.user_one_id = users.user_id AND friends.user_one_id != %1$s) OR (friends.user_two_id = users.user_id AND friends.user_two_id != %1$s) LEFT JOIN posts_photos as picture_photo ON users.user_picture_id = picture_photo.photo_id WHERE status = 1 and users.user_firstname != "" AND (user_one_id = %1$s OR user_two_id = %1$s) ' . $limit_statement, secure($user_id, 'int'));
+        }
         $get_friends = $db->query($userFriends) or _error("SQL_ERROR_THROWEN");
         if ($get_friends->num_rows > 0) {
             while ($friend = $get_friends->fetch_assoc()) {
@@ -445,7 +450,7 @@ class User
                     }
                 }
                 /* get the connection between the viewer & the target */
-                $friend['connection'] = $this->connection($friend['user_id']);
+                $friend['connection'] = $this->connection($friend['user_id'], true, $friend['count']);
                 $friends[] = $friend;
             }
         }
@@ -1152,32 +1157,39 @@ class User
     {
         global $db, $system;
         $results = [];
-        $get_search_log = $db->query(sprintf("SELECT users_searches.log_id, users_searches.node_type, users.user_id, users.user_name, users.user_firstname, users.user_lastname, users.user_gender, users.user_picture, users.user_subscribed, users.user_verified, pages.*, `groups`.*, `events`.* FROM users_searches LEFT JOIN users ON users_searches.node_type = 'user' AND users_searches.node_id = users.user_id LEFT JOIN pages ON users_searches.node_type = 'page' AND users_searches.node_id = pages.page_id LEFT JOIN `groups` ON users_searches.node_type = 'group' AND users_searches.node_id = `groups`.group_id LEFT JOIN `events` ON users_searches.node_type = 'event' AND users_searches.node_id = `events`.event_id WHERE users_searches.user_id = %s ORDER BY users_searches.log_id DESC LIMIT %s", secure($this->_data['user_id'], 'int'), secure($system['min_results'], 'int', false))) or _error("SQL_ERROR_THROWEN");
+        if ($this->_logged_in) {
+            $get_search_log = sprintf("SELECT users_searches.log_id, users_searches.node_type, users.user_id, users.user_name, users.user_firstname, users.user_lastname, users.user_gender, users.user_picture, users.user_subscribed, users.user_verified, (CASE WHEN users_searches.node_type = 'user' THEN (SELECT COUNT(*) as count FROM friends WHERE status = -1 AND (user_one_id = users_searches.user_id AND user_two_id = users.user_id) OR (user_one_id = users.user_id AND user_two_id = users_searches.user_id)) WHEN users_searches.node_type = 'page' THEN (SELECT COUNT(*) as count FROM pages_likes WHERE user_id = users_searches.user_id AND page_id = pages.page_id) WHEN users_searches.node_type = 'group' THEN (SELECT approved FROM groups_members WHERE user_id = users_searches.user_id AND group_id = `groups`.group_id) ELSE (SELECT CONCAT(is_invited,'::', is_interested,'::', is_going) as count FROM events_members WHERE user_id = users_searches.user_id AND event_id = `events`.event_id) END)as count, pages.*, `groups`.*, `events`.* FROM users_searches LEFT JOIN users ON users_searches.node_type = 'user' AND users_searches.node_id = users.user_id LEFT JOIN pages ON users_searches.node_type = 'page' AND users_searches.node_id = pages.page_id LEFT JOIN `groups` ON users_searches.node_type = 'group' AND users_searches.node_id = `groups`.group_id LEFT JOIN `events` ON users_searches.node_type = 'event' AND users_searches.node_id = `events`.event_id WHERE users_searches.user_id = %s ORDER BY users_searches.log_id DESC LIMIT %s", secure($this->_data['user_id'], 'int'), secure($system['min_results'], 'int', false));
+        } else {
+            $get_search_log = sprintf("SELECT users_searches.log_id, users_searches.node_type, users.user_id, users.user_name, users.user_firstname, users.user_lastname, users.user_gender, users.user_picture, users.user_subscribed, users.user_verified, pages.*, `groups`.*, `events`.* FROM users_searches LEFT JOIN users ON users_searches.node_type = 'user' AND users_searches.node_id = users.user_id LEFT JOIN pages ON users_searches.node_type = 'page' AND users_searches.node_id = pages.page_id LEFT JOIN `groups` ON users_searches.node_type = 'group' AND users_searches.node_id = `groups`.group_id LEFT JOIN `events` ON users_searches.node_type = 'event' AND users_searches.node_id = `events`.event_id WHERE users_searches.user_id = %s ORDER BY users_searches.log_id DESC LIMIT %s", secure($this->_data['user_id'], 'int'), secure($system['min_results'], 'int', false));
+        }
+
+        $db->query($get_search_log) or _error("SQL_ERROR_THROWEN");
+
         if ($get_search_log->num_rows > 0) {
             while ($result = $get_search_log->fetch_assoc()) {
                 switch ($result['node_type']) {
                     case 'user':
                         $result['user_picture'] = get_picture($result['user_picture'], $result['user_gender']);
                         /* get the connection between the viewer & the target */
-                        $result['connection'] = $this->connection($result['user_id']);
+                        $result['connection'] = $this->connection($result['user_id'], true, $result['count']);
                         break;
 
                     case 'page':
                         $result['page_picture'] = get_picture($result['page_picture'], 'page');
                         /* check if the viewer liked the page */
-                        $result['i_like'] = $this->check_page_membership($this->_data['user_id'], $result['page_id']);
+                        $result['i_like'] = $this->check_page_membership($this->_data['user_id'], $result['page_id'], $result['count']);
                         break;
 
                     case 'group':
                         $result['group_picture'] = get_picture($result['group_picture'], 'group');
                         /* check if the viewer joined the group */
-                        $result['i_joined'] = $this->check_group_membership($this->_data['user_id'], $result['group_id']);
+                        $result['i_joined'] = $this->check_group_membership($this->_data['user_id'], $result['group_id'], $result['count']);
                         break;
 
                     case 'event':
                         $result['event_picture'] = get_picture($result['event_cover'], 'event');
                         /* check if the viewer joined the event */
-                        $result['i_joined'] = $this->check_event_membership($this->_data['user_id'], $result['event_id']);
+                        $result['i_joined'] = $this->check_event_membership($this->_data['user_id'], $result['event_id'], $result['count']);
                         break;
                 }
                 $result['type'] = $result['node_type'];
@@ -1884,7 +1896,7 @@ class User
      * @param boolean $friendship
      * @return string
      */
-    public function connection($user_id, $friendship = true)
+    public function connection($user_id, $friendship = true, $count = false)
     {
         /* check which type of connection (friendship|follow) connections to get */
         if ($friendship) {
@@ -1909,9 +1921,15 @@ class User
             if (in_array($user_id, $this->_data['friend_requests_sent_ids'])) {
                 return "cancel";
             }
-            /* check if the viewer declined the friend request to the target */
-            if ($this->friendship_declined($user_id)) {
-                return "declined";
+            if ($count !== false) {
+                if ($count) {
+                    return "declined";
+                }
+            } else {
+                /* check if the viewer declined the friend request to the target */
+                if ($this->friendship_declined($user_id)) {
+                    return "declined";
+                }
             }
             /* there is no relation between the viewer & the target */
             return "add";
@@ -4278,20 +4296,23 @@ class User
     {
         global $system, $db;
         $hashtags = [];
-//        if ($postType == 'LocalHub') {
-//            $selectQuery = sprintf("SELECT hashtags.hashtag, hashtags_posts.id as hash_post, COUNT(hashtags_posts.id) AS frequency,hashtags_posts.postHubType FROM hashtags INNER JOIN hashtags_posts as hashtags_posts ON hashtags.hashtag_id = hashtags_posts.hashtag_id WHERE hashtags_posts.created_at > DATE_SUB(CURDATE(), INTERVAL 1 %s) and hashtags_posts.postHubType = 'LocalHub'  GROUP BY hashtags_posts.hashtag_id,hashtags_posts.postHubType ORDER BY frequency DESC LIMIT %s", secure($system['trending_hashtags_interval'], "", false), secure($system['trending_hashtags_limit'], 'int', false));
-//        } elseif ($postType == 'GlobalHub') {
-//            $selectQuery = sprintf("SELECT hashtags.hashtag, hashtags_posts.id as hash_post, COUNT(hashtags_posts.id) AS frequency,hashtags_posts.postHubType FROM hashtags INNER JOIN hashtags_posts as hashtags_posts ON hashtags.hashtag_id = hashtags_posts.hashtag_id WHERE hashtags_posts.created_at > DATE_SUB(CURDATE(), INTERVAL 1 %s) and hashtags_posts.postHubType = 'GlobalHub'  GROUP BY hashtags_posts.hashtag_id,hashtags_posts.postHubType ORDER BY frequency DESC LIMIT %s", secure($system['trending_hashtags_interval'], "", false), secure($system['trending_hashtags_limit'], 'int', false));
-//        } else {
-//            $selectQuery = sprintf("SELECT hashtags.hashtag, hashtags_posts.id as hash_post, COUNT(hashtags_posts.id) AS frequency,hashtags_posts.postHubType FROM hashtags INNER JOIN hashtags_posts as hashtags_posts ON hashtags.hashtag_id = hashtags_posts.hashtag_id WHERE hashtags_posts.created_at > DATE_SUB(CURDATE(), INTERVAL 1 %s) GROUP BY hashtags_posts.hashtag_id,hashtags_posts.postHubType ORDER BY frequency DESC LIMIT %s", secure($system['trending_hashtags_interval'], "", false), secure($system['trending_hashtags_limit'], 'int', false));
-//        }
-//        $get_trending_hashtags = $db->query($selectQuery) or _error("SQL_ERROR_THROWEN");
-//        if ($get_trending_hashtags->num_rows > 0) {
+        if ($postType == 'LocalHub') {
+            $selectQuery = sprintf("SELECT hashtags.hashtag, MAX(hashtags_posts.id) as hash_post, COUNT(hashtags_posts.id) AS frequency,hashtags_posts.postHubType FROM hashtags INNER JOIN hashtags_posts as hashtags_posts ON hashtags.hashtag_id = hashtags_posts.hashtag_id WHERE hashtags_posts.created_at > DATE_SUB(CURDATE(), INTERVAL 1 %s) and hashtags_posts.postHubType = 'LocalHub'  GROUP BY hashtags_posts.hashtag_id,hashtags.hashtag,hashtags_posts.postHubType ORDER BY frequency DESC LIMIT %s", secure($system['trending_hashtags_interval'], "", false), secure($system['trending_hashtags_limit'], 'int', false));
+        } elseif ($postType == 'GlobalHub') {
+            $selectQuery = sprintf("SELECT hashtags.hashtag, MAX(hashtags_posts.id) as hash_post, COUNT(hashtags_posts.id) AS frequency,hashtags_posts.postHubType FROM hashtags INNER JOIN hashtags_posts as hashtags_posts ON hashtags.hashtag_id = hashtags_posts.hashtag_id WHERE hashtags_posts.created_at > DATE_SUB(CURDATE(), INTERVAL 1 %s) and hashtags_posts.postHubType = 'GlobalHub'  GROUP BY hashtags_posts.hashtag_id,hashtags.hashtag,hashtags_posts.postHubType ORDER BY frequency DESC LIMIT %s", secure($system['trending_hashtags_interval'], "", false), secure($system['trending_hashtags_limit'], 'int', false));
+        } else {
+            $selectQuery = sprintf("SELECT hashtags.hashtag, MAX(hashtags_posts.id) as hash_post, COUNT(hashtags_posts.id) AS frequency,hashtags_posts.postHubType FROM hashtags INNER JOIN hashtags_posts as hashtags_posts ON hashtags.hashtag_id = hashtags_posts.hashtag_id WHERE hashtags_posts.created_at > DATE_SUB(CURDATE(), INTERVAL 1 %s) GROUP BY hashtags_posts.hashtag_id,hashtags.hashtag,hashtags_posts.postHubType ORDER BY frequency DESC LIMIT %s", secure($system['trending_hashtags_interval'], "", false), secure($system['trending_hashtags_limit'], 'int', false));
+        }
+
+        $get_trending_hashtags = $db->query($selectQuery) or _error("SQL_ERROR_THROWEN");
+        if ($get_trending_hashtags->num_rows > 0) {
+            $hashtags = $get_trending_hashtags->fetch_all(MYSQLI_ASSOC);
+            array_walk_recursive($hashtags, 'my_html_entity_decode');
 //            while ($hashtag = $get_trending_hashtags->fetch_assoc()) {
 //                $hashtag['hashtag'] = html_entity_decode($hashtag['hashtag'], ENT_QUOTES);
 //                $hashtags[] = $hashtag;
 //            }
-//        }
+        }
 
         return $hashtags;
     }
@@ -9418,10 +9439,14 @@ class User
      * @param integer $page_id
      * @return boolean
      */
-    public function check_page_membership($user_id, $page_id)
+    public function check_page_membership($user_id, $page_id, $count = false)
     {
         global $db;
         if ($this->_logged_in) {
+            if ($count !== false && $count) {
+                return true;
+            }
+
             $get_likes = $db->query(sprintf("SELECT COUNT(*) as count FROM pages_likes WHERE user_id = %s AND page_id = %s", secure($user_id, 'int'), secure($page_id, 'int'))) or _error("SQL_ERROR_THROWEN");
             if ($get_likes->fetch_assoc()['count'] > 0) {
                 return true;
@@ -9910,10 +9935,14 @@ class User
      * @param integer $group_id
      * @return mixed
      */
-    public function check_group_membership($user_id, $group_id)
+    public function check_group_membership($user_id, $group_id, $status=false)
     {
         global $db;
         if ($this->_logged_in) {
+            if ($status !== false) {
+                return ($status == '1') ? "approved" : "pending";
+            }
+
             $get_membership = $db->query(sprintf("SELECT * FROM groups_members WHERE user_id = %s AND group_id = %s", secure($user_id, 'int'), secure($group_id, 'int'))) or _error("SQL_ERROR_THROWEN");
             if ($get_membership->num_rows > 0) {
                 $membership = $get_membership->fetch_assoc();
@@ -10342,10 +10371,20 @@ class User
      * @param integer $event_id
      * @return mixed
      */
-    public function check_event_membership($user_id, $event_id)
+    public function check_event_membership($user_id, $event_id, $listOfActions = false)
     {
         global $db;
         if ($this->_logged_in) {
+            if ($listOfActions !== false) {
+                $listOfActionsArr = explode('::', $listOfActions);
+                list($is_invited, $is_interested, $is_going) = $listOfActionsArr;
+                return [
+                    'is_invited'    => $is_invited,
+                    'is_interested' => $is_interested,
+                    'is_going'      => $is_going
+                ];
+            }
+
             $get_membership = $db->query(sprintf("SELECT is_invited, is_interested, is_going FROM events_members WHERE user_id = %s AND event_id = %s", secure($user_id, 'int'), secure($event_id, 'int'))) or _error("SQL_ERROR_THROWEN");
             if ($get_membership->num_rows > 0) {
                 return $get_membership->fetch_assoc();

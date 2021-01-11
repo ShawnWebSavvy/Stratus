@@ -2053,9 +2053,9 @@ function image_exist($url = null)
         curl_exec($ch);
         // Getting information about HTTP Code
         $retcode = curl_getinfo($ch, CURLINFO_HTTP_CODE);
+        curl_close($ch);
         // Testing for 404 Error
         return $retcode;
-        curl_close($ch);
     }
 }
 
@@ -2441,4 +2441,9 @@ function formatSizeUnits($bytes)
     }
 
     return $bytes;
+}
+
+function my_html_entity_decode(&$value)
+{
+    $value = html_entity_decode($value, ENT_QUOTES);
 }
