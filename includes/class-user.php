@@ -4770,10 +4770,10 @@ class User
                 //Video thumbnails
                 if ($args['video_thumbnail'] == "") {
                     $helpers = new helpers();
-                    $result_ = $helpers->makeVideosThumbnails($system['system_uploads'] . '/' . $args['video']->source, 5, 'prod');
+                    $result_ = $helpers->makeVideosThumbnails($system['system_uploads'] . '/thumbnails/' . $args['video']->source, 5, 'prod');
                     if (sizeof($result_) > 0) :
                         //$db->query(sprintf("UPDATE posts_videos SET thumbnail = $result_['thumb'] WHERE video_id = %s ", secure($post['video']['video_id'], 'int'))) or _error("SQL_ERROR_THROWEN");
-                        $db->query(sprintf("UPDATE posts_videos SET thumbnail = 'uploads/thumbnails/" . $result_['thumb'] . "' WHERE video_id = %s", secure($post['video']['video_id']))) or _error("SQL_ERROR_THROWEN");
+                        $db->query(sprintf("UPDATE posts_videos SET thumbnail = 'thumbnails/" . $result_['thumb'] . "' WHERE video_id = %s", secure($post['video']['video_id']))) or _error("SQL_ERROR_THROWEN");
 
                         $helpers->local_aws_s3_upload($result_['img_path'], $result_['filename']);
                     endif;
