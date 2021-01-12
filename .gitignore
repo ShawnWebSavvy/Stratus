@@ -1,3 +1,14 @@
 /vendor/*
 /content/*
+
+# Ignore files with credentials
+.htaccess
+
+# Ignore Intellij Files
 .idea/*
+# Ignore vim files
+*.swp
+*.swo
+*.swn
+# Ignore other files
+.DS_Store
