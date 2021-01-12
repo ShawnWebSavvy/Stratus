@@ -6,25 +6,39 @@
  * @package Sngine
  * @author Zamblek
  */
-
+//$start_time = microtime(TRUE);
 // fetch bootstrap
 require('bootstrap.php');
 require_once('includes/class-user-global.php');
+
+//$end_time = microtime(TRUE);
+
+//$start_time = microtime(TRUE);
 
 // get user
 if ($user->_logged_in) {
     $userGlobal = new UserGlobal();
     /* get friend requests */
     $user->_data['friend_requests'] = $user->get_friend_requests();
+
     /* all_blogs_categories */
+
     $blogs_categories = $user->get_blogs_categories();
     $smarty->assign('all_blogs_categories', $blogs_categories);
     /* get All friend */
+
     $user->_data['all_friends'] = $user->get_friends($user->_data['user_id'], $offset = 0, $get_all = true);
+
+
     /* get search log */
     $user->_data['search_log'] = $user->get_search_log();
+
+//    $start_time = microtime(TRUE);
     /* get conversations */
     $user->_data['conversations'] = $user->get_conversations();
+//    $end_time = microtime(TRUE);
+//
+//    echo $end_time - $start_time; die;
     /* get conversations */
     $userGlobal->_data['conversations'] = $userGlobal->get_conversations();
     /* get notifications */
@@ -49,6 +63,9 @@ if ($user->_logged_in) {
     }
 }
 
+//$end_time = microtime(TRUE);
+
+//echo $end_time - $start_time; die;
 
 // get static pages
 $static_pages = array();

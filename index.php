@@ -1,5 +1,6 @@
 <?php
-
+ini_set("zlib.output_compression", 1);
+ob_start("ob_gzhandler");
 /**
  * index
  *
@@ -7,8 +8,14 @@
  * @author Zamblek
  */
 
+//$start_time = microtime(TRUE);
+
 // fetch bootloader
 require('bootloader.php');
+
+//$end_time = microtime(TRUE);
+
+//echo $end_time - $start_time; die;
 
 try {
 	// require_once("vendor/autoload.php");
@@ -45,6 +52,7 @@ try {
 	// }
 	// die;
 	// check user logged in
+
 	if (!$user->_logged_in) {
 
 		// page header
