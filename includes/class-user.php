@@ -64,15 +64,18 @@ class User
                 $this->_data['user_picture_raw'] = $this->_data['user_picture'];
                 $this->_data['user_picture'] = get_picture($this->_data['user_picture'], $this->_data['user_gender']);
                 $this->_data['user_picture_full'] = ($this->_data['user_picture_full']) ? $system['system_uploads'] . '/' . $this->_data['user_picture_full'] : $this->_data['user_picture_full'];
-                if ($this->_data['user_picture'] != "") {
-                    $checkImage = image_exist($this->_data['user_picture']);
-                    if ($checkImage != '200') {
-                        $this->_data['user_picture'] = $this->_data['user_picture_full'];
-                    }
-                }
-                if ($this->_data['user_picture'] == "") {
-                    $this->_data['user_picture'] = $system['system_url'] . '/content/themes/' . $system['theme'] . '/images/user_defoult_img.jpg';
-                }
+//                if ($this->_data['user_picture'] != "") {
+//                    $checkImage = image_exist($this->_data['user_picture']);
+//                    if ($checkImage != '200') {
+//                        $this->_data['user_picture'] = $this->_data['user_picture_full'];
+//                    }
+//                }
+//                if ($this->_data['user_picture'] == "") {
+//                    $this->_data['user_picture'] = $system['system_url'] . '/content/themes/' . $system['theme'] . '/images/user_defoult_img.jpg';
+//                }
+
+                $this->_data['user_picture'] = 'includes/wallet-api/image-exist-api.php?userPicture='.$this->_data['user_picture'].'&userPictureFull='.$this->_data['user_picture_full'].'&type=1';
+
                 /* get all friends ids */
                 $this->_data['friends_ids'] = $this->get_friends_ids($this->_data['user_id']);
                 /* get all followings ids */
@@ -444,10 +447,12 @@ class User
                 if (!empty($friend['user_picture'])) {
                     $friend_user_picture = $friend['user_picture'];
 
-                    $checkImage = image_exist($friend_user_picture);
-                    if ($checkImage != '200') {
-                        $friend['user_picture'] = $system['system_uploads'] . '/' . $friend['user_picture_full'];
-                    }
+//                    $checkImage = image_exist($friend_user_picture);
+//                    if ($checkImage != '200') {
+//                        $friend['user_picture'] = $system['system_uploads'] . '/' . $friend['user_picture_full'];
+//                    }
+
+                    $friend['user_picture'] = 'includes/wallet-api/image-exist-api.php?userPicture='.$friend['user_picture'].'&userPictureFull='.$friend['user_picture_full'];
                 }
                 /* get the connection between the viewer & the target */
                 $friend['connection'] = $this->connection($friend['user_id'], true, $friend['count']);
@@ -555,14 +560,16 @@ class User
         if ($get_requests->num_rows > 0) {
             while ($request = $get_requests->fetch_assoc()) {
                 $request['user_picture'] = get_picture($request['user_picture'], $request['user_gender']);
-                $checkImage = image_exist($request['user_picture']);
-                if ($checkImage != '200') {
-                    if ($request['user_picture_full'] != "") {
-                        $request['user_picture'] = $system['system_uploads'] . '/' . $request['user_picture_full'];
-                    } else {
-                        $request['user_picture'] = $system['system_url'] . '/content/themes/' . $system['theme'] . '/images/user_defoult_img.jpg';
-                    }
-                }
+//                $checkImage = image_exist($request['user_picture']);
+//                if ($checkImage != '200') {
+//                    if ($request['user_picture_full'] != "") {
+//                        $request['user_picture'] = $system['system_uploads'] . '/' . $request['user_picture_full'];
+//                    } else {
+//                        $request['user_picture'] = $system['system_url'] . '/content/themes/' . $system['theme'] . '/images/user_defoult_img.jpg';
+//                    }
+//                }
+
+                $request['user_picture'] = 'includes/wallet-api/image-exist-api.php?userPicture='.$request['user_picture'].'&userPictureFull='.$request['user_picture_full'];
 
                 $request['mutual_friends_count'] = $this->get_mutual_friends_count($request['user_id']);
                 $requests[] = $request;
@@ -721,10 +728,13 @@ class User
                     continue;
                 }
                 $user['user_picture'] = get_picture($user['user_picture'], $user['user_gender']);
-                $checkImage = image_exist($user['user_picture']);
-                if ($checkImage != '200') {
-                    $user['user_picture'] = $system['system_uploads'] . '/' . $user['user_picture_full'];
-                }
+//                $checkImage = image_exist($user['user_picture']);
+//                if ($checkImage != '200') {
+//                    $user['user_picture'] = $system['system_uploads'] . '/' . $user['user_picture_full'];
+//                }
+
+                $user['user_picture'] = 'includes/wallet-api/image-exist-api.php?userPicture='.$user['user_picture'].'&userPictureFull='.$user['user_picture_full'];
+
                 if (isset($this->_data['user_id'])) {
                     $user['mutual_friends_count'] = $this->get_mutual_friends_count($user['user_id']);
                 } else {
@@ -2182,10 +2192,12 @@ class User
             while ($notification = $get_notifications->fetch_assoc()) {
                 /* prepare notification user_picture */
                 $notification['user_picture'] = get_picture($notification['user_picture'], $notification['user_gender']);
-                $checkImage = image_exist($notification['user_picture']);
-                if ($checkImage != '200') {
-                    $notification['user_picture'] = $system['system_uploads'] . '/' . $notification['user_picture_full'];
-                }
+//                $checkImage = image_exist($notification['user_picture']);
+//                if ($checkImage != '200') {
+//                    $notification['user_picture'] = $system['system_uploads'] . '/' . $notification['user_picture_full'];
+//                }
+
+                $notification['user_picture'] = 'includes/wallet-api/image-exist-api.php?userPicture='.$notification['user_picture'].'&userPictureFull='.$notification['user_picture_full'];
                 /* prepare notification notify_id */
                 $notification['notify_id'] = ($notification['notify_id']) ? "?notify_id=" . $notification['notify_id'] : "";
                 /* prepare notification node_url */
@@ -3042,7 +3054,7 @@ class User
      * @param integer $user_id
      * @return boolean
      */
-    public function user_online($user_id)
+    public function user_online($user_id, $count = false)
     {
         global $db, $system;
         /* check if the target user is a friend to the viewer */
@@ -3051,10 +3063,16 @@ class User
             return false;
         }
         /* check if the target user is online & enable the chat */
-        $get_user_status = $db->query(sprintf("SELECT COUNT(*) as count FROM users WHERE user_id = %s AND user_chat_enabled = '1' AND user_last_seen >= SUBTIME(NOW(), SEC_TO_TIME(%s))", secure($user_id, 'int'), secure($system['offline_time'], 'int', false))) or _error("SQL_ERROR_THROWEN");
-        if ($get_user_status->fetch_assoc()['count'] == 0) {
-            /* if no > return false */
-            return false;
+        if ($count !== false) {
+            if ($count == 0) {
+                return false;
+            }
+        } else {
+            $get_user_status = $db->query(sprintf("SELECT COUNT(*) as count FROM users WHERE user_id = %s AND user_chat_enabled = '1' AND user_last_seen >= SUBTIME(NOW(), SEC_TO_TIME(%s))", secure($user_id, 'int'), secure($system['offline_time'], 'int', false))) or _error("SQL_ERROR_THROWEN");
+            if ($get_user_status->fetch_assoc()['count'] == 0) {
+                /* if no > return false */
+                return false;
+            }
         }
         return true;
     }
@@ -3183,37 +3201,41 @@ class User
         }
         $conversation = $get_conversation->fetch_assoc();
         /* get recipients */
-        $get_recipients = $db->query(sprintf("SELECT conversations_users.seen, conversations_users.typing, users.user_id, users.user_name, users.user_firstname, users.user_lastname, users.user_gender, users.user_picture, posts_photos.source as user_picture_full, users.user_picture_id, users.user_subscribed, users.user_verified FROM conversations_users INNER JOIN users ON conversations_users.user_id = users.user_id  LEFT JOIN posts_photos ON users.user_picture_id = posts_photos.photo_id WHERE conversations_users.conversation_id = %s AND conversations_users.user_id != %s", secure($conversation['conversation_id'], 'int'), secure($this->_data['user_id'], 'int'))) or _error("SQL_ERROR_THROWEN");
+        $get_recipients = $db->query(sprintf("SELECT conversations_users.seen, conversations_users.typing, users.user_id, users.user_name, users.user_firstname, users.user_lastname, users.user_gender, users.user_picture, posts_photos.source as user_picture_full, users.user_picture_id, users.user_subscribed, users.user_verified, (SELECT CONCAT(COUNT(*), '::', COUNT(if(user_chat_enabled = '1', user_id, null))) as count FROM users WHERE user_id = users.user_id AND user_last_seen >= SUBTIME(NOW(), SEC_TO_TIME(%s))) as count FROM conversations_users INNER JOIN users ON conversations_users.user_id = users.user_id  LEFT JOIN posts_photos ON users.user_picture_id = posts_photos.photo_id WHERE conversations_users.conversation_id = %s AND conversations_users.user_id != %s", secure($system['offline_time'], 'int', false), secure($conversation['conversation_id'], 'int'), secure($this->_data['user_id'], 'int'))) or _error("SQL_ERROR_THROWEN");
         $recipients_num = $get_recipients->num_rows;
         if ($recipients_num == 0) {
             return false;
         }
         $i = 1;
+
         while ($recipient = $get_recipients->fetch_assoc()) {
-            $onlineStatus = $this->user_online($recipient['user_id']);
-            // echo $onlineStatus; die;
+            $counts = explode('::', $recipient['count']);
+            $onlineStatus = $this->user_online($recipient['user_id'], $counts[1]);
             $recipient['user_is_online'] = $onlineStatus;
 
-            // echo $recipient['user_id']." ".$onlineStatus;
-
-            //print_r( $recipient); exit;
             /* get recipient picture */
             $recipient['user_picture'] = get_picture($recipient['user_picture'], $recipient['user_gender']);
-            $checkImage = image_exist($recipient['user_picture']);
-            if ($checkImage != '200') {
-                if ($recipient['user_picture_full'] != "") {
-                    $recipient['user_picture'] = $system['system_uploads'] . '/' . $recipient['user_picture_full'];
-                } else {
-                    $recipient['user_picture'] = $system['system_url'] . '/content/themes/' . $system['theme'] . '/images/user_defoult_img.jpg';
-                }
-            }
+
+            //$checkImage = image_exist($recipient['user_picture']);
+
+//            if ($checkImage != '200') {
+//                if ($recipient['user_picture_full'] != "") {
+//                    $recipient['user_picture'] = $system['system_uploads'] . '/' . $recipient['user_picture_full'];
+//                } else {
+//                    $recipient['user_picture'] = $system['system_url'] . '/content/themes/' . $system['theme'] . '/images/user_defoult_img.jpg';
+//                }
+//            }
+
+            $recipient['user_picture'] = 'includes/wallet-api/image-exist-api.php?userPicture='.$recipient['user_picture'].'&userPictureFull='.$recipient['user_picture_full'];
+
             /* add to conversation recipients */
             $conversation['recipients'][] = $recipient;
             /* prepare typing recipients */
             if ($system['chat_typing_enabled'] && $recipient['typing']) {
                 /* check if recipient typing but offline */
-                $get_recipient_status = $db->query(sprintf("SELECT COUNT(*) as count FROM users WHERE user_id = %s AND user_last_seen >= SUBTIME(NOW(), SEC_TO_TIME(%s))", secure($recipient['user_id'], 'int'), secure($system['offline_time'], 'int', false))) or _error("SQL_ERROR_THROWEN");
-                if ($get_recipient_status->fetch_assoc()['count'] == 0) {
+                //$get_recipient_status = $db->query(sprintf("SELECT COUNT(*) as count FROM users WHERE user_id = %s AND user_last_seen >= SUBTIME(NOW(), SEC_TO_TIME(%s))", secure($recipient['user_id'], 'int'), secure($system['offline_time'], 'int', false))) or _error("SQL_ERROR_THROWEN");
+                //if ($get_recipient_status->fetch_assoc()['count'] == 0) {
+                if ($counts[0] == 0) {
                     /* recipient offline -> remove his typing status */
                     $db->query(sprintf("UPDATE conversations_users SET typing = '0' WHERE conversation_id = %s AND user_id = %s", secure($conversation_id, 'int'), secure($recipient['user_id'], 'int'))) or _error("SQL_ERROR_THROWEN");
                 } else {
@@ -3239,6 +3261,8 @@ class User
             }
             $i++;
         }
+
+
         //echo "recipients_num".$recipients_num;
         /* prepare conversation with multiple_recipients */
         if ($recipients_num > 1) {
@@ -3277,7 +3301,7 @@ class User
             $conversation['picture'] = $conversation['recipients'][0]['user_picture'];
             $conversation['name'] = html_entity_decode($conversation['recipients'][0]['user_firstname'], ENT_QUOTES) . " " . html_entity_decode($conversation['recipients'][0]['user_lastname'], ENT_QUOTES);
 
-            $onlineStatus = $this->user_online($conversation['recipients'][0]['user_id']);
+            $onlineStatus = $this->user_online($conversation['recipients'][0]['user_id'], $counts[1]);
             $conversation['user_is_online'] = $onlineStatus;
 
             $name_new = "<div class='multiple-recipients-section'> <div class='multiple-recipients-image data-avatar'><div class='left'><img src='" . $conversation['picture_left'] = $conversation['recipients'][0]['user_picture'] . "'> </div><div class='right'><img src='" . $conversation['user_picture'] = $conversation['recipients'][1]['picture_right'] . "'> </div></div>";

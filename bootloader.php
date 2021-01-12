@@ -33,12 +33,12 @@ if ($user->_logged_in) {
     /* get search log */
     $user->_data['search_log'] = $user->get_search_log();
 
-    //$start_time = microtime(TRUE);
+//    $start_time = microtime(TRUE);
     /* get conversations */
     $user->_data['conversations'] = $user->get_conversations();
-    //$end_time = microtime(TRUE);
-
-    //echo $end_time - $start_time; die;
+//    $end_time = microtime(TRUE);
+//
+//    echo $end_time - $start_time; die;
     /* get conversations */
     $userGlobal->_data['conversations'] = $userGlobal->get_conversations();
     /* get notifications */
