@@ -1,5 +1,7 @@
 <?php
 
+$BENCHMARK = True;
+$BENCHMARK = False;
 $TIME_START = microtime(true);
 $LAST_TIME = microtime(true);
 $TIMES = array("START" => 0);
@@ -87,13 +89,17 @@ try {
 		$profile['he_request'] = (in_array($profile['user_id'], $user->_data['friend_requests_ids'])) ? true : false;
 		$profile['i_request'] = (in_array($profile['user_id'], $user->_data['friend_requests_sent_ids'])) ? true : false;
 		$profile['i_follow'] = (in_array($profile['user_id'], $user->_data['followings_ids'])) ? true : false;
+/*
+--------------------------------------------------------------------------------	
+@TODO LOAD IN AJAX 1
+--------------------------------------------------------------------------------	
 		$profile['friendship_declined'] = $user->friendship_declined($profile['user_id']);
 		$profile['i_poked'] = $user->poked($profile['user_id']);
 		// get mutual friends 
 		$profile['mutual_friends_count'] = $user->get_mutual_friends_count($profile['user_id']);
 		$profile['mutual_friends'] = $user->get_mutual_friends($profile['user_id']);
+*/
 	}
-
 	$TIMES["BEFORE VIEWS SWITCH CASE"] = microtime(true) - $LAST_TIME; $LAST_TIME = microtime(true);
 	// [2] get view content
 	switch ($_GET['view']) {
@@ -156,7 +162,11 @@ try {
 				}
 			}
 
-			// get friends 
+/*
+--------------------------------------------------------------------------------	
+@TODO LOAD IN AJAX 2
+--------------------------------------------------------------------------------	
+		// get friends 
 			$profile['friends'] = $user->get_friends($profile['user_id']);
 			if (count($profile['friends']) > 0) {
 				$profile['friends_count'] = count($user->get_friends_ids($profile['user_id']));
@@ -164,6 +174,7 @@ try {
 
 			// get photos 
 			$profile['photos'] = $user->get_photos($profile['user_id']);
+
 
 			// get pages 
 			if ($system['pages_enabled']) {
@@ -214,7 +225,7 @@ try {
 			if ($system['colored_posts_enabled']) {
 				$smarty->assign('colored_patterns', $user->get_posts_colored_patterns());
 			}
-
+*/
 			// get user pages 
 			$pages = $user->get_pages(array('managed' => true, 'user_id' => $profile['user_id']));
 			$smarty->assign('pages', $pages);
@@ -226,7 +237,6 @@ try {
 			// assign variables 
 			$smarty->assign('posts', $posts);
 			break;
-
 		case 'friends':
 			// get friends 
 			$profile['friends'] = $user->get_friends($profile['user_id']);
@@ -307,7 +317,6 @@ try {
 			// get events 
 			$profile['events'] = $user->get_events(array('user_id' => $profile['user_id']));
 			break;
-
 		default:
 			_error(404);
 			break;
@@ -347,9 +356,14 @@ try {
 
 	$TIMES["BEFORE GET NEW PEOPLE"] = microtime(true) - $LAST_TIME; $LAST_TIME = microtime(true);
 	// get suggested peopel
-	$new_people = $user->get_new_people(0, true);
+/*
+--------------------------------------------------------------------------------	
+@TODO LOAD IN AJAX 3
+--------------------------------------------------------------------------------	
+//	$new_people = $user->get_new_people(0, true);
 	// assign variables 
-	$smarty->assign('new_people', $new_people);
+//	$smarty->assign('new_people', $new_people);
+ */
 
 	$TIMES["BEFORE GET PAGES"] = microtime(true) - $LAST_TIME; $LAST_TIME = microtime(true);
 	// get suggested pages
@@ -402,18 +416,18 @@ try {
 }
 
 //--------------------------------------------------------------------------------
-/*
-echo "<pre>";
-$TIME_TOTAL = microtime(true) - $TIME_START;
-var_dump($TIMES);
-echo "TIME_TOTAL: " . $TIME_TOTAL . "\n";
-$TIME_SUM = 0;
-foreach ($TIMES as $key => $value) {
-	$TIME_SUM += $value;
+if ($BENCHMARK) {
+	echo "<pre>";
+	$TIME_TOTAL = microtime(true) - $TIME_START;
+	echo "TIME_TOTAL: " . $TIME_TOTAL . "\n";
+	$TIME_SUM = 0;
+	foreach ($TIMES as $key => $value) {
+		echo $key . ": " . $value . "\n";
+		$TIME_SUM += $value;
+	}
+	echo "TIME_SUM: " . $TIME_SUM;
+	echo "done"; die();
 }
-echo "TIME_SUM: " . $TIME_SUM;
-echo "done"; die();
- */
 
 // page header
 page_header($profile['user_firstname'] . " " . $profile['user_lastname'], $profile['user_biography'], $profile['user_picture']);
