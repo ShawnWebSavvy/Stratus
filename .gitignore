@@ -1,5 +1,5 @@
 /vendor/*
-/content/*
+content/themes/default/templates_compiled/*
 
 # Ignore files with credentials
 .htaccess
