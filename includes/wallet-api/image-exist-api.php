@@ -5,21 +5,38 @@ require('../../bootstrap.php');
 $userPicture     = $_GET['userPicture'];
 $userPictureFull = $_GET['userPictureFull'];
 
-$checkImage = '404';
+//$checkImage = '404';
 
-if ($userPicture) {
-    $checkImage = image_exist($userPicture);
-}
+//if ($userPicture) {
+//    $checkImage = image_exist($userPicture);
+//}
+//
+//if ($checkImage != '200') {
+//    if ($userPictureFull != "") {
+//        if (isset($_GET['type'])) {
+//            $userPicture = $userPictureFull;
+//        } else {
+//            $userPicture = $system['system_uploads'] . '/' . $userPictureFull;
+//        }
+//    } else {
+//        $userPicture = $system['system_url'] . '/content/themes/' . $system['theme'] . '/images/user_defoult_img.jpg';
+//    }
+//}
 
-if ($checkImage != '200') {
+$data = @file_get_contents($userPicture);
+
+if (!$data) {
     if ($userPictureFull != "") {
         if (isset($_GET['type'])) {
             $userPicture = $userPictureFull;
+            $data = file_get_contents($userPicture);
         } else {
             $userPicture = $system['system_uploads'] . '/' . $userPictureFull;
+            $data = file_get_contents($userPicture);
         }
     } else {
         $userPicture = $system['system_url'] . '/content/themes/' . $system['theme'] . '/images/user_defoult_img.jpg';
+        $data = file_get_contents($userPicture);
     }
 }
 
@@ -37,4 +54,4 @@ switch ($ext) {
 
 header('Content-type: ' . $ctype);
 
-echo file_get_contents($userPicture);
+echo $data;
