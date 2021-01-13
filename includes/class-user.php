@@ -5033,6 +5033,12 @@ class User
      */
     public function get_posts($args = [])
     {
+$BENCHMARK = True;
+$BENCHMARK = False;
+$TIME_START = microtime(true);
+$LAST_TIME = microtime(true);
+$TIMES = array("START" => 0);
+$TIMES["START"] = microtime(true) - $LAST_TIME; $LAST_TIME = microtime(true);
         global $db, $system;
         /* initialize vars */
         $posts = [];
@@ -5060,7 +5066,8 @@ class User
         /* prepare query */
         $order_query = "ORDER BY posts.post_id DESC";
         $where_query = "";
-        /* get posts */
+	/* get posts */
+$TIMES["BEFORE SWITCH CASE"] = microtime(true) - $LAST_TIME; $LAST_TIME = microtime(true);
         switch ($get) {
             case 'newsfeed':
                 if (!$this->_logged_in && $query) {
@@ -5129,6 +5136,7 @@ class User
                 break;
 
             case 'posts_profile':
+$TIMES["BEFORE POSTS PROFILE"] = microtime(true) - $LAST_TIME; $LAST_TIME = microtime(true);
                 if (isset($args['id']) && !is_numeric($args['id'])) {
                     _error(400);
                 }
@@ -5287,12 +5295,14 @@ class User
                 _error(400);
                 break;
         }
+$TIMES["BEFORE HIDDEN POSTS"] = microtime(true) - $LAST_TIME; $LAST_TIME = microtime(true);
         /* get viewer hidden posts to exclude from results */
         $hidden_posts = $this->_get_hidden_posts($this->_data['user_id']);
         if ($hidden_posts) {
             $hidden_posts_list = implode(',', $hidden_posts);
             $where_query .= " AND (posts.post_id NOT IN ($hidden_posts_list))";
         }
+$TIMES["BEFORE FILTER POSTS"] = microtime(true) - $LAST_TIME; $LAST_TIME = microtime(true);
         /* filter posts */
         if ($filter != "all") {
             $where_query .= " AND (posts.post_type = '$filter')";
@@ -5305,10 +5315,23 @@ class User
             $get_postsQuery = "SELECT posts.post_id FROM posts " . $where_query . " " . $order_query . " " . $limit_statement;
         }
 
+$TIMES["BEFORE QUERY"] = microtime(true) - $LAST_TIME; $LAST_TIME = microtime(true);
         //echo $get_postsQuery; exit;
         $get_posts = $db->query($get_postsQuery) or _error("SQL_ERROR_THROWEN");
+//echo $get_postsQuery; die();
 
-        if ($get_posts->num_rows > 0) {
+$TIMES["AFTER FOR-EACH GET POST"] = microtime(true) - $LAST_TIME; $LAST_TIME = microtime(true);
+/*
+	ATTENTION:
+	This is where whit gets really, really, really, really fucked up.
+	for each post, get_post() -> does a SELECT query for each post and about 200 lines of if-else checking.
+	it also calls _check_post() which doesn this query:
+	
+	SELECT posts.*, posts_photos.source as user_picture_full, users.user_name, users.user_firstname, users.user_lastname, users.user_gender, users.user_picture, users.user_picture_id, users.user_cover, users.user_cover_id, users.user_verified, users.user_subscribed, users.user_pinned_post, pages.*, `groups`.*, `events`.* FROM posts LEFT JOIN users ON posts.user_id = users.user_id AND posts.user_type = 'user' LEFT JOIN posts_photos ON users.user_picture_id = posts_photos.photo_id LEFT JOIN pages ON posts.user_id = pages.page_id AND posts.user_type = 'page' LEFT JOIN `groups` ON posts.in_group = '1' AND posts.group_id = `groups`.group_id LEFT JOIN `events` ON posts.in_event = '1' AND posts.event_id = `events`.event_id WHERE NOT (users.user_name <=> NULL AND pages.page_name <=> NULL) AND posts.post_id = %s", secure($id, 'int'));
+
+	and then another 200 lines of if-else checking. It does this for EVERY POST.
+*/
+	if ($get_posts->num_rows > 0) {
             while ($post = $get_posts->fetch_assoc()) {
                 $post = $this->get_post($post['post_id'], true, true); /* $full_details = true, $pass_privacy_check = true */
                 if ($post) {
@@ -5316,6 +5339,20 @@ class User
                 }
             }
         }
+$TIMES["BEFORE BENCHMARK"] = microtime(true) - $LAST_TIME; $LAST_TIME = microtime(true);
+//--------------------------------------------------------------------------------
+if ($BENCHMARK) {
+	echo "<pre>";
+	$TIME_TOTAL = microtime(true) - $TIME_START;
+	echo "TIME_TOTAL: " . $TIME_TOTAL . "\n";
+	$TIME_SUM = 0;
+	foreach ($TIMES as $key => $value) {
+		echo $key . ": " . number_format($value, 15, '.', '') . "\n";
+		$TIME_SUM += $value;
+	}
+	echo "TIME_SUM: " . $TIME_SUM;
+	echo "done get_posts()"; die();
+}
         return $posts;
     }
 
