@@ -164,13 +164,15 @@ try {
 
 /*
 --------------------------------------------------------------------------------	
-@TODO LOAD IN AJAX 2
+@TODO LOAD IN AJAX
+profile.ajax.friends.php
 --------------------------------------------------------------------------------	
-		// get friends 
+			// get friends 
 			$profile['friends'] = $user->get_friends($profile['user_id']);
 			if (count($profile['friends']) > 0) {
 				$profile['friends_count'] = count($user->get_friends_ids($profile['user_id']));
 			}
+ */
 
 			// get photos 
 			$profile['photos'] = $user->get_photos($profile['user_id']);
@@ -191,6 +193,11 @@ try {
 				$profile['events'] = $user->get_events(array('user_id' => $profile['user_id'], 'results' => $system['min_results_even']));
 			}
 
+/*
+--------------------------------------------------------------------------------	
+@TODO LOAD IN AJAX
+profile.ajax.posts.php
+--------------------------------------------------------------------------------	
 			// get posts 
 			$posts_unpin = $user->get_posts(array('get' => 'posts_profile', 'id' => $profile['user_id']));
 			$postsUnpin = array();
@@ -235,7 +242,7 @@ try {
 			$smarty->assign('groups', $groups);
 			$smarty->assign("userpage", "profile");
 			// assign variables 
-			$smarty->assign('posts', $posts);
+//			$smarty->assign('posts', $posts);
 			break;
 		case 'friends':
 			// get friends 

@@ -644,7 +644,29 @@
                      {/if}
                      <!-- pinned post -->
                      <!-- posts -->
-                     {include file='_posts.tpl' _get="posts_profile" _id=$profile['user_id']}
+<script>
+/*
+PROFILE AJAX POSTS
+*/
+$(document).ready(function() {
+	$.ajax({
+		url: "/profile.ajax.posts.php?username={$profile['user_name']}",
+		method: "get",
+		success: function(html) {
+			$("#ajax_posts").html(html);
+		},
+		error: function(error) {
+			$("#ajax_posts").html("<div class='alert alert-primary text-center'>Oops! There's been error.</div>");
+		},
+	});
+});
+</script>
+<div id="ajax_posts">
+	<div class="loader loader_large"></div>
+	<br>
+	<div class="post x-hidden js_posts_loader" id="hidden-loader" style="display: block;"> <div class="post-body"> <div class="panel-effect"> <div class="fake-effect fe-0"></div> <div class="fake-effect fe-1"></div> <div class="fake-effect fe-2"></div> <div class="fake-effect fe-3"></div> <div class="fake-effect fe-4"></div> <div class="fake-effect fe-5"></div> <div class="fake-effect fe-6"></div> <div class="fake-effect fe-7"></div> <div class="fake-effect fe-8"></div> <div class="fake-effect fe-9"></div> <div class="fake-effect fe-10"></div> <div class="fake-effect fe-11"></div> </div> </div> </div>
+</div>
+                     {*include file='_posts.tpl' _get="posts_profile" _id=$profile['user_id']*}
                      <!-- posts -->
                   </div>
                   <!-- center panel -->
