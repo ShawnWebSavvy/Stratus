@@ -226,7 +226,12 @@ profile.ajax.posts.php
 			// echo "<pre>";
 			// print_r($posts);
 			// die;
-
+*/
+/*			
+--------------------------------------------------------------------------------	
+LOAD IN AJAX
+profile.ajax.posts.php
+--------------------------------------------------------------------------------	
 			// prepare publisher 
 			$smarty->assign('feelings', get_feelings());
 			$smarty->assign('feelings_types', get_feelings_types());
