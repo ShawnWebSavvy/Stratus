@@ -89,6 +89,7 @@ try {
 		$profile['he_request'] = (in_array($profile['user_id'], $user->_data['friend_requests_ids'])) ? true : false;
 		$profile['i_request'] = (in_array($profile['user_id'], $user->_data['friend_requests_sent_ids'])) ? true : false;
 		$profile['i_follow'] = (in_array($profile['user_id'], $user->_data['followings_ids'])) ? true : false;
+$TIMES["BEFORE VIEWS SWITCH CASE LOGIN"] = microtime(true) - $LAST_TIME; $LAST_TIME = microtime(true);
 /*
 --------------------------------------------------------------------------------	
 @TODO LOAD IN AJAX 1
@@ -172,7 +173,6 @@ profile.ajax.friends.php
 			if (count($profile['friends']) > 0) {
 				$profile['friends_count'] = count($user->get_friends_ids($profile['user_id']));
 			}
- */
 
 			// get photos 
 			$profile['photos'] = $user->get_photos($profile['user_id']);
@@ -192,10 +192,11 @@ profile.ajax.friends.php
 			if ($system['events_enabled']) {
 				$profile['events'] = $user->get_events(array('user_id' => $profile['user_id'], 'results' => $system['min_results_even']));
 			}
+ */
 
 /*
 --------------------------------------------------------------------------------	
-@TODO LOAD IN AJAX
+LOAD IN AJAX
 profile.ajax.posts.php
 --------------------------------------------------------------------------------	
 			// get posts 

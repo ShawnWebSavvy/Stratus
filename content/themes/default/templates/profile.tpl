@@ -647,6 +647,7 @@
 <script>
 /*
 PROFILE AJAX POSTS
+/profile.ajax.posts.php
 */
 $(document).ready(function() {
 	$.ajax({

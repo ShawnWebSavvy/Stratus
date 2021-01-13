@@ -6,6 +6,7 @@ $TIME_START = microtime(true);
 $LAST_TIME = microtime(true);
 $TIMES = array("START" => 0);
 
+$OFFSET = $_GET["offset"];
 
 // fetch bootloader
 require('bootloader.php');
@@ -19,7 +20,7 @@ $TIMES["BEFORE GET PROFILE"] = microtime(true) - $LAST_TIME; $LAST_TIME = microt
 	$profile = $get_profile->fetch_assoc();
 			// get posts 
 $TIMES["BEFORE FETCH POSTS"] = microtime(true) - $LAST_TIME; $LAST_TIME = microtime(true);
-			$posts_unpin = $user->get_posts(array('get' => 'posts_profile', 'id' => $profile['user_id']));
+			$posts_unpin = $user->get_posts(array('get' => 'posts_profile', 'id' => $profile['user_id'], "offset" => $OFFSET));
 			$postsUnpin = array();
 			$pinnedPost = array();
 			$i = 0;
@@ -54,7 +55,6 @@ $TIMES["BEFORE PUBLISHER"] = microtime(true) - $LAST_TIME; $LAST_TIME = microtim
 			}
 			$smarty->assign('posts', $posts);
 			$smarty->assign('_id', $profile["user_id"]);
-			$smarty->assign('profile', $profile);
 			
 //--------------------------------------------------------------------------------
 if ($BENCHMARK) {
@@ -71,4 +71,4 @@ if ($BENCHMARK) {
 }
 			$smarty->assign('_get', "posts_profile");
 
-page_footer("NEW_profile.ajax.posts");
+page_footer("NEW_profile.ajax.more_posts");
