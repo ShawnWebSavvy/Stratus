@@ -8,8 +8,14 @@ ob_start("ob_gzhandler");
  * @author Zamblek
  */
 
+//$start_time = microtime(TRUE);
+
 // fetch bootloader
 require('bootloader.php');
+
+//$end_time = microtime(TRUE);
+
+//echo $end_time - $start_time; die;
 
 try {
 	// require_once("vendor/autoload.php");

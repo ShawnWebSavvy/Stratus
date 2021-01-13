@@ -9,12 +9,8 @@
 </div>
 <!-- main wrapper -->
 {if $user->_logged_in}
-<!-- SUCKS and is SLOW AF <script src="https://unpkg.com/masonry-layout@4/dist/masonry.pkgd.min.js"></script> -->
+<script src="https://unpkg.com/masonry-layout@4/dist/masonry.pkgd.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/macy@2"></script>
-<!-- also stop half-screen masonry -->
-<style>
-.js_posts_stream .feeds_post_ul .feeds_post { width: 100% }
-</style>
 
 <!-- Dependencies CSS [Twemoji-Awesome] -->
 <link rel="stylesheet" href="{$system['system_url']}/includes/assets/css/twemoji-awesome/twemoji-awesome.min.css">

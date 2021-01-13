@@ -527,31 +527,10 @@
                      </div>
                      <!-- panel [about] -->
                      <!-- friends -->
-<script>
-/*
-PROFILE AJAX FRIENDS
-/profile.ajax.friends.php
-*/
-$(document).ready(function() {
-	$.ajax({
-		url: "/profile.ajax.friends.php?username={$profile['user_name']}",
-		method: "get",
-		success: function(html) {
-			$("#profile_ajax_friends").html(html);
-		},
-		error: function(error) {
-			$("#profile_ajax_friends").html("<div class='alert alert-primary text-center'>Oops! There's been error.</div>");
-		},
-	});
-});
-</script>
-<div id="profile_ajax_friends">
-	<div class="loader loader_large"></div>
-</div>
-<!-- MOVED AJAX
                      {if $profile['friends_count'] > 0}
                      <div class="card" style="margin-bottom: 0px;">
                         <div class="card-header bg-transparent subHeadingGlobal">
+                           <!-- <i class="fa fa-users mr5"></i> -->
                            <a href="{$system['system_url']}/{$profile['user_name']}/friends">{__("Friends")}</a>
                            <span>{$profile['friends_count']}</span>
                            {if $profile['mutual_friends_count'] && $profile['mutual_friends_count'] > 0}
@@ -580,7 +559,6 @@ $(document).ready(function() {
                         </div>
                      </div>
                      {/if}
--->
                      <!-- friends -->
                   </div>
                </div>
@@ -666,34 +644,7 @@ $(document).ready(function() {
                      {/if}
                      <!-- pinned post -->
                      <!-- posts -->
-<script>
-/*
-PROFILE AJAX POSTS
-/profile.ajax.posts.php
-*/
-$(document).ready(function() {
-	$.ajax({
-		url: "/profile.ajax.posts.php?username={$profile['user_name']}",
-		method: "get",
-		success: function(html) {
-			$("#profile_ajax_posts").html(html);
-		},
-		error: function(error) {
-			$("#profile_ajax_posts").html("<div class='alert alert-primary text-center'>Oops! There's been error.</div>");
-		},
-	});
-});
-</script>
-<div id="profile_ajax_posts">
-	<div class="loader loader_large"></div>
-	<br>
-	<div class="post x-hidden js_posts_loader" id="hidden-loader" style="display: block;"> <div class="post-body"> <div class="panel-effect"> <div class="fake-effect fe-0"></div> <div class="fake-effect fe-1"></div> <div class="fake-effect fe-2"></div> <div class="fake-effect fe-3"></div> <div class="fake-effect fe-4"></div> <div class="fake-effect fe-5"></div> <div class="fake-effect fe-6"></div> <div class="fake-effect fe-7"></div> <div class="fake-effect fe-8"></div> <div class="fake-effect fe-9"></div> <div class="fake-effect fe-10"></div> <div class="fake-effect fe-11"></div> </div> </div> </div>
-	<br>
-	<div class="post x-hidden js_posts_loader" id="hidden-loader" style="display: block;"> <div class="post-body"> <div class="panel-effect"> <div class="fake-effect fe-0"></div> <div class="fake-effect fe-1"></div> <div class="fake-effect fe-2"></div> <div class="fake-effect fe-3"></div> <div class="fake-effect fe-4"></div> <div class="fake-effect fe-5"></div> <div class="fake-effect fe-6"></div> <div class="fake-effect fe-7"></div> <div class="fake-effect fe-8"></div> <div class="fake-effect fe-9"></div> <div class="fake-effect fe-10"></div> <div class="fake-effect fe-11"></div> </div> </div> </div>
-	<br>
-	<div class="post x-hidden js_posts_loader" id="hidden-loader" style="display: block;"> <div class="post-body"> <div class="panel-effect"> <div class="fake-effect fe-0"></div> <div class="fake-effect fe-1"></div> <div class="fake-effect fe-2"></div> <div class="fake-effect fe-3"></div> <div class="fake-effect fe-4"></div> <div class="fake-effect fe-5"></div> <div class="fake-effect fe-6"></div> <div class="fake-effect fe-7"></div> <div class="fake-effect fe-8"></div> <div class="fake-effect fe-9"></div> <div class="fake-effect fe-10"></div> <div class="fake-effect fe-11"></div> </div> </div> </div>
-</div>
-                     {*include file='_posts.tpl' _get="posts_profile" _id=$profile['user_id']*}
+                     {include file='_posts.tpl' _get="posts_profile" _id=$profile['user_id']}
                      <!-- posts -->
                   </div>
                   <!-- center panel -->
