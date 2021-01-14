@@ -183,7 +183,8 @@ url({$profile['user_profile_background']}) fixed !important; background-size:
                            <img class="img-fluid"
                               src="{$system['system_url']}/content/themes/default/images/logo.png" />
                         </a>
-                        {elseif (($page == "index" || $page == "profile" || $page == "pages" || $page == "people") && $active_page != "MarketHub" && 
+                        {elseif (($page == "index" || $page == "profile" || $page == "pages" || $page == "people") &&
+                        $active_page != "MarketHub" &&
                         $view
                         !="articles" && $user->_logged_in ) || $page == "messages" || $active_page == "LocalHub" ||
                         $page
@@ -331,14 +332,16 @@ url({$profile['user_profile_background']}) fixed !important; background-size:
                                     <a href="javascript:void();" id="currentUsername"
                                        class="rightuser-menu usernameOnHoverbtn openRightBlackBar">
                                        <!-- <span class="usernameOnHover">{$userGlobal->_data['user_firstname']}</span> -->
-                                       <img src="{$userGlobal->_data['user_picture']}" />
+                                       <img class="lazyload"
+                                          data-src="{$system['system_url']}/{$userGlobal->_data['user_picture']}" />
                                        <span class="">{$userGlobal->_data['user_firstname']}</span>
                                     </a>
                                     {else}
                                     <a href="javascript:void();" id="currentUsername" page='{$page}'
                                        class="rightuser-menu usernameOnHoverbtn openRightBlackBar">
                                        <!-- <span class="usernameOnHover">{$user->_data['user_firstname']}</span> -->
-                                       <img src="{$user->_data['user_picture']}" />
+                                       <img class="lazyload"
+                                          data-src="{$system['system_url']}/{$user->_data['user_picture']}" />
                                        <span class="">{$user->_data['user_firstname']}</span>
                                     </a>
                                     {/if}
