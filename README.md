@@ -2,62 +2,35 @@
 gaurav.singh@antechindia.com
 qwerty@1234
 
-## Notes on migrating from a previous repo:
+## Notes on Performance Optimization.
 
-Let's say you just add the new official Stratus repo and still have the old "origin"
-by doing something like `git remote add stratus git@github.com:Stratus-Global/stratus.git`
+This application is heavily based on server side rendering. Unfortunatley, posts with normal usage have underlying objects that do queries extreemly ineffieciently. For example:
 
-You should have something like this:
+    profile.php
 
-        $ git remote -v
-        origin  git@github.com:kamalstratus/stratus.git (fetch)
-        origin  git@github.com:kamalstratus/stratus.git (push)
-        stratus git@github.com:kamalstratus/stratus.git (fetch)
-        stratus git@github.com:kamalstratus/stratus.git (push)
-        
-It may be easier to just remove all the remotes and set this repo as your new origin
+A user's profile with a timeline will load 10 posts. In doing so, each posts will load a subset of IDs, loop through each ID, make a select query, make a validation query inside of that, and go through 100-200 lines of arbitrary if-else checking. This causes a profile page of normal usage to make in the ballpark or 50 different queries for 1 single read-only page view.
 
-        $ git remote rm origin
-        $ git remote rm stratus
-        
-Add the new repo as your new "origin"
+The underlying SQL is not based on models and is too difficult to re-write in full in a short time frame, but should be eventually.
 
-        $ git remote -v
-        $ git remote add origin git@github.com:Stratus-Global/stratus.git
-        
-Make sure it's there
+## AJAX Porting of Time-Consuming Reads
 
-        $ git remote -v
-        origin  git@github.com:kamalstratus/stratus.git (fetch)
-        origin  git@github.com:kamalstratus/stratus.git (push)
-        
-Check your branches, you might only have the master branch.
+To compromise, the 10-12 second page-load described by `profile.php` has been (after through benchmarking and identification of the most time consuming calls) reduced to about 0.5 seconds. Once the main page is loaded, asynchrenous javascript allows the other components to load (such as posts, friends, feeds, etc) allowing us to squish that loading time overlapped.
 
-        $ git branch -a
-        * master
-        
-Fetch all the other branches
+## AJAX Ported Ingress PHP Files and Associated Template File Naming Conventions
 
-        $ git fetch origin
-        From github.com:kamalstratus/stratus
-         * [new branch]      master           -> origin/master
-         * [new branch]      performanceIssue -> origin/performanceIssue
-         
-Make sure they're there
+These custom AJAX calls are custom, messy, and coppied from the existing template framework. Because the existing template framework is so tighly coupled with eachother as well as queries and fieldnames, I've found it better to just copy the template for my use case. I've also found it better to do this as well for php files being called via AJAX. For example:
 
-        $ git branch -a
-        * master
-          remotes/origin/master
-          remotes/origin/performanceIssue
-          
-Now you can check out your branch, the issue branch, or any other branch
+`profile.php` has at least 3 time-consuming sub portions:
 
-        $ git checkout performanceIssue
-        Branch 'performanceIssue' set up to track remote branch 'performanceIssue' from 'origin'.
-        Switched to a new branch 'performanceIssue'
-        
-Make sure you're on a new branch
+1. Loading friends
+2. Loading posts
+3. Loading "more" posts
 
-        $ git branch
-          master
-        * performanceIssue
+In normal sittuations, loading posts and loading more posts might have been doable by the same script, but I have not been able to port AJAX calls wrapping infinitie scrolling template portions without loosing the offset information, so I re-did it myself. In doing so, I tried to make these new php AJAX routes as easy to discover as possible.
+
+For `profile.php`, I've created (in the same root directory) `profile.ajax.fiends.php`, `profile.ajax.posts.php`, and `profile.ajax.more_posts.php`. Eventually these weill be ported to microserices and benchmarked accordingly through an API. As for now, I indend on having the same convention for all "AJAX Ported" components of existing routes. In addition, those new PHP files coorespond with similarly named template. Because they are not the existing templates, and are new, they are named as such (specifically `NEW_profile.ajax.friends.tmpl`, `NEW_profile.ajax.posts.tpl`, and `NEW_profile.ajax.more_posts.tpl`.
+
+## Benchmarking Code
+
+You may notice that I will leave benchmarking code laying around. **DO NOT REMOVE IT**
+

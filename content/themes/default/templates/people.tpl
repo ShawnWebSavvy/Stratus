@@ -135,12 +135,14 @@
                                         {/if}
 
                                         <!-- see-more -->
-                                        {if count($user->_data['friend_requests']) >= $system['max_results']}
-                                        <div class="alert alert-info see-more js_see-more" data-get="friend_requests">
-                                            <span>{__("Load More")}</span>
-                                            <div class="loader loader_small x-hidden"></div>
-                                        </div>
-                                        {/if}
+					{if 'friend_requests'|array_key_exists:$user->_data}
+						{if count($user->_data['friend_requests']) >= $system['max_results']}
+						<div class="alert alert-info see-more js_see-more" data-get="friend_requests">
+						    <span>{__("Load More")}</span>
+						    <div class="loader loader_small x-hidden"></div>
+						</div>
+						{/if}
+					{/if}
                                         <!-- see-more -->
                                     </div>
 

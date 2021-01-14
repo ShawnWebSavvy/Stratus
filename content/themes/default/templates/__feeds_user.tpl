@@ -21,24 +21,24 @@
         <div class="mt10">
             <!-- buttons -->
             {if $_connection == "request"}
-            <button type="button" class="btn  btn-primary js_friend-accept"
-                data-uid="{$_user['user_id']}"> <span class="request_dlt">
-                <img
-                    src="{$system['system_uploads_assets']}/content/themes/default/images/svg/svgImg/delete_icon.svg">
-                    </span>
-<span class="request_aspct"><img 
-                    src="{$system['system_uploads_assets']}/content/themes/default/images/svg/svgImg/tick.svg">
-                    </span>
-{__("Confirm")}
+            <button type="button" class="btn  btn-primary js_friend-accept" data-uid="{$_user['user_id']}"> <span
+                    class="request_dlt">
+                    <img
+                        src="{$system['system_uploads_assets']}/content/themes/default/images/svg/svgImg/delete_icon.svg">
+                </span>
+                <span class="request_aspct"><img
+                        src="{$system['system_uploads_assets']}/content/themes/default/images/svg/svgImg/tick.svg">
+                </span>
+                {__("Confirm")}
 
-</button>
-            <button type="button" class="btn  btn-danger js_friend-decline"
-                data-uid="{$_user['user_id']}"><span class="request_dlt">
-                <img
-                    src="{$system['system_uploads_assets']}/content/themes/default/images/svg/svgImg/delete_icon.svg">
-                    </span>
-{__("Delete")}
-</button> {elseif $_connection == "add"}
+            </button>
+            <button type="button" class="btn  btn-danger js_friend-decline" data-uid="{$_user['user_id']}"><span
+                    class="request_dlt">
+                    <img
+                        src="{$system['system_uploads_assets']}/content/themes/default/images/svg/svgImg/delete_icon.svg">
+                </span>
+                {__("Delete")}
+            </button> {elseif $_connection == "add"}
             <button type="button" class="btn  btn-success js_friend-add" data-uid="{$_user['user_id']}">
                 <!-- <i class="fa fa-plus mr5"></i> -->
                 <img class="btn_image_"
@@ -174,19 +174,19 @@
             <div class="float-right _user_action_">
                 <!-- buttons -->
                 {if $_connection == "request"}
-                <button type="button" class="btn  btn-primary js_friend-accept"
-                    data-uid="{$_user['user_id']}"> <span class="request_aspct"><img 
-                    src="{$system['system_uploads_assets']}/content/themes/default/images/svg/svgImg/tick.svg">
+                <button type="button" class="btn  btn-primary js_friend-accept" data-uid="{$_user['user_id']}"> <span
+                        class="request_aspct"><img
+                            src="{$system['system_uploads_assets']}/content/themes/default/images/svg/svgImg/tick.svg">
                     </span>
-{__("Confirm")}
-</button>
-                <button type="button" class="btn  btn-danger js_friend-decline"
-                    data-uid="{$_user['user_id']}"><span class="request_dlt">
-                <img
-                    src="{$system['system_uploads_assets']}/content/themes/default/images/svg/svgImg/delete_icon.svg">
+                    {__("Confirm")}
+                </button>
+                <button type="button" class="btn  btn-danger js_friend-decline" data-uid="{$_user['user_id']}"><span
+                        class="request_dlt">
+                        <img
+                            src="{$system['system_uploads_assets']}/content/themes/default/images/svg/svgImg/delete_icon.svg">
                     </span>
-{__("Delete")}
-</button> {elseif $_connection == "add"}
+                    {__("Delete")}
+                </button> {elseif $_connection == "add"}
                 <button type="button" class="btn  btn-success js_friend-add" data-uid="{$_user['user_id']}">
                     <img class="btn_image_"
                         src="{$system['system_uploads_assets']}/content/themes/default/images/svg/svgImg/add_friend_icon.svg">
