@@ -284,6 +284,21 @@ class User
 
 
     /**
+     * get_followers_count
+     *
+     * @param integer $user_id
+     * @return integer
+     */
+    public function get_followers_count($user_id)
+    {
+        global $db;
+        $get_followers = $db->query(sprintf("SELECT user_id FROM followings WHERE following_id = %s", secure($user_id, 'int'))) or _error("SQL_ERROR_THROWEN");
+
+        return $get_followers->num_rows;
+    }
+
+
+    /**
      * get_followers_ids
      *
      * @param integer $user_id

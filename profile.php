@@ -132,7 +132,9 @@ try {
 			}
 
 			/* get followers count */
-			$profile['followers_count'] = count($user->get_followers_ids($profile['user_id']));
+//			$profile['followers_count'] = count($user->get_followers_ids($profile['user_id']));
+
+            $profile['followers_count'] = $user->get_followers_count($profile['user_id']);
 
 			/* get custom fields */
 			$smarty->assign('custom_fields', $user->get_custom_fields(array("for" => "user", "get" => "profile", "node_id" => $profile['user_id'])));
@@ -400,6 +402,8 @@ $smarty->assign('view', $_GET['view']);
 
 $smarty->assign('active_page', 'LocalHub');
 $smarty->assign('subactive_page', 'profile');
+
+
 
 // page footer
 page_footer("profile");
