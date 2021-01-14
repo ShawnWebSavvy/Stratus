@@ -1,5 +1,3 @@
-
-
 {include file='_head.tpl'}
 {include file='_header_profile.tpl'}
 <!-- page content -->
@@ -18,13 +16,15 @@
             <section class="profile_top_sec local_hub_profile col-12">
                <!-- profile-header -->
                <div class="profile-header custom_p_header">
-                  
-               <button class="_toggle_btn" type="button"><i class="fas fa-ellipsis-v"></i> <i class="fas fa-times"></i></button>
+
+                  <button class="_toggle_btn" type="button"><i class="fas fa-ellipsis-v"></i> <i
+                        class="fas fa-times"></i></button>
                   <!-- profile-cover -->
                   <div class="profile-cover-wrapper">
                      {if $profile['user_cover_id']}
                      <img class="js_position-cover-full x-hidden" src="{$profile['user_cover_full']}">
-                     <img class="js_position-cover-cropped {if $user->_logged_in && $profile['user_cover_lightbox']}js_lightbox{/if}"
+                     <img
+                        class="js_position-cover-cropped {if $user->_logged_in && $profile['user_cover_lightbox']}js_lightbox{/if}"
                         data-init-position="{$profile['user_cover_position']}" data-id="{$profile['user_cover_id']}"
                         data-image="{$profile['user_cover_full']}" data-context="album" src="{$profile['user_cover']}"
                         alt="{$profile['user_firstname']} {$profile['user_lastname']}">
@@ -66,11 +66,13 @@
                         <!-- profile-avatar -->
                         <div class="profile-avatar-wrapper">
                            <img {if $profile['user_picture_id']} {if $user->_logged_in &&
-                           $profile['user_picture_lightbox']}class="js_lightbox"{/if} data-id="{$profile['user_picture_id']}"
+                           $profile['user_picture_lightbox']}class="js_lightbox"{/if}
+                           data-id="{$profile['user_picture_id']}"
                            data-context="album" data-image="{$profile['user_picture_full']}" {elseif
                            !$profile['user_picture_default']} class="js_lightbox-nodata"
                            data-image="{$profile['user_picture']}" {/if} {if
-                           $profile['user_picture_default']} src="{$profile['user_picture']}" {else} src="{$profile['user_picture']}" {/if}
+                           $profile['user_picture_default']} src="{$profile['user_picture']}" {else}
+                           src="{$profile['user_picture']}" {/if}
                            alt="{$profile['user_firstname']} {$profile['user_lastname']}">
                            {if $profile['user_id'] == $user->_data['user_id']}
                            <!-- buttons -->
@@ -104,7 +106,7 @@
                         <!-- profile-name -->
                         <div class="profile-name-wrapper">
                            <a href="{$system['system_url']}/{$profile['user_name']}">{$profile['user_firstname']}
-                           {$profile['user_lastname']}</a>
+                              {$profile['user_lastname']}</a>
                            {if $profile['user_verified']}
                            <i data-toggle="tooltip" data-placement="top" title='{__("Verified User")}'
                               class="fa fa-check-circle fa-fw verified-badge"></i>
@@ -123,36 +125,42 @@
                               {if $profile['we_friends']}
                               <button type="button" class="btn btn-success btn-delete js_friend-remove"
                                  data-uid="{$profile['user_id']}">
-                              <img class="btn_image" src="{$system['system_url']}/content/themes/default/images/svg/svgImg/plus_icon.svg">
-                              <img class="btn_image_hover" src="{$system['system_url']}/content/themes/default/images/svg/svgImg/delete_icon.svg">
-                              <span class="btn_image_"> {__("Friends")} </span>
-                              <span class="btn_image_hover"> {__("Delete")} </span>
+                                 <img class="btn_image"
+                                    src="{$system['system_url']}/content/themes/default/images/svg/svgImg/plus_icon.svg">
+                                 <img class="btn_image_hover"
+                                    src="{$system['system_url']}/content/themes/default/images/svg/svgImg/delete_icon.svg">
+                                 <span class="btn_image_"> {__("Friends")} </span>
+                                 <span class="btn_image_hover"> {__("Delete")} </span>
                               </button>
                               {elseif $profile['he_request']}
                               <button type="button" class="btn btn-primary js_friend-accept"
-                                 data-uid="{$profile['user_id']}"> <span class="request_aspct"><img 
-                    src="{$system['system_uploads_assets']}/content/themes/default/images/svg/svgImg/tick.svg">
-                    </span>
-{__("Confirm")}
-</button>
+                                 data-uid="{$profile['user_id']}"> <span class="request_aspct"><img
+                                       src="{$system['system_uploads_assets']}/content/themes/default/images/svg/svgImg/tick.svg">
+                                 </span>
+                                 {__("Confirm")}
+                              </button>
                               <button type="button" class="btn btn-danger js_friend-decline"
                                  data-uid="{$profile['user_id']}"><span class="request_dlt">
-                <img
-                    src="{$system['system_uploads_assets']}/content/themes/default/images/svg/svgImg/delete_icon.svg">
-                    </span>
-{__("Delete")}
-</button>
+                                    <img
+                                       src="{$system['system_uploads_assets']}/content/themes/default/images/svg/svgImg/delete_icon.svg">
+                                 </span>
+                                 {__("Delete")}
+                              </button>
                               {elseif $profile['i_request']}
                               <button type="button" class="btn btn-warning js_friend-cancel"
                                  data-uid="{$profile['user_id']}">
-                              <img class="btn_image_" src="{$system['system_url']}/content/themes/default/images/svg/svgImg/tick.svg">
-                              Request Sent
+                                 <img class="btn_image_"
+                                    src="{$system['system_url']}/content/themes/default/images/svg/svgImg/tick.svg">
+                                 Request Sent
                               </button>
                               {elseif !$profile['friendship_declined']}
-                              <button type="button" class="btn btn-success js_friend-add" data-uid="{$profile['user_id']}">
-                              <img class="btn_image_" src="{$system['system_url']}/content/themes/default/images/svg/svgImg/add_friend_icon.svg">
-                              <img class="btn_image_hover" src="{$system['system_url']}/content/themes/default/images/svg/svgImg/add_friend-hover.svg">
-                              {__("Add Friend ")}
+                              <button type="button" class="btn btn-success js_friend-add"
+                                 data-uid="{$profile['user_id']}">
+                                 <img class="btn_image_"
+                                    src="{$system['system_url']}/content/themes/default/images/svg/svgImg/add_friend_icon.svg">
+                                 <img class="btn_image_hover"
+                                    src="{$system['system_url']}/content/themes/default/images/svg/svgImg/add_friend-hover.svg">
+                                 {__("Add Friend ")}
                               </button>
                               {/if}
                               <!-- add friend -->
@@ -172,28 +180,33 @@
                                  data-uid="{$profile['user_id']}"
                                  data-name="{$profile['user_firstname']} {$profile['user_lastname']}"
                                  data-link="{$profile['user_name']}">
-                              <span class="more_option">
-                              <img class="" src="{$system['system_url']}/content/themes/default/images/svg/svgImg/msg-icon.svg">
-                              </span>
-                              <span class="text-mobile-only">Message</span>
+                                 <span class="more_option">
+                                    <img class=""
+                                       src="{$system['system_url']}/content/themes/default/images/svg/svgImg/msg-icon.svg">
+                                 </span>
+                                 <span class="text-mobile-only">Message</span>
                               </button>
                               <!-- message -->
                               <!-- poke & report & block -->
                               <div class="d-inline-block dropdown button-profile-option desktop-only">
-                                 <button type="button" class=" more_icon_img" data-toggle="dropdown" data-display="static" style="width:unset;">
-                                 <span class="more_option">
-                                 <img class="" src="{$system['system_url']}/content/themes/default/images/svg/svgImg/more-icon.svg">
-                                 </span>
+                                 <button type="button" class=" more_icon_img" data-toggle="dropdown"
+                                    data-display="static" style="width:unset;">
+                                    <span class="more_option">
+                                       <img class=""
+                                          src="{$system['system_url']}/content/themes/default/images/svg/svgImg/more-icon.svg">
+                                    </span>
                                  </button>
                                  <div class="dropdown-menu dropdown-menu-right">
                                     <!-- poke -->
                                     {if $system['pokes_enabled'] && !$profile['i_poked']}
-                                    {if $profile['user_privacy_poke'] == "public" || ($profile['user_privacy_poke'] == "friends"
+                                    {if $profile['user_privacy_poke'] == "public" || ($profile['user_privacy_poke'] ==
+                                    "friends"
                                     && $profile['we_friends'])}
                                     <div class="dropdown-item pointer js_poke" data-id="{$profile['user_id']}"
                                        data-name="{$profile['user_firstname']} {$profile['user_lastname']}">
                                        <span class="more_option_img">
-                                       <img class="" src="{$system['system_url']}/content/themes/default/images/svg/svgImg/poke.svg">
+                                          <img class=""
+                                             src="{$system['system_url']}/content/themes/default/images/svg/svgImg/poke.svg">
                                        </span>
                                        {__("Poke")}
                                     </div>
@@ -204,7 +217,8 @@
                                     <div class="dropdown-item pointer js_report" data-handle="user"
                                        data-id="{$profile['user_id']}">
                                        <span class="more_option_img">
-                                       <img class="" src="{$system['system_url']}/content/themes/default/images/svg/svgImg/Flag.svg">
+                                          <img class=""
+                                             src="{$system['system_url']}/content/themes/default/images/svg/svgImg/Flag.svg">
                                        </span>
                                        {__("Report")}
                                     </div>
@@ -212,7 +226,8 @@
                                     <!-- block -->
                                     <div class="dropdown-item pointer js_block-user" data-uid="{$profile['user_id']}">
                                        <span class="more_option_img">
-                                       <img class="" src="{$system['system_url']}/content/themes/default/images/svg/svgImg/block_icon.svg">
+                                          <img class=""
+                                             src="{$system['system_url']}/content/themes/default/images/svg/svgImg/block_icon.svg">
                                        </span>
                                        {__("Block")}
                                     </div>
@@ -222,19 +237,21 @@
                                     <!-- <div class="dropdown-divider"></div> -->
                                     <a class="dropdown-item"
                                        href="{$system['system_url']}/admincp/users/edit/{$profile['user_id']}">
-                                    <span class="more_option_img">
-                                    <img class="" src="{$system['system_url']}/content/themes/default/images/svg/svgImg/Cog.svg">
-                                    </span>
-                                    {__("Edit in Admin Panel")}
+                                       <span class="more_option_img">
+                                          <img class=""
+                                             src="{$system['system_url']}/content/themes/default/images/svg/svgImg/Cog.svg">
+                                       </span>
+                                       {__("Edit in Admin Panel")}
                                     </a>
                                     {elseif $user->_is_moderator}
                                     <!-- <div class="dropdown-divider"></div> -->
                                     <a class="dropdown-item"
                                        href="{$system['system_url']}/modcp/users/edit/{$profile['user_id']}">
-                                    <span class="more_option_img">
-                                    <img class="" src="{$system['system_url']}/content/themes/default/images/svg/svgImg/Cog.svg">
-                                    </span>
-                                    {__("Edit in Moderator Panel")}
+                                       <span class="more_option_img">
+                                          <img class=""
+                                             src="{$system['system_url']}/content/themes/default/images/svg/svgImg/Cog.svg">
+                                       </span>
+                                       {__("Edit in Moderator Panel")}
                                     </a>
                                     {/if}
                                     <!-- manage -->
@@ -244,10 +261,11 @@
                               {else}
                               <!-- edit -->
                               <div class="button-profile-option">
-                                 <a href="{$system['system_url']}/settings/profile"  class=" edit_profile_icon">
-                                 <span class="edit_profile_img">
-                                 <img class="" src="{$system['system_url']}/content/themes/default/images/svg/svgImg/edit_icon_hover.svg">
-                                 </span>
+                                 <a href="{$system['system_url']}/settings/profile" class=" edit_profile_icon">
+                                    <span class="edit_profile_img">
+                                       <img class=""
+                                          src="{$system['system_url']}/content/themes/default/images/svg/svgImg/edit_icon_hover.svg">
+                                    </span>
                                  </a>
                               </div>
                               <!-- edit -->
@@ -260,7 +278,7 @@
                      </div>
                   </div>
                </div>
-               <!-- profile-header -->   
+               <!-- profile-header -->
             </section>
             <div class="col-lg-3">
                <div class="profileUpdatesDesign">
@@ -275,36 +293,39 @@
                         <div>
                            {__("To see what")} {$profile['user_firstname']} {__("shares with friends")},
                            <span class="text-primary">
-                           {__("send a friend request")}
+                              {__("send a friend request")}
                            </span>
                            <div class="float-right">
                               <!-- add friend -->
                               {if $profile['he_request']}
-                              <button class="btn btn-primary  js_friend-accept"
-                                 data-uid="{$profile['user_id']}"> <span class="request_dlt">
-                <img
-                    src="{$system['system_uploads_assets']}/content/themes/default/images/svg/svgImg/delete_icon.svg">
-                    </span>
-{__("Confirm")}
-</button>
+                              <button class="btn btn-primary  js_friend-accept" data-uid="{$profile['user_id']}"> <span
+                                    class="request_dlt">
+                                    <img
+                                       src="{$system['system_uploads_assets']}/content/themes/default/images/svg/svgImg/delete_icon.svg">
+                                 </span>
+                                 {__("Confirm")}
+                              </button>
                               <button class="btn btn-secondary  js_friend-decline"
                                  data-uid="{$profile['user_id']}"><span class="request_dlt">
-                <img
-                    src="{$system['system_uploads_assets']}/content/themes/default/images/svg/svgImg/delete_icon.svg">
-                    </span>
-{__("Delete")}
-</button>
+                                    <img
+                                       src="{$system['system_uploads_assets']}/content/themes/default/images/svg/svgImg/delete_icon.svg">
+                                 </span>
+                                 {__("Delete")}
+                              </button>
                               {elseif $profile['i_request']}
-                              <button class="btn btn-secondary  js_friend-cancel"
-                                 data-uid="{$profile['user_id']}">
-                              <img class="btn_image_" src="{$system['system_url']}/content/themes/default/images/svg/svgImg/tick.svg">Request Sent
+                              <button class="btn btn-secondary  js_friend-cancel" data-uid="{$profile['user_id']}">
+                                 <img class="btn_image_"
+                                    src="{$system['system_url']}/content/themes/default/images/svg/svgImg/tick.svg">Request
+                                 Sent
                               </button>
                               {else}
                               <button type="button" class="btn btn-success  js_friend-add"
                                  data-uid="{$profile['user_id']}">
-                              <img class="btn_image_" src="{$system['system_url']}/content/themes/default/images/svg/svgImg/add_friend_icon.svg">
-                              <img class="btn_image_hover" src="{$system['system_url']}/content/themes/default/images/svg/svgImg/add_friend-hover.svg">
-                              {__("Add Friend")}
+                                 <img class="btn_image_"
+                                    src="{$system['system_url']}/content/themes/default/images/svg/svgImg/add_friend_icon.svg">
+                                 <img class="btn_image_hover"
+                                    src="{$system['system_url']}/content/themes/default/images/svg/svgImg/add_friend-hover.svg">
+                                 {__("Add Friend")}
                               </button>
                               {/if}
                               <!-- add friend -->
@@ -328,7 +349,7 @@
                            <div class="float-left mt10">
                               <span class="text-underline" data-toggle="modal"
                                  data-url="users/mutual_friends.php?uid={$profile['user_id']}">{$profile['mutual_friends_count']}
-                              {__("Mutual Friends")}</span>
+                                 {__("Mutual Friends")}</span>
                            </div>
                         </div>
                         {/if}
@@ -352,8 +373,9 @@
                            {/if}
                            <ul class="about-list">
                               {if $profile['user_subscribed']}
-                              <li class="package" {if $profile['package_color']} style="background: {$profile['package_color']}" {/if}>
-                              <i class="fa fa-bolt fa-fw"></i> {$profile['package_name']} {__("Member")}
+                              <li class="package" {if $profile['package_color']}
+                                 style="background: {$profile['package_color']}" {/if}>
+                                 <i class="fa fa-bolt fa-fw"></i> {$profile['package_name']} {__("Member")}
                               </li>
                               {/if}
                               {if $profile['user_work_title']}
@@ -362,7 +384,8 @@
                               <li>
                                  <div class="about-list-item d-flex">
                                     <div class="about_list_img">
-                                       <img class=" " src="{$system['system_url']}/content/themes/default/images/svg/svgImg/work_icon.svg">
+                                       <img class=" "
+                                          src="{$system['system_url']}/content/themes/default/images/svg/svgImg/work_icon.svg">
                                     </div>
                                     <div class="about_list_text">
                                        {$profile['user_work_title']}
@@ -381,12 +404,14 @@
                               {/if}
                               {/if}
                               {if $profile['user_edu_major']}
-                              {if $profile['user_id'] == $user->_data['user_id'] || $profile['user_privacy_education'] ==
+                              {if $profile['user_id'] == $user->_data['user_id'] || $profile['user_privacy_education']
+                              ==
                               "public" || ($profile['user_privacy_education'] == "friends" && $profile['we_friends'])}
                               <li>
                                  <div class="about-list-item d-flex">
                                     <div class="about_list_img">
-                                       <img class=" " src="{$system['system_url']}/content/themes/default/images/svg/svgImg/univsty.svg">
+                                       <img class=" "
+                                          src="{$system['system_url']}/content/themes/default/images/svg/svgImg/univsty.svg">
                                     </div>
                                     <div class="about_list_text">
                                        {__("Studied")} {$profile['user_edu_major']}
@@ -407,7 +432,8 @@
                               <li>
                                  <div class="about-list-item d-flex">
                                     <div class="about_list_img">
-                                       <img class=" " src="{$system['system_url']}/content/themes/default/images/svg/svgImg/home-icb.svg">
+                                       <img class=" "
+                                          src="{$system['system_url']}/content/themes/default/images/svg/svgImg/home-icb.svg">
                                     </div>
                                     <div class="about_list_text">
                                        {__("Lives in")} <span class="text-info">{$profile['user_current_city']}</span>
@@ -422,7 +448,8 @@
                               <li>
                                  <div class="about-list-item d-flex">
                                     <div class="about_list_img">
-                                       <img class=" " src="{$system['system_url']}/content/themes/default/images/svg/svgImg/location_icon.svg">
+                                       <img class=" "
+                                          src="{$system['system_url']}/content/themes/default/images/svg/svgImg/location_icon.svg">
                                     </div>
                                     <div class="about_list_text">
                                        {__("From")} <span class="text-info">{$profile['user_hometown']}</span>
@@ -435,38 +462,43 @@
                                  <div class="about-list-item d-flex">
                                     {if $profile['user_gender'] == "male"}
                                     <div class="about_list_img">
-                                       <img class=" " src="{$system['system_url']}/content/themes/default/images/svg/svgImg/nav_icon_friends.svg">
+                                       <img class=" "
+                                          src="{$system['system_url']}/content/themes/default/images/svg/svgImg/nav_icon_friends.svg">
                                     </div>
                                     <div class="about_list_text">
                                        {__("Male")}
                                     </div>
                                     {elseif $profile['user_gender'] == "female"}
                                     <div class="about_list_img">
-                                       <img class=" " src="{$system['system_url']}/content/themes/default/images/user_defoult_img.jpg">
+                                       <img class=" "
+                                          src="{$system['system_url']}/content/themes/default/images/user_defoult_img.jpg">
                                     </div>
-                                    <div class="about_list_text"> 
+                                    <div class="about_list_text">
                                        {__("Female")}
                                     </div>
                                     {else}
                                     <div class="about_list_img">
-                                       <img class="" src="{$system['system_url']}/content/themes/default/images/user_defoult_img.jpg">
+                                       <img class=""
+                                          src="{$system['system_url']}/content/themes/default/images/user_defoult_img.jpg">
                                     </div>
-                                    <div class="about_list_text"> 
+                                    <div class="about_list_text">
                                        {__("Other")}
                                     </div>
                                     {/if}
                                  </div>
                               </li>
                               {if $profile['user_relationship']}
-                              {if $profile['user_id'] == $user->_data['user_id'] || $profile['user_privacy_relationship']
+                              {if $profile['user_id'] == $user->_data['user_id'] ||
+                              $profile['user_privacy_relationship']
                               == "public" || ($profile['user_privacy_relationship'] == "friends" &&
                               $profile['we_friends'])}
                               <li>
                                  <div class="about-list-item d-flex">
                                     <div class="about_list_img">
-                                       <img class=" " src="{$system['system_url']}/content/themes/default/images/svg/svgImg/reletion-icon.svg">
+                                       <img class=" "
+                                          src="{$system['system_url']}/content/themes/default/images/svg/svgImg/reletion-icon.svg">
                                     </div>
-                                    <div class="about_list_text"> 
+                                    <div class="about_list_text">
                                        {if $profile['user_relationship'] == "relationship"}
                                        {__("In a relationship")}
                                        {elseif $profile['user_relationship'] == "complicated"}
@@ -480,14 +512,16 @@
                               {/if}
                               {/if}
                               {if $profile['user_birthdate'] != null}
-                              {if $profile['user_id'] == $user->_data['user_id'] || $profile['user_privacy_birthdate'] ==
+                              {if $profile['user_id'] == $user->_data['user_id'] || $profile['user_privacy_birthdate']
+                              ==
                               "public" || ($profile['user_privacy_birthdate'] == "friends" && $profile['we_friends'])}
                               <li>
                                  <div class="about-list-item d-flex">
                                     <div class="about_list_img">
-                                       <img class=" " src="{$system['system_url']}/content/themes/default/images/svg/svgImg/dob_icon.svg">
+                                       <img class=" "
+                                          src="{$system['system_url']}/content/themes/default/images/svg/svgImg/dob_icon.svg">
                                     </div>
-                                    <div class="about_list_text"> 
+                                    <div class="about_list_text">
                                        {if $system['system_datetime_format'] == "d/m/Y H:i"}
                                        {$profile['user_birthdate']|date_format:"%d/%m/%Y"}
                                        {else}
@@ -502,10 +536,12 @@
                               <li>
                                  <div class="about-list-item d-flex">
                                     <div class="about_list_img">
-                                       <img class=" " src="{$system['system_url']}/content/themes/default/images/svg/svgImg/nav_icon_globalHub.svg">
+                                       <img class=" "
+                                          src="{$system['system_url']}/content/themes/default/images/svg/svgImg/nav_icon_globalHub.svg">
                                     </div>
-                                    <div class="about_list_text"> 
-                                       <a target="_blank" href="{$profile['user_website']}">{$profile['user_website']}</a>
+                                    <div class="about_list_text">
+                                       <a target="_blank"
+                                          href="{$profile['user_website']}">{$profile['user_website']}</a>
                                     </div>
                                  </div>
                               </li>
@@ -513,11 +549,13 @@
                               <li>
                                  <div class="about-list-item d-flex">
                                     <div class="about_list_img">
-                                       <img class=" " src="{$system['system_url']}/content/themes/default/images/svg/svgImg/eye_icon.svg">
+                                       <img class=" "
+                                          src="{$system['system_url']}/content/themes/default/images/svg/svgImg/eye_icon.svg">
                                     </div>
                                     <div class="about_list_text">
                                        {__("Followed by")}
-                                       <a href="{$system['system_url']}/{$profile['user_name']}/followers" class="friendsCount">
+                                       <a href="{$system['system_url']}/{$profile['user_name']}/followers"
+                                          class="friendsCount">
                                           {$profile['followers_count']} {__("people")}</a>
                                     </div>
                                  </div>
@@ -536,7 +574,7 @@
                            {if $profile['mutual_friends_count'] && $profile['mutual_friends_count'] > 0}
                            <span class="text-underline" data-toggle="modal"
                               data-url="users/mutual_friends.php?uid={$profile['user_id']}">({$profile['mutual_friends_count']}
-                           {__("mutual friends")})</span>
+                              {__("mutual friends")})</span>
                            {/if}
                         </div>
                         <div class="card-body ptb10 plr10">
@@ -569,50 +607,49 @@
                <div class="profile-header-tabs for-mobile">
                   <ul>
                      <li>
-                        <a href="{$system['system_url']}/{$profile['user_name']}" {if $view=="" }class="active"
-                        {/if}>
-                        {__("Timeline")}
+                        <a href="{$system['system_url']}/{$profile['user_name']}" {if $view=="" }class="active" {/if}>
+                           {__("Timeline")}
                         </a>
                      </li>
                      <li>
                         <a href="{$system['system_url']}/{$profile['user_name']}/friends" {if $view=="friends" ||
-                        $view=="followers" || $view=="followings" }class="active" {/if}>
-                        {__("Friends")}
+                           $view=="followers" || $view=="followings" }class="active" {/if}>
+                           {__("Friends")}
                         </a>
                      </li>
                      <li>
                         <a href="{$system['system_url']}/{$profile['user_name']}/photos" {if $view=="photos" ||
-                        $view=="albums" || $view=="album" }class="active" {/if}>
-                        {__("Photos")}
+                           $view=="albums" || $view=="album" }class="active" {/if}>
+                           {__("Photos")}
                         </a>
                      </li>
                      <li>
                         <a href="{$system['system_url']}/{$profile['user_name']}/videos" {if $view=="videos"
-                        }class="active" {/if}>
-                        {__("Videos")}
+                           }class="active" {/if}>
+                           {__("Videos")}
                         </a>
                      </li>
                      {if $system['pages_enabled']}
                      <li>
                         <a href="{$system['system_url']}/{$profile['user_name']}/likes" {if $view=="likes"
-                        }class="active" {/if}>
-                        {__("Likes")}
+                           }class="active" {/if}>
+                           {__("Likes")}
                         </a>
                      </li>
                      {/if}
                      {if $system['groups_enabled']}
                      <li>
                         <a href="{$system['system_url']}/{$profile['user_name']}/groups" {if $view=="groups"
-                        }class="active" {/if}>
-                        {__("Groups")}
+                           }class="active" {/if}>
+                           {__("Groups")}
                         </a>
                      </li>
                      {/if}
                      {if $system['events_enabled']}
                      <li>
                         <a href="{$system['system_url']}/{$profile['user_name']}/events" {if $view=="events"
-                        }class="active" {/if}>
-                        {__("Events")}
+                           }class="active" {/if}>
+                           {__("Events")}
                         </a>
                      </li>
                      {/if}
@@ -624,33 +661,50 @@
                   <!-- view content -->
                   {if $view == ""}
                   <!-- left panel -->
-                  
+
                   <!-- left panel -->
                   <!-- center panel -->
                   <div class="col-lg-12">
                      <!-- publisher -->
                      {if $user->_logged_in}
-<script>
-/*
-PROFILE AJAX PUBLISHER
-/profile.ajax.publisher.php
-*/
-$(document).ready(function() {
-	$.ajax({
-		url: "/profile.ajax.publisher.php?username={$profile['user_name']}",
-		method: "get",
-		success: function(html) {
-			$("#profile_ajax_publisher").html(html);
-		},
-		error: function(error) {
-			$("#profile_ajax_publisher").html("<div class='alert alert-primary text-center'>Oops! There's been error.: " + error + "</div>");
-		},
-	});
-});
-</script>
-<div id="profile_ajax_publisher">
-	<div class="post x-hidden js_posts_loader" id="hidden-loader" style="display: block;"> <div class="post-body"> <div class="panel-effect"> <div class="fake-effect fe-0"></div> <div class="fake-effect fe-1"></div> <div class="fake-effect fe-2"></div> <div class="fake-effect fe-3"></div> <div class="fake-effect fe-4"></div> <div class="fake-effect fe-5"></div> <div class="fake-effect fe-6"></div> <div class="fake-effect fe-7"></div> <div class="fake-effect fe-8"></div> <div class="fake-effect fe-9"></div> <div class="fake-effect fe-10"></div> <div class="fake-effect fe-11"></div> </div> </div> </div>
-</div>
+                     <script>
+                        /*
+                        PROFILE AJAX PUBLISHER
+                        /profile.ajax.publisher.php
+                        */
+                        $(document).ready(function () {
+                           $.ajax({
+                              url: "/profile.ajax.publisher.php?username={$profile['user_name']}",
+                              method: "get",
+                              success: function (html) {
+                                 $("#profile_ajax_publisher").html(html);
+                              },
+                              error: function (error) {
+                                 $("#profile_ajax_publisher").html("<div class='alert alert-primary text-center'>Oops! There's been error.: " + error + "</div>");
+                              },
+                           });
+                        });
+                     </script>
+                     <div id="profile_ajax_publisher">
+                        <div class="post x-hidden js_posts_loader" id="hidden-loader" style="display: none;">
+                           <div class="post-body">
+                              <div class="panel-effect">
+                                 <div class="fake-effect fe-0"></div>
+                                 <div class="fake-effect fe-1"></div>
+                                 <div class="fake-effect fe-2"></div>
+                                 <div class="fake-effect fe-3"></div>
+                                 <div class="fake-effect fe-4"></div>
+                                 <div class="fake-effect fe-5"></div>
+                                 <div class="fake-effect fe-6"></div>
+                                 <div class="fake-effect fe-7"></div>
+                                 <div class="fake-effect fe-8"></div>
+                                 <div class="fake-effect fe-9"></div>
+                                 <div class="fake-effect fe-10"></div>
+                                 <div class="fake-effect fe-11"></div>
+                              </div>
+                           </div>
+                        </div>
+                     </div>
                      {/if}
                      <!-- publisher -->
                      <!-- pinned post -->
@@ -678,8 +732,8 @@ $(document).ready(function() {
                               <li class="nav-item">
                                  <a class="nav-link active"
                                     href="{$system['system_url']}/{$profile['user_name']}/friends">
-                                 {__("Friends")}
-                                 <span class="badge badge-pill badge-info">{$profile['friends_count']}</span>
+                                    {__("Friends")}
+                                    <span class="badge badge-pill badge-info">{$profile['friends_count']}</span>
                                  </a>
                               </li>
                               <li class="nav-item">
@@ -735,16 +789,19 @@ $(document).ready(function() {
                            <!-- panel nav -->
                            <ul class="nav nav-tabs">
                               <li class="nav-item">
-                                 <a class="nav-link" href="{$system['system_url']}/{$profile['user_name']}/friends">{__("Friends")}</a>
+                                 <a class="nav-link"
+                                    href="{$system['system_url']}/{$profile['user_name']}/friends">{__("Friends")}</a>
                               </li>
                               <li class="nav-item">
-                                 <a class="nav-link active" href="{$system['system_url']}/{$profile['user_name']}/followers">
-                                 {__("Followers")}
-                                 <span class="badge badge-pill badge-info">{$profile['followers_count']}</span>
+                                 <a class="nav-link active"
+                                    href="{$system['system_url']}/{$profile['user_name']}/followers">
+                                    {__("Followers")}
+                                    <span class="badge badge-pill badge-info">{$profile['followers_count']}</span>
                                  </a>
                               </li>
                               <li class="nav-item">
-                                 <a class="nav-link" href="{$system['system_url']}/{$profile['user_name']}/followings">{__("Followings")}</a>
+                                 <a class="nav-link"
+                                    href="{$system['system_url']}/{$profile['user_name']}/followings">{__("Followings")}</a>
                               </li>
                            </ul>
                            <!-- panel nav -->
@@ -758,7 +815,8 @@ $(document).ready(function() {
                            </ul>
                            {if count($profile['followers']) >= $system['min_results_even']}
                            <!-- see-more -->
-                           <div class="alert alert-info see-more mt0 mb20 js_see-more" data-get="followers" data-uid="{$profile['user_id']}">
+                           <div class="alert alert-info see-more mt0 mb20 js_see-more" data-get="followers"
+                              data-uid="{$profile['user_id']}">
                               <span>{__("See More")}</span>
                               <div class="loader loader_small x-hidden"></div>
                            </div>
@@ -790,18 +848,20 @@ $(document).ready(function() {
                            <!-- panel nav -->
                            <ul class="nav nav-tabs">
                               <li class="nav-item">
-                                 <a class="nav-link" href="{$system['system_url']}/{$profile['user_name']}/friends">{__("Friends")}</a>
+                                 <a class="nav-link"
+                                    href="{$system['system_url']}/{$profile['user_name']}/friends">{__("Friends")}</a>
                               </li>
                               <li class="nav-item">
                                  <a class="nav-link" href="{$system['system_url']}/{$profile['user_name']}/followers">
-                                 <strong class="pr5">{__("Followers")}</strong>
-                                 <span class="badge badge-pill badge-info">{$profile['followers_count']}</span>
+                                    <strong class="pr5">{__("Followers")}</strong>
+                                    <span class="badge badge-pill badge-info">{$profile['followers_count']}</span>
                                  </a>
                               </li>
                               <li class="nav-item">
-                                 <a class="nav-link active" href="{$system['system_url']}/{$profile['user_name']}/followings">
-                                 {__("Followings")}
-                                 <span class="badge badge-pill badge-info">{$profile['followings_count']}</span>
+                                 <a class="nav-link active"
+                                    href="{$system['system_url']}/{$profile['user_name']}/followings">
+                                    {__("Followings")}
+                                    <span class="badge badge-pill badge-info">{$profile['followings_count']}</span>
                                  </a>
                               </li>
                            </ul>
@@ -816,7 +876,8 @@ $(document).ready(function() {
                            </ul>
                            {if count($profile['followings']) >= $system['min_results_even']}
                            <!-- see-more -->
-                           <div class="alert alert-info see-more mt0 mb20 js_see-more" data-get="followings" data-uid="{$profile['user_id']}">
+                           <div class="alert alert-info see-more mt0 mb20 js_see-more" data-get="followings"
+                              data-uid="{$profile['user_id']}">
                               <span>{__("See More")}</span>
                               <div class="loader loader_small x-hidden"></div>
                            </div>
@@ -862,7 +923,7 @@ $(document).ready(function() {
                         <div class="card-body">
                            {if $profile['photos']}
                            <ul class="row no-gutters">
-                              
+
                            </ul>
                            <!-- see-more -->
                            <div class="alert alert-info see-more mt20 js_see-more" data-get="photos"
@@ -946,9 +1007,8 @@ $(document).ready(function() {
                         <div class="card-header with-icon with-nav custom-tabs">
                            <!-- back to albums -->
                            <div class="float-right">
-                              <a href="{$system['system_url']}/{$profile['user_name']}/albums"
-                                 class="btn  btn-light">
-                              <i class="fa fa-arrow-circle-left mr5"></i>{__("Back to Albums")}
+                              <a href="{$system['system_url']}/{$profile['user_name']}/albums" class="btn  btn-light">
+                                 <i class="fa fa-arrow-circle-left mr5"></i>{__("Back to Albums")}
                               </a>
                            </div>
                            <!-- back to albums -->
@@ -1006,7 +1066,7 @@ $(document).ready(function() {
                               <p class="text-center text-muted __nodata-img___">
                                  <img width="100%"
                                     src="{$system['system_url']}/content/themes/{$system['theme']}/images/no_results15.png">
-                              <p>  {$profile['user_firstname']} {__("doesn't have videos")} </p>
+                              <p> {$profile['user_firstname']} {__("doesn't have videos")} </p>
                               </p>
                            </div>
                            <!-- <p class="text-center text-muted mt10">
@@ -1027,7 +1087,8 @@ $(document).ready(function() {
                         <!-- panel title -->
                         <!-- </div> -->
                         <div class="card-body">
-                           {if $profile['user_id'] == $user->_data['user_id'] || $profile['user_privacy_pages'] == "public"
+                           {if $profile['user_id'] == $user->_data['user_id'] || $profile['user_privacy_pages'] ==
+                           "public"
                            || ($profile['user_privacy_pages'] == "friends" && $profile['we_friends'])}
                            {if count($profile['pages']) > 0}
                            <ul class="row">
@@ -1178,8 +1239,7 @@ $(document).ready(function() {
 {if $gift}
 <script>
    $(function () {
-       modal('#gift');
+      modal('#gift');
    });
 </script>
 {/if}
-
