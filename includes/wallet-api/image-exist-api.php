@@ -45,17 +45,21 @@ $ext    = end($extArr);
 $ext    = strtolower($ext);
 
 switch ($ext) {
-    case "gif": $ctype="image/gif"; break;
-    case "png": $ctype="image/png"; break;
+    case "gif":
+        $ctype = "image/gif";
+        break;
+    case "png":
+        $ctype = "image/png";
+        break;
     case "jpeg":
-    case "jpg": $ctype="image/jpeg"; break;
-    case "svg": $ctype="image/svg+xml"; break;
+    case "jpg":
+        $ctype = "image/jpeg";
+        break;
+    case "svg":
+        $ctype = "image/svg+xml";
+        break;
 }
 
 header('Content-type: ' . $ctype);
 
-<<<<<<< HEAD
-echo file_get_contents($userPicture);
-=======
 echo $data;
->>>>>>> a17bb1bc7e07a8e4680e47773b3e8d51ba344343
