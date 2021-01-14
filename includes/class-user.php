@@ -248,6 +248,20 @@ class User
         return $friends;
     }
 
+    /**
+     * get_friends_ids
+     *
+     * @param integer $user_id
+     * @return integer
+     */
+    public function get_friends_count($user_id)
+    {
+        global $db;
+        $get_friends = $db->query(sprintf('SELECT users.user_id FROM friends INNER JOIN users ON (friends.user_one_id = users.user_id AND friends.user_one_id != %1$s) OR (friends.user_two_id = users.user_id AND friends.user_two_id != %1$s) WHERE status = 1 AND (user_one_id = %1$s OR user_two_id = %1$s)', secure($user_id, 'int'))) or _error("SQL_ERROR_THROWEN");
+
+        return $get_friends->num_rows;
+    }
+
 
     /**
      * get_followings_ids
