@@ -3,7 +3,7 @@
     <span>{if $_title}{$_title}{else}{__("Bookmarks")}{/if}</span>
     {if !$_filter}
 	    <div class="float-right">
-	        <div class="btn-group btn-group-sm js_posts-filter" data-value="all" title='{__("All")}'>
+	        <div class="btn-group btn-group-sm js_posts-filter" data-value="all">
 	            <button type="button" class="btn dropdown-toggle" data-toggle="dropdown" data-display="static">
 	                <i class="btn-group-icon fa fa-bars fa-fw"></i> <span class="btn-group-text">{__("All")}</span>
 	            </button>
