@@ -3393,14 +3393,16 @@ class User
         }
         while ($message = $get_messages->fetch_assoc()) {
             $message['user_picture'] = get_picture($message['user_picture'], $message['user_gender']);
-            $checkImage = image_exist($message['user_picture']);
-            if ($checkImage != '200') {
-                if ($message['user_picture_full'] != "") {
-                    $message['user_picture'] = $system['system_uploads'] . '/' . $message['user_picture_full'];
-                } else {
-                    $message['user_picture'] = $system['system_url'] . '/content/themes/' . $system['theme'] . '/images/user_defoult_img.jpg';
-                }
-            }
+//            $checkImage = image_exist($message['user_picture']);
+//            if ($checkImage != '200') {
+//                if ($message['user_picture_full'] != "") {
+//                    $message['user_picture'] = $system['system_uploads'] . '/' . $message['user_picture_full'];
+//                } else {
+//                    $message['user_picture'] = $system['system_url'] . '/content/themes/' . $system['theme'] . '/images/user_defoult_img.jpg';
+//                }
+//            }
+
+            $message['user_picture'] = 'includes/wallet-api/image-exist-api.php?userPicture='.$message['user_picture'].'&userPictureFull='.$message['user_picture_full'];
             $message['message'] = $this->_parse(["text" => $message['message'], "decode_mentions" => false, "decode_hashtags" => false]);
             /* return */
             $messages[] = $message;
@@ -4538,10 +4540,13 @@ class User
 
         $post['author_id'] = $this->_data['user_id'];
         $post['post_author_picture'] = $this->_data['user_picture'];
-        $checkImage = image_exist($post['post_author_picture']);
-        if ($checkImage != '200') {
-            $post['post_author_picture'] = $system['system_uploads'] . '/' . $this->_data['user_picture_full'];
-        }
+//        $checkImage = image_exist($post['post_author_picture']);
+//        if ($checkImage != '200') {
+//            $post['post_author_picture'] = $system['system_uploads'] . '/' . $this->_data['user_picture_full'];
+//        }
+
+        $post['post_author_picture'] = 'includes/wallet-api/image-exist-api.php?userPicture='.$post['post_author_picture'].'&userPictureFull='.$this->_data['user_picture_full'];
+
         $post['post_author_url'] = $system['system_url'] . '/' . $this->_data['user_name'];
         $post['post_author_name'] = $this->_data['user_firstname'] . " " . $this->_data['user_lastname'];
         $post['post_author_verified'] = $this->_data['user_verified'];
@@ -5078,12 +5083,6 @@ class User
      */
     public function get_posts($args = [])
     {
-$BENCHMARK = True;
-$BENCHMARK = False;
-$TIME_START = microtime(true);
-$LAST_TIME = microtime(true);
-$TIMES = array("START" => 0);
-$TIMES["START"] = microtime(true) - $LAST_TIME; $LAST_TIME = microtime(true);
         global $db, $system;
         /* initialize vars */
         $posts = [];
@@ -5111,8 +5110,7 @@ $TIMES["START"] = microtime(true) - $LAST_TIME; $LAST_TIME = microtime(true);
         /* prepare query */
         $order_query = "ORDER BY posts.post_id DESC";
         $where_query = "";
-	/* get posts */
-$TIMES["BEFORE SWITCH CASE"] = microtime(true) - $LAST_TIME; $LAST_TIME = microtime(true);
+        /* get posts */
         switch ($get) {
             case 'newsfeed':
                 if (!$this->_logged_in && $query) {
@@ -5181,7 +5179,6 @@ $TIMES["BEFORE SWITCH CASE"] = microtime(true) - $LAST_TIME; $LAST_TIME = microt
                 break;
 
             case 'posts_profile':
-$TIMES["BEFORE POSTS PROFILE"] = microtime(true) - $LAST_TIME; $LAST_TIME = microtime(true);
                 if (isset($args['id']) && !is_numeric($args['id'])) {
                     _error(400);
                 }
@@ -5340,14 +5337,12 @@ $TIMES["BEFORE POSTS PROFILE"] = microtime(true) - $LAST_TIME; $LAST_TIME = micr
                 _error(400);
                 break;
         }
-$TIMES["BEFORE HIDDEN POSTS"] = microtime(true) - $LAST_TIME; $LAST_TIME = microtime(true);
         /* get viewer hidden posts to exclude from results */
         $hidden_posts = $this->_get_hidden_posts($this->_data['user_id']);
         if ($hidden_posts) {
             $hidden_posts_list = implode(',', $hidden_posts);
             $where_query .= " AND (posts.post_id NOT IN ($hidden_posts_list))";
         }
-$TIMES["BEFORE FILTER POSTS"] = microtime(true) - $LAST_TIME; $LAST_TIME = microtime(true);
         /* filter posts */
         if ($filter != "all") {
             $where_query .= " AND (posts.post_type = '$filter')";
@@ -5360,23 +5355,10 @@ $TIMES["BEFORE FILTER POSTS"] = microtime(true) - $LAST_TIME; $LAST_TIME = micro
             $get_postsQuery = "SELECT posts.post_id FROM posts " . $where_query . " " . $order_query . " " . $limit_statement;
         }
 
-$TIMES["BEFORE QUERY"] = microtime(true) - $LAST_TIME; $LAST_TIME = microtime(true);
         //echo $get_postsQuery; exit;
         $get_posts = $db->query($get_postsQuery) or _error("SQL_ERROR_THROWEN");
-//echo $get_postsQuery; die();
 
-$TIMES["AFTER FOR-EACH GET POST"] = microtime(true) - $LAST_TIME; $LAST_TIME = microtime(true);
-/*
-	ATTENTION:
-	This is where whit gets really, really, really, really fucked up.
-	for each post, get_post() -> does a SELECT query for each post and about 200 lines of if-else checking.
-	it also calls _check_post() which doesn this query:
-	
-	SELECT posts.*, posts_photos.source as user_picture_full, users.user_name, users.user_firstname, users.user_lastname, users.user_gender, users.user_picture, users.user_picture_id, users.user_cover, users.user_cover_id, users.user_verified, users.user_subscribed, users.user_pinned_post, pages.*, `groups`.*, `events`.* FROM posts LEFT JOIN users ON posts.user_id = users.user_id AND posts.user_type = 'user' LEFT JOIN posts_photos ON users.user_picture_id = posts_photos.photo_id LEFT JOIN pages ON posts.user_id = pages.page_id AND posts.user_type = 'page' LEFT JOIN `groups` ON posts.in_group = '1' AND posts.group_id = `groups`.group_id LEFT JOIN `events` ON posts.in_event = '1' AND posts.event_id = `events`.event_id WHERE NOT (users.user_name <=> NULL AND pages.page_name <=> NULL) AND posts.post_id = %s", secure($id, 'int'));
-
-	and then another 200 lines of if-else checking. It does this for EVERY POST.
-*/
-	if ($get_posts->num_rows > 0) {
+        if ($get_posts->num_rows > 0) {
             while ($post = $get_posts->fetch_assoc()) {
                 $post = $this->get_post($post['post_id'], true, true); /* $full_details = true, $pass_privacy_check = true */
                 if ($post) {
@@ -5384,20 +5366,6 @@ $TIMES["AFTER FOR-EACH GET POST"] = microtime(true) - $LAST_TIME; $LAST_TIME = m
                 }
             }
         }
-$TIMES["BEFORE BENCHMARK"] = microtime(true) - $LAST_TIME; $LAST_TIME = microtime(true);
-//--------------------------------------------------------------------------------
-if ($BENCHMARK) {
-	echo "<pre>";
-	$TIME_TOTAL = microtime(true) - $TIME_START;
-	echo "TIME_TOTAL: " . $TIME_TOTAL . "\n";
-	$TIME_SUM = 0;
-	foreach ($TIMES as $key => $value) {
-		echo $key . ": " . number_format($value, 15, '.', '') . "\n";
-		$TIME_SUM += $value;
-	}
-	echo "TIME_SUM: " . $TIME_SUM;
-	echo "done get_posts()"; die();
-}
         return $posts;
     }
 
@@ -6084,14 +6052,16 @@ if ($BENCHMARK) {
         $get_voters = $db->query(sprintf("SELECT users.user_id, posts_photos.source as user_picture_full, users.user_picture_id, users.user_name, users.user_firstname, users.user_lastname, users.user_picture, users.user_gender FROM posts_polls_options_users INNER JOIN users ON posts_polls_options_users.user_id = users.user_id LEFT JOIN posts_photos ON users.user_picture_id = posts_photos.photo_id WHERE option_id = %s LIMIT %s, %s", secure($option_id, 'int'), secure($offset, 'int', false), secure($system['max_results'], 'int', false))) or _error("SQL_ERROR_THROWEN");
         while ($voter = $get_voters->fetch_assoc()) {
             $voter['user_picture'] = get_picture($voter['user_picture'], $voter['user_gender']);
-            $checkImage = image_exist($voter['user_picture']);
-            if ($checkImage != '200') {
-                if ($voter['user_picture_full'] != "") {
-                    $voter['user_picture'] = $system['system_uploads'] . '/' . $voter['user_picture_full'];
-                } else {
-                    $voter['user_picture'] = $system['system_url'] . '/content/themes/' . $system['theme'] . '/images/user_defoult_img.jpg';
-                }
-            }
+//            $checkImage = image_exist($voter['user_picture']);
+//            if ($checkImage != '200') {
+//                if ($voter['user_picture_full'] != "") {
+//                    $voter['user_picture'] = $system['system_uploads'] . '/' . $voter['user_picture_full'];
+//                } else {
+//                    $voter['user_picture'] = $system['system_url'] . '/content/themes/' . $system['theme'] . '/images/user_defoult_img.jpg';
+//                }
+//            }
+
+            $voter['user_picture'] = 'includes/wallet-api/image-exist-api.php?userPicture='.$voter['user_picture'].'&userPictureFull='.$voter['user_picture_full'];
             /* get the connection between the viewer & the target */
             $voter['connection'] = $this->connection($voter['user_id']);
             $voters[] = $voter;
@@ -6173,14 +6143,17 @@ if ($BENCHMARK) {
         if ($post['user_type'] == "user") {
             /* user */
             $post['post_author_picture'] = get_picture($post['user_picture'], $post['user_gender']);
-            $checkImage = image_exist($post['post_author_picture']);
-            if ($checkImage != '200') {
-                if ($post['user_picture_full'] != "") {
-                    $post['post_author_picture'] = $system['system_uploads'] . '/' . $post['user_picture_full'];
-                } else {
-                    $post['post_author_picture'] = $system['system_url'] . '/content/themes/' . $system['theme'] . '/images/user_defoult_img.jpg';
-                }
-            }
+//            $checkImage = image_exist($post['post_author_picture']);
+//            if ($checkImage != '200') {
+//                if ($post['user_picture_full'] != "") {
+//                    $post['post_author_picture'] = $system['system_uploads'] . '/' . $post['user_picture_full'];
+//                } else {
+//                    $post['post_author_picture'] = $system['system_url'] . '/content/themes/' . $system['theme'] . '/images/user_defoult_img.jpg';
+//                }
+//            }
+
+            $post['post_author_picture'] = 'includes/wallet-api/image-exist-api.php?userPicture='.$post['post_author_picture'].'&userPictureFull='.$post['user_picture_full'];
+
             $post['post_author_url'] = $system['system_url'] . '/' . $post['user_name'];
             $post['post_author_name'] = $post['user_firstname'] . " " . $post['user_lastname'];
             $post['post_author_verified'] = $post['user_verified'];
@@ -7492,14 +7465,16 @@ if ($BENCHMARK) {
                 /* user type */
                 $comment['author_id'] = $comment['user_id'];
                 $comment['author_picture'] = get_picture($comment['user_picture'], $comment['user_gender']);
-                $checkImage = image_exist($comment['author_picture']);
-                if ($checkImage != '200') {
-                    if ($comment['user_picture_full'] != "") {
-                        $comment['author_picture'] = $system['system_uploads'] . '/' . $comment['user_picture_full'];
-                    } else {
-                        $comment['author_picture'] = $system['system_url'] . '/content/themes/' . $system['theme'] . '/images/user_defoult_img.jpg';
-                    }
-                }
+//                $checkImage = image_exist($comment['author_picture']);
+//                if ($checkImage != '200') {
+//                    if ($comment['user_picture_full'] != "") {
+//                        $comment['author_picture'] = $system['system_uploads'] . '/' . $comment['user_picture_full'];
+//                    } else {
+//                        $comment['author_picture'] = $system['system_url'] . '/content/themes/' . $system['theme'] . '/images/user_defoult_img.jpg';
+//                    }
+//                }
+
+                $comment['author_picture'] = 'includes/wallet-api/image-exist-api.php?userPicture='.$comment['author_picture'].'&userPictureFull='.$comment['user_picture_full'];
 
                 $comment['author_url'] = $system['system_url'] . '/' . $comment['user_name'];
                 $comment['author_name'] = $comment['user_firstname'] . " " . $comment['user_lastname'];
@@ -7508,14 +7483,17 @@ if ($BENCHMARK) {
                 /* page type */
                 $comment['author_id'] = $comment['page_admin'];
                 $comment['author_picture'] = get_picture($comment['page_picture'], "page");
-                $checkImage = image_exist($comment['author_picture']);
-                if ($checkImage != '200') {
-                    if ($comment['user_picture_full'] != "") {
-                        $comment['author_picture'] = $system['system_uploads'] . '/' . $comment['user_picture_full'];
-                    } else {
-                        $comment['author_picture'] = $system['system_url'] . '/content/themes/' . $system['theme'] . '/images/user_defoult_img.jpg';
-                    }
-                }
+//                $checkImage = image_exist($comment['author_picture']);
+//                if ($checkImage != '200') {
+//                    if ($comment['user_picture_full'] != "") {
+//                        $comment['author_picture'] = $system['system_uploads'] . '/' . $comment['user_picture_full'];
+//                    } else {
+//                        $comment['author_picture'] = $system['system_url'] . '/content/themes/' . $system['theme'] . '/images/user_defoult_img.jpg';
+//                    }
+//                }
+
+                $comment['author_picture'] = 'includes/wallet-api/image-exist-api.php?userPicture='.$comment['author_picture'].'&userPictureFull='.$comment['user_picture_full'];
+
                 $comment['author_url'] = $system['system_url'] . '/pages/' . $comment['page_name'];
                 $comment['author_name'] = $comment['page_title'];
                 $comment['author_verified'] = $comment['page_verified'];

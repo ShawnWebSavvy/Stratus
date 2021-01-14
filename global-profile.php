@@ -65,13 +65,16 @@ try {
 	//$profile['user_picture'] = get_picture($profile['user_picture'], $profile['user_gender']);
 
 	$profile['global_user_picture'] = get_picture($profile['global_user_picture'], $profile['user_gender']);
-	$checkImage = image_exist($profile['global_user_picture']);
+//	$checkImage = image_exist($profile['global_user_picture']);
 	if ($system['s3_enabled']) {
 		$system['system_uploads'] = $system['system_uploads_url'];
 	}
-	if ($checkImage != 200) {
-		$profile['global_user_picture'] = $system['system_uploads'] . '/' . $profile['user_picture_full'];
-	}
+//	if ($checkImage != 200) {
+//		$profile['global_user_picture'] = $system['system_uploads'] . '/' . $profile['user_picture_full'];
+//	}
+
+    $profile['global_user_picture'] = 'includes/wallet-api/image-exist-api.php?userPicture='.$profile['global_user_picture'].'&userPictureFull='.$system['system_uploads'] . '/' . $profile['user_picture_full'].'&type=1';
+
 	$profile['user_picture'] = $profile['global_user_picture'];
 	$profile['user_picture_full'] = ($profile['user_picture_full']) ? $system['system_uploads'] . '/' . $profile['user_picture_full'] : $profile['user_picture_full'];
 

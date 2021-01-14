@@ -69,9 +69,6 @@ try {
 	// get friend requests sent 
 	$user->_data['friend_requests_sent'] = $user->get_friend_requests_sent();
 	$user->_data['friends'] = $user->get_friends($user->_data['user_id']);
-	// get friend requests
-	$user->_data['friend_requests'] = $user->get_friend_requests();
-
 	// get ads campaigns
 	$ads_campaigns = $user->ads_campaigns();
 	/* assign variables */
