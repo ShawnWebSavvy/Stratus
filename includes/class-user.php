@@ -64,17 +64,17 @@ class User
                 $this->_data['user_picture_raw'] = $this->_data['user_picture'];
                 $this->_data['user_picture'] = get_picture($this->_data['user_picture'], $this->_data['user_gender']);
                 $this->_data['user_picture_full'] = ($this->_data['user_picture_full']) ? $system['system_uploads'] . '/' . $this->_data['user_picture_full'] : $this->_data['user_picture_full'];
-//                if ($this->_data['user_picture'] != "") {
-//                    $checkImage = image_exist($this->_data['user_picture']);
-//                    if ($checkImage != '200') {
-//                        $this->_data['user_picture'] = $this->_data['user_picture_full'];
-//                    }
-//                }
-//                if ($this->_data['user_picture'] == "") {
-//                    $this->_data['user_picture'] = $system['system_url'] . '/content/themes/' . $system['theme'] . '/images/user_defoult_img.jpg';
-//                }
+                //                if ($this->_data['user_picture'] != "") {
+                //                    $checkImage = image_exist($this->_data['user_picture']);
+                //                    if ($checkImage != '200') {
+                //                        $this->_data['user_picture'] = $this->_data['user_picture_full'];
+                //                    }
+                //                }
+                //                if ($this->_data['user_picture'] == "") {
+                //                    $this->_data['user_picture'] = $system['system_url'] . '/content/themes/' . $system['theme'] . '/images/user_defoult_img.jpg';
+                //                }
 
-                $this->_data['user_picture'] = 'includes/wallet-api/image-exist-api.php?userPicture='.$this->_data['user_picture'].'&userPictureFull='.$this->_data['user_picture_full'].'&type=1';
+                $this->_data['user_picture'] = 'includes/wallet-api/image-exist-api.php?userPicture=' . $this->_data['user_picture'] . '&userPictureFull=' . $this->_data['user_picture_full'] . '&type=1';
 
                 /* get all friends ids */
                 $this->_data['friends_ids'] = $this->get_friends_ids($this->_data['user_id']);
@@ -248,6 +248,20 @@ class User
         return $friends;
     }
 
+    /**
+     * get_friends_ids
+     *
+     * @param integer $user_id
+     * @return integer
+     */
+    public function get_friends_count($user_id)
+    {
+        global $db;
+        $get_friends = $db->query(sprintf('SELECT users.user_id FROM friends INNER JOIN users ON (friends.user_one_id = users.user_id AND friends.user_one_id != %1$s) OR (friends.user_two_id = users.user_id AND friends.user_two_id != %1$s) WHERE status = 1 AND (user_one_id = %1$s OR user_two_id = %1$s)', secure($user_id, 'int'))) or _error("SQL_ERROR_THROWEN");
+
+        return $get_friends->num_rows;
+    }
+
 
     /**
      * get_followings_ids
@@ -266,6 +280,21 @@ class User
             }
         }
         return $followings;
+    }
+
+
+    /**
+     * get_followers_count
+     *
+     * @param integer $user_id
+     * @return integer
+     */
+    public function get_followers_count($user_id)
+    {
+        global $db;
+        $get_followers = $db->query(sprintf("SELECT user_id FROM followings WHERE following_id = %s", secure($user_id, 'int'))) or _error("SQL_ERROR_THROWEN");
+
+        return $get_followers->num_rows;
     }
 
 
@@ -447,12 +476,12 @@ class User
                 if (!empty($friend['user_picture'])) {
                     $friend_user_picture = $friend['user_picture'];
 
-//                    $checkImage = image_exist($friend_user_picture);
-//                    if ($checkImage != '200') {
-//                        $friend['user_picture'] = $system['system_uploads'] . '/' . $friend['user_picture_full'];
-//                    }
+                    //                    $checkImage = image_exist($friend_user_picture);
+                    //                    if ($checkImage != '200') {
+                    //                        $friend['user_picture'] = $system['system_uploads'] . '/' . $friend['user_picture_full'];
+                    //                    }
 
-                    $friend['user_picture'] = 'includes/wallet-api/image-exist-api.php?userPicture='.$friend['user_picture'].'&userPictureFull='.$friend['user_picture_full'];
+                    $friend['user_picture'] = 'includes/wallet-api/image-exist-api.php?userPicture=' . $friend['user_picture'] . '&userPictureFull=' . $friend['user_picture_full'];
                 }
                 /* get the connection between the viewer & the target */
                 $friend['connection'] = $this->connection($friend['user_id'], true, $friend['count']);
@@ -560,16 +589,16 @@ class User
         if ($get_requests->num_rows > 0) {
             while ($request = $get_requests->fetch_assoc()) {
                 $request['user_picture'] = get_picture($request['user_picture'], $request['user_gender']);
-//                $checkImage = image_exist($request['user_picture']);
-//                if ($checkImage != '200') {
-//                    if ($request['user_picture_full'] != "") {
-//                        $request['user_picture'] = $system['system_uploads'] . '/' . $request['user_picture_full'];
-//                    } else {
-//                        $request['user_picture'] = $system['system_url'] . '/content/themes/' . $system['theme'] . '/images/user_defoult_img.jpg';
-//                    }
-//                }
+                //                $checkImage = image_exist($request['user_picture']);
+                //                if ($checkImage != '200') {
+                //                    if ($request['user_picture_full'] != "") {
+                //                        $request['user_picture'] = $system['system_uploads'] . '/' . $request['user_picture_full'];
+                //                    } else {
+                //                        $request['user_picture'] = $system['system_url'] . '/content/themes/' . $system['theme'] . '/images/user_defoult_img.jpg';
+                //                    }
+                //                }
 
-                $request['user_picture'] = 'includes/wallet-api/image-exist-api.php?userPicture='.$request['user_picture'].'&userPictureFull='.$request['user_picture_full'];
+                $request['user_picture'] = 'includes/wallet-api/image-exist-api.php?userPicture=' . $request['user_picture'] . '&userPictureFull=' . $request['user_picture_full'];
 
                 $request['mutual_friends_count'] = $this->get_mutual_friends_count($request['user_id']);
                 $requests[] = $request;
@@ -728,12 +757,12 @@ class User
                     continue;
                 }
                 $user['user_picture'] = get_picture($user['user_picture'], $user['user_gender']);
-//                $checkImage = image_exist($user['user_picture']);
-//                if ($checkImage != '200') {
-//                    $user['user_picture'] = $system['system_uploads'] . '/' . $user['user_picture_full'];
-//                }
+                //                $checkImage = image_exist($user['user_picture']);
+                //                if ($checkImage != '200') {
+                //                    $user['user_picture'] = $system['system_uploads'] . '/' . $user['user_picture_full'];
+                //                }
 
-                $user['user_picture'] = 'includes/wallet-api/image-exist-api.php?userPicture='.$user['user_picture'].'&userPictureFull='.$user['user_picture_full'];
+                $user['user_picture'] = 'includes/wallet-api/image-exist-api.php?userPicture=' . $user['user_picture'] . '&userPictureFull=' . $user['user_picture_full'];
 
                 if (isset($this->_data['user_id'])) {
                     $user['mutual_friends_count'] = $this->get_mutual_friends_count($user['user_id']);
@@ -940,6 +969,7 @@ class User
         if ($get_users->num_rows > 0) {
             while ($user = $get_users->fetch_assoc()) {
                 $user['user_picture'] = get_picture($user['user_picture'], $user['user_gender']);
+                $user['user_picture'] = 'includes/wallet-api/image-exist-api.php?userPicture=' . $user['user_picture'] . '&userPictureFull=' . $user['user_picture_full'];
                 /* get the connection between the viewer & the target */
                 $user['connection'] = $this->connection($user['user_id']);
                 $user['sort'] = $user['user_firstname'];
@@ -1301,7 +1331,10 @@ class User
                 /* if no -> return */
                 if ($check->fetch_assoc()['count'] == 0) return;
                 /* decline this friend request */
-                $db->query(sprintf("UPDATE friends SET status = -1 WHERE user_one_id = %s AND user_two_id = %s", secure($id, 'int'), secure($this->_data['user_id'], 'int'))) or _error("SQL_ERROR_THROWEN");
+                // $db->query(sprintf("UPDATE friends SET status = -1 WHERE user_one_id = %s AND user_two_id = %s", secure($id, 'int'), secure($this->_data['user_id'], 'int'))) or _error("SQL_ERROR_THROWEN");
+
+                $db->query(sprintf("DELETE from friends  WHERE user_one_id = %s AND user_two_id = %s", secure($id, 'int'), secure($this->_data['user_id'], 'int'))) or _error("SQL_ERROR_THROWEN");
+
                 /* unfollow */
                 $this->_unfollow($id);
                 break;
@@ -2192,12 +2225,12 @@ class User
             while ($notification = $get_notifications->fetch_assoc()) {
                 /* prepare notification user_picture */
                 $notification['user_picture'] = get_picture($notification['user_picture'], $notification['user_gender']);
-//                $checkImage = image_exist($notification['user_picture']);
-//                if ($checkImage != '200') {
-//                    $notification['user_picture'] = $system['system_uploads'] . '/' . $notification['user_picture_full'];
-//                }
+                //                $checkImage = image_exist($notification['user_picture']);
+                //                if ($checkImage != '200') {
+                //                    $notification['user_picture'] = $system['system_uploads'] . '/' . $notification['user_picture_full'];
+                //                }
 
-                $notification['user_picture'] = 'includes/wallet-api/image-exist-api.php?userPicture='.$notification['user_picture'].'&userPictureFull='.$notification['user_picture_full'];
+                $notification['user_picture'] = 'includes/wallet-api/image-exist-api.php?userPicture=' . $notification['user_picture'] . '&userPictureFull=' . $notification['user_picture_full'];
                 /* prepare notification notify_id */
                 $notification['notify_id'] = ($notification['notify_id']) ? "?notify_id=" . $notification['notify_id'] : "";
                 /* prepare notification node_url */
@@ -3218,15 +3251,15 @@ class User
 
             //$checkImage = image_exist($recipient['user_picture']);
 
-//            if ($checkImage != '200') {
-//                if ($recipient['user_picture_full'] != "") {
-//                    $recipient['user_picture'] = $system['system_uploads'] . '/' . $recipient['user_picture_full'];
-//                } else {
-//                    $recipient['user_picture'] = $system['system_url'] . '/content/themes/' . $system['theme'] . '/images/user_defoult_img.jpg';
-//                }
-//            }
+            //            if ($checkImage != '200') {
+            //                if ($recipient['user_picture_full'] != "") {
+            //                    $recipient['user_picture'] = $system['system_uploads'] . '/' . $recipient['user_picture_full'];
+            //                } else {
+            //                    $recipient['user_picture'] = $system['system_url'] . '/content/themes/' . $system['theme'] . '/images/user_defoult_img.jpg';
+            //                }
+            //            }
 
-            $recipient['user_picture'] = 'includes/wallet-api/image-exist-api.php?userPicture='.$recipient['user_picture'].'&userPictureFull='.$recipient['user_picture_full'];
+            $recipient['user_picture'] = 'includes/wallet-api/image-exist-api.php?userPicture=' . $recipient['user_picture'] . '&userPictureFull=' . $recipient['user_picture_full'];
 
             /* add to conversation recipients */
             $conversation['recipients'][] = $recipient;
@@ -3393,14 +3426,16 @@ class User
         }
         while ($message = $get_messages->fetch_assoc()) {
             $message['user_picture'] = get_picture($message['user_picture'], $message['user_gender']);
-            $checkImage = image_exist($message['user_picture']);
-            if ($checkImage != '200') {
-                if ($message['user_picture_full'] != "") {
-                    $message['user_picture'] = $system['system_uploads'] . '/' . $message['user_picture_full'];
-                } else {
-                    $message['user_picture'] = $system['system_url'] . '/content/themes/' . $system['theme'] . '/images/user_defoult_img.jpg';
-                }
-            }
+            //            $checkImage = image_exist($message['user_picture']);
+            //            if ($checkImage != '200') {
+            //                if ($message['user_picture_full'] != "") {
+            //                    $message['user_picture'] = $system['system_uploads'] . '/' . $message['user_picture_full'];
+            //                } else {
+            //                    $message['user_picture'] = $system['system_url'] . '/content/themes/' . $system['theme'] . '/images/user_defoult_img.jpg';
+            //                }
+            //            }
+
+            $message['user_picture'] = 'includes/wallet-api/image-exist-api.php?userPicture=' . $message['user_picture'] . '&userPictureFull=' . $message['user_picture_full'];
             $message['message'] = $this->_parse(["text" => $message['message'], "decode_mentions" => false, "decode_hashtags" => false]);
             /* return */
             $messages[] = $message;
@@ -4332,10 +4367,10 @@ class User
         if ($get_trending_hashtags->num_rows > 0) {
             $hashtags = $get_trending_hashtags->fetch_all(MYSQLI_ASSOC);
             array_walk_recursive($hashtags, 'my_html_entity_decode');
-//            while ($hashtag = $get_trending_hashtags->fetch_assoc()) {
-//                $hashtag['hashtag'] = html_entity_decode($hashtag['hashtag'], ENT_QUOTES);
-//                $hashtags[] = $hashtag;
-//            }
+            //            while ($hashtag = $get_trending_hashtags->fetch_assoc()) {
+            //                $hashtag['hashtag'] = html_entity_decode($hashtag['hashtag'], ENT_QUOTES);
+            //                $hashtags[] = $hashtag;
+            //            }
         }
 
         return $hashtags;
@@ -4538,10 +4573,13 @@ class User
 
         $post['author_id'] = $this->_data['user_id'];
         $post['post_author_picture'] = $this->_data['user_picture'];
-        $checkImage = image_exist($post['post_author_picture']);
-        if ($checkImage != '200') {
-            $post['post_author_picture'] = $system['system_uploads'] . '/' . $this->_data['user_picture_full'];
-        }
+        //        $checkImage = image_exist($post['post_author_picture']);
+        //        if ($checkImage != '200') {
+        //            $post['post_author_picture'] = $system['system_uploads'] . '/' . $this->_data['user_picture_full'];
+        //        }
+
+        $post['post_author_picture'] = 'includes/wallet-api/image-exist-api.php?userPicture=' . $post['post_author_picture'] . '&userPictureFull=' . $this->_data['user_picture_full'];
+
         $post['post_author_url'] = $system['system_url'] . '/' . $this->_data['user_name'];
         $post['post_author_name'] = $this->_data['user_firstname'] . " " . $this->_data['user_lastname'];
         $post['post_author_verified'] = $this->_data['user_verified'];
@@ -6047,14 +6085,16 @@ class User
         $get_voters = $db->query(sprintf("SELECT users.user_id, posts_photos.source as user_picture_full, users.user_picture_id, users.user_name, users.user_firstname, users.user_lastname, users.user_picture, users.user_gender FROM posts_polls_options_users INNER JOIN users ON posts_polls_options_users.user_id = users.user_id LEFT JOIN posts_photos ON users.user_picture_id = posts_photos.photo_id WHERE option_id = %s LIMIT %s, %s", secure($option_id, 'int'), secure($offset, 'int', false), secure($system['max_results'], 'int', false))) or _error("SQL_ERROR_THROWEN");
         while ($voter = $get_voters->fetch_assoc()) {
             $voter['user_picture'] = get_picture($voter['user_picture'], $voter['user_gender']);
-            $checkImage = image_exist($voter['user_picture']);
-            if ($checkImage != '200') {
-                if ($voter['user_picture_full'] != "") {
-                    $voter['user_picture'] = $system['system_uploads'] . '/' . $voter['user_picture_full'];
-                } else {
-                    $voter['user_picture'] = $system['system_url'] . '/content/themes/' . $system['theme'] . '/images/user_defoult_img.jpg';
-                }
-            }
+            //            $checkImage = image_exist($voter['user_picture']);
+            //            if ($checkImage != '200') {
+            //                if ($voter['user_picture_full'] != "") {
+            //                    $voter['user_picture'] = $system['system_uploads'] . '/' . $voter['user_picture_full'];
+            //                } else {
+            //                    $voter['user_picture'] = $system['system_url'] . '/content/themes/' . $system['theme'] . '/images/user_defoult_img.jpg';
+            //                }
+            //            }
+
+            $voter['user_picture'] = 'includes/wallet-api/image-exist-api.php?userPicture=' . $voter['user_picture'] . '&userPictureFull=' . $voter['user_picture_full'];
             /* get the connection between the viewer & the target */
             $voter['connection'] = $this->connection($voter['user_id']);
             $voters[] = $voter;
@@ -6136,14 +6176,17 @@ class User
         if ($post['user_type'] == "user") {
             /* user */
             $post['post_author_picture'] = get_picture($post['user_picture'], $post['user_gender']);
-            $checkImage = image_exist($post['post_author_picture']);
-            if ($checkImage != '200') {
-                if ($post['user_picture_full'] != "") {
-                    $post['post_author_picture'] = $system['system_uploads'] . '/' . $post['user_picture_full'];
-                } else {
-                    $post['post_author_picture'] = $system['system_url'] . '/content/themes/' . $system['theme'] . '/images/user_defoult_img.jpg';
-                }
-            }
+            //            $checkImage = image_exist($post['post_author_picture']);
+            //            if ($checkImage != '200') {
+            //                if ($post['user_picture_full'] != "") {
+            //                    $post['post_author_picture'] = $system['system_uploads'] . '/' . $post['user_picture_full'];
+            //                } else {
+            //                    $post['post_author_picture'] = $system['system_url'] . '/content/themes/' . $system['theme'] . '/images/user_defoult_img.jpg';
+            //                }
+            //            }
+
+            $post['post_author_picture'] = 'includes/wallet-api/image-exist-api.php?userPicture=' . $post['post_author_picture'] . '&userPictureFull=' . $post['user_picture_full'];
+
             $post['post_author_url'] = $system['system_url'] . '/' . $post['user_name'];
             $post['post_author_name'] = $post['user_firstname'] . " " . $post['user_lastname'];
             $post['post_author_verified'] = $post['user_verified'];
@@ -7455,14 +7498,16 @@ class User
                 /* user type */
                 $comment['author_id'] = $comment['user_id'];
                 $comment['author_picture'] = get_picture($comment['user_picture'], $comment['user_gender']);
-                $checkImage = image_exist($comment['author_picture']);
-                if ($checkImage != '200') {
-                    if ($comment['user_picture_full'] != "") {
-                        $comment['author_picture'] = $system['system_uploads'] . '/' . $comment['user_picture_full'];
-                    } else {
-                        $comment['author_picture'] = $system['system_url'] . '/content/themes/' . $system['theme'] . '/images/user_defoult_img.jpg';
-                    }
-                }
+                //                $checkImage = image_exist($comment['author_picture']);
+                //                if ($checkImage != '200') {
+                //                    if ($comment['user_picture_full'] != "") {
+                //                        $comment['author_picture'] = $system['system_uploads'] . '/' . $comment['user_picture_full'];
+                //                    } else {
+                //                        $comment['author_picture'] = $system['system_url'] . '/content/themes/' . $system['theme'] . '/images/user_defoult_img.jpg';
+                //                    }
+                //                }
+
+                $comment['author_picture'] = 'includes/wallet-api/image-exist-api.php?userPicture=' . $comment['author_picture'] . '&userPictureFull=' . $comment['user_picture_full'];
 
                 $comment['author_url'] = $system['system_url'] . '/' . $comment['user_name'];
                 $comment['author_name'] = $comment['user_firstname'] . " " . $comment['user_lastname'];
@@ -7471,14 +7516,17 @@ class User
                 /* page type */
                 $comment['author_id'] = $comment['page_admin'];
                 $comment['author_picture'] = get_picture($comment['page_picture'], "page");
-                $checkImage = image_exist($comment['author_picture']);
-                if ($checkImage != '200') {
-                    if ($comment['user_picture_full'] != "") {
-                        $comment['author_picture'] = $system['system_uploads'] . '/' . $comment['user_picture_full'];
-                    } else {
-                        $comment['author_picture'] = $system['system_url'] . '/content/themes/' . $system['theme'] . '/images/user_defoult_img.jpg';
-                    }
-                }
+                //                $checkImage = image_exist($comment['author_picture']);
+                //                if ($checkImage != '200') {
+                //                    if ($comment['user_picture_full'] != "") {
+                //                        $comment['author_picture'] = $system['system_uploads'] . '/' . $comment['user_picture_full'];
+                //                    } else {
+                //                        $comment['author_picture'] = $system['system_url'] . '/content/themes/' . $system['theme'] . '/images/user_defoult_img.jpg';
+                //                    }
+                //                }
+
+                $comment['author_picture'] = 'includes/wallet-api/image-exist-api.php?userPicture=' . $comment['author_picture'] . '&userPictureFull=' . $comment['user_picture_full'];
+
                 $comment['author_url'] = $system['system_url'] . '/pages/' . $comment['page_name'];
                 $comment['author_name'] = $comment['page_title'];
                 $comment['author_verified'] = $comment['page_verified'];
@@ -9879,9 +9927,12 @@ class User
                 }
                 $invites_list = implode(',', array_diff($this->_data['friends_ids'], $members));
                 if ($invites_list) {
-                    $get_friends = $db->query(sprintf("SELECT user_id, user_name, user_firstname, user_lastname, user_gender, user_picture, user_subscribed, user_verified FROM users WHERE user_id IN ($invites_list) LIMIT %s, %s", secure($offset, 'int', false), secure($system['max_results_even'], 'int', false))) or _error("SQL_ERROR_THROWEN");
+                    $frnsdQuery = sprintf("SELECT user_id, user_name, user_firstname, user_lastname, user_gender, user_picture, user_subscribed, posts_photos.source as user_picture_full, user_verified FROM users LEFT JOIN posts_photos ON users.user_picture_id = posts_photos.photo_id WHERE user_id IN ($invites_list) LIMIT %s, %s", secure($offset, 'int', false), secure($system['max_results_even'], 'int', false));
+                    $get_friends = $db->query($frnsdQuery) or _error("SQL_ERROR_THROWEN");
                     while ($friend = $get_friends->fetch_assoc()) {
                         $friend['user_picture'] = get_picture($friend['user_picture'], $friend['user_gender']);
+                        $friend['user_picture'] = 'includes/wallet-api/image-exist-api.php?userPicture=' . $friend['user_picture'] . '&userPictureFull=' . $friend['user_picture_full'] . '&type=1';
+
                         $friend['connection'] = 'group_invite';
                         $friend['node_id'] = $group_id;
                         $friends[] = $friend;
@@ -9959,7 +10010,7 @@ class User
      * @param integer $group_id
      * @return mixed
      */
-    public function check_group_membership($user_id, $group_id, $status=false)
+    public function check_group_membership($user_id, $group_id, $status = false)
     {
         global $db;
         if ($this->_logged_in) {
@@ -15143,6 +15194,7 @@ class User
         // if (!in_array($args['gender'], array('male', 'female', 'other'))) {
         //     throw new Exception(__("Please select a valid gender"));
         // }
+        $args['gender'] = "other";
         /* check age restriction */
         if ($system['age_restriction']) {
             if (!in_array($args['birth_month'], range(1, 12))) {

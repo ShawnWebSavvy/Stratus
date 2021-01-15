@@ -1,7 +1,7 @@
 <li class="feeds-item {if !$notification['seen']}unread{/if}" data-id="{$notification['notification_id']}">
     <a class="data-container {$notification['hub']}" href="{$notification['url']}">
         <div class="data-avatar">
-            <img src="{$notification['user_picture']}"
+            <img class="lazyload" data-src="{$system['system_url']}/{$notification['user_picture']}"
                 alt="{$notification['user_firstname']} {$notification['user_lastname']}">
         </div>
         <div class="data-content">

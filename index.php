@@ -1,6 +1,5 @@
 <?php
-ini_set("zlib.output_compression", 1);
-ob_start("ob_gzhandler");
+
 /**
  * index
  *
@@ -18,41 +17,6 @@ require('bootloader.php');
 //echo $end_time - $start_time; die;
 
 try {
-	// require_once("vendor/autoload.php");
-	// \Tinify\setKey("hh9jTWDVlvV24rdbHvPvcKT5lF0tBpHd");
-	// require_once(ABSPATH . 'includes/libs/AWS/aws-autoloader.php');
-	// $s3Client = Aws\S3\S3Client::factory(array(
-	// 	'version' => 'latest',
-	// 	'region' => $system['s3_region'],
-	// 	'credentials' => array(
-	// 		'key' => $system['s3_key'],
-	// 		'secret' => $system['s3_secret'],
-	// 	)
-	// ));
-	// $curent_month = date('m');
-	// $curent_year = date('Y');
-	// $iterator = $s3Client->getIterator('ListObjects', array(
-	// 	'Bucket' => "prod-web-stratus",
-	// 	'Prefix' => 'uploads/photos/' . $curent_year . '/' . $curent_month
-	// ));
-	// foreach ($iterator as $bucket) {
-	// 	// Each Bucket value will contain a Name and CreationDate
-	// 	$newstring = substr($bucket['Key'], -3);
-
-	// 	if ($bucket['Size'] > 900000 && $newstring != "gif") {
-	// 		$url = "https://cdn1.stratus.co/" . $bucket['Key'];
-	// 		echo $url;
-	// 		echo "<br>";
-	// 		echo $bucket['Size'];
-	// 		echo "<br>";
-	// 		$data = file_get_contents($url);
-	// 		$im = imagecreatefromstring($data);
-	// 		imageJpeg($im, "content/" . $bucket['Key']);
-	// 	}
-	// }
-	// die;
-	// check user logged in
-
 	if (!$user->_logged_in) {
 
 		// page header
@@ -63,8 +27,6 @@ try {
 		$smarty->assign('before_login', $_SESSION['logged_in_datetime']);
 		$smarty->assign('custom_fields', $user->get_custom_fields());
 	} else {
-
-
 
 		// user access
 		user_access();

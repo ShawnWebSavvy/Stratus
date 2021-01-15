@@ -21,8 +21,7 @@
                         {if $_handle == "page"}
                         <img class="publisher-avatar" src="{$spage['page_picture']}" />
                         {else}
-                        <img class="publisher-avatar {$user->_data['user_id']}"
-                            src="{$system['system_url']}/{$user->_data['user_picture']}" />
+                        <img class="publisher-avatar {$user->_data['user_id']}" src="{$user->_data['user_picture']}" />
                         {/if}
                     </div>
 

@@ -134,41 +134,46 @@
                 {else}
                 {if $page == "index" && !$user->_logged_in}
                 <a href="{$system['system_url']}" class="logo {$page}">
-                  <img class="img-fluid lazyload"   data-src="{$system['system_url']}/content/themes/default/images/logo.png" />
+                  <img class="img-fluid lazyload"
+                    data-src="{$system['system_url']}/content/themes/default/images/logo.png" />
                 </a>
                 {elseif (($page == "index" || $page == "profile") && $view !="articles" && $user->_logged_in ) || $page
                 == "messages" || $page == "group" || $page == "groups" &&
                 $user->_logged_in}
                 <a href="{$system['system_url']}" class="logo {$page}">
                   <img class="img-fluid lazyload"
-                      data-src="{$system['system_uploads_assets']}/content/themes/default/images/logo_localHub.png" />
+                    data-src="{$system['system_uploads_assets']}/content/themes/default/images/logo_localHub.png" />
                 </a>
                 {elseif ($page == "global-profile/global-profile" || $page =="global-profile/global-profile-photo" ||
                 $page =="global-profile/global-profile-timeline") && $user->_logged_in}
                 <a href="{$system['system_url']}/global-profile-timeline.php" class="logo {$page}">
                   <img class="img-fluid lazyload"
-                      data-src="{$system['system_uploads_assets']}/content/themes/default/images/logo_globalHub.png" />
+                    data-src="{$system['system_uploads_assets']}/content/themes/default/images/logo_globalHub.png" />
                 </a>
                 {elseif ($page == "ads" && $view != "wallet") && $user->_logged_in}
                 <a href="{$system['system_url']}/ads" class="logo {$page}">
-                  <img class="img-fluid lazyload"   data-src="{$system['system_url']}/content/themes/default/images/logo_addHub.png" />
+                  <img class="img-fluid lazyload"
+                    data-src="{$system['system_url']}/content/themes/default/images/logo_addHub.png" />
                 </a>
                 {elseif ($view == "wallet") && $user->_logged_in}
                 <a href="{$system['system_url']}/ads" class="logo {$page}">
-                  <img class="img-fluid lazyload"   data-src="{$system['system_url']}/content/themes/default/images/logo_wallet.png" />
+                  <img class="img-fluid lazyload"
+                    data-src="{$system['system_url']}/content/themes/default/images/logo_wallet.png" />
                 </a>
                 {elseif ($page == "blogs" || $view =='articles') && $user->_logged_in}
                 <a href="{$system['system_url']}/blogs" class="logo {$page}">
-                  <img class="img-fluid lazyload"   data-src="{$system['system_url']}/content/themes/default/images/logo_blog.png" />
+                  <img class="img-fluid lazyload"
+                    data-src="{$system['system_url']}/content/themes/default/images/logo_blog.png" />
                 </a>
                 {elseif ($page == "market") && $user->_logged_in || $actPage}
                 <a href="{$system['system_url']}/market" class="logo {$page}">
                   <img class="img-fluid lazyload"
-                      data-src="{$system['system_url']}/content/themes/default/images/logo_marketHub.png" />
+                    data-src="{$system['system_url']}/content/themes/default/images/logo_marketHub.png" />
                 </a>
                 {else}
                 <a href="{$system['system_url']}" class="logo {$page}">
-                  <img class="img-fluid lazyload" data-src="{$system['system_url']}/content/themes/default/images/logo.png" />
+                  <img class="img-fluid lazyload"
+                    data-src="{$system['system_url']}/content/themes/default/images/logo.png" />
                 </a>
                 {/if}
                 <!--{$system['system_title']}-->
@@ -435,14 +440,15 @@
                         <a href="javascript:void();" id="currentUsername"
                           class="rightuser-menu usernameOnHoverbtn openRightBlackBar">
                           <!-- <span class="usernameOnHover">{$userGlobal->_data['user_firstname']}</span> -->
-                          <img class="lazyload" data-src="{$userGlobal->_data['global_user_picture']}" />
+                          <img class="lazyload"
+                            data-src="{$system['system_url']}/{$userGlobal->_data['global_user_picture']}" />
                           <span class="">{$userGlobal->_data['user_firstname']}</span>
                         </a>
                         {else}
                         <a href="javascript:void();" id="currentUsername" page='{$page}'
                           class="rightuser-menu usernameOnHoverbtn openRightBlackBar">
                           <!-- <span class="usernameOnHover">{$user->_data['user_firstname']}</span> -->
-                          <img class="lazyload" data-src="{$user->_data['user_picture']}" />
+                          <img class="lazyload" data-src="{$system['system_url']}/{$user->_data['user_picture']}" />
                           <span class="">{$user->_data['user_firstname']}</span>
                         </a>
                         {/if}

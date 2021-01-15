@@ -10,7 +10,6 @@
 // set system version
 define('SYS_VER', '2.8');
 
-
 // set absolut & base path
 define('ABSPATH', dirname(__FILE__) . '/');
 define('BASEPATH', dirname($_SERVER['PHP_SELF']));
@@ -41,8 +40,8 @@ if (DEBUGGING) {
 require_once(ABSPATH . 'includes/functions.php');
 
 // //tinypng Optimisation
-// require_once("vendor/autoload.php");
-// \Tinify\setKey("hh9jTWDVlvV24rdbHvPvcKT5lF0tBpHd");
+require_once("vendor/autoload.php");
+\Tinify\setKey("hh9jTWDVlvV24rdbHvPvcKT5lF0tBpHd");
 
 // ini_set('display_errors', 1);
 // ini_set('display_startup_errors', 1);
