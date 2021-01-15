@@ -55,20 +55,26 @@
                     </div>
                     {/if}
                     <!-- stories -->
-
+<div class="row">
+	<div class="col-md-12">
                     <!-- publisher -->
                     {include file='_publisher.tpl' _handle="me" _privacy=true}
                     <!-- publisher -->
+	</div>
+</div>
 
                     <!-- boosted post -->
                     {if $boosted_post}
                     {include file='_boosted_post.tpl' post=$boosted_post}
                     {/if}
                     <!-- boosted post -->
-
+<div class="row">
+	<div class="col-md-12">
                     <!-- posts -->
                     {include file='_posts.tpl' _get="newsfeed"}
                     <!-- posts -->
+	</div>
+</div>
 
                     {elseif $view == "popular"}
                     <!-- popular posts -->
