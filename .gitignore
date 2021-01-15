@@ -6,3 +6,9 @@ content/themes/default/templates_compiled/*
 
 # Ignore Intellij Files
 .idea/*
+
+# Ignore vim files
+*.swp
+*.swo
+*.swn
+.DS_Store

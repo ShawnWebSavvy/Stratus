@@ -686,7 +686,7 @@
                         });
                      </script>
                      <div id="profile_ajax_publisher">
-                        <div class="post x-hidden js_posts_loader" id="hidden-loader" style="display: none;">
+                        <div class="post x-hidden js_posts_loader" id="hidden-loader" style="display: block;">
                            <div class="post-body">
                               <div class="panel-effect">
                                  <div class="fake-effect fe-0"></div>
