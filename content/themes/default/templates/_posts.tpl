@@ -1,5 +1,6 @@
 <!-- posts-filter -->
-
+<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
 <div class="__overlay__" id="__overlay__"></div>
 <div class="posts-filter col-12">
 	<span>{if $_title}{$_title}{else}{__("Recent Updates")}{/if}</span>
@@ -198,16 +199,18 @@
 <div class="js_posts_stream" id="posts_all" data-get="{$_get}" data-filter="{if $_filter}{$_filter}{else}all{/if}" {if
 	$_id}data-id="{$_id}" {/if}>
 	{if $posts}
-	<ul class="feeds_post_ul" id="{if $subactive_page}profile_feeds_post_ul{else}landing_feeds_post_ul{/if}">
-		<!-- posts -->
-		{foreach $posts as $post}
-		{include file='__feeds_post.tpl' _get=$_get}
+	<div class="container-class">
+		<div class="card-columns" style="column-count:2">
+			{foreach $posts as $post}
+		{include file='__feeds_posts.tpl' _get=$_get}
 		{/foreach}
-		<!-- posts -->
-	</ul>
+		  
+		</div>
+	  </div>
+	  
 
 	<!-- see-more -->
-	<div class="alert alert-post see-more mb20 js_see-more {if $user->_logged_in}js_see-more-infinite{/if}"
+	<div class="alert alert-post see-more js_see-more {if $user->_logged_in}js_see-more-infinite{/if}"
 		data-get="{$_get}" data-filter="{if $_filter}{$_filter}{else}all{/if}" {if $_id}data-id="{$_id}" {/if}>
 		<span>{__("More Stories")}</span>
 		<div class="loader loader_small x-hidden"></div>
