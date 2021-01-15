@@ -3,7 +3,8 @@
     <div class="ui-box">
         <div class="img">
             <a href="{$system['system_url']}/{$_user['user_name']}">
-                <img alt="{$_user['user_firstname']} {$_user['user_lastname']}" src="{$_user['user_picture']}" />
+                <img alt="{$_user['user_firstname']} {$_user['user_lastname']}"
+                    src="{$system['system_url']}/{$_user['user_picture']}" />
             </a>
         </div>
         <div class="mt10">

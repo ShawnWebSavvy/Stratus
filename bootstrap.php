@@ -9,7 +9,6 @@
 
 // set system version
 define('SYS_VER', '2.8');
-ini_set('memory_limit', '-1');
 
 // set absolut & base path
 define('ABSPATH', dirname(__FILE__) . '/');
