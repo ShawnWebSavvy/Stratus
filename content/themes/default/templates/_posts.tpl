@@ -1,5 +1,6 @@
 <!-- posts-filter -->
-
+<link rel="stylesheet" href="{$system['system_url']}/content/bricklayer.css">
+<link rel="stylesheet" href="{$system['system_url']}/content/demo.css">
 <div class="__overlay__" id="__overlay__"></div>
 <div class="posts-filter col-12">
 	<span>{if $_title}{$_title}{else}{__("Recent Updates")}{/if}</span>
@@ -198,13 +199,13 @@
 <div class="js_posts_stream" id="posts_all" data-get="{$_get}" data-filter="{if $_filter}{$_filter}{else}all{/if}" {if
 	$_id}data-id="{$_id}" {/if}>
 	{if $posts}
-	<ul class="feeds_post_ul" id="{if $subactive_page}profile_feeds_post_ul{else}landing_feeds_post_ul{/if}">
+	<div class="bricklayer">
 		<!-- posts -->
 		{foreach $posts as $post}
-		{include file='__feeds_post.tpl' _get=$_get}
+		{include file='__feeds_posts.tpl' _get=$_get}
 		{/foreach}
 		<!-- posts -->
-	</ul>
+	</div>
 
 	<!-- see-more -->
 	<div class="alert alert-post see-more mb20 js_see-more {if $user->_logged_in}js_see-more-infinite{/if}"
@@ -225,3 +226,5 @@
 	</div>
 	{/if}
 </div>
+<script src="https://rawgit.com/ademilter/bricklayer/master/dist/bricklayer.min.js"></script>
+<script src="{$system['system_url']}/content/demo.js"></script>

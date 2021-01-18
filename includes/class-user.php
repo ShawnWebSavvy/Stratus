@@ -4366,11 +4366,11 @@ class User
         $get_trending_hashtags = $db->query($selectQuery) or _error("SQL_ERROR_THROWEN");
         if ($get_trending_hashtags->num_rows > 0) {
             $hashtags = $get_trending_hashtags->fetch_all(MYSQLI_ASSOC);
-            array_walk_recursive($hashtags, 'my_html_entity_decode');
-            //            while ($hashtag = $get_trending_hashtags->fetch_assoc()) {
-            //                $hashtag['hashtag'] = html_entity_decode($hashtag['hashtag'], ENT_QUOTES);
-            //                $hashtags[] = $hashtag;
-            //            }
+            //array_walk_recursive($hashtags, 'my_html_entity_decode');
+            while ($hashtag = $get_trending_hashtags->fetch_assoc()) {
+                $hashtag['hashtag'] = html_entity_decode($hashtag['hashtag'], ENT_QUOTES);
+                $hashtags[] = $hashtag;
+            }
         }
 
         return $hashtags;
@@ -4808,7 +4808,7 @@ class User
                 //Video thumbnails
                 if ($args['video_thumbnail'] == "") {
                     $helpers = new helpers();
-                    $result_ = $helpers->makeVideosThumbnails($system['system_uploads'] . '/thumbnails/' . $args['video']->source, 5, 'prod');
+                    $result_ = $helpers->makeVideosThumbnails($system['system_uploads'] . '/' . $args['video']->source, 5, 'prod');
                     if (sizeof($result_) > 0) :
                         //$db->query(sprintf("UPDATE posts_videos SET thumbnail = $result_['thumb'] WHERE video_id = %s ", secure($post['video']['video_id'], 'int'))) or _error("SQL_ERROR_THROWEN");
                         $db->query(sprintf("UPDATE posts_videos SET thumbnail = 'thumbnails/" . $result_['thumb'] . "' WHERE video_id = %s", secure($post['video']['video_id']))) or _error("SQL_ERROR_THROWEN");

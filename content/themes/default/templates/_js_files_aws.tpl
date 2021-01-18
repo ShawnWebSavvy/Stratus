@@ -372,7 +372,7 @@
 <!-- Dependencies Plugins -->
 
 <!-- Sngine [JS] -->
-<script src="{$system['system_url']}/includes/assets/js/stratus/core.js?{$cacheremovejs}" defer></script>
+<script src="http://localhost/stratus_speed/includes/assets/js/stratus/core.js?{$cacheremovejs}" defer></script>
 <!--Landing page custom js -->
 <script src="{$system['system_url']}/includes/assets/js/stratus/custom.js?{$cacheremovejs}" defer></script>
 

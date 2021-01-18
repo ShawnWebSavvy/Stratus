@@ -105,6 +105,7 @@ function render_template(e, t) {
     return Mustache.parse(a), Mustache.render(a, t);
 }
 function load_more(element) {
+    var bricklayer = new Bricklayer(document.querySelector('.bricklayer'));
     if (!element.hasClass("done") && !element.hasClass("loading")) {
         var _this = element,
             loading = _this.find(".loader"),
@@ -128,6 +129,18 @@ function load_more(element) {
                 function (response) {
                     if ((_this.removeClass("loading"), text.show(), loading.addClass("x-hidden"), response.callback)) eval(response.callback);
                     else if (response.data) {
+                        console.log(response.data)
+                        var datatta = response.data;
+                        console.log(datatta.split('<div class="carsds"'))
+                        bricklayer.append(JSON.parse(response.data));
+                        bricklayer.on("afterAppend", function (e) {
+                            var el = e.detail.item;
+                            el.classList.add('is-append');
+                            setTimeout(function () {
+                                el.classList.remove('is-append');
+                            }, 500);
+                        });
+
                         if ((data.offset++, response.append ? stream.append(response.data) : stream.prepend(response.data), $(window).width() > 1024)) {
                             if ($("body #landing_feeds_post_ul").length > 0) var macyInstance = Macy({ container: ".feeds_post_ul", trueOrder: !0, columns: 2, waitForImages: !0 });
                             if ($("body #feeds_post_ul").length > 0) var macyInstance = Macy({ container: ".feeds_post_ul", trueOrder: !0, columns: 2, waitForImages: !0 });

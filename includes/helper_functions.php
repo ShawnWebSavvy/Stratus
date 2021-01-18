@@ -36,7 +36,7 @@ class helpers
     $file_name = $name_info['filename'] . '.jpg';
 
 
-    $path = ABSPATH . $system['uploads_directory'] . 'content/uploads/photos/' . $file_name;
+    $path = ABSPATH . 'content/uploads/photos/' . $file_name;
 
     //print_r($path); die;
 
@@ -48,7 +48,8 @@ class helpers
     $cmd = "$ffmpeg  -i $video -vf scale=-2:ih -deinterlace -an -ss $interval -f mjpeg -t 1 -r 1 -y -s $size $path 2>&1";
 
     exec($cmd, $output);
-
+    print_r($output);
+    die;
     if ($env == 'local') :
       $thumb_ = 'photos/' . $file_name;
     else :
@@ -75,15 +76,13 @@ class helpers
         'secret' => $system['s3_secret'],
       )
     ));
-    $Key = 'uploads/' . $file_name;
-    $result = $s3Client->putObject([
+    $Key = 'uploads/thumbnails/' . $file_name;
+    $s3Client->putObject([
       'Bucket' => $system['s3_bucket'],
       'Key'    => $Key,
-      'Body'   => 'This is the body',
+      'Body'   => "this is body",
       'ACL'    => 'public-read',
-      'SourceFile' => $file_source
     ]);
-
     //var_dump($result);
     /* remove local file */
     gc_collect_cycles();
