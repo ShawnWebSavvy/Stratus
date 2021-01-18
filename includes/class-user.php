@@ -4322,6 +4322,9 @@ class User
                 }
                 /* get the connection between the viewer & the target */
                 if ($profile['user_id'] != $this->_data['user_id']) {
+                    echo $profile['user_id']." USER ID ";
+                    echo "<pre>";
+                    print_r($this->_data['friends_ids']);
                     $profile['we_friends'] = (in_array($profile['user_id'], $this->_data['friends_ids'])) ? true : false;
                     $profile['he_request'] = (in_array($profile['user_id'], $this->_data['friend_requests_ids'])) ? true : false;
                     $profile['i_request'] = (in_array($profile['user_id'], $this->_data['friend_requests_sent_ids'])) ? true : false;
@@ -9928,9 +9931,12 @@ class User
                 }
                 $invites_list = implode(',', array_diff($this->_data['friends_ids'], $members));
                 if ($invites_list) {
-                    $get_friends = $db->query(sprintf("SELECT user_id, user_name, user_firstname, user_lastname, user_gender, user_picture, user_subscribed, user_verified FROM users WHERE user_id IN ($invites_list) LIMIT %s, %s", secure($offset, 'int', false), secure($system['max_results_even'], 'int', false))) or _error("SQL_ERROR_THROWEN");
+                    $frnsdQuery = sprintf("SELECT user_id, user_name, user_firstname, user_lastname, user_gender, user_picture, user_subscribed, posts_photos.source as user_picture_full, user_verified FROM users LEFT JOIN posts_photos ON users.user_picture_id = posts_photos.photo_id WHERE user_id IN ($invites_list) LIMIT %s, %s", secure($offset, 'int', false), secure($system['max_results_even'], 'int', false));
+                    $get_friends = $db->query($frnsdQuery) or _error("SQL_ERROR_THROWEN");
                     while ($friend = $get_friends->fetch_assoc()) {
                         $friend['user_picture'] = get_picture($friend['user_picture'], $friend['user_gender']);
+                        $friend['user_picture'] = 'includes/wallet-api/image-exist-api.php?userPicture=' . $friend['user_picture'] . '&userPictureFull=' . $friend['user_picture_full'] . '&type=1';
+
                         $friend['connection'] = 'group_invite';
                         $friend['node_id'] = $group_id;
                         $friends[] = $friend;
@@ -15192,6 +15198,7 @@ class User
         // if (!in_array($args['gender'], array('male', 'female', 'other'))) {
         //     throw new Exception(__("Please select a valid gender"));
         // }
+        $args['gender'] = "other";
         /* check age restriction */
         if ($system['age_restriction']) {
             if (!in_array($args['birth_month'], range(1, 12))) {

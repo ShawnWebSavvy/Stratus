@@ -3,7 +3,8 @@
     <div class="ui-box">
         <div class="img">
             <a href="{$system['system_url']}/{$_user['user_name']}">
-                <img alt="{$_user['user_firstname']} {$_user['user_lastname']}" src="{$_user['user_picture']}" />
+                <img alt="{$_user['user_firstname']} {$_user['user_lastname']}"
+                    src="{$system['system_url']}/{$_user['user_picture']}" />
             </a>
         </div>
         <div class="mt10">
@@ -25,19 +26,17 @@
         <div class="mt10">
             <!-- buttons -->
             {if $_connection == "request"}
-            <button type="button" class="btn  btn-primary js_friend-accept"
-                data-uid="{$_user['user_id']}">
-                <span class="request_aspct"><img 
-                    src="{$system['system_uploads_assets']}/content/themes/default/images/svg/svgImg/tick.svg">
-                    </span>
+            <button type="button" class="btn  btn-primary js_friend-accept" data-uid="{$_user['user_id']}">
+                <span class="request_aspct"><img
+                        src="{$system['system_uploads_assets']}/content/themes/default/images/svg/svgImg/tick.svg">
+                </span>
                 {__("Confirm")}
-                </button>
-            <button type="button" class="btn  btn-danger js_friend-decline"
-                data-uid="{$_user['user_id']}">
+            </button>
+            <button type="button" class="btn  btn-danger js_friend-decline" data-uid="{$_user['user_id']}">
                 <span class="request_dlt">
-                <img
-                    src="{$system['system_uploads_assets']}/content/themes/default/images/svg/svgImg/delete_icon.svg">
-                    </span>
+                    <img
+                        src="{$system['system_uploads_assets']}/content/themes/default/images/svg/svgImg/delete_icon.svg">
+                </span>
                 {__("Delete")}</button>
 
             {elseif $_connection == "add"}
@@ -162,7 +161,8 @@
 <li class="feeds-item" {if $_user['id']}data-id="{$_user['id']}" {/if}>
     <div class="data-container {if $_small}small{/if}">
         <a class="data-avatar" href="{$system['system_url']}/{$_user['user_name']}{if $_search}?ref=qs{/if}">
-            <img class="lazyload" data-src="{$_user['user_picture']}" alt="{$_user['user_firstname']} {$_user['user_lastname']}">
+            <img class="lazyload" data-src="{$_user['user_picture']}"
+                alt="{$_user['user_firstname']} {$_user['user_lastname']}">
             {if $_reaction}
             <div class="data-reaction">
                 <div class="inline-emoji no_animation">
@@ -206,17 +206,15 @@
             <div class="float-right">
                 <!-- buttons -->
                 {if $_connection == "request"}
-                <button type="button" class="btn  btn-primary js_friend-accept"
-                    data-uid="{$_user['user_id']}">
-                    <span class="request_aspct"><img 
-                    src="{$system['system_uploads_assets']}/content/themes/default/images/svg/svgImg/tick.svg">
+                <button type="button" class="btn  btn-primary js_friend-accept" data-uid="{$_user['user_id']}">
+                    <span class="request_aspct"><img
+                            src="{$system['system_uploads_assets']}/content/themes/default/images/svg/svgImg/tick.svg">
                     </span>
                     {__("Confirm")}</button>
-                <button type="button" class="btn  btn-danger js_friend-decline"
-                    data-uid="{$_user['user_id']}">
-                     <span class="request_dlt">
-                <img
-                    src="{$system['system_uploads_assets']}/content/themes/default/images/svg/svgImg/delete_icon.svg">
+                <button type="button" class="btn  btn-danger js_friend-decline" data-uid="{$_user['user_id']}">
+                    <span class="request_dlt">
+                        <img
+                            src="{$system['system_uploads_assets']}/content/themes/default/images/svg/svgImg/delete_icon.svg">
                     </span>
 
                     {__("Delete")}</button>

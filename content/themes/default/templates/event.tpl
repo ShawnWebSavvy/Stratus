@@ -159,14 +159,16 @@
                                         <div class="dropdown-divider"></div>
                                         <a class="dropdown-item"
                                             href="{$system['system_url']}/admincp/events/edit_event/{$event['event_id']}">
-                                            <img class="mr10" src="{$system['system_url']}/content/themes/default/images/svg/svgImg/Cog.svg">
+                                            <img class="mr10"
+                                                src="{$system['system_url']}/content/themes/default/images/svg/svgImg/Cog.svg">
                                             {__("Edit in Admin Panel")}
                                         </a>
                                         {elseif $user->_is_moderator}
                                         <div class="dropdown-divider"></div>
                                         <a class="dropdown-item"
                                             href="{$system['system_url']}/modcp/events/edit_event/{$event['event_id']}">
-                                            <img class="mr10" src="{$system['system_url']}/content/themes/default/images/svg/svgImg/Cog.svg">
+                                            <img class="mr10"
+                                                src="{$system['system_url']}/content/themes/default/images/svg/svgImg/Cog.svg">
                                             {__("Edit in Moderator Panel")}
                                         </a>
                                         {/if}
@@ -748,7 +750,8 @@
                         <ul class="side-nav">
                             <li {if $sub_view=="" }class="active" {/if}>
                                 <a href="{$system['system_url']}/events/{$event['event_id']}/settings">
-                                    <img class="mr10" src="{$system['system_url']}/content/themes/default/images/svg/svgImg/Cog.svg">
+                                    <img class="mr10"
+                                        src="{$system['system_url']}/content/themes/default/images/svg/svgImg/Cog.svg">
                                     {__("Event Settings")}</a>
                             </li>
                             <li {if $sub_view=="delete" }class="active" {/if}>
@@ -764,7 +767,8 @@
                 <div class="card">
                     {if $sub_view == ""}
                     <div class="card-header with-icon">
-                        <img class="mr10" src="{$system['system_url']}/content/themes/default/images/svg/svgImg/Cog.svg">
+                        <img class="mr10"
+                            src="{$system['system_url']}/content/themes/default/images/svg/svgImg/Cog.svg">
                         {__("Event Settings")}
                     </div>
                     <form class="js_ajax-forms"
