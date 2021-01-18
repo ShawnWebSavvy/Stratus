@@ -18,6 +18,9 @@ $TIMES["BEFORE GET PROFILE"] = microtime(true) - $LAST_TIME; $LAST_TIME = microt
 	$profile = $get_profile->fetch_assoc();
 
 //--------------------------------------------------------------------------------
+// echo "<pre>"; var_dump($system); die();
+// echo "<pre>"; var_dump($profile); die();
+//--------------------------------------------------------------------------------
 
 	if ($user->_data['user_id'] == $profile['user_id']) {
 		$smarty->assign("_handle", "me");

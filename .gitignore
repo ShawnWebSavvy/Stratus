@@ -1,8 +1,15 @@
 /vendor/*
 content/themes/default/templates_compiled/*
 /includes/config.php
+content/uploads/*
 # Ignore files with credentials
 .htaccess
 
 # Ignore Intellij Files
 .idea/*
+
+# Ignore vim files
+*.swp
+*.swo
+*.swn
+.DS_Store
