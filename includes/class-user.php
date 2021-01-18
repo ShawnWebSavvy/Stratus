@@ -2007,7 +2007,6 @@ class User
     public function banned($user_id)
     {
         global $db;
-        echo "SELECT COUNT(*) as count FROM users WHERE user_banned = '1' AND user_id = %s", secure($user_id, 'int'); die;
         $check = $db->query(sprintf("SELECT COUNT(*) as count FROM users WHERE user_banned = '1' AND user_id = %s", secure($user_id, 'int'))) or _error("SQL_ERROR_THROWEN");
         if ($check->fetch_assoc()['count'] > 0) {
             return true;
