@@ -316,19 +316,19 @@ class UserGlobal
                 case 'react_angry':
                     if ($system['email_post_likes'] && $receiver['email_post_likes']) {
                         if ($node_type == "post") {
-                            $notification['url'] = $system['system_url'] . '/posts/' . $node_url;
+                            $notification['url'] = $system['system_url'] . '/global-profile-posts/' . $node_url;
                             $notification['message'] = __("reacted to your post");
                         } elseif ($node_type == "photo") {
                             $notification['url'] = $system['system_url'] . '/photos/' . $node_url;
                             $notification['message'] = __("reacted to your photo");
                         } elseif ($node_type == "post_comment") {
-                            $notification['url'] = $system['system_url'] . '/posts/' . $node_url . $notify_id;
+                            $notification['url'] = $system['system_url'] . '/global-profile-posts/' . $node_url . $notify_id;
                             $notification['message'] = __("reacted to your comment");
                         } elseif ($node_type == "photo_comment") {
                             $notification['url'] = $system['system_url'] . '/photos/' . $node_url . $notify_id;
                             $notification['message'] = __("reacted to your comment");
                         } elseif ($node_type == "post_reply") {
-                            $notification['url'] = $system['system_url'] . '/posts/' . $node_url . $notify_id;
+                            $notification['url'] = $system['system_url'] . '/global-profile-posts/' . $node_url . $notify_id;
                             $notification['message'] = __("reacted to your reply");
                         } elseif ($node_type == "photo_reply") {
                             $notification['url'] = $system['system_url'] . '/photos/' . $node_url . $notify_id;
@@ -340,7 +340,7 @@ class UserGlobal
                 case 'comment':
                     if ($system['email_post_comments'] && $receiver['email_post_comments']) {
                         if ($node_type == "post") {
-                            $notification['url'] = $system['system_url'] . '/posts/' . $node_url . $notify_id;
+                            $notification['url'] = $system['system_url'] . '/global-profile-posts/' . $node_url . $notify_id;
                             $notification['message'] = __("commented on your post");
                         } elseif ($node_type == "photo") {
                             $notification['url'] = $system['system_url'] . '/photos/' . $node_url . $notify_id;
@@ -352,7 +352,7 @@ class UserGlobal
                 case 'reply':
                     if ($system['email_post_comments'] && $receiver['email_post_comments']) {
                         if ($node_type == "post") {
-                            $notification['url'] = $system['system_url'] . '/posts/' . $node_url . $notify_id;
+                            $notification['url'] = $system['system_url'] . '/global-profile-posts/' . $node_url . $notify_id;
                         } elseif ($node_type == "photo") {
                             $notification['url'] = $system['system_url'] . '/photos/' . $node_url . $notify_id;
                         }
@@ -362,7 +362,7 @@ class UserGlobal
 
                 case 'share':
                     if ($system['email_post_shares'] && $receiver['email_post_shares']) {
-                        $notification['url'] = $system['system_url'] . '/posts/' . $node_url;
+                        $notification['url'] = $system['system_url'] . '/global-profile-posts/' . $node_url;
                         $notification['message'] = __("shared your post");
                     }
                     break;
@@ -371,12 +371,12 @@ class UserGlobal
                     if ($system['email_mentions'] && $receiver['email_mentions']) {
                         switch ($node_type) {
                             case 'post':
-                                $notification['url'] = $system['system_url'] . '/posts/' . $node_url;
+                                $notification['url'] = $system['system_url'] . '/global-profile-posts/' . $node_url;
                                 $notification['message'] = __("mentioned you in a post");
                                 break;
 
                             case 'comment_post':
-                                $notification['url'] = $system['system_url'] . '/posts/' . $node_url . $notify_id;
+                                $notification['url'] = $system['system_url'] . '/global-profile-posts/' . $node_url . $notify_id;
                                 $notification['message'] = __("mentioned you in a comment");
                                 break;
 
@@ -386,7 +386,7 @@ class UserGlobal
                                 break;
 
                             case 'reply_post':
-                                $notification['url'] = $system['system_url'] . '/posts/' . $node_url . $notify_id;
+                                $notification['url'] = $system['system_url'] . '/global-profile-posts/' . $node_url . $notify_id;
                                 $notification['message'] = __("mentioned you in a reply");
                                 break;
 
@@ -407,7 +407,7 @@ class UserGlobal
 
                 case 'wall':
                     if ($system['email_wall_posts'] && $receiver['email_wall_posts']) {
-                        $notification['url'] = $system['system_url'] . '/posts/' . $node_url;
+                        $notification['url'] = $system['system_url'] . '/global-profile-posts/' . $node_url;
                         $notification['message'] = __("posted on your wall");
                     }
                     break;
@@ -470,19 +470,19 @@ class UserGlobal
                 case 'react_sad':
                 case 'react_angry':
                     if ($node_type == "post") {
-                        $notification['url'] = $system['system_url'] . '/posts/' . $node_url;
+                        $notification['url'] = $system['system_url'] . '/global-profile-posts/' . $node_url;
                         $notification['message'] = __("reacted to your post");
                     } elseif ($node_type == "photo") {
                         $notification['url'] = $system['system_url'] . '/photos/' . $node_url;
                         $notification['message'] = __("reacted to your photo");
                     } elseif ($node_type == "post_comment") {
-                        $notification['url'] = $system['system_url'] . '/posts/' . $node_url . $notify_id;
+                        $notification['url'] = $system['system_url'] . '/global-profile-posts/' . $node_url . $notify_id;
                         $notification['message'] = __("reacted to your comment");
                     } elseif ($node_type == "photo_comment") {
                         $notification['url'] = $system['system_url'] . '/photos/' . $node_url . $notify_id;
                         $notification['message'] = __("reacted to your comment");
                     } elseif ($node_type == "post_reply") {
-                        $notification['url'] = $system['system_url'] . '/posts/' . $node_url . $notify_id;
+                        $notification['url'] = $system['system_url'] . '/global-profile-posts/' . $node_url . $notify_id;
                         $notification['message'] = __("reacted to your reply");
                     } elseif ($node_type == "photo_reply") {
                         $notification['url'] = $system['system_url'] . '/photos/' . $node_url . $notify_id;
@@ -492,7 +492,7 @@ class UserGlobal
 
                 case 'comment':
                     if ($node_type == "post") {
-                        $notification['url'] = $system['system_url'] . '/posts/' . $node_url . $notify_id;
+                        $notification['url'] = $system['system_url'] . '/global-profile-posts/' . $node_url . $notify_id;
                         $notification['message'] = __("commented on your post");
                     } elseif ($node_type == "photo") {
                         $notification['url'] = $system['system_url'] . '/photos/' . $node_url . $notify_id;
@@ -502,7 +502,7 @@ class UserGlobal
 
                 case 'reply':
                     if ($node_type == "post") {
-                        $notification['url'] = $system['system_url'] . '/posts/' . $node_url . $notify_id;
+                        $notification['url'] = $system['system_url'] . '/global-profile-posts/' . $node_url . $notify_id;
                     } elseif ($node_type == "photo") {
                         $notification['url'] = $system['system_url'] . '/photos/' . $node_url . $notify_id;
                     }
@@ -510,24 +510,24 @@ class UserGlobal
                     break;
 
                 case 'share':
-                    $notification['url'] = $system['system_url'] . '/posts/' . $node_url;
+                    $notification['url'] = $system['system_url'] . '/global-profile-posts/' . $node_url;
                     $notification['message'] = __("shared your post");
                     break;
 
                 case 'vote':
-                    $notification['url'] = $system['system_url'] . '/posts/' . $node_url;
+                    $notification['url'] = $system['system_url'] . '/global-profile-posts/' . $node_url;
                     $notification['message'] = __("voted on your poll");
                     break;
 
                 case 'mention':
                     switch ($node_type) {
                         case 'post':
-                            $notification['url'] = $system['system_url'] . '/posts/' . $node_url;
+                            $notification['url'] = $system['system_url'] . '/global-profile-posts/' . $node_url;
                             $notification['message'] = __("mentioned you in a post");
                             break;
 
                         case 'comment_post':
-                            $notification['url'] = $system['system_url'] . '/posts/' . $node_url . $notify_id;
+                            $notification['url'] = $system['system_url'] . '/global-profile-posts/' . $node_url . $notify_id;
                             $notification['message'] = __("mentioned you in a comment");
                             break;
 
@@ -537,7 +537,7 @@ class UserGlobal
                             break;
 
                         case 'reply_post':
-                            $notification['url'] = $system['system_url'] . '/posts/' . $node_url . $notify_id;
+                            $notification['url'] = $system['system_url'] . '/global-profile-posts/' . $node_url . $notify_id;
                             $notification['message'] = __("mentioned you in a reply");
                             break;
 
@@ -554,7 +554,7 @@ class UserGlobal
                     // break;
 
                 case 'wall':
-                    $notification['url'] = $system['system_url'] . '/posts/' . $node_url;
+                    $notification['url'] = $system['system_url'] . '/posglobal-profile-poststs/' . $node_url;
                     $notification['message'] = __("posted on your wall");
                     break;
 
@@ -7613,6 +7613,7 @@ class UserGlobal
         }
         /* check if the viewer can share the post */
         $post = $this->global_check_post($post_id, true);
+       
         if (!$post || $post['privacy'] != 'public') {
             _error(403);
         }
@@ -7635,7 +7636,7 @@ class UserGlobal
         }
         /* share to */
         switch ($args['share_to']) {
-            case 'timeline':
+            case 'timeline': 
                 /* insert the new shared post */
                 $db->query(sprintf("INSERT INTO global_posts (user_id, user_type, post_type, origin_id, time, privacy, text) VALUES (%s, 'user', 'shared', %s, %s, 'public', %s)", secure($this->_data['user_id'], 'int'), secure($post_id, 'int'), secure($date), secure($args['message']))) or _error("SQL_ERROR_THROWEN");
                 break;
