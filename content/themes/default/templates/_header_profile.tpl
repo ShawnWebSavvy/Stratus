@@ -195,7 +195,7 @@
             <div class=" col-6 col-lg-10 usersectionHeaderMobile">
               <div class="row">
                 <!-- profile-tabs -->
-                <div class="profile-header-tabs desktop_only">
+                <div class="profile-header-tabs custom-tabs desktop_only">
                   <a href="javascript:window.history.back()" class="back_btn_profile btn  headerBackButtonGlobal"><i
                       class="fas fa-chevron-left"></i> <span>Back</span></a>
 

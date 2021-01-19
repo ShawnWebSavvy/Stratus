@@ -153,7 +153,7 @@
                 <li {if $subactive_page=="events" }class="active" {/if}>
                     <a href="{$system['system_url']}/events">
                         <div class="svg-container">
-                            <img src="{$system['system_url']}/content/themes/default/images/svg/svgImg/event_add_icon.svg"
+                            <img src="{$system['system_url']}/content/themes/default/images/svg/svgImg/event_add_iconSidebar.svg"
                                 class="">
                         </div>
                         <span class="nav-text">{__("Events")}</span>
