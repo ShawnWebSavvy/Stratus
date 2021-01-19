@@ -82,6 +82,7 @@
 .profile-name-wrapper a{word-break:break-all}
 .right-sidebar-inner-ant .js_user-popover a{text-align:left}
 .post-meta img{width:18px;height:18px}
+._postshare__ .post_images__ img{width:30px;height:30px}
 .profile-name-wrapper .badge.badge-warning{line-height:normal;margin-left:10px;font-size:15px}
 .marketSection{overflow-x:auto;display:inline-block;height:calc(100vh - 145px)}
 .marketSection>.card{min-height:724px}

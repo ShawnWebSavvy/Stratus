@@ -73,7 +73,7 @@
     <link rel="stylesheet" type='text/css'
         href="https://cdn1.stratus.co/content/themes/default/css/style-custom-light.css">
     <link rel="stylesheet" type='text/css'
-        href="https://cdn1.stratus.co/content/themes/default/css/custom_responsive_style.css">
+        href="{$system['system_url']}/content/themes/default/css/custom_responsive_style.css">
     <!-- CSS -->
 
     {/if}

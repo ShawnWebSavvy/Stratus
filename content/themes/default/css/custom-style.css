@@ -427,7 +427,7 @@ button:focus{outline:none !important;box-shadow:none;}
 .sharing_people .post-avatar{flex:0 0 50px;max-width:50px;margin-bottom:15px }
 .sharing_people .post-meta{flex:0 0 calc(100% - 50px);padding-left:15px;}
 .fa.fa-bullhorn{color:#5271f2 !important;}
-.alert-info{color:#fff !important;border-color:#d0e1ff !important;background-color:#d0e1ff !important;}
+/* .alert-info{color:#fff !important;border-color:#d0e1ff !important;background-color:#d0e1ff !important;} */
 ._friend_list_items .js_see-more, .panel-photos .js_see-more{background-color:#1e1f20 !important;}
 .about_list_img img{max-width:100%;}
 .about-list .about-list-item.d-flex{align-items:center;}
