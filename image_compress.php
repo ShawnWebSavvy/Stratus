@@ -13,7 +13,7 @@ error_reporting(E_ALL);
 require('bootloader.php');
 
 try {
-
+    global $system;
     require_once("vendor/autoload.php");
     \Tinify\setKey("hh9jTWDVlvV24rdbHvPvcKT5lF0tBpHd");
     require_once(ABSPATH . 'includes/libs/AWS/aws-autoloader.php');
@@ -36,7 +36,7 @@ try {
         $newstring = substr($bucket['Key'], -3);
 
         if ($bucket['Size'] > 900000 && $newstring != "gif") {
-            $url = "https://cdn1.stratus.co/" . $bucket['Key'];
+            $url = $system['system_uploads_assets'] . $bucket['Key'];
             echo $url;
             echo "<br>" . formatSizeUnits($bucket['Size']);
             $source = \Tinify\fromUrl($url);

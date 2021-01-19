@@ -46,34 +46,41 @@
     <!-- Fonts [Roboto|Font-Awesome] -->
     <!-- CSS -->
     {if $page =='sign'}
-    <link rel="stylesheet" href="https://cdn1.stratus.co/content/themes/default/css/bootstrap.min.css">
-    <link rel="stylesheet" type='text/css' href="https://cdn1.stratus.co/content/themes/default/css/login.css">
-    <link rel="stylesheet" type='text/css' href="https://cdn1.stratus.co/content/themes/default/css/custom.css">
+    <link rel="stylesheet" href="{$system['system_uploads_assets']}/content/themes/default/css/bootstrap.min.css">
     <link rel="stylesheet" type='text/css'
-        href="https://cdn1.stratus.co/content/themes/default/css/style-custom-light.css">
+        href="{$system['system_uploads_assets']}/content/themes/default/css/login.css">
+    <link rel="stylesheet" type='text/css'
+        href="{$system['system_uploads_assets']}/content/themes/default/css/custom.css">
+    <link rel="stylesheet" type='text/css'
+        href="{$system['system_uploads_assets']}/content/themes/default/css/style-custom-light.css">
     {else}
     {if $system['language']['dir'] == "LTR"}
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.13.0/css/all.css">
-    <link rel="stylesheet" href="https://cdn1.stratus.co/content/themes/default/css/bootstrap.min.css">
-    <link rel="stylesheet" type='text/css' href="https://cdn1.stratus.co/content/themes/default/css/style.min.css">
-    <link rel="stylesheet" type='text/css' href="https://cdn1.stratus.co/content/themes/default/css/custom.css">
-    <link rel="stylesheet" type='text/css' href="https://cdn1.stratus.co/content/themes/default/css/setting_nav.css">
-    <link rel="stylesheet" type='text/css' href="https://cdn1.stratus.co/content/themes/default/css/custom-style.css">
+    <link rel="stylesheet" href="{$system['system_uploads_assets']}/content/themes/default/css/bootstrap.min.css">
+    <link rel="stylesheet" type='text/css'
+        href="{$system['system_uploads_assets']}/content/themes/default/css/style.min.css">
+    <link rel="stylesheet" type='text/css'
+        href="{$system['system_uploads_assets']}/content/themes/default/css/custom.css">
+    <link rel="stylesheet" type='text/css'
+        href="{$system['system_uploads_assets']}/content/themes/default/css/setting_nav.css">
+    <link rel="stylesheet" type='text/css'
+        href="{$system['system_uploads_assets']}/content/themes/default/css/custom-style.css">
     {else}
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.13.0/css/all.css">
     <link rel="stylesheet" href="https://cdn.rtlcss.com/bootstrap/v4.2.1/css/bootstrap.min.css"
         integrity="sha384-vus3nQHTD+5mpDiZ4rkEPlnkcyTP+49BhJ4wJeJunw06ZAp+wzzeBPUXr42fi8If" crossorigin="anonymous">
-    <link rel="stylesheet" type='text/css' href="https://cdn1.stratus.co/content/themes/default/css/style.rtl.min.css">
+    <link rel="stylesheet" type='text/css'
+        href="{$system['system_uploads_assets']}/content/themes/default/css/style.rtl.min.css">
     {/if}
 
     <link rel="stylesheet" type='text/css'
-        href="https://cdn1.stratus.co/content/themes/default/css/live_video_style.css">
+        href="{$system['system_uploads_assets']}/content/themes/default/css/live_video_style.css">
     <link rel="stylesheet" type='text/css'
-        href="https://cdn1.stratus.co/content/themes/default/css/style-responsive.css">
+        href="{$system['system_uploads_assets']}/content/themes/default/css/style-responsive.css">
     <link rel="stylesheet" type='text/css'
-        href="https://cdn1.stratus.co/content/themes/default/css/style-custom-light.css">
+        href="{$system['system_uploads_assets']}/content/themes/default/css/style-custom-light.css">
     <link rel="stylesheet" type='text/css'
-        href="https://cdn1.stratus.co/content/themes/default/css/custom_responsive_style.css">
+        href="{$system['system_uploads_assets']}/content/themes/default/css/custom_responsive_style.css">
     <!-- CSS -->
 
     {/if}
@@ -83,7 +90,7 @@
     {include file='_head.css.tpl'}
     <!-- CSS Customized -->
 
-    <script src="https://cdn1.stratus.co/includes/assets/js/stratus/lazysizes.min.js"></script>
+    <script src="{$system['system_uploads_assets']}/includes/assets/js/stratus/lazysizes.min.js"></script>
     <!-- Header Custom JavaScript -->
     {if $system['custome_js_header']}
     <script>

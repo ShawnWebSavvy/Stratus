@@ -142,18 +142,8 @@ function load_more(element) {
                             var d = document.createElement('div');
                             d.innerHTML = values;
                             var valuesPost = d.firstChild;
-                            // consol
-                            // valuesPost.innerHTML = (bricklayer.elements.length + 1);
                             bricklayer.append(valuesPost)
                         }
-
-                        bricklayer.on("afterAppend", function (e) {
-                            var el = e.detail.item;
-                            el.classList.add('is-append');
-                            setTimeout(function () {
-                                el.classList.remove('is-append');
-                            }, 500);
-                        });
 
                         if ((data.offset++, response.append ? stream.append(response.data) : stream.prepend(response.data), $(window).width() > 1024)) {
                             if ($("body #landing_feeds_post_ul").length > 0) var macyInstance = Macy({ container: ".feeds_post_ul", trueOrder: !0, columns: 2, waitForImages: !0 });

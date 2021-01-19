@@ -1,6 +1,6 @@
 <!-- posts-filter -->
-<link rel="stylesheet" href="{$system['system_url']}/content/bricklayer.css">
-<link rel="stylesheet" href="{$system['system_url']}/content/demo.css">
+<link rel="stylesheet" href="{$system['system_uploads_assets']}/content/themes/default/css/bricklayer.css">
+<link rel="stylesheet" href="{$system['system_uploads_assets']}/content/themes/default/css/bricklayer-custom.css">
 <div class="__overlay__" id="__overlay__"></div>
 <div class="posts-filter col-12">
 	<span>{if $_title}{$_title}{else}{__("Recent Updates")}{/if}</span>
@@ -244,5 +244,5 @@
 	</div>
 	{/if}
 </div>
-<script src="https://rawgit.com/ademilter/bricklayer/master/dist/bricklayer.min.js"></script>
-<script src="{$system['system_url']}/content/demo.js"></script>
+<script src="{$system['system_uploads_assets']}/content/themes/default/js/bricklayer.min.js"></script>
+<script src="{$system['system_uploads_assets']}/content/themes/default/js/bricklayer-custom.js"></script>
