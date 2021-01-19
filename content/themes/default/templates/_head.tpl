@@ -58,7 +58,7 @@
     <link rel="stylesheet" type='text/css' href="https://cdn1.stratus.co/content/themes/default/css/style.min.css">
     <link rel="stylesheet" type='text/css' href="https://cdn1.stratus.co/content/themes/default/css/custom.css">
     <link rel="stylesheet" type='text/css' href="https://cdn1.stratus.co/content/themes/default/css/setting_nav.css">
-    <link rel="stylesheet" type='text/css' href="https://cdn1.stratus.co/content/themes/default/css/custom-style.css">
+    <link rel="stylesheet" type='text/css' href="{$system['system_url']}/content/themes/default/css/custom-style.css">
     {else}
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.13.0/css/all.css">
     <link rel="stylesheet" href="https://cdn.rtlcss.com/bootstrap/v4.2.1/css/bootstrap.min.css"
@@ -69,7 +69,7 @@
     <link rel="stylesheet" type='text/css'
         href="https://cdn1.stratus.co/content/themes/default/css/live_video_style.css">
     <link rel="stylesheet" type='text/css'
-        href="https://cdn1.stratus.co/content/themes/default/css/style-responsive.css">
+        href="{$system['system_url']}/content/themes/default/css/style-responsive.css">
     <link rel="stylesheet" type='text/css'
         href="https://cdn1.stratus.co/content/themes/default/css/style-custom-light.css">
     <link rel="stylesheet" type='text/css'
