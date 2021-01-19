@@ -487,3 +487,6 @@ div#search-results .js_friend-accept, div#search-results .js_friend-decline {
 div#search-results .js_friend-accept {
 	margin-right: 8px !important;
 }
+.profileUpdatesDesign .about-list-item {
+word-break: break-all;
+}

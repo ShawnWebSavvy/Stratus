@@ -4322,9 +4322,6 @@ class User
                 }
                 /* get the connection between the viewer & the target */
                 if ($profile['user_id'] != $this->_data['user_id']) {
-                    echo $profile['user_id']." USER ID ";
-                    echo "<pre>";
-                    print_r($this->_data['friends_ids']);
                     $profile['we_friends'] = (in_array($profile['user_id'], $this->_data['friends_ids'])) ? true : false;
                     $profile['he_request'] = (in_array($profile['user_id'], $this->_data['friend_requests_ids'])) ? true : false;
                     $profile['i_request'] = (in_array($profile['user_id'], $this->_data['friend_requests_sent_ids'])) ? true : false;

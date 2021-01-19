@@ -227,7 +227,8 @@ function button_status(e, t) {
                                 : eval(response.callback),
                         $(".spinner-grow").hide(),
                         $("#getInTouch").get(0).reset(),
-                        $(".learn-btn").text("Submit");
+                        // $(".learn-btn").text("Submit");
+                        $(".cnt_btn").text("Submit");
                 },
                 "json"
             ).fail(function () {
