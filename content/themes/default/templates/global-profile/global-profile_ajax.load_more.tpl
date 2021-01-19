@@ -6,7 +6,7 @@ $get == 'discover' }
 {include file='_ads.tpl'}
 
 {foreach $data as $post}
-{include file='global-profile/global-profile__feeds_post.tpl' _get=$get}
+{include file='global-profile/global-profile__feeds_posts.tpl' _get=$get}
 {/foreach}
 
 

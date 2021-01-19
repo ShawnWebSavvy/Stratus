@@ -24,6 +24,9 @@
 {/if}
 <!-- JS Files -->
 
+
+<script src="https://rawgit.com/ademilter/bricklayer/master/dist/bricklayer.min.js"></script>
+<script src="{$system['system_url']}/content/demo.js"></script>
 <!-- JS Templates -->
 {include file='global-profile/global-profile_js_templates.tpl'}
 <!-- JS Templates -->

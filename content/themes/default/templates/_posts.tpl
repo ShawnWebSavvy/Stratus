@@ -195,7 +195,25 @@
 	</div>
 </div>
 <!-- posts-loader -->
-
+{if $subactive_page}
+<style>
+	@media screen and (min-width: 700px) {
+		.bricklayer-column-sizer {
+			/* If page is greater than 700px, columns will be 5% wide. That means there will be lots of columns */
+			width: 100%;
+		}
+	}
+</style>
+{else}
+<style>
+	@media screen and (min-width: 700px) {
+		.bricklayer-column-sizer {
+			/* If page is greater than 700px, columns will be 5% wide. That means there will be lots of columns */
+			width: 50%;
+		}
+	}
+</style>
+{/if}
 <div class="js_posts_stream" id="posts_all" data-get="{$_get}" data-filter="{if $_filter}{$_filter}{else}all{/if}" {if
 	$_id}data-id="{$_id}" {/if}>
 	{if $posts}
