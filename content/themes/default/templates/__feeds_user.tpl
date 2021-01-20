@@ -145,7 +145,7 @@
                     {/if}
                 </a>
             </div>
-            <div class="userNameWrap _user_details">
+            <div class="userNameWrap _user_details" style="width:100%;">
                 <div class="mt5">
                     <span class="name js_user-popover {$_user['user_lastname']}" data-uid="{$_user['user_id']}">
                         <a href="{$system['system_url']}/{$_user['user_name']}{if $_search}?ref=qs{/if}">{$_user['user_firstname']}

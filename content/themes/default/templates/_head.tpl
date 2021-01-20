@@ -98,8 +98,9 @@
     </script>
     {/if}
     <!-- Header Custom JavaScript -->
-    <link rel="stylesheet" type='text/css' href="{$system['system_url']}/includes/assets/css/blurry-load.min.css">
-    <script src="{$system['system_url']}/includes/assets/js/stratus/blurry-load.min.js" defer></script>
+    <link rel="stylesheet" type='text/css'
+        href="{$system['system_uploads_assets']}/includes/assets/css/blurry-load.min.css">
+    <script src="{$system['system_uploads_assets']}/includes/assets/js/stratus/blurry-load.min.js" defer></script>
 
     <!-- Load jQuery now so we can lazy load components -->
     <script src="https://code.jquery.com/jquery-3.5.1.min.js"

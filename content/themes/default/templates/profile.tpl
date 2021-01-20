@@ -280,7 +280,7 @@
                </div>
                <!-- profile-header -->
             </section>
-            <div class="col-lg-3">
+            <div class="col-md-12 col-xl-3 col-lg-4">
                <div class="profileUpdatesDesign">
                   <!-- panel [mutual-friends] -->
                   {if $user->_logged_in && $user->_data['user_id'] != $profile['user_id'] && !$profile['we_friends'] &&
@@ -602,9 +602,9 @@
                </div>
             </div>
             <!-- content panel -->
-            <div class="col-lg-9 js_conversation-container sec_cstm_w offcanvas-mainbar">
+           <div class="col-md-12 col-xl-9 col-lg-8 js_conversation-container">
                <!-- profile-tabs -->
-               <div class="profile-header-tabs for-mobile">
+               <div class="profile-header-tabs custom-tabs for-mobile">
                   <ul>
                      <li>
                         <a href="{$system['system_url']}/{$profile['user_name']}" {if $view=="" }class="active" {/if}>
