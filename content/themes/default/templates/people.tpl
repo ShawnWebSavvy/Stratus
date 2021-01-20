@@ -3,7 +3,7 @@
 <!-- page content -->
 <div class="container mt20 offcanvas">
     <div class="row">
-        <div class="sidebar-left-ant offcanvas-sidebar js_sticky-sidebar">
+        <div class="sidebar-left-ant offcanvas-sidebar js_sticky-sidebar" id="sidebarHiddSwip">
             {include file='_sidebar.tpl'}
         </div>
     </div>

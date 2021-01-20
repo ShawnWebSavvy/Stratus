@@ -5,7 +5,7 @@
    <div class="__overlay__" id="__overlay__"></div>
    <div class="row">
       {if $user->_logged_in}
-      <div class="offcanvas-sidebar sidebar-left-ant">
+      <div class="offcanvas-sidebar sidebar-left-ant" id="sidebarHiddSwip">
          {include file='_sidebar.tpl'}
       </div>
       {/if}

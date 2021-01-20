@@ -6,7 +6,7 @@
     <div class="row">
         <!-- side panel -->
         {if $user->_logged_in}
-        <div class="offcanvas-sidebar sidebar-left-ant">
+        <div class="offcanvas-sidebar sidebar-left-ant" id="sidebarHiddSwip">
             {include file='_sidebar.tpl'}
         </div>
         {/if}
