@@ -508,3 +508,6 @@ div#search-results .js_friend-accept {
 	transform: translate(-50%, -50%);
 	max-width: 80px;
 }
+.profileUpdatesDesign .about-list-item {
+word-break: break-all;
+}

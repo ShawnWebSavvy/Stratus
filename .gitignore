@@ -1,6 +1,7 @@
 /vendor/*
 content/themes/default/templates_compiled/*
-includes/config.php
+/includes/config.php
+content/uploads/*
 # Ignore files with credentials
 .htaccess
 
