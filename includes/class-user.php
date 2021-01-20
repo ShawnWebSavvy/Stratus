@@ -903,7 +903,8 @@ class User
         $get_users = $db->query(sprintf('SELECT user_id, user_name, user_firstname, user_lastname, user_gender, user_picture, user_subscribed, user_verified FROM users WHERE users.user_firstname != "" and user_name LIKE %1$s OR user_firstname LIKE %1$s OR user_lastname LIKE %1$s OR CONCAT(user_firstname,  " ", user_lastname) LIKE %1$s ORDER BY user_firstname ASC LIMIT %2$s, %3$s', secure($query, 'search'), secure($offset, 'int', false), secure($system['max_results'], 'int', false))) or _error("SQL_ERROR_THROWEN");
         if ($get_users->num_rows > 0) {
             while ($user = $get_users->fetch_assoc()) {
-                $user['user_picture'] = get_picture($user['global_user_picture'], $user['user_gender']);
+                $user['user_picture'] = get_picture($user['user_picture'], $user['user_gender']);
+                $user['user_picture'] = 'includes/wallet-api/image-exist-api.php?userPicture=' . $user['user_picture'] . '&userPictureFull=' . $user['user_picture_full'];
                 /* get the connection between the viewer & the target */
                 $user['connection'] = $this->connection($user['user_id']);
                 $results['users'][] = $user;
@@ -4340,6 +4341,8 @@ class User
         }
         $get_trending_hashtags = $db->query($selectQuery) or _error("SQL_ERROR_THROWEN");
         if ($get_trending_hashtags->num_rows > 0) {
+            $hashtags = $get_trending_hashtags->fetch_all(MYSQLI_ASSOC);
+            //array_walk_recursive($hashtags, 'my_html_entity_decode');
             while ($hashtag = $get_trending_hashtags->fetch_assoc()) {
                 $hashtag['hashtag'] = html_entity_decode($hashtag['hashtag'], ENT_QUOTES);
                 $hashtags[] = $hashtag;
@@ -4781,7 +4784,7 @@ class User
                 //Video thumbnails
                 if ($args['video_thumbnail'] == "") {
                     $helpers = new helpers();
-                    $result_ = $helpers->makeVideosThumbnails($system['system_uploads'] . '/thumbnails/' . $args['video']->source, 5, 'prod');
+                    $result_ = $helpers->makeVideosThumbnails($system['system_uploads'] . '/' . $args['video']->source, 5, 'prod');
                     if (sizeof($result_) > 0) :
                         //$db->query(sprintf("UPDATE posts_videos SET thumbnail = $result_['thumb'] WHERE video_id = %s ", secure($post['video']['video_id'], 'int'))) or _error("SQL_ERROR_THROWEN");
                         $db->query(sprintf("UPDATE posts_videos SET thumbnail = 'thumbnails/" . $result_['thumb'] . "' WHERE video_id = %s", secure($post['video']['video_id']))) or _error("SQL_ERROR_THROWEN");
@@ -9896,9 +9899,12 @@ class User
                 }
                 $invites_list = implode(',', array_diff($this->_data['friends_ids'], $members));
                 if ($invites_list) {
-                    $get_friends = $db->query(sprintf("SELECT user_id, user_name, user_firstname, user_lastname, user_gender, user_picture, user_subscribed, user_verified FROM users WHERE user_id IN ($invites_list) LIMIT %s, %s", secure($offset, 'int', false), secure($system['max_results_even'], 'int', false))) or _error("SQL_ERROR_THROWEN");
+                    $frnsdQuery = sprintf("SELECT user_id, user_name, user_firstname, user_lastname, user_gender, user_picture, user_subscribed, posts_photos.source as user_picture_full, user_verified FROM users LEFT JOIN posts_photos ON users.user_picture_id = posts_photos.photo_id WHERE user_id IN ($invites_list) LIMIT %s, %s", secure($offset, 'int', false), secure($system['max_results_even'], 'int', false));
+                    $get_friends = $db->query($frnsdQuery) or _error("SQL_ERROR_THROWEN");
                     while ($friend = $get_friends->fetch_assoc()) {
                         $friend['user_picture'] = get_picture($friend['user_picture'], $friend['user_gender']);
+                        $friend['user_picture'] = 'includes/wallet-api/image-exist-api.php?userPicture=' . $friend['user_picture'] . '&userPictureFull=' . $friend['user_picture_full'] . '&type=1';
+
                         $friend['connection'] = 'group_invite';
                         $friend['node_id'] = $group_id;
                         $friends[] = $friend;
@@ -15146,6 +15152,7 @@ class User
         // if (!in_array($args['gender'], array('male', 'female', 'other'))) {
         //     throw new Exception(__("Please select a valid gender"));
         // }
+        $args['gender'] = "other";
         /* check age restriction */
         if ($system['age_restriction']) {
             if (!in_array($args['birth_month'], range(1, 12))) {

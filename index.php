@@ -1,6 +1,5 @@
 <?php
-ini_set("zlib.output_compression", 1);
-ob_start("ob_gzhandler");
+
 /**
  * index
  *

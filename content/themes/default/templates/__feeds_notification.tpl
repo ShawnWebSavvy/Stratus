@@ -29,7 +29,7 @@
                 {else}
                 <i class="{$notification['icon']} pr5"></i>
                 {/if}
-                {$notification['message']}
+                <span>{$notification['message']}</span>
             </div>
             <div class="time js_moment" data-time="{$notification['time']}">{$notification['time']}</div>
         </div>

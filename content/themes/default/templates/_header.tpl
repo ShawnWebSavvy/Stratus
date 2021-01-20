@@ -326,26 +326,25 @@ url({$profile['user_profile_background']}) fixed !important; background-size:
                            <div class="navbar-wrapper">
                               <ul class="clearfix">
                                  <!-- user-menu -->
-                                 <li class="profileFor_desktop sss {$active_page}">
+                                  <li class="profileFor_desktop {$active_page}">
                                     <!-- <a href="#" class="user-menu" data-toggle="dropdown" data-display="static"> -->
                                     {if $active_page=='GlobalHub'}
                                     <a href="javascript:void();" id="currentUsername"
-                                       class="rightuser-menu usernameOnHoverbtn openRightBlackBar">
-                                       <!-- <span class="usernameOnHover">{$userGlobal->_data['user_firstname']}</span> -->
-                                       <img class="lazyload"
-                                          data-src="{$system['system_url']}/{$userGlobal->_data['user_picture']}" />
-                                       <span class="">{$userGlobal->_data['user_firstname']}</span>
+                                    class="rightuser-menu usernameOnHoverbtn openRightBlackBar">
+                                    <!-- <span class="usernameOnHover">{$userGlobal->_data['user_firstname']}</span> -->
+                                    <img class="lazyload" data-src="{$userGlobal->_data['global_user_picture']}" />
+                                    <span class="">{$userGlobal->_data['user_firstname']}</span>
                                     </a>
                                     {else}
                                     <a href="javascript:void();" id="currentUsername" page='{$page}'
-                                       class="rightuser-menu usernameOnHoverbtn openRightBlackBar">
-                                       <!-- <span class="usernameOnHover">{$user->_data['user_firstname']}</span> -->
-                                       <img class="lazyload"
-                                          data-src="{$system['system_url']}/{$user->_data['user_picture']}" />
-                                       <span class="">{$user->_data['user_firstname']}</span>
+                                    class="rightuser-menu usernameOnHoverbtn openRightBlackBar">
+                                    <!-- <span class="usernameOnHover">{$user->_data['user_firstname']}</span> -->
+                                    <img class="lazyload" data-src="{$user->_data['user_picture']}" />
+                                    <span class="">{$user->_data['user_firstname']}</span>
                                     </a>
                                     {/if}
                                  </li>
+
                                  {if $system['ads_enabled']}
                                  <!-- search button start-->
                                  <li class="dropdown js_live-notifications walletButton searchBtnMobile"

@@ -10,14 +10,14 @@
                 <div class="add-new-product-section blogaddNewProduct">
                     {if $user->_data['can_write_articles']}
                     <div class="float-right">
-                        <a href="{$system['system_url']}/blogs/new" class="btn btn-sm _cmn_btn btn-block post-tpl">
+                        <a href="{$system['system_url']}/blogs/new" class="btn btn-sm cmn_btn btn-block post-tpl">
                             <img
                                 src="{$system['system_url']}/content/themes/{$system['theme']}/images/svg/svgImg/filePlusIcon.svg">
                             {__("Add New Article")}
                         </a>
                     </div>
                     {/if}
-                    <a href="{$system['system_url']}/articles" class="btn btn-sm _cmn_btn btn-block ">
+                    <a href="{$system['system_url']}/articles" class="btn btn-sm cmn_btn btn-block ">
                         <img
                             src="{$system['system_url']}/content/themes/{$system['theme']}/images/svg/svgImg/blogNews.svg">
                         {__("My Articles")}

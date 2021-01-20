@@ -159,14 +159,16 @@
                                         <div class="dropdown-divider"></div>
                                         <a class="dropdown-item"
                                             href="{$system['system_url']}/admincp/events/edit_event/{$event['event_id']}">
-                                            <img class="mr10" src="{$system['system_url']}/content/themes/default/images/svg/svgImg/Cog.svg">
+                                            <img class="mr10"
+                                                src="{$system['system_url']}/content/themes/default/images/svg/svgImg/Cog.svg">
                                             {__("Edit in Admin Panel")}
                                         </a>
                                         {elseif $user->_is_moderator}
                                         <div class="dropdown-divider"></div>
                                         <a class="dropdown-item"
                                             href="{$system['system_url']}/modcp/events/edit_event/{$event['event_id']}">
-                                            <img class="mr10" src="{$system['system_url']}/content/themes/default/images/svg/svgImg/Cog.svg">
+                                            <img class="mr10"
+                                                src="{$system['system_url']}/content/themes/default/images/svg/svgImg/Cog.svg">
                                             {__("Edit in Moderator Panel")}
                                         </a>
                                         {/if}
@@ -186,7 +188,7 @@
             <!-- profile-header -->
         </section>
         <!-- profile-tabs -->
-        <div class="profile-header-tabs for-mobile">
+        <div class="profile-header-tabs custom-tabs for-mobile">
             <ul>
                 {if $event['event_privacy'] == "public" || $event['i_joined'] || $event['i_admin']}
                 <li>
@@ -230,7 +232,7 @@
             </ul>
         </div>
         <!-- profile-tabs -->
-        <div class="col-lg-3 col-md-4 about_sec ">
+        <div class="col-md-12 col-xl-3 col-lg-4 about_sec ">
             <div class="profileUpdatesDesign">
                 <!-- panel [about] -->
                 <div class="card">
@@ -414,7 +416,7 @@
             </div>
         </div>
         <!-- content panel -->
-        <div class="col-md-9 col-md-8 sec_cstm_w {if $user->_logged_in} offcanvas-mainbar{/if} ">
+        <div class="col-md-12 col-xl-9 col-lg-8">
 
             <!-- profile-content -->
             <div class="row">
@@ -748,7 +750,8 @@
                         <ul class="side-nav">
                             <li {if $sub_view=="" }class="active" {/if}>
                                 <a href="{$system['system_url']}/events/{$event['event_id']}/settings">
-                                    <img class="mr10" src="{$system['system_url']}/content/themes/default/images/svg/svgImg/Cog.svg">
+                                    <img class="mr10"
+                                        src="{$system['system_url']}/content/themes/default/images/svg/svgImg/Cog.svg">
                                     {__("Event Settings")}</a>
                             </li>
                             <li {if $sub_view=="delete" }class="active" {/if}>
@@ -764,7 +767,8 @@
                 <div class="card">
                     {if $sub_view == ""}
                     <div class="card-header with-icon">
-                        <img class="mr10" src="{$system['system_url']}/content/themes/default/images/svg/svgImg/Cog.svg">
+                        <img class="mr10"
+                            src="{$system['system_url']}/content/themes/default/images/svg/svgImg/Cog.svg">
                         {__("Event Settings")}
                     </div>
                     <form class="js_ajax-forms"

@@ -9,7 +9,7 @@
     </div>
     <div class="row right-side-content-ant">
         <!-- content panel -->
-        <div class="col-lg-9 offcanvas-mainbar">
+        <div class="col-lg-12 offcanvas-mainbar">
             <div class="explore_cmn_style">
                 <!-- tabs -->
                 <div class="content-tabs custom-tabs clearfix">

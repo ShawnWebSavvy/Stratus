@@ -427,7 +427,7 @@ button:focus{outline:none !important;box-shadow:none;}
 .sharing_people .post-avatar{flex:0 0 50px;max-width:50px;margin-bottom:15px }
 .sharing_people .post-meta{flex:0 0 calc(100% - 50px);padding-left:15px;}
 .fa.fa-bullhorn{color:#5271f2 !important;}
-.alert-info{color:#fff !important;border-color:#d0e1ff !important;background-color:#d0e1ff !important;}
+/* .alert-info{color:#fff !important;border-color:#d0e1ff !important;background-color:#d0e1ff !important;} */
 ._friend_list_items .js_see-more, .panel-photos .js_see-more{background-color:#1e1f20 !important;}
 .about_list_img img{max-width:100%;}
 .about-list .about-list-item.d-flex{align-items:center;}
@@ -486,4 +486,28 @@ div#search-results .js_friend-accept, div#search-results .js_friend-decline {
 }
 div#search-results .js_friend-accept {
 	margin-right: 8px !important;
+}
+#posts_all .video_thumb_img_size {
+    height: 303px;
+}
+.video_thumb_img_size {
+	height: 500px;
+	overflow: hidden;
+	position: relative;
+	text-align: center;
+}
+.video_thumb_img_size img:first-child {
+	max-width: 100%;
+	width: auto !important;
+	text-align: center;
+	margin: 0 auto;
+}
+.video_thumb_img_size img:nth-child(2) {
+	top: 50% !important;
+	left: 50% !important;
+	transform: translate(-50%, -50%);
+	max-width: 80px;
+}
+.profileUpdatesDesign .about-list-item {
+word-break: break-all;
 }

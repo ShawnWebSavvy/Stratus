@@ -280,7 +280,7 @@
                </div>
                <!-- profile-header -->
             </section>
-            <div class="col-lg-3">
+            <div class="col-md-12 col-xl-3 col-lg-4">
                <div class="profileUpdatesDesign">
                   <!-- panel [mutual-friends] -->
                   {if $user->_logged_in && $user->_data['user_id'] != $profile['user_id'] && !$profile['we_friends'] &&
@@ -602,9 +602,9 @@
                </div>
             </div>
             <!-- content panel -->
-            <div class="col-lg-9 js_conversation-container sec_cstm_w offcanvas-mainbar">
+           <div class="col-md-12 col-xl-9 col-lg-8 js_conversation-container">
                <!-- profile-tabs -->
-               <div class="profile-header-tabs for-mobile">
+               <div class="profile-header-tabs custom-tabs for-mobile">
                   <ul>
                      <li>
                         <a href="{$system['system_url']}/{$profile['user_name']}" {if $view=="" }class="active" {/if}>
@@ -667,45 +667,14 @@
                   <div class="col-lg-12">
                      <!-- publisher -->
                      {if $user->_logged_in}
-                     <script>
-                        /*
-                        PROFILE AJAX PUBLISHER
-                        /profile.ajax.publisher.php
-                        */
-                        $(document).ready(function () {
-                           $.ajax({
-                              url: "/profile.ajax.publisher.php?username={$profile['user_name']}",
-                              method: "get",
-                              success: function (html) {
-                                 $("#profile_ajax_publisher").html(html);
-                              },
-                              error: function (error) {
-                                 $("#profile_ajax_publisher").html("<div class='alert alert-primary text-center'>Oops! There's been error.: " + error + "</div>");
-                              },
-                           });
-                        });
-                     </script>
-                     <div id="profile_ajax_publisher">
-                        <div class="post x-hidden js_posts_loader" id="hidden-loader" style="display: block;">
-                           <div class="post-body">
-                              <div class="panel-effect">
-                                 <div class="fake-effect fe-0"></div>
-                                 <div class="fake-effect fe-1"></div>
-                                 <div class="fake-effect fe-2"></div>
-                                 <div class="fake-effect fe-3"></div>
-                                 <div class="fake-effect fe-4"></div>
-                                 <div class="fake-effect fe-5"></div>
-                                 <div class="fake-effect fe-6"></div>
-                                 <div class="fake-effect fe-7"></div>
-                                 <div class="fake-effect fe-8"></div>
-                                 <div class="fake-effect fe-9"></div>
-                                 <div class="fake-effect fe-10"></div>
-                                 <div class="fake-effect fe-11"></div>
-                              </div>
-                           </div>
-                        </div>
-                     </div>
+                     {if $user->_data['user_id'] == $profile['user_id']}
+                     {include file='_publisher.tpl' _handle="me" _privacy=true}
+                     {elseif $system['wall_posts_enabled'] && ( $profile['user_privacy_wall'] == 'friends' &&
+                     $profile['we_friends'] || $profile['user_privacy_wall'] == 'public' )}
+                     {include file='_publisher.tpl' _handle="user" _id=$profile['user_id'] _privacy=true}
                      {/if}
+                     {/if}
+
                      <!-- publisher -->
                      <!-- pinned post -->
                      {if $pinned_post}
@@ -1237,9 +1206,9 @@
 <!-- page content -->
 {include file='_footer.tpl'}
 {if $gift}
-<script>
+<>
    $(function () {
-      modal('#gift');
+   modal('#gift');
    });
-</script>
+</>
 {/if}

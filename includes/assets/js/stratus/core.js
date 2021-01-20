@@ -128,6 +128,23 @@ function load_more(element) {
                 function (response) {
                     if ((_this.removeClass("loading"), text.show(), loading.addClass("x-hidden"), response.callback)) eval(response.callback);
                     else if (response.data) {
+                        var datatta = response.data;
+                        var ArrayVal = datatta.split('<div class="carsds"');
+                        var loopArray = [];
+                        if (ArrayVal.length > 0) {
+                            for (var i = 1; i < ArrayVal.length; i++) {
+                                loopArray.push('<div class="carsds"' + ArrayVal[i])
+                            }
+                        }
+
+                        for (var ik = 0; ik < loopArray.length; ik++) {
+                            var values = loopArray[ik];
+                            var d = document.createElement('div');
+                            d.innerHTML = values;
+                            var valuesPost = d.firstChild;
+                            bricklayer.append(valuesPost)
+                        }
+
                         if ((data.offset++, response.append ? stream.append(response.data) : stream.prepend(response.data), $(window).width() > 1024)) {
                             if ($("body #landing_feeds_post_ul").length > 0) var macyInstance = Macy({ container: ".feeds_post_ul", trueOrder: !0, columns: 2, waitForImages: !0 });
                             if ($("body #feeds_post_ul").length > 0) var macyInstance = Macy({ container: ".feeds_post_ul", trueOrder: !0, columns: 2, waitForImages: !0 });
@@ -227,7 +244,8 @@ function button_status(e, t) {
                                 : eval(response.callback),
                         $(".spinner-grow").hide(),
                         $("#getInTouch").get(0).reset(),
-                        $(".learn-btn").text("Submit");
+                        // $(".learn-btn").text("Submit");
+                        $(".cnt_btn").text("Submit");
                 },
                 "json"
             ).fail(function () {

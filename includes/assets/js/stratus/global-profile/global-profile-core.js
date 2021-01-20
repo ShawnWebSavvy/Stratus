@@ -290,6 +290,32 @@ function load_more(element) {
       if (response.callback) {
         eval(response.callback);
       } else {
+        var datatta = response.data;
+        var ArrayVal = datatta.split('<div class="carsds"');
+        var loopArray = [];
+        if (ArrayVal.length > 0) {
+          for (var i = 1; i < ArrayVal.length; i++) {
+            loopArray.push('<div class="carsds"' + ArrayVal[i])
+          }
+        }
+
+        for (var ik = 0; ik < loopArray.length; ik++) {
+          var values = loopArray[ik];
+          var d = document.createElement('div');
+          d.innerHTML = values;
+          var valuesPost = d.firstChild;
+          // consol
+          // valuesPost.innerHTML = (bricklayer.elements.length + 1);
+          bricklayer.append(valuesPost)
+        }
+
+        bricklayer.on("afterAppend", function (e) {
+          var el = e.detail.item;
+          el.classList.add('is-append');
+          setTimeout(function () {
+            el.classList.remove('is-append');
+          }, 500);
+        });
         if (response.data) {
           data["offset"]++;
           if (response.append) {

@@ -396,7 +396,7 @@
                                         <option value="offline">{__("Offline")}</option>
                                     </select>
                                 </div>
-                                <button type="submit" class="btn friendsSearchbtn _cmn_btn " name="submit"><span
+                                <button type="submit" class="btn friendsSearchbtn cmn_btn " name="submit"><span
                                         class="search-input-icon"> <img
                                             src="{$system['system_url']}/content/themes/default/images/Search2.svg"
                                             alt="search icon">

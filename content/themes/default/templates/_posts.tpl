@@ -1,5 +1,6 @@
 <!-- posts-filter -->
-
+<link rel="stylesheet" href="{$system['system_uploads_assets']}/content/themes/default/css/bricklayer.css">
+<link rel="stylesheet" href="{$system['system_uploads_assets']}/content/themes/default/css/bricklayer-custom.css">
 <div class="__overlay__" id="__overlay__"></div>
 <div class="posts-filter col-12">
 	<span>{if $_title}{$_title}{else}{__("Recent Updates")}{/if}</span>
@@ -194,20 +195,38 @@
 	</div>
 </div>
 <!-- posts-loader -->
-
+{if $subactive_page}
+<style>
+	@media screen and (min-width: 700px) {
+		.bricklayer-column-sizer {
+			/* If page is greater than 700px, columns will be 5% wide. That means there will be lots of columns */
+			width: 100%;
+		}
+	}
+</style>
+{else}
+<style>
+	@media screen and (min-width: 700px) {
+		.bricklayer-column-sizer {
+			/* If page is greater than 700px, columns will be 5% wide. That means there will be lots of columns */
+			width: 50%;
+		}
+	}
+</style>
+{/if}
 <div class="js_posts_stream" id="posts_all" data-get="{$_get}" data-filter="{if $_filter}{$_filter}{else}all{/if}" {if
 	$_id}data-id="{$_id}" {/if}>
 	{if $posts}
-	<ul class="feeds_post_ul" id="{if $subactive_page}profile_feeds_post_ul{else}landing_feeds_post_ul{/if}">
+	<div class="bricklayer">
 		<!-- posts -->
 		{foreach $posts as $post}
-		{include file='__feeds_post.tpl' _get=$_get}
+		{include file='__feeds_posts.tpl' _get=$_get}
 		{/foreach}
 		<!-- posts -->
-	</ul>
+	</div>
 
 	<!-- see-more -->
-	<div class="alert alert-post see-more mb20 js_see-more {if $user->_logged_in}js_see-more-infinite{/if}"
+	<div class="alert alert-post see-more js_see-more {if $user->_logged_in}js_see-more-infinite{/if}"
 		data-get="{$_get}" data-filter="{if $_filter}{$_filter}{else}all{/if}" {if $_id}data-id="{$_id}" {/if}>
 		<span>{__("More Stories")}</span>
 		<div class="loader loader_small x-hidden"></div>
@@ -225,3 +244,5 @@
 	</div>
 	{/if}
 </div>
+<script src="{$system['system_uploads_assets']}/content/themes/default/js/bricklayer.min.js"></script>
+<script src="{$system['system_uploads_assets']}/content/themes/default/js/bricklayer-custom.js"></script>

@@ -233,7 +233,7 @@
     <!-- jQuery-UI -->
 
     <!-- Sticky Sidebar -->
-    <script src="{$system['system_url']}/includes/assets/js/plugins/sticky-sidebar/theia-sticky-sidebar.min.js"></script>
+    <script src="{$system['system_uploads_assets']}/includes/assets/js/plugins/sticky-sidebar/theia-sticky-sidebar.min.js"></script>
     <!-- Sticky Sidebar -->
 
     <!-- Google Geocomplete -->
@@ -339,11 +339,11 @@
 <!-- Dependencies Plugins -->
 {assign var="cacheremovejs" value=$smarty.now|date_format:'%Y-%m-%d_%H:%M:%S'}
 <!-- Stratus [JS] -->
-<script src="{$system['system_url']}/includes/assets/js/stratus/global-profile/global-profile-core.js?{$cacheremovejs}" {if !$user->_logged_in}defer{/if}></script>
+<script src="{$system['system_uploads_assets']}/includes/assets/js/stratus/global-profile/global-profile-core.js?{$cacheremovejs}" {if !$user->_logged_in}defer{/if}></script>
 {if $user->_logged_in}
-    <script src="{$system['system_url']}/includes/assets/js/stratus/global-profile/global-profile-user.js?{$cacheremovejs}"></script>
-    <script src="{$system['system_url']}/includes/assets/js/stratus/global-profile/global-profile-post.js?{$cacheremovejs}"></script>
-    <script src="{$system['system_url']}/includes/assets/js/stratus/global-profile/global-profile-chat.js?{$cacheremovejs}"></script>
+    <script src="{$system['system_uploads_assets']}/includes/assets/js/stratus/global-profile/global-profile-user.js?{$cacheremovejs}"></script>
+    <script src="{$system['system_uploads_assets']}/includes/assets/js/stratus/global-profile/global-profile-post.js?{$cacheremovejs}"></script>
+    <script src="{$system['system_uploads_assets']}/includes/assets/js/stratus/global-profile/global-profile-chat.js?{$cacheremovejs}"></script>
     <script src="{$system['system_uploads_assets']}/includes/assets/js/stratus/showads.js?{$cacheremovejs}"></script>
 {/if}
 <!-- Stratus [JS] -->
@@ -367,7 +367,7 @@
     <!-- Dependencies Plugins [JS] -->
 
     <!-- Stratus [JS] -->
-    <script src="{$system['system_url']}/includes/assets/js/stratus/admin.js?{$cacheremovejs}"></script>
+    <script src="{$system['system_uploads_assets']}/includes/assets/js/stratus/admin.js?{$cacheremovejs}"></script>
     <!-- Stratus [JS] -->
 
     <!-- Admin Charts -->
