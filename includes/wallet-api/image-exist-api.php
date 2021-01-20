@@ -3,6 +3,8 @@
 //ob_start("ob_gzhandler");
 require('../../bootstrap.php');
 
+if (strpos($_SERVER['HTTP_REFERER'], $_SERVER['SERVER_NAME']) === false) die;
+
 $userPicture     = $_GET['userPicture'];
 $userPictureFull = $_GET['userPictureFull'];
 
