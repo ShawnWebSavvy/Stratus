@@ -967,7 +967,7 @@
                                         src="{$system['system_url']}/content/themes/default/images/svg/svgImg/eye-icon.svg" />
                                     <span class="ml5 d-none d-lg-inline-block">{__("View Profile")}</span>
                                 </a>
-                            </div>
+                            </div> 
                         </div>
                         <form class="js_ajax-forms setting-social-form" data-url="users/settings.php?edit=social">
                             <div class="card-body">
