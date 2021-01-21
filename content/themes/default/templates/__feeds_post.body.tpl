@@ -7,8 +7,8 @@
             {include file='__svg_icons.tpl' icon="spy" width="30px" height="30px"}
         </div>
         {else}
-        <a class="post-avatar-picture {$_post['post_author_online']}" href="{$_post['post_author_url']}"
-            style="background-image:url({$_post['post_author_picture']});">
+        <a class="post-avatar-picture" href="{$_post['post_author_url']}"
+            style="background-image:url({$system['system_url']}/{$_post['post_author_picture']});">
         </a>
         {if $_post['post_author_online']}<i class="fa fa-circle online-dot"></i>{/if}
         {/if}
@@ -901,30 +901,30 @@
             </div>
         </div>
         {elseif $_post['post_type'] == "live" && $_post['live']}
-              {if $system['save_live_enabled'] && $_post['live']['live_ended'] && $_post['live']['live_recorded']}
-                  <div class="overflow-hidden">
-                      <div>
-                          <video class="js_fluidplayer"
-                              id="video-{$_post['live']['live_id']}{if $pinned || $boosted}-{$_post['post_id']}{/if}"
-                              {if
-                      $_post['live']['video_thumbnail']}poster="{$system['system_uploads']}/{$_post['live']['video_thumbnail']}" {/if} controls preload="auto" controls preload="auto"
-                          style="width:100%;height:100%;" width="100%" height="100%">
-                          <source src="{$system['system_agora_uploads']}/{$_post['live']['agora_file']}"
-                              type="application/x-mpegURL">
-                      </video>
-                  </div>
-              </div>
-              {else}
+        {if $system['save_live_enabled'] && $_post['live']['live_ended'] && $_post['live']['live_recorded']}
+        <div class="overflow-hidden">
+            <div>
+                <video class="js_fluidplayer"
+                    id="video-{$_post['live']['live_id']}{if $pinned || $boosted}-{$_post['post_id']}{/if}" {if
+                    $_post['live']['video_thumbnail']}poster="{$system['system_uploads']}/{$_post['live']['video_thumbnail']}"
+                    {/if} controls preload="auto" controls preload="auto" style="width:100%;height:100%;" width="100%"
+                    height="100%">
+                    <source src="{$system['system_agora_uploads']}/{$_post['live']['agora_file']}"
+                        type="application/x-mpegURL">
+                </video>
+            </div>
+        </div>
+        {else}
 
-              <div class="youtube-player with-live js_lightbox-live">
-                  <img src="{$system['system_uploads']}/{$_post['live']['video_thumbnail']}">
-                  <div class="fluid_initial_play play live_video_play"
-                      style="background-color:#3367d6;width:60px;height:60px;background-image:unset;">
-                      <div class="fluid_initial_play_button">
-                      </div>
-                  </div>
-              </div>
-              {/if}
+        <div class="youtube-player with-live js_lightbox-live">
+            <img src="{$system['system_uploads']}/{$_post['live']['video_thumbnail']}">
+            <div class="fluid_initial_play play live_video_play"
+                style="background-color:#3367d6;width:60px;height:60px;background-image:unset;">
+                <div class="fluid_initial_play_button">
+                </div>
+            </div>
+        </div>
+        {/if}
         {elseif $_post['post_type'] == "map"}
         <div class="post-map">
             <img src="https://maps.googleapis.com/maps/api/staticmap?center={$_post['location']}&amp;zoom=13&amp;size=600x250&amp;maptype=roadmap&amp;markers=color:red%7C{$_post['location']}&amp;key={$system['geolocation_key']}"
