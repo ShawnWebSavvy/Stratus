@@ -55,7 +55,7 @@ try {
 
 
 
-        $profile['user_picture'] = 'includes/wallet-api/image-exist-api.php?userPicture='.$profile['user_picture'].'&userPictureFull='.$profile['user_picture_full'].'&type=1';
+        $profile['user_picture'] = $system['system_url'].'/includes/wallet-api/image-exist-api.php?userPicture='.$profile['user_picture'].'&userPictureFull='.$profile['user_picture_full'].'&type=1';
 	}
 	if ($profile['user_picture'] == "") {
 		$profile['user_picture'] = $system['system_url'] . '/content/themes/' . $system['theme'] . '/images/user_defoult_img.jpg';
