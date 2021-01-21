@@ -675,57 +675,110 @@ $(function () {
                             is_anonymous: is_anonymous,
                         },
                         function (response) {
-                            $(".no-post-to-show").css("display", "none"),
-                                $(".wrapFooterDiv-old").show(),
-                                response.callback
-                                    ? (button_status(_this, "reset"), eval(response.callback))
-                                    : (response.post && window.location.reload(),
-                                        button_status(_this, "reset"),
-                                        publisher.find(".js_publisher-tab").removeClass("active activated disabled"),
-                                        textarea.val("").removeAttr("style"),
-                                        textarea.attr("placeholder", textarea.data("init-placeholder")),
-                                        album.val(""),
-                                        album_meta.hide(),
-                                        feeling_meta.hide(),
-                                        $("#feelings-menu-toggle").removeClass("active").text($("#feelings-menu-toggle").data("init-text")),
-                                        $("#feelings-data").hide(),
-                                        $("#feelings-data input").show().attr("placeholder", $("#feelings-menu-toggle").data("init-text")).removeData("action").val(""),
-                                        $("#feelings-data span").html(""),
-                                        $(".js_publisher-feelings").removeClass("activated active"),
-                                        location.val(""),
-                                        location_meta.hide(),
-                                        publisher.removeData("colored_pattern"),
-                                        publisher.find(".colored-text-wrapper").removeAttr("style").removeClass("colored"),
-                                        colored_pattern_meta.hide(),
-                                        attachments_voice_notes.hide(),
-                                        attachments_voice_notes.find(".js_voice-success-message").hide(),
-                                        attachments_voice_notes.find(".js_voice-start").show(),
-                                        publisher.removeData("voice_notes"),
-                                        gif.val(""),
-                                        gif_meta.hide(),
-                                        $('.publisher-meta[data-meta="poll"]').hide().find("input").val(""),
-                                        attachments.hide(),
-                                        attachments.find("li.item").remove(),
-                                        publisher.removeData("photos"),
-                                        attachments_video.hide(),
-                                        publisher.removeData("video"),
-                                        attachments_audio.hide(),
-                                        publisher.removeData("audio"),
-                                        attachments_file.hide(),
-                                        publisher.removeData("file"),
-                                        attachments_video_thumbnail.find(".x-image").removeAttr("style"),
-                                        attachments_video_thumbnail.find("input.js_x-image-input").val(""),
-                                        attachments_video_thumbnail.hide(),
-                                        $(".publisher-scraper").hide().html(""),
-                                        publisher.removeData("scraping"),
-                                        $("body").removeClass("publisher-focus"),
-                                        publisher.find(".publisher-slider").slideUp(),
-                                        publisher.find(".publisher-emojis").fadeOut(),
-                                        $(".js_posts_stream").find("ul:first").prepend(response.post),
-                                        posts_stream.removeData("loading"),
-                                        photo_grid(),
-                                        "share" == current_page && window.close());
+                            if (response.post) {
+                                var datatta = response.post;
+                                var ArrayVal = datatta.split('<div class="carsds"');
+                                var loopArray = [];
+                                if (ArrayVal.length > 0) {
+                                    for (var i = 1; i < ArrayVal.length; i++) {
+                                        loopArray.push('<div class="carsds"' + ArrayVal[i])
+                                    }
+                                }
+                                for (var ik = 0; ik < loopArray.length; ik++) {
+                                    var values = loopArray[ik];
+                                    var d = document.createElement('div');
+                                    d.innerHTML = values;
+                                    var valuesPost = d.firstChild;
+                                    bricklayer.prepend(valuesPost)
+                                    bricklayer.redraw();
+                                }
+                            }
+                            $(".no-post-to-show").css("display", "none");
+                            $(".wrapFooterDiv-old").show();
+                            if (response.callback) {
+                                /* button reset */
+                                button_status(_this, "reset");
+                                eval(response.callback);
+                            } else {
+                                /* button reset */
+                                button_status(_this, "reset");
+                                /* prepare publisher */
+                                /* remove (active|activated|disabled) from all tabs */
+                                publisher
+                                    .find(".js_publisher-tab")
+                                    .removeClass("active activated disabled");
+                                textarea.val("").removeAttr("style");
+                                textarea.attr("placeholder", textarea.data("init-placeholder"));
+                                /* hide & empty album */
+                                album.val("");
+                                album_meta.hide();
+                                /* hide & empty feelings */
+                                feeling_meta.hide();
+                                $("#feelings-menu-toggle")
+                                    .removeClass("active")
+                                    .text($("#feelings-menu-toggle").data("init-text"));
+                                $("#feelings-data").hide();
+                                $("#feelings-data input")
+                                    .show()
+                                    .attr("placeholder", $("#feelings-menu-toggle").data("init-text"))
+                                    .removeData("action")
+                                    .val("");
+                                $("#feelings-data span").html("");
+                                $(".js_publisher-feelings").removeClass("activated active");
+                                /* hide & empty location */
+                                location.val("");
+                                location_meta.hide();
+                                /* hide & empty colored patterns */
+                                publisher.removeData("colored_pattern");
+                                publisher
+                                    .find(".colored-text-wrapper")
+                                    .removeAttr("style")
+                                    .removeClass("colored");
+                                colored_pattern_meta.hide();
+                                /* hide & empty voice notes */
+                                attachments_voice_notes.hide();
+                                attachments_voice_notes.find(".js_voice-success-message").hide();
+                                attachments_voice_notes.find(".js_voice-start").show();
+                                publisher.removeData("voice_notes");
+                                /* hide & empty gif */
+                                gif.val("");
+                                gif_meta.hide();
+                                /* hide & remove poll meta */
+                                $('.publisher-meta[data-meta="poll"]').hide().find("input").val("");
+                                /* hide & empty attachments */
+                                attachments.hide();
+                                attachments.find("li.item").remove();
+                                publisher.removeData("photos");
+                                attachments_video.hide();
+                                publisher.removeData("video");
+                                attachments_audio.hide();
+                                publisher.removeData("audio");
+                                attachments_file.hide();
+                                publisher.removeData("file");
+                                /* hide & empty video custom thumbnail */
+                                attachments_video_thumbnail.find(".x-image").removeAttr("style");
+                                attachments_video_thumbnail.find("input.js_x-image-input").val("");
+                                attachments_video_thumbnail.hide();
+                                /* hide & empty scraper */
+                                $(".publisher-scraper").hide().html("");
+                                publisher.removeData("scraping");
+                                /* collapse the publisher */
+                                $("body").removeClass("publisher-focus");
+                                publisher.find(".publisher-slider").slideUp();
+                                publisher.find(".publisher-emojis").fadeOut();
+                                /* attache the new post */
+                                $(".js_posts_stream").find("ul:first").prepend(response.post);
+                                /* release the loading status */
+                                posts_stream.removeData("loading");
+                                /* rerun photo grid */
+                                photo_grid();
+                                /* close the window if share plugin */
+                                if (current_page == "share") {
+                                    window.close();
+                                }
+                            }
                         },
+
                         "json"
                     ).fail(function () {
                         button_status(_this, "reset"), modal("#modal-message", { title: __.Error, message: __["There is something that went wrong!"] });

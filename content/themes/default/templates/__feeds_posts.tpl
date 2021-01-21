@@ -27,7 +27,7 @@
             {if $standalone && $boosted || $post['boosted'] == "1"}
             <div class="boosted-icon" data-toggle="tooltip" title="{__(" Promoted")}">
                 <img width="30px" height="30px"
-                    src="{$system['system_url']}/content/themes/{$system['theme']}/images/svg/svgImg/Featured.svg">
+                    src="{$system['system_uploads_assets']}/content/themes/{$system['theme']}/images/svg/svgImg/Featured.svg">
             </div>
             {/if}
 

@@ -3917,9 +3917,9 @@ $(function () {
     var originVar = window.location.host;
     var locationPage = "";
     if (originVar == "localhost") {
-      window.history.pushState({}, document.title, "/sngine/global-profile-timeline.php");
+      window.history.pushState({}, document.title, "/sngine/global-profile-timeline");
     } else {
-      window.history.pushState({}, document.title, "/global-profile-timeline.php");
+      window.history.pushState({}, document.title, "/global-profile-timeline");
     }
 
     $("body").removeClass("publisher-focus");

@@ -181,9 +181,9 @@ try {
 	/* assign variables */
 	$smarty->assign('groups', $groups);
 	/* return */
-	if ($_POST['handle'] == "page") {
-		$return['post'] = $smarty->fetch("__feeds_post.tpl");
-	}
+	//if ($_POST['handle'] == "page") {
+	$return['post'] = $smarty->fetch("__feeds_posts.tpl");
+	//}
 
 	// return & exit
 	return_json($return);
