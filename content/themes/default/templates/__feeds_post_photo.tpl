@@ -9,7 +9,7 @@
             {include file='__svg_icons.tpl' icon="spy" class="rounded-circle" width="40px" height="40px"}
             {else}
             <a class="post-avatar-picture" href="{$post['post_author_url']}"
-                style="background-image:url({$post['post_author_picture']});">
+                style="background-image:url({$system['system_url']}/{$post['post_author_picture']});">
             </a>
             {if $post['post_author_online']}<i class="fa fa-circle online-dot"></i>{/if}
             {/if}
@@ -123,7 +123,8 @@
         <!-- comments & shares -->
         <span class="float-right">
             <!-- comments -->
-            <span class="pointer js_comments-toggle stratus_localhub_{$post['post_id']}" id="stratus_localhub_{$post['post_id']}">
+            <span class="pointer js_comments-toggle stratus_localhub_{$post['post_id']}"
+                id="stratus_localhub_{$post['post_id']}">
                 <i class="fa fa-comments"></i> {$post['comments']} {__("Comments")}
             </span>
             <!-- comments -->

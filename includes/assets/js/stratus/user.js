@@ -89,6 +89,7 @@ function data_heartbeat() {
     ) {
         data["last_post"] = posts_stream.find('.non_promoted').first().data("id") || 0;
         data["get"] = posts_stream.data("get");
+        console.log(data['get'])
         data["filter"] = posts_stream.data("filter");
         data["id"] = posts_stream.data("id");
         if (data["get"] === "newsfeed") {
@@ -110,7 +111,7 @@ function data_heartbeat() {
             data['last_post_pinned'] = posts_stream.find(".pinned_post").first().data("id") || 0;
         }
     }
-    console.log(data)
+
     var cechkPost = posts_stream.find(".non_promoted").first().data("id");
 
     (data.get = cechkPost && cechkPost > 0) && (data.last_post = cechkPost),
@@ -118,6 +119,7 @@ function data_heartbeat() {
             api["data/live"],
             data,
             function (response) {
+                console.log(data)
                 if (response.callback) eval(response.callback);
                 else {
                     if (response.requests) {
@@ -165,6 +167,7 @@ function data_heartbeat() {
                         var notifications = parseInt(response.notifications_count);
                         $(".js_live-notifications").find("span.counterlive").text(notifications).show(), notifications_sound;
                     }
+                    console.log(response.posts)
                     if (response.posts) {
                         var datatta = response.posts;
                         var ArrayVal = datatta.split('<div class="carsds"');
