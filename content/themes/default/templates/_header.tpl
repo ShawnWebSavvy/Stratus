@@ -202,7 +202,7 @@ url({$profile['user_profile_background']}) fixed !important; background-size:
                         $page=="global-profile/global-profile-bookmarks" || $page=="messages_global" ||
                         $active_page=='GlobalHub') &&
                         $user->_logged_in}
-                        <a href="{$system['system_url']}/global-profile-timeline.php" class="logo {$page}">
+                        <a href="{$system['system_url']}/global-profile-timeline" class="logo {$page}">
                            <img class="img-fluid"
                               src="{$system['system_uploads_assets']}/content/themes/default/images/logo_globalHub.png" />
                         </a>
@@ -326,21 +326,21 @@ url({$profile['user_profile_background']}) fixed !important; background-size:
                            <div class="navbar-wrapper">
                               <ul class="clearfix">
                                  <!-- user-menu -->
-                                  <li class="profileFor_desktop {$active_page}">
+                                 <li class="profileFor_desktop {$active_page}">
                                     <!-- <a href="#" class="user-menu" data-toggle="dropdown" data-display="static"> -->
                                     {if $active_page=='GlobalHub'}
                                     <a href="javascript:void();" id="currentUsername"
-                                    class="rightuser-menu usernameOnHoverbtn openRightBlackBar">
-                                    <!-- <span class="usernameOnHover">{$userGlobal->_data['user_firstname']}</span> -->
-                                    <img class="lazyload" data-src="{$userGlobal->_data['global_user_picture']}" />
-                                    <span class="">{$userGlobal->_data['user_firstname']}</span>
+                                       class="rightuser-menu usernameOnHoverbtn openRightBlackBar">
+                                       <!-- <span class="usernameOnHover">{$userGlobal->_data['user_firstname']}</span> -->
+                                       <img class="lazyload" data-src="{$userGlobal->_data['global_user_picture']}" />
+                                       <span class="">{$userGlobal->_data['user_firstname']}</span>
                                     </a>
                                     {else}
                                     <a href="javascript:void();" id="currentUsername" page='{$page}'
-                                    class="rightuser-menu usernameOnHoverbtn openRightBlackBar">
-                                    <!-- <span class="usernameOnHover">{$user->_data['user_firstname']}</span> -->
-                                    <img class="lazyload" data-src="{$user->_data['user_picture']}" />
-                                    <span class="">{$user->_data['user_firstname']}</span>
+                                       class="rightuser-menu usernameOnHoverbtn openRightBlackBar">
+                                       <!-- <span class="usernameOnHover">{$user->_data['user_firstname']}</span> -->
+                                       <img class="lazyload" data-src="{$user->_data['user_picture']}" />
+                                       <span class="">{$user->_data['user_firstname']}</span>
                                     </a>
                                     {/if}
                                  </li>

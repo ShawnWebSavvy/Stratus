@@ -134,7 +134,7 @@
         <div class="_user_detail_sec">
             <div class="user__imgs">
                 <a class="data-avatar" href="{$system['system_url']}/{$_user['user_name']}{if $_search}?ref=qs{/if}">
-                    <img class="lazyload dddd" data-src="{$system['system_url']}/{$_user['user_picture']}"
+                    <img class="lazyload" data-src="{$system['system_url']}/{$_user['user_picture']}"
                         alt="{$_user['user_firstname']} {$_user['user_lastname']}"> {if
                     $_reaction}
                     <div class="data-reaction">

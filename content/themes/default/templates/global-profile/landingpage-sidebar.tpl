@@ -1,10 +1,11 @@
 <div class="card main-side-nav-card">
     <div class="card-body with-nav landingpage-sidebar">
         <div class="chat-conversations js_scroller" data-slimScroll-height="87vh">
-            <ul class="main-side-nav main-left-side-nav left-sidebar-{if ($page == 'global-profile/landingpage')}first{else}second{/if}-ul ">
-                <li {if ($page == 'global-profile/landingpage')}class="active" {/if}>
+            <ul
+                class="main-side-nav main-left-side-nav left-sidebar-{if ($page == 'global-profile/landingpage')}first{else}second{/if}-ul ">
+                <li {if ($page=='global-profile/landingpage' )}class="active" {/if}>
 
-                    <a href="{$system['system_url']}/landingpage.php" class="{$page}">
+                    <a href="{$system['system_url']}/landingpage" class="{$page}">
                         <div class="svg-container">
                             <img src="{$system['system_url']}/content/themes/default/images/svg/svgImg/nav_icon_favourite.svg"
                                 class="blackicon">
@@ -28,14 +29,15 @@
                 </li>
 
                 <li>
-                    <a href="{$system['system_url']}/global-profile-timeline.php">
+                    <a href="{$system['system_url']}/global-profile-timeline">
                         <div class="svg-container">
                             <img src="{$system['system_url']}/content/themes/default/images/svg/svgImg/nav_icon_globalHub.svg"
                                 class="blackicon">
                             <img src="{$system['system_url']}/content/themes/default/images/svg/svgImg/nav_icon_globalHub-active.svg"
                                 class="whiteicon">
                         </div>
-                        <span class="nav-text">Global Hub</span></a>
+                        <span class="nav-text">Global Hub</span>
+                    </a>
                 </li>
 
                 <!--<li>
@@ -62,9 +64,11 @@
                 <li>
                     <a href="{$system['system_url']}/blogs">
                         <div class="svg-container">
-                            <img src="{$system['system_url']}/content/themes/default/images/svg/svgImg/nav_icon_blogHub.svg" class="blackicon">
-                            <img src="{$system['system_url']}/content/themes/default/images/svg/svgImg/nav_icon_blogHub_active.svg" class="whiteicon">
-                        </div>  
+                            <img src="{$system['system_url']}/content/themes/default/images/svg/svgImg/nav_icon_blogHub.svg"
+                                class="blackicon">
+                            <img src="{$system['system_url']}/content/themes/default/images/svg/svgImg/nav_icon_blogHub_active.svg"
+                                class="whiteicon">
+                        </div>
                         <span class="nav-text">{__("Blog Hub")}</span>
                     </a>
                 </li>
@@ -174,12 +178,14 @@
 
 
                 {if $system['ads_enabled']}
-                <li {if $page== "ads" && $view != "wallet"}class="active"{/if}>
+                <li {if $page=="ads" && $view !="wallet" }class="active" {/if}>
                     <a href="{$system['system_url']}/ads">
                         <div class="svg-container">
-                            <img src="{$system['system_url']}/content/themes/default/images/svg/svgImg/nav_icon_adHub.svg" class="blackicon">
-                            <img src="{$system['system_url']}/content/themes/default/images/svg/svgImg/nav_icon_adHub_active.svg" class="whiteicon">
-                        </div>                            
+                            <img src="{$system['system_url']}/content/themes/default/images/svg/svgImg/nav_icon_adHub.svg"
+                                class="blackicon">
+                            <img src="{$system['system_url']}/content/themes/default/images/svg/svgImg/nav_icon_adHub_active.svg"
+                                class="whiteicon">
+                        </div>
                         <span class="nav-text">{__("Ads Hub")}</span>
                     </a>
                 </li>
@@ -189,9 +195,11 @@
                 <li>
                     <a href="{$system['system_url']}/market">
                         <div class="svg-container">
-                            <img src="{$system['system_url']}/content/themes/default/images/svg/svgImg/nav_icon_marketHub.svg" class="blackicon">
-                            <img src="{$system['system_url']}/content/themes/default/images/svg/svgImg/nav_icon_marketHub_active.svg" class="whiteicon">
-                        </div>  
+                            <img src="{$system['system_url']}/content/themes/default/images/svg/svgImg/nav_icon_marketHub.svg"
+                                class="blackicon">
+                            <img src="{$system['system_url']}/content/themes/default/images/svg/svgImg/nav_icon_marketHub_active.svg"
+                                class="whiteicon">
+                        </div>
                         <span class="nav-text">{__("Marketplace")}</span>
                     </a>
                 </li>

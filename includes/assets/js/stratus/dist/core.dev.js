@@ -1075,7 +1075,7 @@ $(function () {
   $(".blacksidebarclassadd").removeClass("rightBlackSidebar");
   $(".blacksidebarclassadd").removeClass("hiddBar");
   $("body").on("click", ".openRightBlackBar", function () {
-    if (window.location.href.indexOf("landingpage.php") < 0) {
+    if (window.location.href.indexOf("landingpage") < 0) {
       if ($(".rightUserDetails").css("display") == "block") {
         $(".rightUserDetails").css("display", "none");
       } else {

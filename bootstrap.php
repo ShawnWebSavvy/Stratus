@@ -120,11 +120,6 @@ $system['system_uploads_assets'] = $system['system_url'];
 /* set system uploads */
 if ($system['s3_enabled']) {
     $endpoint = "https://s3." . $system['s3_region'] . ".amazonaws.com/" . $system['s3_bucket'];
-    //$endpoint . "/uploads";
-
-    /*ImageKit Live */
-    //$system['system_uploads'] = "https://ik.imagekit.io/stratus";
-    //$system['system_uploads_url'] = "https://ik.imagekit.io/stratus";
 
     /*CDN Stag */
     // $system['system_uploads'] =  "https://cdn.stratus-stage.xyz/uploads";

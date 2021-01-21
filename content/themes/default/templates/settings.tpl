@@ -967,7 +967,7 @@
                                         src="{$system['system_url']}/content/themes/default/images/svg/svgImg/eye-icon.svg" />
                                     <span class="ml5 d-none d-lg-inline-block">{__("View Profile")}</span>
                                 </a>
-                            </div> 
+                            </div>
                         </div>
                         <form class="js_ajax-forms setting-social-form" data-url="users/settings.php?edit=social">
                             <div class="card-body">
@@ -3232,9 +3232,9 @@
                                         <div class="InformationIconName">
                                             <span class="settingInfoImageHover">
                                                 <img width="25px" height="25px"
-                                                    src="{$system['system_url']}/content/themes/default/images/svg/svgImg/nav_icon_adHub.svg" />
+                                                    src="{$system['system_uploads_assets']}/content/themes/default/images/svg/svgImg/nav_icon_adHub.svg" />
                                                 <img width="25px" height="25px"
-                                                    src="{$system['system_url']}/content/themes/default/images/svg/svgImg/nav_icon_adHub_active.svg" />
+                                                    src="{$system['system_uploads_assets']}/content/themes/default/images/svg/svgImg/nav_icon_adHub_active.svg" />
                                             </span>
                                             <div class="title">{__("Groups")}</div>
                                         </div>

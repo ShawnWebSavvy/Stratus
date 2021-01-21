@@ -373,22 +373,27 @@
 <!-- Dependencies Plugins -->
 
 <!-- Sngine [JS] -->
-<script src="{$system['system_url']}/includes/assets/js/stratus/core.js?{$cacheremovejs}" defer></script>
+<script src="{$system['system_uploads_assets']}/includes/assets/js/stratus/core.js?{$cacheremovejs}" defer></script>
 <script src="{$system['system_url']}/includes/assets/js/stratus/swipMobileCode.js?{$cacheremovejs}" defer></script>
 <!--Landing page custom js -->
-<script src="{$system['system_url']}/includes/assets/js/stratus/custom.js?{$cacheremovejs}" defer></script>
+<script src="{$system['system_uploads_assets']}/includes/assets/js/stratus/custom.js?{$cacheremovejs}" defer></script>
 
 {if $user->_logged_in}
-    <script src="{$system['system_url']}/includes/assets/js/stratus/user.js?{$cacheremovejs}" defer></script>
-    <script src="{$system['system_url']}/includes/assets/js/stratus/post.js?{$cacheremovejs}" defer></script>
-    <script src="{$system['system_url']}/includes/assets/js/stratus/chat.js?{$cacheremovejs}" defer></script>
+    <script src="{$system['system_uploads_assets']}/includes/assets/js/stratus/user.js?{$cacheremovejs}" defer></script>
+    <script src="{$system['system_uploads_assets']}/includes/assets/js/stratus/post.js?{$cacheremovejs}" defer></script>
+    <script src="{$system['system_uploads_assets']}/includes/assets/js/stratus/chat.js?{$cacheremovejs}" defer></script>
     <script src="{$system['system_uploads_assets']}/includes/assets/js/stratus/showads.js?{$cacheremovejs}" defer></script>
     {if $system['live_enabled'] && $page == "live"}
-        <script src="{$system['system_url']}/includes/assets/js/stratus/live.js"></script>
+        <script src="{$system['system_uploads_assets']}/includes/assets/js/stratus/live.js"></script>
     {/if}
 {/if}
 <!-- Sngine [JS] -->
+{if $userGlobal->_logged_in || $user->_logged_in}
+    <!-- Emoji Animation Script -->
+    <script src="https://unpkg.com/@lottiefiles/lottie-player@latest/dist/lottie-player.js"></script>
 
+    <!-- Emoji Animation Script -->
+    {/if}
 {if $page == "admin"}
     <!-- Dependencies Plugins -->
     <script src="{$system['system_uploads_assets']}/includes/assets/js/plugins/bootstrap.colorpicker/bootstrap-colorpicker.min.js"></script>
@@ -408,7 +413,7 @@
     <!-- Dependencies Plugins [JS] -->
 
     <!-- Sngine [JS] -->
-    <script src="{$system['system_url']}/includes/assets/js/stratus/admin.js"></script>
+    <script src="{$system['system_uploads_assets']}/includes/assets/js/stratus/admin.js"></script>
     <!-- Sngine [JS] -->
 
     <!-- Admin Charts -->
