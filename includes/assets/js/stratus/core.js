@@ -567,7 +567,7 @@ function button_status(e, t) {
             $(".blacksidebarclassadd").removeClass("rightBlackSidebar"),
             $(".blacksidebarclassadd").removeClass("hiddBar"),
             $("body").on("click", ".openRightBlackBar", function () {
-                window.location.href.indexOf("landingpage.php") < 0 &&
+                window.location.href.indexOf("landingpage") < 0 &&
                     ("block" == $(".rightUserDetails").css("display") ? $(".rightUserDetails").css("display", "none") : $(".rightUserDetails").css("display", "block"),
                         $(".blacksidebarclassadd").hasClass("rightBlackSidebar") ? $(".blacksidebarclassadd").removeClass("rightBlackSidebar") : $(".blacksidebarclassadd").addClass("rightBlackSidebar"));
             }),

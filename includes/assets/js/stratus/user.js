@@ -99,7 +99,7 @@ function data_heartbeat() {
         if (data["get"] === "posts_profile") {
             data["custom_pinned"] = "custom_pinned";
             data["last_post_boosted"] = posts_stream.find(".boosted").first().data("id") || 0;
-            data["last_post_pinned"] = posts_stream.find('.pinned_post').first().data("id") || 0;
+            data["last_post_pinned"] = posts_stream.find('.unpinned_post').first().data("id") || 0;
         }
         if (data["get"] === "newsfeed" && data['filter'] == "article") {
             data["custom_boosted"] = "custom_boosted";
@@ -111,87 +111,84 @@ function data_heartbeat() {
             data['last_post_pinned'] = posts_stream.find(".pinned_post").first().data("id") || 0;
         }
     }
-
-    var cechkPost = posts_stream.find(".non_promoted").first().data("id");
-
-    (data.get = cechkPost && cechkPost > 0) && (data.last_post = cechkPost),
-        $.post(
-            api["data/live"],
-            data,
-            function (response) {
-                console.log(data)
-                if (response.callback) eval(response.callback);
-                else {
-                    if (response.requests) {
-                        $(".js_live-requests").find(".js_scroller ul").length > 1
-                            ? $(".js_live-requests").find(".js_scroller ul:first").prepend(response.requests)
-                            : $(".js_live-requests")
-                                .find(".js_scroller p:first")
-                                .replaceWith("<ul>" + response.requests + "</ul>");
-                        var requests = parseInt(response.requests_count);
-                        $(".js_live-requests").find("span.counter").text(requests).show(), notifications_sound;
-                    }
-                    if (
-                        (response.conversations &&
-                            ($(".js_live-messages")
-                                .find(".js_scroller")
-                                .html("<ul>" + response.conversations + "</ul>"),
-                                -1 != window.location.pathname.indexOf("messages") &&
-                                ($(".js_live-messages-alt").find(".js_scroller ul").length > 0
-                                    ? $(".js_live-messages-alt").find(".js_scroller ul").html(response.conversations)
-                                    : $(".js_live-messages-alt")
-                                        .find(".js_scroller")
-                                        .html("<ul>" + response.conversations + "</ul>")),
-                                $(".js_live-messages")
-                                    .find(".js_scrollerGroup")
-                                    .html("<ul>" + response.conversations_group + "</ul>"),
-                                -1 != window.location.pathname.indexOf("messages") &&
-                                ($(".js_live-messages-alt").find(".js_scrollerGroup ul").length > 0
-                                    ? $(".js_live-messages-alt").find(".js_scrollerGroup ul").html(response.conversations_group)
-                                    : $(".js_live-messages-alt")
-                                        .find(".js_scrollerGroup")
-                                        .html("<ul>" + response.conversations_group + "</ul>")),
-                                response.conversations_count > 0
-                                    ? ($(".js_live-messages").find("span.counter").text(response.conversations_count).show(), chat_sound)
-                                    : $(".js_live-messages").find("span.counter").text(response.conversations_count)),
-                            response.notifications)
-                    ) {
-                        $.each(response.notifications_json, function (e, t) {
-                            browser_notifications_enabled, noty_notifications_enabled;
-                        }),
-                            $(".js_live-notifications").find(".js_scroller ul").length > 0
-                                ? $(".js_live-notifications").find(".js_scroller ul").prepend(response.notifications)
-                                : $(".js_live-notifications")
-                                    .find(".js_scroller")
-                                    .html("<ul>" + response.notifications + "</ul>");
-                        var notifications = parseInt(response.notifications_count);
-                        $(".js_live-notifications").find("span.counterlive").text(notifications).show(), notifications_sound;
-                    }
-                    console.log(response.posts)
-                    if (response.posts) {
-                        var datatta = response.posts;
-                        var ArrayVal = datatta.split('<div class="carsds"');
-                        var loopArray = [];
-                        if (ArrayVal.length > 0) {
-                            for (var i = 1; i < ArrayVal.length; i++) {
-                                loopArray.push('<div class="carsds"' + ArrayVal[i])
-                            }
-                        }
-
-                        for (var ik = 0; ik < loopArray.length; ik++) {
-                            var values = loopArray[ik];
-                            var d = document.createElement('div');
-                            d.innerHTML = values;
-                            var valuesPost = d.firstChild;
-                            bricklayer.prepend(valuesPost)
-                            bricklayer.redraw();
-                        }
-                    }
-                    response.posts && (posts_stream.find("ul:first").prepend(response.posts), setTimeout(photo_grid(), 200)), setTimeout("data_heartbeat();", min_data_heartbeat);
+    console.log(data)
+    //var cechkPost = posts_stream.find(".non_promoted").first().data("id");
+    //(data.get = cechkPost && cechkPost > 0) && (data.last_post = cechkPost),
+    $.post(
+        api["data/live"],
+        data,
+        function (response) {
+            if (response.callback) eval(response.callback);
+            else {
+                if (response.requests) {
+                    $(".js_live-requests").find(".js_scroller ul").length > 1
+                        ? $(".js_live-requests").find(".js_scroller ul:first").prepend(response.requests)
+                        : $(".js_live-requests")
+                            .find(".js_scroller p:first")
+                            .replaceWith("<ul>" + response.requests + "</ul>");
+                    var requests = parseInt(response.requests_count);
+                    $(".js_live-requests").find("span.counter").text(requests).show(), notifications_sound;
                 }
-            },
-            "json"
-        );
+                if (
+                    (response.conversations &&
+                        ($(".js_live-messages")
+                            .find(".js_scroller")
+                            .html("<ul>" + response.conversations + "</ul>"),
+                            -1 != window.location.pathname.indexOf("messages") &&
+                            ($(".js_live-messages-alt").find(".js_scroller ul").length > 0
+                                ? $(".js_live-messages-alt").find(".js_scroller ul").html(response.conversations)
+                                : $(".js_live-messages-alt")
+                                    .find(".js_scroller")
+                                    .html("<ul>" + response.conversations + "</ul>")),
+                            $(".js_live-messages")
+                                .find(".js_scrollerGroup")
+                                .html("<ul>" + response.conversations_group + "</ul>"),
+                            -1 != window.location.pathname.indexOf("messages") &&
+                            ($(".js_live-messages-alt").find(".js_scrollerGroup ul").length > 0
+                                ? $(".js_live-messages-alt").find(".js_scrollerGroup ul").html(response.conversations_group)
+                                : $(".js_live-messages-alt")
+                                    .find(".js_scrollerGroup")
+                                    .html("<ul>" + response.conversations_group + "</ul>")),
+                            response.conversations_count > 0
+                                ? ($(".js_live-messages").find("span.counter").text(response.conversations_count).show(), chat_sound)
+                                : $(".js_live-messages").find("span.counter").text(response.conversations_count)),
+                        response.notifications)
+                ) {
+                    $.each(response.notifications_json, function (e, t) {
+                        browser_notifications_enabled, noty_notifications_enabled;
+                    }),
+                        $(".js_live-notifications").find(".js_scroller ul").length > 0
+                            ? $(".js_live-notifications").find(".js_scroller ul").prepend(response.notifications)
+                            : $(".js_live-notifications")
+                                .find(".js_scroller")
+                                .html("<ul>" + response.notifications + "</ul>");
+                    var notifications = parseInt(response.notifications_count);
+                    $(".js_live-notifications").find("span.counterlive").text(notifications).show(), notifications_sound;
+                }
+                if (response.posts) {
+                    var datatta = response.posts;
+                    var ArrayVal = datatta.split('<div class="carsds"');
+                    var loopArray = [];
+                    if (ArrayVal.length > 0) {
+                        for (var i = 1; i < ArrayVal.length; i++) {
+                            loopArray.push('<div class="carsds"' + ArrayVal[i])
+                        }
+                    }
+
+                    for (var ik = 0; ik < loopArray.length; ik++) {
+                        var values = loopArray[ik];
+                        var d = document.createElement('div');
+                        d.innerHTML = values;
+                        var valuesPost = d.firstChild;
+                        bricklayer.prepend(valuesPost)
+                        bricklayer.redraw();
+                    }
+                }
+                response.posts && (posts_stream.find("ul:first").prepend(response.posts), setTimeout(photo_grid(), 200)), setTimeout("data_heartbeat();", min_data_heartbeat);
+            }
+        },
+        "json"
+    );
 }
 function init_picture_crop(e) {
     setTimeout(function () {
@@ -212,7 +209,7 @@ function init_picture_position() {
     $(".profile-cover-wrapper").imagedrag({ position: e, input: ".js_position-picture-val" });
 }
 function onimgTagclick(e) {
-    const t = "#" + $(e).attr("id"),
+    const t = "body #" + $(e).attr("id"),
         s = $(e).attr("data-video"),
         a = $(e).attr("data-vid");
     $(t).after(

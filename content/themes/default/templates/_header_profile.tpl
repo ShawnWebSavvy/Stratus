@@ -146,7 +146,7 @@
                 </a>
                 {elseif ($page == "global-profile/global-profile" || $page =="global-profile/global-profile-photo" ||
                 $page =="global-profile/global-profile-timeline") && $user->_logged_in}
-                <a href="{$system['system_url']}/global-profile-timeline.php" class="logo {$page}">
+                <a href="{$system['system_url']}/global-profile-timeline" class="logo {$page}">
                   <img class="img-fluid lazyload"
                     data-src="{$system['system_uploads_assets']}/content/themes/default/images/logo_globalHub.png" />
                 </a>
