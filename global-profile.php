@@ -74,10 +74,8 @@ try {
 	//	if ($checkImage != 200) {
 	//		$profile['global_user_picture'] = $system['system_uploads'] . '/' . $profile['user_picture_full'];
 	//	}
-	if ($profile['user_picture_full'] == "") {
-		$profile['user_picture_full'] = 'content/themes/default/images/user_defoult_img.jpg';
-	}
-	$profile['global_user_picture'] = 'includes/wallet-api/image-exist-api.php?userPicture=' . $profile['global_user_picture'] . '&userPictureFull=' . $system['system_uploads'] . '/' . $profile['user_picture_full'] . '&type=1';
+
+	$profile['global_user_picture'] = $system['system_url'] . '/includes/wallet-api/image-exist-api.php?userPicture=' . $profile['global_user_picture'] . '&userPictureFull=' . $system['system_uploads'] . '/' . $profile['user_picture_full'] . '&type=1';
 
 	$profile['user_picture'] = $profile['global_user_picture'];
 	$profile['user_picture_full'] = ($profile['user_picture_full']) ? $system['system_uploads'] . '/' . $profile['user_picture_full'] : $profile['user_picture_full'];

@@ -339,7 +339,7 @@
 <!-- Dependencies Plugins -->
 {assign var="cacheremovejs" value=$smarty.now|date_format:'%Y-%m-%d_%H:%M:%S'}
 <!-- Stratus [JS] -->
-<script src="http://localhost/stratus_speed/includes/assets/js/stratus/global-profile/global-profile-core.js?{$cacheremovejs}" {if !$user->_logged_in}defer{/if}></script>
+<script src="{$system['system_uploads_assets']}/includes/assets/js/stratus/global-profile/global-profile-core.js?{$cacheremovejs}" {if !$user->_logged_in}defer{/if}></script>
 {if $user->_logged_in}
     <script src="{$system['system_uploads_assets']}/includes/assets/js/stratus/global-profile/global-profile-user.js?{$cacheremovejs}"></script>
     <script src="{$system['system_uploads_assets']}/includes/assets/js/stratus/global-profile/global-profile-post.js?{$cacheremovejs}"></script>
