@@ -64,7 +64,7 @@
     <link rel="stylesheet" type='text/css'
         href="{$system['system_uploads_assets']}/content/themes/default/css/setting_nav.css">
     <link rel="stylesheet" type='text/css'
-        href="{$system['system_uploads_assets']}/content/themes/default/css/custom-style.css">
+        href="{$system['system_url']}/content/themes/default/css/custom-style.css">
     {else}
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.13.0/css/all.css">
     <link rel="stylesheet" href="https://cdn.rtlcss.com/bootstrap/v4.2.1/css/bootstrap.min.css"

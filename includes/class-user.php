@@ -74,7 +74,7 @@ class User
                 //                    $this->_data['user_picture'] = $system['system_url'] . '/content/themes/' . $system['theme'] . '/images/user_defoult_img.jpg';
                 //                }
 
-                $this->_data['user_picture'] = $system['system_url'].'/includes/wallet-api/image-exist-api.php?userPicture=' . $this->_data['user_picture'] . '&userPictureFull=' . $this->_data['user_picture_full'] . '&type=1';
+                $this->_data['user_picture'] = $system['system_url'] . '/includes/wallet-api/image-exist-api.php?userPicture=' . $this->_data['user_picture'] . '&userPictureFull=' . $this->_data['user_picture_full'] . '&type=1';
 
                 /* get all friends ids */
                 $this->_data['friends_ids'] = $this->get_friends_ids($this->_data['user_id']);
@@ -477,7 +477,7 @@ class User
                     //                        $friend['user_picture'] = $system['system_uploads'] . '/' . $friend['user_picture_full'];
                     //                    }
 
-                    $friend['user_picture'] = $system['system_url'].'/includes/wallet-api/image-exist-api.php?userPicture=' . $friend['user_picture'] . '&userPictureFull=' . $friend['user_picture_full'];
+                    $friend['user_picture'] = $system['system_url'] . '/includes/wallet-api/image-exist-api.php?userPicture=' . $friend['user_picture'] . '&userPictureFull=' . $friend['user_picture_full'];
                 }
                 /* get the connection between the viewer & the target */
                 $friend['connection'] = $this->connection($friend['user_id']);
@@ -594,7 +594,7 @@ class User
                 //                    }
                 //                }
 
-                $request['user_picture'] = $system['system_url'].'/includes/wallet-api/image-exist-api.php?userPicture=' . $request['user_picture'] . '&userPictureFull=' . $request['user_picture_full'];
+                $request['user_picture'] = $system['system_url'] . '/includes/wallet-api/image-exist-api.php?userPicture=' . $request['user_picture'] . '&userPictureFull=' . $request['user_picture_full'];
 
                 $request['mutual_friends_count'] = $this->get_mutual_friends_count($request['user_id']);
                 $requests[] = $request;
@@ -758,7 +758,7 @@ class User
                 //                    $user['user_picture'] = $system['system_uploads'] . '/' . $user['user_picture_full'];
                 //                }
 
-                $user['user_picture'] = $system['system_url'].'/includes/wallet-api/image-exist-api.php?userPicture=' . $user['user_picture'] . '&userPictureFull=' . $user['user_picture_full'];
+                $user['user_picture'] = $system['system_url'] . '/includes/wallet-api/image-exist-api.php?userPicture=' . $user['user_picture'] . '&userPictureFull=' . $user['user_picture_full'];
 
                 if (isset($this->_data['user_id'])) {
                     $user['mutual_friends_count'] = $this->get_mutual_friends_count($user['user_id']);
@@ -904,7 +904,7 @@ class User
         if ($get_users->num_rows > 0) {
             while ($user = $get_users->fetch_assoc()) {
                 $user['user_picture'] = get_picture($user['user_picture'], $user['user_gender']);
-                $user['user_picture'] = $system['system_url'].'/includes/wallet-api/image-exist-api.php?userPicture=' . $user['user_picture'] . '&userPictureFull=' . $user['user_picture_full'];
+                $user['user_picture'] = $system['system_url'] . '/includes/wallet-api/image-exist-api.php?userPicture=' . $user['user_picture'] . '&userPictureFull=' . $user['user_picture_full'];
                 /* get the connection between the viewer & the target */
                 $user['connection'] = $this->connection($user['user_id']);
                 $results['users'][] = $user;
@@ -966,7 +966,7 @@ class User
         if ($get_users->num_rows > 0) {
             while ($user = $get_users->fetch_assoc()) {
                 $user['user_picture'] = get_picture($user['user_picture'], $user['user_gender']);
-                $user['user_picture'] = $system['system_url'].'/includes/wallet-api/image-exist-api.php?userPicture=' . $user['user_picture'] . '&userPictureFull=' . $user['user_picture_full'];
+                $user['user_picture'] = $system['system_url'] . '/includes/wallet-api/image-exist-api.php?userPicture=' . $user['user_picture'] . '&userPictureFull=' . $user['user_picture_full'];
                 /* get the connection between the viewer & the target */
                 $user['connection'] = $this->connection($user['user_id']);
                 $user['sort'] = $user['user_firstname'];
@@ -2214,7 +2214,7 @@ class User
                 //                    $notification['user_picture'] = $system['system_uploads'] . '/' . $notification['user_picture_full'];
                 //                }
 
-                $notification['user_picture'] = $system['system_url'].'/includes/wallet-api/image-exist-api.php?userPicture=' . $notification['user_picture'] . '&userPictureFull=' . $notification['user_picture_full'];
+                $notification['user_picture'] = $system['system_url'] . '/includes/wallet-api/image-exist-api.php?userPicture=' . $notification['user_picture'] . '&userPictureFull=' . $notification['user_picture_full'];
                 /* prepare notification notify_id */
                 $notification['notify_id'] = ($notification['notify_id']) ? "?notify_id=" . $notification['notify_id'] : "";
                 /* prepare notification node_url */
@@ -3237,7 +3237,7 @@ class User
             //                }
             //            }
 
-            $recipient['user_picture'] = $system['system_url'].'/includes/wallet-api/image-exist-api.php?userPicture=' . $recipient['user_picture'] . '&userPictureFull=' . $recipient['user_picture_full'];
+            $recipient['user_picture'] = $system['system_url'] . '/includes/wallet-api/image-exist-api.php?userPicture=' . $recipient['user_picture'] . '&userPictureFull=' . $recipient['user_picture_full'];
 
             /* add to conversation recipients */
             $conversation['recipients'][] = $recipient;
@@ -3412,7 +3412,7 @@ class User
             //                }
             //            }
 
-            $message['user_picture'] = $system['system_url'].'/includes/wallet-api/image-exist-api.php?userPicture=' . $message['user_picture'] . '&userPictureFull=' . $message['user_picture_full'];
+            $message['user_picture'] = $system['system_url'] . '/includes/wallet-api/image-exist-api.php?userPicture=' . $message['user_picture'] . '&userPictureFull=' . $message['user_picture_full'];
             $message['message'] = $this->_parse(["text" => $message['message'], "decode_mentions" => false, "decode_hashtags" => false]);
             /* return */
             $messages[] = $message;
@@ -4554,7 +4554,7 @@ class User
         //            $post['post_author_picture'] = $system['system_uploads'] . '/' . $this->_data['user_picture_full'];
         //        }
 
-        $post['post_author_picture'] = $system['system_url'].'/includes/wallet-api/image-exist-api.php?userPicture=' . $post['post_author_picture'] . '&userPictureFull=' . $this->_data['user_picture_full'];
+        $post['post_author_picture'] = $system['system_url'] . '/includes/wallet-api/image-exist-api.php?userPicture=' . $post['post_author_picture'] . '&userPictureFull=' . $this->_data['user_picture_full'];
 
         $post['post_author_url'] = $system['system_url'] . '/' . $this->_data['user_name'];
         $post['post_author_name'] = $this->_data['user_firstname'] . " " . $this->_data['user_lastname'];
@@ -6015,6 +6015,7 @@ class User
         if ($get_users->num_rows > 0) {
             while ($_user = $get_users->fetch_assoc()) {
                 $_user['user_picture'] = get_picture($_user['user_picture'], $_user['user_gender']);
+                $_user['user_picture'] = 'includes/wallet-api/image-exist-api.php?userPicture=' . $_user['user_picture'] . '&userPictureFull=' . $system['system_uploads'] . '/' . $_user['user_picture_full'];
                 /* get the connection between the viewer & the target */
                 $_user['connection'] = $this->connection($_user['user_id']);
                 /* get mutual friends count */
@@ -6075,7 +6076,7 @@ class User
             //                }
             //            }
 
-            $voter['user_picture'] = $system['system_url'].'/includes/wallet-api/image-exist-api.php?userPicture=' . $voter['user_picture'] . '&userPictureFull=' . $voter['user_picture_full'];
+            $voter['user_picture'] = $system['system_url'] . '/includes/wallet-api/image-exist-api.php?userPicture=' . $voter['user_picture'] . '&userPictureFull=' . $voter['user_picture_full'];
             /* get the connection between the viewer & the target */
             $voter['connection'] = $this->connection($voter['user_id']);
             $voters[] = $voter;
@@ -6166,7 +6167,7 @@ class User
             //                }
             //            }
 
-            $post['post_author_picture'] = $system['system_url'].'/includes/wallet-api/image-exist-api.php?userPicture=' . $post['post_author_picture'] . '&userPictureFull=' . $post['user_picture_full'];
+            $post['post_author_picture'] = $system['system_url'] . '/includes/wallet-api/image-exist-api.php?userPicture=' . $post['post_author_picture'] . '&userPictureFull=' . $post['user_picture_full'];
 
             $post['post_author_url'] = $system['system_url'] . '/' . $post['user_name'];
             $post['post_author_name'] = $post['user_firstname'] . " " . $post['user_lastname'];
@@ -7488,7 +7489,7 @@ class User
                 //                    }
                 //                }
 
-                $comment['author_picture'] = $system['system_url'].'/includes/wallet-api/image-exist-api.php?userPicture=' . $comment['author_picture'] . '&userPictureFull=' . $comment['user_picture_full'];
+                $comment['author_picture'] = $system['system_url'] . '/includes/wallet-api/image-exist-api.php?userPicture=' . $comment['author_picture'] . '&userPictureFull=' . $comment['user_picture_full'];
 
                 $comment['author_url'] = $system['system_url'] . '/' . $comment['user_name'];
                 $comment['author_name'] = $comment['user_firstname'] . " " . $comment['user_lastname'];
@@ -7506,7 +7507,7 @@ class User
                 //                    }
                 //                }
 
-                $comment['author_picture'] = $system['system_url'].'/includes/wallet-api/image-exist-api.php?userPicture=' . $comment['author_picture'] . '&userPictureFull=' . $comment['user_picture_full'];
+                $comment['author_picture'] = $system['system_url'] . '/includes/wallet-api/image-exist-api.php?userPicture=' . $comment['author_picture'] . '&userPictureFull=' . $comment['user_picture_full'];
 
                 $comment['author_url'] = $system['system_url'] . '/pages/' . $comment['page_name'];
                 $comment['author_name'] = $comment['page_title'];
@@ -9909,7 +9910,7 @@ class User
                     $get_friends = $db->query($frnsdQuery) or _error("SQL_ERROR_THROWEN");
                     while ($friend = $get_friends->fetch_assoc()) {
                         $friend['user_picture'] = get_picture($friend['user_picture'], $friend['user_gender']);
-                        $friend['user_picture'] = $system['system_url'].'/includes/wallet-api/image-exist-api.php?userPicture=' . $friend['user_picture'] . '&userPictureFull=' . $friend['user_picture_full'] . '&type=1';
+                        $friend['user_picture'] = $system['system_url'] . '/includes/wallet-api/image-exist-api.php?userPicture=' . $friend['user_picture'] . '&userPictureFull=' . $friend['user_picture_full'] . '&type=1';
 
                         $friend['connection'] = 'group_invite';
                         $friend['node_id'] = $group_id;
@@ -10382,7 +10383,7 @@ class User
                     $get_friends = $db->query(sprintf("SELECT users.user_id, users.user_name, users.user_firstname, users.user_lastname, users.user_gender, users.user_picture, users.user_picture_id, posts_photos.source as user_picture_full, users.user_subscribed, users.user_verified FROM users LEFT JOIN posts_photos ON users.user_picture_id = posts_photos.photo_id WHERE user_id IN ($invites_list) LIMIT %s, %s", secure($offset, 'int', false), secure($system['max_results_even'], 'int', false))) or _error("SQL_ERROR_THROWEN");
                     while ($friend = $get_friends->fetch_assoc()) {
                         $friend['user_picture'] = get_picture($friend['user_picture'], $friend['user_gender']);
-                        $friend['user_picture'] = $system['system_url'].'/includes/wallet-api/image-exist-api.php?userPicture=' . $friend['user_picture'] . '&userPictureFull=' . $friend['user_picture_full'];
+                        $friend['user_picture'] = $system['system_url'] . '/includes/wallet-api/image-exist-api.php?userPicture=' . $friend['user_picture'] . '&userPictureFull=' . $friend['user_picture_full'];
                         $friend['connection'] = 'event_invite';
                         $friend['node_id'] = $event_id;
                         $friends[] = $friend;

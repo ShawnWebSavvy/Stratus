@@ -203,7 +203,7 @@
                             </div>
                         </div>
                         {/if}
-                        <ul class="about-list">
+                        <ul class="about-list pages_about_list">
                             <!-- likes -->
                             <li>
                                 <div class="about-list-item">
@@ -215,7 +215,11 @@
                             <!-- category -->
                             <li>
                                 <div class="about-list-item">
-                                    <i class="fa fa-tag fa-fw fa-lg"></i> {__($spage['page_category_name'])}
+                                <div class="about_list_img">
+                                <img class=" "
+                                src="{$system['system_url']}/content/themes/default/images/svg/svgImg/blogNewsHover.svg">
+                                </div>
+                                {__($spage['page_category_name'])}
                                 </div>
                             </li>
                             <!-- category -->
@@ -223,27 +227,41 @@
                             {if $spage['page_company']}
                             <li>
                                 <div class="about-list-item">
-                                    <i class="fa fa-briefcase fa-fw fa-lg"></i> {$spage['page_company']}
-                                </div>
+                                <div class="about_list_img">
+                                <img class=" "
+                                src="{$system['system_url']}/content/themes/default/images/svg/svgImg/univsty.svg">
+                          </div>
+                          {$spage['page_company']}
+                                </div> 
                             </li>
                             {/if} {if $spage['page_phone']}
                             <li>
                                 <div class="about-list-item">
-                                    <i class="fa fa-phone fa-fw fa-lg"></i> {$spage['page_phone']}
+                                <div class="about_list_img">
+                                    <i class="fa fa-phone fa-fw fa-lg"></i> 
+                                    </div>
+                                    {$spage['page_phone']}
                                 </div>
                             </li>
                             {/if} {if $spage['page_website']}
                             <li>
                                 <div class="about-list-item">
-                                    <i class="fa fa-link fa-fw fa-lg"></i>
-                                    <a target="_blank" href="{$spage['page_website']}">{$spage['page_website']}</a>
+                                <div class="about_list_img">
+                                <img class=" "
+                                src="{$system['system_url']}/content/themes/default/images/svg/svgImg/nav_icon_globalHub.svg">
                                 </div>
+                                    <a target="_blank" href="{$spage['page_website']}">{$spage['page_website']}</a>
+                                </div> 
                             </li>
                             {/if} {if $spage['page_location']}
                             <li>
                                 <div class="about-list-item">
-                                    <i class="fa fa-map-marker fa-fw fa-lg"></i> {$spage['page_location']}
+                                <div class="about_list_img">
+                                <img class=" "
+                                src="{$system['system_url']}/content/themes/default/images/svg/svgImg/location_icon.svg">
                                 </div>
+                                 {$spage['page_location']}
+                                </div> 
                             </li>
                             <li style="height: auto;">
                                 <div>
