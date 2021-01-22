@@ -4,11 +4,11 @@
             <ul class="main-side-nav main-left-side-nav left-sidebar-first-ul ">
                 <li>
 
-                    <!--<a href="{$system['system_url']}/global-profile-timeline.php" class="{$page}">
+                    <!--<a href="{$system['system_url']}/global-profile-timeline" class="{$page}">
                     include file='__svg_icons.tpl' icon="homepage" class="" width="24px" height="24px"
                    
                 </a>-->
-                    <a href="{$system['system_url']}/landingpage.php" class="{$page}">
+                    <a href="{$system['system_url']}/landingpage" class="{$page}">
                         {include file='__svg_icons.tpl' icon="homepage" class="" width="24px" height="24px"}
                         {__("Favorites")}
                     </a>
@@ -34,7 +34,7 @@
                 <!-- basic -->
 
                 <!--<li>
-                    <a href="{$system['system_url']}/global-profile-timeline.php">
+                    <a href="{$system['system_url']}/global-profile-timeline">
                         {include file='__svg_icons.tpl' icon="GlobalHub" class="" width="24px" height="24px"}
                         Global Hub</a>
                 </li>-->

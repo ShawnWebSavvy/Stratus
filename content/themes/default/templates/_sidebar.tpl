@@ -8,9 +8,9 @@
             <ul
                 class="main-side-nav main-left-side-nav left-sidebar-{if ($page == 'global-profile/landingpage')}second-ul active {else}first-ul{/if}">
                 <li {if ($page=='global-profile/landingpage' )}class="active" {/if}>
-                    <a href="{$system['system_url']}/landingpage.php" class="{$page}">
+                    <a href="{$system['system_url']}/landingpage" class="{$page}">
                         <div class="svg-container">
-                            <img src="{$system['system_url']}/content/themes/default/images/svg/svgImg/favoritesN.svg"
+                            <img src="{$system['system_uploads_assets']}/content/themes/default/images/svg/svgImg/favoritesN.svg"
                                 class="">
                             <!-- <img src="{$system['system_url']}/content/themes/default/images/svg/svgImg/nav_icon_favourite.svg"
                                 class="blackicon">
@@ -28,7 +28,7 @@
                 <li {if $active_page=='LocalHub' }class="active" {/if}>
                     <a href="{$system['system_url']}">
                         <div class="svg-container">
-                            <img src="{$system['system_url']}/content/themes/default/images/svg/svgImg/local_hubN.svg"
+                            <img src="{$system['system_uploads_assets']}/content/themes/default/images/svg/svgImg/local_hubN.svg"
                                 class="">
                             <!-- <img src="{$system['system_url']}/content/themes/default/images/svg/svgImg/nav_icon_localhub.svg" class="blackicon">
                             <img src="{$system['system_url']}/content/themes/default/images/svg/svgImg/nav_icon_localhub_active.svg"
@@ -43,7 +43,7 @@
                 <li {if $subactive_page=="profile" }class="active" {/if}>
                     <a page="{$page}" href="{$system['system_url']}/{$user->_data['user_name']}">
                         <div class="svg-container">
-                            <img src="{$system['system_url']}/content/themes/default/images/svg/svgImg/profile_iconN.svg"
+                            <img src="{$system['system_uploads_assets']}/content/themes/default/images/svg/svgImg/profile_iconN.svg"
                                 class="">
                             <!-- <img src="{$system['system_url']}/content/themes/default/images/svg/svgImg/nav_icon_friends.svg"
                                 class="blackicon">
@@ -56,7 +56,7 @@
                 <li {if $subactive_page=="friends" }class="active" {/if}>
                     <a href="{$system['system_url']}/people/friend_requests">
                         <div class="svg-container">
-                            <img src="{$system['system_url']}/content/themes/default/images/svg/svgImg/friend_iconN.svg"
+                            <img src="{$system['system_uploads_assets']}/content/themes/default/images/svg/svgImg/friend_iconN.svg"
                                 class="">
                             <!-- <img src="{$system['system_url']}/content/themes/default/images/svg/friendsIcon.svg"
                                 class="blackicon">
@@ -72,7 +72,7 @@
                 <li {if $subactive_page=="messages" }class="active" {/if}>
                     <a href="{$system['system_url']}/messages" class="{$page}">
                         <div class="svg-container">
-                            <img src="{$system['system_url']}/content/themes/default/images/svg/svgImg/messages_iconN.svg"
+                            <img src="{$system['system_uploads_assets']}/content/themes/default/images/svg/svgImg/messages_iconN.svg"
                                 class="">
                             <!-- <img src="{$system['system_url']}/content/themes/default/images/svg/svgImg/nav_icon_messages.svg"
                                 class="blackicon">
@@ -87,7 +87,7 @@
                 <li {if $subactive_page=="settings" }class="active" {/if}>
                     <a href="{$system['system_url']}/settings">
                         <div class="svg-container">
-                            <img src="{$system['system_url']}/content/themes/default/images/svg/svgImg/setting_iconN.svg"
+                            <img src="{$system['system_uploads_assets']}/content/themes/default/images/svg/svgImg/setting_iconN.svg"
                                 class="">
                             <!-- <img src="{$system['system_url']}/content/themes/default/images/svg/svgImg/nav_icon_settings.svg"
                                 class="blackicon">
@@ -118,7 +118,7 @@
                 <li {if $subactive_page=="memories" }class="active" {/if}>
                     <a href="{$system['system_url']}/memories">
                         <div class="svg-container">
-                            <img src="{$system['system_url']}/content/themes/default/images/svg/svgImg/memories_iconN.svg"
+                            <img src="{$system['system_uploads_assets']}/content/themes/default/images/svg/svgImg/memories_iconN.svg"
                                 class="">
                             <!-- <img src="{$system['system_url']}/content/themes/default/images/svg/svgImg/nav_icon_nav_icon_memories.svg"
                                 class="blackicon">
@@ -134,7 +134,7 @@
                 <li {if $subactive_page=="pages" }class="active" {/if}>
                     <a href="{$system['system_url']}/pages">
                         <div class="svg-container">
-                            <img src="{$system['system_url']}/content/themes/default/images/svg/svgImg/nav_icon_adHub_active.svg"
+                            <img src="{$system['system_uploads_assets']}/content/themes/default/images/svg/svgImg/nav_icon_adHub_active.svg"
                                 class="">
                         </div>
                         <span class="nav-text">{__("Pages")}</span>
@@ -144,7 +144,7 @@
                     <a href="{$system['system_url']}/groups">
                         <div class="svg-container">
                             <img style="width: 25px;"
-                                src="{$system['system_url']}/content/themes/default/images/svg/svgImg/group_icon.svg"
+                                src="{$system['system_uploads_assets']}/content/themes/default/images/svg/svgImg/group_icon.svg"
                                 class="">
                         </div>
                         <span class="nav-text">{__("Groups")}</span>
@@ -153,7 +153,7 @@
                 <li {if $subactive_page=="events" }class="active" {/if}>
                     <a href="{$system['system_url']}/events">
                         <div class="svg-container">
-                            <img src="{$system['system_url']}/content/themes/default/images/svg/svgImg/event_add_iconSidebar.svg"
+                            <img src="{$system['system_uploads_assets']}/content/themes/default/images/svg/svgImg/event_add_iconSidebar.svg"
                                 class="">
                         </div>
                         <span class="nav-text">{__("Events")}</span>
@@ -164,7 +164,7 @@
                 <li {if $subactive_page=="pages" }class="active" {/if}>
                     <a href="{$system['system_url']}/pages">
                         <div class="svg-container">
-                            <img src="{$system['system_url']}/content/themes/default/images/svg/svgImg/explore_iconN.svg"
+                            <img src="{$system['system_uploads_assets']}/content/themes/default/images/svg/svgImg/explore_iconN.svg"
                                 class="">
                         </div>
                         <span class="nav-text">{__("Explore Circle")}</span>
@@ -180,9 +180,9 @@
             <ul
                 class="main-side-nav main-left-side-nav left-sidebar-{if ($active_page=='GlobalHub')}second-ul active {else}first-ul{/if} {$page}">
                 <li {if ($active_page=='GlobalHub' )}class="active" {/if}>
-                    <a href="{$system['system_url']}/global-profile-timeline.php">
+                    <a href="{$system['system_url']}/global-profile-timeline">
                         <div class="svg-container">
-                            <img src="{$system['system_url']}/content/themes/default/images/svg/svgImg/globle_hubN.svg"
+                            <img src="{$system['system_uploads_assets']}/content/themes/default/images/svg/svgImg/globle_hubN.svg"
                                 class="">
                         </div>
                         <span class="nav-text">Atrium</span>
@@ -192,7 +192,7 @@
                 <li {if ($subactive_page=='globalhub_profile' )}class="active" {/if}>
                     <a href="{$system['system_url']}/global-profile.php?username={$user->_data['user_name']}">
                         <div class="svg-container">
-                            <img src="{$system['system_url']}/content/themes/default/images/svg/svgImg/profile_iconN.svg"
+                            <img src="{$system['system_uploads_assets']}/content/themes/default/images/svg/svgImg/profile_iconN.svg"
                                 class="">
                         </div>
                         <span class="nav-text">Profile</span>
@@ -203,7 +203,7 @@
                     <a
                         href="{$system['system_url']}/global-profile.php?username={$user->_data['user_name']}&view=followers">
                         <div class="svg-container">
-                            <img src="{$system['system_url']}/content/themes/default/images/svg/svgImg/friend_iconN.svg"
+                            <img src="{$system['system_uploads_assets']}/content/themes/default/images/svg/svgImg/friend_iconN.svg"
                                 class="">
                             <!-- <img src="{$system['system_url']}/content/themes/default/images/svg/friendsIcon.svg"
                                 class="blackicon">
@@ -219,7 +219,7 @@
                     <!--<a href="{$system['system_url']}/people/friend_requests">-->
                     <a href="{$system['system_url']}/globalMessages">
                         <div class="svg-container">
-                            <img src="{$system['system_url']}/content/themes/default/images/svg/svgImg/messages_iconN.svg"
+                            <img src="{$system['system_uploads_assets']}/content/themes/default/images/svg/svgImg/messages_iconN.svg"
                                 class="">
                             <!-- <img src="{$system['system_url']}/content/themes/default/images/svg/svgImg/nav_icon_messages.svg"
                         class="blackicon">
@@ -232,7 +232,7 @@
                     <!--<a href="{$system['system_url']}/people/friend_requests">-->
                     <a href="{$system['system_url']}/global-profile-bookmarks.php">
                         <div class="svg-container">
-                            <img src="{$system['system_url']}/content/themes/default/images/svg/svgImg/bookmark_iconN.svg"
+                            <img src="{$system['system_uploads_assets']}/content/themes/default/images/svg/svgImg/bookmark_iconN.svg"
                                 class="">
                         </div>
                         <span class="nav-text">Bookmarks</span>
@@ -244,7 +244,7 @@
                 <li {if ($subactive_page=='explore' )}class="active" {/if}>
                     <a href="{$system['system_url']}/global/explore">
                         <div class="svg-container">
-                            <img src="{$system['system_url']}/content/themes/default/images/svg/svgImg/explore_iconN.svg"
+                            <img src="{$system['system_uploads_assets']}/content/themes/default/images/svg/svgImg/explore_iconN.svg"
                                 class="">
                         </div><span class="nav-text">Explore Atrium</span>
                     </a>
@@ -264,7 +264,7 @@
                 <li {if $active_page=='BlogHub' }class="active" {/if}>
                     <a href="{$system['system_url']}/blogs">
                         <div class="svg-container">
-                            <img src="{$system['system_url']}/content/themes/default/images/svg/svgImg/blog_hubN.svg"
+                            <img src="{$system['system_uploads_assets']}/content/themes/default/images/svg/svgImg/blog_hubN.svg"
                                 class="">
                             <!-- <img src="{$system['system_url']}/content/themes/default/images/svg/svgImg/nav_icon_blogHub.svg" class="blackicon">
                             <img src="{$system['system_url']}/content/themes/default/images/svg/svgImg/nav_icon_blogHub_active.svg" class="whiteicon"> -->
@@ -283,7 +283,7 @@
                 <li {if $page==" ads" && $view!="wallet" }class="active" {/if}>
                 <a href=" {$system['system_url']}/ads">
                     <div class="svg-container">
-                        <img src="{$system['system_url']}/content/themes/default/images/svg/svgImg/ad_hubN.svg"
+                        <img src="{$system['system_uploads_assets']}/content/themes/default/images/svg/svgImg/ad_hubN.svg"
                             class="">
                         <!-- <img src="{$system['system_url']}/content/themes/default/images/svg/svgImg/nav_icon_adHub.svg" class="blackicon">
                             <img src="{$system['system_url']}/content/themes/default/images/svg/svgImg/nav_icon_adHub_active.svg" class="whiteicon"> -->
@@ -301,7 +301,7 @@
                 <li {if $active_page=="MarketHub" }class="active" {/if}>
                     <a href="{$system['system_url']}/market">
                         <div class="svg-container {$page}">
-                            <img src="{$system['system_url']}/content/themes/default/images/svg/svgImg/market_hubN.svg"
+                            <img src="{$system['system_uploads_assets']}/content/themes/default/images/svg/svgImg/market_hubN.svg"
                                 class="">
                             <!-- <img src="{$system['system_url']}/content/themes/default/images/svg/svgImg/nav_icon_marketHub.svg" class="blackicon">
                               <img src="{$system['system_url']}/content/themes/default/images/svg/svgImg/nav_icon_marketHub_active.svg" class="whiteicon"> -->
@@ -319,9 +319,9 @@
                 <li {if $page=="ads" && $view=="wallet" }class="active" {/if}>
                     <a href=" {$system['system_url']}/wallet">
                         <div class="svg-container ">
-                            <img src="{$system['system_url']}/content/themes/default/images/svg/svgImg/Wallet.svg"
+                            <img src="{$system['system_uploads_assets']}/content/themes/default/images/svg/svgImg/Wallet.svg"
                                 class="blackicon">
-                            <img src="{$system['system_url']}/content/themes/default/images/svg/svgImg/Wallet-active.svg"
+                            <img src="{$system['system_uploads_assets']}/content/themes/default/images/svg/svgImg/Wallet-active.svg"
                                 class="whiteicon">
 
                         </div>
@@ -338,9 +338,9 @@
                 <li>
                     <a href="{$system['system_url']}/signout">
                         <div class="svg-container">
-                            <img src="{$system['system_url']}/content/themes/default/images/svg/svgImg/logOutNew.svg"
+                            <img src="{$system['system_uploads_assets']}/content/themes/default/images/svg/svgImg/logOutNew.svg"
                                 class="blackicon">
-                            <img src="{$system['system_url']}/content/themes/default/images/svg/svgImg/logOut_activeNew.svg"
+                            <img src="{$system['system_uploads_assets']}/content/themes/default/images/svg/svgImg/logOut_activeNew.svg"
                                 class="whiteicon">
                         </div>
                         <span class="nav-text">{__("Log Out")}</span>

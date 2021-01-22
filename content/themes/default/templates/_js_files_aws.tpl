@@ -377,7 +377,7 @@
 <script src="{$system['system_uploads_assets']}/includes/assets/js/stratus/custom.js?{$cacheremovejs}" defer></script>
 
 {if $user->_logged_in}
-    <script src="http://localhost/stratus_speed/includes/assets/js/stratus/user.js?{$cacheremovejs}" defer></script>
+    <script src="{$system['system_uploads_assets']}/includes/assets/js/stratus/user.js?{$cacheremovejs}" defer></script>
     <script src="{$system['system_uploads_assets']}/includes/assets/js/stratus/post.js?{$cacheremovejs}" defer></script>
     <script src="{$system['system_uploads_assets']}/includes/assets/js/stratus/chat.js?{$cacheremovejs}" defer></script>
     <script src="{$system['system_uploads_assets']}/includes/assets/js/stratus/showads.js?{$cacheremovejs}" defer></script>

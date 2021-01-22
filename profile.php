@@ -48,14 +48,16 @@ try {
 	$profile['user_picture_full'] = ($profile['user_picture_full']) ? $system['system_uploads'] . '/' . $profile['user_picture_full'] : $profile['user_picture_full'];
 
 	if ($profile['user_picture'] != "") {
-//		$checkImage = image_exist($profile['user_picture']);
-//		if ($checkImage != '200') {
-//			$profile['user_picture'] = $profile['user_picture_full'];
-//		}
+		//		$checkImage = image_exist($profile['user_picture']);
+		//		if ($checkImage != '200') {
+		//			$profile['user_picture'] = $profile['user_picture_full'];
+		//		}
 
 
-
-        $profile['user_picture'] = 'includes/wallet-api/image-exist-api.php?userPicture='.$profile['user_picture'].'&userPictureFull='.$profile['user_picture_full'].'&type=1';
+		if ($profile['user_picture_full'] == "") {
+			$profile['user_picture_full'] = 'content/themes/default/images/user_defoult_img.jpg';
+		}
+		$profile['user_picture'] = 'includes/wallet-api/image-exist-api.php?userPicture=' . $profile['user_picture'] . '&userPictureFull=' . $system['system_uploads'] . '/' . $profile['user_picture_full'] . '&type=1';
 	}
 	if ($profile['user_picture'] == "") {
 		$profile['user_picture'] = $system['system_url'] . '/content/themes/' . $system['theme'] . '/images/user_defoult_img.jpg';
@@ -132,9 +134,9 @@ try {
 			}
 
 			/* get followers count */
-//			$profile['followers_count'] = count($user->get_followers_ids($profile['user_id']));
+			//			$profile['followers_count'] = count($user->get_followers_ids($profile['user_id']));
 
-            $profile['followers_count'] = $user->get_followers_count($profile['user_id']);
+			$profile['followers_count'] = $user->get_followers_count($profile['user_id']);
 
 			/* get custom fields */
 			$smarty->assign('custom_fields', $user->get_custom_fields(array("for" => "user", "get" => "profile", "node_id" => $profile['user_id'])));
@@ -158,9 +160,9 @@ try {
 			/* get friends */
 			$profile['friends'] = $user->get_friends($profile['user_id']);
 			if (count($profile['friends']) > 0) {
-//				$profile['friends_count'] = count($user->get_friends_ids($profile['user_id']));
+				//				$profile['friends_count'] = count($user->get_friends_ids($profile['user_id']));
 
-                $profile['friends_count'] = $user->get_friends_count($profile['user_id']);
+				$profile['friends_count'] = $user->get_friends_count($profile['user_id']);
 			}
 
 			/* get photos */

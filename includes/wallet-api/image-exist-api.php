@@ -23,6 +23,9 @@ $userPictureFull = $_GET['userPictureFull'];
 //        $userPicture = $system['system_url'] . '/content/themes/' . $system['theme'] . '/images/user_defoult_img.jpg';
 //    }
 //}
+if ($userPictureFull == "https://cdn1.stratus.co/uploads/") {
+    $userPicture = $system['system_uploads_assets'] . '/content/themes/default/images/user_defoult_img.jpg';
+}
 
 $data = @file_get_contents($userPicture);
 
@@ -32,7 +35,7 @@ if (!$data) {
             $userPicture = $userPictureFull;
             $data = file_get_contents($userPicture);
         } else {
-            $userPicture = $system['system_uploads'] . '/' . $userPictureFull;
+            $userPicture = $userPictureFull;
             $data = file_get_contents($userPicture);
         }
     } else {

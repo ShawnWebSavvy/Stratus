@@ -263,6 +263,18 @@ RewriteRule ^saved/?$ index.php?view=saved [L,QSA]
 # Memories
 RewriteRule ^memories/?$ index.php?view=memories [L,QSA]
 
+# landingPage
+RewriteRule ^landingpage/?$ landingpage.php [L,QSA]
+
+# GloBalProfile
+RewriteRule ^global-profile-timeline/?$ global-profile-timeline.php [L,QSA]
+
+# GloBalProfile
+RewriteRule ^global-profile/?$ global-profile.php [L,QSA]
+RewriteRule ^global-profile/([^/]+)/?$ global-profile.php?username=$1 [L,QSA]
+RewriteRule ^global-profile/([^/]+)/([^/]+)/?$ global-profile.php?username=$1&view=$2 [L,QSA]
+RewriteRule ^global-profile/([^/]+)/([^/]+)/([^/]+)/?$ global-profile.php?username=$1&view=$2&id=$3 [L,QSA]
+
 # Ads
 RewriteRule ^ads/?$ ads.php [L,QSA]
 RewriteRule ^ads/new?$ ads.php?view=new [L,QSA]

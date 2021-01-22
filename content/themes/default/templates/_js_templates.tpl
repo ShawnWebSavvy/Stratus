@@ -40,7 +40,7 @@
         <!-- <div class="big-icon success">
             <i class="fa fa-thumbs-up fa-3x"></i>
         </div> -->
-        <img width="40px" height="40px" src="{$system['system_url']}/content/themes/default/images/svg/svgImg/nav_icon_localhub.svg">
+        <img width="40px" height="40px" src="{$system['system_uploads_assets']}/content/themes/default/images/svg/svgImg/nav_icon_localhub.svg">
         <h4>{literal}{{title}}{/literal}</h4>
         <p class="mt20">{literal}{{message}}{/literal}</p>
     </div>
@@ -1441,7 +1441,7 @@
 {if $page == "ads" || $page == "settings"}
 <script id="wallet-transfer" type="text/template">
             <div class="modal-header">
-                <h6 class="modal-title"><img width="20px" class="mr20" src="{$system['system_url']}/content/themes/{$system['theme']}/images/svg/svgImg/sendMoney.svg">{__("Send Money")}</h6>
+                <h6 class="modal-title"><img width="20px" class="mr20" src="{$system['system_uploads_assets']}/content/themes/{$system['theme']}/images/svg/svgImg/sendMoney.svg">{__("Send Money")}</h6>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
@@ -1475,7 +1475,7 @@
 
 <script id="wallet-replenish" type="text/template">
             <div class="modal-header">
-                <h6 class="modal-title"><img width="20px" class="mr20" src="{$system['system_url']}/content/themes/{$system['theme']}/images/svg/svgImg/sendMoney.svg"> {__("Replenish Credit")}</h6>
+                <h6 class="modal-title"><img width="20px" class="mr20" src="{$system['system_uploads_assets']}/content/themes/{$system['theme']}/images/svg/svgImg/sendMoney.svg"> {__("Replenish Credit")}</h6>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
@@ -1502,7 +1502,7 @@
 
 <script id="wallet-withdraw-affiliates" type="text/template">
             <div class="modal-header">
-                <h6 class="modal-title"><img width="20px" class="mr20" src="{$system['system_url']}/content/themes/{$system['theme']}/images/svg/svgImg/sendMoney.svg"> {__("Withdraw Affiliates Credit")}</h6>
+                <h6 class="modal-title"><img width="20px" class="mr20" src="{$system['system_uploads_assets']}/content/themes/{$system['theme']}/images/svg/svgImg/sendMoney.svg"> {__("Withdraw Affiliates Credit")}</h6>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
@@ -1535,7 +1535,7 @@
 
 <script id="wallet-withdraw-points" type="text/template">
             <div class="modal-header">
-                <h6 class="modal-title"><img width="20px" class="mr20" src="{$system['system_url']}/content/themes/{$system['theme']}/images/svg/svgImg/sendMoney.svg"> {__("Withdraw Points Credit")}</h6>
+                <h6 class="modal-title"><img width="20px" class="mr20" src="{$system['system_uploads_assets']}/content/themes/{$system['theme']}/images/svg/svgImg/sendMoney.svg"> {__("Withdraw Points Credit")}</h6>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
