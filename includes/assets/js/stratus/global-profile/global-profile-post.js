@@ -1323,7 +1323,7 @@ $(function () {
           eval(response.callback);
         } else {
           if (response.post) {
-            window.location.reload();
+            //window.location.reload();
           }
           $(".no_data_img_").css("display", "none");
           /* button reset */

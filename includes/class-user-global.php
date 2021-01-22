@@ -82,12 +82,16 @@ class UserGlobal
                 $this->_data['global_user_picture'] = $this->_data['user_picture'];
                 $this->_data['user_picture_full'] = ($this->_data['user_picture_full']) ? $system['system_uploads'] . '/' . $this->_data['user_picture_full'] : $this->_data['user_picture_full'];
 
-                if ($this->_data['user_picture'] == "") {
-                    $this->_data['user_picture'] = $system['system_url'] . '/content/themes/' . $system['theme'] . '/images/user_defoult_img.jpg';
+                // if ($this->_data['user_picture'] == "") {
+                //     $this->_data['user_picture'] = $system['system_url'] . '/content/themes/' . $system['theme'] . '/images/user_defoult_img.jpg';
+                // }
+                // if ($this->_data['global_user_picture'] == "") {
+                //     $this->_data['global_user_picture'] = $system['system_url'] . '/content/themes/' . $system['theme'] . '/images/user_defoult_img.jpg';
+                // }
+                if ($this->_data['user_picture_full'] == "") {
+                    $this->_data['user_picture_full'] = 'content/themes/default/images/user_defoult_img.jpg';
                 }
-                if ($this->_data['global_user_picture'] == "") {
-                    $this->_data['global_user_picture'] = $system['system_url'] . '/content/themes/' . $system['theme'] . '/images/user_defoult_img.jpg';
-                }
+                $this->_data['global_user_picture'] = 'includes/wallet-api/image-exist-api.php?userPicture=' . $this->_data['global_user_picture'] . '&userPictureFull=' . $system['system_uploads'] . '/' . $this->_data['user_picture_full'] . '&type=1';
 
                 /* get all friends ids */
                 $this->_data['friends_ids'] = $this->get_friends_ids($this->_data['user_id']);
@@ -2850,7 +2854,7 @@ class UserGlobal
         //        }
         $post['post_author_url'] = $system['system_url'] . '/global-profile.php?username=' . $this->_data['user_name'];
 
-        $post['post_author_picture'] = 'includes/wallet-api/image-exist-api.php?userPicture=' . $post['post_author_picture'] . '&userPictureFull=' . $this->_data['user_picture_full'];
+        $post['post_author_picture'] = 'includes/wallet-api/image-exist-api.php?userPicture=' . $post['post_author_picture'] . '&userPictureFull=' . $system['system_uploads'] . '/' . $this->_data['user_picture_full'];
 
         $post['post_author_name'] = $this->_data['user_firstname'] . " " . $this->_data['user_lastname'];
         $post['post_author_user_name'] = $this->_data['user_name'];
@@ -4144,7 +4148,7 @@ class UserGlobal
                 //                    $post['post_author_picture'] = $system['system_uploads'] . '/' . $this->_data['user_picture_full'];
                 //                }
 
-                $post['post_author_picture'] = 'includes/wallet-api/image-exist-api.php?userPicture=' . $post['post_author_picture'] . '&userPictureFull=' . $this->_data['user_picture_full'];
+                $post['post_author_picture'] = 'includes/wallet-api/image-exist-api.php?userPicture=' . $post['post_author_picture'] . '&userPictureFull=' . $system['system_uploads'] . '/' . $this->_data['user_picture_full'];
             } else {
                 $post['post_author_picture'] = $system['system_uploads'] . '/' . $post['global_user_picture'];
             }
@@ -4756,7 +4760,8 @@ class UserGlobal
         $offset *= $system['max_results_even'];
         switch ($type) {
             case 'user':
-                $get_albums = $db->query(sprintf("SELECT album_id FROM global_posts_photos_albums as posts_photos_albums WHERE user_type = 'user' AND user_id = %s AND in_group = '0' AND in_event = '0' LIMIT %s, %s", secure($id, 'int'), secure($offset, 'int', false), secure($system['max_results_even'], 'int', false))) or _error("SQL_ERROR_THROWEN");
+                $userquery = sprintf("SELECT album_id FROM global_posts_photos_albums as posts_photos_albums WHERE user_type = 'user' AND user_id = %s AND in_group = '0' AND in_event = '0' LIMIT %s, %s", secure($id, 'int'), secure($offset, 'int', false), secure($system['max_results_even'], 'int', false));
+                $get_albums = $db->query($userquery) or _error("SQL_ERROR_THROWEN");
                 break;
 
             case 'page':
@@ -7143,7 +7148,8 @@ class UserGlobal
     public function get_album($album_id, $full_details = true)
     {
         global $db, $system;
-        $get_album = $db->query(sprintf("SELECT posts_photos_albums.*, users.user_name, users.user_album_pictures, users.user_album_covers, users.user_album_timeline, pages.page_id, pages.page_name, pages.page_admin, pages.page_album_pictures, pages.page_album_covers, pages.page_album_timeline, `groups`.group_name, `groups`.group_admin, `groups`.group_album_pictures, `groups`.group_album_covers, `groups`.group_album_timeline, `events`.event_admin, `events`.event_album_covers, `events`.event_album_timeline FROM posts_photos_albums LEFT JOIN users ON posts_photos_albums.user_id = users.user_id AND posts_photos_albums.user_type = 'user' LEFT JOIN pages ON posts_photos_albums.user_id = pages.page_id AND posts_photos_albums.user_type = 'page' LEFT JOIN `groups` ON posts_photos_albums.in_group = '1' AND posts_photos_albums.group_id = `groups`.group_id LEFT JOIN `events` ON posts_photos_albums.in_event = '1' AND posts_photos_albums.event_id = `events`.event_id WHERE NOT (users.user_name <=> NULL AND pages.page_name <=> NULL) AND posts_photos_albums.album_id = %s", secure($album_id, 'int'))) or _error("SQL_ERROR_THROWEN");
+        $albumGet = sprintf("SELECT posts_photos_albums.*, users.user_name, users.user_album_pictures, users.global_user_album_covers, users.user_album_timeline, pages.page_id, pages.page_name, pages.page_admin, pages.page_album_pictures, pages.page_album_covers, pages.page_album_timeline, `groups`.group_name, `groups`.group_admin, `groups`.group_album_pictures, `groups`.group_album_covers, `groups`.group_album_timeline, `events`.event_admin, `events`.event_album_covers, `events`.event_album_timeline FROM global_posts_photos_albums as posts_photos_albums LEFT JOIN users ON posts_photos_albums.user_id = users.user_id AND posts_photos_albums.user_type = 'user' LEFT JOIN pages ON posts_photos_albums.user_id = pages.page_id AND posts_photos_albums.user_type = 'page' LEFT JOIN `groups` ON posts_photos_albums.in_group = '1' AND posts_photos_albums.group_id = `groups`.group_id LEFT JOIN `events` ON posts_photos_albums.in_event = '1' AND posts_photos_albums.event_id = `events`.event_id WHERE NOT (users.user_name <=> NULL AND pages.page_name <=> NULL) AND posts_photos_albums.album_id = %s", secure($album_id, 'int'));
+        $get_album = $db->query($albumGet) or _error("SQL_ERROR_THROWEN");
         if ($get_album->num_rows == 0) {
             return false;
         }
@@ -7176,15 +7182,16 @@ class UserGlobal
         } elseif ($album['user_type'] == "user") {
             $album['path'] = $album['user_name'];
             /* check if (cover|profile|timeline) album */
-            $album['can_delete'] = (($album_id == $album['user_album_pictures']) or ($album_id == $album['user_album_covers']) or ($album_id == $album['user_album_timeline'])) ? false : true;
+            $album['can_delete'] = (($album_id == $album['user_album_pictures']) or ($album_id == $album['global_user_album_covers']) or ($album_id == $album['user_album_timeline'])) ? false : true;
         } elseif ($album['user_type'] == "page") {
             $album['path'] = 'pages/' . $album['page_name'];
             /* check if (cover|profile|timeline) album */
             $album['can_delete'] = (($album_id == $album['user_album_timeline']) or ($album_id == $album['page_album_covers']) or ($album_id == $album['page_album_timeline'])) ? false : true;
         }
         /* get album cover photo */
-        $where_statement = ($album['user_type'] == "user" && !$album['in_group'] && !$album['in_event']) ? "posts.privacy = 'public' AND" : '';
-        $get_cover = $db->query(sprintf("SELECT source, blur FROM posts_photos INNER JOIN posts ON posts_photos.post_id = posts.post_id WHERE " . $where_statement . " posts_photos.album_id = %s ORDER BY photo_id DESC LIMIT 1", secure($album_id, 'int'))) or _error("SQL_ERROR_THROWEN");
+        $where_statement = ($album['user_type'] == "user" && !$album['in_group'] && !$album['in_event']) ? "global_posts.privacy = 'public' AND" : '';
+        $coverget = sprintf("SELECT source, blur FROM global_posts_photos INNER JOIN global_posts ON global_posts_photos.post_id = global_posts.post_id WHERE " . $where_statement . " global_posts_photos.album_id = %s ORDER BY photo_id DESC LIMIT 1", secure($album_id, 'int'));
+        $get_cover = $db->query($coverget) or _error("SQL_ERROR_THROWEN");
         if ($get_cover->num_rows == 0) {
             $album['cover']['source'] = $system['system_url'] . '/content/themes/' . $system['theme'] . '/images/blank_album.jpg';
             $album['cover']['blur'] = 0;
@@ -7225,6 +7232,7 @@ class UserGlobal
                 $album['manage_album'] = true;
             }
         }
+        //echo "<pre>";print_r($full_details);die;
         /* get album photos */
         if ($full_details) {
             $album['photos'] = $this->get_photos($album_id, 'album');
@@ -7249,6 +7257,7 @@ class UserGlobal
     {
         global $db, $system;
         $photos = [];
+
         switch ($type) {
             case 'album':
                 $offset *= $system['max_results_even'];
@@ -7259,7 +7268,8 @@ class UserGlobal
                         return $photos;
                     }
                 }
-                $get_photos = $db->query(sprintf("SELECT posts_photos.photo_id, posts_photos.source, posts_photos.blur, posts.user_id, posts.user_type, posts.privacy FROM posts_photos INNER JOIN posts ON posts_photos.post_id = posts.post_id WHERE posts_photos.album_id = %s ORDER BY posts_photos.photo_id DESC LIMIT %s, %s", secure($id, 'int'), secure($offset, 'int', false), secure($system['max_results_even'], 'int', false))) or _error("SQL_ERROR_THROWEN");
+                $query = sprintf("SELECT posts_photos.photo_id, posts_photos.source, posts_photos.blur, posts.user_id, posts.user_type, posts.privacy FROM global_posts_photos as posts_photos INNER JOIN global_posts as posts ON posts_photos.post_id = posts.post_id WHERE posts_photos.album_id = %s ORDER BY posts_photos.photo_id DESC LIMIT %s, %s", secure($id, 'int'), secure($offset, 'int', false), secure($system['max_results_even'], 'int', false));
+                $get_photos = $db->query($query) or _error("SQL_ERROR_THROWEN");
                 if ($get_photos->num_rows > 0) {
                     while ($photo = $get_photos->fetch_assoc()) {
                         /* check the photo privacy */
@@ -7476,7 +7486,7 @@ class UserGlobal
             //                $post['post_author_picture'] = $system['system_uploads'] . '/' . $this->_data['user_picture_full'];
             //            }
 
-            $post['post_author_picture'] = 'includes/wallet-api/image-exist-api.php?userPicture=' . $post['post_author_picture'] . '&userPictureFull=' . $this->_data['user_picture_full'];
+            $post['post_author_picture'] = 'includes/wallet-api/image-exist-api.php?userPicture=' . $post['post_author_picture'] . '&userPictureFull=' . $system['system_uploads'] . '/' . $this->_data['user_picture_full'];
 
             $post['post_author_url'] = $system['system_url'] . '/' . $post['user_name'];
             $post['post_author_name'] = $post['user_firstname'] . " " . $post['user_lastname'];
@@ -8946,19 +8956,22 @@ class UserGlobal
         $where = "";
         /* merge (friends, followings, friend requests & friend requests sent) and get the unique ids  */
         $old_people_ids = array_unique($this->_data['followings_ids']);
+
+        $profileName = "global_profile.user_firstname != '' and users.global_user_picture != '' and ";
+
         /* add the viewer to this list */
         $old_people_ids[] = $this->_data['user_id'];
         /* make a list from old people */
         $old_people_ids_list = implode(',', $old_people_ids);
-        $where .= sprintf("WHERE user_banned = '0' AND user_id NOT IN (%s)", $old_people_ids_list);
+        $where .= sprintf("WHERE " . $profileName . " users.user_banned = '0' AND users.user_id NOT IN (%s)", $old_people_ids_list);
         if ($system['activation_enabled']) {
             $where .= " AND user_activated = '1'";
         }
         /* get users */
         if ($random) {
-            $sqlSearch = sprintf("SELECT * FROM (SELECT user_id, user_name, user_firstname, user_lastname, user_gender, global_user_picture as user_picture, user_subscribed, user_verified, (%s * acos(cos(radians(%s)) * cos(radians(user_latitude)) * cos(radians(user_longitude) - radians(%s)) + sin(radians(%s)) * sin(radians(user_latitude))) ) AS distance FROM users " . $where . " HAVING distance < %s ORDER BY distance ASC LIMIT %s) tmp ORDER BY RAND() LIMIT %s", secure($unit, 'int'), secure($this->_data['user_latitude']), secure($this->_data['user_longitude']), secure($this->_data['user_latitude']), secure($distance, 'int'), secure($system['max_results'] * 2, 'int', false), secure($system['min_results'], 'int', false));
+            $sqlSearch =  sprintf("SELECT * FROM (SELECT users.user_id, users.user_name, global_profile.user_firstname, global_profile.user_lastname, global_profile.user_gender, global_user_picture as user_picture, picture_photo.source as user_picture_full, users.user_subscribed, country.country_name as user_country_name, users.user_verified, (%s * acos(cos(radians(%s)) * cos(radians(user_latitude)) * cos(radians(user_longitude) - radians(%s)) + sin(radians(%s)) * sin(radians(user_latitude))) ) AS distance FROM users LEFT JOIN posts_photos as picture_photo ON users.user_picture_id = picture_photo.photo_id INNER JOIN global_profile ON users.user_id=global_profile.user_id left join system_countries as country on country.country_id = users.user_country " . $where . " HAVING distance < %s ORDER BY distance ASC LIMIT %s) tmp ORDER BY distance ASC LIMIT %s, %s", secure($unit, 'int'), secure($this->_data['user_latitude']), secure($this->_data['user_longitude']), secure($this->_data['user_latitude']), secure($distance, 'int'), secure($system['max_results'] * 2, 'int', false), secure($offset, 'int', false), secure($system['min_results'], 'int', false));
         } else {
-            $sqlSearch = sprintf("SELECT user_id, user_name, user_firstname, user_lastname, user_gender, global_user_picture as user_picture, user_subscribed, user_verified, (%s * acos(cos(radians(%s)) * cos(radians(user_latitude)) * cos(radians(user_longitude) - radians(%s)) + sin(radians(%s)) * sin(radians(user_latitude))) ) AS distance FROM users " . $where . " HAVING distance < %s ORDER BY distance ASC LIMIT %s, %s", secure($unit, 'int'), secure($this->_data['user_latitude']), secure($this->_data['user_longitude']), secure($this->_data['user_latitude']), secure($distance, 'int'), secure($offset, 'int', false), secure($system['min_results'], 'int', false));
+            $sqlSearch = sprintf("SELECT * FROM (SELECT users.user_id, users.user_name, global_profile.user_firstname, global_profile.user_lastname, global_profile.user_gender, global_user_picture as user_picture, picture_photo.source as user_picture_full, users.user_subscribed, country.country_name as user_country_name, users.user_verified, (%s * acos(cos(radians(%s)) * cos(radians(user_latitude)) * cos(radians(user_longitude) - radians(%s)) + sin(radians(%s)) * sin(radians(user_latitude))) ) AS distance FROM users LEFT JOIN posts_photos as picture_photo ON users.user_picture_id = picture_photo.photo_id INNER JOIN global_profile ON users.user_id=global_profile.user_id left join system_countries as country on country.country_id = users.user_country " . $where . " HAVING distance < %s ORDER BY distance ASC LIMIT %s, %s", secure($unit, 'int'), secure($this->_data['user_latitude']), secure($this->_data['user_longitude']), secure($this->_data['user_latitude']), secure($distance, 'int'), secure($offset, 'int', false), secure($system['min_results'], 'int', false));
         }
         $get_users = $db->query($sqlSearch) or _error("SQL_ERROR_THROWEN");
         if ($get_users->num_rows > 0) {
