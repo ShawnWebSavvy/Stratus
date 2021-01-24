@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="228px" height="219px" viewBox="0 0 228 219" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <title>roundgraph</title>
+    <g id="InvestPlatform" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="Home/Knox-PRO/Home" transform="translate(-1149.000000, -198.000000)">
+            <g id="Total-balance" transform="translate(1118.000000, 162.000000)">
+                <g id="roundgraph" transform="translate(31.000000, 40.000000)">
+                    <g id="total-balance/chart" transform="translate(13.000000, 0.000000)" stroke-linecap="round" stroke-width="8">
+                        <g id="round-chart">
+                            <circle stroke="#E4E4E4" opacity="0.30220395" cx="105.5" cy="105.5" r="105.5"></circle>
+                            <path d="M105.5,211 C163.766041,211 211,163.766041 211,105.5 C211,47.2339589 163.766041,0 105.5,0 C47.2339589,0 0,47.2339589 0,105.5 C0,163.766041 47.2339589,211 105.5,211 Z" stroke="#6C5DD3" stroke-dasharray="330,149"></path>
+                            <path d="M105.5,190.5 C152.720346,190.5 191,152.444204 191,105.5 C191,58.5557963 152.720346,20.5 105.5,20.5 C58.2796539,20.5 20,58.5557963 20,105.5 C20,152.444204 58.2796539,190.5 105.5,190.5 Z" stroke="#3DBAA2" stroke-dasharray="266,179"></path>
+                            <path d="M105.135294,167.5 C139.376949,167.5 167.135294,139.741654 167.135294,105.5 C167.135294,71.2583455 139.376949,43.5 105.135294,43.5 C70.8936396,43.5 43.1352941,71.2583455 43.1352941,105.5 C43.1352941,139.741654 70.8936396,167.5 105.135294,167.5 Z" stroke="#FF7A68" stroke-dasharray="193,56"></path>
+                        </g>
+                    </g>
+                    <g id="tooltip---usdt" transform="translate(0.000000, 95.000000)">
+                        <rect id="Rectangle" fill-opacity="0.807282561" fill="#05040E" opacity="0.807766869" x="0" y="0" width="90" height="32" rx="16"></rect>
+                        <text id="USDT" font-family="Helvetica" font-size="18" font-weight="normal" line-spacing="24" fill="#11142D">
+                            <tspan x="25" y="22">USDT</tspan>
+                        </text>
+                        <circle id="Oval" fill="#FFFFFF" cx="14" cy="16" r="6"></circle>
+                    </g>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>

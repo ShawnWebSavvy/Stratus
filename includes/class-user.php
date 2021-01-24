@@ -12447,6 +12447,48 @@ class User
         return $transactions;
     }
 
+       /**
+     * investment_get_transactions
+     *
+     * @return array
+     */
+    public function investment_get_transactions()
+    {
+        global $db;
+        $transactions = [];
+        $get_transactions = $db->query(sprintf("SELECT * from investment_transactions WHERE user_id = %s ORDER BY id DESC", secure($this->_data['user_id'], 'int'))) or _error("SQL_ERROR_THROWEN");
+        if ($get_transactions->num_rows > 0) {
+            $i = 0;
+            while ($transaction = $get_transactions->fetch_assoc()) {
+                if ($transaction['tnx_type'] == "buy") {
+                    $transactions['buy'][$i] = $transaction;
+                }else{
+                    $transactions['sell'][$i] = $transaction;
+                }
+                $i++;
+            }
+        }
+        return $transactions;
+    }
+
+       /**
+     * investment_latest_transactions
+     *
+     * @return array
+     */
+    public function investment_latest_transactions()
+    {
+        global $db;
+        $transactions = [];
+        $get_transactions = $db->query(sprintf("SELECT * from investment_transactions WHERE user_id = %s ORDER BY id DESC limit 4", secure($this->_data['user_id'], 'int'))) or _error("SQL_ERROR_THROWEN");
+        if ($get_transactions->num_rows > 0) {
+            while ($transaction = $get_transactions->fetch_assoc()) {
+                $transactions[] = $transaction;
+            }
+        }
+        return $transactions;
+    }
+
 
     /**
      * wallet_package_payment

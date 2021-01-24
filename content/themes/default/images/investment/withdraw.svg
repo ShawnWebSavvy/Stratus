@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="40px" height="40px" viewBox="0 0 40 40" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <title>circle icon/withdraw</title>
+    <g id="circle-icon/withdraw" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <circle id="icon-background" fill="#4FBF67" cx="20" cy="20" r="20"></circle>
+        <g id="money-bag" transform="translate(13.000000, 12.000000)" stroke="#FFFFFF" stroke-linecap="round" stroke-linejoin="round">
+            <polyline id="Path" points="9 4.5 11.5 0.5 2.5 0.5 5 4.5"></polyline>
+            <path d="M9,4.5 L5,4.5 C5,4.5 0.5,7.722 0.5,11.056 C0.5,13.278 2.125,15.5 7,15.5 C11.875,15.5 13.5,13.278 13.5,11.056 C13.5,7.722 9,4.5 9,4.5 Z" id="Path"></path>
+        </g>
+    </g>
+</svg>

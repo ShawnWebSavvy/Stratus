@@ -252,7 +252,9 @@
 <script src="https://unpkg.com/video.js@7.8.4/dist/video.min.js" {if !$user->_logged_in}defer{/if}></script>
 <script src="https://unpkg.com/videojs-contrib-hls@5.15.0/dist/videojs-contrib-hls.min.js" {if !$user->_logged_in}defer{/if}></script>
 <link href="https://unpkg.com/video.js@7.8.4/dist/video-js.min.css" rel="stylesheet">
-
+<script src="{$system['system_url']}/includes/assets/js/plugins/swipeMobile/swipeMobile.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
+<script type="text/javascript" src="http://mbostock.github.com/d3/d3.js?2.5.0"></script>
 {if $user->_logged_in}
     <!-- jQuery-UI -->
     <script>var _tooltip = jQuery.fn.tooltip;</script>
@@ -383,6 +385,9 @@
     <script src="{$system['system_uploads_assets']}/includes/assets/js/stratus/showads.js?{$cacheremovejs}" defer></script>
     {if $system['live_enabled'] && $page == "live"}
         <script src="{$system['system_uploads_assets']}/includes/assets/js/stratus/live.js"></script>
+    {/if}
+    {if $page == "investment/activity" || $page == "investment/buy_sell"  || $page == "investment/index" }
+        <script src="{$system['system_url']}/includes/assets/js/stratus/investment.js"></script>
     {/if}
 {/if}
 <!-- Sngine [JS] -->

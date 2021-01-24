@@ -292,6 +292,23 @@
                 </a>
                 </li>
             </ul>
+	        <ul class="main-side-nav main-left-side-nav left-sidebar-{if ($active_page=="Investment" )}second-ul
+                active{else}first-ul
+                {/if}">
+                <li {if $active_page=="Investment"  }class="active" {/if}>
+                    <a href=" {$system['system_url']}/investments">
+                        <div class="svg-container ">
+                            <img src="{$system['system_url']}/content/themes/default/images/svg/svgImg/Wallet.svg"
+                                class="blackicon">
+                            <img src="{$system['system_url']}/content/themes/default/images/svg/svgImg/Wallet-active.svg"
+                                class="whiteicon">
+
+                        </div>
+                        <span class="nav-text">Investment</span>
+                    </a>
+
+                </li>
+            </ul>
             <!-- ADS Hub end -->
 
             <!-- Market HUB Starts -->

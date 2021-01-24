@@ -114,6 +114,8 @@ $system['BASEPATH'] = ltrim(BASEPATH, '/');
 /* set system version */
 $system['system_version'] = SYS_VER;
 
+$system['investment_api_base_url'] = "https://ws.stage-apollo.xyz/api/";
+
 /* set session hash */
 $session_hash = session_hash($system['session_hash']);
 $system['system_uploads_assets'] = $system['system_url'];

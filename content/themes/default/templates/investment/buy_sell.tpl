@@ -1,0 +1,222 @@
+{include file='_head.tpl'}
+{include file='_header.tpl'}
+
+<!-- page content -->
+<div class="container mt20 offcanvas">
+    <div class="row">
+        <div class="offcanvas-sidebar sidebar-left-ant">
+            {include file='_sidebar.tpl'}
+        </div>
+    </div>
+    <div class="row right-side-content-ant">
+        <div class="col-lg-12 offcanvas-mainbar">
+            <div class="row">
+                <div class="home-page-middel-block">
+                    <div class="card buySellSection">
+                        <div class="btnSectionBuySell">
+                            <a href="javascript:;" class="btn buySellButton {if $order_action_type=='Buy'} active {/if}" data-actionType="buy">Buy</a>
+                            <a href="javascript:;" class="btn buySellButton {if $order_action_type=='Sell'} active {/if}" data-actionType="sell">Sell</a>
+                        </div>
+                        <div class="CurrencyHeading">
+                            <div class="heading">
+                                <h3>Currency</h3>
+                            </div>
+                            <div class="dropdown">
+                                <button class="btn dropdown-toggle" type="button" id="dropdownMenu2"
+                                    data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                    More Info
+                                </button>
+                                <div class="dropdown-menu" aria-labelledby="dropdownMenu2">
+                                    <p>At vero eos censes tantas res gessisse sine dubio praeclara sunt, explicabo nemo
+                                        enim maxime placeat, facere possimus, omnis voluptas nulla pariatur? at vero eos
+                                        censes tantas res gessisse sine causa? quae fuerit causa, mox videro; interea
+                                        hoc epicurus in bonis sit sentiri haec putat.</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="coinSelection">
+                            <ul>
+                                <div class="MobileCrousle">
+                                    <div class="gallery js-flickity" data-flickity-options='{ "cellAlign": "left", "wrapAround": false, "contain": true, "prevNextButtons": false, "pageDots": false }'>
+                                        {foreach $token_details as $tkn_detail}
+                                        <div class="gallery-cell">
+                                            <li>
+                                                <a href="javascript:;" class="coinDetailPrice coinDetailPrice_wallet  {if $set_active_coin==$tkn_detail['short_name']} active {/if}" data-coin="{strtoupper($tkn_detail['short_name'])}">
+                                                    <div class="coinDetailHeader">
+                                                        <img src="{$system['system_url']}/content/themes/default/images/investment/{if 'btc'==$tkn_detail['short_name']  }bit{else}{$tkn_detail['short_name']}{/if}Coin.svg"
+                                                            alt="bit coin">
+                                                        <div class="textSection">
+                                                            <h5>{$tkn_detail['name']}</h5>
+                                                            <p>{strtoupper($tkn_detail['short_name'])}</p>
+                                                        </div>
+                                                    </div>
+                                                    <div class="priceCount">
+                                                        <p>
+                                                            <span>
+                                                            {if $order_action_type=='Buy'}
+                                                                {$tkn_detail['buy_price']}
+                                                            {else}
+                                                                {$tkn_detail['sell_price']}
+                                                            {/if}
+                                                            </span>
+                                                            USD
+                                                        </p>
+                                                    </div>
+                                                </a>
+                                            </li>
+                                        </div>
+                                        {/foreach}
+                                        
+                                        <!-- <div class="gallery-cell">
+                                            <li>
+                                                <a href="javascript:;" class="coinDetailPrice coinDetailPrice_wallet {if $set_active_coin=='eth'} active {/if}" data-coin="ETH">
+                                                    <div class="coinDetailHeader">
+                                                        <img src="{$system['system_url']}/content/themes/default/images/investment/ethCoin.svg"
+                                                            alt="bit coin">
+                                                        <div class="textSection">
+                                                            <h5>Ethereum</h5>
+                                                            <p>ETH</p>
+                                                        </div>
+                                                    </div>
+                                                    <div class="priceCount">
+                                                        <p>5.000 USD</p>
+                                                    </div>
+                                                </a>
+                                            </li>
+                                        </div>
+                                        <div class="gallery-cell">
+                                            <li>
+                                                <a href="javascript:;" class="coinDetailPrice coinDetailPrice_wallet {if $set_active_coin=='apl'} active {/if}" data-coin="APL">
+                                                    <div class="coinDetailHeader">
+                                                        <img src="{$system['system_url']}/content/themes/default/images/investment/aplCoin.svg"
+                                                            alt="bit coin">
+                                                        <div class="textSection">
+                                                            <h5>Apollo</h5>
+                                                            <p>APL</p>
+                                                        </div>
+                                                    </div>
+                                                    <div class="priceCount">
+                                                        <p>15.284 USD</p>
+                                                    </div>
+                                                </a>
+                                            </li>
+                                        </div> -->
+                                    </div>
+                                </div>
+                            </ul>
+                        </div>
+                        <div class="CurrencyHeading">
+                            <div class="heading">
+                                <h3>Payment Method</h3>
+                            </div>
+                        </div>
+                        <div class="coinSelection">
+                            <ul>
+                                <div class="MobileCrousle">
+                                    <div class="gallery js-flickity" data-flickity-options='{ "cellAlign": "left", "wrapAround": false, "contain": true, "prevNextButtons": false, "pageDots": false }'>
+                                        <div class="gallery-cell">
+                                            <li>
+                                                <a href="#" class="coinDetailPrice active">
+                                                    <div class="coinDetailHeader">
+                                                        <img src="{$system['system_url']}/content/themes/default/images/investment/dollerCoin.svg"
+                                                            alt="bit coin">
+                                                        <div class="textSection">
+                                                            <h5>Wallet</h5>
+                                                            <p>USD</p>
+                                                        </div>
+                                                    </div>
+                                                    <div class="priceCount">
+                                                        <p>{$user_data['user_wallet_balance']|number_format:2} USD</p>
+                                                    </div>
+                                                </a>
+                                            </li>
+                                        </div>
+                                        <!-- <div class="gallery-cell">
+                                            <li>
+                                                <a href="#" class="coinDetailPrice ">
+                                                    <div class="coinDetailHeader">
+                                                        <img src="{$system['system_url']}/content/themes/default/images/investment/bankAccount.svg"
+                                                            alt="bit coin">
+                                                        <div class="textSection">
+                                                            <h5>Bank Account</h5>
+                                                            <p>USD</p>
+                                                        </div>
+                                                    </div>
+                                                    <div class="priceCount">
+                                                        <p>************123</p>
+                                                    </div>
+                                                </a>
+                                            </li>
+                                        </div>
+                                        <div class="gallery-cell" style="height: 100%;">
+                                            <li style="height: 100%;">
+                                                <a href="#" class="coinDetailPrice addNewPayment">
+                                                    <img src="{$system['system_url']}/content/themes/default/images/investment/addnewPayment.svg"
+                                                        alt="bit coin">
+                                                </a>
+                                            </li>
+                                        </div> -->
+                                    </div>
+                                </div>
+                            </ul>
+                        </div>
+
+                        <div class="CurrencyHeading">
+                            <div class="heading">
+                                <h3>Amount</h3>
+                            </div>
+                            <div class="dropdown minMaxDrop">
+                                <button class="btn dropdown-toggle" type="button" id="dropdownMenu2"
+                                    data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                    Use Max
+                                </button>
+                                <div class="dropdown-menu " aria-labelledby="dropdownMenu2">
+                                    <a class="dropdown-item" href="#"><img src="{$system['system_url']}/content/themes/default/images/svg/svgImg/checkedBlue.svg" alt="swap" style="margin-right: 10px;"> Min</a>
+                                    <a class="dropdown-item" href="#"> Max</a>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="amountSectionChange" id="amountSectionChange">
+                            <div class="amountCount">
+                                <input type="text" class="" placeholder="USD" id="amount">
+                                <!-- <p>25.007 USD</p> -->
+                            </div>
+                            <button class="swapButton" id="swapButton">
+                                <img src="{$system['system_url']}/content/themes/default/images/investment/ic_switch.svg" alt="swap" id="investment_swap">
+                                <span class="spinner-grow spinner-grow-sm ml10 x-hidden" id="investment_spiner"></span>
+                            </button>
+                            <div class="amountCount">
+                                <!-- <p>1.0000 BTC</p> -->
+                                <input type="text" class="" placeholder="{strtoupper($set_active_coin)}" id="total_coin">
+                            </div>
+                        </div>
+                        <div class="MoreAssetsSection">
+                            <button type="button" class="btn MoreAssetsbutton" id="buy_btn"><span class="coin_element">{$order_action_type}</span>&nbsp;<span id="buy_btn_txt">{strtoupper($set_active_coin)}</span></button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Modal -->
+<div class="modal fade" id="confrimModal" role="dialog" data-backdrop="static" data-keyboard="false">
+   
+</div>
+
+
+<div class="modal fade" id="topUpModal" role="dialog">
+    
+</div>
+
+<div class="right-sidebar js_sticky-sidebar">
+    {include file='investment/right-sidebar.tpl'}
+</div>
+
+<script>
+    var min_tnx_amnt = parseFloat("{$min_tnx_amnt}");
+    var max_tnx_amnt = parseFloat("{$max_tnx_amnt}");
+    var buy_details ={json_encode($_buy_details)};
+    var sell_details = {json_encode($_sell_details)};
+</script>
+{include file='_footer.tpl'}
