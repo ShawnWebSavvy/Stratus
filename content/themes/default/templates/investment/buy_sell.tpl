@@ -161,7 +161,7 @@
                             </ul>
                         </div>
 
-                        <div class="CurrencyHeading">
+                        <!-- <div class="CurrencyHeading">
                             <div class="heading">
                                 <h3>Amount</h3>
                             </div>
@@ -175,7 +175,7 @@
                                     <a class="dropdown-item" href="javascript:;"> Max</a>
                                 </div>
                             </div>
-                        </div>
+                        </div> -->
                         <div class="amountSectionChange" id="amountSectionChange">
                             <div class="amountCount">
                                 <input type="text" class="" placeholder="USD" id="amount">
@@ -190,6 +190,16 @@
                                 <input type="text" class="" placeholder="{strtoupper($set_active_coin)}" id="total_coin">
                             </div>
                         </div>
+                        <div class="container">
+                        <div class="row">
+                            <div class="col-sm-3">
+                                <p class="alert alert-danger mb0 mt10 x-hidden" style="float: inline-end;" id="usd_balance">USD balance is insufficient</p>
+                            </div>
+                            <div class="col-sm-7">
+                                <p class="alert alert-danger mb0 mt10 x-hidden" style="float: inline-end;" id="token_balance">BTC balance is insufficient</p>
+                            </div>
+                        </div>
+                    </div>
                         <div class="MoreAssetsSection">
                             <button type="button" class="btn MoreAssetsbutton" id="buy_btn"><span class="coin_element">{$order_action_type}</span>&nbsp;<span id="buy_btn_txt">{strtoupper($set_active_coin)}</span></button>
                         </div>
@@ -214,9 +224,11 @@
 </div>
 
 <script>
-    var min_tnx_amnt = parseFloat("{$min_tnx_amnt}");
-    var max_tnx_amnt = parseFloat("{$max_tnx_amnt}");
+    var min_buy_amount = parseFloat("{$min_buy_amount}");
+    var min_sell_amount = parseFloat("{$min_sell_amount}");
+    var base_max_size = parseFloat("{$base_max_size}");
     var buy_details ={json_encode($_buy_details)};
+    var wallet     = {json_encode($wallet_balance)};
     var sell_details = {json_encode($_sell_details)};
 </script>
 {include file='_footer.tpl'}

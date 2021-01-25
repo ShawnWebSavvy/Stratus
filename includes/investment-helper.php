@@ -28,45 +28,36 @@ class InvestmentHelper {
         }
         return $token_price;
     }
-    public static function get_all_token_price()
+    public static function get_all_token_price($user_data=null)
     {   global $db,$system;
-        $tokens = $db->query("SELECT * FROM investment_coins") or _error("SQL_ERROR_THROWEN");
         $return = [];
-        if ($tokens->num_rows > 0) {
-            $i = 0;
-            while ($token = $tokens->fetch_assoc()) {
-                $id = $token['id'];
-                $return['token'][$i]['id']=$token['id'];
-                $return['token'][$i]['buy_price']=$token['buy_price'];
-                $return['token'][$i]['sell_price']=$token['sell_price'];
-                $return['token'][$i]['name']=$token['name'];
-                $return['token'][$i]['short_name']=$token['short_name'];
-                $return['buy'][$token['short_name']] = $token['buy_price'];
-                $return['sell'][$token['short_name']] = $token['sell_price'];
-                $i++;
-                
+        $tokens  =  httpGetCurl('investment/get_tickers',$system['investment_api_base_url']);
+        foreach($tokens['data'] as $i=>$token){
+            $return['token'][$i]['buy_price']=$token['buy_price'];
+            $return['token'][$i]['sell_price']=$token['sell_price'];
+            $return['token'][$i]['name']=$token['name'];
+            $return['token'][$i]['short_name']=$token['short_name'];
+            $return['buy'][$token['short_name']] = round($token['buy_price'],5);
+            $return['sell'][$token['short_name']] = round($token['sell_price'],5);
+            if(!empty($user_data)){
+                $return['wallet_amount']['balance'][$token['short_name']]=$user_data[$token['short_name'].'_wallet'];
             }
         }
         return $return;
     }
     public static function update_all_token_price()
     {   global $db,$system;
-        $tokens = $db->query("SELECT * FROM investment_coins") or _error("SQL_ERROR_THROWEN");
         $return = [];
-        if ($tokens->num_rows > 0) {
-            $i = 0;
-            while ($token = $tokens->fetch_assoc()) {
-                $id = $token['id'];
-                $token_price  =  httpGetCurl('investment/get_ticker/'.$token['trade_pair'],$system['investment_api_base_url']);
-                $buy_price = round(($token_price['data']['buy_price']),3);
-                $sell_price = round(($token_price['data']['sell_price']),3);
-                $fluctuation = $token_price['fluctuation'];
-                $db->query("UPDATE investment_coins SET buy_price = '$buy_price', sell_price = '$sell_price', fluctuation = '$fluctuation' WHERE id='$id'") or _error("SQL_ERROR_THROWEN");
-                $return['buy'][$token['short_name']] = $buy_price;
-                $return['sell'][$token['short_name']] = $sell_price;
-                $return['fluctuation'] = $fluctuation;
-                $i++;
-                
+        $tokens  =  httpGetCurl('investment/get_tickers',$system['investment_api_base_url']);
+        foreach($tokens['data'] as $i=>$token){
+            $return['token'][$i]['buy_price']=$token['buy_price'];
+            $return['token'][$i]['sell_price']=$token['sell_price'];
+            $return['token'][$i]['name']=$token['name'];
+            $return['token'][$i]['short_name']=$token['short_name'];
+            $return['buy'][$token['short_name']] = round($token['buy_price'],5);
+            $return['sell'][$token['short_name']] = round($token['sell_price'],5);
+            if(!empty($user_data)){
+                $return['wallet_amount']['balance'][$token['short_name']]=$user_data[$token['short_name'].'_wallet'];
             }
         }
         return $return;
@@ -90,7 +81,7 @@ class InvestmentHelper {
             $receive_token = round($token_value-$fees_token,5);
             $params['size'] = $receive_token;
             // $result = InvestmentHelper::buy_order($params);
-            $order_id = "435345";
+            $order_id = rand(999,99999);
             // if(isset($result['data']['data']['order_id'])){
             if(isset($order_id)){
                 $db->query(sprintf("INSERT INTO investment_transactions (user_id, order_id, tokens, currency, tnx_type ,amount, receive_amount, recieve_token, fees, status) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s)", secure($user_data['user_id'], 'int'), secure($order_id), secure($token_value), secure($token_name), secure($action),secure($amount),secure($amount), secure($receive_token), secure($fees), secure('completed') )) or _error("SQL_ERROR_THROWEN");
@@ -111,7 +102,7 @@ class InvestmentHelper {
             
         }catch(Exception $e){
             // echo '<pre>'; print_r($e); die;
-            return $false;
+            return false;
         }
         
     }
@@ -129,7 +120,7 @@ class InvestmentHelper {
             $receive_amount = round($amount-$fees_amount,2);
             // die($token_value);
             // $result = InvestmentHelper::buy_order($params);
-            $order_id = "435345";
+            $order_id = rand(999,99999);
             // if(isset($result['data']['data']['order_id'])){
             if(isset($order_id)){
                 $db->query(sprintf("INSERT INTO investment_transactions (user_id, order_id, tokens, currency, tnx_type ,amount, receive_amount, recieve_token, fees, status) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s)", secure($user_data['user_id'], 'int'), secure($order_id), secure($token_value), secure($token_name), secure($action),secure($amount),secure($receive_amount), secure($token_value), secure($fees), secure('completed') )) or _error("SQL_ERROR_THROWEN");
@@ -204,45 +195,56 @@ class InvestmentHelper {
 
     public static function getDashboardDate($user_data){
          global $db,$system;
-        $tokens = $db->query("SELECT * FROM investment_coins") or _error("SQL_ERROR_THROWEN");
+        // $tokens = $db->query("SELECT * FROM investment_coins") or _error("SQL_ERROR_THROWEN");
+        $tokens  =  httpGetCurl('investment/dashboard_detail',$system['investment_api_base_url']);
+        //    echo '<pre>'; print_r($tokens); die;
         $return = [];
-        $i =0;
-        if ($tokens->num_rows > 0) {
-            while ($token = $tokens->fetch_assoc()) {
-                $token['wallet_name'] = $token['short_name'].'_wallet';
-                $details  =  httpGetCurl('investment/get_kline_data/'.strtoupper($token['short_name']).'_USDT',$system['investment_api_base_url']);
-                      
-        // echo '<pre>'; print_r($details); die;
-                $return['graph'][$token['short_name'].'_kline_data'] =  array_map(function ($ar) {return (double)$ar['close'];}, $details['data']);
-                $return['series'][$i] = $user_data[$token['short_name'].'_wallet'];
-                $return['total_coin'] = $return['total_coin']+$return['series'][$i];
-                $return['labels'][$i] = strtoupper($token['short_name']);
-                $return['token_data'][$i] = $token;
-                $i++;
-                
-            }
-            if($return['total_coin']>0){
-                foreach($return['series'] as $key=>$item){
-                    $return['series'][$key] = round($item*100/$return['total_coin'],2);
-                }
-            }
+        $currency_price = [];
+        foreach($tokens['data'] as $key=>$token){
+            
+            $return['token_data'][$key]['wallet_name'] = $token['short_name'].'_wallet'; 
+            $return['graph'][$token['short_name'].'_kline_data'] =  $token['kline_data']?array_map(function ($ar) {return (double)$ar['close'];}, $token['kline_data']):"";
+            $return['series'][$key] = $user_data[$token['short_name'].'_wallet'];
+            $return['total_coin'] = $return['total_coin']+$user_data[$token['short_name'].'_wallet'];
+            $return['labels'][$key] = strtoupper($token['short_name']);
+            $return['token_data'][$key]['buy_price'] =  round($token['ticker_data']['buy_price'],5);
+            $return['token_data'][$key]['short_name'] =  $token['short_name'];
+            $return['token_data'][$key]['name'] =  $token['name'];
+            $return['token_data'][$key]['fluctuation'] =  $token['fluctuation'];
+            $currency_price[$token['short_name'].'_price'] = $return['token_data'][$key]['buy_price'];
            
-            // echo '<pre>'; print_r($return); die;
         }
-        
+        if($return['total_coin']>0){
+            foreach($return['series'] as $key1=>$item){
+                $return['series'][$key1] = round($item*100/$return['total_coin'],2);
+            }
+        }
+        $return['total_balance'] = self::getBtcBlance($user_data,$currency_price);
+        // echo '<pre>'; print_r($return); die;
         return $return;
    
     }
 
-    // public static function getBtcBlance($user_data){
-    //     $total_btc = $user_data['btc_wallet'];
-    //     $total_apl = $user_data['apl_wallet'];
-    //     $total_eth = $user_data['eth_wallet'];
-    //     $apl_price =  $total_apl>0?self::get_ticker_price('APL'):0;
-    //     $apl_price = $total_apl>0?$apl_price['buy_price']:0;
-    //     $eth_price =  $total_eth>0?self::get_ticker_price('ETH'):0;
-    //     $eth_price = $total_eth>0?$eth_price['buy_price']:0;
-    //     // $eth_price =  $total_eth>0?self::get_ticker_price('ETH_USDT'):0;   
-    //      echo '<pre>'; print_r($eth_price); die;
-    // }
+    public static function getBtcBlance($user_data,$currency_price){
+        $total_btc = $user_data['btc_wallet'];
+    
+        $btc_price =  $total_btc>0?$currency_price['btc_price']:0;
+        $btc_total_amount = ($total_btc>0)?($total_btc*$btc_price):0;
+        // echo '<pre>'; print_r($btc_price['buy_price']); die;
+        $total_apl = $user_data['apl_wallet'];
+        $apl_price = $total_apl>0?$currency_price['apl_price']:0;
+        $apl_total_amount = $total_apl>0?($total_apl*$apl_price):0;
+
+        $total_eth = $user_data['eth_wallet'];
+        $eth_price = $total_eth>0?$currency_price['eth_price']:0;
+        $eth_total_amount = ($total_eth>0)?($total_eth*$eth_price):0;
+
+
+        $total['amount']  = round($apl_total_amount+$eth_total_amount+$btc_total_amount,2);
+        $total['total_token_btc'] =  $total['amount']>0?round($total['amount']/$btc_price, 5):0;
+        // $eth_price =  $total_eth>0?self::get_ticker_price('ETH_USDT'):0;   
+        // echo '<pre>'; print_r($total); die;
+        return $total;
+         
+    }
 }

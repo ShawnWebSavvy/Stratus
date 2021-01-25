@@ -86,7 +86,6 @@ try {
                     $smarty->assign('token_name', $_POST['token_name']);
                     $smarty->assign('token_value', $_POST['token_value']);
                     $smarty->assign('amount', $_POST['amount']);
-                    die($_POST['per_coin_price']);
                     $smarty->assign('per_coin_price', $_POST['per_coin_price']);
                     $return['failed'] = $smarty->fetch("investment/top_up.tpl");
                 }

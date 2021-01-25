@@ -21,6 +21,7 @@ try {
         throw new Exception(__("You must select any currency"));
     }
     $token_price = InvestmentHelper::get_ticker_price($_POST['token']);
+    // echo '<pre>'; print_r($token_price); die;       
     $fees        = 1;
     switch($_POST['action']){
         case 'buy':

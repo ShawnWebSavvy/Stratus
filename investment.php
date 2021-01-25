@@ -21,8 +21,9 @@ try {
             $lat_transactions = $user->investment_latest_transactions();
           
             $allTokens = InvestmentHelper::getDashboardDate($user->_data);
+            
             //   echo '<pre>'; print_r($allTokens); die;
-            // $get_balance_btc = InvestmentHelper::getBtcBlance($user->_data);
+            $smarty->assign('get_balance', $allTokens['total_balance']);
             $smarty->assign('allTokens', $allTokens['token_data']);
             $smarty->assign('graphData', $allTokens['graph']);
             $smarty->assign('lat_transactions', $lat_transactions);
@@ -33,8 +34,9 @@ try {
         break;
         case 'coin_buy_sell':
             page_header('Buy/Sell');
-            $smarty->assign('min_tnx_amnt','0.001');
-            $smarty->assign('max_tnx_amnt','20000');
+            $smarty->assign('min_buy_amount','5');
+            $smarty->assign('min_sell_amount','5');  
+            $smarty->assign('base_max_size','10000000');
             if(isset($_SESSION['order_action_type']) && isset($_SESSION['coin'])) {
                 $smarty->assign('order_action_type', $_SESSION['order_action_type']);
                 $smarty->assign('set_active_coin', $_SESSION['coin']);
@@ -44,9 +46,11 @@ try {
                 $smarty->assign('order_action_type','Buy');
                 $smarty->assign('set_active_coin','btc');
             }
-            $_details = InvestmentHelper::get_all_token_price();
+            $_details = InvestmentHelper::get_all_token_price($user->_data);
             $lat_transactions = $user->investment_latest_transactions();
+            $_details['wallet_amount']['balance']['usd']= $user->_data['user_wallet_balance'];
             // echo '<pre>'; print_r($lat_transactions); die;
+            $smarty->assign('wallet_balance', $_details['wallet_amount']);
             $smarty->assign('lat_transactions', $lat_transactions);
             $smarty->assign('_buy_details',$_details['buy']);
             $smarty->assign('_sell_details', $_details['sell']);

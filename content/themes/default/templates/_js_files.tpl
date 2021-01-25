@@ -249,14 +249,13 @@
 <script src="{$system['system_url']}/includes/assets/js/plugins/autosize/autosize.min.js" {if !$user->_logged_in}defer{/if}></script>
 <script src="{$system['system_url']}/includes/assets/js/plugins/readmore/readmore.min.js" {if !$user->_logged_in}defer{/if}></script>
 <script src="{$system['system_url']}/includes/assets/js/plugins/moment/moment-with-locales.min.js" {if !$user->_logged_in}defer{/if}></script>
+{if $user->_logged_in}
 <script src="https://cdn.fluidplayer.com/v2/current/fluidplayer.min.js" {if !$user->_logged_in}defer{/if}></script>
 <link rel="stylesheet" href="https://cdn.fluidplayer.com/v2/current/fluidplayer.min.css" type="text/css"/>
 <script src="https://unpkg.com/video.js@7.8.4/dist/video.min.js" {if !$user->_logged_in}defer{/if}></script>
 <script src="https://unpkg.com/videojs-contrib-hls@5.15.0/dist/videojs-contrib-hls.min.js" {if !$user->_logged_in}defer{/if}></script>
 <link href="https://unpkg.com/video.js@7.8.4/dist/video-js.min.css" rel="stylesheet">
-<script src="{$system['system_url']}/includes/assets/js/plugins/swipeMobile/swipeMobile.js"></script>
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
-<script type="text/javascript" src="http://mbostock.github.com/d3/d3.js?2.5.0"></script>
+{/if}
 {if $user->_logged_in}
     <!-- jQuery-UI -->
     <script>var _tooltip = jQuery.fn.tooltip;</script>
@@ -373,6 +372,8 @@
         <script src="https://cdn.datatables.net/v/bs4/dt-1.10.20/datatables.min.js"></script>
     {/if}
     <!-- Datatables -->
+    <script src="{$system['system_url']}/includes/assets/js/plugins/swipeMobile/swipeMobile.js"></script>
+    <script type="text/javascript" src="http://mbostock.github.com/d3/d3.js?2.5.0"></script>
 
 {/if}
 <!-- Dependencies Plugins -->
