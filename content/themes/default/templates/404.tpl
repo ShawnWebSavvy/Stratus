@@ -7,7 +7,7 @@
 
 		<!-- side panel -->
         {if $user->_logged_in}
-            <div class="col-12 d-block d-sm-none offcanvas-sidebar">
+            <div class="col-12 d-block d-sm-none offcanvas-sidebar" id="sidebarHiddSwip">
                 {include file='_sidebar.tpl'}
             </div>
         {/if}

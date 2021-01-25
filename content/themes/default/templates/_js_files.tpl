@@ -255,7 +255,8 @@
 <script src="https://unpkg.com/video.js@7.8.4/dist/video.min.js" {if !$user->_logged_in}defer{/if}></script>
 <script src="https://unpkg.com/videojs-contrib-hls@5.15.0/dist/videojs-contrib-hls.min.js" {if !$user->_logged_in}defer{/if}></script>
 <link href="https://unpkg.com/video.js@7.8.4/dist/video-js.min.css" rel="stylesheet">
-{/if}
+<script src="{$system['system_url']}/includes/assets/js/plugins/swipeMobile/swipeMobile.js"></script>
+
 {if $user->_logged_in}
     <!-- jQuery-UI -->
     <script>var _tooltip = jQuery.fn.tooltip;</script>
@@ -377,7 +378,9 @@
 <!-- Dependencies Plugins -->
 
 <!-- Sngine [JS] -->
+
 <script src="{$system['system_uploads_assets']}/includes/assets/js/stratus/core.js?{$cacheremovejs}" defer></script>
+<script src="{$system['system_url']}/includes/assets/js/stratus/swipMobileCode.js?{$cacheremovejs}" defer></script>
 <!--Landing page custom js -->
 <script src="{$system['system_url']}/includes/assets/js/stratus/custom.js?{$cacheremovejs}" defer></script>
 

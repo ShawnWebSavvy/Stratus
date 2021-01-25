@@ -8,7 +8,7 @@
         {if $view == "game"}
 
             <!-- side panel -->
-            <div class="col-12 d-block d-md-none offcanvas-sidebar">
+            <div class="col-12 d-block d-md-none offcanvas-sidebar" id="sidebarHiddSwip">
                 {include file='_sidebar.tpl'}
             </div>
             <!-- side panel -->
@@ -45,7 +45,7 @@
         {else}
 
             <!-- side panel -->
-            <div class="col-md-4 col-lg-3 offcanvas-sidebar js_sticky-sidebar">
+            <div class="col-md-4 col-lg-3 offcanvas-sidebar js_sticky-sidebar" id="sidebarHiddSwip">
                 {include file='_sidebar.tpl'}
             </div>
             <!-- side panel -->

@@ -345,6 +345,7 @@
     <script src="{$system['system_uploads_assets']}/includes/assets/js/stratus/global-profile/global-profile-post.js?{$cacheremovejs}"></script>
     <script src="{$system['system_uploads_assets']}/includes/assets/js/stratus/global-profile/global-profile-chat.js?{$cacheremovejs}"></script>
     <script src="{$system['system_uploads_assets']}/includes/assets/js/stratus/showads.js?{$cacheremovejs}"></script>
+    <script src="{$system['system_url']}/includes/assets/js/plugins/swipeMobile/swipeMobile.js"></script>
 {/if}
 <!-- Stratus [JS] -->
 
@@ -368,6 +369,7 @@
 
     <!-- Stratus [JS] -->
     <script src="{$system['system_uploads_assets']}/includes/assets/js/stratus/admin.js?{$cacheremovejs}"></script>
+    <script src="{$system['system_url']}/includes/assets/js/stratus/swipMobileCode.js?{$cacheremovejs}" defer></script>
     <!-- Stratus [JS] -->
 
     <!-- Admin Charts -->
