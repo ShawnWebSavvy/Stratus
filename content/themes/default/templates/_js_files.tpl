@@ -249,6 +249,7 @@
 <script src="{$system['system_url']}/includes/assets/js/plugins/autosize/autosize.min.js" {if !$user->_logged_in}defer{/if}></script>
 <script src="{$system['system_url']}/includes/assets/js/plugins/readmore/readmore.min.js" {if !$user->_logged_in}defer{/if}></script>
 <script src="{$system['system_url']}/includes/assets/js/plugins/moment/moment-with-locales.min.js" {if !$user->_logged_in}defer{/if}></script>
+{if $user->_logged_in}
 <script src="https://cdn.fluidplayer.com/v2/current/fluidplayer.min.js" {if !$user->_logged_in}defer{/if}></script>
 <link rel="stylesheet" href="https://cdn.fluidplayer.com/v2/current/fluidplayer.min.css" type="text/css"/>
 <script src="https://unpkg.com/video.js@7.8.4/dist/video.min.js" {if !$user->_logged_in}defer{/if}></script>
