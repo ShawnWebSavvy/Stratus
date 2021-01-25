@@ -2950,6 +2950,8 @@ $(function () {
     var message = textarea.val();
     var attachments = comment.find(".comment-attachments");
     var attachments_voice_notes = comment.find(".comment-voice-notes");
+    var spanCheck = _this.parents(".post-comment-button-span-modal").text();
+    console.log(spanCheck);
     /* check if there is current (sending) process */
     if (comment.data("sending")) {
       return false;
@@ -2978,9 +2980,10 @@ $(function () {
         voice_note: JSON.stringify(voice_note),
       },
       function (response) {
+        //consonle.log(response)
         /* check if there is a callback */
         if (response.callback) {
-          eval(response.callback);
+          //eval(response.callback);
         } else {
           textarea.val("");
           textarea.attr("style", "");
@@ -2997,7 +3000,7 @@ $(function () {
           /* remove currenet sending process */
           comment.removeData("sending");
         }
-        window.location.reload();
+        //window.location.reload();
       },
       "json"
     ).fail(function () {
@@ -3455,12 +3458,13 @@ $(function () {
         reactions_wrapper.hasClass("js_unreact-" + handle) &&
         old_reaction == reaction
       ) {
+
         var spanValue = _parent
-          .find(".js_react-post .reaction-btn:first .reaction-counting")
+          .find(".js_react-" + handle + " .reaction-btn:first .reaction-counting")
           .text();
         var deduct = parseInt(spanValue) - 1;
         _parent
-          .find(".js_react-post .reaction-btn:first .reaction-counting")
+          .find(".js_react-" + handle + " .reaction-btn:first .reaction-counting")
           .text(deduct);
 
         /* [1] user unreact */
@@ -3489,6 +3493,7 @@ $(function () {
           api["posts/reaction"],
           { do: _undo, reaction: old_reaction, id: id },
           function (response) {
+            console.log()
             /* check the response */
             if (response.callback) {
               eval(response.callback);
@@ -3503,11 +3508,11 @@ $(function () {
         });
       } else {
         var spanValue_ = _parent
-          .find(".js_react-post .reaction-btn:first .reaction-counting")
+          .find(".js_react-" + handle + "  .reaction-btn:first .reaction-counting")
           .text();
         var adjust = parseInt(spanValue_) + parseInt(1);
         _parent
-          .find(".js_react-post .reaction-btn:first .reaction-counting")
+          .find(".js_react-" + handle + "  .reaction-btn:first .reaction-counting")
           .text(adjust);
 
         /* [2] user react */

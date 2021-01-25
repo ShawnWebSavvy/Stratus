@@ -5065,22 +5065,22 @@ class UserGlobal
         /* reaction the post */
         if ($photo['i_react']) {
             /* remove any previous reaction */
-            $db->query(sprintf("DELETE FROM posts_photos_reactions WHERE user_id = %s AND photo_id = %s", secure($this->_data['user_id'], 'int'), secure($photo_id, 'int'))) or _error("SQL_ERROR_THROWEN");
+            $db->query(sprintf("DELETE FROM global_posts_photos_reactions WHERE user_id = %s AND photo_id = %s", secure($this->_data['user_id'], 'int'), secure($photo_id, 'int'))) or _error("SQL_ERROR_THROWEN");
             /* update photo reaction counter */
             $reaction_field = "reaction_" . $photo['i_reaction'] . "_count";
-            $db->query(sprintf("UPDATE posts_photos SET $reaction_field = IF($reaction_field=0,0,$reaction_field-1) WHERE photo_id = %s", secure($photo_id, 'int'))) or _error("SQL_ERROR_THROWEN");
+            $db->query(sprintf("UPDATE global_posts_photos SET $reaction_field = IF($reaction_field=0,0,$reaction_field-1) WHERE photo_id = %s", secure($photo_id, 'int'))) or _error("SQL_ERROR_THROWEN");
             /* delete notification */
             $this->delete_notification($post['author_id'], 'react_' . $photo['i_reaction'], 'photo', $photo_id);
         }
-        $db->query(sprintf("INSERT INTO posts_photos_reactions (user_id, photo_id, reaction, reaction_time) VALUES (%s, %s, %s, %s)", secure($this->_data['user_id'], 'int'), secure($photo_id, 'int'), secure($reaction), secure($date))) or _error("SQL_ERROR_THROWEN");
+        $db->query(sprintf("INSERT INTO global_posts_photos_reactions (user_id, photo_id, reaction, reaction_time) VALUES (%s, %s, %s, %s)", secure($this->_data['user_id'], 'int'), secure($photo_id, 'int'), secure($reaction), secure($date))) or _error("SQL_ERROR_THROWEN");
         $reaction_id = $db->insert_id;
         /* update photo reaction counter */
         $reaction_field = "reaction_" . $reaction . "_count";
-        $db->query(sprintf("UPDATE posts_photos SET $reaction_field = $reaction_field + 1 WHERE photo_id = %s", secure($photo_id, 'int'))) or _error("SQL_ERROR_THROWEN");
+        $db->query(sprintf("UPDATE global_posts_photos SET $reaction_field = $reaction_field + 1 WHERE photo_id = %s", secure($photo_id, 'int'))) or _error("SQL_ERROR_THROWEN");
         /* post notification */
         $this->post_notification(array('to_user_id' => $post['author_id'], 'action' => 'react_' . $reaction, 'hub' => "LocalHub", 'node_type' => 'photo', 'node_url' => $photo_id));
         /* points balance */
-        $this->points_balance("add", $this->_data['user_id'], "posts_photos_reactions", $reaction_id);
+        $this->points_balance("add", $this->_data['user_id'], "global_posts_photos_reactions", $reaction_id);
     }
 
 
@@ -5101,14 +5101,14 @@ class UserGlobal
         }
         $post = $photo['post'];
         /* unreact the photo */
-        $db->query(sprintf("DELETE FROM posts_photos_reactions WHERE user_id = %s AND photo_id = %s", secure($this->_data['user_id'], 'int'), secure($photo_id, 'int'))) or _error("SQL_ERROR_THROWEN");
+        $db->query(sprintf("DELETE FROM global_posts_photos_reactions WHERE user_id = %s AND photo_id = %s", secure($this->_data['user_id'], 'int'), secure($photo_id, 'int'))) or _error("SQL_ERROR_THROWEN");
         /* update photo reaction counter */
         $reaction_field = "reaction_" . $photo['i_reaction'] . "_count";
-        $db->query(sprintf("UPDATE posts_photos SET $reaction_field = IF($reaction_field=0,0,$reaction_field-1) WHERE photo_id = %s", secure($photo_id, 'int'))) or _error("SQL_ERROR_THROWEN");
+        $db->query(sprintf("UPDATE global_posts_photos SET $reaction_field = IF($reaction_field=0,0,$reaction_field-1) WHERE photo_id = %s", secure($photo_id, 'int'))) or _error("SQL_ERROR_THROWEN");
         /* delete notification */
         $this->delete_notification($post['author_id'], 'react_' . $reaction, 'photo', $photo_id);
         /* points balance */
-        $this->points_balance("delete", $this->_data['user_id'], "posts_photos_reactions");
+        $this->points_balance("delete", $this->_data['user_id'], "global_posts_photos_reactions");
     }
 
     /* ------------------------------- */
