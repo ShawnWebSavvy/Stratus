@@ -4,6 +4,10 @@
 // fetch bootloader
 require('bootloader.php');
 require_once('./includes/investment-helper.php');
+// live enabled
+if(!$system['investment_module_status']) {
+	_error(404);
+}
 try {
 
     // user access
@@ -18,6 +22,7 @@ try {
           
             $allTokens = InvestmentHelper::getDashboardDate($user->_data);
             //   echo '<pre>'; print_r($allTokens); die;
+            // $get_balance_btc = InvestmentHelper::getBtcBlance($user->_data);
             $smarty->assign('allTokens', $allTokens['token_data']);
             $smarty->assign('graphData', $allTokens['graph']);
             $smarty->assign('lat_transactions', $lat_transactions);

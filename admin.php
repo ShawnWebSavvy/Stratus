@@ -203,7 +203,10 @@ try {
 					// page header
 					page_header($control_panel['title'] . " &rsaquo; " . __("Analytics Settings"));
 					break;
-
+				case 'investment':
+					// page header
+					page_header($control_panel['title'] . " &rsaquo; " . __("Investment Settings"));
+					break;
 				default:
 					_error(404);
 					break;
@@ -233,17 +236,33 @@ try {
 						$exchanges = InvestmentHelper::getAdminExchangeDetail('investment/admin/settings/exchanges');
 						$smarty->assign('exchanges', $exchanges);
 						break;
-					case 'exchange':
+					case 'coin':
 						// die($_GET['edit']);
-						if(isset($_GET['edit'])){
-							page_header($control_panel['title'] . " &rsaquo; " ."Investment Exchange Edit");
-							$detail = InvestmentHelper::getAdminExchangeDetail('investment/admin/settings/fees/'.$_GET['edit']);
-							// echo '<pre>'; print_r($detail); die;
+						if(isset($_GET['exchange_id'])){
+							page_header($control_panel['title'] . " &rsaquo; " ."Investment Exchange Coin Edit");
+							$params['exchangeId'] = $_GET['exchange_id'];
+							$params['tradePair']= $_GET['trade'];
+							$detail = InvestmentHelper::getAdminSettingDetail('investment/admin/settings/fee/',$params);
+							$price = $detail['price'];
+							$detail = $detail['list']['0'];
 							$smarty->assign('detail', $detail);
+							$smarty->assign('price', $price);
+							$smarty->assign('exchange_name', $_GET['exchange']);
+							$smarty->assign('exchange_id', $_GET['exchange_id']);
+							break;
+						}
+					case 'coins':
+						// die($_GET['exchange_id']);
+						if(isset($_GET['exchange_id'])&&isset($_GET['exchange'])){
+							page_header($control_panel['title'] . " &rsaquo; " ."Investment Exchange Coin Edit");
+							$details = InvestmentHelper::getAdminExchangeDetail('investment/admin/settings/fees/'.$_GET['exchange_id']);
+							// echo '<pre>'; print_r($details); die;
+							$smarty->assign('details', $details);
 							$smarty->assign('exchange_name', $_GET['exchange']);
 							$smarty->assign('exchange_id', $_GET['edit']);
 							break;
 						}
+						
 					case 'transactions':
 						$insights = [];
 						$tnx_type = ($_GET['tnx_type'] == 'sell') ? 'sell' : 'buy';

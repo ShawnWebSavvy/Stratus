@@ -292,6 +292,8 @@
                 </a>
                 </li>
             </ul>
+            
+            {if $system['investment_module_status']}
 	        <ul class="main-side-nav main-left-side-nav left-sidebar-{if ($active_page=="Investment" )}second-ul
                 active{else}first-ul
                 {/if}">
@@ -309,6 +311,7 @@
 
                 </li>
             </ul>
+            {/if}
             <!-- ADS Hub end -->
 
             <!-- Market HUB Starts -->

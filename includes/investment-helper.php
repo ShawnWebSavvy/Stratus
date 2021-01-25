@@ -180,6 +180,28 @@ class InvestmentHelper {
         return $details['data']['list'];
     }
 
+    public static function getAdminTickerPrice($url)
+    {   
+        global $system;
+        $token_price  =  httpGetCurl($url,$system['investment_api_base_url']);
+        if (!isset($token_price['data'])) {
+            throw new Exception(__("Something Went Wrong!! Please try again"));
+        }
+        return $token_price['data']['price'];
+    }
+
+    public static function getAdminSettingDetail($api_suffix,$params)
+    {   
+        global $system;
+        $details  =  httpPostCurl($api_suffix,$system['investment_api_base_url'],$params);
+        
+        // echo '<pre>'; print_r($details); die;
+        if (!isset($details['data'])) {
+            throw new Exception(__("Something Went Wrong!! Please try again"));
+        }
+        return $details['data'];
+    }
+
     public static function getDashboardDate($user_data){
          global $db,$system;
         $tokens = $db->query("SELECT * FROM investment_coins") or _error("SQL_ERROR_THROWEN");
@@ -189,7 +211,9 @@ class InvestmentHelper {
             while ($token = $tokens->fetch_assoc()) {
                 $token['wallet_name'] = $token['short_name'].'_wallet';
                 $details  =  httpGetCurl('investment/get_kline_data/'.strtoupper($token['short_name']).'_USDT',$system['investment_api_base_url']);
-                $return['graph'][$token['short_name'].'_kline_data'] =  array_map(function ($ar) {return (double)$ar['close'];}, $details['data']['data']['klines']);
+                      
+        // echo '<pre>'; print_r($details); die;
+                $return['graph'][$token['short_name'].'_kline_data'] =  array_map(function ($ar) {return (double)$ar['close'];}, $details['data']);
                 $return['series'][$i] = $user_data[$token['short_name'].'_wallet'];
                 $return['total_coin'] = $return['total_coin']+$return['series'][$i];
                 $return['labels'][$i] = strtoupper($token['short_name']);
@@ -209,5 +233,16 @@ class InvestmentHelper {
         return $return;
    
     }
+
+    // public static function getBtcBlance($user_data){
+    //     $total_btc = $user_data['btc_wallet'];
+    //     $total_apl = $user_data['apl_wallet'];
+    //     $total_eth = $user_data['eth_wallet'];
+    //     $apl_price =  $total_apl>0?self::get_ticker_price('APL'):0;
+    //     $apl_price = $total_apl>0?$apl_price['buy_price']:0;
+    //     $eth_price =  $total_eth>0?self::get_ticker_price('ETH'):0;
+    //     $eth_price = $total_eth>0?$eth_price['buy_price']:0;
+    //     // $eth_price =  $total_eth>0?self::get_ticker_price('ETH_USDT'):0;   
+    //      echo '<pre>'; print_r($eth_price); die;
+    // }
 }
-?>

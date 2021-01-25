@@ -565,10 +565,17 @@ try {
 		case 'analytics':
 			/* update */
 			update_system_options([ 
-				'analytics_code' => secure($_POST['message'])
+				'analytics_code' => secure($_POST['investment_module_status'])
+			]);
+			break;
+		case 'investment':
+			/* update */
+			update_system_options([ 
+				'investment_module_status' => secure($_POST['message'])
 			]);
 			break;
 
+			
 		case 'wallet':
 			$_POST['wallet_enabled'] = (isset($_POST['wallet_enabled']))? '1' : '0';
 			$_POST['wallet_transfer_enabled'] = (isset($_POST['wallet_transfer_enabled']))? '1' : '0';

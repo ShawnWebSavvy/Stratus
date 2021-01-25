@@ -168,11 +168,11 @@
                             <div class="dropdown minMaxDrop">
                                 <button class="btn dropdown-toggle" type="button" id="dropdownMenu2"
                                     data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                    Use Max
+                                    Use Min
                                 </button>
                                 <div class="dropdown-menu " aria-labelledby="dropdownMenu2">
-                                    <a class="dropdown-item" href="#"><img src="{$system['system_url']}/content/themes/default/images/svg/svgImg/checkedBlue.svg" alt="swap" style="margin-right: 10px;"> Min</a>
-                                    <a class="dropdown-item" href="#"> Max</a>
+                                    <a class="dropdown-item" href="javascript:;"><img src="{$system['system_url']}/content/themes/default/images/svg/svgImg/checkedBlue.svg" alt="swap" style="margin-right: 10px;"> Min</a>
+                                    <a class="dropdown-item" href="javascript:;"> Max</a>
                                 </div>
                             </div>
                         </div>

@@ -105,6 +105,11 @@
                                                 <i class="fa fa-chart-pie fa-fw mr10"></i>{__("Analytics Settings")}
                                             </a>
                                         </li>
+                                        <li {if $view=="settings" && $sub_view=="investment" }class="active" {/if}>
+                                            <a href="{$system['system_url']}/{$control_panel['url']}/settings/investment">
+                                                <i class="fa fa-chart-pie fa-fw mr10"></i>{__("Investment Settings")}
+                                            </a>
+                                        </li>
                                     </ul>
                                 </div>
                             </li>

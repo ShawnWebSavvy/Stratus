@@ -27,8 +27,9 @@
             </div>
         {/if}
         <i class="fa fa-user mr10"></i>Investment
+        {if $sub_view == "coin" || $sub_view == "coins"} &rsaquo; {__(Exchanges)}{/if}
         {if $sub_view != "" && $sub_view != "edit"} &rsaquo; {__($sub_view|capitalize)}{/if}
-        {if $sub_view == "exchange"} &rsaquo; Edit{/if}
+        {if $sub_view == "coin"} &rsaquo; Edit{/if}
     </div>
 
     {if $sub_view == "" || $sub_view == "exchanges"}
@@ -65,9 +66,9 @@
                                         {/if}
                                     </td>
                                     <td>
-                                        <a data-toggle="tooltip" data-placement="top" title='{__("Edit")}' href="{$system['system_url']}/{$control_panel['url']}/investment/exchange?edit={$row['id']}&exchange={$row['name']}" class="btn btn-sm btn-icon btn-rounded btn-primary">
+                                        <a data-toggle="tooltip" data-placement="top" title='{__("Edit")}' href="{$system['system_url']}/{$control_panel['url']}/investment/coins?exchange_id={$row['id']}&exchange={$row['name']}" class="btn btn-sm btn-icon btn-rounded btn-primary">
                                             <i class="fa fa-pencil-alt"></i>
-                                        </a>
+                                        </a>  
                                     </td>
                                 </tr>
                             {/foreach}
@@ -83,8 +84,53 @@
             </div>
             {$pager}
         </div>
-
-    {elseif $sub_view == "exchange"}
+    {elseif $sub_view == 'coins' }
+         <div class="card-body">
+            <div class="table-responsive">
+                <table class="table table-striped table-bordered table-hover">
+                    <thead>
+                        <tr>
+                            <th>{__("ID")}</th>
+                            <th>{__("Coin Name")}</th>
+                            <th>{__("Trade")}</th>
+                            <th>{__("Exchange")}</th>
+                            <th>{__("Actions")}</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {if $details}
+                            {foreach $details as $key=>$row}
+                                <tr>
+                                    <td><a href="javascript:;" target="_blank">{$key+1}</a></td>
+                                    
+                                    <td>
+                                        <a href="javascript:;" target="_blank">
+                                            {$row['name']}
+                                        </a>
+                                    </td>
+                                    <td>{$row['trade_pair']|upper}</td>
+                                    <td>{$exchange_name|upper}</td>
+                                    <td>
+                                       
+                                        <a data-toggle="tooltip" data-placement="top" title='{__("Edit")}' href="{$system['system_url']}/{$control_panel['url']}/investment/coin/edit?exchange_id={$row['exchange_id']}&trade={$row['trade_pair']}" class="btn btn-sm btn-icon btn-rounded btn-primary">
+                                            <i class="fa fa-pencil-alt"></i>
+                                        </a>  
+                                    </td>
+                                </tr>
+                            {/foreach}
+                        {else}
+                            <tr>
+                                <td colspan="6" class="text-center">
+                                    {__("No data to show")}
+                                </td>
+                            </tr>
+                        {/if}
+                    </tbody>
+                </table>
+            </div>
+            {$pager}
+        </div>
+    {elseif $sub_view == "coin"}
         
         <div class="card-body">
            
@@ -100,11 +146,33 @@
                     <form class="js_ajax-forms " data-url="admin/investment.php?id={$exchange_id}&do=edit_exchange">
                         <div class="form-group form-row">
                             <label class="col-md-3 form-control-label">
-                                Exchange Name
+                                Coin Name
                             </label>
                             <div class="col-md-9">
                                 <div class="input-group">
-                                   <label class="col-md-3 form-control-label">{$exchange_name}</label>
+                                   <label class="col-md-3 form-control-label">{$detail['name']|ucfirst}</label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group form-row">
+                            <label class="col-md-3 form-control-label">
+                                Trade Pair
+                            </label>
+                            <div class="col-md-9">
+                                <div class="input-group">
+                                   <label class="col-md-3 form-control-label">{$detail['trade_pair']|upper}</label>
+                                </div>
+                            </div>
+                        </div>
+                        <input type="hidden" name="trade" value="{$detail['trade_pair']|upper}">
+                        <input type="hidden" name="exchange_id" value="{$exchange_id}">
+                        <div class="form-group form-row">
+                            <label class="col-md-3 form-control-label">
+                                Buy Price From BitMart
+                            </label>
+                            <div class="col-md-9">
+                                <div class="input-group">
+                                    <label class="col-md-3 form-control-label">${$price}</label>
                                 </div>
                             </div>
                         </div>
@@ -114,43 +182,82 @@
                             </label>
                             <div class="col-md-9">
                                 <div class="input-group">
-                                    <input type="text" class="form-control" name="markup_price" value="{$detail[0]['markup_price']}" oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*?)\..*/g, '$1');">
+                                    <input type="text" class="form-control" name="markup_price" value="{$detail['markup_price']}" oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*?)\..*/g, '$1');">
                                 </div>
                             </div>
                         </div>
-
+                        <div class="form-group form-row">
+                            <label class="col-md-3 form-control-label">
+                                Buy Price OF Stratus
+                            </label>
+                            <div class="col-md-9">
+                                <div class="input-group">
+                                    <label class="col-md-3 form-control-label" id="buy_price">${$price+($price*$detail['markup_price']/100)}</label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group form-row">
+                            <label class="col-md-3 form-control-label">
+                                Sell Price From BitMart
+                            </label>
+                            <div class="col-md-9">
+                                <div class="input-group">
+                                    <label class="col-md-3 form-control-label">${$price}</label>
+                                </div>
+                            </div>
+                        </div>
                         <div class="form-group form-row">
                             <label class="col-md-3 form-control-label">
                                 Markdown Price(%)
                             </label>
                             <div class="col-md-9">
                                 <div class="input-group">
-                                    <input type="text" class="form-control" name="markdown_price" value="{$detail[0]['markdown_price']}" oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*?)\..*/g, '$1');">
+                                    <input type="text" class="form-control" name="markdown_price" value="{$detail['markdown_price']}" oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*?)\..*/g, '$1');">
                                 </div>
                             </div>
                         </div>
                         <div class="form-group form-row">
                             <label class="col-md-3 form-control-label">
-                                Fees(%)
+                                Sell Price OF Stratus
                             </label>
                             <div class="col-md-9">
                                 <div class="input-group">
-                                    <input type="text" class="form-control" name="fees" value="{$detail[0]['fees']}" oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*?)\..*/g, '$1');">
+                                    <label class="col-md-3 form-control-label">${$price-($price*$detail['markdown_price']/100)}</label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group form-row">
+                            <label class="col-md-3 form-control-label">
+                               Buy Fees(%)
+                            </label>
+                            <div class="col-md-9">
+                                <div class="input-group">
+                                    <input type="text" class="form-control" name="buy_fees" value="{$detail['buy_fees']}" oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*?)\..*/g, '$1');">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group form-row">
+                            <label class="col-md-3 form-control-label">
+                               Sell Fees(%)
+                            </label>
+                            <div class="col-md-9">
+                                <div class="input-group">
+                                    <input type="text" class="form-control" name="sell_fees" value="{$detail['sell_fees']}" oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*?)\..*/g, '$1');">
                                 </div>
                             </div>
                         </div>
 
-                        <div class="form-group form-row">
+                        <!-- <div class="form-group form-row">
                             <label class="col-md-3 form-control-label">
                                 Activated
                             </label>
                             <div class="col-md-9">
                                 <label class="switch" for="user_email_verified">
-                                    <input type="checkbox" name="status" id="user_email_verified" {if $detail[0]['investment_active']}checked{/if}>
+                                    <input type="checkbox" name="status" id="user_email_verified" {if $detail['investment_active']}checked{/if}>
                                     <span class="slider round"></span>
                                 </label>
                             </div>
-                        </div>
+                        </div> -->
 
             
                         <div class="form-row">
