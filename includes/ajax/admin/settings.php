@@ -565,13 +565,13 @@ try {
 		case 'analytics':
 			/* update */
 			update_system_options([ 
-				'analytics_code' => secure($_POST['investment_module_status'])
+				'analytics_code' => secure($_POST['message'])
 			]);
 			break;
 		case 'investment':
 			/* update */
 			update_system_options([ 
-				'investment_module_status' => secure($_POST['message'])
+				'investment_module_status' => secure($_POST['investment_module_status'])
 			]);
 			break;
 
