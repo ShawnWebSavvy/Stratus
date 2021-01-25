@@ -79,7 +79,7 @@
                            data-id="{$profile['global_user_picture_id']}" data-context="album"
                            data-image="{$profile['global_user_picture']}" {elseif !$profile['user_picture_default']}
                            class="js_lightbox-nodata" data-image="{$profile['user_picture']}" {/if}
-                           src="{$profile['global_user_picture']}" alt="{$profile['user_firstname']}
+                           src="{$system_url}/{$profile['global_user_picture']}" alt="{$profile['user_firstname']}
                            {$profile['user_lastname']}">
                            {if $profile['user_id'] == $user->_data['user_id']}
                            <!-- buttons -->
@@ -744,7 +744,7 @@
                            {if $profile['albums']}
                            <ul class="row">
                               {foreach $profile['albums'] as $album}
-                              {include file='__feeds_album.tpl'}
+                              {{include file='global-profile/global-profile__feeds_album.tpl'}}
                               {/foreach}
                            </ul>
                            {if count($profile['albums']) >= $system['max_results_even']}

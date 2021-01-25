@@ -2158,12 +2158,12 @@ try {
 								$row['user_picture'] = get_picture($row['user_picture'], $row['user_gender']);
 								if (!empty($row['user_picture'])) {
 									$row_user_picture = $row['user_picture'];
-//									$checkImage = image_exist($row_user_picture);
-//									if ($checkImage != '200') {
-//										$row['user_picture'] = $system['system_uploads'] . '/' . $row['user_picture_full'];
-//									}
+									//									$checkImage = image_exist($row_user_picture);
+									//									if ($checkImage != '200') {
+									//										$row['user_picture'] = $system['system_uploads'] . '/' . $row['user_picture_full'];
+									//									}
 
-                                    $row['user_picture'] = 'includes/wallet-api/image-exist-api.php?userPicture='.$row_user_picture.'&userPictureFull='.$row['user_picture_full'];
+									$row['user_picture'] = $system['system_url'] . '/includes/wallet-api/image-exist-api.php?userPicture=' . $row_user_picture . '&userPictureFull=' . $row['user_picture_full'];
 								}
 								$row['color'] = 'primary';
 							} elseif ($row['node_type'] == 'page') {

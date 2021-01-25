@@ -441,14 +441,14 @@
                           class="rightuser-menu usernameOnHoverbtn openRightBlackBar">
                           <!-- <span class="usernameOnHover">{$userGlobal->_data['user_firstname']}</span> -->
                           <img class="lazyload"
-                            data-src="{$system['system_url']}/{$userGlobal->_data['global_user_picture']}" />
+                            data-src="{$userGlobal->_data['global_user_picture']}" />
                           <span class="">{$userGlobal->_data['user_firstname']}</span>
                         </a>
                         {else}
                         <a href="javascript:void();" id="currentUsername" page='{$page}'
                           class="rightuser-menu usernameOnHoverbtn openRightBlackBar">
                           <!-- <span class="usernameOnHover">{$user->_data['user_firstname']}</span> -->
-                          <img class="lazyload" data-src="{$system['system_url']}/{$user->_data['user_picture']}" />
+                          <img class="lazyload" data-src="{$user->_data['user_picture']}" />
                           <span class="">{$user->_data['user_firstname']}</span>
                         </a>
                         {/if}
