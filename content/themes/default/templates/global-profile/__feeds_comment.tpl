@@ -69,87 +69,6 @@
 
 
 
-            <!-- comment actions & time  -->
-            <ul class="comment-actions clearfix">
-                <!-- reactions -->
-                <li>
-                    <div class="pointer unselectable sss reactions-wrapper {if $_comment['i_react']}js_unreact-comment{/if}"
-                        data-reaction="{$_comment['i_reaction']}">
-                        <!-- reaction-btn -->
-                        <div class="reaction-btn">
-                            {if !$_comment['i_react']}
-                            <div class="reaction-btn-icon d-none">
-                                <i class="icon-post icon_like"></i>
-                            </div>
-                            <span class="reaction-btn-name text-link">{__("Like")}</span>
-                            {else}
-                            <div class="reaction-btn-icon d-none">
-                                <div class="inline-emoji no_animation">
-                                    {include file='__reaction_emojis.tpl' _reaction=$_comment['i_reaction']}
-                                </div>
-                            </div>
-                            <span
-                                class="reaction-btn-name text-link {$_comment['i_reaction_details']['color']}">{$_comment['i_reaction_details']['title']}</span>
-                            {/if}
-                        </div>
-                        <!-- reaction-btn -->
-
-                        <!-- reactions-container -->
-                        <div class="reactions-container">
-                            {foreach $reactions as $reaction}
-                            <div class="reactions_item duration-{$reaction@iteration} js_react-comment"
-                                data-reaction="{$reaction['reaction']}" data-reaction-color="{$reaction['color']}"
-                                data-title="{$reaction['title']}">
-                                {include file='__reaction_emojis.tpl' _reaction=$reaction['reaction']}
-                            </div>
-                            {/foreach}
-                        </div>
-                        <!-- reactions-container -->
-                    </div>
-                </li>
-                <!-- reactions -->
-
-                <!-- comment -->
-                <li>
-                    <span class="text-link js_reply {if $_comment['comments_disabled']}x-hidden{/if}"
-                        data-username="{if $user->_data['user_name'] != $_comment['author_user_name']}{$_comment['author_user_name']}{/if}">
-                        {__("Reply")}
-                    </span>
-                </li>
-                <!-- comment -->
-
-                <!-- time  -->
-                <li>
-                    <small class="text-muted js_moment" data-time="{$_comment['time']}">{$_comment['time']}</small>
-                </li>
-                <!-- time  -->
-
-                <!-- reactions stats -->
-                {if $_comment['reactions_total_count'] > 0}
-                <li class="ml5">
-                    <div data-toggle="modal" data-url="posts/who_reacts.php?comment_id={$_comment['comment_id']}">
-                        <div class="reactions-stats">
-                            {foreach $_comment['reactions'] as $reaction_type => $reaction_count}
-                            {if $reaction_count > 0}
-                            <div class="reactions-stats-item">
-                                <div class="inline-emoji no_animation">
-                                    {include file='__reaction_emojis.tpl' _reaction=$reaction_type}
-                                </div>
-                            </div>
-                            {/if}
-                            {/foreach}
-                            <!-- reactions count -->
-                            <span>
-                                {$_comment['reactions_total_count']}
-                            </span>
-                            <!-- reactions count -->
-                        </div>
-                    </div>
-                </li>
-                {/if}
-                <!-- reactions stats -->
-            </ul>
-            <!-- comment actions & time  -->
 
             <!-- comment replies  -->
             {if !$_is_reply}
@@ -179,7 +98,7 @@
                 <ul class="js_replies">
                     {if $_comment['replies'] > 0}
                     {foreach $_comment['comment_replies'] as $reply}
-                    {include file='__feeds_comment.tpl' _comment=$reply _is_reply=true}
+                    {include file='global-profile/__feeds_comment.tpl' _comment=$reply _is_reply=true}
                     {/foreach}
                     {/if}
                 </ul>

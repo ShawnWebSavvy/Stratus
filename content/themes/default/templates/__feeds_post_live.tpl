@@ -11,7 +11,7 @@
             </div>
             {else}
             <a class="post-avatar-picture" href="{$post['post_author_url']}"
-                style="background-image:url({$system['system_url']}/{$post['post_author_picture']});">
+                style="background-image:url({$post['post_author_picture']});">
             </a>
             {if $post['post_author_online']}<i class="fa fa-circle online-dot"></i>{/if}
             {/if}
