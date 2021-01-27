@@ -5,7 +5,7 @@
    <div class="row">
       <!-- side panel -->
       {if $user->_logged_in}
-      <div class="offcanvas-sidebar sidebar-left-ant">
+      <div class="offcanvas-sidebar sidebar-left-ant" id="sidebarHiddSwip">
          {include file='_sidebar.tpl'}
       </div>
       {/if}
@@ -694,7 +694,7 @@
                         </div>
                         <div class="card-body">
                            {if $profile['photos']}
-                           <ul class="row no-gutters ">
+                           <ul class="row no-gutters">
                               {foreach $profile['photos'] as $photo}
                               {include file='global-profile/global-profile__feeds_photo.tpl' _context="photos"}
                               {/foreach}
@@ -774,7 +774,8 @@
                         <div class="card-header with-icon with-nav custom-tabs">
                            <!-- back to albums -->
                            <div class="float-right">
-                              <a href="{$system['system_url']}/{$profile['user_name']}/albums" class="btn  btn-light">
+                              <a href="{$system['system_url']}/global-profile/{$profile['user_name']}/albums"
+                                 class="btn  btn-light">
                                  <i class="fa fa-arrow-circle-left mr5"></i>{__("Back to Albums")}
                               </a>
                            </div>
@@ -788,17 +789,17 @@
                            <ul class="nav nav-tabs">
                               <li class="nav-item">
                                  <a class="nav-link"
-                                    href="{$system['system_url']}/{$profile['user_name']}/photos">{__("Photos")}</a>
+                                    href="{$system['system_url']}/global-profile/{$profile['user_name']}/photos">{__("Photos")}</a>
                               </li>
                               <li class="nav-item">
                                  <a class="nav-link active"
-                                    href="{$system['system_url']}/{$profile['user_name']}/albums">{__("Albums")}</a>
+                                    href="{$system['system_url']}/global-profile/{$profile['user_name']}/albums">{__("Albums")}</a>
                               </li>
                            </ul>
                            <!-- panel nav -->
                         </div>
                         <div class="card-body">
-                           {include file='_album.tpl'}
+                           {include file='global-profile/global_album.tpl'}
                         </div>
                      </div>
                   </div>

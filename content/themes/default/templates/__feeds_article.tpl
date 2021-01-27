@@ -12,7 +12,7 @@
             <div>
                 <div class="post-avatar">
                     <div class="post-avatar-picture small"
-                        style="background-image:url('{$system['system_url']}/{$article['post_author_picture']}');">
+                        style="background-image:url('{$article['post_author_picture']}');">
                     </div>
                 </div>
                 <div class="post-meta">
