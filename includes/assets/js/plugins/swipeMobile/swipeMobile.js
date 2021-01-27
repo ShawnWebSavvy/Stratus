@@ -135,8 +135,4 @@
         }
         return defaultValue;
     }
-<<<<<<< HEAD
 }(window, document));
-=======
-}(window, document));
->>>>>>> 86c1ff63d7d1fbe70ed2dcccfe37d1cd079f1f50
