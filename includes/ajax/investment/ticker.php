@@ -22,9 +22,10 @@ try {
     }
     $token_price = InvestmentHelper::get_ticker_price($_POST['token']);
     // echo '<pre>'; print_r($token_price); die;       
-    $fees        = 1;
+    
     switch($_POST['action']){
         case 'buy':
+            $fees        = $token_price['data']['buy_fees'];
             if(!empty($_POST['type'])&&$_POST['type']=="coin"){
                 $token_price['data']['amount'] = round($_POST['total_tokens']*$token_price['data']['buy_price'], 2);
                 $token_price['data']['sub_total'] = round($_POST['total_tokens']*$token_price['data']['buy_price'], 2);
@@ -38,6 +39,7 @@ try {
             }
             break;
         case 'sell':
+            $fees        = $token_price['data']['sell_fees'];
             if(!empty($_POST['type'])&&$_POST['type']=="coin"){
                 
                 $token_price['data']['sub_total'] = round($_POST['total_tokens']*$token_price['data']['sell_price'], 2);

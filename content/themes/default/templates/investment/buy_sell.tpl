@@ -161,21 +161,21 @@
                             </ul>
                         </div>
 
-                        <!-- <div class="CurrencyHeading">
+                        <div class="CurrencyHeading">
                             <div class="heading">
                                 <h3>Amount</h3>
                             </div>
                             <div class="dropdown minMaxDrop">
-                                <button class="btn dropdown-toggle" type="button" id="dropdownMenu2"
+                                <button class="btn dropdown-toggle drop-down-data" type="button" id="dropdownMenu"
                                     data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                    Use Min
+                                    Use
                                 </button>
                                 <div class="dropdown-menu " aria-labelledby="dropdownMenu2">
-                                    <a class="dropdown-item" href="javascript:;"><img src="{$system['system_url']}/content/themes/default/images/svg/svgImg/checkedBlue.svg" alt="swap" style="margin-right: 10px;"> Min</a>
-                                    <a class="dropdown-item" href="javascript:;"> Max</a>
+                                    <a class="dropdown-item purchase_value" href="javascript:;" data-value="Min"><span class="x-hidden purchase_value_tick"><img src="{$system['system_url']}/content/themes/default/images/svg/svgImg/checkedBlue.svg" alt="swap" style="margin-right: 10px;"></span>Min</a>
+                                    <a class="dropdown-item purchase_value" href="javascript:;" data-value="Max"><span class="x-hidden purchase_value_tick"><img src="{$system['system_url']}/content/themes/default/images/svg/svgImg/checkedBlue.svg" alt="swap" style="margin-right: 10px;"></span>Max</a>
                                 </div>
                             </div>
-                        </div> -->
+                        </div>
                         <div class="amountSectionChange" id="amountSectionChange">
                             <div class="amountCount">
                                 <input type="text" class="" placeholder="USD" id="amount">
@@ -224,9 +224,8 @@
 </div>
 
 <script>
-    var min_buy_amount = parseFloat("{$min_buy_amount}");
-    var min_sell_amount = parseFloat("{$min_sell_amount}");
-    var base_max_size = parseFloat("{$base_max_size}");
+    var order_detail  = {json_encode($order_detail)};
+    console.log(order_detail,'order_detail');
     var buy_details ={json_encode($_buy_details)};
     var wallet     = {json_encode($wallet_balance)};
     var sell_details = {json_encode($_sell_details)};

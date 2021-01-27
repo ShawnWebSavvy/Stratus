@@ -32,12 +32,17 @@ class InvestmentHelper {
     {   global $db,$system;
         $return = [];
         $tokens  =  httpGetCurl('investment/get_tickers',$system['investment_api_base_url']);
+        // echo '<pre>'; print_r($tokens); die;
         foreach($tokens['data'] as $i=>$token){
             $return['token'][$i]['buy_price']=$token['buy_price'];
             $return['token'][$i]['sell_price']=$token['sell_price'];
             $return['token'][$i]['name']=$token['name'];
             $return['token'][$i]['short_name']=$token['short_name'];
             $return['buy'][$token['short_name']] = round($token['buy_price'],5);
+            $return['sell'][$token['short_name']] = round($token['sell_price'],5);
+            $return['order'][$token['short_name']]['min_buy_amount'] = $token['min_buy_amount'];
+            $return['order'][$token['short_name']]['min_sell_amount'] = $token['min_sell_amount'];
+            $return['order'][$token['short_name']]['base_max_size'] = $token['base_max_size'];
             $return['sell'][$token['short_name']] = round($token['sell_price'],5);
             if(!empty($user_data)){
                 $return['wallet_amount']['balance'][$token['short_name']]=$user_data[$token['short_name'].'_wallet'];
@@ -77,6 +82,7 @@ class InvestmentHelper {
             $token_price = self::get_ticker_price(strtoupper($token_name));
             $token_value=round($amount/$token_price['data']['buy_price'], 5);
             $fees = 1;
+            $fees        = $token_price['data']['buy_fees'];
             $fees_token = round($token_value*$fees/100,5);
             $receive_token = round($token_value-$fees_token,5);
             $params['size'] = $receive_token;
@@ -115,7 +121,7 @@ class InvestmentHelper {
             $params['size'] = $token_value;
             $token_price = self::get_ticker_price(strtoupper($token_name));
             $amount=round(($token_value*$token_price['data']['sell_price']), 2);
-            $fees = 1;
+            $fees        = $token_price['data']['sell_fees'];
             $fees_amount = round($amount*$fees/100,5);
             $receive_amount = round($amount-$fees_amount,2);
             // die($token_value);

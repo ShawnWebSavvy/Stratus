@@ -154,7 +154,7 @@
                                                 class="btn coinBaseButton">Buy</a>
                                             <a href="{$system['system_url']}/investment/buy-sell"
                                                 class="btn coinBaseButton">Sell</a>
-                                            <a href="{$system['system_url']}/investment/buy-sell"
+                                            <a href="javascript:;"
                                                 class="btn coinBaseButton">Info</a>
                                         </div>
                                     </div>
@@ -204,7 +204,7 @@
                                                             class="btn coinBaseButton">Buy</a>
                                                         <a href="{$system['system_url']}/investment/buy-sell"
                                                             class="btn coinBaseButton">Sell</a>
-                                                        <a href="{$system['system_url']}/investment/buy-sell"
+                                                        <a href="javascript:;"
                                                             class="btn coinBaseButton">Info</a>
                                                         {* <button type="button" class="btn coinBaseButton">Buy</button>
                                                         <button type="button" class="btn coinBaseButton">Sell</button>
