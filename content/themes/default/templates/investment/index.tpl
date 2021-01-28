@@ -132,7 +132,7 @@
                                         </div>
                                         <div class="GraphSection">
                                         <div class="graphSectionHeader">
-                                            <h3>{$detail['buy_price']} USD</h3>
+                                            <h3><span class="coin_price">{$detail['buy_price']}</span> USD</h3>
                                             <div class="imageHikWrap">
                                                 {if $detail['fluctuation']>0 }
                                                     <img width="10px" src="{$system['system_url']}/content/themes/default/images/investment/arrowUp.svg" alt="">

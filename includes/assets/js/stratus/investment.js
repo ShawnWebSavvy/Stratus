@@ -30,10 +30,7 @@ if (endUrl != "investments") {
                 .fail(function (err) {
 
                 })
-
-
         }
-
         var action = $('.btnSectionBuySell').find('a.active').data('actiontype');
         function updateDetail() {
             let token = ($('#total_coin').attr('placeholder')).toLowerCase();
@@ -417,8 +414,45 @@ if (endUrl != "investments") {
         $('.aGraph').each(function (index) {
             createLine($(this), $(this).attr('id'));
         });
-
-
+       
+        function dashboardData() {
+            $.post(api['investment/thread'], { 'order_action_type': "update_dashboard"}
+                , 'json')
+                .done(function (response) {
+                    if (response['graph'] != null && response['graph'] != undefined && response['graph'] != "") {
+                        garph_data = response.graph;
+                    }
+                    if (response['series'] != null && response['series'] != undefined && response['series'] != "") {
+                        series = response.series;
+                    }
+                    if (response['labels'] != null && response['labels'] != undefined && response['labels'] != "") {
+                        labels = response.labels;
+                    }
+                    $('.aGraph').each(function (index) {
+                        if (response['token_data'] != null && response['token_data'] != undefined && response['token_data'] != "") {
+                            if (parseFloat(response['token_data'][index]['fluctuation']) > 0) {
+                                $(this).closest('.GraphSection').find('img').attr('src',site_path+"/content/themes/default/images/investment/arrowUp.svg");
+                                $(this).attr('data-color', '#4682b4');
+                            } else {
+                                $(this).closest('.GraphSection').find('img').attr('src',site_path+"/content/themes/default/images/investment/arrowDown.svg");
+                                $(this).attr('data-color', '#ff7979');
+                            }
+                            // alert(0);
+                            // alert($(this).closest('.GraphSection').find('.coin_price').html());
+                            $(this).closest('.GraphSection').find('.coin_price').html(response['token_data'][index]['buy_price']);
+                            
+                            $(this).closest('.GraphSection').find('p').html((parseFloat(response['token_data'][index]['fluctuation'])*100).toFixed(2));
+                            garph_data = response.graph;
+                            $('#total_amount').html(response['total_balance']['amount']);
+                            $(this).find('svg').remove();
+                            createLine($(this), $(this).attr('id'));
+                        }
+                        
+                    });
+                    setTimeout(dashboardData, 4000);
+                });
+        }
+        setTimeout(dashboardData, 4000);
         $('.coinBaseButton').click(function (e) {
             e.preventDefault();
             let current = $(this);
