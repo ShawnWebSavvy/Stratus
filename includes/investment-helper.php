@@ -234,7 +234,7 @@ class InvestmentHelper {
     public static function getBtcBlance($user_data,$currency_price){
         $total_btc = $user_data['btc_wallet'];
     
-        $btc_price =  $total_btc>0?$currency_price['btc_price']:0;
+        $btc_price =  $currency_price['btc_price'];
         $btc_total_amount = ($total_btc>0)?($total_btc*$btc_price):0;
         // echo '<pre>'; print_r($btc_price['buy_price']); die;
         $total_apl = $user_data['apl_wallet'];

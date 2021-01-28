@@ -171,8 +171,8 @@
                                     Use
                                 </button>
                                 <div class="dropdown-menu " aria-labelledby="dropdownMenu2">
-                                    <a class="dropdown-item purchase_value" href="javascript:;" data-value="Min"><span class="x-hidden purchase_value_tick"><img src="{$system['system_url']}/content/themes/default/images/svg/svgImg/checkedBlue.svg" alt="swap" style="margin-right: 10px;"></span>Min</a>
-                                    <a class="dropdown-item purchase_value" href="javascript:;" data-value="Max"><span class="x-hidden purchase_value_tick"><img src="{$system['system_url']}/content/themes/default/images/svg/svgImg/checkedBlue.svg" alt="swap" style="margin-right: 10px;"></span>Max</a>
+                                    <a class="dropdown-item purchase_value" href="javascript:;" data-value="Min"><span class="x-hidden purchase_value_tick" id="tick1"><img src="{$system['system_url']}/content/themes/default/images/svg/svgImg/checkedBlue.svg" alt="swap" style="margin-right: 10px;"></span>Min</a>
+                                    <a class="dropdown-item purchase_value" href="javascript:;" data-value="Max"><span class="x-hidden purchase_value_tick" id="tick1"><img src="{$system['system_url']}/content/themes/default/images/svg/svgImg/checkedBlue.svg" alt="swap" style="margin-right: 10px;"></span>Max</a>
                                 </div>
                             </div>
                         </div>

@@ -309,13 +309,19 @@ if (endUrl != "investments") {
         $(".dropdown-menu a").click(function () {
             let token_name = (token.attr('placeholder')).toLowerCase();
             $('#dropdownMenu').prop('disabled', true);
+            // $('.purchase_value_tick').hide();
             if ($(this).data('value') == 'Max') {
                 $('#total_coin').val(order_detail[token_name]['base_max_size']);
                 $('#total_coin').trigger("input");
+                $(this).prev('a').find('span').addClass('x-hidden');
+                $(this).find('span').removeClass('x-hidden');
+            
             } else {
                 // updateDetail();
                 $('#amount').val(order_detail[token_name]['min_buy_amount']);
                 $('#amount').trigger("input");
+                $(this).next('a').find('span').addClass('x-hidden');
+                $(this).find('span').removeClass('x-hidden');
             }
             $('.drop-down-data').html('Use '+$(this).data('value'));
             setTimeout(function() {
