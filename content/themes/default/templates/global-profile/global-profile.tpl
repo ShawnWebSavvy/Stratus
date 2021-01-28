@@ -196,7 +196,7 @@
                                     <img class=""
                                        src="{$system['system_url']}/content/themes/default/images/svg/svgImg/msg-icon.svg">
                                  </span>
-                                 <span class="text-mobile-only">Message</span>
+                                 {* <span class="text-mobile-only">Message</span> *}
                               </button>
                               <!-- message -->
                               <!-- poke & report & block -->
