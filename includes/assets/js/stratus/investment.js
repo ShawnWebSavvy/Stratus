@@ -17,6 +17,7 @@ if (endUrl != "investments") {
                 timeout = setTimeout(callback, delay);
             }
         }
+        var timeou_id = "";
         updateToken();
         setInterval(updateToken, 30000);
         function updateToken() {
@@ -32,6 +33,7 @@ if (endUrl != "investments") {
                 })
         }
         var action = $('.btnSectionBuySell').find('a.active').data('actiontype');
+       
         function updateDetail() {
             let token = ($('#total_coin').attr('placeholder')).toLowerCase();
             if (action == 'buy') {
@@ -51,7 +53,10 @@ if (endUrl != "investments") {
                     $(this).find('.priceCount').find('span').html(sell_details[($(this).data('coin').toLowerCase())]);
                 });
             }
-            change_amount();
+           
+            timeou_id = setTimeout(function () {
+                change_amount();
+            }, 3000);
 
         }
 
@@ -70,14 +75,23 @@ if (endUrl != "investments") {
         var min_tnx_error = "The minimum transaction amount is ";
         var max_balance_error = "The maximum transaction amount is ";
         buy_btn.prop('disabled', true);
+
+        function reset_sidebar_calculation() {
+            $('#amount').val("");
+            $('#total_coin').val("");
+            $('#total_coin').val("");
+            $('#total_fees').html(0);
+            $('.overall_coin').html(0);
+            $('#sub_total').html(0);
+            $('#order_total').html(0);
+        }
         function change_amount() {
             let total_amount = amount.val();
             token_name = token.attr('placeholder');
             // alert(token);
            
             if (total_amount == "" || total_amount == undefined) {
-                amount.val("");
-                token.val("");
+                reset_sidebar_calculation();
                 clearTimeout(timeout);
                 $('#investment_swap').show();
                 $('#investment_spiner').hide();
@@ -139,6 +153,7 @@ if (endUrl != "investments") {
                     });
             }, 2000);
         }
+        
         $('.buySellButton').on('click', function () {
             // $(this).siblings.addClass('active');
             $('.buySellButton').removeClass('active');
@@ -146,7 +161,8 @@ if (endUrl != "investments") {
             $('.coin_element').text($(this).html());
             action = $(this).data('actiontype');
             buying_text.html($(this).html() + 'ing');
-            updateDetail();
+            reset_sidebar_calculation();
+            // updateDetail();
         });
 
         $(document).on('click', '.coinDetailPrice_wallet', function () {
@@ -166,13 +182,13 @@ if (endUrl != "investments") {
         })
 
         $(document).on('input', '#amount', function () {
+            clearTimeout(timeou_id);
             this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*?)\..*/g, '$1');
             let total_amount = amount.val();
             token_name = token.attr('placeholder');
             
             if (total_amount == "" || total_amount == undefined) {
-                amount.val("");
-                token.val("");
+                reset_sidebar_calculation();
                 clearTimeout(timeout);
                 $('#usd_balance').hide();
                 $('#token_balance').hide();
@@ -181,7 +197,7 @@ if (endUrl != "investments") {
             buy_btn.prop('disabled', true);
             $('#investment_swap').hide();
             $('#investment_spiner').show();
-            order_total.html(total_amount);
+            // order_total.html(total_amount);
             clearTimeout(timeout);
             timeout = setTimeout(function () {
                 $.post(api['investment/ticker'], { 'token': token_name, 'amount': total_amount, 'action': action }, function (response) {
@@ -190,6 +206,7 @@ if (endUrl != "investments") {
                         $('.overall_coin').html(response.data.tokens);
                         sub_total.text(response.data.sub_total);
                         $('#total_fees').text(response.data.total_fees);
+                        order_total.html(total_amount);
                         if (response.data.amount) {
                             order_total.html(response.data.amount);
                         }
@@ -231,7 +248,7 @@ if (endUrl != "investments") {
                     .fail(function (err) {
                         $('#investment_swap').show();
                         $('#investment_spiner').hide();
-                        modal('#modal-message', { title: __['Error'], message: __['There is something that went wrong!'] });
+                        // modal('#modal-message', { title: __['Error'], message: __['There is something that went wrong!'] });
                     });
             },2000);
         });
@@ -244,8 +261,7 @@ if (endUrl != "investments") {
             let total_tokens = token.val();
             
             if (total_tokens == "" || total_tokens == undefined) {
-                amount.val("");
-                token.val("");
+                reset_sidebar_calculation();
                 clearTimeout(timeout);
                 $('#usd_balance').hide();
                 $('#token_balance').hide();
@@ -298,7 +314,7 @@ if (endUrl != "investments") {
                     .fail(function () {
                         $('#investment_swap').show();
                         $('#investment_spiner').hide();
-                        modal('#modal-message', { title: __['Error'], message: __['There is something that went wrong!'] });
+                        // modal('#modal-message', { title: __['Error'], message: __['There is something that went wrong!'] });
                     });
             }, 1000);
         });
