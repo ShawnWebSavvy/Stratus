@@ -139,7 +139,7 @@
                                                 {else}
                                                     <img width="10px" class="arrowDown" src="{$system['system_url']}/content/themes/default/images/investment/arrowDown.svg" alt="">
                                                 {/if}
-                                                <p>{printf("%.1f",$detail['fluctuation']*100)}</p>
+                                                <p>{printf("%.1f",$detail['fluctuation']*100)}%</p>
                                             </div>
                                         </div>
                                             {if $detail['fluctuation']>0 }
@@ -184,14 +184,14 @@
                                                         <div class="timeWrap">24H</div>
                                                     </div>
                                                     <div class="GraphSection">
-                                                        <p>{$detailMobile['buy_price']} USD</p>
+                                                        <p><span class="coin_price">{$detailMobile['buy_price']}</span> USD</p>
                                                         <div class="imageHikWrap">
                                                             {if $detail['fluctuation']>0 }
                                                                 <img width="10px" src="{$system['system_url']}/content/themes/default/images/investment/arrowUp.svg" alt="">
                                                             {else}
                                                                 <img width="10px" class="arrowDown" src="{$system['system_url']}/content/themes/default/images/investment/arrowDown.svg" alt="">
                                                             {/if}
-                                                            {printf("%.1f",$detailMobile['fluctuation']*100)}
+                                                            <p>{printf("%.1f",$detailMobile['fluctuation']*100)}%</p>
                                                         </div>
                                                         {if $detail['fluctuation']>0 }
                                                             <div  class="graph{$element}"  data-element="{$detail['short_name']}" data-color="#4682b4"></div>
