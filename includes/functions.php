@@ -1267,8 +1267,9 @@ function aws_s3_test()
     }
 }
 
-function aws_s3_test1($s3_bucket, $s3_region, $s3_key, $s3_secret) {
-    require_once(ABSPATH.'includes/libs/AWS/aws-autoloader.php');
+function aws_s3_test1($s3_bucket, $s3_region, $s3_key, $s3_secret)
+{
+    require_once(ABSPATH . 'includes/libs/AWS/aws-autoloader.php');
     try {
         $s3Client = Aws\S3\S3Client::factory(array(
             'version'    => 'latest',
@@ -1279,14 +1280,14 @@ function aws_s3_test1($s3_bucket, $s3_region, $s3_key, $s3_secret) {
             )
         ));
         $buckets = $s3Client->listBuckets();
-        if(empty($buckets)) {
+        if (empty($buckets)) {
             throw new Exception(__("There is no buckets in your account"));
         }
-        if(!$s3Client->doesBucketExist($s3_bucket)) {
+        if (!$s3Client->doesBucketExist($s3_bucket)) {
             throw new Exception(__("There is no bucket with this name in your account"));
         }
     } catch (Exception $e) {
-        if(DEBUGGING) {
+        if (DEBUGGING) {
             throw new Exception($e->getMessage());
         } else {
             throw new Exception(__("Connection Failed, Please check your settings"));
@@ -1984,7 +1985,7 @@ function get_picture($picture, $type)
                 break;
 
             case 'other':
-                $picture = $system['system_url'] . '/content/themes/' . $system['theme'] . '/images/blank_profile_other.jpg';
+                $picture = $system['system_url'] . '/content/themes/' . $system['theme'] . '/images/user_defoult_img.jpg';
                 break;
 
             case 'page':

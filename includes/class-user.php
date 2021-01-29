@@ -2337,13 +2337,21 @@ class User
 
                     case 'share':
                         $notification['icon'] = "fa fa-share";
-                        $notification['url'] = $system['system_url'] . '/posts/' . $notification['node_url'];
+                        if ($notification['hub'] == 'GlobalHub') {
+                            $notification['url'] = $system['system_url'] . '/global-profile-posts/' . $notification['node_url'];
+                        } else {
+                            $notification['url'] = $system['system_url'] . '/posts/' . $notification['node_url'];
+                        }
                         $notification['message'] = __("shared your post");
                         break;
 
                     case 'vote':
                         $notification['icon'] = "fa fa-check-circle";
-                        $notification['url'] = $system['system_url'] . '/posts/' . $notification['node_url'];
+                        if ($notification['hub'] == 'GlobalHub') {
+                            $notification['url'] = $system['system_url'] . '/global-profile-posts/' . $notification['node_url'];
+                        } else {
+                            $notification['url'] = $system['system_url'] . '/posts/' . $notification['node_url'];
+                        }
                         $notification['message'] = __("voted on your poll");
                         break;
 
@@ -2361,7 +2369,11 @@ class User
                                 break;
 
                             case 'comment_post':
-                                $notification['url'] = $system['system_url'] . '/posts/' . $notification['node_url'] . $notification['notify_id'];
+                                if ($notification['hub'] == 'GlobalHub') {
+                                    $notification['url'] = $system['system_url'] . '/global-profile-posts/' . $notification['notify_id'];
+                                } else {
+                                    $notification['url'] = $system['system_url'] . '/posts/' . $notification['node_url'] . $notification['notify_id'];
+                                }
                                 $notification['message'] = __("mentioned you in a comment");
                                 break;
 
