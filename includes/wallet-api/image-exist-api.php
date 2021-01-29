@@ -45,11 +45,9 @@ if (!$data) {
         $data = file_get_contents($userPicture);
     }
 }
-
 $extArr = explode('.', $userPicture);
 $ext    = end($extArr);
 $ext    = strtolower($ext);
-
 switch ($ext) {
     case "gif":
         $ctype = "image/gif";
@@ -65,7 +63,5 @@ switch ($ext) {
         $ctype = "image/svg+xml";
         break;
 }
-
 header('Content-type: ' . $ctype);
-
 echo $data;
