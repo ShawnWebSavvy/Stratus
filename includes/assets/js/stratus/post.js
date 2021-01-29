@@ -675,24 +675,6 @@ $(function () {
                             is_anonymous: is_anonymous,
                         },
                         function (response) {
-                            if (response.post) {
-                                var datatta = response.post;
-                                var ArrayVal = datatta.split('<div class="carsds"');
-                                var loopArray = [];
-                                if (ArrayVal.length > 0) {
-                                    for (var i = 1; i < ArrayVal.length; i++) {
-                                        loopArray.push('<div class="carsds"' + ArrayVal[i])
-                                    }
-                                }
-                                for (var ik = 0; ik < loopArray.length; ik++) {
-                                    var values = loopArray[ik];
-                                    var d = document.createElement('div');
-                                    d.innerHTML = values;
-                                    var valuesPost = d.firstChild;
-                                    bricklayer.prepend(valuesPost)
-                                    bricklayer.redraw();
-                                }
-                            }
                             $(".no-post-to-show").css("display", "none");
                             $(".wrapFooterDiv-old").show();
                             if (response.callback) {
