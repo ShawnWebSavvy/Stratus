@@ -82,7 +82,7 @@
     <link rel="stylesheet" type='text/css'
         href="{$system['system_uploads_assets']}/content/themes/default/css/style-custom-light.css">
     <link rel="stylesheet" type='text/css'
-        href="{$system['system_uploads_assets']}/content/themes/default/css/custom_responsive_style.css">
+        href="{$system['system_url']}/content/themes/default/css/custom_responsive_style.css">
     <!-- CSS -->
     <link rel="stylesheet" type='text/css'
             href="{$system['system_url']}/content/themes/{$system['theme']}/css/investmentStyle.css">

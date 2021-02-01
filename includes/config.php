@@ -7,12 +7,12 @@ if (isset($_SERVER['HTTPS']) && strtolower($_SERVER['HTTPS']) == 'on') {
 }
 $protocol = $is_secure ? 'https' : 'http';
 $system_url =  $protocol . "://" . $_SERVER['HTTP_HOST'];
-define("DB_NAME", "stratus");
+define("DB_NAME", "investment");
 define("DB_USER", "root");
 define("DB_PASSWORD", "");
 define("DB_HOST", "localhost");
 define("DB_PORT", "3306");
-define("SYS_URL", "http://localhost/stratus_speed");
+define("SYS_URL", "http://localhost/stratus");
 define("API_BASE_URL", "https://ws.stage-apollo.xyz/api");
 define("DEBUGGING", true);
 define("DEFAULT_LOCALE", "en_us");

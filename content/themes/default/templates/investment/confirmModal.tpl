@@ -17,39 +17,41 @@
                                 <img src="{$system['system_url']}/content/themes/default/images/investment/dollerCoin.svg"
                                     alt="bit coin">
                                 <div class="TextWrap">
-                                    <p>Wallet</p>
-                                    <h5>Payment Method</h5>
+                                    <p>Payment Method</p>
+                                    <h5>Wallet</h5>
                                 </div>
                             </div>
                             <div class="coinDetails dashedLines avilableColor">
                                 <img src="{$system['system_url']}/content/themes/default/images/investment/Instanly.svg"
                                     alt="bit coin">
                                 <div class="TextWrap">
-                                    <p>Instantly</p>
-                                    <h5>Available</h5>
+                                    <p>Available</p>
+                                    <h5>Instantly</h5>
                                 </div>
                             </div>
                             <div class="coinDetails dashedLines">
                                 <img src="{$system['system_url']}/content/themes/default/images/investment/walletIconChange.svg"
                                     alt="bit coin">
                                 <div class="TextWrap">
-                                    <p>{strtoupper($token_name)} Wallet</p>
-                                    <h5>
+                                    <p>
                                         {if $action=='buy'}
                                              Deposit To
                                         {else}
                                             Withdrawal From
                                         {/if}
+                                    </p>
+                                    <h5>
+                                        {strtoupper($token_name)} Wallet
                                    </h5>
                                 </div>
                             </div>
                         </div>
-                        <div class="col-md-8 confirmTransaction">
+                        <div class="col-md-8 confirmTransaction lineChange">
                             <h5>Confirm your Transaction</h5>
                             <p>Review all the details and confirm your <br />
                                 transaction below</p>
                             <div class="MoreAssetsSection">
-                                <button type="button" class="btn MoreAssetsbutton" id="complete_order">Confirm
+                                <button type="button" class="btn MoreAssetsbutton" id="complete_order" style="max-width:242px;min-height: 56px;">Confirm
                                     {ucfirst($action)}</button>
                             </div>
                             <a href="javascript:;" class="confirmBuyLink" id="confirm_cancel" data-dismiss="modal" aria-label="Close">Cancel Transaction</a>

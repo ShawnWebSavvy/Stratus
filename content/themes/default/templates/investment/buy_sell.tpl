@@ -168,18 +168,18 @@
                             <div class="dropdown minMaxDrop">
                                 <button class="btn dropdown-toggle drop-down-data" type="button" id="dropdownMenu"
                                     data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                    Use
+                                    Use Min/Max
                                 </button>
-                                <div class="dropdown-menu " aria-labelledby="dropdownMenu2">
-                                    <a class="dropdown-item purchase_value" href="javascript:;" data-value="Min"><span class="x-hidden purchase_value_tick" id="tick1"><img src="{$system['system_url']}/content/themes/default/images/svg/svgImg/checkedBlue.svg" alt="swap" style="margin-right: 10px;"></span>Min</a>
-                                    <a class="dropdown-item purchase_value" href="javascript:;" data-value="Max"><span class="x-hidden purchase_value_tick" id="tick1"><img src="{$system['system_url']}/content/themes/default/images/svg/svgImg/checkedBlue.svg" alt="swap" style="margin-right: 10px;"></span>Max</a>
+                                <div class="dropdown-menu " aria-labelledby="dropdownMenu2" style="max-width:198px">
+                                    <a class="dropdown-item purchase_value" href="javascript:;" data-value="Min"><span class="x-hidden purchase_value_tick" id="tick1"><img src="{$system['system_url']}/content/themes/default/images/svg/svgImg/checkedBlue.svg" alt="swap" style="margin-right: 10px;"></span>Use Min</a>
+                                    <a class="dropdown-item purchase_value" href="javascript:;" data-value="Max"><span class="x-hidden purchase_value_tick" id="tick1"><img src="{$system['system_url']}/content/themes/default/images/svg/svgImg/checkedBlue.svg" alt="swap" style="margin-right: 10px;"></span>Use Max</a>
                                 </div>
                             </div>
                         </div>
                         <div class="amountSectionChange" id="amountSectionChange">
                             <div class="amountCount">
                                 <input type="text" class="" placeholder="USD" id="amount">
-                                <!-- <p>25.007 USD</p> -->
+                                <p class="currancyNme">USD</p>
                             </div>
                             <button class="swapButton" id="swapButton">
                                 <img src="{$system['system_url']}/content/themes/default/images/investment/ic_switch.svg" alt="swap" id="investment_swap">
@@ -188,18 +188,20 @@
                             <div class="amountCount">
                                 <!-- <p>1.0000 BTC</p> -->
                                 <input type="text" class="" placeholder="{strtoupper($set_active_coin)}" id="total_coin">
+                                <p class="currancyNme">USD</p>
                             </div>
                         </div>
-                        <div class="container">
-                        <div class="row">
-                            <div class="col-sm-3">
-                                <p class="alert alert-danger mb0 mt10 x-hidden" style="float: inline-end;" id="usd_balance">USD balance is insufficient</p>
+                          <div class="amountSectionChange">
+                            <div class="amountCount">
+                             <p class="alert alert-danger mb0 mt0 x-hidden" style="float: inline-end;" id="usd_balance">USD balance is insufficient</p>
                             </div>
-                            <div class="col-sm-7">
-                                <p class="alert alert-danger mb0 mt10 x-hidden" style="float: inline-end;" id="token_balance">BTC balance is insufficient</p>
+                            <button class="swapButton" style="opacity:0;">
+                                <img src="{$system['system_url']}/content/themes/default/images/investment/ic_switch.svg">
+                            </button>
+                            <div class="amountCount">
+                               <p class="alert alert-danger mb0 mt0 x-hidden" style="float: inline-end;" id="token_balance">BTC balance is insufficient</p>
                             </div>
                         </div>
-                    </div>
                         <div class="MoreAssetsSection">
                             <button type="button" class="btn MoreAssetsbutton" id="buy_btn"><span class="coin_element">{$order_action_type}</span>&nbsp;<span id="buy_btn_txt">{strtoupper($set_active_coin)}</span></button>
                         </div>

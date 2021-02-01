@@ -22,7 +22,7 @@
                                                     {$_sell_details[$set_active_coin]}
                                                 {/if}
                                                 </span>
-                                                per &nbsp; <span class="coin_text">USD</span></p>
+                                                PER &nbsp; <span class="coin_text">USD</span></p>
                                         </div>
                                         <div class="activityDate">{date('M d, Y')}</div>
                                     </div>
