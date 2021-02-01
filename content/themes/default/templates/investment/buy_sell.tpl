@@ -189,6 +189,7 @@
                                 <!-- <p>1.0000 BTC</p> -->
                                 <input type="text" class="" placeholder="{strtoupper($set_active_coin)}" id="total_coin">
                                 <p class="currancyNme">USD</p>
+                                
                             </div>
                         </div>
                           <div class="amountSectionChange">
