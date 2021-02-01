@@ -265,7 +265,7 @@ $(function () {
             })
             .catch(err => {
                 /* update live status */
-                $('#js_live-status').html('<i class="fas fa-exclamation-circle mr5"></i>' + __['Getting permissions failed'] + ' (' + 'Camera permission is required to go live' + ')').addClass("error");
+                $('#js_live-status').html('<i class="fas fa-exclamation-circle mr5"></i>' + __['Getting permissions failed'] + ' (' + 'Camera & mic permission is required to go live' + ')').addClass("error");
             });
     }
 

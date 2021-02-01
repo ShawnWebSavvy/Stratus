@@ -73,8 +73,6 @@
         href="{$system['system_uploads_assets']}/content/themes/default/css/style.rtl.min.css">
     {/if}
     <script src="https://cdn1.stratus.co/includes/assets/js/stratus/lazysizes.min.js"></script>
-    <script src="https://unpkg.com/flickity@2.2.2/dist/flickity.pkgd.min.js"></script>
-
     <link rel="stylesheet" type='text/css'
         href="{$system['system_uploads_assets']}/content/themes/default/css/live_video_style.css">
     <link rel="stylesheet" type='text/css'

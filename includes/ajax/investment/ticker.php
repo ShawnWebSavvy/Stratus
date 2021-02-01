@@ -44,14 +44,14 @@ try {
                 
                 $token_price['data']['sub_total'] = round($_POST['total_tokens']*$token_price['data']['sell_price'], 2);
                 $token_price['data']['total_fees'] = round($token_price['data']['sub_total']*$fees/100, 2);
-                $token_price['data']['amount'] = round($token_price['data']['sub_total']+$token_price['data']['total_fees'],2);
+                $token_price['data']['amount'] = round($token_price['data']['sub_total']-$token_price['data']['total_fees'],2);
                 // $token_price['data']['selling_sub_total'] = number_format((double)$_POST['token']*(double)$token_price['data']['selling_fees'], 5, '.', '');
                 // echo '<pre>'; print_r($token_price); die;
             }else{
                 $token_price['data']['tokens'] = round($_POST['amount']/$token_price['data']['sell_price'], 5);
                 $token_price['data']['sub_total'] = $_POST['amount'];
                 $token_price['data']['total_fees'] = '$'.round($_POST['amount']*$fees/100, 2);
-                $token_price['data']['amount'] = $_POST['amount']+round($_POST['amount']*$fees/100, 2);
+                $token_price['data']['amount'] = $_POST['amount']-round($_POST['amount']*$fees/100, 2);
             }
             break;
     }

@@ -33,16 +33,15 @@ if ($user->_logged_in) {
     /* get search log */
     $user->_data['search_log'] = $user->get_search_log();
 
-//    $start_time = microtime(TRUE);
     /* get conversations */
     $user->_data['conversations'] = $user->get_conversations();
-//    $end_time = microtime(TRUE);
-//
-//    echo $end_time - $start_time; die;
+
     /* get conversations */
     $userGlobal->_data['conversations'] = $userGlobal->get_conversations();
+
     /* get notifications */
     $user->_data['notifications'] = $user->get_notifications();
+
     /* get online & offline friends */
     require_once(ABSPATH . 'includes/libs/MobileDetect/Mobile_Detect.php');
     $detect = new Mobile_Detect;
@@ -62,10 +61,6 @@ if ($user->_logged_in) {
         $user->check_user_package();
     }
 }
-
-//$end_time = microtime(TRUE);
-
-//echo $end_time - $start_time; die;
 
 // get static pages
 $static_pages = array();
