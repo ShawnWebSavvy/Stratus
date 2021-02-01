@@ -162,7 +162,9 @@ if (endUrl != "investments") {
             action = $(this).data('actiontype');
             buying_text.html($(this).html() + 'ing');
             reset_sidebar_calculation();
-            // updateDetail();
+            $('#usd_balance').hide();
+            $('#token_balance').hide();
+            updateDetail();
         });
 
         $(document).on('click', '.coinDetailPrice_wallet', function () {
