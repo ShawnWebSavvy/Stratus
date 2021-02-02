@@ -154,8 +154,8 @@
                                                 class="btn coinBaseButton">Buy</a>
                                             <a href="{$system['system_url']}/investment/buy-sell"
                                                 class="btn coinBaseButton">Sell</a>
-                                            <a href="javascript:;"
-                                                class="btn coinBaseButton">Info</a>
+                                         <!--    <a href="javascript:;"
+                                                class="btn coinBaseButton">Info</a> -->
                                         </div>
                                     </div>
                                 {/foreach}
@@ -204,8 +204,8 @@
                                                             class="btn coinBaseButton">Buy</a>
                                                         <a href="{$system['system_url']}/investment/buy-sell"
                                                             class="btn coinBaseButton">Sell</a>
-                                                        <a href="javascript:;"
-                                                            class="btn coinBaseButton">Info</a>
+                                                        <!-- <a href="javascript:;"
+                                                            class="btn coinBaseButton">Info</a> -->
                                                         {* <button type="button" class="btn coinBaseButton">Buy</button>
                                                         <button type="button" class="btn coinBaseButton">Sell</button>
                                                         <button type="button" class="btn coinBaseButton">Info</button> *}
@@ -217,9 +217,9 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="MoreAssetsSection">
+                       <!--  <div class="MoreAssetsSection">
                             <button type="button" class="btn MoreAssetsbutton">Discover more assets</button>
-                        </div>
+                        </div> -->
                     </div>
 
 

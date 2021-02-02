@@ -75,7 +75,7 @@ if (endUrl != "investments") {
         var min_tnx_error = "The minimum transaction amount is ";
         var max_balance_error = "The maximum transaction amount is ";
         buy_btn.prop('disabled', true);
-
+        $('.currancyNme').hide();
         function reset_sidebar_calculation() {
             $('#amount').val("");
             $('#total_coin').val("");
@@ -84,6 +84,7 @@ if (endUrl != "investments") {
             $('.overall_coin').html(0);
             $('#sub_total').html(0);
             $('#order_total').html(0);
+            $('.currancyNme').hide(); 
         }
         function change_amount() {
             let total_amount = amount.val();
@@ -172,6 +173,7 @@ if (endUrl != "investments") {
             $(this).addClass('active');
             $('#total_coin').attr('placeholder', $(this).data('coin'));
             $('#buy_btn_txt').html($(this).data('coin'));
+            $('#coin_show').html($(this).data('coin'));
             $('.coin_img').attr('src', $(this).find('img').attr('src'));
             updateDetail();
         });
@@ -200,6 +202,7 @@ if (endUrl != "investments") {
             $('#investment_swap').hide();
             $('#investment_spiner').show();
             // order_total.html(total_amount);
+            $('.currancyNme').show();
             clearTimeout(timeout);
             timeout = setTimeout(function () {
                 $.post(api['investment/ticker'], { 'token': token_name, 'amount': total_amount, 'action': action }, function (response) {
@@ -274,6 +277,7 @@ if (endUrl != "investments") {
             $('#investment_spiner').show();
 
             clearTimeout(timeout);
+            $('.currancyNme').show();
             timeout = setTimeout(function () {
                 $.post(api['investment/ticker'], { 'token': token_name, 'total_tokens': total_tokens, 'type': 'coin', 'action': action }, function (response) {
                     if (response) {

@@ -353,7 +353,7 @@
     <!-- Twilio -->
     <!-- Agora -->
     {if $system['live_enabled']}
-        <script src="https://cdn.agora.io/sdk/release/AgoraRTCSDK-3.2.1.js"></script>
+        <script src="https://cdn.agora.io/sdk/release/AgoraRTCSDK-3.4.0.js"></script>
     {/if}
     <!-- Agora -->
     <!-- Easytimer -->
