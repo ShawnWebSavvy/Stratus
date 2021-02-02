@@ -222,7 +222,7 @@
     
 </div>
 
-<div class="right-sidebar js_sticky-sidebar">
+<div class="right-sidebar js_sticky-sidebar" style="z-index:0;">
     {include file='investment/right-sidebar.tpl'}
 </div>
 
