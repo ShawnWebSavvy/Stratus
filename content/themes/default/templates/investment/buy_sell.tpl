@@ -21,7 +21,7 @@
                             <div class="heading">
                                 <h3>Currency</h3>
                             </div>
-                            <div class="dropdown">
+                            <!-- <div class="dropdown">
                                 <button class="btn dropdown-toggle" type="button" id="dropdownMenu2"
                                     data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                     More Info
@@ -32,7 +32,7 @@
                                         censes tantas res gessisse sine causa? quae fuerit causa, mox videro; interea
                                         hoc epicurus in bonis sit sentiri haec putat.</p>
                                 </div>
-                            </div>
+                            </div> -->
                         </div>
                         <div class="coinSelection">
                             <ul>
@@ -179,7 +179,7 @@
                         <div class="amountSectionChange" id="amountSectionChange">
                             <div class="amountCount">
                                 <input type="text" class="" placeholder="USD" id="amount">
-                                <p class="currancyNme">USD</p>
+                                <p class="currancyNme" id="currency_show">USD</p>
                             </div>
                             <button class="swapButton" id="swapButton">
                                 <img src="{$system['system_url']}/content/themes/default/images/investment/ic_switch.svg" alt="swap" id="investment_swap">
@@ -188,7 +188,7 @@
                             <div class="amountCount">
                                 <!-- <p>1.0000 BTC</p> -->
                                 <input type="text" class="" placeholder="{strtoupper($set_active_coin)}" id="total_coin">
-                                <p class="currancyNme">USD</p>
+                                <p class="currancyNme" id="coin_show">{strtoupper($set_active_coin)}</p>
                                 
                             </div>
                         </div>
