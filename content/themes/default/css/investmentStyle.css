@@ -469,6 +469,7 @@
   padding-bottom: 26px;
   border-bottom: 1px solid #e5e8ef;
   margin-bottom: 25px;
+  position: relative;
 }
 
 .activityBlock .activityDetails {
@@ -482,6 +483,7 @@
   font-size: 16px;
   font-weight: 700;
   color: #1e1f20;
+  padding-right: 55px;
 }
 
 .activityBlock .activityDetails h5 {
@@ -505,6 +507,9 @@
   font-size: 12px;
   font-weight: 400;
   color: #8f92a1;
+  position: absolute;
+  right: 0;
+  top: 0;
 }
 
 .viewAllSection {
