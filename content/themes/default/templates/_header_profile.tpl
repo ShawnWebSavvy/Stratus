@@ -146,7 +146,7 @@
                 </a>
                 {elseif ($page == "global-profile/global-profile" || $page =="global-profile/global-profile-photo" ||
                 $page =="global-profile/global-profile-timeline") && $user->_logged_in}
-                <a href="{$system['system_url']}/global-profile-timeline.php" class="logo {$page}">
+                <a href="{$system['system_url']}/global-profile-timeline" class="logo {$page}">
                   <img class="img-fluid lazyload"
                     data-src="{$system['system_uploads_assets']}/content/themes/default/images/logo_globalHub.png" />
                 </a>
@@ -195,7 +195,7 @@
             <div class=" col-6 col-lg-10 usersectionHeaderMobile">
               <div class="row">
                 <!-- profile-tabs -->
-                <div class="profile-header-tabs desktop_only">
+                <div class="profile-header-tabs custom-tabs desktop_only">
                   <a href="javascript:window.history.back()" class="back_btn_profile btn  headerBackButtonGlobal"><i
                       class="fas fa-chevron-left"></i> <span>Back</span></a>
 
@@ -441,14 +441,14 @@
                           class="rightuser-menu usernameOnHoverbtn openRightBlackBar">
                           <!-- <span class="usernameOnHover">{$userGlobal->_data['user_firstname']}</span> -->
                           <img class="lazyload"
-                            data-src="{$system['system_url']}/{$userGlobal->_data['global_user_picture']}" />
+                            data-src="{$userGlobal->_data['global_user_picture']}" />
                           <span class="">{$userGlobal->_data['user_firstname']}</span>
                         </a>
                         {else}
                         <a href="javascript:void();" id="currentUsername" page='{$page}'
                           class="rightuser-menu usernameOnHoverbtn openRightBlackBar">
                           <!-- <span class="usernameOnHover">{$user->_data['user_firstname']}</span> -->
-                          <img class="lazyload" data-src="{$system['system_url']}/{$user->_data['user_picture']}" />
+                          <img class="lazyload" data-src="{$user->_data['user_picture']}" />
                           <span class="">{$user->_data['user_firstname']}</span>
                         </a>
                         {/if}

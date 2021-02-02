@@ -4,8 +4,6 @@
 <!-- page content -->
 {if !$user->_logged_in}
 
-
-
 <div class="mainloginBlock">
     {include file='_sign_form.tpl'}
 </div>
@@ -13,12 +11,21 @@
 {include file='_footer.links.tpl'}
 
 {else}
-
+<link rel="stylesheet" href="{$system['system_uploads_assets']}/content/themes/default/css/bricklayer.css">
+<link rel="stylesheet" href="{$system['system_uploads_assets']}/content/themes/default/css/bricklayer-custom.css">
+<style>
+    @media screen and (min-width: 700px) {
+        .bricklayer-column-sizer {
+            /* If page is greater than 700px, columns will be 5% wide. That means there will be lots of columns */
+            width: 50%;
+        }
+    }
+</style>
 <div class="container mt20 offcanvas">
     <div class="row">
 
         <!-- side panel -->
-        <div class="col-md-4 col-lg-3 offcanvas-sidebar js_sticky-sidebar">
+        <div class="col-md-4 col-lg-3 offcanvas-sidebar js_sticky-sidebar" id="sidebarHiddSwip">
             {include file='_sidebar.tpl'}
         </div>
         <!-- side panel -->
@@ -32,9 +39,9 @@
                     <div class="post-section-new">
 
                         {if $postsNew}
-                        <ul class="feeds_post_ul" id="landing_feeds_post_ul">
+                        <div class="bricklayer" id="landing_feeds_post_uls">
                             {foreach $postsNew as $postsItem}
-                            <li class="feeds_post" data-id="{$postsItem['post_id']}" post-type="">
+                            <div class="feeds_post" data-id="{$postsItem['post_id']}" post-type="">
                                 <div class="post" data-id="{$postsItem['post_id']}">
                                     <div class="post-body">
                                         <div class="post-header">
@@ -148,9 +155,9 @@
                                                                         data-title='{__("Shared with: Public")}'
                                                                         data-value="public">
                                                                         <div class="post_images__">
-                                                                            <img src="{$system['system_url']}/content/themes/default/images/svg/svgImg/nav_icon_globalHub.svg"
+                                                                            <img src="{$system['system_uploads_assets']}/content/themes/default/images/svg/svgImg/nav_icon_globalHub.svg"
                                                                                 class="blackicon">
-                                                                            <img src="{$system['system_url']}/content/themes/default/images/svg/svgImg/nav_icon_globalHub-active.svg"
+                                                                            <img src="{$system['system_uploads_assets']}/content/themes/default/images/svg/svgImg/nav_icon_globalHub-active.svg"
                                                                                 class="whiteicon">
                                                                         </div>
                                                                         <span> {__("Public")}</span>
@@ -170,9 +177,9 @@
                                                                         data-title='{__("Shared with: Only Me")}'
                                                                         data-value="me">
                                                                         <div class="post_images__">
-                                                                            <img src="{$system['system_url']}/content/themes/default/images/svg/svgImg/Hide_form.svg"
+                                                                            <img src="{$system['system_uploads_assets']}/content/themes/default/images/svg/svgImg/Hide_form.svg"
                                                                                 class="blackicon">
-                                                                            <img src="{$system['system_url']}/content/themes/default/images/svg/svgImg/Hide_form-hover.svg"
+                                                                            <img src="{$system['system_uploads_assets']}/content/themes/default/images/svg/svgImg/Hide_form-hover.svg"
                                                                                 class="whiteicon">
                                                                         </div>
                                                                         <span> {__("Only Me")} </span>
@@ -280,156 +287,159 @@
                                                 </div>
                                             </div>
                                         </div>
-                            </li>
-                            {/foreach}
-                        </ul>
+                                    </div>
+                                    {/foreach}
+                                </div>
 
-                        {else}
-                        <div class="text-center text-muted no-post-to-show no_data_img_ __no_data_contet__">
-                            <img src="{$system['system_url']}/content/themes/default/images/no_results3.png"
-                                width="100%">
-                            <p class="mb10"><strong>No Record Found</strong></p>
-                        </div>
-                        <!--- <li class="{$postsNew['post_id']} no_data_img_"><img width="100%"
+                                {else}
+                                <div class="text-center text-muted no-post-to-show no_data_img_ __no_data_contet__">
+                                    <img src="{$system['system_url']}/content/themes/default/images/no_results3.png"
+                                        width="100%">
+                                    <p class="mb10"><strong>No Record Found</strong></p>
+                                </div>
+                                <!--- <li class="{$postsNew['post_id']} no_data_img_"><img width="100%"
                                 src="{$system['system_url']}/content/themes/{$system['theme']}/images/no_results3.png"><p>No Record Found</p></li> --->
-                        {/if}
+                                {/if}
 
-                    </div>
-
-                    {elseif $view == "popular"}
-                    <!-- popular posts -->
-                    {include file='_posts.tpl' _get="popular" _title=__("Popular Posts")}
-                    <!-- popular posts -->
-
-                    {elseif $view == "discover"}
-                    <!-- discover posts -->
-                    {include file='_posts.tpl' _get="discover" _title=__("Discover Posts")}
-                    <!-- discover posts -->
-
-                    {elseif $view == "saved"}
-                    <!-- saved posts -->
-                    {include file='_posts.tpl' _get="saved" _title=__("Saved Posts")}
-                    <!-- saved posts -->
-
-                    {elseif $view == "memories"}
-                    <!-- page header -->
-                    <div class="page-header mini rounded-top mb10">
-                        <div class="crystal c03"></div>
-                        <div class="circle-1"></div>
-                        <div class="circle-2"></div>
-                        <div class="inner">
-                            <h2>{__("Memories")}</h2>
-                            <p>{__("Enjoy looking back on your memories")}</p>
-                        </div>
-                    </div>
-                    <!-- page header -->
-
-                    <!-- memories posts -->
-                    {include file='_posts.tpl' _get="memories" _title=__("ON THIS DAY") _filter="all"}
-                    <!-- memories posts -->
-
-                    {elseif $view == "articles"}
-                    <!-- articles posts -->
-                    {include file='_posts.tpl' _get="posts_profile" _id=$user->_data['user_id'] _filter="article"
-                    _title=__("My Articles")}
-                    <!-- articles posts -->
-
-                    {elseif $view == "products"}
-                    <!-- products posts -->
-                    {include file='_posts.tpl' _get="posts_profile" _id=$user->_data['user_id'] _filter="product"
-                    _title=__("My Products")}
-                    <!-- products posts -->
-
-                    {elseif $view == "boosted_posts"}
-                    {if $user->_is_admin || $user->_data['user_subscribed']}
-                    <!-- boosted posts -->
-                    {include file='_posts.tpl' _get="boosted" _title=__("My Boosted Posts")}
-                    <!-- boosted posts -->
-                    {else}
-                    <!-- upgrade -->
-                    <div class="alert alert-warning">
-                        <div class="icon">
-                            <i class="fa fa-id-card fa-2x"></i>
-                        </div>
-                        <div class="text">
-                            <strong>{__("Membership")}</strong><br>
-                            {__("Choose the Plan That's Right for You")}, {__("Check the package from")} <a
-                                href="{$system['system_url']}/packages">{__("Here")}</a>
-                        </div>
-                    </div>
-                    <div class="text-center">
-                        <a href="{$system['system_url']}/packages" class="btn btn-primary"><i
-                                class="fa fa-rocket mr5"></i>{__("Upgrade to Pro")}</a>
-                    </div>
-                    <!-- upgrade -->
-                    {/if}
-
-                    {elseif $view == "boosted_pages"}
-                    {if $user->_is_admin || $user->_data['user_subscribed']}
-                    <div class="card">
-                        <div class="card-header">
-                            <strong>{__("My Boosted Pages")}</strong>
-                        </div>
-                        <div class="card-body">
-                            {if $boosted_pages}
-                            <ul>
-                                {foreach $boosted_pages as $_page}
-                                {include file='__feeds_page.tpl' _tpl="list"}
-                                {/foreach}
-                            </ul>
-
-                            {if count($boosted_pages) >= $system['max_results_even']}
-                            <!-- see-more -->
-                            <div class="alert alert-info see-more js_see-more" data-get="boosted_pages">
-                                <span>{__("Load More")}</span>
-                                <div class="loader loader_small x-hidden"></div>
                             </div>
-                            <!-- see-more -->
-                            {/if}
-                            {else}
-                            <p class="text-center text-muted mt10 no_dataimg_">
-                                <img width="100%"
-                                    src="{$system['system_url']}/content/themes/{$system['theme']}/images/no_results13.png">
-                            <p> {__("No pages to show")}</p>
-                            </p>
-                            {/if}
-                        </div>
-                    </div>
-                    {else}
-                    <!-- upgrade -->
-                    <div class="alert alert-warning">
-                        <div class="icon">
-                            <i class="fa fa-id-card fa-2x"></i>
-                        </div>
-                        <div class="text">
-                            <strong>{__("Membership")}</strong><br>
-                            {__("Choose the Plan That's Right for You")}, {__("Check the package from")} <a
-                                href="{$system['system_url']}/packages">{__("Here")}</a>
-                        </div>
-                    </div>
-                    <div class="text-center">
-                        <a href="{$system['system_url']}/packages" class="btn btn-primary"><i
-                                class="fa fa-rocket mr5"></i>{__("Upgrade to Pro")}</a>
-                    </div>
-                    <!-- upgrade -->
-                    {/if}
 
-                    {/if}
+                            {elseif $view == "popular"}
+                            <!-- popular posts -->
+                            {include file='_posts.tpl' _get="popular" _title=__("Popular Posts")}
+                            <!-- popular posts -->
+
+                            {elseif $view == "discover"}
+                            <!-- discover posts -->
+                            {include file='_posts.tpl' _get="discover" _title=__("Discover Posts")}
+                            <!-- discover posts -->
+
+                            {elseif $view == "saved"}
+                            <!-- saved posts -->
+                            {include file='_posts.tpl' _get="saved" _title=__("Saved Posts")}
+                            <!-- saved posts -->
+
+                            {elseif $view == "memories"}
+                            <!-- page header -->
+                            <div class="page-header mini rounded-top mb10">
+                                <div class="crystal c03"></div>
+                                <div class="circle-1"></div>
+                                <div class="circle-2"></div>
+                                <div class="inner">
+                                    <h2>{__("Memories")}</h2>
+                                    <p>{__("Enjoy looking back on your memories")}</p>
+                                </div>
+                            </div>
+                            <!-- page header -->
+
+                            <!-- memories posts -->
+                            {include file='_posts.tpl' _get="memories" _title=__("ON THIS DAY") _filter="all"}
+                            <!-- memories posts -->
+
+                            {elseif $view == "articles"}
+                            <!-- articles posts -->
+                            {include file='_posts.tpl' _get="posts_profile" _id=$user->_data['user_id']
+                            _filter="article"
+                            _title=__("My Articles")}
+                            <!-- articles posts -->
+
+                            {elseif $view == "products"}
+                            <!-- products posts -->
+                            {include file='_posts.tpl' _get="posts_profile" _id=$user->_data['user_id']
+                            _filter="product"
+                            _title=__("My Products")}
+                            <!-- products posts -->
+
+                            {elseif $view == "boosted_posts"}
+                            {if $user->_is_admin || $user->_data['user_subscribed']}
+                            <!-- boosted posts -->
+                            {include file='_posts.tpl' _get="boosted" _title=__("My Boosted Posts")}
+                            <!-- boosted posts -->
+                            {else}
+                            <!-- upgrade -->
+                            <div class="alert alert-warning">
+                                <div class="icon">
+                                    <i class="fa fa-id-card fa-2x"></i>
+                                </div>
+                                <div class="text">
+                                    <strong>{__("Membership")}</strong><br>
+                                    {__("Choose the Plan That's Right for You")}, {__("Check the package from")} <a
+                                        href="{$system['system_url']}/packages">{__("Here")}</a>
+                                </div>
+                            </div>
+                            <div class="text-center">
+                                <a href="{$system['system_url']}/packages" class="btn btn-primary"><i
+                                        class="fa fa-rocket mr5"></i>{__("Upgrade to Pro")}</a>
+                            </div>
+                            <!-- upgrade -->
+                            {/if}
+
+                            {elseif $view == "boosted_pages"}
+                            {if $user->_is_admin || $user->_data['user_subscribed']}
+                            <div class="card">
+                                <div class="card-header">
+                                    <strong>{__("My Boosted Pages")}</strong>
+                                </div>
+                                <div class="card-body">
+                                    {if $boosted_pages}
+                                    <ul>
+                                        {foreach $boosted_pages as $_page}
+                                        {include file='__feeds_page.tpl' _tpl="list"}
+                                        {/foreach}
+                                    </ul>
+
+                                    {if count($boosted_pages) >= $system['max_results_even']}
+                                    <!-- see-more -->
+                                    <div class="alert alert-info see-more js_see-more" data-get="boosted_pages">
+                                        <span>{__("Load More")}</span>
+                                        <div class="loader loader_small x-hidden"></div>
+                                    </div>
+                                    <!-- see-more -->
+                                    {/if}
+                                    {else}
+                                    <p class="text-center text-muted mt10 no_dataimg_">
+                                        <img width="100%"
+                                            src="{$system['system_url']}/content/themes/{$system['theme']}/images/no_results13.png">
+                                    <p> {__("No pages to show")}</p>
+                                    </p>
+                                    {/if}
+                                </div>
+                            </div>
+                            {else}
+                            <!-- upgrade -->
+                            <div class="alert alert-warning">
+                                <div class="icon">
+                                    <i class="fa fa-id-card fa-2x"></i>
+                                </div>
+                                <div class="text">
+                                    <strong>{__("Membership")}</strong><br>
+                                    {__("Choose the Plan That's Right for You")}, {__("Check the package from")} <a
+                                        href="{$system['system_url']}/packages">{__("Here")}</a>
+                                </div>
+                            </div>
+                            <div class="text-center">
+                                <a href="{$system['system_url']}/packages" class="btn btn-primary"><i
+                                        class="fa fa-rocket mr5"></i>{__("Upgrade to Pro")}</a>
+                            </div>
+                            <!-- upgrade -->
+                            {/if}
+
+                            {/if}
+                        </div>
+                        <!-- center panel -->
+                        <!-- right panel -->
+                        <div class="right-sidebar js_sticky-sidebar">
+                            {include file='right-sidebar.tpl'}
+                        </div>
+                        <!-- right panel -->
+                    </div>
                 </div>
-                <!-- center panel -->
-                <!-- right panel -->
-                <div class="right-sidebar js_sticky-sidebar">
-                    {include file='right-sidebar.tpl'}
-                </div>
-                <!-- right panel -->
+                <!-- content panel -->
+
             </div>
         </div>
-        <!-- content panel -->
 
-    </div>
-</div>
-
-{/if}
-<!-- page content -->
-
-{include file='_footer.tpl'}
+        {/if}
+        <!-- page content -->
+        <script src="{$system['system_uploads_assets']}/content/themes/default/js/bricklayer.min.js"></script>
+        <script src="{$system['system_uploads_assets']}/content/themes/default/js/bricklayer-custom.js"></script>
+        {include file='_footer.tpl'}

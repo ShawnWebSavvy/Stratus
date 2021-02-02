@@ -4,7 +4,7 @@
 <!-- page content -->
 <div class="container mt20 offcanvas">
     <div class="row">
-        <div class="col-md-4 col-lg-3  offcanvas-sidebar sidebar-left-ant">
+        <div class="col-md-4 col-lg-3  offcanvas-sidebar sidebar-left-ant" id="sidebarHiddSwip">
             {include file='_sidebar.tpl'}
         </div>
     </div>
@@ -20,7 +20,7 @@
                         <div class="card-header with-icon">{__("Basic")}
                             <div class="float-right">
                                 <a href="{$system['system_url']}/global-profile.php?username={$user->_data['user_name']}"
-                                    class="btn btn-sm viewProfileButton">
+                                    class="btn viewProfileButton">
                                     <img width="30px" height="30px"
                                         src="{$system['system_upload_assets']}/content/themes/default/images/svg/svgImg/eye-icon.svg" />
                                     <span class="ml5 d-none d-lg-inline-block">{__("View Profile")}</span>
@@ -593,7 +593,7 @@
                         <div class="card-header with-icon">{__("Basic")}
                             <div class="float-right">
                                 <a href="{$system['system_url']}/{$user->_data['user_name']}"
-                                    class="btn btn-sm viewProfileButton">
+                                    class="btn viewProfileButton">
                                     <img width="30px" height="30px"
                                         src="{$system['system_url']}/content/themes/default/images/svg/svgImg/eye-icon.svg" />
                                     <span class="ml5 d-none d-lg-inline-block">{__("View Profile")}</span>
@@ -773,7 +773,7 @@
                         <div class="card-header with-icon">{__("Work")}
                             <div class="float-right">
                                 <a href="{$system['system_url']}/{$user->_data['user_name']}"
-                                    class="btn btn-sm viewProfileButton">
+                                    class="btn viewProfileButton">
                                     <img width="30px" height="30px"
                                         src="{$system['system_url']}/content/themes/default/images/svg/svgImg/eye-icon.svg" />
                                     <span class="ml5 d-none d-lg-inline-block">{__("View Profile")}</span>
@@ -829,7 +829,7 @@
                         <div class="card-header with-icon">{__("Location")}
                             <div class="float-right">
                                 <a href="{$system['system_url']}/{$user->_data['user_name']}"
-                                    class="btn btn-sm viewProfileButton">
+                                    class="btn viewProfileButton">
                                     <img width="30px" height="30px"
                                         src="{$system['system_url']}/content/themes/default/images/svg/svgImg/eye-icon.svg" />
                                     <span class="ml5 d-none d-lg-inline-block">{__("View Profile")}</span>
@@ -875,7 +875,7 @@
                             {__("Education")}
                             <div class="float-right">
                                 <a href="{$system['system_url']}/{$user->_data['user_name']}"
-                                    class="btn btn-sm viewProfileButton">
+                                    class="btn viewProfileButton">
                                     <img width="30px" height="30px"
                                         src="{$system['system_url']}/content/themes/default/images/svg/svgImg/eye-icon.svg" />
                                     <span class="ml5 d-none d-lg-inline-block">{__("View Profile")}</span>
@@ -929,7 +929,7 @@
                         <div class="card-header with-icon">{__("Other")}
                             <div class="float-right">
                                 <a href="{$system['system_url']}/{$user->_data['user_name']}"
-                                    class="btn btn-sm viewProfileButton">
+                                    class="btn viewProfileButton">
                                     <img width="30px" height="30px"
                                         src="{$system['system_url']}/content/themes/default/images/svg/svgImg/eye-icon.svg" />
                                     <span class="ml5 d-none d-lg-inline-block">{__("View Profile")}</span>
@@ -962,7 +962,7 @@
                         <div class="card-header with-icon">{__("Social Links")}
                             <div class="float-right">
                                 <a href="{$system['system_url']}/{$user->_data['user_name']}"
-                                    class="btn btn-sm viewProfileButton">
+                                    class="btn viewProfileButton">
                                     <img width="30px" height="30px"
                                         src="{$system['system_url']}/content/themes/default/images/svg/svgImg/eye-icon.svg" />
                                     <span class="ml5 d-none d-lg-inline-block">{__("View Profile")}</span>
@@ -1062,7 +1062,7 @@
                         <div class="card-header with-icon">{__("Design")}
                             <div class="float-right">
                                 <a href="{$system['system_url']}/{$user->_data['user_name']}"
-                                    class="btn btn-sm viewProfileButton">
+                                    class="btn viewProfileButton">
                                     <img width="30px" height="30px"
                                         src="{$system['system_url']}/content/themes/default/images/svg/svgImg/eye-icon.svg" />
                                     <span class="ml5 d-none d-lg-inline-block">{__("View Profile")}</span>
@@ -3232,9 +3232,9 @@
                                         <div class="InformationIconName">
                                             <span class="settingInfoImageHover">
                                                 <img width="25px" height="25px"
-                                                    src="{$system['system_url']}/content/themes/default/images/svg/svgImg/nav_icon_adHub.svg" />
+                                                    src="{$system['system_uploads_assets']}/content/themes/default/images/svg/svgImg/nav_icon_adHub.svg" />
                                                 <img width="25px" height="25px"
-                                                    src="{$system['system_url']}/content/themes/default/images/svg/svgImg/nav_icon_adHub_active.svg" />
+                                                    src="{$system['system_uploads_assets']}/content/themes/default/images/svg/svgImg/nav_icon_adHub_active.svg" />
                                             </span>
                                             <div class="title">{__("Groups")}</div>
                                         </div>

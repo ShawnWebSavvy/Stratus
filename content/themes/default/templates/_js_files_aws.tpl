@@ -247,12 +247,14 @@
 <script src="{$system['system_uploads_assets']}/includes/assets/js/plugins/autosize/autosize.min.js" {if !$user->_logged_in}defer{/if}></script>
 <script src="{$system['system_uploads_assets']}/includes/assets/js/plugins/readmore/readmore.min.js" {if !$user->_logged_in}defer{/if}></script>
 <script src="{$system['system_uploads_assets']}/includes/assets/js/plugins/moment/moment-with-locales.min.js" {if !$user->_logged_in}defer{/if}></script>
+{if $user->_logged_in}
 <script src="https://cdn.fluidplayer.com/v2/current/fluidplayer.min.js" {if !$user->_logged_in}defer{/if}></script>
 <link rel="stylesheet" href="https://cdn.fluidplayer.com/v2/current/fluidplayer.min.css" type="text/css"/>
 <script src="https://unpkg.com/video.js@7.8.4/dist/video.min.js" {if !$user->_logged_in}defer{/if}></script>
 <script src="https://unpkg.com/videojs-contrib-hls@5.15.0/dist/videojs-contrib-hls.min.js" {if !$user->_logged_in}defer{/if}></script>
 <link href="https://unpkg.com/video.js@7.8.4/dist/video-js.min.css" rel="stylesheet">
-
+<script src="{$system['system_url']}/includes/assets/js/plugins/swipeMobile/swipeMobile.js"></script>
+{/if}
 {if $user->_logged_in}
     <!-- jQuery-UI -->
     <script>var _tooltip = jQuery.fn.tooltip;</script>
@@ -372,21 +374,27 @@
 <!-- Dependencies Plugins -->
 
 <!-- Sngine [JS] -->
-<script src="{$system['system_url']}/includes/assets/js/stratus/core.js?{$cacheremovejs}" defer></script>
+<script src="{$system['system_uploads_assets']}/includes/assets/js/stratus/core.js?{$cacheremovejs}" defer></script>
+<script src="{$system['system_url']}/includes/assets/js/stratus/swipMobileCode.js?{$cacheremovejs}" defer></script>
 <!--Landing page custom js -->
-<script src="{$system['system_url']}/includes/assets/js/stratus/custom.js?{$cacheremovejs}" defer></script>
+<script src="{$system['system_uploads_assets']}/includes/assets/js/stratus/custom.js?{$cacheremovejs}" defer></script>
 
 {if $user->_logged_in}
-    <script src="{$system['system_url']}/includes/assets/js/stratus/user.js?{$cacheremovejs}" defer></script>
-    <script src="{$system['system_url']}/includes/assets/js/stratus/post.js?{$cacheremovejs}" defer></script>
-    <script src="{$system['system_url']}/includes/assets/js/stratus/chat.js?{$cacheremovejs}" defer></script>
+    <script src="{$system['system_uploads_assets']}/includes/assets/js/stratus/user.js?{$cacheremovejs}" defer></script>
+    <script src="{$system['system_uploads_assets']}/includes/assets/js/stratus/post.js?{$cacheremovejs}" defer></script>
+    <script src="{$system['system_uploads_assets']}/includes/assets/js/stratus/chat.js?{$cacheremovejs}" defer></script>
     <script src="{$system['system_uploads_assets']}/includes/assets/js/stratus/showads.js?{$cacheremovejs}" defer></script>
     {if $system['live_enabled'] && $page == "live"}
-        <script src="{$system['system_url']}/includes/assets/js/stratus/live.js"></script>
+        <script src="{$system['system_uploads_assets']}/includes/assets/js/stratus/live.js"></script>
     {/if}
 {/if}
 <!-- Sngine [JS] -->
+{if $userGlobal->_logged_in || $user->_logged_in}
+    <!-- Emoji Animation Script -->
+    <script src="https://unpkg.com/@lottiefiles/lottie-player@latest/dist/lottie-player.js"></script>
 
+    <!-- Emoji Animation Script -->
+    {/if}
 {if $page == "admin"}
     <!-- Dependencies Plugins -->
     <script src="{$system['system_uploads_assets']}/includes/assets/js/plugins/bootstrap.colorpicker/bootstrap-colorpicker.min.js"></script>
@@ -406,7 +414,7 @@
     <!-- Dependencies Plugins [JS] -->
 
     <!-- Sngine [JS] -->
-    <script src="{$system['system_url']}/includes/assets/js/stratus/admin.js"></script>
+    <script src="{$system['system_uploads_assets']}/includes/assets/js/stratus/admin.js"></script>
     <!-- Sngine [JS] -->
 
     <!-- Admin Charts -->

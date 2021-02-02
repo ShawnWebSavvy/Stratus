@@ -74,7 +74,7 @@ class User
                 //                    $this->_data['user_picture'] = $system['system_url'] . '/content/themes/' . $system['theme'] . '/images/user_defoult_img.jpg';
                 //                }
 
-                $this->_data['user_picture'] = 'includes/wallet-api/image-exist-api.php?userPicture=' . $this->_data['user_picture'] . '&userPictureFull=' . $this->_data['user_picture_full'] . '&type=1';
+                $this->_data['user_picture'] = $system['system_url'] . '/includes/wallet-api/image-exist-api.php?userPicture=' . $this->_data['user_picture'] . '&userPictureFull=' . $this->_data['user_picture_full'] . '&type=1';
 
                 /* get all friends ids */
                 $this->_data['friends_ids'] = $this->get_friends_ids($this->_data['user_id']);
@@ -464,11 +464,7 @@ class User
         }
         $limit_statement = ($get_all) ? "" : sprintf("LIMIT %s, %s", secure($offset, 'int', false), secure($system['min_results_even'], 'int', false));
 
-        if ($this->_logged_in) {
-            $userFriends = sprintf('SELECT users.user_id, users.user_picture_id, picture_photo.source as user_picture_full, users.user_name, users.user_firstname, users.user_lastname, users.user_gender, users.user_picture, users.user_subscribed, users.user_verified, (SELECT COUNT(*) as count FROM friends WHERE status = -1 AND (user_one_id = %2$s AND user_two_id = users.user_id) OR (user_one_id = users.user_id AND user_two_id = %2$s)) as count FROM friends INNER JOIN users ON (friends.user_one_id = users.user_id AND friends.user_one_id != %1$s) OR (friends.user_two_id = users.user_id AND friends.user_two_id != %1$s) LEFT JOIN posts_photos as picture_photo ON users.user_picture_id = picture_photo.photo_id WHERE status = 1 and users.user_firstname != "" AND (user_one_id = %1$s OR user_two_id = %1$s) ' . $limit_statement, secure($user_id, 'int'), secure($this->_data['user_id'], 'int'));
-        } else {
-            $userFriends = sprintf('SELECT users.user_id, users.user_picture_id, picture_photo.source as user_picture_full, users.user_name, users.user_firstname, users.user_lastname, users.user_gender, users.user_picture, users.user_subscribed, users.user_verified FROM friends INNER JOIN users ON (friends.user_one_id = users.user_id AND friends.user_one_id != %1$s) OR (friends.user_two_id = users.user_id AND friends.user_two_id != %1$s) LEFT JOIN posts_photos as picture_photo ON users.user_picture_id = picture_photo.photo_id WHERE status = 1 and users.user_firstname != "" AND (user_one_id = %1$s OR user_two_id = %1$s) ' . $limit_statement, secure($user_id, 'int'));
-        }
+        $userFriends = sprintf('SELECT users.user_id, users.user_picture_id, picture_photo.source as user_picture_full, users.user_name, users.user_firstname, users.user_lastname, users.user_gender, users.user_picture, users.user_subscribed, users.user_verified FROM friends INNER JOIN users ON (friends.user_one_id = users.user_id AND friends.user_one_id != %1$s) OR (friends.user_two_id = users.user_id AND friends.user_two_id != %1$s) LEFT JOIN posts_photos as picture_photo ON users.user_picture_id = picture_photo.photo_id WHERE status = 1 and users.user_firstname != "" AND (user_one_id = %1$s OR user_two_id = %1$s) ' . $limit_statement, secure($user_id, 'int'));
         $get_friends = $db->query($userFriends) or _error("SQL_ERROR_THROWEN");
         if ($get_friends->num_rows > 0) {
             while ($friend = $get_friends->fetch_assoc()) {
@@ -481,10 +477,10 @@ class User
                     //                        $friend['user_picture'] = $system['system_uploads'] . '/' . $friend['user_picture_full'];
                     //                    }
 
-                    $friend['user_picture'] = 'includes/wallet-api/image-exist-api.php?userPicture=' . $friend['user_picture'] . '&userPictureFull=' . $friend['user_picture_full'];
+                    $friend['user_picture'] = $system['system_url'] . '/includes/wallet-api/image-exist-api.php?userPicture=' . $friend['user_picture'] . '&userPictureFull=' . $friend['user_picture_full'];
                 }
                 /* get the connection between the viewer & the target */
-                $friend['connection'] = $this->connection($friend['user_id'], true, $friend['count']);
+                $friend['connection'] = $this->connection($friend['user_id']);
                 $friends[] = $friend;
             }
         }
@@ -598,7 +594,7 @@ class User
                 //                    }
                 //                }
 
-                $request['user_picture'] = 'includes/wallet-api/image-exist-api.php?userPicture=' . $request['user_picture'] . '&userPictureFull=' . $request['user_picture_full'];
+                $request['user_picture'] = $system['system_url'] . '/includes/wallet-api/image-exist-api.php?userPicture=' . $request['user_picture'] . '&userPictureFull=' . $request['user_picture_full'];
 
                 $request['mutual_friends_count'] = $this->get_mutual_friends_count($request['user_id']);
                 $requests[] = $request;
@@ -762,7 +758,7 @@ class User
                 //                    $user['user_picture'] = $system['system_uploads'] . '/' . $user['user_picture_full'];
                 //                }
 
-                $user['user_picture'] = 'includes/wallet-api/image-exist-api.php?userPicture=' . $user['user_picture'] . '&userPictureFull=' . $user['user_picture_full'];
+                $user['user_picture'] = $system['system_url'] . '/includes/wallet-api/image-exist-api.php?userPicture=' . $user['user_picture'] . '&userPictureFull=' . $user['user_picture_full'];
 
                 if (isset($this->_data['user_id'])) {
                     $user['mutual_friends_count'] = $this->get_mutual_friends_count($user['user_id']);
@@ -908,7 +904,7 @@ class User
         if ($get_users->num_rows > 0) {
             while ($user = $get_users->fetch_assoc()) {
                 $user['user_picture'] = get_picture($user['user_picture'], $user['user_gender']);
-                $user['user_picture'] = 'includes/wallet-api/image-exist-api.php?userPicture=' . $user['user_picture'] . '&userPictureFull=' . $user['user_picture_full'];
+                $user['user_picture'] = $system['system_url'] . '/includes/wallet-api/image-exist-api.php?userPicture=' . $user['user_picture'] . '&userPictureFull=' . $user['user_picture_full'];
                 /* get the connection between the viewer & the target */
                 $user['connection'] = $this->connection($user['user_id']);
                 $results['users'][] = $user;
@@ -970,7 +966,7 @@ class User
         if ($get_users->num_rows > 0) {
             while ($user = $get_users->fetch_assoc()) {
                 $user['user_picture'] = get_picture($user['user_picture'], $user['user_gender']);
-                $user['user_picture'] = 'includes/wallet-api/image-exist-api.php?userPicture=' . $user['user_picture'] . '&userPictureFull=' . $user['user_picture_full'];
+                $user['user_picture'] = $system['system_url'] . '/includes/wallet-api/image-exist-api.php?userPicture=' . $user['user_picture'] . '&userPictureFull=' . $user['user_picture_full'];
                 /* get the connection between the viewer & the target */
                 $user['connection'] = $this->connection($user['user_id']);
                 $user['sort'] = $user['user_firstname'];
@@ -1198,39 +1194,32 @@ class User
     {
         global $db, $system;
         $results = [];
-        if ($this->_logged_in) {
-            $get_search_log = sprintf("SELECT users_searches.log_id, users_searches.node_type, users.user_id, users.user_name, users.user_firstname, users.user_lastname, users.user_gender, users.user_picture, users.user_subscribed, users.user_verified, (CASE WHEN users_searches.node_type = 'user' THEN (SELECT COUNT(*) as count FROM friends WHERE status = -1 AND (user_one_id = users_searches.user_id AND user_two_id = users.user_id) OR (user_one_id = users.user_id AND user_two_id = users_searches.user_id)) WHEN users_searches.node_type = 'page' THEN (SELECT COUNT(*) as count FROM pages_likes WHERE user_id = users_searches.user_id AND page_id = pages.page_id) WHEN users_searches.node_type = 'group' THEN (SELECT approved FROM groups_members WHERE user_id = users_searches.user_id AND group_id = `groups`.group_id) ELSE (SELECT CONCAT(is_invited,'::', is_interested,'::', is_going) as count FROM events_members WHERE user_id = users_searches.user_id AND event_id = `events`.event_id) END)as count, pages.*, `groups`.*, `events`.* FROM users_searches LEFT JOIN users ON users_searches.node_type = 'user' AND users_searches.node_id = users.user_id LEFT JOIN pages ON users_searches.node_type = 'page' AND users_searches.node_id = pages.page_id LEFT JOIN `groups` ON users_searches.node_type = 'group' AND users_searches.node_id = `groups`.group_id LEFT JOIN `events` ON users_searches.node_type = 'event' AND users_searches.node_id = `events`.event_id WHERE users_searches.user_id = %s ORDER BY users_searches.log_id DESC LIMIT %s", secure($this->_data['user_id'], 'int'), secure($system['min_results'], 'int', false));
-        } else {
-            $get_search_log = sprintf("SELECT users_searches.log_id, users_searches.node_type, users.user_id, users.user_name, users.user_firstname, users.user_lastname, users.user_gender, users.user_picture, users.user_subscribed, users.user_verified, pages.*, `groups`.*, `events`.* FROM users_searches LEFT JOIN users ON users_searches.node_type = 'user' AND users_searches.node_id = users.user_id LEFT JOIN pages ON users_searches.node_type = 'page' AND users_searches.node_id = pages.page_id LEFT JOIN `groups` ON users_searches.node_type = 'group' AND users_searches.node_id = `groups`.group_id LEFT JOIN `events` ON users_searches.node_type = 'event' AND users_searches.node_id = `events`.event_id WHERE users_searches.user_id = %s ORDER BY users_searches.log_id DESC LIMIT %s", secure($this->_data['user_id'], 'int'), secure($system['min_results'], 'int', false));
-        }
-
-        $db->query($get_search_log) or _error("SQL_ERROR_THROWEN");
-
+        $get_search_log = $db->query(sprintf("SELECT users_searches.log_id, users_searches.node_type, users.user_id, users.user_name, users.user_firstname, users.user_lastname, users.user_gender, users.user_picture, users.user_subscribed, users.user_verified, pages.*, `groups`.*, `events`.* FROM users_searches LEFT JOIN users ON users_searches.node_type = 'user' AND users_searches.node_id = users.user_id LEFT JOIN pages ON users_searches.node_type = 'page' AND users_searches.node_id = pages.page_id LEFT JOIN `groups` ON users_searches.node_type = 'group' AND users_searches.node_id = `groups`.group_id LEFT JOIN `events` ON users_searches.node_type = 'event' AND users_searches.node_id = `events`.event_id WHERE users_searches.user_id = %s ORDER BY users_searches.log_id DESC LIMIT %s", secure($this->_data['user_id'], 'int'), secure($system['min_results'], 'int', false))) or _error("SQL_ERROR_THROWEN");
         if ($get_search_log->num_rows > 0) {
             while ($result = $get_search_log->fetch_assoc()) {
                 switch ($result['node_type']) {
                     case 'user':
                         $result['user_picture'] = get_picture($result['user_picture'], $result['user_gender']);
                         /* get the connection between the viewer & the target */
-                        $result['connection'] = $this->connection($result['user_id'], true, $result['count']);
+                        $result['connection'] = $this->connection($result['user_id']);
                         break;
 
                     case 'page':
                         $result['page_picture'] = get_picture($result['page_picture'], 'page');
                         /* check if the viewer liked the page */
-                        $result['i_like'] = $this->check_page_membership($this->_data['user_id'], $result['page_id'], $result['count']);
+                        $result['i_like'] = $this->check_page_membership($this->_data['user_id'], $result['page_id']);
                         break;
 
                     case 'group':
                         $result['group_picture'] = get_picture($result['group_picture'], 'group');
                         /* check if the viewer joined the group */
-                        $result['i_joined'] = $this->check_group_membership($this->_data['user_id'], $result['group_id'], $result['count']);
+                        $result['i_joined'] = $this->check_group_membership($this->_data['user_id'], $result['group_id']);
                         break;
 
                     case 'event':
                         $result['event_picture'] = get_picture($result['event_cover'], 'event');
                         /* check if the viewer joined the event */
-                        $result['i_joined'] = $this->check_event_membership($this->_data['user_id'], $result['event_id'], $result['count']);
+                        $result['i_joined'] = $this->check_event_membership($this->_data['user_id'], $result['event_id']);
                         break;
                 }
                 $result['type'] = $result['node_type'];
@@ -1940,7 +1929,7 @@ class User
      * @param boolean $friendship
      * @return string
      */
-    public function connection($user_id, $friendship = true, $count = false)
+    public function connection($user_id, $friendship = true)
     {
         /* check which type of connection (friendship|follow) connections to get */
         if ($friendship) {
@@ -1965,15 +1954,9 @@ class User
             if (in_array($user_id, $this->_data['friend_requests_sent_ids'])) {
                 return "cancel";
             }
-            if ($count !== false) {
-                if ($count) {
-                    return "declined";
-                }
-            } else {
-                /* check if the viewer declined the friend request to the target */
-                if ($this->friendship_declined($user_id)) {
-                    return "declined";
-                }
+            /* check if the viewer declined the friend request to the target */
+            if ($this->friendship_declined($user_id)) {
+                return "declined";
             }
             /* there is no relation between the viewer & the target */
             return "add";
@@ -2231,7 +2214,7 @@ class User
                 //                    $notification['user_picture'] = $system['system_uploads'] . '/' . $notification['user_picture_full'];
                 //                }
 
-                $notification['user_picture'] = 'includes/wallet-api/image-exist-api.php?userPicture=' . $notification['user_picture'] . '&userPictureFull=' . $notification['user_picture_full'];
+                $notification['user_picture'] = $system['system_url'] . '/includes/wallet-api/image-exist-api.php?userPicture=' . $notification['user_picture'] . '&userPictureFull=' . $notification['user_picture_full'];
                 /* prepare notification notify_id */
                 $notification['notify_id'] = ($notification['notify_id']) ? "?notify_id=" . $notification['notify_id'] : "";
                 /* prepare notification node_url */
@@ -3088,7 +3071,7 @@ class User
      * @param integer $user_id
      * @return boolean
      */
-    public function user_online($user_id, $count = false)
+    public function user_online($user_id)
     {
         global $db, $system;
         /* check if the target user is a friend to the viewer */
@@ -3097,16 +3080,10 @@ class User
             return false;
         }
         /* check if the target user is online & enable the chat */
-        if ($count !== false) {
-            if ($count == 0) {
-                return false;
-            }
-        } else {
-            $get_user_status = $db->query(sprintf("SELECT COUNT(*) as count FROM users WHERE user_id = %s AND user_chat_enabled = '1' AND user_last_seen >= SUBTIME(NOW(), SEC_TO_TIME(%s))", secure($user_id, 'int'), secure($system['offline_time'], 'int', false))) or _error("SQL_ERROR_THROWEN");
-            if ($get_user_status->fetch_assoc()['count'] == 0) {
-                /* if no > return false */
-                return false;
-            }
+        $get_user_status = $db->query(sprintf("SELECT COUNT(*) as count FROM users WHERE user_id = %s AND user_chat_enabled = '1' AND user_last_seen >= SUBTIME(NOW(), SEC_TO_TIME(%s))", secure($user_id, 'int'), secure($system['offline_time'], 'int', false))) or _error("SQL_ERROR_THROWEN");
+        if ($get_user_status->fetch_assoc()['count'] == 0) {
+            /* if no > return false */
+            return false;
         }
         return true;
     }
@@ -3235,7 +3212,7 @@ class User
         }
         $conversation = $get_conversation->fetch_assoc();
         /* get recipients */
-        $get_recipients = $db->query(sprintf("SELECT conversations_users.seen, conversations_users.typing, users.user_id, users.user_name, users.user_firstname, users.user_lastname, users.user_gender, users.user_picture, posts_photos.source as user_picture_full, users.user_picture_id, users.user_subscribed, users.user_verified, (SELECT CONCAT(COUNT(*), '::', COUNT(if(user_chat_enabled = '1', user_id, null))) as count FROM users WHERE user_id = users.user_id AND user_last_seen >= SUBTIME(NOW(), SEC_TO_TIME(%s))) as count FROM conversations_users INNER JOIN users ON conversations_users.user_id = users.user_id  LEFT JOIN posts_photos ON users.user_picture_id = posts_photos.photo_id WHERE conversations_users.conversation_id = %s AND conversations_users.user_id != %s", secure($system['offline_time'], 'int', false), secure($conversation['conversation_id'], 'int'), secure($this->_data['user_id'], 'int'))) or _error("SQL_ERROR_THROWEN");
+        $get_recipients = $db->query(sprintf("SELECT conversations_users.seen, conversations_users.typing, users.user_id, users.user_name, users.user_firstname, users.user_lastname, users.user_gender, users.user_picture, posts_photos.source as user_picture_full, users.user_picture_id, users.user_subscribed, users.user_verified FROM conversations_users INNER JOIN users ON conversations_users.user_id = users.user_id  LEFT JOIN posts_photos ON users.user_picture_id = posts_photos.photo_id WHERE conversations_users.conversation_id = %s AND conversations_users.user_id != %s", secure($conversation['conversation_id'], 'int'), secure($this->_data['user_id'], 'int'))) or _error("SQL_ERROR_THROWEN");
         $recipients_num = $get_recipients->num_rows;
         if ($recipients_num == 0) {
             return false;
@@ -3243,8 +3220,8 @@ class User
         $i = 1;
 
         while ($recipient = $get_recipients->fetch_assoc()) {
-            $counts = explode('::', $recipient['count']);
-            $onlineStatus = $this->user_online($recipient['user_id'], $counts[1]);
+            $onlineStatus = $this->user_online($recipient['user_id']);
+            // echo $onlineStatus; die;
             $recipient['user_is_online'] = $onlineStatus;
 
             /* get recipient picture */
@@ -3260,16 +3237,15 @@ class User
             //                }
             //            }
 
-            $recipient['user_picture'] = 'includes/wallet-api/image-exist-api.php?userPicture=' . $recipient['user_picture'] . '&userPictureFull=' . $recipient['user_picture_full'];
+            $recipient['user_picture'] = $system['system_url'] . '/includes/wallet-api/image-exist-api.php?userPicture=' . $recipient['user_picture'] . '&userPictureFull=' . $recipient['user_picture_full'];
 
             /* add to conversation recipients */
             $conversation['recipients'][] = $recipient;
             /* prepare typing recipients */
             if ($system['chat_typing_enabled'] && $recipient['typing']) {
                 /* check if recipient typing but offline */
-                //$get_recipient_status = $db->query(sprintf("SELECT COUNT(*) as count FROM users WHERE user_id = %s AND user_last_seen >= SUBTIME(NOW(), SEC_TO_TIME(%s))", secure($recipient['user_id'], 'int'), secure($system['offline_time'], 'int', false))) or _error("SQL_ERROR_THROWEN");
-                //if ($get_recipient_status->fetch_assoc()['count'] == 0) {
-                if ($counts[0] == 0) {
+                $get_recipient_status = $db->query(sprintf("SELECT COUNT(*) as count FROM users WHERE user_id = %s AND user_last_seen >= SUBTIME(NOW(), SEC_TO_TIME(%s))", secure($recipient['user_id'], 'int'), secure($system['offline_time'], 'int', false))) or _error("SQL_ERROR_THROWEN");
+                if ($get_recipient_status->fetch_assoc()['count'] == 0) {
                     /* recipient offline -> remove his typing status */
                     $db->query(sprintf("UPDATE conversations_users SET typing = '0' WHERE conversation_id = %s AND user_id = %s", secure($conversation_id, 'int'), secure($recipient['user_id'], 'int'))) or _error("SQL_ERROR_THROWEN");
                 } else {
@@ -3335,7 +3311,7 @@ class User
             $conversation['picture'] = $conversation['recipients'][0]['user_picture'];
             $conversation['name'] = html_entity_decode($conversation['recipients'][0]['user_firstname'], ENT_QUOTES) . " " . html_entity_decode($conversation['recipients'][0]['user_lastname'], ENT_QUOTES);
 
-            $onlineStatus = $this->user_online($conversation['recipients'][0]['user_id'], $counts[1]);
+            $onlineStatus = $this->user_online($conversation['recipients'][0]['user_id']);
             $conversation['user_is_online'] = $onlineStatus;
 
             $name_new = "<div class='multiple-recipients-section'> <div class='multiple-recipients-image data-avatar'><div class='left'><img src='" . $conversation['picture_left'] = $conversation['recipients'][0]['user_picture'] . "'> </div><div class='right'><img src='" . $conversation['user_picture'] = $conversation['recipients'][1]['picture_right'] . "'> </div></div>";
@@ -3436,7 +3412,7 @@ class User
             //                }
             //            }
 
-            $message['user_picture'] = 'includes/wallet-api/image-exist-api.php?userPicture=' . $message['user_picture'] . '&userPictureFull=' . $message['user_picture_full'];
+            $message['user_picture'] = $system['system_url'] . '/includes/wallet-api/image-exist-api.php?userPicture=' . $message['user_picture'] . '&userPictureFull=' . $message['user_picture_full'];
             $message['message'] = $this->_parse(["text" => $message['message'], "decode_mentions" => false, "decode_hashtags" => false]);
             /* return */
             $messages[] = $message;
@@ -4357,21 +4333,20 @@ class User
         global $system, $db;
         $hashtags = [];
         if ($postType == 'LocalHub') {
-            $selectQuery = sprintf("SELECT hashtags.hashtag, MAX(hashtags_posts.id) as hash_post, COUNT(hashtags_posts.id) AS frequency,hashtags_posts.postHubType FROM hashtags INNER JOIN hashtags_posts as hashtags_posts ON hashtags.hashtag_id = hashtags_posts.hashtag_id WHERE hashtags_posts.created_at > DATE_SUB(CURDATE(), INTERVAL 1 %s) and hashtags_posts.postHubType = 'LocalHub'  GROUP BY hashtags_posts.hashtag_id,hashtags.hashtag,hashtags_posts.postHubType ORDER BY frequency DESC LIMIT %s", secure($system['trending_hashtags_interval'], "", false), secure($system['trending_hashtags_limit'], 'int', false));
+            $selectQuery = sprintf("SELECT hashtags.hashtag, MAX(hashtags_posts.id) as hash_post, COUNT(hashtags_posts.id) AS frequency,hashtags_posts.postHubType FROM hashtags INNER JOIN hashtags_posts as hashtags_posts ON hashtags.hashtag_id = hashtags_posts.hashtag_id WHERE hashtags_posts.created_at > DATE_SUB(CURDATE(), INTERVAL 1 %s) and hashtags_posts.postHubType = 'LocalHub'  GROUP BY hashtags_posts.hashtag_id,hashtags_posts.postHubType ORDER BY frequency DESC LIMIT %s", secure($system['trending_hashtags_interval'], "", false), secure($system['trending_hashtags_limit'], 'int', false));
         } elseif ($postType == 'GlobalHub') {
-            $selectQuery = sprintf("SELECT hashtags.hashtag, MAX(hashtags_posts.id) as hash_post, COUNT(hashtags_posts.id) AS frequency,hashtags_posts.postHubType FROM hashtags INNER JOIN hashtags_posts as hashtags_posts ON hashtags.hashtag_id = hashtags_posts.hashtag_id WHERE hashtags_posts.created_at > DATE_SUB(CURDATE(), INTERVAL 1 %s) and hashtags_posts.postHubType = 'GlobalHub'  GROUP BY hashtags_posts.hashtag_id,hashtags.hashtag,hashtags_posts.postHubType ORDER BY frequency DESC LIMIT %s", secure($system['trending_hashtags_interval'], "", false), secure($system['trending_hashtags_limit'], 'int', false));
+            $selectQuery = sprintf("SELECT hashtags.hashtag, MAX(hashtags_posts.id) as hash_post, COUNT(hashtags_posts.id) AS frequency,hashtags_posts.postHubType FROM hashtags INNER JOIN hashtags_posts as hashtags_posts ON hashtags.hashtag_id = hashtags_posts.hashtag_id WHERE hashtags_posts.created_at > DATE_SUB(CURDATE(), INTERVAL 1 %s) and hashtags_posts.postHubType = 'GlobalHub'  GROUP BY hashtags_posts.hashtag_id,hashtags_posts.postHubType ORDER BY frequency DESC LIMIT %s", secure($system['trending_hashtags_interval'], "", false), secure($system['trending_hashtags_limit'], 'int', false));
         } else {
-            $selectQuery = sprintf("SELECT hashtags.hashtag, MAX(hashtags_posts.id) as hash_post, COUNT(hashtags_posts.id) AS frequency,hashtags_posts.postHubType FROM hashtags INNER JOIN hashtags_posts as hashtags_posts ON hashtags.hashtag_id = hashtags_posts.hashtag_id WHERE hashtags_posts.created_at > DATE_SUB(CURDATE(), INTERVAL 1 %s) GROUP BY hashtags_posts.hashtag_id,hashtags.hashtag,hashtags_posts.postHubType ORDER BY frequency DESC LIMIT %s", secure($system['trending_hashtags_interval'], "", false), secure($system['trending_hashtags_limit'], 'int', false));
+            $selectQuery = sprintf("SELECT hashtags.hashtag, MAX(hashtags_posts.id) as hash_post, COUNT(hashtags_posts.id) AS frequency,hashtags_posts.postHubType FROM hashtags INNER JOIN hashtags_posts as hashtags_posts ON hashtags.hashtag_id = hashtags_posts.hashtag_id WHERE hashtags_posts.created_at > DATE_SUB(CURDATE(), INTERVAL 1 %s) GROUP BY hashtags_posts.hashtag_id,hashtags_posts.postHubType ORDER BY frequency DESC LIMIT %s", secure($system['trending_hashtags_interval'], "", false), secure($system['trending_hashtags_limit'], 'int', false));
         }
-
         $get_trending_hashtags = $db->query($selectQuery) or _error("SQL_ERROR_THROWEN");
         if ($get_trending_hashtags->num_rows > 0) {
             $hashtags = $get_trending_hashtags->fetch_all(MYSQLI_ASSOC);
-            array_walk_recursive($hashtags, 'my_html_entity_decode');
-            //            while ($hashtag = $get_trending_hashtags->fetch_assoc()) {
-            //                $hashtag['hashtag'] = html_entity_decode($hashtag['hashtag'], ENT_QUOTES);
-            //                $hashtags[] = $hashtag;
-            //            }
+            //array_walk_recursive($hashtags, 'my_html_entity_decode');
+            while ($hashtag = $get_trending_hashtags->fetch_assoc()) {
+                $hashtag['hashtag'] = html_entity_decode($hashtag['hashtag'], ENT_QUOTES);
+                $hashtags[] = $hashtag;
+            }
         }
 
         return $hashtags;
@@ -4579,7 +4554,7 @@ class User
         //            $post['post_author_picture'] = $system['system_uploads'] . '/' . $this->_data['user_picture_full'];
         //        }
 
-        $post['post_author_picture'] = 'includes/wallet-api/image-exist-api.php?userPicture=' . $post['post_author_picture'] . '&userPictureFull=' . $this->_data['user_picture_full'];
+        $post['post_author_picture'] = $system['system_url'] . '/includes/wallet-api/image-exist-api.php?userPicture=' . $post['post_author_picture'] . '&userPictureFull=' . $this->_data['user_picture_full'];
 
         $post['post_author_url'] = $system['system_url'] . '/' . $this->_data['user_name'];
         $post['post_author_name'] = $this->_data['user_firstname'] . " " . $this->_data['user_lastname'];
@@ -4809,7 +4784,7 @@ class User
                 //Video thumbnails
                 if ($args['video_thumbnail'] == "") {
                     $helpers = new helpers();
-                    $result_ = $helpers->makeVideosThumbnails($system['system_uploads'] . '/thumbnails/' . $args['video']->source, 5, 'prod');
+                    $result_ = $helpers->makeVideosThumbnails($system['system_uploads'] . '/' . $args['video']->source, 5, 'prod');
                     if (sizeof($result_) > 0) :
                         //$db->query(sprintf("UPDATE posts_videos SET thumbnail = $result_['thumb'] WHERE video_id = %s ", secure($post['video']['video_id'], 'int'))) or _error("SQL_ERROR_THROWEN");
                         $db->query(sprintf("UPDATE posts_videos SET thumbnail = 'thumbnails/" . $result_['thumb'] . "' WHERE video_id = %s", secure($post['video']['video_id']))) or _error("SQL_ERROR_THROWEN");
@@ -5217,6 +5192,10 @@ class User
                     _error(400);
                 }
                 $id = $args['id'];
+                // echo "<pre>";
+                // print_r($this->_data['user_id']);
+                // print_r($args);
+                // die;
                 /* get target user's posts */
                 /* check if there is a viewer user */
                 if ($this->_logged_in) {
@@ -5389,7 +5368,8 @@ class User
             $get_postsQuery = "SELECT posts.post_id FROM posts " . $where_query . " " . $order_query . " " . $limit_statement;
         }
 
-        //echo $get_postsQuery; exit;
+        // echo $get_postsQuery;
+        // exit;
         $get_posts = $db->query($get_postsQuery) or _error("SQL_ERROR_THROWEN");
 
         if ($get_posts->num_rows > 0) {
@@ -6035,6 +6015,7 @@ class User
         if ($get_users->num_rows > 0) {
             while ($_user = $get_users->fetch_assoc()) {
                 $_user['user_picture'] = get_picture($_user['user_picture'], $_user['user_gender']);
+                $_user['user_picture'] = 'includes/wallet-api/image-exist-api.php?userPicture=' . $_user['user_picture'] . '&userPictureFull=' . $system['system_uploads'] . '/' . $_user['user_picture_full'];
                 /* get the connection between the viewer & the target */
                 $_user['connection'] = $this->connection($_user['user_id']);
                 /* get mutual friends count */
@@ -6095,7 +6076,7 @@ class User
             //                }
             //            }
 
-            $voter['user_picture'] = 'includes/wallet-api/image-exist-api.php?userPicture=' . $voter['user_picture'] . '&userPictureFull=' . $voter['user_picture_full'];
+            $voter['user_picture'] = $system['system_url'] . '/includes/wallet-api/image-exist-api.php?userPicture=' . $voter['user_picture'] . '&userPictureFull=' . $voter['user_picture_full'];
             /* get the connection between the viewer & the target */
             $voter['connection'] = $this->connection($voter['user_id']);
             $voters[] = $voter;
@@ -6186,7 +6167,7 @@ class User
             //                }
             //            }
 
-            $post['post_author_picture'] = 'includes/wallet-api/image-exist-api.php?userPicture=' . $post['post_author_picture'] . '&userPictureFull=' . $post['user_picture_full'];
+            $post['post_author_picture'] = $system['system_url'] . '/' . 'includes/wallet-api/image-exist-api.php?userPicture=' . $post['post_author_picture'] . '&userPictureFull=' . $system['system_uploads'] . '/' . $post['user_picture_full'];
 
             $post['post_author_url'] = $system['system_url'] . '/' . $post['user_name'];
             $post['post_author_name'] = $post['user_firstname'] . " " . $post['user_lastname'];
@@ -7508,7 +7489,7 @@ class User
                 //                    }
                 //                }
 
-                $comment['author_picture'] = 'includes/wallet-api/image-exist-api.php?userPicture=' . $comment['author_picture'] . '&userPictureFull=' . $comment['user_picture_full'];
+                $comment['author_picture'] = $system['system_url'] . '/includes/wallet-api/image-exist-api.php?userPicture=' . $comment['author_picture'] . '&userPictureFull=' . $comment['user_picture_full'];
 
                 $comment['author_url'] = $system['system_url'] . '/' . $comment['user_name'];
                 $comment['author_name'] = $comment['user_firstname'] . " " . $comment['user_lastname'];
@@ -7526,7 +7507,7 @@ class User
                 //                    }
                 //                }
 
-                $comment['author_picture'] = 'includes/wallet-api/image-exist-api.php?userPicture=' . $comment['author_picture'] . '&userPictureFull=' . $comment['user_picture_full'];
+                $comment['author_picture'] = $system['system_url'] . '/includes/wallet-api/image-exist-api.php?userPicture=' . $comment['author_picture'] . '&userPictureFull=' . $comment['user_picture_full'];
 
                 $comment['author_url'] = $system['system_url'] . '/pages/' . $comment['page_name'];
                 $comment['author_name'] = $comment['page_title'];
@@ -9471,9 +9452,10 @@ class User
                 }
                 $invites_list = implode(',', array_diff($potential_invites, $invited_friends));
                 if ($invites_list) {
-                    $get_friends = $db->query(sprintf("SELECT user_id, user_name, user_firstname, user_lastname, user_gender, user_picture, user_subscribed, user_verified FROM users WHERE user_id IN ($invites_list) LIMIT %s, %s", secure($offset, 'int', false), secure($system['max_results_even'], 'int', false))) or _error("SQL_ERROR_THROWEN");
+                    $get_friends = $db->query(sprintf("SELECT users.user_id, users.user_name, posts_photos.source as user_picture_full, users.user_picture_id, users.user_firstname, users.user_lastname, users.user_gender, users.user_picture, users.user_subscribed, users.user_verified FROM users LEFT JOIN posts_photos ON users.user_picture_id = posts_photos.photo_id WHERE user_id IN ($invites_list) LIMIT %s, %s", secure($offset, 'int', false), secure($system['max_results_even'], 'int', false))) or _error("SQL_ERROR_THROWEN");
                     while ($friend = $get_friends->fetch_assoc()) {
                         $friend['user_picture'] = get_picture($friend['user_picture'], $friend['user_gender']);
+                        $friend['user_picture'] = $system['system_url'] . '/includes/wallet-api/image-exist-api.php?userPicture=' . $friend['user_picture'] . '&userPictureFull=' . $friend['user_picture_full'];
                         $friend['connection'] = 'page_invite';
                         $friend['node_id'] = $page_id;
                         $friends[] = $friend;
@@ -9512,14 +9494,10 @@ class User
      * @param integer $page_id
      * @return boolean
      */
-    public function check_page_membership($user_id, $page_id, $count = false)
+    public function check_page_membership($user_id, $page_id)
     {
         global $db;
         if ($this->_logged_in) {
-            if ($count !== false && $count) {
-                return true;
-            }
-
             $get_likes = $db->query(sprintf("SELECT COUNT(*) as count FROM pages_likes WHERE user_id = %s AND page_id = %s", secure($user_id, 'int'), secure($page_id, 'int'))) or _error("SQL_ERROR_THROWEN");
             if ($get_likes->fetch_assoc()['count'] > 0) {
                 return true;
@@ -9932,7 +9910,7 @@ class User
                     $get_friends = $db->query($frnsdQuery) or _error("SQL_ERROR_THROWEN");
                     while ($friend = $get_friends->fetch_assoc()) {
                         $friend['user_picture'] = get_picture($friend['user_picture'], $friend['user_gender']);
-                        $friend['user_picture'] = 'includes/wallet-api/image-exist-api.php?userPicture=' . $friend['user_picture'] . '&userPictureFull=' . $friend['user_picture_full'] . '&type=1';
+                        $friend['user_picture'] = $system['system_url'] . '/includes/wallet-api/image-exist-api.php?userPicture=' . $friend['user_picture'] . '&userPictureFull=' . $friend['user_picture_full'] . '&type=1';
 
                         $friend['connection'] = 'group_invite';
                         $friend['node_id'] = $group_id;
@@ -10011,14 +9989,10 @@ class User
      * @param integer $group_id
      * @return mixed
      */
-    public function check_group_membership($user_id, $group_id, $status = false)
+    public function check_group_membership($user_id, $group_id)
     {
         global $db;
         if ($this->_logged_in) {
-            if ($status !== false) {
-                return ($status == '1') ? "approved" : "pending";
-            }
-
             $get_membership = $db->query(sprintf("SELECT * FROM groups_members WHERE user_id = %s AND group_id = %s", secure($user_id, 'int'), secure($group_id, 'int'))) or _error("SQL_ERROR_THROWEN");
             if ($get_membership->num_rows > 0) {
                 $membership = $get_membership->fetch_assoc();
@@ -10406,9 +10380,10 @@ class User
                 }
                 $invites_list = implode(',', array_diff($this->_data['friends_ids'], $members));
                 if ($invites_list) {
-                    $get_friends = $db->query(sprintf("SELECT user_id, user_name, user_firstname, user_lastname, user_gender, user_picture, user_subscribed, user_verified FROM users WHERE user_id IN ($invites_list) LIMIT %s, %s", secure($offset, 'int', false), secure($system['max_results_even'], 'int', false))) or _error("SQL_ERROR_THROWEN");
+                    $get_friends = $db->query(sprintf("SELECT users.user_id, users.user_name, users.user_firstname, users.user_lastname, users.user_gender, users.user_picture, users.user_picture_id, posts_photos.source as user_picture_full, users.user_subscribed, users.user_verified FROM users LEFT JOIN posts_photos ON users.user_picture_id = posts_photos.photo_id WHERE user_id IN ($invites_list) LIMIT %s, %s", secure($offset, 'int', false), secure($system['max_results_even'], 'int', false))) or _error("SQL_ERROR_THROWEN");
                     while ($friend = $get_friends->fetch_assoc()) {
                         $friend['user_picture'] = get_picture($friend['user_picture'], $friend['user_gender']);
+                        $friend['user_picture'] = $system['system_url'] . '/includes/wallet-api/image-exist-api.php?userPicture=' . $friend['user_picture'] . '&userPictureFull=' . $friend['user_picture_full'];
                         $friend['connection'] = 'event_invite';
                         $friend['node_id'] = $event_id;
                         $friends[] = $friend;
@@ -10447,20 +10422,10 @@ class User
      * @param integer $event_id
      * @return mixed
      */
-    public function check_event_membership($user_id, $event_id, $listOfActions = false)
+    public function check_event_membership($user_id, $event_id)
     {
         global $db;
         if ($this->_logged_in) {
-            if ($listOfActions !== false) {
-                $listOfActionsArr = explode('::', $listOfActions);
-                list($is_invited, $is_interested, $is_going) = $listOfActionsArr;
-                return [
-                    'is_invited'    => $is_invited,
-                    'is_interested' => $is_interested,
-                    'is_going'      => $is_going
-                ];
-            }
-
             $get_membership = $db->query(sprintf("SELECT is_invited, is_interested, is_going FROM events_members WHERE user_id = %s AND event_id = %s", secure($user_id, 'int'), secure($event_id, 'int'))) or _error("SQL_ERROR_THROWEN");
             if ($get_membership->num_rows > 0) {
                 return $get_membership->fetch_assoc();

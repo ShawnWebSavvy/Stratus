@@ -4,7 +4,7 @@
 <div class="container mt20 {if $user->_logged_in}offcanvas{/if}">
       <div class="row">
          {if $user->_logged_in}
-        <div class="col-md-12 offcanvas-sidebar js_sticky-sidebar">
+        <div class="col-md-12 offcanvas-sidebar js_sticky-sidebar" id="sidebarHiddSwip">
           {include file='_sidebar.tpl'}
         </div>
         {/if}

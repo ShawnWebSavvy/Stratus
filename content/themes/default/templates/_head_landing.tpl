@@ -41,10 +41,12 @@
     <link rel="shortcut icon" href="{$system['system_uploads']}/{$system['system_favicon']}" />
     {/if}
     <link rel="stylesheet" type='text/css'
-        href="https://cdn1.stratus.co/content/themes/default/css/live_video_style.css">
-    <link rel="stylesheet" href="https://cdn1.stratus.co/content/themes/default/css/bootstrap.min.css">
-    <link rel="stylesheet" type='text/css' href="https://cdn1.stratus.co/content/themes/default/css/landingcss.css">
-    <link rel="stylesheet" type='text/css' href="https://cdn1.stratus.co/content/themes/default/css/landingCustom.css">
+        href="{$system['system_uploads_assets']}/content/themes/default/css/live_video_style.css">
+    <link rel="stylesheet" href="{$system['system_uploads_assets']}/content/themes/default/css/bootstrap.min.css">
+    <link rel="stylesheet" type='text/css'
+        href="{$system['system_uploads_assets']}/content/themes/default/css/landingcss.css">
+    <link rel="stylesheet" type='text/css'
+        href="{$system['system_uploads_assets']}/content/themes/default/css/landingCustom.css">
     <script src="{$system['system_url']}/includes/assets/js/stratus/lazysizes.min.js"></script>
 
 

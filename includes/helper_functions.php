@@ -36,7 +36,7 @@ class helpers
     $file_name = $name_info['filename'] . '.jpg';
 
 
-    $path = ABSPATH . $system['uploads_directory'] . 'content/uploads/photos/' . $file_name;
+    $path = ABSPATH . 'content/uploads/photos/' . $file_name;
 
     //print_r($path); die;
 
@@ -63,32 +63,60 @@ class helpers
 
 
 
-  function local_aws_s3_upload($file_source, $file_name)
-  {
+  // function local_aws_s3_upload($file_source, $file_name)
+  // {
+  //   global $system;
+  //   require_once(ABSPATH . 'includes/libs/AWS/aws-autoloader.php');
+  //   $s3Client = Aws\S3\S3Client::factory(array(
+  //     'version'    => 'latest',
+  //     'region'      => $system['s3_region'],
+  //     'credentials' => array(
+  //       'key'    => $system['s3_key'],
+  //       'secret' => $system['s3_secret'],
+  //     )
+  //   ));
+  //   $Key = 'uploads/thumbnails/' . $file_name;
+  //   $s3Client->putObject([
+  //     'Bucket' => $system['s3_bucket'],
+  //     'Key'    => $Key,
+  //     'Body'   => "this is body",
+  //     'ACL'    => 'public-read',
+  //   ]);
+  //   //var_dump($result);
+  //   /* remove local file */
+  //   gc_collect_cycles();
+  //   if ($s3Client->doesObjectExist($system['s3_bucket'], $Key)) {
+  //     unlink($file_source);
+  //   }
+  // }
+
+   function local_aws_s3_upload($file_source, $file_name)
+{
     global $system;
     require_once(ABSPATH . 'includes/libs/AWS/aws-autoloader.php');
     $s3Client = Aws\S3\S3Client::factory(array(
-      'version'    => 'latest',
-      'region'      => $system['s3_region'],
-      'credentials' => array(
-        'key'    => $system['s3_key'],
-        'secret' => $system['s3_secret'],
-      )
+        'version'    => 'latest',
+        'region'      => $system['s3_region'],
+        'credentials' => array(
+            'key'    => $system['s3_key'],
+            'secret' => $system['s3_secret'],
+        )
     ));
-    $Key = 'uploads/' . $file_name;
+    $Key = 'uploads/thumbnails/' . $file_name;
     $result = $s3Client->putObject([
-      'Bucket' => $system['s3_bucket'],
-      'Key'    => $Key,
-      'Body'   => 'This is the body',
-      'ACL'    => 'public-read',
-      'SourceFile' => $file_source
+        'Bucket' => $system['s3_bucket'],
+        'Key'    => $Key,
+        'Body'   => 'This is the body',
+        'ACL'    => 'public-read',
+        'SourceFile' => $file_source
     ]);
 
     //var_dump($result);
     /* remove local file */
     gc_collect_cycles();
     if ($s3Client->doesObjectExist($system['s3_bucket'], $Key)) {
-      unlink($file_source);
+        unlink($file_source);
     }
-  }
+
+}
 } // End of helpers class

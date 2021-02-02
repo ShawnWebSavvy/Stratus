@@ -27,7 +27,7 @@
             {if $standalone && $boosted || $post['boosted'] == "1"}
             <div class="boosted-icon" data-toggle="tooltip" title="{__(" Promoted")}">
                 <img width="30px" height="30px"
-                    src="{$system['system_url']}/content/themes/{$system['theme']}/images/svg/svgImg/Featured.svg">
+                    src="{$system['system_uploads_assets']}/content/themes/{$system['theme']}/images/svg/svgImg/Featured.svg">
             </div>
             {/if}
 
@@ -98,8 +98,8 @@
                     <!-- comments & shares -->
                     <span class="float-right">
                         <!-- comments -->
-                        <span class="pointer js_comments-toggle stratus_localhub_{$post['post_id']}" id="stratus_localhub_{$post['post_id']}"
-                            parent-data-id="{$post['post_id']}">
+                        <span class="pointer js_comments-toggle stratus_localhub_{$post['post_id']}"
+                            id="stratus_localhub_{$post['post_id']}" parent-data-id="{$post['post_id']}">
                             <i class="fa fa-comments"></i> {$post['comments']} {__("Comments")}
                         </span>
                         <!-- comments -->
@@ -177,7 +177,7 @@
                             <i class="icon-post icon_share"></i>
                             <span>{__("Share")}</span>
                         </div>
-                        <div class="_share-dropdown_ dropdown-menu fade"
+                        <div class="_share-dropdown_ dropdown-menu fade _share_btn_element"
                             aria-labelledby="stratus_post_{$post['post_id']}" data-toggle="modal"
                             data-url="posts/share.php?do=create&post_id={$post['post_id']}">
                             <div class="share_icon_list">

@@ -495,7 +495,7 @@ body.login-index-body .index-intro h1{font-size:35px}
 .main-wrapper .container{padding-left:20px;padding-right:20px}
 .publisher-message-old-design .wrapFooterDiv.wrapFootershowHide{flex-direction:column;align-items:flex-end}
 .main-wrapper .main-header .container{padding-left:10px;padding-right:10px}
-.publisher textarea{font-size:12px!important}
+/* .publisher textarea{font-size:12px!important} */
 .MainWrapBlocksMob{padding-right:7px}
 .centerPartMob{padding-right:0!important}
 .offcanvas.active .offcanvas-mainbar{left:195px}

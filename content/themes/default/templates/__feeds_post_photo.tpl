@@ -123,7 +123,8 @@
         <!-- comments & shares -->
         <span class="float-right">
             <!-- comments -->
-            <span class="pointer js_comments-toggle stratus_localhub_{$post['post_id']}" id="stratus_localhub_{$post['post_id']}">
+            <span class="pointer js_comments-toggle stratus_localhub_{$post['post_id']}"
+                id="stratus_localhub_{$post['post_id']}">
                 <i class="fa fa-comments"></i> {$post['comments']} {__("Comments")}
             </span>
             <!-- comments -->

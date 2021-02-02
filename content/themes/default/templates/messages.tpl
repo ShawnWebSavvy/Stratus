@@ -4,7 +4,7 @@
 <!-- page content -->
 <div class="container mt20 offcanvas">
     <div class="row">
-        <div class="offcanvas-sidebar sidebar-left-ant">
+        <div class="offcanvas-sidebar sidebar-left-ant" id="sidebarHiddSwip">
             {include file='_sidebar.tpl'}
         </div>
     </div>

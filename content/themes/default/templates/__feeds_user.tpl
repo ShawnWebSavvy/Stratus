@@ -4,7 +4,7 @@
         <div class="img">
             <a href="{$system['system_url']}/{$_user['user_name']}">
                 <img alt="{$_user['user_firstname']} {$_user['user_lastname']}"
-                    src="{$system['system_url']}/{$_user['user_picture']}" />
+                    src="{$_user['user_picture']}" />
             </a>
         </div>
         <div class="mt10">
@@ -134,7 +134,7 @@
         <div class="_user_detail_sec">
             <div class="user__imgs">
                 <a class="data-avatar" href="{$system['system_url']}/{$_user['user_name']}{if $_search}?ref=qs{/if}">
-                    <img class="lazyload" data-src="{$system['system_url']}/{$_user['user_picture']}"
+                    <img class="lazyload" data-src="{$_user['user_picture']}"
                         alt="{$_user['user_firstname']} {$_user['user_lastname']}"> {if
                     $_reaction}
                     <div class="data-reaction">
@@ -145,7 +145,7 @@
                     {/if}
                 </a>
             </div>
-            <div class="userNameWrap _user_details">
+            <div class="userNameWrap _user_details" style="width:100%;">
                 <div class="mt5">
                     <span class="name js_user-popover {$_user['user_lastname']}" data-uid="{$_user['user_id']}">
                         <a href="{$system['system_url']}/{$_user['user_name']}{if $_search}?ref=qs{/if}">{$_user['user_firstname']}

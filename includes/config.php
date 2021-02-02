@@ -1,4 +1,12 @@
 <?php
+$is_secure = false;
+if (isset($_SERVER['HTTPS']) && strtolower($_SERVER['HTTPS']) == 'on') {
+    $is_secure = true;
+} elseif (!empty($_SERVER['HTTP_X_FORWARDED_PROTO']) && $_SERVER['HTTP_X_FORWARDED_PROTO'] == 'https' || !empty($_SERVER['HTTP_X_FORWARDED_SSL']) && $_SERVER['HTTP_X_FORWARDED_SSL'] == 'on') {
+    $is_secure = true;
+}
+$protocol = $is_secure ? 'https' : 'http';
+$system_url =  $protocol . "://" . $_SERVER['HTTP_HOST'];
 define("DB_NAME", "sngine");
 define("DB_USER", "root");
 define("DB_PASSWORD", "");

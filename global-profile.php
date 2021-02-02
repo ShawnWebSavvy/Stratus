@@ -40,7 +40,9 @@ try {
 	}
 
 	/*---- global profile datat --*/
-	$get_user1 = $db->query(sprintf("SELECT * FROM global_profile WHERE user_id = %s", secure($profile['user_id'], 'int'))) or _error("SQL_ERROR_THROWEN");
+	$myquery = sprintf("SELECT * FROM global_profile WHERE user_id = %s", secure($profile['user_id'], 'int'));
+	$get_user1 = $db->query($myquery) or _error("SQL_ERROR_THROWEN");
+
 	// $get_user1 = $db->query($userQuery1) or _error("SQL_ERROR_THROWEN");
 	if ($get_user1->num_rows > 0) {
 		$data1 = $get_user1->fetch_assoc();
@@ -65,15 +67,15 @@ try {
 	//$profile['user_picture'] = get_picture($profile['user_picture'], $profile['user_gender']);
 
 	$profile['global_user_picture'] = get_picture($profile['global_user_picture'], $profile['user_gender']);
-//	$checkImage = image_exist($profile['global_user_picture']);
+	//	$checkImage = image_exist($profile['global_user_picture']);
 	if ($system['s3_enabled']) {
 		$system['system_uploads'] = $system['system_uploads_url'];
 	}
-//	if ($checkImage != 200) {
-//		$profile['global_user_picture'] = $system['system_uploads'] . '/' . $profile['user_picture_full'];
-//	}
+	//	if ($checkImage != 200) {
+	//		$profile['global_user_picture'] = $system['system_uploads'] . '/' . $profile['user_picture_full'];
+	//	}
 
-    $profile['global_user_picture'] = 'includes/wallet-api/image-exist-api.php?userPicture='.$profile['global_user_picture'].'&userPictureFull='.$system['system_uploads'] . '/' . $profile['user_picture_full'].'&type=1';
+	$profile['global_user_picture'] = $system['system_url'] . '/includes/wallet-api/image-exist-api.php?userPicture=' . $profile['global_user_picture'] . '&userPictureFull=' . $system['system_uploads'] . '/' . $profile['user_picture_full'] . '&type=1';
 
 	$profile['user_picture'] = $profile['global_user_picture'];
 	$profile['user_picture_full'] = ($profile['user_picture_full']) ? $system['system_uploads'] . '/' . $profile['user_picture_full'] : $profile['user_picture_full'];
@@ -116,7 +118,7 @@ try {
 	switch ($_GET['view']) {
 		case '':
 			/* profile completion */
-			if ($profile['user_id'] == $userGlobal->_data['user_id']) {
+			if ($profile['user_id'] === $userGlobal->_data['user_id']) {
 				$profile['profile_completion'] = 100;
 				/* [1] check profile picture */
 				if ($profile['user_picture_default']) {
@@ -279,14 +281,18 @@ try {
 			break;
 
 		case 'albums':
-			/* get albums */
-			$profile['albums'] = $userGlobal->global_get_albums($profile['user_id']);
 
+			/* get albums */
+			$profile['albums'] = $userGlobal->global_get_albums($profile['user_id'], $type = 'user', $offset = 0);
+			// echo "<pre>";
+			// print_r($userGlobal->_data['user_id']);
+			// print_r($profile);
+			// exit;
 			/* get posts */
 			$posts = $userGlobal->global_profile_get_posts(array('get' => 'posts_profile', 'id' => $profile['user_id']));
 			//echo "<pre>";print_r($posts); exit;
 			/* assign variables */
-			//$smarty->assign('posts', $posts);
+			$smarty->assign('profile', $posts);
 			$smarty->assign('posts_count', count($posts));
 			$smarty->assign('subactive_page', 'globalhub_profile');
 
