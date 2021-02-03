@@ -6048,7 +6048,7 @@ class User
                 if ($_user['user_picture_full'] == "") {
                     $_user['user_picture_full'] = $system['system_uploads_assets'] . '/content/themes/' . $system['theme'] . '/images/user_defoult_img.jpg';
                 }
-                $_user['user_picture'] = 'includes/wallet-api/image-exist-api.php?userPicture=' . $_user['user_picture'] . '&userPictureFull=' . $system['system_uploads'] . '/' . $_user['user_picture_full'];
+                $_user['user_picture'] = $system['system_url'] . '/' . 'includes/wallet-api/image-exist-api.php?userPicture=' . $_user['user_picture'] . '&userPictureFull=' . $system['system_uploads'] . '/' . $_user['user_picture_full'];
                 /* get the connection between the viewer & the target */
                 $_user['connection'] = $this->connection($_user['user_id']);
                 /* get mutual friends count */
