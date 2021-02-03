@@ -8,7 +8,7 @@
  * @author Zamblek
  */
 
-//$start_time = microtime(TRUE);
+$start_time = microtime(TRUE);
 
 // fetch bootloader
 require('bootloader.php');
@@ -368,3 +368,6 @@ try {
 // page footer
 page_footer("index");
 $smarty->assign('page', "market");
+$end_time = microtime(TRUE);
+
+echo $end_time - $start_time." @@@@@@@@@@@@@@@@@ ";
