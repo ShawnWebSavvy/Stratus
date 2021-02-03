@@ -36,11 +36,13 @@ class User
             $system['system_uploads'] = $system['system_uploads_url'];
         }
         if (isset($_COOKIE[$this->_cookie_user_id]) && isset($_COOKIE[$this->_cookie_user_token])) {
-            $userQuery = sprintf("SELECT users.*, users_sessions.*, posts_photos.source as user_picture_full, packages.*,country.country_name as user_country_name FROM users INNER JOIN users_sessions ON users.user_id = users_sessions.user_id LEFT JOIN posts_photos ON users.user_picture_id = posts_photos.photo_id LEFT JOIN packages ON users.user_subscribed = '1' AND users.user_package = packages.package_id left join system_countries as country on country.country_id = users.user_country  WHERE users_sessions.user_id = %s AND users_sessions.session_token = %s", secure($_COOKIE[$this->_cookie_user_id], 'int'), secure($_COOKIE[$this->_cookie_user_token]));
-            $get_user = $db->query($userQuery) or _error("SQL_ERROR_THROWEN");
-            if ($get_user->num_rows > 0) {
-                $this->_data = $get_user->fetch_assoc();
-                /* check unusual login */
+
+           $response_data =  cachedUserData($db, $system, $_COOKIE[$this->_cookie_user_id] ,$_COOKIE[$this->_cookie_user_token] );
+
+           if(sizeof($response_data) > 0 ){
+                $this->_data = $response_data;
+
+                 /* check unusual login */
                 if ($system['unusual_login_enabled']) {
                     if ($this->_data['user_browser'] != get_user_browser() || $this->_data['user_os'] != get_user_os() || $this->_data['user_ip'] != get_user_ip()) {
                         return;
@@ -133,7 +135,8 @@ class User
                 if ($system['live_enabled']) {
                     $this->_data['can_go_live'] = $this->check_module_permission($system['live_permission']);
                 }
-            }
+           }
+
         }
     }
 
