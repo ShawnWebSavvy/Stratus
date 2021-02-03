@@ -458,7 +458,7 @@ if (endUrl != "investments") {
                                 $(this).closest('.GraphSection').find('img').attr('src', site_path + "/content/themes/default/images/investment/arrowUp.svg");
                                 $(this).closest('.GraphSection').find('img').removeClass('arrowDown');
                                 // $(this).attr('data-color', '#4682b4');
-                                color = "#4682b4";
+                                color = "#52CC8A";
                                 $('.' + class_element).closest('.GraphSection').find('.imageHikWrap').find('img').removeClass('arrowDown');
                                 $('.'+class_element).closest('.GraphSection').find('.imageHikWrap').find('img').attr('src',site_path+"/content/themes/default/images/investment/arrowUp.svg");
                             } else {

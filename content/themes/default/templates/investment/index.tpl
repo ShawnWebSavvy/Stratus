@@ -143,7 +143,7 @@
                                             </div>
                                         </div>
                                             {if $detail['fluctuation']>0 }
-                                                <div  id="graph{$key}" class="aGraph"  data-element="{$detail['short_name']}" data-color="#4682b4"></div>
+                                                <div  id="graph{$key}" class="aGraph"  data-element="{$detail['short_name']}" data-color="#52CC8A"></div>
                                             {else}
                                                 <div  id="graph{$key}" class="aGraph"  data-element="{$detail['short_name']}" data-color="#ff7979"></div>
                                             {/if}
