@@ -5865,9 +5865,10 @@ class UserGlobal
         $m = 1;
         $n = 1;
         foreach ($localPostArray as $key => $localpost) {
-            // echo $localPostArray[$key]['post_type']; echo "<br/>";
+
             if ($localPostArray[$key]['post_type'] == '' || $localPostArray[$key]['post_type'] == 'photos' || $localPostArray[$key]['post_type'] == 'video' || $localPostArray[$key]['post_type'] == 'profile_picture' || $localPostArray[$key]['post_type'] == 'profile_cover' || $localPostArray[$key]['post_type'] == 'shared' || $localPostArray[$key]['post_type'] == 'album' || $localPostArray[$key]['post_type'] == 'file' || $localPostArray[$key]['post_type'] == 'link' || $localPostArray[$key]['post_type'] == 'audio' || $localPostArray[$key]['post_type'] == 'poll') {
                 if ($i <= 2) {
+                    $localPostArray[$key]['posthub'] = "LocalHub";
                     $finalPostArray[] = $localPostArray[$key];
 
                     $i++;
@@ -5904,13 +5905,17 @@ class UserGlobal
                 }
             }
         }
-        //echo "<pre>";print_r($finalPostArray); exit;
         if (!empty($global_get_postsAarray[0])) {
+            $global_get_postsAarray[0]['posthub'] = "GlobalHub";
             $finalPostArray[] = $global_get_postsAarray[0];
         }
         if (!empty($global_get_postsAarray[1])) {
+            $global_get_postsAarray[1]['posthub'] = "GlobalHub";
             $finalPostArray[] = $global_get_postsAarray[1];
         }
+        // echo "<pre>";
+        // print_r($finalPostArray);
+        // die;
         return $finalPostArray;
     }
 
