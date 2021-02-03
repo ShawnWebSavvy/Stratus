@@ -380,7 +380,6 @@
 <!-- Dependencies Plugins -->
 
 <!-- Sngine [JS] -->
-
 <script src="{$system['system_uploads_assets']}/includes/assets/js/stratus/core.js?{$cacheremovejs}" defer></script>
 <script src="{$system['system_url']}/includes/assets/js/stratus/swipMobileCode.js?{$cacheremovejs}" defer></script>
 <!--Landing page custom js -->
