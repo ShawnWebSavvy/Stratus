@@ -88,9 +88,9 @@ class UserGlobal
                 // if ($this->_data['global_user_picture'] == "") {
                 //     $this->_data['global_user_picture'] = $system['system_url'] . '/content/themes/' . $system['theme'] . '/images/user_defoult_img.jpg';
                 // }
-                if ($this->_data['user_picture_full'] == "") {
-                    $this->_data['user_picture_full'] = 'content/themes/default/images/user_defoult_img.jpg';
-                }
+                // if ($this->_data['user_picture_full'] == "") {
+                //     $this->_data['user_picture_full'] = 'content/themes/default/images/user_defoult_img.jpg';
+                // }
                 $this->_data['global_user_picture'] = $system['system_url'] . '/' . 'includes/wallet-api/image-exist-api.php?userPicture=' . $this->_data['global_user_picture'] . '&userPictureFull=' . $system['system_uploads'] . '/' . $this->_data['user_picture_full'] . '&type=1';
 
                 /* get all friends ids */
