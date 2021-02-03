@@ -21,8 +21,7 @@ try {
             $lat_transactions = $user->investment_latest_transactions();
           
             $allTokens = InvestmentHelper::getDashboardDate($user->_data);
-            
-            //   echo '<pre>'; print_r($allTokens); die;
+    
             $smarty->assign('get_balance', $allTokens['total_balance']);
             $smarty->assign('allTokens', $allTokens['token_data']);
             $smarty->assign('graphData', $allTokens['graph']);

@@ -230,7 +230,7 @@ url({$profile['user_profile_background']}) fixed !important; background-size:
                         {elseif $page == "investment/activity" || $page == "investment/buy_sell"  || $page == "investment/index" && $user->_logged_in}
                            <a href="{$system['system_url']}/investments" class="logo {$page}">
                               <img class="img-fluid"
-                                src="{$system['system_uploads_assets']}/content/themes/default/images/Investment Hub.svg" />
+                                src="{$system['system_uploads_assets']}/content/themes/default/images/investment/Investment-Hub.png" />
                            </a>
                         {else}
                         <a href="{$system['system_url']}" class="logo {$page}">
