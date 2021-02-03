@@ -134,7 +134,10 @@ function fetchPostDataForTimeline($user_id, $userObj, $redisObject, $system)
         $getPostsFromRedis = $redisObject->getValueFromKey($redisPostKey);
         $jsonValue = json_decode($getPostsFromRedis, true);
         $posts = $jsonValue;
+
     }
+
+    
 
     return $posts;
 }
