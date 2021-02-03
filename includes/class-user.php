@@ -4986,6 +4986,11 @@ class User
         /* points balance */
         $this->points_balance("add", $this->_data['user_id'], "post", $post['post_id']);
 
+
+            $redisPostKey = 'user-' . $this->_data['user_id'] . '-posts';
+            $redisObject = new RedisClass();
+            $redisObject->deleteValueFromKey($redisPostKey);
+            fetchPostDataForTimeline($this->_data['user_id'], $this, $redisObject, $system);
         // return
         return $post;
     }
