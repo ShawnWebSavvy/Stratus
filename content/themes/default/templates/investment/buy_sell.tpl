@@ -66,7 +66,33 @@
                                             </li>
                                         </div>
                                         {/foreach}
-                                        
+                                        <div class="gallery-cell">
+                                            <li>
+                                                <a href="javascript:;" class="coinDetailPrice coinDetailPrice_wallet  {if $set_active_coin==$tkn_detail['short_name']} active {/if}" data-coin="{strtoupper($tkn_detail['short_name'])}">
+                                                    <div class="coinDetailHeader">
+                                                        <img src="{$system['system_url']}/content/themes/default/images/investment/gsx.svg"
+                                                            alt="bit coin">
+                                                        <div class="textSection">
+                                                            <h5>Gold Secured Currency</h5>
+                                                            <p>GSX</p>
+                                                            <p class="comingSoon">Coming Soon</p>
+                                                        </div>
+                                                    </div>
+                                                    <div class="priceCount">
+                                                        <p>
+                                                            <span>
+                                                            {if $order_action_type=='Buy'}
+                                                                {$tkn_detail['buy_price']}
+                                                            {else}
+                                                                {$tkn_detail['sell_price']}
+                                                            {/if}
+                                                            </span>
+                                                            USD
+                                                        </p>
+                                                    </div>
+                                                </a>
+                                            </li>
+                                        </div>
                                         <!-- <div class="gallery-cell">
                                             <li>
                                                 <a href="javascript:;" class="coinDetailPrice coinDetailPrice_wallet {if $set_active_coin=='eth'} active {/if}" data-coin="ETH">
@@ -180,6 +206,7 @@
                             <div class="amountCount">
                                 <input type="text" class="" placeholder="USD" id="amount">
                                 <p class="currancyNme" id="currency_show">USD</p>
+                                <p class="availableBalnce">Balance Available: 0.0092 ETH</p>
                             </div>
                             <button class="swapButton" id="swapButton">
                                 <img src="{$system['system_url']}/content/themes/default/images/investment/ic_switch.svg" alt="swap" id="investment_swap">
@@ -189,7 +216,7 @@
                                 <!-- <p>1.0000 BTC</p> -->
                                 <input type="text" class="" placeholder="{strtoupper($set_active_coin)}" id="total_coin">
                                 <p class="currancyNme" id="coin_show">{strtoupper($set_active_coin)}</p>
-                                
+                                <p class="availableBalnce">Balance Available: 0.0092 ETH</p>
                             </div>
                         </div>
                           <div class="amountSectionChange">

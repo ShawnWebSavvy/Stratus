@@ -22,7 +22,10 @@
                                                     {$_sell_details[$set_active_coin]}
                                                 {/if}
                                                 </span>
-                                                PER &nbsp; <span class="coin_text">USD</span></p>
+                                                Per&nbsp;<span class="coin_text">USD</span></p>
+                                            <p class="infoText">Available <span class="per_coin_price">
+                                                40458.374
+                                                </span> ETH</p>
                                         </div>
                                         <div class="activityDate">{date('M d, Y')}</div>
                                     </div>
@@ -91,10 +94,10 @@
                         <li>
                             <div class="activityBlock">
                                 {if $transaction['tnx_type']=='buy'}
-                                    <img src="{$system['system_url']}/content/themes/default/images/investment/deposit.svg"
+                                    <img src="{$system['system_url']}/content/themes/default/images/investment/withdraw.svg"
                                     alt="withdraw Icon">
                                 {else}
-                                    <img src="{$system['system_url']}/content/themes/default/images/investment/withdraw.svg"
+                                    <img src="{$system['system_url']}/content/themes/default/images/investment/sell.svg"
                                     alt="withdraw Icon">
                                 {/if}
                                 

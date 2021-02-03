@@ -7,9 +7,9 @@ if (isset($_SERVER['HTTPS']) && strtolower($_SERVER['HTTPS']) == 'on') {
 }
 $protocol = $is_secure ? 'https' : 'http';
 $system_url =  $protocol . "://" . $_SERVER['HTTP_HOST'];
-define("DB_NAME", "sngine");
+define("DB_NAME", "investment");
 define("DB_USER", "root");
-define("DB_PASSWORD", "Admin@123");
+define("DB_PASSWORD", "");
 define("DB_HOST", "localhost");
 define("DB_PORT", "3306");
 define("SYS_URL", "http://localhost/stratus");

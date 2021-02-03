@@ -121,11 +121,15 @@
                                                 <p>
                                                     <img src="{$system['system_url']}/content/themes/default/images/svg/svgImg/Wallet_icon_header.svg"
                                                         alt="wallet">
+                                                        <span>
                                                         {if $user_data[$detail['wallet_name']] && $user_data[$detail['wallet_name']]>0}
                                                             {$user_data[$detail['wallet_name']]}
                                                         {else}
                                                             0
                                                         {/if} {$detail['short_name']|upper}
+                                                        <br/>
+                                                         $402.68 USD
+                                                        </span>
                                                 </p>
                                             </div>
                                             <div class="timeWrap">24H</div>
