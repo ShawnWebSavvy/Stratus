@@ -711,6 +711,21 @@
   width: 32%;
 }
 
+@media (max-width:1458px){
+  .coinSelection ul .MobileCrousle .gallery-cell {
+    width: 35%;
+  }
+}
+@media (max-width:1321px){
+  .coinSelection ul .MobileCrousle .gallery-cell {
+    width: 37%;
+  }
+}
+@media (max-width:1278px){
+  .coinSelection ul .MobileCrousle .gallery-cell {
+    width: 39%;
+  }
+}
 @media (max-width: 1250px) and (min-width: 992px) {
   .coinSelection ul .MobileCrousle .gallery-cell {
     width: 56%;
