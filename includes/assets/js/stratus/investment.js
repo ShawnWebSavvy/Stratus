@@ -45,6 +45,10 @@ if (endUrl != "investments") {
                         $(this).find('.priceCount').find('span').html(buy_details[($(this).data('coin').toLowerCase())]);
                     });
                 });
+                   
+                timeou_id = setTimeout(function () {
+                    change_amount();
+                }, 3000);
             } else {
                 $('.per_coin_price').html(sell_details[token]);
                 $('.coin_text').html(token.toUpperCase());
@@ -52,11 +56,11 @@ if (endUrl != "investments") {
                 $(".coinDetailPrice_wallet").each(function () {
                     $(this).find('.priceCount').find('span').html(sell_details[($(this).data('coin').toLowerCase())]);
                 });
+                    
+                timeou_id = setTimeout(function () {
+                    change_coin();
+                }, 3000);
             }
-           
-            timeou_id = setTimeout(function () {
-                change_amount();
-            }, 3000);
 
         }
 
@@ -105,54 +109,116 @@ if (endUrl != "investments") {
             $('#investment_spiner').show();
             order_total.html(total_amount);
             clearTimeout(timeout);
-            timeout = setTimeout(function () {
-                $.post(api['investment/ticker'], { 'token': token_name, 'amount': total_amount, 'action': action }, function (response) {
-                    if (response) {
-                        $('#total_coin').val(response.data.tokens);
-                        $('.overall_coin').html(response.data.tokens);
-                        sub_total.text(response.data.sub_total);
-                        $('#total_fees').text(response.data.total_fees);
-                        if (response.data.amount) {
-                            order_total.html(response.data.amount);
-                        }
+            $.post(api['investment/ticker'], { 'token': token_name, 'amount': total_amount, 'action': action }, function (response) {
+                if (response) {
+                    $('#total_coin').val(response.data.tokens);
+                    $('.overall_coin').html(response.data.tokens);
+                    sub_total.text(response.data.sub_total);
+                    $('#total_fees').text(response.data.total_fees);
+                    if (response.data.amount) {
+                        order_total.html(response.data.amount);
                     }
+                }
+                $('#investment_swap').show();
+                $('#investment_spiner').hide();
+                if (parseFloat(total_amount) > parseFloat(wallet.balance.usd) && action == 'buy') {
+                    $('#usd_balance').show();
+                    $('#usd_balance').html(wallet_insuficient_error);
+                    $('#token_balance').hide();
+                    return false;
+                }
+                if (parseFloat(total_amount) < parseFloat(order_detail[token_name.toLowerCase()]['min_buy_amount']) && action == 'buy') {
+                    $('#usd_balance').show();
+                    $('#usd_balance').html(min_tnx_error+'$'+order_detail[token_name.toLowerCase()]['min_buy_amount']);
+                    $('#token_balance').hide();
+                    return false;
+                }
+                if (parseFloat(response.data.tokens) > parseFloat(wallet.balance[token_name.toLowerCase()]) && action == 'sell') {
+                    $('#usd_balance').hide();
+                    $('#token_balance').html(token_name.toUpperCase() + balance_error)
+                    $('#token_balance').show();
+                    return false;
+                }
+                if (parseFloat(response.data.tokens) > parseFloat(order_detail[token_name.toLowerCase()]['base_max_size']) && action == 'sell') {
+                    $('#usd_balance').hide();
+                    $('#token_balance').html(max_balance_error+order_detail[token_name.toLowerCase()]['base_max_size']+token_name.toUpperCase())
+                    $('#token_balance').show();
+                    return false;
+                }                    
+                $('#usd_balance').hide();
+                $('#token_balance').hide();
+                buy_btn.prop('disabled', false);
+            }, 'json')
+                .fail(function (err) {
+                    // console.log(err);
                     $('#investment_swap').show();
                     $('#investment_spiner').hide();
-                    if (parseFloat(total_amount) > parseFloat(wallet.balance.usd) && action == 'buy') {
-                        $('#usd_balance').show();
-                        $('#usd_balance').html(wallet_insuficient_error);
-                        $('#token_balance').hide();
-                        return false;
-                    }
-                    if (parseFloat(total_amount) < parseFloat(order_detail[token_name.toLowerCase()]['min_buy_amount']) && action == 'buy') {
-                        $('#usd_balance').show();
-                        $('#usd_balance').html(min_tnx_error+'$'+order_detail[token_name.toLowerCase()]['min_buy_amount']);
-                        $('#token_balance').hide();
-                        return false;
-                    }
-                    if (parseFloat(response.data.tokens) > parseFloat(wallet.balance[token_name.toLowerCase()]) && action == 'sell') {
-                        $('#usd_balance').hide();
-                        $('#token_balance').html(token_name.toUpperCase() + balance_error)
-                        $('#token_balance').show();
-                        return false;
-                    }
-                    if (parseFloat(response.data.tokens) > parseFloat(order_detail[token_name.toLowerCase()]['base_max_size']) && action == 'sell') {
-                        $('#usd_balance').hide();
-                        $('#token_balance').html(max_balance_error+order_detail[token_name.toLowerCase()]['base_max_size']+token_name.toUpperCase())
-                        $('#token_balance').show();
-                        return false;
-                    }                    
+                    modal('#modal-message', { title: __['Error'], message: __['There is something that went wrong!'] });
+                });
+        }
+        
+        function change_coin() {
+            this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*?)\..*/g, '$1');
+            let total_amount = amount.val();
+            token_name = token.attr('placeholder');
+            let total_tokens = token.val();
+            
+            if (total_tokens == "" || total_tokens == undefined) {
+                reset_sidebar_calculation();
+                clearTimeout(timeout);
+                $('#usd_balance').hide();
+                $('#token_balance').hide();
+                return
+            };
+            buy_btn.prop('disabled', true);
+            $('#investment_swap').hide();
+            $('#investment_spiner').show();
+
+            clearTimeout(timeout);
+            $('.currancyNme').show();
+            $.post(api['investment/ticker'], { 'token': token_name, 'total_tokens': total_tokens, 'type': 'coin', 'action': action }, function (response) {
+                if (response) {
+                    $('#amount').val(response.data.amount);
+                    order_total.html(response.data.amount);
+                    sub_total.text(response.data.sub_total);
+                    total_fees.text(response.data.total_fees);
+                }
+                $('.overall_coin').html(total_tokens);
+                $('#investment_swap').show();
+                $('#investment_spiner').hide();
+                if (parseFloat(total_tokens) > parseFloat(wallet.balance[token_name.toLowerCase()]) && action == 'sell') {
                     $('#usd_balance').hide();
+                    $('#token_balance').html(token_name.toUpperCase() + balance_error)
+                    $('#token_balance').show();
+                    return false;
+                }
+                if (parseFloat(total_tokens) > parseFloat(order_detail[token_name.toLowerCase()]['base_max_size']) && action == 'sell') {
+                    $('#usd_balance').hide();
+                    $('#token_balance').html(max_balance_error+order_detail[token_name.toLowerCase()]['base_max_size']+token_name.toUpperCase())
+                    $('#token_balance').show();
+                    return false;
+                }
+                if (parseFloat(response.data.amount) > parseFloat(wallet.balance.usd) && action == 'buy') {
+                    $('#usd_balance').show();
+                    $('#usd_balance').html(wallet_insuficient_error);
                     $('#token_balance').hide();
-                    buy_btn.prop('disabled', false);
-                }, 'json')
-                    .fail(function (err) {
-                        // console.log(err);
-                        $('#investment_swap').show();
-                        $('#investment_spiner').hide();
-                        modal('#modal-message', { title: __['Error'], message: __['There is something that went wrong!'] });
-                    });
-            }, 2000);
+                    return false;
+                }
+                if (parseFloat(response.data.amount) < parseFloat(order_detail[token_name.toLowerCase()]['min_buy_amount']) && action == 'buy') {
+                    $('#usd_balance').show();
+                    $('#usd_balance').html(min_tnx_error+'$'+order_detail[token_name.toLowerCase()]['min_buy_amount']);
+                    $('#token_balance').hide();
+                    return false;
+                }
+                $('#usd_balance').hide();
+                $('#token_balance').hide();
+                buy_btn.prop('disabled', false);
+            }, 'json')
+                .fail(function () {
+                    $('#investment_swap').show();
+                    $('#investment_spiner').hide();
+                    // modal('#modal-message', { title: __['Error'], message: __['There is something that went wrong!'] });
+                });
         }
         
         $('.buySellButton').on('click', function () {

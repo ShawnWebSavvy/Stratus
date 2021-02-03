@@ -19,9 +19,12 @@ try {
     
 	switch ($_POST['order_action_type']) {
         case 'get_all_tokens_rate':
-            $_details = InvestmentHelper::update_all_token_price();
+            $_details = InvestmentHelper::update_all_token_price($user->_data);
             $return['buy_details'] =$_details['buy'];
             $return['sell_details'] =$_details['sell'];
+            $return['wallet_coins'] =$_details['wallet'];
+            $return['usd_wallet_amount'] =round($user->_data['user_wallet_balance'],2);
+            // echo '<pre>'; print_r($return); die;
             return_json($return);
             break;
         case 'update_dashboard':

@@ -50,7 +50,7 @@ class InvestmentHelper {
         }
         return $return;
     }
-    public static function update_all_token_price()
+    public static function update_all_token_price($user_data=null)
     {   global $db,$system;
         $return = [];
         $tokens  =  httpGetCurl('investment/get_tickers',$system['investment_api_base_url']);
@@ -61,6 +61,7 @@ class InvestmentHelper {
             $return['token'][$i]['short_name']=$token['short_name'];
             $return['buy'][$token['short_name']] = round($token['buy_price'],5);
             $return['sell'][$token['short_name']] = round($token['sell_price'],5);
+            $return['wallet'][$token['short_name']]['total_coins'] = round($user_data[$token['short_name'].'_wallet'],5);
             if(!empty($user_data)){
                 $return['wallet_amount']['balance'][$token['short_name']]=$user_data[$token['short_name'].'_wallet'];
             }
@@ -200,15 +201,14 @@ class InvestmentHelper {
     }
 
     public static function getDashboardDate($user_data){
-         global $db,$system;
-        // $tokens = $db->query("SELECT * FROM investment_coins") or _error("SQL_ERROR_THROWEN");
+        global $db,$system;
         $tokens  =  httpGetCurl('investment/dashboard_detail',$system['investment_api_base_url']);
-        //    echo '<pre>'; print_r($tokens); die;
         $return = [];
         $currency_price = [];
         foreach($tokens['data'] as $key=>$token){
             
-            $return['token_data'][$key]['wallet_name'] = $token['short_name'].'_wallet'; 
+            $return['token_data'][$key]['wallet_name'] = $token['short_name'].'_wallet';
+            $return['token_data'][$key]['total_wallet_quote_amount'] = self::convertBaseToQuoteCurrency($token['ticker_data']['buy_price'],$user_data[$token['short_name'].'_wallet']);
             $return['graph'][$token['short_name'].'_kline_data'] =  $token['kline_data']?array_map(function ($ar) {return (double)$ar['close'];}, $token['kline_data']):"";
             $return['series'][$key] = $user_data[$token['short_name'].'_wallet'];
             $return['total_coin'] = $return['total_coin']+$user_data[$token['short_name'].'_wallet'];
@@ -229,6 +229,11 @@ class InvestmentHelper {
         // echo '<pre>'; print_r($return); die;
         return $return;
    
+    }
+    
+    public static function convertBaseToQuoteCurrency($base_currency_amount,$quote_currency_price){
+        $total_quote_currency_amount = ($base_currency_amount>0 && $quote_currency_price>0)?round($base_currency_amount*$quote_currency_price, 2):0;
+        return $total_quote_currency_amount;
     }
 
     public static function getBtcBlance($user_data,$currency_price){
