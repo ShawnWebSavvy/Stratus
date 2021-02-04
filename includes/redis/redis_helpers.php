@@ -152,9 +152,8 @@ function cachedUserData($db, $system, $user_id, $user_token)
     $response = [];
     $redisPostKey = 'user-' . $user_id;
     $userClassObject = new userClass();
-
     $isKeyExistOnRedis = $redisObject->isRedisKeyExist($redisPostKey);
-    // echo $isKeyExistOnRedis; die;
+
     if ($isKeyExistOnRedis == false) {
         /* get user pages */
         $userQuery = sprintf(
@@ -182,11 +181,7 @@ function cachedUserData($db, $system, $user_id, $user_token)
             $_data['user_picture'] = get_picture($_data['user_picture'], $_data['user_gender']);
             $_data['user_picture_full'] = ($_data['user_picture_full']) ? $_data['user_picture_full'] : $_data['user_picture_full'];
 
-            if ($_data['user_picture_full'] == "") {
-                $_data['user_picture_full'] = $system['system_uploads_assets'] . '/content/themes/' . $system['theme'] . '/images/user_defoult_img.jpg';
-            }
-
-            $_data['user_picture'] = $system['system_url'] . '/includes/wallet-api/image-exist-api.php?userPicture=' . $_data['user_picture'] . '&userPictureFull=' . $system['system_uploads'] . '/' . $_data['user_picture_full'] . '&type=1';
+            $_data['user_picture'] = $system['system_url'] . '/includes/wallet-api/image-exist-api.php?userPicture=' . $_data['user_picture'] . '&userPictureFull=' . $_data['user_picture_full'] . '&type=1';
 
             /* get all friends ids */
             $_data['friends_ids'] = $userClassObject->get_friends_ids($_data['user_id']);
