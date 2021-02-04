@@ -6268,7 +6268,7 @@ class User
      */
     public function shareCount($post_id)
     {
-        global $db, $date;
+        global $db, $date,$system;
         /* check if the viewer can share the post */
         $post = $this->_check_post($post_id, true);
         if (!$post || $post['privacy'] != 'public') {
@@ -6287,6 +6287,9 @@ class User
         } else {
             $totalCounts = 0;
         }
+                     $redisPostKey = 'user-' . $this->_data['user_id'] . '-posts';
+                     $redisObject = new RedisClass();
+                     fetchAndSetDataOnPostReaction($system, $this,$redisObject,$redisPostKey);
         return $totalCounts;
     }
 
@@ -7135,8 +7138,9 @@ class User
                         /**
              * update Redis
              */
-                     $redisPostKey = 'user-' . $this->_data['user_id'] . '-posts';
+                       $redisPostKey = 'user-' . $this->_data['user_id'] . '-posts';
                      $redisObject = new RedisClass();
+                     fetchAndSetDataOnPostReaction($system, $this,$redisObject,$redisPostKey);
                     // $getPostsFromRedis = $redisObject->getValueFromKey($redisPostKey);
                     // $jsonValue_ = json_decode($getPostsFromRedis, true);
                     // print_r($jsonValue_); die;
