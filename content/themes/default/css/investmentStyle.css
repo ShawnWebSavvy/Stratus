@@ -708,7 +708,7 @@
 }
 
 .coinSelection ul .MobileCrousle .gallery-cell {
-  width: 290px;
+  width: 300px;
 }
 
 /* @media (max-width:1458px){
@@ -741,7 +741,8 @@
 .coinSelection ul li {
   margin-right: 15px;
   padding-bottom: 30px;
-  padding-left: 15px;
+  padding-left: 10px;
+  padding-right: 10px;
   padding-top: 10px;
 }
 
