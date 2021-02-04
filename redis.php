@@ -8,7 +8,7 @@ class RedisClass
         if ($this->redis === NULL) {
             try {
                 $this->redis = new Redis();
-                $this->redis->connect('172.31.24.194', 6379);
+                $this->redis->connect('127.0.0.1', 6379);
             } catch (Exception $e) {
                 echo $e->getMessage();
             }
@@ -52,7 +52,6 @@ class RedisClass
     {
         try {
             $redisObj = $this->redis;
-            // deleting the value from redis
             return $redisObj->keys("*");
         } catch (Exception $e) {
             echo $e->getMessage();
@@ -65,6 +64,30 @@ class RedisClass
             $redisObj = $this->redis;
             return  $redisObj->exists($key) ?  true : false;
         } catch (Exception $e) {
+            echo $e->getMessage();
+        }
+    }
+
+    function checkRedisObjectTimeToLive($key)
+    {
+        try {
+            $redisObj = $this->redis;
+            $exp_time = $redisObj->ttl($key);
+            return ($exp_time) ? $exp_time : false;
+        } catch (Exception $e) {
+            echo $e->getMessage();
+        }
+    }
+
+
+    function setValueWithExpireInRedis($key, $ttl, $data)
+    {
+        try {
+            $redisObj = $this->redis;
+            // setting the value in redis
+            $redisObj->setex($key, $ttl, $data);
+        } catch (Exception $e) {
+            echo $e->getMessage();
         }
     }
 }
