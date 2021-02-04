@@ -12,12 +12,16 @@ $start_time = microtime(TRUE);
 
 // fetch bootloader
 require('bootloader.php');
+ require('redis.php');
 
 //$end_time = microtime(TRUE);
 
 //echo $end_time - $start_time; die;
 
 try {
+	
+	 $redis = new RedisClass();
+	print_r($redis);
 	if (!$user->_logged_in) {
 
 		// page header
@@ -370,4 +374,4 @@ page_footer("index");
 $smarty->assign('page', "market");
 $end_time = microtime(TRUE);
 
-echo $end_time - $start_time." @@@@@@@@@@@@@@@@@ ";
+// echo $end_time - $start_time." @@@@@@@@@@@@@@@@@ ";
