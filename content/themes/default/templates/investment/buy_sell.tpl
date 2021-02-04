@@ -66,9 +66,9 @@
                                             </li>
                                         </div>
                                         {/foreach}
-                                        <div class="gallery-cell">
+                                        <div class="gallery-cell" disabled>
                                             <li>
-                                                <a href="javascript:;" class="coinDetailPrice coinDetailPrice_wallet  {if $set_active_coin==$tkn_detail['short_name']} active {/if}" data-coin="{strtoupper($tkn_detail['short_name'])}">
+                                                <a href="javascript:;" class="coinDetailPrice"  data-coin="gsx">
                                                     <div class="coinDetailHeader">
                                                         <img src="{$system['system_url']}/content/themes/default/images/investment/gsx.svg"
                                                             alt="bit coin">
@@ -81,11 +81,7 @@
                                                     <div class="priceCount">
                                                         <p>
                                                             <span>
-                                                            {if $order_action_type=='Buy'}
-                                                                {$tkn_detail['buy_price']}
-                                                            {else}
-                                                                {$tkn_detail['sell_price']}
-                                                            {/if}
+                                                                0.1
                                                             </span>
                                                             USD
                                                         </p>
@@ -206,7 +202,8 @@
                             <div class="amountCount">
                                 <input type="text" class="" placeholder="USD" id="amount">
                                 <p class="currancyNme" id="currency_show">USD</p>
-                                <p class="availableBalnce">Balance Available: 0.0092 ETH</p>
+                                <a href="javascript:;" class="availableBalnce " id="availableBalnce1">Balance Available: $<span id="wallet_balance">{$wallet_coins_amount['usd']}</span></a>
+                            
                             </div>
                             <button class="swapButton" id="swapButton">
                                 <img src="{$system['system_url']}/content/themes/default/images/investment/ic_switch.svg" alt="swap" id="investment_swap">
@@ -216,7 +213,7 @@
                                 <!-- <p>1.0000 BTC</p> -->
                                 <input type="text" class="" placeholder="{strtoupper($set_active_coin)}" id="total_coin">
                                 <p class="currancyNme" id="coin_show">{strtoupper($set_active_coin)}</p>
-                                <p class="availableBalnce">Balance Available: 0.0092 ETH</p>
+                                <a href="javascript:;" class="availableBalnce" id="availableBalnce2">Balance Available: <span class="balance wallet_amount11" id="coin_balance">{$wallet_coins_amount[$set_active_coin]}</span><span class="coin_text">{strtoupper($set_active_coin)}</span></a>
                             </div>
                         </div>
                           <div class="amountSectionChange">
@@ -255,9 +252,10 @@
 
 <script>
     var order_detail  = {json_encode($order_detail)};
-    console.log(order_detail,'order_detail');
+
     var buy_details ={json_encode($_buy_details)};
     var wallet     = {json_encode($wallet_balance)};
     var sell_details = {json_encode($_sell_details)};
+    var wallet_coins = {json_encode($wallet_coins_amount)};
 </script>
 {include file='_footer.tpl'}

@@ -21,7 +21,7 @@ try {
             $lat_transactions = $user->investment_latest_transactions();
           
             $allTokens = InvestmentHelper::getDashboardDate($user->_data);
-    
+            // echo '<pre>'; print_r($allTokens); die;
             $smarty->assign('get_balance', $allTokens['total_balance']);
             $smarty->assign('allTokens', $allTokens['token_data']);
             $smarty->assign('graphData', $allTokens['graph']);
@@ -49,8 +49,9 @@ try {
             //    echo '<pre>'; print_r($_details); die;
             $lat_transactions = $user->investment_latest_transactions();
             $_details['wallet_amount']['balance']['usd']= $user->_data['user_wallet_balance'];
-            // echo '<pre>'; print_r($lat_transactions); die;
+            // echo '<pre>'; print_r($_details['wallet_amount']['balance']); die;
             $smarty->assign('order_detail', $_details['order']);
+            $smarty->assign('wallet_coins_amount',$_details['wallet_amount']['balance']);
             $smarty->assign('wallet_balance', $_details['wallet_amount']);
             $smarty->assign('lat_transactions', $lat_transactions);
             $smarty->assign('_buy_details',$_details['buy']);
