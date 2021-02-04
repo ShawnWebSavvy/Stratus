@@ -708,10 +708,10 @@
 }
 
 .coinSelection ul .MobileCrousle .gallery-cell {
-  width: 32%;
+  width: 290px;
 }
 
-@media (max-width:1458px){
+/* @media (max-width:1458px){
   .coinSelection ul .MobileCrousle .gallery-cell {
     width: 35%;
   }
@@ -725,16 +725,16 @@
   .coinSelection ul .MobileCrousle .gallery-cell {
     width: 39%;
   }
-}
+} */
 @media (max-width: 1250px) and (min-width: 992px) {
   .coinSelection ul .MobileCrousle .gallery-cell {
-    width: 56%;
+    width: 50%;
   }
 }
 
 @media (max-width: 767px) {
   .coinSelection ul .MobileCrousle .gallery-cell {
-    width: 85%;
+    width: 80%;
   }
 }
 
