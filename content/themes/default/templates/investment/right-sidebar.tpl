@@ -22,10 +22,14 @@
                                                     {$_sell_details[$set_active_coin]}
                                                 {/if}
                                                 </span>
-                                                Per&nbsp;<span class="coin_text">USD</span></p>
-                                            <p class="infoText">Available <span class="per_coin_price">
-                                                40458.374
-                                                </span> ETH</p>
+                                                Per&nbsp;<span class="coin_text">USD</span>
+                                            </p>
+                                            <p class="infoText">Available 
+                                                <span class="wallet_amount wallet_amount11" id="wallet_amount">
+                                                    {$wallet_coins_amount[$set_active_coin]}
+                                                </span>
+                                                <span class="coin_text"> {$set_active_coin|upper}</span>
+                                            </p>
                                         </div>
                                         <div class="activityDate">{date('M d, Y')}</div>
                                     </div>

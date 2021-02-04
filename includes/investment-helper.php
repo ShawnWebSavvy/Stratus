@@ -61,7 +61,7 @@ class InvestmentHelper {
             $return['token'][$i]['short_name']=$token['short_name'];
             $return['buy'][$token['short_name']] = round($token['buy_price'],5);
             $return['sell'][$token['short_name']] = round($token['sell_price'],5);
-            $return['wallet'][$token['short_name']]['total_coins'] = round($user_data[$token['short_name'].'_wallet'],5);
+            $return['wallet'][$token['short_name']] = round($user_data[$token['short_name'].'_wallet'],5);
             if(!empty($user_data)){
                 $return['wallet_amount']['balance'][$token['short_name']]=$user_data[$token['short_name'].'_wallet'];
             }

@@ -18,11 +18,16 @@ if (endUrl != "investments") {
             }
         }
         var timeou_id = "";
+        
         updateToken();
         setInterval(updateToken, 30000);
         function updateToken() {
             $.post(api['investment/thread'], { 'order_action_type': 'get_all_tokens_rate' }, function (response) {
                 if (response) {
+                    $('#wallet_balance').html(response['usd_wallet_amount']);
+                    $('#coin_balance').html(response['wallet_coins'][($('#total_coin').attr('placeholder')).toLowerCase()]);
+                    wallet_coins = response['wallet_coins'];
+                    wallet_coins['usd'] = response['usd_wallet_amount'];
                     buy_details = response.buy_details;
                     sell_details = response.sell_details;
                     updateDetail();
@@ -33,7 +38,11 @@ if (endUrl != "investments") {
                 })
         }
         var action = $('.btnSectionBuySell').find('a.active').data('actiontype');
-       
+        if (action == 'buy') {
+            $('#availableBalnce2').hide()
+        } else {
+            $('#availableBalnce1').hide()
+        }
         function updateDetail() {
             let token = ($('#total_coin').attr('placeholder')).toLowerCase();
             if (action == 'buy') {
@@ -158,7 +167,7 @@ if (endUrl != "investments") {
         }
         
         function change_coin() {
-            this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*?)\..*/g, '$1');
+            $('#total_coin').val().replace(/[^0-9.]/g, '').replace(/(\..*?)\..*/g, '$1');
             let total_amount = amount.val();
             token_name = token.attr('placeholder');
             let total_tokens = token.val();
@@ -220,7 +229,7 @@ if (endUrl != "investments") {
                     // modal('#modal-message', { title: __['Error'], message: __['There is something that went wrong!'] });
                 });
         }
-        
+      
         $('.buySellButton').on('click', function () {
             // $(this).siblings.addClass('active');
             $('.buySellButton').removeClass('active');
@@ -231,7 +240,29 @@ if (endUrl != "investments") {
             reset_sidebar_calculation();
             $('#usd_balance').hide();
             $('#token_balance').hide();
+            if (action == 'buy') {
+                $('#availableBalnce2').hide();
+                $('#availableBalnce1').show();
+        
+            } else {
+                $('.wallet_amount11').html(wallet_coins[token.attr('placeholder').toLowerCase()]);
+                $('#availableBalnce2').show();
+                $('#availableBalnce1').hide();
+            }
             updateDetail();
+        });
+
+        $(document).on('click', '.availableBalnce', function () {
+            // alert(wallet_coins);
+            if (action == 'buy') {
+                $('#amount').val(wallet_coins['usd']);
+                $('#amount').trigger("input");
+            } else {
+                
+                $('#total_coin').val(wallet_coins[token.attr('placeholder').toLowerCase()]);
+                $('#total_coin').trigger("input");
+                
+            }
         });
 
         $(document).on('click', '.coinDetailPrice_wallet', function () {
@@ -241,6 +272,9 @@ if (endUrl != "investments") {
             $('#buy_btn_txt').html($(this).data('coin'));
             $('#coin_show').html($(this).data('coin'));
             $('.coin_img').attr('src', $(this).find('img').attr('src'));
+           
+            $('#wallet_balance').html(wallet_coins['usd']);
+            $('.wallet_amount11').html(wallet_coins[$(this).data('coin').toLowerCase()]);
             updateDetail();
         });
         $(document).on('click', '#swapButton', function () {
