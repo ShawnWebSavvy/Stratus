@@ -37,12 +37,12 @@ class User
         }
         if (isset($_COOKIE[$this->_cookie_user_id]) && isset($_COOKIE[$this->_cookie_user_token])) {
 
-           $response_data =  cachedUserData($db, $system, $_COOKIE[$this->_cookie_user_id] ,$_COOKIE[$this->_cookie_user_token] );
+            $response_data =  cachedUserData($db, $system, $_COOKIE[$this->_cookie_user_id], $_COOKIE[$this->_cookie_user_token]);
 
-           if(sizeof($response_data) > 0 ){
+            if (sizeof($response_data) > 0) {
                 $this->_data = $response_data;
 
-                 /* check unusual login */
+                /* check unusual login */
                 if ($system['unusual_login_enabled']) {
                     if ($this->_data['user_browser'] != get_user_browser() || $this->_data['user_os'] != get_user_os() || $this->_data['user_ip'] != get_user_ip()) {
                         return;
@@ -135,12 +135,9 @@ class User
                 if ($system['live_enabled']) {
                     $this->_data['can_go_live'] = $this->check_module_permission($system['live_permission']);
                 }
-           }
-
+            }
         }
     }
-
-
 
     /* ------------------------------- */
     /* System Countries */
@@ -4467,6 +4464,13 @@ class User
         foreach ($videos as $video) { //print_r($videos);
             $db->query(sprintf("INSERT INTO stories_media (story_id, source, is_photo, text, time) VALUES (%s, %s, '0', %s, %s)", secure($story_id, 'int'), secure($video), secure($message), secure($date))) or _error("SQL_ERROR_THROWEN");
         }
+        $redisObject = new RedisClass();
+        $rediskeyname = 'user-' . $this->_data['user_id'] . '-getotherstory';
+        $redisObject->deleteValueFromKey($rediskeyname);
+        $rediskeyname = 'user-' . $this->_data['user_id'] . '-getmystory';
+        $redisObject->deleteValueFromKey($rediskeyname);
+        getMyStory($this->_data['user_id'], $this, $redisObject, $system);
+        getAllStories($this->_data['user_id'], $this, $redisObject, $system);
     }
 
     /**
@@ -4535,6 +4539,13 @@ class User
     {
         global $db, $system;
         $check_story = $db->query(sprintf("DELETE FROM stories WHERE time>=DATE_SUB(NOW(), INTERVAL 1 DAY) AND user_id = %s", secure($this->_data['user_id'], 'int'))) or _error("SQL_ERROR_THROWEN");
+        $redisObject = new RedisClass();
+        $rediskeyname = 'user-' . $this->_data['user_id'] . '-getotherstory';
+        $redisObject->deleteValueFromKey($rediskeyname);
+        $rediskeyname = 'user-' . $this->_data['user_id'] . '-getmystory';
+        $redisObject->deleteValueFromKey($rediskeyname);
+        getMyStory($this->_data['user_id'], $this, $redisObject, $system);
+        getAllStories($this->_data['user_id'], $this, $redisObject, $system);
     }
 
 
@@ -4987,10 +4998,10 @@ class User
         $this->points_balance("add", $this->_data['user_id'], "post", $post['post_id']);
 
 
-            $redisPostKey = 'user-' . $this->_data['user_id'] . '-posts';
-            $redisObject = new RedisClass();
-            $redisObject->deleteValueFromKey($redisPostKey);
-            fetchPostDataForTimeline($this->_data['user_id'], $this, $redisObject, $system);
+        $redisPostKey = 'user-' . $this->_data['user_id'] . '-posts';
+        $redisObject = new RedisClass();
+        $redisObject->deleteValueFromKey($redisPostKey);
+        fetchPostDataForTimeline($this->_data['user_id'], $this, $redisObject, $system);
         // return
         return $post;
     }
@@ -7899,6 +7910,10 @@ class User
         /* points balance */
         $this->points_balance("add", $this->_data['user_id'], "comment", $comment['comment_id']);
 
+        $redisPostKey = 'user-' . $this->_data['user_id'] . '-posts';
+        $redisObject = new RedisClass();
+        $redisObject->deleteValueFromKey($redisPostKey);
+        fetchPostDataForTimeline($this->_data['user_id'], $this, $redisObject, $system);
         /* return */
         return $comment;
     }

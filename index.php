@@ -40,13 +40,18 @@ try {
 
 				// get stories
 				if ($system['stories_enabled']) {
-					$smarty->assign('stories', $user->get_stories());
-					$smarty->assign('has_story', $user->get_my_story());
+					$get_stories = getMyStory($user->_data['user_id'], $user, $redisObject, $system);
+					$getAllStories = getAllStories($user->_data['user_id'], $user, $redisObject, $system);
+					$smarty->assign('stories', $getAllStories);
+					$smarty->assign('has_story', $get_stories);
 				}
-				//echo "<pre>";print_r($user->get_stories()); exit;
+
+				$feelings = getFeelings($user->_data['user_id'], $redisObject, $system);
+				$feelingTypes = getFeelingTypes($user->_data['user_id'], $redisObject, $system);
+
 				// prepare publisher
-				$smarty->assign('feelings', get_feelings());
-				$smarty->assign('feelings_types', get_feelings_types());
+				$smarty->assign('feelings', $feelings);
+				$smarty->assign('feelings_types', $feelingTypes);
 				if ($system['colored_posts_enabled']) {
 					$smarty->assign('colored_patterns', $user->get_posts_colored_patterns());
 				}
@@ -55,13 +60,13 @@ try {
 				$daytime_msg_enabled = (isset($_COOKIE['dt_msg'])) ? false : $system['daytime_msg_enabled'];
 				$smarty->assign('daytime_msg_enabled', $daytime_msg_enabled);
 
-					$posts = fetchPostDataForTimeline($user->_data['user_id'],$user, $redisObject,$system);
+				$posts = fetchPostDataForTimeline($user->_data['user_id'], $user, $redisObject, $system);
 
-			//	echo "<pre>";print_r($posts);die;
+				//	echo "<pre>";print_r($posts);die;
 				/* get user pages */
 				$pages = $user->get_pages(array('managed' => true, 'user_id' => $user->_data['user_id']));
 				$smarty->assign('pages', $pages);
-				
+
 				$groups = $user->get_groups(array('get_all' => true, 'user_id' => $user->_data['user_id']));
 
 				/* assign variables */
@@ -298,7 +303,7 @@ try {
 
 		// get suggested peopel
 		//$new_people = $user->get_new_people(0, true);
-		$new_people = getSuggestedPeoples($user->_data['user_id'],$user, $redisObject);
+		$new_people = getSuggestedPeoples($user->_data['user_id'], $user, $redisObject);
 		/* assign variables */
 		$smarty->assign('new_people', $new_people);
 
@@ -306,7 +311,7 @@ try {
 		if ($system['pages_enabled']) {
 			// $new_pages = $user->get_pages(array('suggested' => true, 'random' => 'true', 'results' => 5));
 			/* assign variables */
-			$new_pages = getSuggestedPages($user->_data['user_id'],$user,$redisObject);
+			$new_pages = getSuggestedPages($user->_data['user_id'], $user, $redisObject);
 			$smarty->assign('new_pages', $new_pages);
 		}
 
@@ -314,10 +319,9 @@ try {
 		if ($system['groups_enabled']) {
 
 			//Block for redis
-				$new_groups = getNewGroups($user->_data['user_id'],$user,$redisObject);
+			$new_groups = getNewGroups($user->_data['user_id'], $user, $redisObject);
 			/* assign variables */
 			$smarty->assign('new_groups', $new_groups);
-		
 		}
 
 		// get suggested events

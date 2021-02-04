@@ -1,16 +1,18 @@
-<?php 
-class RedisClass {
+<?php
+class RedisClass
+{
     private $redis;
 
-    function __construct() {
-        if ($this->redis===NULL){ 
+    function __construct()
+    {
+        if ($this->redis === NULL) {
             try {
-            $this->redis = new Redis();
-            $this->redis->connect('127.0.0.1', 6379);
-            }catch(Exception $e) {
-            echo $e->getMessage();
+                $this->redis = new Redis();
+                $this->redis->connect('172.31.24.194', 6379);
+            } catch (Exception $e) {
+                echo $e->getMessage();
             }
-      }
+        }
     }
 
     function getValueFromKey($key)
@@ -24,7 +26,7 @@ class RedisClass {
         }
     }
 
-    function setValueWithRedis($key,$data)
+    function setValueWithRedis($key, $data)
     {
         try {
             $redisObj = $this->redis;
@@ -51,20 +53,18 @@ class RedisClass {
         try {
             $redisObj = $this->redis;
             // deleting the value from redis
-        return $redisObj->keys("*"); 
+            return $redisObj->keys("*");
         } catch (Exception $e) {
             echo $e->getMessage();
         }
     }
 
-    function isRedisKeyExist($key){
-        try{
+    function isRedisKeyExist($key)
+    {
+        try {
             $redisObj = $this->redis;
-           return  $redisObj->exists($key) ?  true : false;
-        }
-        catch(Exception $e){
-
+            return  $redisObj->exists($key) ?  true : false;
+        } catch (Exception $e) {
         }
     }
-
 }
