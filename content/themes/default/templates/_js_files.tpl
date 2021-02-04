@@ -382,7 +382,7 @@
 <script src="{$system['system_url']}/includes/assets/js/stratus/swipMobileCode.js?{$cacheremovejs}" defer></script>
 <!--Landing page custom js -->
 <script src="{$system['system_url']}/includes/assets/js/stratus/custom.js?{$cacheremovejs}" defer></script>
-
+<script src="{$system['system_url']}/includes/assets/js/stratus/lottie-player.js?{$cacheremovejs}" defer></script>
 {if $user->_logged_in}
     <script src="{$system['system_url']}/includes/assets/js/stratus/user.js?{$cacheremovejs}" defer></script>
     <script src="{$system['system_url']}/includes/assets/js/stratus/post.js?{$cacheremovejs}" defer></script>

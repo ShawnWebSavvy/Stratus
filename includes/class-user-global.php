@@ -88,10 +88,10 @@ class UserGlobal
                 // if ($this->_data['global_user_picture'] == "") {
                 //     $this->_data['global_user_picture'] = $system['system_url'] . '/content/themes/' . $system['theme'] . '/images/user_defoult_img.jpg';
                 // }
-                if ($this->_data['user_picture_full'] == "") {
-                    $this->_data['user_picture_full'] = 'content/themes/default/images/user_defoult_img.jpg';
-                }
-                $this->_data['global_user_picture'] = 'includes/wallet-api/image-exist-api.php?userPicture=' . $this->_data['global_user_picture'] . '&userPictureFull=' . $system['system_uploads'] . '/' . $this->_data['user_picture_full'] . '&type=1';
+                // if ($this->_data['user_picture_full'] == "") {
+                //     $this->_data['user_picture_full'] = 'content/themes/default/images/user_defoult_img.jpg';
+                // }
+                $this->_data['global_user_picture'] = $system['system_url'] . '/' . 'includes/wallet-api/image-exist-api.php?userPicture=' . $this->_data['global_user_picture'] . '&userPictureFull=' . $system['system_uploads'] . '/' . $this->_data['user_picture_full'] . '&type=1';
 
                 /* get all friends ids */
                 $this->_data['friends_ids'] = $this->get_friends_ids($this->_data['user_id']);
@@ -2854,7 +2854,7 @@ class UserGlobal
         //        }
         $post['post_author_url'] = $system['system_url'] . '/global-profile.php?username=' . $this->_data['user_name'];
 
-        $post['post_author_picture'] = $system['system_url'].'/includes/wallet-api/image-exist-api.php?userPicture=' . $post['post_author_picture'] . '&userPictureFull=' . $this->_data['user_picture_full'];
+        $post['post_author_picture'] = $system['system_url'] . '/includes/wallet-api/image-exist-api.php?userPicture=' . $post['post_author_picture'] . '&userPictureFull=' . $this->_data['user_picture_full'];
 
         $post['post_author_name'] = $this->_data['user_firstname'] . " " . $this->_data['user_lastname'];
         $post['post_author_user_name'] = $this->_data['user_name'];
@@ -4148,7 +4148,7 @@ class UserGlobal
                 //                    $post['post_author_picture'] = $system['system_uploads'] . '/' . $this->_data['user_picture_full'];
                 //                }
 
-                $post['post_author_picture'] = $system['system_url'].'/includes/wallet-api/image-exist-api.php?userPicture=' . $post['post_author_picture'] . '&userPictureFull=' . $this->_data['user_picture_full'];
+                $post['post_author_picture'] = $system['system_url'] . '/includes/wallet-api/image-exist-api.php?userPicture=' . $post['post_author_picture'] . '&userPictureFull=' . $this->_data['user_picture_full'];
             } else {
                 $post['post_author_picture'] = $system['system_uploads'] . '/' . $post['global_user_picture'];
             }
@@ -5865,9 +5865,10 @@ class UserGlobal
         $m = 1;
         $n = 1;
         foreach ($localPostArray as $key => $localpost) {
-            // echo $localPostArray[$key]['post_type']; echo "<br/>";
+
             if ($localPostArray[$key]['post_type'] == '' || $localPostArray[$key]['post_type'] == 'photos' || $localPostArray[$key]['post_type'] == 'video' || $localPostArray[$key]['post_type'] == 'profile_picture' || $localPostArray[$key]['post_type'] == 'profile_cover' || $localPostArray[$key]['post_type'] == 'shared' || $localPostArray[$key]['post_type'] == 'album' || $localPostArray[$key]['post_type'] == 'file' || $localPostArray[$key]['post_type'] == 'link' || $localPostArray[$key]['post_type'] == 'audio' || $localPostArray[$key]['post_type'] == 'poll') {
                 if ($i <= 2) {
+                    $localPostArray[$key]['posthub'] = "LocalHub";
                     $finalPostArray[] = $localPostArray[$key];
 
                     $i++;
@@ -5904,13 +5905,17 @@ class UserGlobal
                 }
             }
         }
-        //echo "<pre>";print_r($finalPostArray); exit;
         if (!empty($global_get_postsAarray[0])) {
+            $global_get_postsAarray[0]['posthub'] = "GlobalHub";
             $finalPostArray[] = $global_get_postsAarray[0];
         }
         if (!empty($global_get_postsAarray[1])) {
+            $global_get_postsAarray[1]['posthub'] = "GlobalHub";
             $finalPostArray[] = $global_get_postsAarray[1];
         }
+        // echo "<pre>";
+        // print_r($finalPostArray);
+        // die;
         return $finalPostArray;
     }
 
@@ -6904,7 +6909,7 @@ class UserGlobal
                     //                        $follower['user_picture'] = $system['system_uploads'] . '/' . $follower['user_picture_full'];
                     //                    }
 
-                    $follower['user_picture'] = $system['system_url'].'/includes/wallet-api/image-exist-api.php?userPicture=' . $follower['user_picture'] . '&userPictureFull=' . $system['system_uploads'] . '/' . $follower['user_picture_full'] . '&type=1';
+                    $follower['user_picture'] = $system['system_url'] . '/includes/wallet-api/image-exist-api.php?userPicture=' . $follower['user_picture'] . '&userPictureFull=' . $system['system_uploads'] . '/' . $follower['user_picture_full'] . '&type=1';
                 } else {
                     $follower['user_picture'] = $system['system_uploads'] . '/' . $follower['user_picture'];
                 }
@@ -7486,7 +7491,7 @@ class UserGlobal
             //                $post['post_author_picture'] = $system['system_uploads'] . '/' . $this->_data['user_picture_full'];
             //            }
 
-            $post['post_author_picture'] = $system['system_url'].'/includes/wallet-api/image-exist-api.php?userPicture=' . $post['post_author_picture'] . '&userPictureFull=' . $this->_data['user_picture_full'];
+            $post['post_author_picture'] = $system['system_url'] . '/includes/wallet-api/image-exist-api.php?userPicture=' . $post['post_author_picture'] . '&userPictureFull=' . $this->_data['user_picture_full'];
 
             $post['post_author_url'] = $system['system_url'] . '/' . $post['user_name'];
             $post['post_author_name'] = $post['user_firstname'] . " " . $post['user_lastname'];
