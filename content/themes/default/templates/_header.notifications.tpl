@@ -1,9 +1,9 @@
 <li class="dropdown js_live-notifications bell-icon-mobile mob_resposive_">
     <a href="#" data-toggle="dropdown" data-display="static">
         <div class="img-wrap-style" style="width:30px;height:30px;">
-            <img class="" src="{$system['system_uploads_assets']}/content/themes/default/images/svg/svgImg/notifications-icon.svg"
+            <img src="{$system['system_uploads_assets']}/content/themes/default/images/svg/svgImg/notifications-icon.svg"
                 class="blackicon">
-            <img class="" src="{$system['system_uploads_assets']}/content/themes/default/images/svg/svgImg/notifications_icon_hover.svg"
+            <img src="{$system['system_uploads_assets']}/content/themes/default/images/svg/svgImg/notifications_icon_hover.svg"
                 class="whiteicon">
         </div>
         <span
