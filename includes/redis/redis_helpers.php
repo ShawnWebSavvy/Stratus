@@ -352,3 +352,50 @@ function getAllStories($user_id, $userObj, $redisObject)
     }
     return $response;
 }
+
+function syncProfilePagePostsWithRedis($user_id, $user,$profile,$redisObject){
+$rediskeyname = 'profile-posts-'.$user_id;
+$isKeyExistOnRedis = $redisObject->isRedisKeyExist($rediskeyname);
+
+//  $redisObject->deleteValueFromKey($rediskeyname);
+//  print_r($isKeyExistOnRedis); die;
+    if ($isKeyExistOnRedis == false) {
+
+        	$posts_unpin = $user->get_posts(array('get' => 'posts_profile', 'id' => $profile['user_id']));
+			$postsUnpin = array();
+			$pinnedPost = array();
+			$i = 0;
+			$k = 0;
+			foreach ($posts_unpin as $post) {
+				if ($profile['user_pinned_post'] != $post['post_id']) {
+					$postsUnpin[$i] = $post;
+					$postsUnpin[$i]['status_post'] = "unpinned_post";
+					$i++;
+				} else {
+					$pinnedPost[$k] = $post;
+					$pinnedPost[$k]['status_post'] = "pinned_post";
+					$k++;
+				}
+			}
+
+			if (!empty($pinnedPost)) {
+				$posts = array_merge($pinnedPost, $postsUnpin);
+				//$posts = array_reverse($posts)
+			} else {
+				$posts = $postsUnpin;
+			}
+		
+            $jsonValue = json_encode($posts);
+            $redisObject->setValueWithRedis($rediskeyname, $jsonValue);
+            $getValuesFromRedis = $redisObject->getValueFromKey($rediskeyname);
+            $jsonValue = json_decode($getValuesFromRedis, true);
+            $response = $jsonValue;
+    }else{
+            $getValuesFromRedis = $redisObject->getValueFromKey($rediskeyname);
+            $jsonValue = json_decode($getValuesFromRedis, true);
+            $response = $jsonValue;
+            
+    }
+
+    return $response;
+}
