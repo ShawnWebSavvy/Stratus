@@ -202,7 +202,7 @@
                             <div class="amountCount">
                                 <input type="text" class="" placeholder="USD" id="amount">
                                 <p class="currancyNme" id="currency_show">USD</p>
-                                <a href="javascript:;" class="availableBalnce " id="availableBalnce1">Balance Available: $<span id="wallet_balance">{$wallet_coins_amount['usd']}</span></a>
+                                <a href="javascript:;" class="availableBalnce " id="availableBalnce1">Balance Available: $<span id="wallet_balance">{$wallet_coins_amount['usd']|number_format:2}</span></a>
                             
                             </div>
                             <button class="swapButton" id="swapButton">

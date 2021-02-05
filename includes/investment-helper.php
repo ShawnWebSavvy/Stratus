@@ -22,6 +22,7 @@ class InvestmentHelper {
     public static function get_ticker_price($token)
     {   
         global $system;
+        // echo'<pre>'; print_r($token); die;
         $token_price  =  httpGetCurl('investment/get_ticker/'.$token.'_USDT',$system['investment_api_base_url']);
         if (!isset($token_price['data'])) {
             throw new Exception(__("Something Went Wrong!! Please try again"));
@@ -43,7 +44,6 @@ class InvestmentHelper {
             $return['order'][$token['short_name']]['min_buy_amount'] = $token['min_buy_amount'];
             $return['order'][$token['short_name']]['min_sell_amount'] = $token['min_sell_amount'];
             $return['order'][$token['short_name']]['base_max_size'] = $token['base_max_size'];
-            $return['sell'][$token['short_name']] = round($token['sell_price'],5);
             if(!empty($user_data)){
                 $return['wallet_amount']['balance'][$token['short_name']]=$user_data[$token['short_name'].'_wallet'];
             }
