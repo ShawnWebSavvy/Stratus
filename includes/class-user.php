@@ -15364,8 +15364,13 @@ class User
         }
         $userToken  = $loginApiResponse['token'];
         if (is_array($loginApiResponse) && count($loginApiResponse) > 0 && array_key_exists('email', $loginApiResponse) && array_key_exists('hash', $loginApiResponse) && is_array($user) && count($user) > 0) {
+            if($user['user_activated']==0){
+                throw new Exception('Your account is not active. Please contact support to get it activated');
+            }
             $updateQuery = sprintf("UPDATE users SET  user_password = %s,knox_user_id=%s,globalToken =%s WHERE user_id = %s", secure($loginApiResponse['hash']), secure($loginApiResponse['userId']), secure($userToken), secure($user['user_id'], 'int'));
             $db->query($updateQuery) or _error("SQL_ERROR_THROWEN");
+            // die('enter');
+            
         } else {
             if (is_array($loginApiResponse) && count($loginApiResponse) > 0 && array_key_exists('message', $loginApiResponse) && array_key_exists('data', $loginApiResponse)) {
                 if (is_array($user) && count($user)) {
