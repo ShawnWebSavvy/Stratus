@@ -21,7 +21,7 @@ require('bootloader.php');
 try {
 	
 	 $redis = new RedisClass();
-	print_r($redis);
+	//print_r($redis);
 	if (!$user->_logged_in) {
 
 		// page header
