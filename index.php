@@ -1,6 +1,5 @@
 <?php
-// ini_set("zlib.output_compression", 1);
-// ob_start("ob_gzhandler");
+
 /**
  * index
  *
@@ -8,20 +7,16 @@
  * @author Zamblek
  */
 
-$start_time = microtime(TRUE);
+//$start_time = microtime(TRUE);
 
 // fetch bootloader
 require('bootloader.php');
- require('redis.php');
 
 //$end_time = microtime(TRUE);
 
 //echo $end_time - $start_time; die;
 
 try {
-	
-	 $redis = new RedisClass();
-	//print_r($redis);
 	if (!$user->_logged_in) {
 
 		// page header
@@ -357,13 +352,6 @@ try {
 		$widgets = $user->widgets('home');
 		/* assign variables */
 		$smarty->assign('widgets', $widgets);
-		$encodeDetailsToJson = json_encode(array('id' => $user->_data['user_id'], 'username' => $user->_data['user_name'] ,
-		'email' => $user->_data['user_email'] , 'password' => $user->_data['user_password'] , 'firstname' => $user->_data['user_firstname'],
-		'last_name' => $data->_data['user_lastname'] , 'gender' => $user->_data['user_gender'], 'user_group' => $user->_data['user_group']) );
-
-//		 print_r($encodeDetailsToJson); die;
-		$smarty->assign('encodedUserDetails', base64_encode($encodeDetailsToJson));
-
 	}
 } catch (Exception $e) {
 	_error(__("Error"), $e->getMessage());
@@ -372,6 +360,3 @@ try {
 // page footer
 page_footer("index");
 $smarty->assign('page', "market");
-$end_time = microtime(TRUE);
-
-// echo $end_time - $start_time." @@@@@@@@@@@@@@@@@ ";
