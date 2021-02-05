@@ -55,7 +55,7 @@
                                 <li class="smallList pt30">
                                     <div class="feeTotalInfo">
                                         <h5>Fee</h5>
-                                        <h5><span id="total_fees">0</span></h5>
+                                        <h5><span id="total_fees" class="total_fees_amount">0</span></h5>
                                     </div>
                                 </li>
                                 <li class="smallList">

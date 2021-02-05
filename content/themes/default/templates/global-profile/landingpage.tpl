@@ -259,12 +259,13 @@
 
 
                                                     {if $postsItem['photos_num']>0 }
-                                                    <a href="{$system['system_url']}/photos/{$postsItem['photos'][0]['photo_id']}"
+                                                    <a {$postsItem['posthub']}
+                                                        href="{$system['system_url']}/{if $postsItem['posthub'] == 'GlobalHub'}global-profile-photo{else}photos{/if}/{$postsItem['photos'][0]['photo_id']}"
                                                         class="js_lightbox"
                                                         data-id="{$postsItem['photos'][0]['photo_id']}"
                                                         data-image="{$system['system_uploads']}/{$postsItem['photos'][0]['source']}"
                                                         data-context="{if $postsItem['post_type'] == 'product'}post{else}album{/if}">
-                                                        <div class="image"><img
+                                                        <div class="image sdds"><img
                                                                 src="{$system['system_uploads']}/{$postsItem['photos'][0]['source']}">
                                                         </div>
                                                     </a>

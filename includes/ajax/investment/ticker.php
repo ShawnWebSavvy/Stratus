@@ -22,7 +22,8 @@ try {
     }
     $token_price = InvestmentHelper::get_ticker_price($_POST['token']);
     // echo '<pre>'; print_r($token_price); die;       
-    
+    $token_price['data']['buy_price'] = round($token_price['data']['buy_price'],5);
+    $token_price['data']['sell_price'] = round($token_price['data']['sell_price'],5);
     switch($_POST['action']){
         case 'buy':
             $fees        = $token_price['data']['buy_fees'];

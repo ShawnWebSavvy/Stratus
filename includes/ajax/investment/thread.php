@@ -24,7 +24,7 @@ try {
             $return['sell_details'] =$_details['sell'];
             $return['wallet_coins'] =$_details['wallet'];
             $return['usd_wallet_amount'] =round($user->_data['user_wallet_balance'],2);
-            echo '<pre>'; print_r($return); die;
+            // echo '<pre>'; print_r($return); die;
             return_json($return);
             break;
         case 'update_dashboard':

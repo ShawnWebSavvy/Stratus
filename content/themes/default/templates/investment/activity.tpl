@@ -55,7 +55,7 @@
                                                     data-time="{$buy_tnx['created_at']|date_format}">{$buy_tnx['created_at']|date_format}</span>
                                                 </td>
                                                 <td>
-                                                    <img src="{$system['system_url']}/content/themes/default/images/investment/deposit.svg"
+                                                    <img src="{$system['system_url']}/content/themes/default/images/investment/withdraw.svg"
                                                         alt="withdraw Icon">
                                                     {$buy_tnx['currency']|strtoupper}/USDT
                                                 </td>
@@ -108,7 +108,7 @@
                                                 data-time="{$sell_tnx['created_at']|date_format}">{$sell_tnx['created_at']|date_format}</span>
                                             </td>
                                             <td>
-                                                <img src="{$system['system_url']}/content/themes/default/images/investment/deposit.svg"
+                                                <img src="{$system['system_url']}/content/themes/default/images/investment/sell.svg"
                                                     alt="withdraw Icon">
                                                 {$sell_tnx['currency']|strtoupper}/USDT
                                             </td>

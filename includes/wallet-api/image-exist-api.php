@@ -17,7 +17,7 @@ if ($checkImage != '200') {
         if (isset($_GET['type'])) {
             $userPicture = $userPictureFull;
         } else {
-            $userPicture = $system['system_uploads'] . '/' . $userPictureFull;
+            $userPicture = $userPictureFull;
         }
     } else {
         $userPicture = $system['system_uploads_assets'] . '/content/themes/' . $system['theme'] . '/images/user_defoult_img.jpg';
