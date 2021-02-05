@@ -275,7 +275,7 @@
   .coinBaseButtonSection
   .coinBaseButton:nth-child(2)::after {
   content: "";
-  width: 1px;
+  width: 0px;
   height: 31px;
   background-color: #a7b4cb;
   display: inline-block;

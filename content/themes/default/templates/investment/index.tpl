@@ -33,8 +33,7 @@
                                         <div class="delistingsTextWrap">
                                             <h6>November 2021 </h6>
                                             <h4>Asset Delistings Update</h4>
-                                            <p>The Grin blockchain has presented significant technical challenges. The
-                                                Grin blockchain has presented significant technical challenges.</p>
+                                            <p>The Grin blockchain has presented significant technical challenges.</p>
                                             <button class="btn findMore">Find out more</button>
                                         </div>
                                     </div>
@@ -42,7 +41,7 @@
                                         <div class="delistingsTextWrap">
                                             <h6>November 2022 </h6>
                                             <h4>Asset Delistings Update</h4>
-                                            <p>The Grin blockchain</p>
+                                            <p>The Grin blockchain has presented significant technical challenges.</p>
                                             <button class="btn findMore">Find out more</button>
                                         </div>
                                     </div>
@@ -64,7 +63,7 @@
                                 <div class="gallery-cell">
                                     <div class="delistingsUpdate">
                                         <div class="delistingsTextWrap">
-                                            <h6>November 2020 </h6>
+                                            <h6>November 2021 </h6>
                                             <h4>Asset Delistings Update</h4>
                                             <p>The Grin blockchain has presented significant technical challenges.</p>
                                             <button class="btn findMore">Find out more</button>
@@ -74,7 +73,7 @@
                                 <div class="gallery-cell">
                                     <div class="delistingsUpdate">
                                         <div class="delistingsTextWrap">
-                                            <h6>November 2020 </h6>
+                                            <h6>November 2022 </h6>
                                             <h4>Asset Delistings Update</h4>
                                             <p>The Grin blockchain has presented significant technical challenges.</p>
                                             <button class="btn findMore">Find out more</button>
