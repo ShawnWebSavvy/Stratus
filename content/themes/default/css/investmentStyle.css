@@ -612,6 +612,11 @@
   padding: 30px;
   border-radius: 15px;
 }
+@media (max-width:480px){
+  .buySellSection {
+    padding: 30px 15px;
+  }
+}
 
 .btnSectionBuySell {
   display: -webkit-box;
@@ -711,21 +716,6 @@
   width: 300px;
 }
 
-/* @media (max-width:1458px){
-  .coinSelection ul .MobileCrousle .gallery-cell {
-    width: 35%;
-  }
-}
-@media (max-width:1321px){
-  .coinSelection ul .MobileCrousle .gallery-cell {
-    width: 37%;
-  }
-}
-@media (max-width:1278px){
-  .coinSelection ul .MobileCrousle .gallery-cell {
-    width: 39%;
-  }
-} */
 @media (max-width: 1250px) and (min-width: 992px) {
   .coinSelection ul .MobileCrousle .gallery-cell {
     width: 50%;
@@ -735,6 +725,11 @@
 @media (max-width: 767px) {
   .coinSelection ul .MobileCrousle .gallery-cell {
     width: 80%;
+  }
+}
+@media (max-width: 480px) {
+  .coinSelection ul .MobileCrousle .gallery-cell {
+    width: 270px;
   }
 }
 
@@ -819,6 +814,13 @@
   font-size: 21px;
   font-weight: 600;
   color: #16161f;
+}
+
+@media (max-width:480px){
+  .coinDetailPrice .priceCount p {
+    padding: 20px 23px;
+    font-size: 17px;
+  }
 }
 
 .addNewPayment {
