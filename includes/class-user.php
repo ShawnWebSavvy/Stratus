@@ -36,107 +36,25 @@ class User
             $system['system_uploads'] = $system['system_uploads_url'];
         }
         if (isset($_COOKIE[$this->_cookie_user_id]) && isset($_COOKIE[$this->_cookie_user_token])) {
-            $userQuery = sprintf("SELECT users.*, users_sessions.*, posts_photos.source as user_picture_full, packages.*,country.country_name as user_country_name FROM users INNER JOIN users_sessions ON users.user_id = users_sessions.user_id LEFT JOIN posts_photos ON users.user_picture_id = posts_photos.photo_id LEFT JOIN packages ON users.user_subscribed = '1' AND users.user_package = packages.package_id left join system_countries as country on country.country_id = users.user_country  WHERE users_sessions.user_id = %s AND users_sessions.session_token = %s", secure($_COOKIE[$this->_cookie_user_id], 'int'), secure($_COOKIE[$this->_cookie_user_token]));
-            $get_user = $db->query($userQuery) or _error("SQL_ERROR_THROWEN");
-            if ($get_user->num_rows > 0) {
-                $this->_data = $get_user->fetch_assoc();
-                /* check unusual login */
-                if ($system['unusual_login_enabled']) {
-                    if ($this->_data['user_browser'] != get_user_browser() || $this->_data['user_os'] != get_user_os() || $this->_data['user_ip'] != get_user_ip()) {
-                        return;
-                    }
-                }
+
+            $response_data =  cachedUserData($db, $system, $_COOKIE[$this->_cookie_user_id], $_COOKIE[$this->_cookie_user_token]);
+
+           if(!empty($response_data) > 0 ){
+                $this->_data = $response_data;
                 $this->_logged_in = true;
                 $this->_is_admin = ($this->_data['user_group'] == 1) ? true : false;
                 $this->_is_moderator = ($this->_data['user_group'] == 2) ? true : false;
-                /* update user language */
+                                   /* update user language */
                 if ($system['current_language'] != $this->_data['user_language']) {
                     $updateQ = sprintf("UPDATE users SET user_language = %s WHERE user_id = %s", secure($system['current_language']), secure($this->_data['user_id'], 'int'));
                     $db->query($updateQ) or _error("SQL_ERROR_THROWEN");
                 }
                 /* update user last seen */
                 $db->query(sprintf("UPDATE users SET user_last_seen = NOW() WHERE user_id = %s", secure($this->_data['user_id'], 'int'))) or _error("SQL_ERROR_THROWEN");
-                /* active session */
-                $this->_data['active_session_id'] = $this->_data['session_id'];
-                $this->_data['active_session_token'] = $this->_data['session_token'];
-                /* get user picture */
-                $this->_data['user_picture_default'] = ($this->_data['user_picture']) ? false : true;
-                $this->_data['user_picture_raw'] = $this->_data['user_picture'];
-                $this->_data['user_picture'] = get_picture($this->_data['user_picture'], $this->_data['user_gender']);
-                $this->_data['user_picture_full'] = ($this->_data['user_picture_full']) ? $system['system_uploads'] . '/' . $this->_data['user_picture_full'] : $this->_data['user_picture_full'];
-                //                if ($this->_data['user_picture'] != "") {
-                //                    $checkImage = image_exist($this->_data['user_picture']);
-                //                    if ($checkImage != '200') {
-                //                        $this->_data['user_picture'] = $this->_data['user_picture_full'];
-                //                    }
-                //                }
-                if ($this->_data['user_picture_full'] == "") {
-                    $this->_data['user_picture_full'] = $system['system_uploads_assets'] . '/content/themes/' . $system['theme'] . '/images/user_defoult_img.jpg';
-                }
+           }
 
-                $this->_data['user_picture'] = $system['system_url'] . '/includes/wallet-api/image-exist-api.php?userPicture=' . $this->_data['user_picture'] . '&userPictureFull=' . $system['system_uploads'] . '/' . $this->_data['user_picture_full'] . '&type=1';
-                // echo "<pre>";
-                // print_r($this->_data);
-                // die;
-                /* get all friends ids */
-                $this->_data['friends_ids'] = $this->get_friends_ids($this->_data['user_id']);
-                /* get all followings ids */
-                $this->_data['followings_ids'] = $this->get_followings_ids($this->_data['user_id']);
-                /* get all friend requests ids */
-                $this->_data['friend_requests_ids'] = $this->get_friend_requests_ids();
-                /* get all friend requests sent ids */
-                $this->_data['friend_requests_sent_ids'] = $this->get_friend_requests_sent_ids();
-                /* check boost permission */
-                $this->_data['can_boost_posts'] = false;
-                $this->_data['can_boost_pages'] = false;
-                if ($system['packages_enabled'] && ($this->_is_admin || $this->_data['user_subscribed'])) {
-                    if ($this->_is_admin || ($this->_data['boost_posts_enabled'] && ($this->_data['user_boosted_posts'] < $this->_data['boost_posts']))) {
-                        $this->_data['can_boost_posts'] = true;
-                    }
-                    if ($this->_is_admin || ($this->_data['boost_pages_enabled'] && ($this->_data['user_boosted_pages'] < $this->_data['boost_pages']))) {
-                        $this->_data['can_boost_pages'] = true;
-                    }
-                }
-                /* check pages permission */
-                if ($system['pages_enabled']) {
-                    $this->_data['can_create_pages'] = $this->check_module_permission($system['pages_permission']);
-                }
-                /* check groups permission */
-                if ($system['groups_enabled']) {
-                    $this->_data['can_create_groups'] = $this->check_module_permission($system['groups_permission']);
-                }
-                /* check events permission */
-                if ($system['events_enabled']) {
-                    $this->_data['can_create_events'] = $this->check_module_permission($system['events_permission']);
-                }
-                /* check blogs permission */
-                if ($system['blogs_enabled']) {
-                    $this->_data['can_write_articles'] = $this->check_module_permission($system['blogs_permission']);
-                }
-                /* check market permission */
-                if ($system['market_enabled']) {
-                    $this->_data['can_sell_products'] = $this->check_module_permission($system['market_permission']);
-                }
-                /* check forums permission */
-                if ($system['forums_enabled']) {
-                    $this->_data['can_use_forums'] = $this->check_module_permission($system['forums_permission']);
-                }
-                /* check movies permission */
-                if ($system['movies_enabled']) {
-                    $this->_data['can_watch_movies'] = $this->check_module_permission($system['movies_permission']);
-                }
-                /* check games permission */
-                if ($system['games_enabled']) {
-                    $this->_data['can_play_games'] = $this->check_module_permission($system['games_permission']);
-                }
-                /* check games permission */
-                if ($system['live_enabled']) {
-                    $this->_data['can_go_live'] = $this->check_module_permission($system['live_permission']);
-                }
-            }
         }
     }
-
 
 
     /* ------------------------------- */
@@ -478,9 +396,9 @@ class User
                     //                    if ($checkImage != '200') {
                     //                        $friend['user_picture'] = $system['system_uploads'] . '/' . $friend['user_picture_full'];
                     //                    }
-                    if ($friend['user_picture_full'] == "") {
-                        $friend['user_picture_full'] = $system['system_uploads_assets'] . '/content/themes/' . $system['theme'] . '/images/user_defoult_img.jpg';
-                    }
+                    // if ($friend['user_picture_full'] == "") {
+                    //     $friend['user_picture_full'] = $system['system_uploads_assets'] . '/content/themes/' . $system['theme'] . '/images/user_defoult_img.jpg';
+                    // }
                     $friend['user_picture'] = $system['system_url'] . '/includes/wallet-api/image-exist-api.php?userPicture=' . $friend['user_picture'] . '&userPictureFull=' . $system['system_uploads'] . '/' . $friend['user_picture_full'];
                 }
                 /* get the connection between the viewer & the target */
@@ -597,9 +515,9 @@ class User
                 //                        $request['user_picture'] = $system['system_url'] . '/content/themes/' . $system['theme'] . '/images/user_defoult_img.jpg';
                 //                    }
                 //                }
-                if ($request['user_picture_full'] == "") {
-                    $request['user_picture_full'] = $system['system_uploads_assets'] . '/content/themes/' . $system['theme'] . '/images/user_defoult_img.jpg';
-                }
+                // if ($request['user_picture_full'] == "") {
+                //     $request['user_picture_full'] = $system['system_uploads_assets'] . '/content/themes/' . $system['theme'] . '/images/user_defoult_img.jpg';
+                // }
                 $request['user_picture'] = $system['system_url'] . '/includes/wallet-api/image-exist-api.php?userPicture=' . $request['user_picture'] . '&userPictureFull=' . $system['system_uploads'] . '/' .  $request['user_picture_full'];
 
                 $request['mutual_friends_count'] = $this->get_mutual_friends_count($request['user_id']);
@@ -759,9 +677,9 @@ class User
                     continue;
                 }
                 $user['user_picture'] = get_picture($user['user_picture'], $user['user_gender']);
-                if ($user['user_picture_full'] == "") {
-                    $user['user_picture_full'] = $system['system_uploads_assets'] . '/content/themes/' . $system['theme'] . '/images/user_defoult_img.jpg';
-                }
+                // if ($user['user_picture_full'] == "") {
+                //     $user['user_picture_full'] = $system['system_uploads_assets'] . '/content/themes/' . $system['theme'] . '/images/user_defoult_img.jpg';
+                // }
                 $user['user_picture'] = $system['system_url'] . '/includes/wallet-api/image-exist-api.php?userPicture=' . $user['user_picture'] . '&userPictureFull=' . $system['system_uploads'] . '/' . $user['user_picture_full'];
 
                 if (isset($this->_data['user_id'])) {
@@ -908,9 +826,9 @@ class User
         if ($get_users->num_rows > 0) {
             while ($user = $get_users->fetch_assoc()) {
                 $user['user_picture'] = get_picture($user['user_picture'], $user['user_gender']);
-                if ($user['user_picture_full'] == "") {
-                    $user['user_picture_full'] = $system['system_uploads_assets'] . '/content/themes/' . $system['theme'] . '/images/user_defoult_img.jpg';
-                }
+                // if ($user['user_picture_full'] == "") {
+                //     $user['user_picture_full'] = $system['system_uploads_assets'] . '/content/themes/' . $system['theme'] . '/images/user_defoult_img.jpg';
+                // }
                 $user['user_picture'] = $system['system_url'] . '/includes/wallet-api/image-exist-api.php?userPicture=' . $user['user_picture'] . '&userPictureFull=' . $system['system_uploads'] . '/' . $user['user_picture_full'];
                 /* get the connection between the viewer & the target */
                 $user['connection'] = $this->connection($user['user_id']);
@@ -973,9 +891,9 @@ class User
         if ($get_users->num_rows > 0) {
             while ($user = $get_users->fetch_assoc()) {
                 $user['user_picture'] = get_picture($user['user_picture'], $user['user_gender']);
-                if ($user['user_picture_full'] == "") {
-                    $user['user_picture_full'] = $system['system_uploads_assets'] . '/content/themes/' . $system['theme'] . '/images/user_defoult_img.jpg';
-                }
+                // if ($user['user_picture_full'] == "") {
+                //     $user['user_picture_full'] = $system['system_uploads_assets'] . '/content/themes/' . $system['theme'] . '/images/user_defoult_img.jpg';
+                // }
                 $user['user_picture'] = $system['system_url'] . '/includes/wallet-api/image-exist-api.php?userPicture=' . $user['user_picture'] . '&userPictureFull=' . $system['system_uploads'] . '/' . $user['user_picture_full'];
                 /* get the connection between the viewer & the target */
                 $user['connection'] = $this->connection($user['user_id']);
@@ -2223,10 +2141,12 @@ class User
                 //                if ($checkImage != '200') {
                 //                    $notification['user_picture'] = $system['system_uploads'] . '/' . $notification['user_picture_full'];
                 //                }
-                if ($notification['user_picture_full'] == "") {
-                    $notification['user_picture_full'] = $system['system_uploads_assets'] . '/content/themes/' . $system['theme'] . '/images/user_defoult_img.jpg';
-                }
-                $notification['user_picture'] = $system['system_url'] . '/includes/wallet-api/image-exist-api.php?userPicture=' . $notification['user_picture'] . '&userPictureFull=' . $system['system_uploads'] . '/' . $notification['user_picture_full'];
+                // if ($notification['user_picture_full'] == "") {
+                //     $notification['user_picture_full'] = $system['system_uploads_assets'] . '/content/themes/' . $system['theme'] . '/images/user_defoult_img.jpg';
+                // } else {
+                //     $notification['user_picture_full'] = $system['system_uploads'] . '/' . $notification['user_picture_full'];
+                // }
+                $notification['user_picture'] = $system['system_url'] . '/includes/wallet-api/image-exist-api.php?userPicture=' . $notification['user_picture'] . '&userPictureFull=' . $notification['user_picture_full'];
                 /* prepare notification notify_id */
                 $notification['notify_id'] = ($notification['notify_id']) ? "?notify_id=" . $notification['notify_id'] : "";
                 /* prepare notification node_url */
@@ -3260,9 +3180,9 @@ class User
             //                    $recipient['user_picture'] = $system['system_url'] . '/content/themes/' . $system['theme'] . '/images/user_defoult_img.jpg';
             //                }
             //            }
-            if ($recipient['user_picture_full'] == "") {
-                $recipient['user_picture_full'] = $system['system_uploads_assets'] . '/content/themes/' . $system['theme'] . '/images/user_defoult_img.jpg';
-            }
+            // if ($recipient['user_picture_full'] == "") {
+            //     $recipient['user_picture_full'] = $system['system_uploads_assets'] . '/content/themes/' . $system['theme'] . '/images/user_defoult_img.jpg';
+            // }
             $recipient['user_picture'] = $system['system_url'] . '/includes/wallet-api/image-exist-api.php?userPicture=' . $recipient['user_picture'] . '&userPictureFull=' . $system['system_uploads'] . '/' . $recipient['user_picture_full'];
 
             /* add to conversation recipients */
@@ -3437,9 +3357,9 @@ class User
             //                    $message['user_picture'] = $system['system_url'] . '/content/themes/' . $system['theme'] . '/images/user_defoult_img.jpg';
             //                }
             //            }
-            if ($message['user_picture_full'] == "") {
-                $message['user_picture_full'] = $system['system_uploads_assets'] . '/content/themes/' . $system['theme'] . '/images/user_defoult_img.jpg';
-            }
+            // if ($message['user_picture_full'] == "") {
+            //     $message['user_picture_full'] = $system['system_uploads_assets'] . '/content/themes/' . $system['theme'] . '/images/user_defoult_img.jpg';
+            // }
             $message['user_picture'] = $system['system_url'] . '/includes/wallet-api/image-exist-api.php?userPicture=' . $message['user_picture'] . '&userPictureFull=' . $system['system_uploads'] . '/' . $message['user_picture_full'];
             $message['message'] = $this->_parse(["text" => $message['message'], "decode_mentions" => false, "decode_hashtags" => false]);
             /* return */
@@ -4462,6 +4382,13 @@ class User
         foreach ($videos as $video) { //print_r($videos);
             $db->query(sprintf("INSERT INTO stories_media (story_id, source, is_photo, text, time) VALUES (%s, %s, '0', %s, %s)", secure($story_id, 'int'), secure($video), secure($message), secure($date))) or _error("SQL_ERROR_THROWEN");
         }
+        $redisObject = new RedisClass();
+        $rediskeyname = 'user-' . $this->_data['user_id'] . '-getotherstory';
+        $redisObject->deleteValueFromKey($rediskeyname);
+        $rediskeyname = 'user-' . $this->_data['user_id'] . '-getmystory';
+        $redisObject->deleteValueFromKey($rediskeyname);
+        getMyStory($this->_data['user_id'], $this, $redisObject, $system);
+        getAllStories($this->_data['user_id'], $this, $redisObject, $system);
     }
 
     /**
@@ -4530,6 +4457,13 @@ class User
     {
         global $db, $system;
         $check_story = $db->query(sprintf("DELETE FROM stories WHERE time>=DATE_SUB(NOW(), INTERVAL 1 DAY) AND user_id = %s", secure($this->_data['user_id'], 'int'))) or _error("SQL_ERROR_THROWEN");
+        $redisObject = new RedisClass();
+        $rediskeyname = 'user-' . $this->_data['user_id'] . '-getotherstory';
+        $redisObject->deleteValueFromKey($rediskeyname);
+        $rediskeyname = 'user-' . $this->_data['user_id'] . '-getmystory';
+        $redisObject->deleteValueFromKey($rediskeyname);
+        getMyStory($this->_data['user_id'], $this, $redisObject, $system);
+        getAllStories($this->_data['user_id'], $this, $redisObject, $system);
     }
 
 
@@ -4581,9 +4515,9 @@ class User
         //        if ($checkImage != '200') {
         //            $post['post_author_picture'] = $system['system_uploads'] . '/' . $this->_data['user_picture_full'];
         //        }
-        if ($this->_data['user_picture_full'] == "") {
-            $this->_data['user_picture_full'] = $system['system_uploads_assets'] . '/content/themes/' . $system['theme'] . '/images/user_defoult_img.jpg';
-        }
+        // if ($this->_data['user_picture_full'] == "") {
+        //     $this->_data['user_picture_full'] = $system['system_uploads_assets'] . '/content/themes/' . $system['theme'] . '/images/user_defoult_img.jpg';
+        // }
         $post['post_author_picture'] = $system['system_url'] . '/includes/wallet-api/image-exist-api.php?userPicture=' . $post['post_author_picture'] . '&userPictureFull=' . $system['system_uploads'] . '/' . $this->_data['user_picture_full'];
 
         $post['post_author_url'] = $system['system_url'] . '/' . $this->_data['user_name'];
@@ -4981,6 +4915,11 @@ class User
         /* points balance */
         $this->points_balance("add", $this->_data['user_id'], "post", $post['post_id']);
 
+
+        $redisPostKey = 'user-' . $this->_data['user_id'] . '-posts';
+        $redisObject = new RedisClass();
+        $redisObject->deleteValueFromKey($redisPostKey);
+        fetchPostDataForTimeline($this->_data['user_id'], $this, $redisObject, $system);
         // return
         return $post;
     }
@@ -6045,10 +5984,10 @@ class User
         if ($get_users->num_rows > 0) {
             while ($_user = $get_users->fetch_assoc()) {
                 $_user['user_picture'] = get_picture($_user['user_picture'], $_user['user_gender']);
-                if ($_user['user_picture_full'] == "") {
-                    $_user['user_picture_full'] = $system['system_uploads_assets'] . '/content/themes/' . $system['theme'] . '/images/user_defoult_img.jpg';
-                }
-                $_user['user_picture'] = 'includes/wallet-api/image-exist-api.php?userPicture=' . $_user['user_picture'] . '&userPictureFull=' . $system['system_uploads'] . '/' . $_user['user_picture_full'];
+                // if ($_user['user_picture_full'] == "") {
+                //     $_user['user_picture_full'] = $system['system_uploads_assets'] . '/content/themes/' . $system['theme'] . '/images/user_defoult_img.jpg';
+                // }
+                $_user['user_picture'] = $system['system_url'] . '/' . 'includes/wallet-api/image-exist-api.php?userPicture=' . $_user['user_picture'] . '&userPictureFull=' . $system['system_uploads'] . '/' . $_user['user_picture_full'];
                 /* get the connection between the viewer & the target */
                 $_user['connection'] = $this->connection($_user['user_id']);
                 /* get mutual friends count */
@@ -6108,9 +6047,9 @@ class User
             //                    $voter['user_picture'] = $system['system_url'] . '/content/themes/' . $system['theme'] . '/images/user_defoult_img.jpg';
             //                }
             //            }
-            if ($voter['user_picture_full'] == "") {
-                $voter['user_picture_full'] = $system['system_uploads_assets'] . '/content/themes/' . $system['theme'] . '/images/user_defoult_img.jpg';
-            }
+            // if ($voter['user_picture_full'] == "") {
+            //     $voter['user_picture_full'] = $system['system_uploads_assets'] . '/content/themes/' . $system['theme'] . '/images/user_defoult_img.jpg';
+            // }
             $voter['user_picture'] = $system['system_url'] . '/includes/wallet-api/image-exist-api.php?userPicture=' . $voter['user_picture'] . '&userPictureFull=' . $system['system_uploads'] . '/' . $voter['user_picture_full'];
             /* get the connection between the viewer & the target */
             $voter['connection'] = $this->connection($voter['user_id']);
@@ -6201,9 +6140,9 @@ class User
             //                    $post['post_author_picture'] = $system['system_url'] . '/content/themes/' . $system['theme'] . '/images/user_defoult_img.jpg';
             //                }
             //            }
-            if ($post['user_picture_full'] == "") {
-                $post['user_picture_full'] = $system['system_uploads_assets'] . '/content/themes/' . $system['theme'] . '/images/user_defoult_img.jpg';
-            }
+            // if ($post['user_picture_full'] == "") {
+            //     $post['user_picture_full'] = $system['system_uploads_assets'] . '/content/themes/' . $system['theme'] . '/images/user_defoult_img.jpg';
+            // }
             $post['post_author_picture'] = $system['system_url'] . '/' . 'includes/wallet-api/image-exist-api.php?userPicture=' . $post['post_author_picture'] . '&userPictureFull=' . $system['system_uploads'] . '/' . $post['user_picture_full'];
 
             $post['post_author_url'] = $system['system_url'] . '/' . $post['user_name'];
@@ -7182,7 +7121,7 @@ class User
      */
     public function react_post($post_id, $reaction)
     {
-        global $db, $date;
+        global $db, $date, $system;
         /* check reation */
         if (!in_array($reaction, ['like', 'love', 'haha', 'yay', 'wow', 'sad', 'angry'])) {
             _error(403);
@@ -7203,10 +7142,27 @@ class User
             /* update post reaction counter */
             $reaction_field = "reaction_" . $post['i_reaction'] . "_count";
             $db->query(sprintf("UPDATE posts SET $reaction_field = IF($reaction_field=0,0,$reaction_field-1) WHERE post_id = %s", secure($post_id, 'int'))) or _error("SQL_ERROR_THROWEN");
+
             /* delete notification */
             $this->delete_notification($post['author_id'], 'react_' . $post['i_reaction'], 'post', $post_id);
             /* points balance */
             $this->points_balance("delete", $this->_data['user_id'], "posts_reactions");
+
+                        /**
+             * update Redis
+             */
+                     $redisPostKey = 'user-' . $this->_data['user_id'] . '-posts';
+                     $redisObject = new RedisClass();
+                    // $getPostsFromRedis = $redisObject->getValueFromKey($redisPostKey);
+                    // $jsonValue_ = json_decode($getPostsFromRedis, true);
+                    // print_r($jsonValue_); die;
+                    // $redisObject->deleteValueFromKey($redisPostKey);
+                    // fetchPostDataForTimeline($this->_data['user_id'], $this, $redisObject, $system);
+                    
+
+            /**
+             * update redis
+             */
         }
         $db->query(sprintf("INSERT INTO posts_reactions (user_id, post_id, reaction, reaction_time) VALUES (%s, %s, %s, %s)", secure($this->_data['user_id'], 'int'), secure($post_id, 'int'), secure($reaction), secure($date))) or _error("SQL_ERROR_THROWEN");
         $reaction_id = $db->insert_id;
@@ -7217,6 +7173,10 @@ class User
         $this->post_notification(array('to_user_id' => $post['author_id'], 'action' => 'react_' . $reaction, 'hub' => "LocalHub", 'node_type' => 'post', 'node_url' => $post_id));
         /* points balance */
         $this->points_balance("add", $this->_data['user_id'], "posts_reactions", $reaction_id);
+                
+                     $redisPostKey = 'user-' . $this->_data['user_id'] . '-posts';
+                     $redisObject = new RedisClass();
+                     fetchAndSetDataOnPostReaction($system, $this,$redisObject,$redisPostKey);
     }
 
 
@@ -7229,7 +7189,7 @@ class User
      */
     public function unreact_post($post_id, $reaction)
     {
-        global $db;
+        global $db,$system;
         /* check reation */
         if (!in_array($reaction, ['like', 'love', 'haha', 'yay', 'wow', 'sad', 'angry'])) {
             _error(403);
@@ -7249,6 +7209,17 @@ class User
             /* update post reaction counter */
             $reaction_field = "reaction_" . $reaction . "_count";
             $db->query(sprintf("UPDATE posts SET $reaction_field = IF($reaction_field=0,0,$reaction_field-1) WHERE post_id = %s", secure($post_id, 'int'))) or _error("SQL_ERROR_THROWEN");
+
+              /**
+             * update Redis
+             */
+                    $redisPostKey = 'user-' . $this->_data['user_id'] . '-posts';
+                     $redisObject = new RedisClass();
+                     fetchAndSetDataOnPostReaction($system, $this,$redisObject,$redisPostKey);
+
+            /**
+             * update redis
+             */
             /* delete notification */
             $this->delete_notification($post['author_id'], 'react_' . $reaction, 'post', $post_id);
             /* points balance */
@@ -7525,9 +7496,9 @@ class User
                 //                        $comment['author_picture'] = $system['system_url'] . '/content/themes/' . $system['theme'] . '/images/user_defoult_img.jpg';
                 //                    }
                 //                }
-                if ($comment['user_picture_full'] == "") {
-                    $comment['user_picture_full'] = $system['system_uploads_assets'] . '/content/themes/' . $system['theme'] . '/images/user_defoult_img.jpg';
-                }
+                // if ($comment['user_picture_full'] == "") {
+                //     $comment['user_picture_full'] = $system['system_uploads_assets'] . '/content/themes/' . $system['theme'] . '/images/user_defoult_img.jpg';
+                // }
                 $comment['author_picture'] = $system['system_url'] . '/includes/wallet-api/image-exist-api.php?userPicture=' . $comment['author_picture'] . '&userPictureFull=' . $system['system_uploads'] . '/' . $comment['user_picture_full'];
 
                 $comment['author_url'] = $system['system_url'] . '/' . $comment['user_name'];
@@ -7545,9 +7516,9 @@ class User
                 //                        $comment['author_picture'] = $system['system_url'] . '/content/themes/' . $system['theme'] . '/images/user_defoult_img.jpg';
                 //                    }
                 //                }
-                if ($comment['user_picture_full'] == "") {
-                    $comment['user_picture_full'] = $system['system_uploads_assets'] . '/content/themes/' . $system['theme'] . '/images/user_defoult_img.jpg';
-                }
+                // if ($comment['user_picture_full'] == "") {
+                //     $comment['user_picture_full'] = $system['system_uploads_assets'] . '/content/themes/' . $system['theme'] . '/images/user_defoult_img.jpg';
+                // }
                 $comment['author_picture'] = $system['system_url'] . '/includes/wallet-api/image-exist-api.php?userPicture=' . $comment['author_picture'] . '&userPictureFull=' . $system['system_uploads'] . '/' . $comment['user_picture_full'];
 
                 $comment['author_url'] = $system['system_url'] . '/pages/' . $comment['page_name'];
@@ -7889,6 +7860,10 @@ class User
         /* points balance */
         $this->points_balance("add", $this->_data['user_id'], "comment", $comment['comment_id']);
 
+        $redisPostKey = 'user-' . $this->_data['user_id'] . '-posts';
+        $redisObject = new RedisClass();
+        $redisObject->deleteValueFromKey($redisPostKey);
+        fetchPostDataForTimeline($this->_data['user_id'], $this, $redisObject, $system);
         /* return */
         return $comment;
     }
@@ -8656,6 +8631,17 @@ class User
         $this->post_notification(array('to_user_id' => $post['author_id'], 'action' => 'react_' . $reaction, 'hub' => "LocalHub", 'node_type' => 'photo', 'node_url' => $photo_id));
         /* points balance */
         $this->points_balance("add", $this->_data['user_id'], "posts_photos_reactions", $reaction_id);
+
+          /**
+             * update Redis
+             */
+                    $redisPostKey = 'user-' . $this->_data['user_id'] . '-posts';
+                     $redisObject = new RedisClass();
+                     fetchAndSetDataOnPostReaction($system, $this,$redisObject,$redisPostKey);
+
+            /**
+             * update redis
+             */
     }
 
 
@@ -8684,6 +8670,17 @@ class User
         $this->delete_notification($post['author_id'], 'react_' . $reaction, 'photo', $photo_id);
         /* points balance */
         $this->points_balance("delete", $this->_data['user_id'], "posts_photos_reactions");
+
+          /**
+             * update Redis
+             */
+                    $redisPostKey = 'user-' . $this->_data['user_id'] . '-posts';
+                     $redisObject = new RedisClass();
+                     fetchAndSetDataOnPostReaction($system, $this,$redisObject,$redisPostKey);
+
+            /**
+             * update redis
+             */
     }
 
 
@@ -9496,9 +9493,9 @@ class User
                     $get_friends = $db->query(sprintf("SELECT users.user_id, users.user_name, posts_photos.source as user_picture_full, users.user_picture_id, users.user_firstname, users.user_lastname, users.user_gender, users.user_picture, users.user_subscribed, users.user_verified FROM users LEFT JOIN posts_photos ON users.user_picture_id = posts_photos.photo_id WHERE user_id IN ($invites_list) LIMIT %s, %s", secure($offset, 'int', false), secure($system['max_results_even'], 'int', false))) or _error("SQL_ERROR_THROWEN");
                     while ($friend = $get_friends->fetch_assoc()) {
                         $friend['user_picture'] = get_picture($friend['user_picture'], $friend['user_gender']);
-                        if ($friend['user_picture_full'] == "") {
-                            $friend['user_picture_full'] = $system['system_uploads_assets'] . '/content/themes/' . $system['theme'] . '/images/user_defoult_img.jpg';
-                        }
+                        // if ($friend['user_picture_full'] == "") {
+                        //     $friend['user_picture_full'] = $system['system_uploads_assets'] . '/content/themes/' . $system['theme'] . '/images/user_defoult_img.jpg';
+                        // }
                         $friend['user_picture'] = $system['system_url'] . '/includes/wallet-api/image-exist-api.php?userPicture=' . $friend['user_picture'] . '&userPictureFull=' . $system['system_uploads'] . '/' . $friend['user_picture_full'];
                         $friend['connection'] = 'page_invite';
                         $friend['node_id'] = $page_id;

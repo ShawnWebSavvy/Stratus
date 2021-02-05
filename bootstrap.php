@@ -24,8 +24,9 @@ if (!file_exists(ABSPATH . 'includes/config.php')) {
 
 // get system configurations
 require_once(ABSPATH . 'includes/config.php');
-
-
+//add redis files
+require_once('redis.php');
+require_once(ABSPATH . 'includes/redis/redis_helpers.php');
 // enviroment settings
 if (DEBUGGING) {
     ini_set("display_errors", true);
