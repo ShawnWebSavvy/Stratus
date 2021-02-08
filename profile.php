@@ -24,7 +24,9 @@ try {
 	if ($system['s3_enabled']) {
 		$system['system_uploads'] = $system['system_uploads_url'];
 	}
+	$redisObject = new RedisClass();
 	// [1] get main profile info
+	  	
 	$get_profile = $db->query(sprintf("SELECT users.*, picture_photo.source as user_picture_full, picture_photo_post.privacy as user_picture_privacy, cover_photo.source as user_cover_full, cover_photo_post.privacy as cover_photo_privacy, packages.name as package_name, packages.color as package_color FROM users LEFT JOIN posts_photos as picture_photo ON users.user_picture_id = picture_photo.photo_id LEFT JOIN posts as picture_photo_post ON picture_photo.post_id = picture_photo_post.post_id LEFT JOIN posts_photos as cover_photo ON users.user_cover_id = cover_photo.photo_id LEFT JOIN posts as cover_photo_post ON cover_photo.post_id = cover_photo_post.post_id LEFT JOIN packages ON users.user_subscribed = '1' AND users.user_package = packages.package_id WHERE users.user_name = %s", secure($_GET['username']))) or _error("SQL_ERROR_THROWEN");
 	if ($get_profile->num_rows == 0) {
 		_error(404);
@@ -182,29 +184,30 @@ try {
 			}
 
 			/* get posts */
-			$posts_unpin = $user->get_posts(array('get' => 'posts_profile', 'id' => $profile['user_id']));
-			$postsUnpin = array();
-			$pinnedPost = array();
-			$i = 0;
-			$k = 0;
-			foreach ($posts_unpin as $post) {
-				if ($profile['user_pinned_post'] != $post['post_id']) {
-					$postsUnpin[$i] = $post;
-					$postsUnpin[$i]['status_post'] = "unpinned_post";
-					$i++;
-				} else {
-					$pinnedPost[$k] = $post;
-					$pinnedPost[$k]['status_post'] = "pinned_post";
-					$k++;
-				}
-			}
+			// $posts_unpin = $user->get_posts(array('get' => 'posts_profile', 'id' => $profile['user_id']));
+			// $postsUnpin = array();
+			// $pinnedPost = array();
+			// $i = 0;
+			// $k = 0;
+			// foreach ($posts_unpin as $post) {
+			// 	if ($profile['user_pinned_post'] != $post['post_id']) {
+			// 		$postsUnpin[$i] = $post;
+			// 		$postsUnpin[$i]['status_post'] = "unpinned_post";
+			// 		$i++;
+			// 	} else {
+			// 		$pinnedPost[$k] = $post;
+			// 		$pinnedPost[$k]['status_post'] = "pinned_post";
+			// 		$k++;
+			// 	}
+			// }
 
-			if (!empty($pinnedPost)) {
-				$posts = array_merge($pinnedPost, $postsUnpin);
-				//$posts = array_reverse($posts)
-			} else {
-				$posts = $postsUnpin;
-			}
+			// if (!empty($pinnedPost)) {
+			// 	$posts = array_merge($pinnedPost, $postsUnpin);
+			// 	//$posts = array_reverse($posts)
+			// } else {
+			// 	$posts = $postsUnpin;
+			// }
+			$posts = syncProfilePagePostsWithRedis($user->_data['user_id'],$user,$profile,$redisObject);
 			// echo "<pre>";
 			// print_r($posts);
 			// die;
@@ -256,12 +259,14 @@ try {
 
 		case 'photos':
 			/* get photos */
-			$profile['photos'] = $user->get_photos($profile['user_id']);
+				$profile['photos'] = $user->get_photos($profile['user_id']);
+			$profile['photos'] = usersProfilePhotosSection($user->_data['user_id'],$user, $redisObject,'photos');
 			break;
 
 		case 'albums':
 			/* get albums */
 			$profile['albums'] = $user->get_albums($profile['user_id']);
+			$profile['albums'] = usersProfilePhotosSection($user->_data['user_id'],$user, $redisObject,'albums');
 			break;
 
 		case 'album':
@@ -345,27 +350,31 @@ try {
 	}
 
 	// get suggested peopel
-	$new_people = $user->get_new_people(0, true);
+	//$new_people = $user->get_new_people(0, true);
+		$new_people = getSuggestedPeoples($user->_data['user_id'], $user, $redisObject);
 	/* assign variables */
 	$smarty->assign('new_people', $new_people);
 
 	// get suggested pages
 	if ($system['pages_enabled']) {
-		$new_pages = $user->get_pages(array('suggested' => true, 'random' => 'true', 'results' => 5));
+	//	$new_pages = $user->get_pages(array('suggested' => true, 'random' => 'true', 'results' => 5));
+	$new_pages = getSuggestedPages($user->_data['user_id'], $user, $redisObject);
 		/* assign variables */
 		$smarty->assign('new_pages', $new_pages);
 	}
 
 	// get suggested groups
 	if ($system['groups_enabled']) {
-		$new_groups = $user->get_groups(array('suggested' => true, 'random' => 'true', 'results' => 5));
+		//$new_groups = $user->get_groups(array('suggested' => true, 'random' => 'true', 'results' => 5));
+		$new_groups = getNewGroups($user->_data['user_id'], $user, $redisObject);
 		/* assign variables */
 		$smarty->assign('new_groups', $new_groups);
 	}
 
 	// get suggested events
 	if ($system['events_enabled']) {
-		$new_events = $user->get_events(array('suggested' => true, 'random' => 'true', 'results' => 5));
+		//$new_events = $user->get_events(array('suggested' => true, 'random' => 'true', 'results' => 5));
+		$new_events = getEventsLists($user->_data['user_id'], $user, $redisObject);
 		/* assign variables */
 		$smarty->assign('new_events', $new_events);
 	}

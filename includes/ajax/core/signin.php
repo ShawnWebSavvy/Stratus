@@ -26,9 +26,11 @@ try {
 	// signin
 	$remember = (isset($_POST['remember'])) ? true : false;
 	$user->sign_in($_POST['username_email'], $_POST['password'], $remember);
+	$url = $system['system_url'];
 
+	return_json(array('callback' => 'window.location.assign("'.$url.'");'));
 	// return
-	return_json(array('callback' => 'window.location.reload();'));
+	//return_json(array('callback' => 'window.location.reload();'));
 	//return_json( array("callback" => "window.location.replace('landingpage');") );
 	//return_json( array('callback' => 'location.href(landingpage);') );
 
