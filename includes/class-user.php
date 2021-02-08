@@ -3896,6 +3896,8 @@ class User
         if ($system['save_live_enabled']) {
             $this->stop_live_recording($post_id, $post['live']['agora_uid'], $post['live']['agora_channel_name'], $post['live']['agora_resource_id'], $post['live']['agora_sid']);
         }
+
+        
     }
 
 
@@ -5160,16 +5162,17 @@ class User
                 if (isset($args['id']) && !is_numeric($args['id'])) {
                     _error(400);
                 }
-                $id = $args['id'];
-                // echo "<pre>";
-                // print_r($this->_data['user_id']);
+                 $id = $args['id'];
+                //  echo "<pre>";
+                // // print_r($this->_data['user_id']);
                 // print_r($args);
-                // die;
+               // die;
                 /* get target user's posts */
                 /* check if there is a viewer user */
                 if ($this->_logged_in) {
                     /* check if the target user is the viewer */
                     if ($id == $this->_data['user_id']) {
+                       
                         /* get all posts */
                         $where_query .= "WHERE (";
                         /* get all target posts */
@@ -5333,6 +5336,7 @@ class User
         if ($last_post_id != null && $get != 'popular' && $get != 'saved' && $get != 'memories') { /* excluded as not ordered by post_id */
             $get_postsQuery = sprintf("SELECT * FROM (SELECT posts.post_id FROM posts " . $where_query . ") posts WHERE posts.post_id > %s ORDER BY posts.post_id DESC", secure($last_post_id, 'int'));
         } else {
+            $order_query = "ORDER BY posts.post_id DESC";
             $limit_statement = ($get_all) ? "" : sprintf("LIMIT %s, %s", secure($offset, 'int', false), secure($system['max_results'], 'int', false)); /* get_all for cases like download user's posts */
             $get_postsQuery = "SELECT posts.post_id FROM posts " . $where_query . " " . $order_query . " " . $limit_statement;
         }
@@ -5349,6 +5353,7 @@ class User
                 }
             }
         }
+
         return $posts;
     }
 
@@ -6306,6 +6311,10 @@ class User
                      $redisPostKey = 'user-' . $this->_data['user_id'] . '-posts';
                      $redisObject = new RedisClass();
                      fetchAndSetDataOnPostReaction($system, $this,$redisObject,$redisPostKey);
+
+                       //profile post
+                        $redisTimelinekey = 'profile-posts-'.$this->_data['user_id'];
+                        fetchAndSetDataOnPostReaction($system, $this,$redisObject,$redisTimelinekey);
         return $totalCounts;
     }
 
@@ -7157,6 +7166,10 @@ class User
                        $redisPostKey = 'user-' . $this->_data['user_id'] . '-posts';
                      $redisObject = new RedisClass();
                      fetchAndSetDataOnPostReaction($system, $this,$redisObject,$redisPostKey);
+
+                     //profile post
+                     $redisTimelinekey = 'profile-posts-'.$this->_data['user_id'];
+                     fetchAndSetDataOnPostReaction($system, $this,$redisObject,$redisTimelinekey);
                     // $getPostsFromRedis = $redisObject->getValueFromKey($redisPostKey);
                     // $jsonValue_ = json_decode($getPostsFromRedis, true);
                     // print_r($jsonValue_); die;
@@ -7181,6 +7194,10 @@ class User
                      $redisPostKey = 'user-' . $this->_data['user_id'] . '-posts';
                      $redisObject = new RedisClass();
                      fetchAndSetDataOnPostReaction($system, $this,$redisObject,$redisPostKey);
+
+                     //profile post
+                     $redisTimelinekey = 'profile-posts-'.$this->_data['user_id'];
+                     fetchAndSetDataOnPostReaction($system, $this,$redisObject,$redisTimelinekey);
     }
 
 
@@ -7220,6 +7237,10 @@ class User
                     $redisPostKey = 'user-' . $this->_data['user_id'] . '-posts';
                      $redisObject = new RedisClass();
                      fetchAndSetDataOnPostReaction($system, $this,$redisObject,$redisPostKey);
+
+                     //profile post
+                     $redisTimelinekey = 'profile-posts-'.$this->_data['user_id'];
+                     fetchAndSetDataOnPostReaction($system, $this,$redisObject,$redisTimelinekey);
 
             /**
              * update redis
@@ -7868,6 +7889,10 @@ class User
         $redisObject = new RedisClass();
         $redisObject->deleteValueFromKey($redisPostKey);
         fetchPostDataForTimeline($this->_data['user_id'], $this, $redisObject, $system);
+
+        //profile post
+         $redisTimelinekey = 'profile-posts-'.$this->_data['user_id'];
+         fetchAndSetDataOnPostReaction($system, $this,$redisObject,$redisTimelinekey);
         /* return */
         return $comment;
     }
@@ -8600,7 +8625,7 @@ class User
      */
     public function react_photo($photo_id, $reaction)
     {
-        global $db, $date;
+        global $db, $date,$system;
         /* check reation */
         if (!in_array($reaction, ['like', 'love', 'haha', 'yay', 'wow', 'sad', 'angry'])) {
             _error(403);
@@ -8646,6 +8671,9 @@ class User
             /**
              * update redis
              */
+            //profile post
+                     $redisTimelinekey = 'profile-posts-'.$this->_data['user_id'];
+                     fetchAndSetDataOnPostReaction($system, $this,$redisObject,$redisTimelinekey);
     }
 
 
@@ -8658,7 +8686,7 @@ class User
      */
     public function unreact_photo($photo_id, $reaction)
     {
-        global $db;
+        global $db,$system;
         /* (check|get) photo */
         $photo = $this->get_photo($photo_id);
         if (!$photo) {
@@ -8685,6 +8713,10 @@ class User
             /**
              * update redis
              */
+
+            //profile post
+                     $redisTimelinekey = 'profile-posts-'.$this->_data['user_id'];
+                     fetchAndSetDataOnPostReaction($system, $this,$redisObject,$redisTimelinekey);
     }
 
 
@@ -14573,6 +14605,27 @@ class User
                 $this->set_custom_fields($args, "user", "settings", $this->_data['user_id']);
                 /* update user */
                 $db->query(sprintf("UPDATE users SET user_firstname = %s, user_lastname = %s, user_gender = %s, user_country = %s, user_birthdate = %s, user_relationship = %s, user_biography = %s, user_website = %s WHERE user_id = %s", secure($args['firstname']), secure($args['lastname']), secure($args['gender']), secure($args['country'], 'int'), secure($args['birth_date']), secure($args['relationship']), secure($args['biography']), secure($args['website']), secure($this->_data['user_id'], 'int'))) or _error("SQL_ERROR_THROWEN");
+
+                // print_r($args); die;
+                  $new_response = [];
+                  $redisObject = new RedisClass();
+                  $redisPostKey = 'user-' . $this->_data['user_id'];
+                  $getPostsFromRedis = $redisObject->getValueFromKey($redisPostKey);
+                  $jsonValuesRes = json_decode($getPostsFromRedis, true);
+                  $jsonValuesRes['user_firstname'] = $args['firstname'];
+                  $jsonValuesRes['user_lastname'] = $args['lastname'];
+                  $jsonValuesRes['user_gender'] = $args['gender'];
+                  $jsonValuesRes['user_country'] = $args['country'];
+                  $jsonValuesRes['user_birth_date'] = $args['birth_date'];
+                  $jsonValuesRes['user_relationship'] = $args['relationship'];
+                  $jsonValuesRes['user_biography'] = $args['biography'];
+                  $jsonValuesRes['user_website'] = ($args['website'] !== null) ? $args['website'] :"";
+                  $new_response = json_encode($jsonValuesRes);
+                    //$redisObject->deleteValueFromKey($redisPostKey);
+                    $redisObject->setValueWithRedis($redisPostKey, $new_response);
+                    //  $aa = $redisObject->getValueFromKey($redisPostKey);
+                //   echo "<pre>";
+                //    print_r($); die;
                 break;
 
                 /*-- Global profile edit --*/

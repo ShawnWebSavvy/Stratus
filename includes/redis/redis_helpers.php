@@ -154,6 +154,9 @@ function cachedUserData($db, $system, $user_id, $user_token)
     $userClassObject = new userClass();
     $isKeyExistOnRedis = $redisObject->isRedisKeyExist($redisPostKey);
 
+//              $redisObject->deleteValueFromKey($redisPostKey);
+//  print_r($isKeyExistOnRedis); die;
+
     if ($isKeyExistOnRedis == false) {
         /* get user pages */
         $userQuery = sprintf(
@@ -252,6 +255,7 @@ function cachedUserData($db, $system, $user_id, $user_token)
     }
 
     return $response;
+
 }
 
 function fetchAndSetDataOnPostReaction($system, $userObj, $redisObject, $redisPostKey)
@@ -357,8 +361,8 @@ function syncProfilePagePostsWithRedis($user_id, $user,$profile,$redisObject){
 $rediskeyname = 'profile-posts-'.$user_id;
 $isKeyExistOnRedis = $redisObject->isRedisKeyExist($rediskeyname);
 
-//  $redisObject->deleteValueFromKey($rediskeyname);
-//  print_r($isKeyExistOnRedis); die;
+// $redisObject->deleteValueFromKey($rediskeyname);
+// print_r($isKeyExistOnRedis); die;
     if ($isKeyExistOnRedis == false) {
 
         	$posts_unpin = $user->get_posts(array('get' => 'posts_profile', 'id' => $profile['user_id']));
@@ -396,6 +400,51 @@ $isKeyExistOnRedis = $redisObject->isRedisKeyExist($rediskeyname);
             $response = $jsonValue;
             
     }
-
     return $response;
 }
+
+
+function usersProfilePhotosSection($user_id, $user,$redisObject, $type){
+
+    if($type == 'photos'){
+    $rediskeyname = 'profile-photos-'.$user_id; 
+    $isKeyExistOnRedis = $redisObject->isRedisKeyExist($rediskeyname);
+//      $redisObject->deleteValueFromKey($rediskeyname);
+//  print_r($isKeyExistOnRedis); die;
+     if ($isKeyExistOnRedis == false){
+        $data =  $user->get_photos($user_id);
+        $jsonValue = json_encode($data);
+        $redisObject->setValueWithRedis($rediskeyname, $jsonValue);
+        $getValuesFromRedis = $redisObject->getValueFromKey($rediskeyname);
+        $jsonValue = json_decode($getValuesFromRedis, true);
+        $response = $jsonValue;
+     }else{
+            $getValuesFromRedis = $redisObject->getValueFromKey($rediskeyname);
+            $jsonValue = json_decode($getValuesFromRedis, true);
+            $response = $jsonValue;
+     }
+    }elseif($type == "albums" ){
+        $rediskeyname = 'profile-albums-'.$user_id;
+       // print_r($rediskeyname); die;
+        $isKeyExistOnRedis = $redisObject->isRedisKeyExist($rediskeyname);
+//          $redisObject->deleteValueFromKey($rediskeyname);
+//  print_r($isKeyExistOnRedis); die;
+        if ($isKeyExistOnRedis == false){
+            $data =  $user->get_albums($user_id);
+            $jsonValue = json_encode($data);
+            $redisObject->setValueWithRedis($rediskeyname, $jsonValue);
+            $getValuesFromRedis = $redisObject->getValueFromKey($rediskeyname);
+            $jsonValue = json_decode($getValuesFromRedis, true);
+            $response = $jsonValue;
+        }else{
+                $getValuesFromRedis = $redisObject->getValueFromKey($rediskeyname);
+                $jsonValue = json_decode($getValuesFromRedis, true);
+                $response = $jsonValue;
+        }
+    }
+
+    return $response;
+
+}
+
+
