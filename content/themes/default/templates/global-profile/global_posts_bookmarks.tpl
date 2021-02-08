@@ -61,7 +61,7 @@
 					{if $system['blogs_enabled'] && $_get != "posts_page" && $_get != "posts_group" && $_get !=
 					"posts_event"}
 					<div class="dropdown-item pointer" data-title='{__("Articles")}' data-value="article">
-						<div class="Articles">
+						<div class="imgHover">
 							<img alt="Articles" title="Articles" src="{$system['system_url']}/content/themes/default/images/svg/svgImg/coloredpost.svg">
 							<img alt="Articles" class="hoverIcon" title="Articles" src="{$system['system_url']}/content/themes/default/images/svg/svgImg/coloredpostHover.svg">
 						</div>
