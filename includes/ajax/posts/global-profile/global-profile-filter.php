@@ -25,6 +25,9 @@ try {
 	switch ($_GET['handle']) {
 		case 'posts':
 			// get filtered posts
+		
+			$_POST['get'] =  empty($_POST['get']) ? 'newsfeed' : $_POST['get'];
+			// die($_POST['get'].'enter');
 			$posts = $userGlobal->global_profile_get_posts(array('get' => $_POST['get'], 'filter' => $_POST['filter'], 'id' => $_POST['id']));
 			/* assign variables */
 			$smarty->assign('posts', $posts);
