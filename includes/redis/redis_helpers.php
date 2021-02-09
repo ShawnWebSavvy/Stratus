@@ -358,7 +358,7 @@ function getAllStories($user_id, $userObj, $redisObject)
 }
 
 function syncProfilePagePostsWithRedis($user_id, $user,$profile,$redisObject){
-$rediskeyname = 'profile-posts-'.$user_id;
+$rediskeyname = 'profile-posts-'.$profile['user_id'];
 $isKeyExistOnRedis = $redisObject->isRedisKeyExist($rediskeyname);
 
 // $redisObject->deleteValueFromKey($rediskeyname);
