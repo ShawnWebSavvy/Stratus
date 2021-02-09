@@ -29,12 +29,14 @@ try {
 	} else {
 		$redisObject = new RedisClass();
 		$array = $redisObject->getStoredKeys();
-		// echo "<pre>";
-		// print_r($array);
-		// foreach ($array as $key) {
-		// 	$redisObject->deleteValueFromKey($key);
+		// if ($user->_data['user_id'] == 4) {
+		// 	echo "<pre>";
+		// 	print_r($array);
+		// 	foreach ($array as $key) {
+		// 		$redisObject->deleteValueFromKey($key);
+		// 	}
+		// 	die;
 		// }
-		// die;
 
 		// user access
 		user_access();
