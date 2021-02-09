@@ -30,17 +30,8 @@
     var chat_typing_enabled = {if $system['chat_typing_enabled']}true{else}false{/if};
     var chat_seen_enabled = {if $system['chat_seen_enabled']}true{else}false{/if};
     var chat_sound = {if $user->_data['chat_sound']}true{else}false{/if};
-    /* live */
-    {if $system['live_enabled']}
-        var agora_app_id = "{$system['agora_app_id']}";
-        {if $page == "live"}
-            var agora_uid = "{$agora['uid']}";
-            var agora_token = "{$agora['token']}";
-            var agora_channel_name = "{$agora['channel_name']}";
-        {/if}
-    {/if}
     /* notifications */
-    var notifications_sound = {if $user->_data['notifications_sound']}true{else}false{/if};
+    var notifications_sound = false;
     var noty_notifications_enabled = {if $system['noty_notifications_enabled']}true{else}false{/if};
     var browser_notifications_enabled = {if $system['browser_notifications_enabled']}true{else}false{/if};
     /* posts */
@@ -63,7 +54,7 @@
     var __ = [];
     __['Ask something'] = "{__('Ask something')}";
     __['Add Friend'] = "{__('Add Friend')}";
-    __['Friends'] = "{__('Friends')}";
+    __['Friends'] = "{__('Friends')}"; 
     __['Friend Request Sent'] = "{__('Request Sent')}";
     __['Following'] = "{__('Following')}";
     __['Follow'] = "{__('Follow')}";
@@ -181,22 +172,6 @@
     __['Select All'] = "{__('Select All')}";
     __['Deselect All'] = "{__('Deselect All')}";
     __['Total'] = "{__('Total')}";
-    __['Sorry, WebRTC is not available in your browser'] = "{__('Sorry, WebRTC is not available in your browser')}";
-    __['You are ready to Go Live now'] = "{__('You are ready to Go Live now')}";
-    __['Getting permissions failed'] = "{__('Getting permissions failed')}";
-    __['Going Live'] = "{__('Going Live')}";
-    __['You are live now'] = "{__('You are live now')}";
-    __['You are offline now'] = "{__('You are offline now')}";
-    __['Going live failed'] = "{__('Going live failed')}";
-    __['Online'] = "{__('Online')}";
-    __['Offline'] = "{__('Offline')}";
-    __['Switching stream sources'] = "{__('Switching stream sources')}";
-    __['Successfully switched to new device'] = "{__('Successfully switched to new device')}";
-    __['Unable to determine device type'] = "{__('Unable to determine device type')}";
-    __['Failed to switch to new device'] = "{__('Failed to switch to new device')}";
-    __['Ending live error'] = "{__('Ending live error')}";
-    __['Joining live stream failed'] = "{__('Joining live stream failed')}";
-    __['Live Ended'] = "{__('Live Ended')}";
     /* i18n for DataTables */
     __['Processing...'] = "{__('Processing...')}";
     __['Search:'] = "{__('Search:')}";
@@ -228,110 +203,104 @@
     __['Follow these instructions to allow notifications:'] = "{__('Follow these instructions to allow notifications:')}";
 </script>
 <!-- Initialize -->
-{assign var="cacheremovejs" value=$smarty.now|date_format:'%Y-%m-%d_%H:%M:%S'}
 
 <!-- Dependencies Libs [jQuery|Bootstrap] -->
 <script src="https://code.jquery.com/jquery-3.5.1.min.js" integrity="sha256-9/aliU8dGd2tb6OSsuzixeV4y/faTqgFtohetphbbj0=" crossorigin="anonymous" {if !$user->_logged_in}defer{/if}></script>
 <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous" {if !$user->_logged_in}defer{/if}></script>
 {if $system['language']['dir'] == "LTR"}
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js" integrity="sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6QL9UvYjZE3Ipu6Tp75j7Bh/kR0JKI" crossorigin="anonymous" defer></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js" integrity="sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6QL9UvYjZE3Ipu6Tp75j7Bh/kR0JKI" crossorigin="anonymous" {if !$user->_logged_in}defer{/if}></script>
 {else}
     <script src="https://cdn.rtlcss.com/bootstrap/v4.2.1/js/bootstrap.min.js" integrity="sha384-a9xOd0rz8w0J8zqj1qJic7GPFfyMfoiuDjC9rqXlVOcGO/dmRqzMn34gZYDTel8k" crossorigin="anonymous" {if !$user->_logged_in}defer{/if}></script>
 {/if}
 <!-- Dependencies Libs [jQuery|Bootstrap] -->
 
 <!-- Dependencies Plugins -->
-<script src="{$system['system_uploads_assets']}/includes/assets/js/plugins/mustache/mustache.min.js" {if !$user->_logged_in}defer{/if}></script>
-<script src="{$system['system_uploads_assets']}/includes/assets/js/plugins/jquery.form/jquery.form.min.js" {if !$user->_logged_in}defer{/if}></script>
-<script src="{$system['system_uploads_assets']}/includes/assets/js/plugins/jquery.inview/jquery.inview.min.js" {if !$user->_logged_in}defer{/if}></script>
-<script src="{$system['system_uploads_assets']}/includes/assets/js/plugins/autosize/autosize.min.js" {if !$user->_logged_in}defer{/if}></script>
-<script src="{$system['system_uploads_assets']}/includes/assets/js/plugins/readmore/readmore.min.js" {if !$user->_logged_in}defer{/if}></script>
-<script src="{$system['system_uploads_assets']}/includes/assets/js/plugins/moment/moment-with-locales.min.js" {if !$user->_logged_in}defer{/if}></script>
-{if $user->_logged_in}
+<script src="{$system['system_url']}/includes/assets/js/plugins/mustache/mustache.min.js" {if !$user->_logged_in}defer{/if}></script>
+<script src="{$system['system_url']}/includes/assets/js/plugins/jquery.form/jquery.form.min.js" {if !$user->_logged_in}defer{/if}></script>
+<script src="{$system['system_url']}/includes/assets/js/plugins/jquery.inview/jquery.inview.min.js" {if !$user->_logged_in}defer{/if}></script>
+<script src="{$system['system_url']}/includes/assets/js/plugins/autosize/autosize.min.js" {if !$user->_logged_in}defer{/if}></script>
+<script src="{$system['system_url']}/includes/assets/js/plugins/readmore/readmore.min.js" {if !$user->_logged_in}defer{/if}></script>
+<script src="{$system['system_url']}/includes/assets/js/plugins/moment/moment-with-locales.min.js" {if !$user->_logged_in}defer{/if}></script>
 <script src="https://cdn.fluidplayer.com/v2/current/fluidplayer.min.js" {if !$user->_logged_in}defer{/if}></script>
 <link rel="stylesheet" href="https://cdn.fluidplayer.com/v2/current/fluidplayer.min.css" type="text/css"/>
-<script src="https://unpkg.com/video.js@7.8.4/dist/video.min.js" {if !$user->_logged_in}defer{/if}></script>
-<script src="https://unpkg.com/videojs-contrib-hls@5.15.0/dist/videojs-contrib-hls.min.js" {if !$user->_logged_in}defer{/if}></script>
-<link href="https://unpkg.com/video.js@7.8.4/dist/video-js.min.css" rel="stylesheet">
-<script src="{$system['system_url']}/includes/assets/js/plugins/swipeMobile/swipeMobile.js"></script>
-{/if}
+
 {if $user->_logged_in}
     <!-- jQuery-UI -->
     <script>var _tooltip = jQuery.fn.tooltip;</script>
     <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js" integrity="sha256-VazP97ZCwtekAsvgPBSUwPFKdrwD3unUfSGVYrahUqU=" crossorigin="anonymous"></script>
     <script>jQuery.fn.tooltip = _tooltip;</script>
-    <script src="{$system['system_uploads_assets']}/includes/assets/js/plugins/jquery-ui.triggeredAutocomplete/jquery-ui.triggeredAutocomplete.js"></script>
+    <script src="{$system['system_url']}/includes/assets/js/plugins/jquery-ui.triggeredAutocomplete/jquery-ui.triggeredAutocomplete.js"></script>
     <!-- jQuery-UI -->
 
     <!-- Sticky Sidebar -->
-    <script src="{$system['system_uploads_assets']}/includes/assets/js/plugins/sticky-sidebar/theia-sticky-sidebar.min.js"></script>
+    <script src="{$system['system_url']}/includes/assets/js/plugins/sticky-sidebar/theia-sticky-sidebar.min.js"></script>
     <!-- Sticky Sidebar -->
 
     <!-- Google Geocomplete -->
     {if $system['geolocation_enabled']}
-        <script src="{$system['system_uploads_assets']}/includes/assets/js/plugins/jquery.geocomplete/jquery.geocomplete.min.js"></script>
+        <script src="{$system['system_url']}/includes/assets/js/plugins/jquery.geocomplete/jquery.geocomplete.min.js"></script>
         <script src="https://maps.googleapis.com/maps/api/js?libraries=places&key={$system['geolocation_key']}"></script>
     {/if}
     <!-- Google Geocomplete -->
 
     <!-- Noty Notifications -->
     {if $system['noty_notifications_enabled']}
-        <script src="{$system['system_uploads_assets']}/includes/assets/js/plugins/noty/noty.min.js"></script>
-        <link rel="stylesheet" type='text/css' href="{$system['system_uploads_assets']}/includes/assets/js/plugins/noty/noty.css">
+        <script src="{$system['system_url']}/includes/assets/js/plugins/noty/noty.min.js"></script>
+        <link rel="stylesheet" type='text/css' href="{$system['system_url']}/includes/assets/js/plugins/noty/noty.css">
     {/if}
     <!-- Noty Notifications -->
 
     <!-- Crop Profile Picture & Reposition Cover Photo -->
-    {if $page == "started" || $page == "profile" || $page == "page" || $page == "group" || $page == "event"}
-        <script src="{$system['system_uploads_assets']}/includes/assets/js/plugins/jquery-ui.touch-punch/jquery-ui.touch-punch.min.js"></script>
-        <script src="{$system['system_uploads_assets']}/includes/assets/js/plugins/jquery.imagedrag/jquery.imagedrag.min.js"></script>
-        <script src="{$system['system_uploads_assets']}/includes/assets/js/plugins/rcrop/rcrop.min.js"></script>
-        <link rel="stylesheet" type='text/css' href="{$system['system_uploads_assets']}/includes/assets/js/plugins/rcrop/rcrop.min.css">
+    {if $page == "started" || $page == "global-profile/global-profile" || $page == "profile" || $page == "page" || $page == "group" || $page == "event"}
+        <script src="{$system['system_url']}/includes/assets/js/plugins/jquery-ui.touch-punch/jquery-ui.touch-punch.min.js"></script>
+        <script src="{$system['system_url']}/includes/assets/js/plugins/jquery.imagedrag/jquery.imagedrag.min.js"></script>
+        <script src="{$system['system_url']}/includes/assets/js/plugins/rcrop/rcrop.min.js"></script>
+        <link rel="stylesheet" type='text/css' href="{$system['system_url']}/includes/assets/js/plugins/rcrop/rcrop.min.css">
     {/if}
     <!-- Crop Profile Picture & Reposition Cover Photo -->
 
     <!-- Stories -->
-    {if $page == "index" && $view == ""}
-        <script src="{$system['system_uploads_assets']}/includes/assets/js/plugins/zuck/zuck.js?{$cacheremove}"></script>
+    {if $page == "global-profile/global-profile-timeline" && $view == ""}
+        <script src="{$system['system_url']}/includes/assets/js/plugins/zuck/zuck.js?{$cacheremove}"></script>
         {if $system['language']['dir'] == "LTR"}
-            <link rel="stylesheet" type='text/css' href="{$system['system_uploads_assets']}/includes/assets/js/plugins/zuck/zuck.css">
+            <link rel="stylesheet" type='text/css' href="{$system['system_url']}/includes/assets/js/plugins/zuck/zuck.css?{$cacheremove}">
         {else}
-            <link rel="stylesheet" type='text/css' href="{$system['system_uploads_assets']}/includes/assets/js/plugins/zuck/zuck.rtl.css">
+            <link rel="stylesheet" type='text/css' href="{$system['system_url']}/includes/assets/js/plugins/zuck/zuck.rtl.css?{$cacheremove}">
         {/if}
 
-        <script src="{$system['system_uploads_assets']}/includes/assets/js/plugins/slick/slick.min.js"></script>
-        <link rel="stylesheet" type='text/css' href="{$system['system_uploads_assets']}/includes/assets/js/plugins/slick/slick.css">
-        <link rel="stylesheet" type='text/css' href="{$system['system_uploads_assets']}/includes/assets/js/plugins/slick/slick-theme.css">
+        <script src="{$system['system_url']}/includes/assets/js/plugins/slick/slick.min.js"></script>
+        <link rel="stylesheet" type='text/css' href="{$system['system_url']}/includes/assets/js/plugins/slick/slick.css">
+        <link rel="stylesheet" type='text/css' href="{$system['system_url']}/includes/assets/js/plugins/slick/slick-theme.css">
     {/if}
     <!-- Stories -->
 
     <!-- Voice Notes -->
     {if $system['voice_notes_posts_enabled'] || $system['voice_notes_comments_enabled'] || $system['voice_notes_chat_enabled']}
-        <script src="{$system['system_uploads_assets']}/includes/assets/js/plugins/recorder/recorder.js"></script>
+        <script src="{$system['system_url']}/includes/assets/js/plugins/recorder/recorder.js"></script>
     {/if}
     <!-- Voice Notes -->
 
     <!-- Slick Slider -->
-    {if $page == "index"}
-        <script src="{$system['system_uploads_assets']}/includes/assets/js/plugins/slick/slick.min.js"></script>
-        <link rel="stylesheet" type='text/css' href="{$system['system_uploads_assets']}/includes/assets/js/plugins/slick/slick.css">
-        <link rel="stylesheet" type='text/css' href="{$system['system_uploads_assets']}/includes/assets/js/plugins/slick/slick-theme.css">
+    {if $page == "global-profile/global-profile-timeline"}
+        <script src="{$system['system_url']}/includes/assets/js/plugins/slick/slick.min.js"></script>
+        <link rel="stylesheet" type='text/css' href="{$system['system_url']}/includes/assets/js/plugins/slick/slick.css">
+        <link rel="stylesheet" type='text/css' href="{$system['system_url']}/includes/assets/js/plugins/slick/slick-theme.css">
     {/if}
     <!-- Slick Slider -->
 
     <!-- TinyMCE -->
     {if $page == "admin" || $page == "blogs" || $page == "forums"}
-        <script src="{$system['system_uploads_assets']}/includes/assets/js/plugins/tinymce/tinymce.min.js"></script>
+        <script src="{$system['system_url']}/includes/assets/js/plugins/tinymce/tinymce.min.js"></script>
     {/if}
     <!-- TinyMCE -->
 
     <!-- Bootstrap selectpicker & datetimepicker -->
     {if $page == "admin" || $page == "groups" || $page == "group" || $page == "events" || $page == "event" || $page == "ads"}
-        <script src="{$system['system_uploads_assets']}/includes/assets/js/plugins/bootstrap.select/bootstrap-select.min.js"></script>
-        <link rel="stylesheet" type='text/css' href="{$system['system_uploads_assets']}/includes/assets/js/plugins/bootstrap.select/bootstrap-select.min.css">
+        <script src="{$system['system_url']}/includes/assets/js/plugins/bootstrap.select/bootstrap-select.min.js"></script>
+        <link rel="stylesheet" type='text/css' href="{$system['system_url']}/includes/assets/js/plugins/bootstrap.select/bootstrap-select.min.css">
 
-        <script src="{$system['system_uploads_assets']}/includes/assets/js/plugins/bootstrap.datetimepicker/bootstrap-datetimepicker.min.js"></script>
-        <link rel="stylesheet" type='text/css' href="{$system['system_uploads_assets']}/includes/assets/js/plugins/bootstrap.datetimepicker/bootstrap-datetimepicker.min.css">
+        <script src="{$system['system_url']}/includes/assets/js/plugins/bootstrap.datetimepicker/bootstrap-datetimepicker.min.js"></script>
+        <link rel="stylesheet" type='text/css' href="{$system['system_url']}/includes/assets/js/plugins/bootstrap.datetimepicker/bootstrap-datetimepicker.min.css">
     {/if}
     <!-- Bootstrap selectpicker & datetimepicker -->
 
@@ -351,14 +320,10 @@
         <script src="https://media.twiliocdn.com/sdk/js/video/releases/1.20.0/twilio-video.min.js"></script>
     {/if}
     <!-- Twilio -->
-    <!-- Agora -->
-    {if $system['live_enabled']}
-        <script src="https://cdn.agora.io/sdk/release/AgoraRTCSDK-3.4.0.js"></script>
-    {/if}
-    <!-- Agora -->
+
     <!-- Easytimer -->
     {if $system['audio_call_enabled'] || $system['video_call_enabled'] || $system['voice_notes_posts_enabled'] || $system['voice_notes_comments_enabled'] || $system['voice_notes_chat_enabled']}
-        <script src="{$system['system_uploads_assets']}/includes/assets/js/plugins/easytimer/easytimer.min.js"></script>
+        <script src="{$system['system_url']}/includes/assets/js/plugins/easytimer/easytimer.min.js"></script>
     {/if}
     <!-- Easytimer -->
 
@@ -372,57 +337,40 @@
 
 {/if}
 <!-- Dependencies Plugins -->
-
-<!-- Sngine [JS] -->
-<script src="{$system['system_uploads_assets']}/includes/assets/js/stratus/core.js?{$cacheremovejs}" defer></script>
-<script src="{$system['system_url']}/includes/assets/js/stratus/swipMobileCode.js?{$cacheremovejs}" defer></script>
-<!--Landing page custom js -->
-<script src="{$system['system_uploads_assets']}/includes/assets/js/stratus/custom.js?{$cacheremovejs}" defer></script>
-
+{assign var="cacheremovejs" value=$smarty.now|date_format:'%Y-%m-%d_%H:%M:%S'}
+<!-- Stratus [JS] -->
+<script src="{$system['system_url']}/includes/assets/js/stratus/global-profile/global-profile-core.js?{$cacheremovejs}" {if !$user->_logged_in}defer{/if}></script>
 {if $user->_logged_in}
-    <script src="{$system['system_uploads_assets']}/includes/assets/js/stratus/user.js?{$cacheremovejs}" defer></script>
-    <script src="{$system['system_uploads_assets']}/includes/assets/js/stratus/post.js?{$cacheremovejs}" defer></script>
-    <script src="{$system['system_uploads_assets']}/includes/assets/js/stratus/chat.js?{$cacheremovejs}" defer></script>
-    <script src="{$system['system_uploads_assets']}/includes/assets/js/stratus/showads.js?{$cacheremovejs}" defer></script>
-    {if $system['live_enabled'] && $page == "live"}
-        <script src="{$system['system_uploads_assets']}/includes/assets/js/stratus/live.js"></script>
-    {/if}
-
-    {if $page == "investment/activity" || $page == "investment/buy_sell"  || $page == "investment/index" }
-        <script src="{$system['system_url']}/includes/assets/js/stratus/investment.js?{$cacheremovejs}" defer></script>
-        <script src="{$system['system_uploads_assets']}/includes/assets/js/stratus/swipMobileCode.js?{$cacheremovejs}" defer></script>
-        <script src="{$system['system_url']}/includes/assets/js/plugins/graph/d3.js?{$cacheremovejs}" defer></script>
-        <script src="https://unpkg.com/flickity@2.2.2/dist/flickity.pkgd.min.js"></script>
-    {/if}
+    <script src="{$system['system_url']}/includes/assets/js/stratus/global-profile/global-profile-user.js?{$cacheremovejs}"></script>
+    <script src="{$system['system_url']}/includes/assets/js/stratus/global-profile/global-profile-post.js?{$cacheremovejs}"></script>
+    <script src="{$system['system_url']}/includes/assets/js/stratus/global-profile/global-profile-chat.js?{$cacheremovejs}"></script>
+    <script src="{$system['system_uploads_assets']}/includes/assets/js/stratus/showads.js?{$cacheremovejs}"></script>
+    <script src="{$system['system_url']}/includes/assets/js/plugins/swipeMobile/swipeMobile.js"></script>
 {/if}
-<!-- Sngine [JS] -->
+<!-- Stratus [JS] -->
 
-    <!-- Emoji Animation Script -->
-    <script src="https://unpkg.com/@lottiefiles/lottie-player@latest/dist/lottie-player.js"></script>
-
-    <!-- Emoji Animation Script -->
-   
 {if $page == "admin"}
     <!-- Dependencies Plugins -->
-    <script src="{$system['system_uploads_assets']}/includes/assets/js/plugins/bootstrap.colorpicker/bootstrap-colorpicker.min.js"></script>
-    <link rel="stylesheet" type='text/css' href="{$system['system_uploads_assets']}/includes/assets/js/plugins/bootstrap.colorpicker/bootstrap-colorpicker.min.css">
+    <script src="{$system['system_url']}/includes/assets/js/plugins/bootstrap.colorpicker/bootstrap-colorpicker.min.js"></script>
+    <link rel="stylesheet" type='text/css' href="{$system['system_url']}/includes/assets/js/plugins/bootstrap.colorpicker/bootstrap-colorpicker.min.css">
 
-    <script src="{$system['system_uploads_assets']}/includes/assets/js/plugins/jquery.treegrid/jquery.treegrid.min.js"></script>
-    <script src="{$system['system_uploads_assets']}/includes/assets/js/plugins/jquery.treegrid/jquery.treegrid.fontawesome.js"></script>
-    <link rel="stylesheet" type='text/css' href="{$system['system_uploads_assets']}/includes/assets/js/plugins/jquery.treegrid/jquery.treegrid.css">
+    <script src="{$system['system_url']}/includes/assets/js/plugins/jquery.treegrid/jquery.treegrid.min.js"></script>
+    <script src="{$system['system_url']}/includes/assets/js/plugins/jquery.treegrid/jquery.treegrid.fontawesome.js"></script>
+    <link rel="stylesheet" type='text/css' href="{$system['system_url']}/includes/assets/js/plugins/jquery.treegrid/jquery.treegrid.css">
 
-    <script src="{$system['system_uploads_assets']}/includes/assets/js/plugins/codemirror/lib/codemirror.js"></script>
-    <script src="{$system['system_uploads_assets']}/includes/assets/js/plugins/codemirror/mode/css/css.js"></script>
-    <script src="{$system['system_uploads_assets']}/includes/assets/js/plugins/codemirror/mode/javascript/javascript.js"></script>
-    <link rel="stylesheet" type='text/css' href="{$system['system_uploads_assets']}/includes/assets/js/plugins/codemirror/lib/codemirror.css">
+    <script src="{$system['system_url']}/includes/assets/js/plugins/codemirror/lib/codemirror.js"></script>
+    <script src="{$system['system_url']}/includes/assets/js/plugins/codemirror/mode/css/css.js"></script>
+    <script src="{$system['system_url']}/includes/assets/js/plugins/codemirror/mode/javascript/javascript.js"></script>
+    <link rel="stylesheet" type='text/css' href="{$system['system_url']}/includes/assets/js/plugins/codemirror/lib/codemirror.css">
 
-    <script src="{$system['system_uploads_assets']}/includes/assets/js/plugins/tagify/jquery.tagify.min.js"></script>
-    <link rel="stylesheet" type='text/css' href="{$system['system_uploads_assets']}/includes/assets/js/plugins/tagify/tagify.css">
+    <script src="{$system['system_url']}/includes/assets/js/plugins/tagify/jquery.tagify.min.js"></script>
+    <link rel="stylesheet" type='text/css' href="{$system['system_url']}/includes/assets/js/plugins/tagify/tagify.css">
     <!-- Dependencies Plugins [JS] -->
 
-    <!-- Sngine [JS] -->
-    <script src="{$system['system_uploads_assets']}/includes/assets/js/stratus/admin.js"></script>
-    <!-- Sngine [JS] -->
+    <!-- Stratus [JS] -->
+    <script src="{$system['system_url']}/includes/assets/js/stratus/admin.js?{$cacheremovejs}"></script>
+    <script src="{$system['system_url']}/includes/assets/js/stratus/swipMobileCode.js?{$cacheremovejs}" defer></script>
+    <!-- Stratus [JS] -->
 
     <!-- Admin Charts -->
     <script src="https://code.highcharts.com/highcharts.js"></script>
@@ -557,7 +505,7 @@
                     {/foreach}
                 ]
             });
-
+            
         });
         </script>
     {/if}

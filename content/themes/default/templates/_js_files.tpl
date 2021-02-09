@@ -181,8 +181,6 @@
     __['Select All'] = "{__('Select All')}";
     __['Deselect All'] = "{__('Deselect All')}";
     __['Total'] = "{__('Total')}";
-    __['Stop Campaign'] = "{__('Stop Campaign')}";
-    __['Resume Campaign'] = "{__('Resume Campaign')}";
     __['Sorry, WebRTC is not available in your browser'] = "{__('Sorry, WebRTC is not available in your browser')}";
     __['You are ready to Go Live now'] = "{__('You are ready to Go Live now')}";
     __['Getting permissions failed'] = "{__('Getting permissions failed')}";
@@ -328,7 +326,7 @@
     <!-- TinyMCE -->
 
     <!-- Bootstrap selectpicker & datetimepicker -->
-    {if $page == "admin" || $page == "groups" || $page == "group" || $page == "events" || $page == "event" || $page == "ads" || $page == "settings"}
+    {if $page == "admin" || $page == "groups" || $page == "group" || $page == "events" || $page == "event" || $page == "ads"}
         <script src="{$system['system_url']}/includes/assets/js/plugins/bootstrap.select/bootstrap-select.min.js"></script>
         <link rel="stylesheet" type='text/css' href="{$system['system_url']}/includes/assets/js/plugins/bootstrap.select/bootstrap-select.min.css">
 
@@ -338,7 +336,7 @@
     <!-- Bootstrap selectpicker & datetimepicker -->
 
     <!-- Stripe & 2Checkout -->
-    {if $page == "packages" || $page == "ads" || $page == "settings"}
+    {if $page == "packages" || $page == "ads"}
         {if $system['creditcard_enabled'] || $system['alipay_enabled']}
             <script src="https://checkout.stripe.com/checkout.js"></script>
         {/if}
@@ -353,13 +351,11 @@
         <script src="https://media.twiliocdn.com/sdk/js/video/releases/1.20.0/twilio-video.min.js"></script>
     {/if}
     <!-- Twilio -->
-
     <!-- Agora -->
     {if $system['live_enabled']}
         <script src="https://cdn.agora.io/sdk/release/AgoraRTCSDK-3.4.0.js"></script>
     {/if}
     <!-- Agora -->
-
     <!-- Easytimer -->
     {if $system['audio_call_enabled'] || $system['video_call_enabled'] || $system['voice_notes_posts_enabled'] || $system['voice_notes_comments_enabled'] || $system['voice_notes_chat_enabled']}
         <script src="{$system['system_url']}/includes/assets/js/plugins/easytimer/easytimer.min.js"></script>
@@ -368,7 +364,7 @@
 
 
     <!-- Datatables -->
-    {if $page == "admin" || $page == "ads" || $page == "developers" || $page == "settings"}
+    {if $page == "admin" || $page == "ads" || $page == "developers"}
         <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/v/bs4/dt-1.10.20/datatables.min.css"/>
         <script src="https://cdn.datatables.net/v/bs4/dt-1.10.20/datatables.min.js"></script>
     {/if}
@@ -380,18 +376,16 @@
 <!-- Dependencies Plugins -->
 
 <!-- Sngine [JS] -->
-<script src="{$system['system_uploads_assets']}/includes/assets/js/stratus/core.js?{$cacheremovejs}" defer></script>
+<script src="{$system['system_url']}/includes/assets/js/stratus/core.js?{$cacheremovejs}" defer></script>
 <script src="{$system['system_url']}/includes/assets/js/stratus/swipMobileCode.js?{$cacheremovejs}" defer></script>
 <!--Landing page custom js -->
 <script src="{$system['system_url']}/includes/assets/js/stratus/custom.js?{$cacheremovejs}" defer></script>
-<script src="{$system['system_url']}/includes/assets/js/stratus/lottie-player.js?{$cacheremovejs}" defer></script>
+
 {if $user->_logged_in}
     <script src="{$system['system_url']}/includes/assets/js/stratus/user.js?{$cacheremovejs}" defer></script>
     <script src="{$system['system_url']}/includes/assets/js/stratus/post.js?{$cacheremovejs}" defer></script>
     <script src="{$system['system_url']}/includes/assets/js/stratus/chat.js?{$cacheremovejs}" defer></script>
-    <script src="{$system['system_uploads_assets']}/includes/assets/js/stratus/showads.js?{$cacheremovejs}" defer></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/mediaelement/4.2.16/mediaelement-and-player.min.js" integrity="sha512-MgxzaA7Bkq7g2ND/4XYgoxUbehuHr3Q/bTuGn4lJkCxfxHEkXzR1Bl0vyCoHhKlMlE2ZaFymsJrRFLiAxQOpPg==" crossorigin="anonymous"></script>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/mediaelement/4.2.16/mediaelementplayer-legacy.min.css" integrity="sha512-/mTP+VCSG9+D7An+ecpc5S3kD1uHiGl+sdeygFXygXd4NH1dPIGjJIAcfscVGz7g7umbKILDw7EL12A0LTvz5w==" crossorigin="anonymous" />
+    <script src="{$system['system_url']}/includes/assets/js/stratus/showads.js?{$cacheremovejs}" defer></script>
     {if $system['live_enabled'] && $page == "live"}
         <script src="{$system['system_url']}/includes/assets/js/stratus/live.js"></script>
     {/if}
@@ -404,10 +398,15 @@
 {/if}
 <!-- Sngine [JS] -->
 
+    <!-- Emoji Animation Script -->
+    <script src="https://unpkg.com/@lottiefiles/lottie-player@latest/dist/lottie-player.js"></script>
+
+    <!-- Emoji Animation Script -->
+   
 {if $page == "admin"}
     <!-- Dependencies Plugins -->
     <script src="{$system['system_url']}/includes/assets/js/plugins/bootstrap.colorpicker/bootstrap-colorpicker.min.js"></script>
-    <link rel="stylesheet" type='text/css' href="{$system['system_url']}/includes/assets/js/plugins/bootstrap.colorpicker/bootstrap-colorpicker.min.css" defer>
+    <link rel="stylesheet" type='text/css' href="{$system['system_url']}/includes/assets/js/plugins/bootstrap.colorpicker/bootstrap-colorpicker.min.css">
 
     <script src="{$system['system_url']}/includes/assets/js/plugins/jquery.treegrid/jquery.treegrid.min.js"></script>
     <script src="{$system['system_url']}/includes/assets/js/plugins/jquery.treegrid/jquery.treegrid.fontawesome.js"></script>
