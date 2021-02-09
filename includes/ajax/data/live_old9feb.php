@@ -67,9 +67,6 @@ try {
 
 	// [4] check for new posts
 	if (isset($_POST['last_post']) && isset($_POST['custom_boosted'])) {
-		//print_r('here11111111'); die;
-	//	print_r($_POST); die;
-
 		$boosted_posts = array();
 		// get boosted post
 		if ($system['packages_enabled']) {
@@ -78,28 +75,11 @@ try {
 		}
 		// get posts (newsfeed)
 		$posts = $user->get_posts_all(array('get' => $_POST['get'], 'filter' => $_POST['filter'], 'id' => $_POST['id'], 'last_post_id' => $_POST['last_post']));
-
-		//print_r($posts); die;
 		if (!empty($boosted_posts)) {
 			$posts = array_merge($boosted_posts, $posts);
 			//$posts = array_reverse($posts)
 		}
 		if ($posts) {
-			$redisPostKey = 'user-' . $user->_data['user_id'] . '-posts';
-        	$redisObject = new RedisClass();
-			 $isKeyExist = $redisObject->isRedisKeyExist($redisPostKey);
-            if($isKeyExist == true){
-				$new_response = [];
-				//$jsonEncData = json_encode($posts);
-			    	$getPostsFromRedis = $redisObject->getValueFromKey($redisPostKey);
-                	$jsonValuesRes = json_decode($getPostsFromRedis, true);
-					foreach ($posts as $value) {
-					  $jsonValuesRes[] = $value;
-					}
-            		
-					$new_response = json_encode($jsonValuesRes);
-				    $redisObject->setValueWithRedis($redisPostKey, $new_response);
-			}
 			/* get user pages */
 			$pages = $user->get_pages(array('managed' => true, 'user_id' => $user->_data['user_id']));
 			$smarty->assign('pages', $pages);
@@ -116,8 +96,6 @@ try {
 
 	if (isset($_POST['last_post_pinned']) && isset($_POST['custom_pinned'])) {
 		/* get followers count */
-	
-
 
 		$profile['followers_count'] = count($user->get_followers_ids($profile['user_id']));
 
@@ -217,8 +195,13 @@ try {
 
 	// [4] check for new posts
 	if (isset($_POST['last_post']) && !isset($_POST['custom_boosted'])) {
+	//	print_r('here'); die;
 		$posts = $user->get_posts(array('get' => $_POST['get'], 'filter' => $_POST['filter'], 'id' => $_POST['id'], 'last_post_id' => $_POST['last_post']));
 		if ($posts) {
+			$redisPostKey = 'user-' . $user->_data['user_id'] . '-posts';
+        	$redisObject = new RedisClass();
+			$jsonEncVal = json_encode($posts); 
+			$redis->lpush($redisPostKey, $jsonEncVal); 
 			/* get user pages */
 			$pages = $user->get_pages(array('managed' => true, 'user_id' => $user->_data['user_id']));
 			$smarty->assign('pages', $pages);
