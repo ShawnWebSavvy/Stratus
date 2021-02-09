@@ -1248,7 +1248,7 @@
 }
 
 .nav-link.buySelltableTabs {
-  width: 60px;
+  width: 98px;
   height: 40px;
   display: -webkit-box;
   display: -ms-flexbox;
@@ -1261,10 +1261,10 @@
   justify-content: center;
   font-size: 14px;
   font-weight: 600;
-  color: #a7b4cb;
+  color: #16161f;
   background-color: transparent;
   padding: 11px 17px;
-  border-radius: 20px;
+  border-radius: 10px;
   margin-right: 8px;
 }
 
