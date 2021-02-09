@@ -60,6 +60,9 @@ switch ($_GET['do']) {
 		}
 
 		// sign out
+		 $redisObject = new RedisClass();
+         $redisPostKey = 'user-' . $user->_data['user_id'].'-posts';
+		 $redisObject->deleteValueFromKey($redisPostKey);
 		$user->sign_out();
 		redirect();
 		break;
