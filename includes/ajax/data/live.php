@@ -142,7 +142,7 @@ try {
 		}
 
 		/* get posts */
-		//$posts_unpin = $user->get_posts(array('get' => 'posts_profile', 'id' => $profile['user_id']));
+		$posts_unpin = $user->get_posts(array('get' => 'posts_profile', 'id' => $user->_data['user_id']));
 		$user->get_boosted_all(array('get' => $_POST['get'], 'filter' => $_POST['filter'], 'id' => $profile['user_id'], 'last_post_id' => $_POST['last_post_pinned']));
 		$postsUnpin = array();
 		$pinnedPost = array();
@@ -164,10 +164,12 @@ try {
 
 		if (!empty($pinnedPost)) {
 			$posts = array_merge($pinnedPost, $postsUnpin);
-			//$posts = array_reverse($posts)
+			//$posts = array_reverse($posts);
 		} else {
 			$posts = $postsUnpin;
 		}
+		// echo "<pre>";
+		// print_r($posts);
 
 		/* prepare publisher */
 		$smarty->assign('feelings', get_feelings());
@@ -193,6 +195,7 @@ try {
 
 	// [4] check for new posts
 	if (isset($_POST['last_post']) && !isset($_POST['custom_boosted'])) {
+	//	print_r('here'); die;
 		$posts = $user->get_posts(array('get' => $_POST['get'], 'filter' => $_POST['filter'], 'id' => $_POST['id'], 'last_post_id' => $_POST['last_post']));
 		if ($posts) {
 			/* get user pages */
