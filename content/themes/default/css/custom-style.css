@@ -70,7 +70,7 @@ body.profile-localhub .js_follow{height:42px !important;font-size:14px;font-weig
 .clr_overlay_{width:100%;height:100%;background-color:rgba(0, 0, 0, 0.5);position:absolute;top:0;left:0;z-index:999999;}
 ._share__img{margin-top:-6px;margin-right:8px;}
 ._share_post_.dropdown.show .action-btn{position:relative;z-index:99999999;}
-._share-dropdown_.dropdown-menu.fade.show{width:260px;z-index:99999999;}
+._share-dropdown_.dropdown-menu.fade.show{min-width: 260px; z-index:99999999;}
 .source{min-height:inherit !important;background-color:transparent !important;padding:0 !important;height:auto !important;margin-top:8px;margin-left:15px;}
 .stratus_story_popup .modal-body._add_story_popup .row > div .attachments li.item{width:96px;height:120px;}
 .stratus_story_popup .modal-body._add_story_popup .row > div .attachments li.item.deletable::before{width:94px;height:120px;}
