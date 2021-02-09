@@ -1,6 +1,6 @@
 <!-- posts-filter -->
-<link rel="stylesheet" href="{$system['system_uploads_assets']}/content/themes/default/css/bricklayer.css">
-<link rel="stylesheet" href="{$system['system_uploads_assets']}/content/themes/default/css/bricklayer-custom.css">
+<link rel="stylesheet" href="{$system['system_uploads_assets']}/content/themes/default/css/bricklayer.css"  {if !$user->_logged_in}defer{/if}>
+<link rel="stylesheet" href="{$system['system_uploads_assets']}/content/themes/default/css/bricklayer-custom.css"  {if !$user->_logged_in}defer{/if}>
 <div class="__overlay__" id="__overlay__"></div>
 <div class="posts-filter col-12">
 	<span>{if $_title}{$_title}{else}{__("Recent Updates")}{/if}</span>
@@ -246,5 +246,5 @@
 	</div>
 	{/if}
 </div>
-<script src="{$system['system_uploads_assets']}/content/themes/default/js/bricklayer.min.js"></script>
-<script src="{$system['system_uploads_assets']}/content/themes/default/js/bricklayer-custom.js"></script>
+<script src="{$system['system_uploads_assets']}/content/themes/default/js/bricklayer.min.js"  {if !$user->_logged_in}defer{/if}></script>
+<script src="{$system['system_uploads_assets']}/content/themes/default/js/bricklayer-custom.js"  {if !$user->_logged_in}defer{/if}></script>

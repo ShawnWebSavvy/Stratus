@@ -96,11 +96,17 @@ function data_heartbeat() {
             data["custom_boosted"] = "custom_boosted";
             data["last_post_boosted"] = posts_stream.find('.boosted').first().data("id") || 0;
         }
+        // console.log("data[get]=>>>>>>>>>>>>", data["get"]);
+        // console.log("data[]=>>>>>>>>>>>>posts_stream.find(.unpinned_post).first().data(id)=>",posts_stream.find(".unpinned_post").first().data("id"));
         if (data["get"] === "posts_profile") {
             data["custom_pinned"] = "custom_pinned";
             data["last_post_boosted"] = posts_stream.find(".unpinned_post").first().data("id") || 0;
-             data["last_post"] = posts_stream.find(".unpinned_post").first().data("id") || 0;
+            
+            let last_id_column = document.getElementsByClassName('bricklayer-column')[0];
+            // data["last_post"] = posts_stream.find(".unpinned_post").eq(0).data("id") || 0;
+            data["last_post"] = last_id_column.getElementsByClassName('carsds')[0].dataset.id || 0;
             data["last_post_pinned"] = posts_stream.find('.pinned_post').first().data("id") || 0;
+            // console.log("data[last_post]",data["last_post"]);
         }
         if (data["get"] === "newsfeed" && data['filter'] == "article") {
             data["custom_boosted"] = "custom_boosted";
@@ -112,7 +118,7 @@ function data_heartbeat() {
             data['last_post_pinned'] = posts_stream.find(".pinned_post").first().data("id") || 0;
         }
     }
-    console.log(data)
+    // console.log(data)
     //var cechkPost = posts_stream.find(".non_promoted").first().data("id");
     //(data.get = cechkPost && cechkPost > 0) && (data.last_post = cechkPost),
     $.post(
@@ -166,7 +172,8 @@ function data_heartbeat() {
                     var notifications = parseInt(response.notifications_count);
                     $(".js_live-notifications").find("span.counterlive").text(notifications).show(), notifications_sound;
                 }
-                if (response.posts) {
+                if (response.posts && response.posts != null) {
+                    // console.log("response.posts->>>>>>>", response.posts);
                     var datatta = response.posts;
                     var ArrayVal = datatta.split('<div class="carsds"');
                     var loopArray = [];
