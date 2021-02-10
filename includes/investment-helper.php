@@ -69,7 +69,7 @@ class InvestmentHelper {
         return $return;
     }
 
-    public static function buy_order($params){
+    public static function buySellOrder($params){
         global $db,$system;
         $result  =  httpPostCurl('investment/place_order/',$system['investment_api_base_url'],$params);
         return $result;
@@ -87,10 +87,10 @@ class InvestmentHelper {
             $fees_token = round($token_value*$fees/100,5);
             $receive_token = round($token_value-$fees_token,5);
             $params['size'] = $receive_token;
-            // $result = InvestmentHelper::buy_order($params);
-            $order_id = rand(999,99999);
-            // if(isset($result['data']['data']['order_id'])){
-            if(isset($order_id)){
+            $result = InvestmentHelper::buySellOrder($params);
+            // $order_id = rand(999,99999);
+            if(isset($result['data']['data']['order_id'])){
+            // if(isset($order_id)){
                 $db->query(sprintf("INSERT INTO investment_transactions (user_id, order_id, tokens, currency, tnx_type ,amount, receive_amount, recieve_token, fees, status) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s)", secure($user_data['user_id'], 'int'), secure($order_id), secure($token_value), secure($token_name), secure($action),secure($amount),secure($amount), secure($receive_token), secure($fees), secure('completed') )) or _error("SQL_ERROR_THROWEN");
                 $investment_id = $db->insert_id;
                 if($investment_id){
@@ -126,10 +126,10 @@ class InvestmentHelper {
             $fees_amount = round($amount*$fees/100,5);
             $receive_amount = round($amount-$fees_amount,2);
             // die($token_value);
-            // $result = InvestmentHelper::buy_order($params);
-            $order_id = rand(999,99999);
-            // if(isset($result['data']['data']['order_id'])){
-            if(isset($order_id)){
+            $result = InvestmentHelper::buySellOrder($params);
+            // $order_id = rand(999,99999);
+            if(isset($result['data']['data']['order_id'])){
+            // if(isset($order_id)){
                 $db->query(sprintf("INSERT INTO investment_transactions (user_id, order_id, tokens, currency, tnx_type ,amount, receive_amount, recieve_token, fees, status) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s)", secure($user_data['user_id'], 'int'), secure($order_id), secure($token_value), secure($token_name), secure($action),secure($amount),secure($receive_amount), secure($token_value), secure($fees), secure('completed') )) or _error("SQL_ERROR_THROWEN");
                 $investment_id = $db->insert_id;
                 if($investment_id){
@@ -153,19 +153,19 @@ class InvestmentHelper {
         
     }
 
-    public static function getAllActiveTokens(){
-        global $db,$system;
-        $tokens = $db->query("SELECT * FROM investment_coins") or _error("SQL_ERROR_THROWEN");
-        $return = [];
-        if ($tokens->num_rows > 0) {
-            while ($token = $tokens->fetch_assoc()) {
-                $token['wallet_name'] = $token['short_name'].'_wallet';
-                $return[] = $token;
+    // public static function getAllActiveTokens(){
+    //     global $db,$system;
+    //     $tokens = $db->query("SELECT * FROM investment_coins") or _error("SQL_ERROR_THROWEN");
+    //     $return = [];
+    //     if ($tokens->num_rows > 0) {
+    //         while ($token = $tokens->fetch_assoc()) {
+    //             $token['wallet_name'] = $token['short_name'].'_wallet';
+    //             $return[] = $token;
                 
-            }
-        }
-        return $return;
-    }
+    //         }
+    //     }
+    //     return $return;
+    // }
 
     public static function getAdminExchangeDetail($api_suffix)
     {   

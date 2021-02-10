@@ -162,6 +162,40 @@
                                         </div>
                                     </div>
                                 {/foreach}
+                                <div class="coinDetailSection">
+                                    <div class="coinSectionHeader">
+                                        <img src="{$system['system_url']}/content/themes/default/images/investment/gsx.svg"
+                                                    alt="bit coin">
+                                        <div class="coinNameValue">
+                                            <h5 class="token_name">Gold Secured Currency</h5>
+                                            <p>
+                                                <img src="{$system['system_url']}/content/themes/default/images/svg/svgImg/Wallet_icon_header.svg"
+                                                    alt="wallet">
+                                                    <span>
+                                                        0 GSX
+                                                        <br/>
+                                                        $0
+                                                    </span>
+                                            </p>
+                                        </div>
+                                    </div>
+                                    <div class="GraphSection">
+                                    <div class="graphSectionHeader">
+                                        <h3><span class="coin_price">0.1</span> USD</h3>
+                                    </div>
+                                     <div class="comming_soon_text">
+                                         <p>Comming Soon</p>
+                                     </div>
+                                    </div>
+                                    <div class="coinBaseButtonSection btn-group" role="group">
+                                        <a href="javascript:;"
+                                            class="btn coinBaseButton" disabled>Buy</a>
+                                        <a href="javascript:;"
+                                            class="btn coinBaseButton" disabled>Sell</a>
+                                    
+                                    </div>
+                                </div>
+                                
                             {/if}
                             <div class="MobileCrousle">
                                 <div class="gallery js-flickity" data-flickity-options='{ "wrapAround": true,"prevNextButtons": false, "pageDots": false }'>
@@ -214,16 +248,47 @@
                                                             class="btn coinBaseButton">Buy</a>
                                                         <a href="{$system['system_url']}/investment/buy-sell"
                                                             class="btn coinBaseButton">Sell</a>
-                                                        <!-- <a href="javascript:;"
-                                                            class="btn coinBaseButton">Info</a> -->
-                                                        {* <button type="button" class="btn coinBaseButton">Buy</button>
-                                                        <button type="button" class="btn coinBaseButton">Sell</button>
-                                                        <button type="button" class="btn coinBaseButton">Info</button> *}
                                                     </div>
                                                 </div>
                                             </div>
                                         {/foreach}
                                     {/if}
+                                    <div class="gallery-cell">
+                                        <div class="coinDetailSection">
+                                            <div class="coinSectionHeader">
+                                                <img src="{$system['system_url']}/content/themes/default/images/investment/gsx.svg"
+                                                        alt="bit coin">
+                                                <div class="coinNameValue">
+                                                    <h5 class="token_name">Gold Secured Currency</h5>
+                                                    <p>
+                                                        <img src="{$system['system_url']}/content/themes/default/images/svg/svgImg/Wallet_icon_header.svg"
+                                                            alt="wallet">
+                                                        <span>
+                                                            0 GSX
+                                                            <br/>
+                                                            $0
+                                                        </span>
+                                                    </p>
+                                                </div>
+                                            </div>
+                                            <div class="GraphSection">
+                                                <p><span class="coin_price">0.1</span> USD</p>
+                                             
+                                                 <div class="comming_soon_text">
+                                                     <p>Comming Soon</p>
+                                                 </div>
+                                               
+                                            </div>
+                                            <div class="coinBaseButtonSection btn-group" role="group">
+                                                <a href="javascript:;"
+                                                    class="btn coinBaseButton" disabled>Buy</a>
+                                                <a href="javascript:;"
+                                                    class="btn coinBaseButton" disabled>Sell</a>
+                                            
+                                            </div>
+                                        </div>
+                                    </div>
+                                  
                                 </div>
                             </div>
                         </div>
