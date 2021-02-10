@@ -559,3 +559,40 @@ body.profile-localhub .button-messages-profile {
     background-color: transparent;
 }
 }
+.play_video_icon {
+    width: 50px !important;
+    top: 50% !important;
+    left: 50% !important;
+    transform: translate(-50%, -50%) !important;
+}
+
+.rightSideBarScroll .card .card-body ul li.feeds-item .data-container ._user_detail_sec {
+    max-width: calc(100% - 50px) !important;
+    flex: 0 0 calc(100% - 50px) !important;
+}
+
+.rightSideBarScroll .card .card-body ul li.feeds-item .data-container .usernamesWrapBlock {
+    flex: 0 0 50px !important;
+    max-width: 50px !important;
+}
+
+.rightSideBarScroll .card .card-body ul li.feeds-item .searchSectionWrap {
+    padding-left: 0;
+    padding-right: 0;
+}
+
+.profileUpdatesDesign .usernamesWrapBlock {
+    flex: 0 0 50px !important;
+    max-width: 50px;
+}.profileUpdatesDesign ._user_detail_sec {
+    max-width: calc(100% - 50px) !important;
+    flex: 0 0 calc(100% - 50px) !important;
+}
+.landingpage-localhub .post-replace .image img {
+    max-width: 100%;
+    width: auto !important;
+}
+a.js_lightbox {
+    display: block !important;
+    text-align: center;
+}

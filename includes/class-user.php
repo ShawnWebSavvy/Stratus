@@ -1313,7 +1313,7 @@ class User
 
             case 'friend-add':
                 /* check blocking */
-                if ($this->blocked($id)) {
+                if ($this->blocked($id)) { 
                     _error(403);
                 }
                 /* check if there is any relation between the viewer & the target */

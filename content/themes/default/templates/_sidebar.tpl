@@ -21,7 +21,7 @@
                     </a>
                 </li>
             </ul>
-
+         
             <!-- local hub sub menu starts -->
             <ul
                 class="main-side-nav main-left-side-nav left-sidebar-{if ($active_page=='LocalHub')}second-ul active {else}first-ul{/if}">
@@ -253,7 +253,23 @@
             </ul>
             <!-- sub of global end -->
             <!-- Global Hub End here -->
-
+    <!-- playtube -->	
+    <ul	
+class="main-side-nav main-left-side-nav left-sidebar first-ul">	
+<li>	
+    <a href="{PLY_URL}?dtl={$encodedUserDetails}" class="{$page}">	
+        <div class="svg-container">	
+            <img src="{$system['system_url']}/content/themes/default/images/svg/svgImg/video_hub_icon.svg" class="">	
+            <!-- <img src="{$system['system_url']}/content/themes/default/images/svg/svgImg/nav_icon_favourite.svg"	
+                class="blackicon">	
+            <img src="{$system['system_url']}/content/themes/default/images/svg/svgImg/nav_icon_favourits_active.svg"	
+                class="whiteicon"> -->	
+        </div>	
+        <span class="nav-text">{__("Video Hub")}</span>	
+    </a>	
+</li>	
+</ul>	
+<!-- playtube -->
 
             <!-- Blog Hub starts-->
 
@@ -336,7 +352,7 @@
             <!-- Logiut starts -->
             <ul class="main-side-nav main-left-side-nav left-sidebar-five-ul">
                 <li>
-                    <a href="{$system['system_url']}/signout">
+                <a href="{$system['system_url']}/signout" onclick=window.open("{PLAYTUBE_LINK}","_self") >
                         <div class="svg-container">
                             <img src="{$system['system_uploads_assets']}/content/themes/default/images/svg/svgImg/logOutNew.svg"
                                 class="blackicon">
