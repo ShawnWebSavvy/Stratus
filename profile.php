@@ -205,10 +205,19 @@ try {
 			} else {
 				$posts = $postsUnpin;
 			}
+			if(!empty($posts)){
+				function invenDescSort($item1,$item2)
+				{
+					if ($item1['post_id'] == $item2['post_id']) return 0;
+					return ($item1['post_id'] < $item2['post_id']) ? 1 : -1;
+				}
+				usort($posts,'invenDescSort');
+			}
+		
+
 			// echo "<pre>";
 			// print_r($posts);
 			// die;
-
 			/* prepare publisher */
 			$smarty->assign('feelings', get_feelings());
 			$smarty->assign('feelings_types', get_feelings_types());

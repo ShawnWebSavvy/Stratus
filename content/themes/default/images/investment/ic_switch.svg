@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="32px" height="32px" viewBox="0 0 32 32" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <title>ic_switch</title>
+    <g id="InvestPlatform" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="Home/Knox-PRO/Buy_Sell" transform="translate(-638.000000, -1032.000000)">
+            <g id="assets" transform="translate(250.000000, 138.000000)">
+                <g id="Payment-Method-Copy" transform="translate(32.000000, 806.000000)">
+                    <g id="ic_switch" transform="translate(356.000000, 88.000000)">
+                        <polygon id="Bounds" fill-opacity="0.1" fill="#FF0000" opacity="0" points="0 0 32 0 32 32 0 32"></polygon>
+                        <polygon id="Shape-Copy" fill="#E4E4E4" transform="translate(16.000000, 24.666667) scale(-1, 1) translate(-16.000000, -24.666667) " points="29 19 3 19 3 22.0833333 20.4473684 22.0833333 20.4473684 30.3333333"></polygon>
+                        <polygon id="Shape-Copy-2" fill="#E4E4E4" transform="translate(16.500000, 7.500000) scale(1, -1) translate(-16.500000, -7.500000) " points="29 2 4 2 4 4.99264706 20.7763158 4.99264706 20.7763158 13"></polygon>
+                    </g>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>

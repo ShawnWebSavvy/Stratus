@@ -19,9 +19,9 @@
                 <div class="published_img_post">
                     <div class="published_avatar-block">
                         {if $_handle == "page"}
-                        <img class="publisher-avatar" src="{$spage['page_picture']}" />
+                        <img class="publisher-avatar lazyload" src="{$spage['page_picture']}" />
                         {else}
-                        <img class="publisher-avatar {$user->_data['user_id']}"
+                        <img class="publisher-avatar lazyload {$user->_data['user_id']}"
                             src="{$user->_data['user_picture']}" />
                         {/if}
                     </div>

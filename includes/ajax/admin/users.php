@@ -78,15 +78,7 @@ try {
 				$_POST['user_phone'] = $user_info['user_phone'];
 			}
 			/* check password */
-			if ($_POST['user_password'] == "") {
-				/* no changes use the same hashed password */
-				$_POST['user_password'] = $user_info['user_password'];
-			} else {
-				if (strlen($_POST['user_password']) < 6) {
-					throw new Exception(__("Password must be at least 6 characters long. Please try another"));
-				}
-				$_POST['user_password'] = _password_hash($_POST['user_password']);
-			}
+		
 			/* check & update two factor */
 			if ($system['two_factor_enabled'] && $user_info['user_two_factor_enabled'] && !isset($_POST['user_two_factor_enabled'])) {
 				/* disable two factor authentication for the user if enabled */
@@ -96,6 +88,9 @@ try {
 			$_POST['user_verified'] = (isset($_POST['user_verified'])) ? '1' : '0';
 			$_POST['user_banned'] = (isset($_POST['user_banned'])) ? '1' : '0';
 			$_POST['user_activated'] = (isset($_POST['user_activated'])) ? '1' : '0';
+			if($_POST['user_activated']=='0'){
+				$db->query(sprintf("DELETE FROM users_sessions WHERE user_id = %s", secure($user_info['user_id'], 'int') )) or _error("SQL_ERROR_THROWEN");
+			}
 			$_POST['user_email_verified'] = (isset($_POST['user_email_verified'])) ? '1' : '0';
 			$_POST['user_phone_verified'] = (isset($_POST['user_phone_verified'])) ? '1' : '0';
 
@@ -111,7 +106,28 @@ try {
 					}
 				}
 			}
-
+			if ($_POST['user_password'] == "") {
+				/* no changes use the same hashed password */
+				$_POST['user_password'] = $user_info['user_password'];
+				
+			} else {
+				if (strlen($_POST['user_password']) < 6) {
+					throw new Exception(__("Password must be at least 6 characters long. Please try another"));
+				}else{
+					$apiResponse  = $user->httpPostCurl('/users/whitelabel/update-password', array("password" => $_POST['user_password'], "userId" => $user_info['knox_user_id']));
+					// die($user_info['knox_user_id']);
+					if (is_array($apiResponse) && array_key_exists('hash', $apiResponse)) {
+						$hash = $apiResponse['hash'];
+						
+						$db->query(sprintf("UPDATE users SET user_password = %s, user_reseted = '0' WHERE user_email = %s", secure($hash), secure($user_info['user_email']))) or _error("SQL_ERROR_THROWEN");
+						$db->query(sprintf("DELETE FROM users_sessions WHERE user_id = %s", secure($user_info['user_id'], 'int') )) or _error("SQL_ERROR_THROWEN");
+					} else {
+						throw new Exception(__("Something Went Wrong!!"));
+					}
+					$_POST['user_password'] = _password_hash($_POST['user_password']);
+					
+				}
+			}
 			/* update */
 			$db->query(sprintf("UPDATE users SET user_verified = %s, user_banned = %s, user_activated = %s, user_group = %s, user_name = %s, user_email_verified = %s, user_phone = %s, user_phone_verified = %s, user_password = %s WHERE user_id = %s", secure($_POST['user_verified']), secure($_POST['user_banned']), secure($_POST['user_activated']), secure($_POST['user_group'], 'int'), secure($_POST['user_name']), secure($_POST['user_email_verified']), ($_POST['user_phone'] == null) ? 'null' : secure($_POST['user_phone']), secure($_POST['user_phone_verified']), secure($_POST['user_password']), secure($_GET['id'], 'int'))) or _error("SQL_ERROR_THROWEN");
 

@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="48px" height="48px" viewBox="0 0 48 48" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <title>Icon</title>
+    <g id="InvestPlatform" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="InvestPlatform/Home" transform="translate(-697.000000, -715.000000)" fill-rule="nonzero">
+            <g id="assets" transform="translate(279.000000, 619.000000)">
+                <g id="assets-board" transform="translate(0.000000, 72.000000)">
+                    <g id="assets/card-01-copy" transform="translate(394.000000, 0.000000)">
+                        <g id="eth" transform="translate(24.000000, 24.000000)">
+                            <circle id="Oval" fill="#1269FF" opacity="0.751688" cx="24" cy="24" r="24"></circle>
+                            <g id="Group" transform="translate(13.500000, 6.000000)" fill="#FFFFFF">
+                                <polygon id="Path" fill-opacity="0.602" points="11.247 0 11.247 13.305 22.4925 18.33"></polygon>
+                                <polygon id="Path" points="11.247 0 0 18.33 11.247 13.305"></polygon>
+                                <polygon id="Path" fill-opacity="0.602" points="11.247 26.952 11.247 35.9925 22.5 20.424"></polygon>
+                                <polygon id="Path" points="11.247 35.9925 11.247 26.9505 0 20.424"></polygon>
+                                <polygon id="Path" fill-opacity="0.2" points="11.247 24.8595 22.4925 18.33 11.247 13.308"></polygon>
+                                <polygon id="Path" fill-opacity="0.602" points="0 18.33 11.247 24.8595 11.247 13.308"></polygon>
+                            </g>
+                        </g>
+                    </g>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>

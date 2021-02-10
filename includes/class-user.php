@@ -36,107 +36,25 @@ class User
             $system['system_uploads'] = $system['system_uploads_url'];
         }
         if (isset($_COOKIE[$this->_cookie_user_id]) && isset($_COOKIE[$this->_cookie_user_token])) {
-            $userQuery = sprintf("SELECT users.*, users_sessions.*, posts_photos.source as user_picture_full, packages.*,country.country_name as user_country_name FROM users INNER JOIN users_sessions ON users.user_id = users_sessions.user_id LEFT JOIN posts_photos ON users.user_picture_id = posts_photos.photo_id LEFT JOIN packages ON users.user_subscribed = '1' AND users.user_package = packages.package_id left join system_countries as country on country.country_id = users.user_country  WHERE users_sessions.user_id = %s AND users_sessions.session_token = %s", secure($_COOKIE[$this->_cookie_user_id], 'int'), secure($_COOKIE[$this->_cookie_user_token]));
-            $get_user = $db->query($userQuery) or _error("SQL_ERROR_THROWEN");
-            if ($get_user->num_rows > 0) {
-                $this->_data = $get_user->fetch_assoc();
-                /* check unusual login */
-                if ($system['unusual_login_enabled']) {
-                    if ($this->_data['user_browser'] != get_user_browser() || $this->_data['user_os'] != get_user_os() || $this->_data['user_ip'] != get_user_ip()) {
-                        return;
-                    }
-                }
+
+            $response_data =  cachedUserData($db, $system, $_COOKIE[$this->_cookie_user_id], $_COOKIE[$this->_cookie_user_token]);
+
+           if(!empty($response_data) > 0 ){
+                $this->_data = $response_data;
                 $this->_logged_in = true;
                 $this->_is_admin = ($this->_data['user_group'] == 1) ? true : false;
                 $this->_is_moderator = ($this->_data['user_group'] == 2) ? true : false;
-                /* update user language */
+                                   /* update user language */
                 if ($system['current_language'] != $this->_data['user_language']) {
                     $updateQ = sprintf("UPDATE users SET user_language = %s WHERE user_id = %s", secure($system['current_language']), secure($this->_data['user_id'], 'int'));
                     $db->query($updateQ) or _error("SQL_ERROR_THROWEN");
                 }
                 /* update user last seen */
                 $db->query(sprintf("UPDATE users SET user_last_seen = NOW() WHERE user_id = %s", secure($this->_data['user_id'], 'int'))) or _error("SQL_ERROR_THROWEN");
-                /* active session */
-                $this->_data['active_session_id'] = $this->_data['session_id'];
-                $this->_data['active_session_token'] = $this->_data['session_token'];
-                /* get user picture */
-                $this->_data['user_picture_default'] = ($this->_data['user_picture']) ? false : true;
-                $this->_data['user_picture_raw'] = $this->_data['user_picture'];
-                $this->_data['user_picture'] = get_picture($this->_data['user_picture'], $this->_data['user_gender']);
-                $this->_data['user_picture_full'] = ($this->_data['user_picture_full']) ? $system['system_uploads'] . '/' . $this->_data['user_picture_full'] : $this->_data['user_picture_full'];
-                //                if ($this->_data['user_picture'] != "") {
-                //                    $checkImage = image_exist($this->_data['user_picture']);
-                //                    if ($checkImage != '200') {
-                //                        $this->_data['user_picture'] = $this->_data['user_picture_full'];
-                //                    }
-                //                }
-                // if ($this->_data['user_picture_full'] == "") {
-                //     $this->_data['user_picture_full'] = $system['system_uploads_assets'] . '/content/themes/' . $system['theme'] . '/images/user_defoult_img.jpg';
-                // }
+           }
 
-                $this->_data['user_picture'] = $system['system_url'] . '/includes/wallet-api/image-exist-api.php?userPicture=' . $this->_data['user_picture'] . '&userPictureFull=' . $system['system_uploads'] . '/' . $this->_data['user_picture_full'] . '&type=1';
-                // echo "<pre>";
-                // print_r($this->_data);
-                // die;
-                /* get all friends ids */
-                $this->_data['friends_ids'] = $this->get_friends_ids($this->_data['user_id']);
-                /* get all followings ids */
-                $this->_data['followings_ids'] = $this->get_followings_ids($this->_data['user_id']);
-                /* get all friend requests ids */
-                $this->_data['friend_requests_ids'] = $this->get_friend_requests_ids();
-                /* get all friend requests sent ids */
-                $this->_data['friend_requests_sent_ids'] = $this->get_friend_requests_sent_ids();
-                /* check boost permission */
-                $this->_data['can_boost_posts'] = false;
-                $this->_data['can_boost_pages'] = false;
-                if ($system['packages_enabled'] && ($this->_is_admin || $this->_data['user_subscribed'])) {
-                    if ($this->_is_admin || ($this->_data['boost_posts_enabled'] && ($this->_data['user_boosted_posts'] < $this->_data['boost_posts']))) {
-                        $this->_data['can_boost_posts'] = true;
-                    }
-                    if ($this->_is_admin || ($this->_data['boost_pages_enabled'] && ($this->_data['user_boosted_pages'] < $this->_data['boost_pages']))) {
-                        $this->_data['can_boost_pages'] = true;
-                    }
-                }
-                /* check pages permission */
-                if ($system['pages_enabled']) {
-                    $this->_data['can_create_pages'] = $this->check_module_permission($system['pages_permission']);
-                }
-                /* check groups permission */
-                if ($system['groups_enabled']) {
-                    $this->_data['can_create_groups'] = $this->check_module_permission($system['groups_permission']);
-                }
-                /* check events permission */
-                if ($system['events_enabled']) {
-                    $this->_data['can_create_events'] = $this->check_module_permission($system['events_permission']);
-                }
-                /* check blogs permission */
-                if ($system['blogs_enabled']) {
-                    $this->_data['can_write_articles'] = $this->check_module_permission($system['blogs_permission']);
-                }
-                /* check market permission */
-                if ($system['market_enabled']) {
-                    $this->_data['can_sell_products'] = $this->check_module_permission($system['market_permission']);
-                }
-                /* check forums permission */
-                if ($system['forums_enabled']) {
-                    $this->_data['can_use_forums'] = $this->check_module_permission($system['forums_permission']);
-                }
-                /* check movies permission */
-                if ($system['movies_enabled']) {
-                    $this->_data['can_watch_movies'] = $this->check_module_permission($system['movies_permission']);
-                }
-                /* check games permission */
-                if ($system['games_enabled']) {
-                    $this->_data['can_play_games'] = $this->check_module_permission($system['games_permission']);
-                }
-                /* check games permission */
-                if ($system['live_enabled']) {
-                    $this->_data['can_go_live'] = $this->check_module_permission($system['live_permission']);
-                }
-            }
         }
     }
-
 
 
     /* ------------------------------- */
@@ -3978,6 +3896,8 @@ class User
         if ($system['save_live_enabled']) {
             $this->stop_live_recording($post_id, $post['live']['agora_uid'], $post['live']['agora_channel_name'], $post['live']['agora_resource_id'], $post['live']['agora_sid']);
         }
+
+        
     }
 
 
@@ -4464,6 +4384,13 @@ class User
         foreach ($videos as $video) { //print_r($videos);
             $db->query(sprintf("INSERT INTO stories_media (story_id, source, is_photo, text, time) VALUES (%s, %s, '0', %s, %s)", secure($story_id, 'int'), secure($video), secure($message), secure($date))) or _error("SQL_ERROR_THROWEN");
         }
+        $redisObject = new RedisClass();
+        $rediskeyname = 'user-' . $this->_data['user_id'] . '-getotherstory';
+        $redisObject->deleteValueFromKey($rediskeyname);
+        $rediskeyname = 'user-' . $this->_data['user_id'] . '-getmystory';
+        $redisObject->deleteValueFromKey($rediskeyname);
+        getMyStory($this->_data['user_id'], $this, $redisObject, $system);
+        getAllStories($this->_data['user_id'], $this, $redisObject, $system);
     }
 
     /**
@@ -4532,6 +4459,13 @@ class User
     {
         global $db, $system;
         $check_story = $db->query(sprintf("DELETE FROM stories WHERE time>=DATE_SUB(NOW(), INTERVAL 1 DAY) AND user_id = %s", secure($this->_data['user_id'], 'int'))) or _error("SQL_ERROR_THROWEN");
+        $redisObject = new RedisClass();
+        $rediskeyname = 'user-' . $this->_data['user_id'] . '-getotherstory';
+        $redisObject->deleteValueFromKey($rediskeyname);
+        $rediskeyname = 'user-' . $this->_data['user_id'] . '-getmystory';
+        $redisObject->deleteValueFromKey($rediskeyname);
+        getMyStory($this->_data['user_id'], $this, $redisObject, $system);
+        getAllStories($this->_data['user_id'], $this, $redisObject, $system);
     }
 
 
@@ -4983,6 +4917,11 @@ class User
         /* points balance */
         $this->points_balance("add", $this->_data['user_id'], "post", $post['post_id']);
 
+
+        $redisPostKey = 'user-' . $this->_data['user_id'] . '-posts';
+        $redisObject = new RedisClass();
+        $redisObject->deleteValueFromKey($redisPostKey);
+        fetchPostDataForTimeline($this->_data['user_id'], $this, $redisObject, $system);
         // return
         return $post;
     }
@@ -5223,16 +5162,17 @@ class User
                 if (isset($args['id']) && !is_numeric($args['id'])) {
                     _error(400);
                 }
-                $id = $args['id'];
-                // echo "<pre>";
-                // print_r($this->_data['user_id']);
+                 $id = $args['id'];
+                //  echo "<pre>";
+                // // print_r($this->_data['user_id']);
                 // print_r($args);
-                // die;
+               // die;
                 /* get target user's posts */
                 /* check if there is a viewer user */
                 if ($this->_logged_in) {
                     /* check if the target user is the viewer */
                     if ($id == $this->_data['user_id']) {
+                       
                         /* get all posts */
                         $where_query .= "WHERE (";
                         /* get all target posts */
@@ -5396,6 +5336,7 @@ class User
         if ($last_post_id != null && $get != 'popular' && $get != 'saved' && $get != 'memories') { /* excluded as not ordered by post_id */
             $get_postsQuery = sprintf("SELECT * FROM (SELECT posts.post_id FROM posts " . $where_query . ") posts WHERE posts.post_id > %s ORDER BY posts.post_id DESC", secure($last_post_id, 'int'));
         } else {
+            $order_query = "ORDER BY posts.post_id DESC";
             $limit_statement = ($get_all) ? "" : sprintf("LIMIT %s, %s", secure($offset, 'int', false), secure($system['max_results'], 'int', false)); /* get_all for cases like download user's posts */
             $get_postsQuery = "SELECT posts.post_id FROM posts " . $where_query . " " . $order_query . " " . $limit_statement;
         }
@@ -5412,6 +5353,7 @@ class User
                 }
             }
         }
+
         return $posts;
     }
 
@@ -6347,7 +6289,7 @@ class User
      */
     public function shareCount($post_id)
     {
-        global $db, $date;
+        global $db, $date,$system;
         /* check if the viewer can share the post */
         $post = $this->_check_post($post_id, true);
         if (!$post || $post['privacy'] != 'public') {
@@ -6366,6 +6308,13 @@ class User
         } else {
             $totalCounts = 0;
         }
+                     $redisPostKey = 'user-' . $this->_data['user_id'] . '-posts';
+                     $redisObject = new RedisClass();
+                     fetchAndSetDataOnPostReaction($system, $this,$redisObject,$redisPostKey);
+
+                       //profile post
+                        $redisTimelinekey = 'profile-posts-'.$this->_data['user_id'];
+                        fetchAndSetDataOnPostReaction($system, $this,$redisObject,$redisTimelinekey);
         return $totalCounts;
     }
 
@@ -7184,7 +7133,7 @@ class User
      */
     public function react_post($post_id, $reaction)
     {
-        global $db, $date;
+        global $db, $date, $system;
         /* check reation */
         if (!in_array($reaction, ['like', 'love', 'haha', 'yay', 'wow', 'sad', 'angry'])) {
             _error(403);
@@ -7205,10 +7154,32 @@ class User
             /* update post reaction counter */
             $reaction_field = "reaction_" . $post['i_reaction'] . "_count";
             $db->query(sprintf("UPDATE posts SET $reaction_field = IF($reaction_field=0,0,$reaction_field-1) WHERE post_id = %s", secure($post_id, 'int'))) or _error("SQL_ERROR_THROWEN");
+
             /* delete notification */
             $this->delete_notification($post['author_id'], 'react_' . $post['i_reaction'], 'post', $post_id);
             /* points balance */
             $this->points_balance("delete", $this->_data['user_id'], "posts_reactions");
+
+                        /**
+             * update Redis
+             */
+                       $redisPostKey = 'user-' . $this->_data['user_id'] . '-posts';
+                     $redisObject = new RedisClass();
+                     fetchAndSetDataOnPostReaction($system, $this,$redisObject,$redisPostKey);
+
+                     //profile post
+                     $redisTimelinekey = 'profile-posts-'.$this->_data['user_id'];
+                     fetchAndSetDataOnPostReaction($system, $this,$redisObject,$redisTimelinekey);
+                    // $getPostsFromRedis = $redisObject->getValueFromKey($redisPostKey);
+                    // $jsonValue_ = json_decode($getPostsFromRedis, true);
+                    // print_r($jsonValue_); die;
+                    // $redisObject->deleteValueFromKey($redisPostKey);
+                    // fetchPostDataForTimeline($this->_data['user_id'], $this, $redisObject, $system);
+                    
+
+            /**
+             * update redis
+             */
         }
         $db->query(sprintf("INSERT INTO posts_reactions (user_id, post_id, reaction, reaction_time) VALUES (%s, %s, %s, %s)", secure($this->_data['user_id'], 'int'), secure($post_id, 'int'), secure($reaction), secure($date))) or _error("SQL_ERROR_THROWEN");
         $reaction_id = $db->insert_id;
@@ -7219,6 +7190,14 @@ class User
         $this->post_notification(array('to_user_id' => $post['author_id'], 'action' => 'react_' . $reaction, 'hub' => "LocalHub", 'node_type' => 'post', 'node_url' => $post_id));
         /* points balance */
         $this->points_balance("add", $this->_data['user_id'], "posts_reactions", $reaction_id);
+                
+                     $redisPostKey = 'user-' . $this->_data['user_id'] . '-posts';
+                     $redisObject = new RedisClass();
+                     fetchAndSetDataOnPostReaction($system, $this,$redisObject,$redisPostKey);
+
+                     //profile post
+                     $redisTimelinekey = 'profile-posts-'.$this->_data['user_id'];
+                     fetchAndSetDataOnPostReaction($system, $this,$redisObject,$redisTimelinekey);
     }
 
 
@@ -7231,7 +7210,7 @@ class User
      */
     public function unreact_post($post_id, $reaction)
     {
-        global $db;
+        global $db,$system;
         /* check reation */
         if (!in_array($reaction, ['like', 'love', 'haha', 'yay', 'wow', 'sad', 'angry'])) {
             _error(403);
@@ -7251,6 +7230,21 @@ class User
             /* update post reaction counter */
             $reaction_field = "reaction_" . $reaction . "_count";
             $db->query(sprintf("UPDATE posts SET $reaction_field = IF($reaction_field=0,0,$reaction_field-1) WHERE post_id = %s", secure($post_id, 'int'))) or _error("SQL_ERROR_THROWEN");
+
+              /**
+             * update Redis
+             */
+                    $redisPostKey = 'user-' . $this->_data['user_id'] . '-posts';
+                     $redisObject = new RedisClass();
+                     fetchAndSetDataOnPostReaction($system, $this,$redisObject,$redisPostKey);
+
+                     //profile post
+                     $redisTimelinekey = 'profile-posts-'.$this->_data['user_id'];
+                     fetchAndSetDataOnPostReaction($system, $this,$redisObject,$redisTimelinekey);
+
+            /**
+             * update redis
+             */
             /* delete notification */
             $this->delete_notification($post['author_id'], 'react_' . $reaction, 'post', $post_id);
             /* points balance */
@@ -7891,6 +7885,14 @@ class User
         /* points balance */
         $this->points_balance("add", $this->_data['user_id'], "comment", $comment['comment_id']);
 
+        $redisPostKey = 'user-' . $this->_data['user_id'] . '-posts';
+        $redisObject = new RedisClass();
+        $redisObject->deleteValueFromKey($redisPostKey);
+        fetchPostDataForTimeline($this->_data['user_id'], $this, $redisObject, $system);
+
+        //profile post
+         $redisTimelinekey = 'profile-posts-'.$this->_data['user_id'];
+         fetchAndSetDataOnPostReaction($system, $this,$redisObject,$redisTimelinekey);
         /* return */
         return $comment;
     }
@@ -8623,7 +8625,7 @@ class User
      */
     public function react_photo($photo_id, $reaction)
     {
-        global $db, $date;
+        global $db, $date,$system;
         /* check reation */
         if (!in_array($reaction, ['like', 'love', 'haha', 'yay', 'wow', 'sad', 'angry'])) {
             _error(403);
@@ -8658,6 +8660,20 @@ class User
         $this->post_notification(array('to_user_id' => $post['author_id'], 'action' => 'react_' . $reaction, 'hub' => "LocalHub", 'node_type' => 'photo', 'node_url' => $photo_id));
         /* points balance */
         $this->points_balance("add", $this->_data['user_id'], "posts_photos_reactions", $reaction_id);
+
+          /**
+             * update Redis
+             */
+                    $redisPostKey = 'user-' . $this->_data['user_id'] . '-posts';
+                     $redisObject = new RedisClass();
+                     fetchAndSetDataOnPostReaction($system, $this,$redisObject,$redisPostKey);
+
+            /**
+             * update redis
+             */
+            //profile post
+                     $redisTimelinekey = 'profile-posts-'.$this->_data['user_id'];
+                     fetchAndSetDataOnPostReaction($system, $this,$redisObject,$redisTimelinekey);
     }
 
 
@@ -8670,7 +8686,7 @@ class User
      */
     public function unreact_photo($photo_id, $reaction)
     {
-        global $db;
+        global $db,$system;
         /* (check|get) photo */
         $photo = $this->get_photo($photo_id);
         if (!$photo) {
@@ -8686,6 +8702,21 @@ class User
         $this->delete_notification($post['author_id'], 'react_' . $reaction, 'photo', $photo_id);
         /* points balance */
         $this->points_balance("delete", $this->_data['user_id'], "posts_photos_reactions");
+
+          /**
+             * update Redis
+             */
+                    $redisPostKey = 'user-' . $this->_data['user_id'] . '-posts';
+                     $redisObject = new RedisClass();
+                     fetchAndSetDataOnPostReaction($system, $this,$redisObject,$redisPostKey);
+
+            /**
+             * update redis
+             */
+
+            //profile post
+                     $redisTimelinekey = 'profile-posts-'.$this->_data['user_id'];
+                     fetchAndSetDataOnPostReaction($system, $this,$redisObject,$redisTimelinekey);
     }
 
 
@@ -12493,6 +12524,48 @@ class User
         return $transactions;
     }
 
+       /**
+     * investment_get_transactions
+     *
+     * @return array
+     */
+    public function investment_get_transactions()
+    {
+        global $db;
+        $transactions = [];
+        $get_transactions = $db->query(sprintf("SELECT * from investment_transactions WHERE user_id = %s ORDER BY id DESC", secure($this->_data['user_id'], 'int'))) or _error("SQL_ERROR_THROWEN");
+        if ($get_transactions->num_rows > 0) {
+            $i = 0;
+            while ($transaction = $get_transactions->fetch_assoc()) {
+                if ($transaction['tnx_type'] == "buy") {
+                    $transactions['buy'][$i] = $transaction;
+                }else{
+                    $transactions['sell'][$i] = $transaction;
+                }
+                $i++;
+            }
+        }
+        return $transactions;
+    }
+
+       /**
+     * investment_latest_transactions
+     *
+     * @return array
+     */
+    public function investment_latest_transactions()
+    {
+        global $db;
+        $transactions = [];
+        $get_transactions = $db->query(sprintf("SELECT * from investment_transactions WHERE user_id = %s ORDER BY id DESC limit 4", secure($this->_data['user_id'], 'int'))) or _error("SQL_ERROR_THROWEN");
+        if ($get_transactions->num_rows > 0) {
+            while ($transaction = $get_transactions->fetch_assoc()) {
+                $transactions[] = $transaction;
+            }
+        }
+        return $transactions;
+    }
+
 
     /**
      * wallet_package_payment
@@ -14574,6 +14647,27 @@ class User
                 $this->set_custom_fields($args, "user", "settings", $this->_data['user_id']);
                 /* update user */
                 $db->query(sprintf("UPDATE users SET user_firstname = %s, user_lastname = %s, user_gender = %s, user_country = %s, user_birthdate = %s, user_relationship = %s, user_biography = %s, user_website = %s WHERE user_id = %s", secure($args['firstname']), secure($args['lastname']), secure($args['gender']), secure($args['country'], 'int'), secure($args['birth_date']), secure($args['relationship']), secure($args['biography']), secure($args['website']), secure($this->_data['user_id'], 'int'))) or _error("SQL_ERROR_THROWEN");
+
+                // print_r($args); die;
+                  $new_response = [];
+                  $redisObject = new RedisClass();
+                  $redisPostKey = 'user-' . $this->_data['user_id'];
+                  $getPostsFromRedis = $redisObject->getValueFromKey($redisPostKey);
+                  $jsonValuesRes = json_decode($getPostsFromRedis, true);
+                  $jsonValuesRes['user_firstname'] = $args['firstname'];
+                  $jsonValuesRes['user_lastname'] = $args['lastname'];
+                  $jsonValuesRes['user_gender'] = $args['gender'];
+                  $jsonValuesRes['user_country'] = $args['country'];
+                  $jsonValuesRes['user_birth_date'] = $args['birth_date'];
+                  $jsonValuesRes['user_relationship'] = $args['relationship'];
+                  $jsonValuesRes['user_biography'] = $args['biography'];
+                  $jsonValuesRes['user_website'] = ($args['website'] !== null) ? $args['website'] :"";
+                  $new_response = json_encode($jsonValuesRes);
+                    //$redisObject->deleteValueFromKey($redisPostKey);
+                    $redisObject->setValueWithRedis($redisPostKey, $new_response);
+                    //  $aa = $redisObject->getValueFromKey($redisPostKey);
+                //   echo "<pre>";
+                //    print_r($); die;
                 break;
 
                 /*-- Global profile edit --*/
@@ -15364,8 +15458,13 @@ class User
         }
         $userToken  = $loginApiResponse['token'];
         if (is_array($loginApiResponse) && count($loginApiResponse) > 0 && array_key_exists('email', $loginApiResponse) && array_key_exists('hash', $loginApiResponse) && is_array($user) && count($user) > 0) {
+            if($user['user_activated']==0){
+                throw new Exception('Your account is not active. Please contact support to get it activated');
+            }
             $updateQuery = sprintf("UPDATE users SET  user_password = %s,knox_user_id=%s,globalToken =%s WHERE user_id = %s", secure($loginApiResponse['hash']), secure($loginApiResponse['userId']), secure($userToken), secure($user['user_id'], 'int'));
             $db->query($updateQuery) or _error("SQL_ERROR_THROWEN");
+            // die('enter');
+            
         } else {
             if (is_array($loginApiResponse) && count($loginApiResponse) > 0 && array_key_exists('message', $loginApiResponse) && array_key_exists('data', $loginApiResponse)) {
                 if (is_array($user) && count($user)) {
