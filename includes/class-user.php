@@ -7386,6 +7386,100 @@ class User
             $this->post_notification(array('to_user_id' => $post['author_id'], 'action' => 'vote', 'hub' => "LocalHub", 'node_type' => 'post', 'node_url' => $post['post_id']));
         }
 
+         /**
+                 * Get author friend from redis
+                 */
+                 $ids = [];
+                 $response_ = [];
+                 $new_response = [];
+                 $redisObject = new RedisClass();
+                 $rediskeyname = 'user-' . $post['author_id'];
+                 $current_user = 'user-' . $this->_data['user_id'].'-posts';
+                 $isExist = $redisObject->isRedisKeyExist($rediskeyname);
+                 if($isExist == true){
+                 $getValuesFromRedis = $redisObject->getValueFromKey($rediskeyname);
+                 $jsonValue = json_decode($getValuesFromRedis, true);
+                 array_push($jsonValue['friends_ids'],$post['author_id']);
+                                
+                 foreach($jsonValue['friends_ids'] as  $vals){
+                     $keys = 'user-'. $vals.'-posts';
+                     $isExistKey = $redisObject->isRedisKeyExist($keys);
+                     if($isExistKey == true){
+                       $ids[] ='user-'. $vals.'-posts';
+                     
+                          $response_ =   syncDataOnFriendsPostAction($redisObject,$keys,$poll['post_id'],$this->_data['user_id'],$option_id,$system, $this);
+                         
+                          if(array_key_exists($current_user, $response_)){
+                        
+                                      $search_res = array_search($option_id, array_column($response_[$current_user]['poll']['options'], 'option_id'));
+
+                                //         echo "<pre>";
+                                //   print_r($search_res); 
+                                  if($search_res!==false){
+                                        $response_[$current_user]['poll']['options'][$search_res]['checked'] = true;
+                                         $response_[$current_user]['poll']['options'][$search_res]['votes'] = 1;
+                                        $new_response =  $response_[$current_user];
+                                    // your object will be
+                                    // print_r($response_[$current_user]['poll']['options'][$search_res]);
+
+                                   
+                                }          
+                          }else{
+
+                          
+                                 $search_res = array_search($option_id, array_column($response_[$keys]['poll']['options'], 'option_id'));
+                          //update other users
+                            $other_user_key = $redisObject->getValueFromKey($keys);
+                            $otherUserJsonData = json_decode($other_user_key, true);
+                          //  print_r($otherUserJsonData); die;
+                            // $indexCompleted = array_search($post['post_id'], $otherUserJsonData);
+                            foreach($otherUserJsonData as $subKey => $subArray){
+                            
+                                if($subArray['post_id'] == $post['post_id'] ){
+                                    unset($otherUserJsonData[$subKey]);
+                                                            
+                                }
+                                // $getJsonValue[] =  $new_response;
+                                array_values($otherUserJsonData);
+                            }
+
+                              $response_[$keys]['poll']['votes'] = (string)$response_[$keys]['poll']['votes'] + 1;
+                                $response_[$keys]['poll']['options'][$search_res]['votes'] = $response_[$keys]['poll']['options'][$search_res]['votes'] + 1;
+                            //   echo "<pre>";
+                            //   print_r($otherUserJsonData);die;
+                             array_unshift($otherUserJsonData,$response_[$keys]);
+                            
+                                 $finalV = json_encode(array_values($otherUserJsonData));
+                                 $redisObject->setValueWithRedis($keys, $finalV);
+                     }
+
+                     }
+                 }
+                 //get current user post data & sync update
+                 $current_user_posts = $redisObject->getValueFromKey($current_user);
+                 $getJsonValue = json_decode($current_user_posts, true);
+                  foreach($getJsonValue as $subKey => $subArray){
+                    
+                        if($subArray['post_id'] == $post['post_id'] ){
+                            unset($getJsonValue[$subKey]);
+                                                     
+                        }
+                        // $getJsonValue[] =  $new_response;
+                         array_values($getJsonValue);
+                    }
+                 
+
+                 }
+                array_unshift($getJsonValue,$new_response);
+              // array_merge($getJsonValue,$new_response);
+                 $final_ = json_encode(array_values($getJsonValue));
+                 $redisObject->setValueWithRedis($current_user, $final_);
+                 //get current user post data & sync update
+
+
+                // echo "<pre>";
+                // print_r($final_); die;
+
                 // //for current user post
                 //      $redisPostKey = 'user-' . $this->_data['user_id'] . '-posts';
                 //      $redisObject = new RedisClass();
@@ -7393,13 +7487,13 @@ class User
                 //      //profile post
                 //      $redisTimelinekey = 'profile-posts-'.$this->_data['user_id'];
                 //      fetchAndSetDataOnPostReaction($system, $this,$redisObject,$redisTimelinekey);
-                // //for author post  
-                //      $redisPostKey = 'user-' . $post['author_id'] . '-posts';
-                //      $redisObject = new RedisClass();
-                //      fetchAndSetDataOnPostReaction($system, $this,$redisObject,$redisPostKey);
-                //      //profile post
-                //      $redisTimelinekey = 'profile-posts-'.$post['author_id'];
-                //      fetchAndSetDataOnPostReaction($system, $this,$redisObject,$redisTimelinekey);   
+                //for author post  
+                    //  $redisPostKey = 'user-' . $post['author_id'] . '-posts';
+                    //  $redisObject = new RedisClass();
+                    //  fetchAndSetDataOnPostReaction($system, $this,$redisObject,$redisPostKey);
+                    //  //profile post
+                    //  $redisTimelinekey = 'profile-posts-'.$post['author_id'];
+                    //  fetchAndSetDataOnPostReaction($system, $this,$redisObject,$redisTimelinekey);   
     }
 
 
@@ -7411,7 +7505,7 @@ class User
      */
     public function delete_vote($option_id)
     {
-        global $db;
+        global $db,$system;
         /* get poll */
         $get_poll = $db->query(sprintf("SELECT posts_polls.* FROM posts_polls_options INNER JOIN posts_polls ON posts_polls_options.poll_id = posts_polls.poll_id WHERE option_id = %s", secure($option_id, 'int'))) or _error("SQL_ERROR_THROWEN");
         if ($get_poll->num_rows == 0) {
@@ -7435,6 +7529,31 @@ class User
             /* delete notification */
             $this->delete_notification($post['author_id'], 'vote', 'post', $post['post_id']);
         }
+
+         /**
+                 * Get author friend from redis
+                 */
+                 $ids = [];
+                 $redisObject = new RedisClass();
+                 $rediskeyname = 'user-' . $post['author_id'];
+                 $isExist = $redisObject->isRedisKeyExist($rediskeyname);
+                 if($isExist == true){
+                 $getValuesFromRedis = $redisObject->getValueFromKey($rediskeyname);
+                 $jsonValue = json_decode($getValuesFromRedis, true);
+                 array_push($jsonValue['friends_ids'],$post['author_id']);
+                                
+                 foreach($jsonValue['friends_ids'] as  $vals){
+                     $keys = 'user-'. $vals.'-posts';
+                     $isExistKey = $redisObject->isRedisKeyExist($keys);
+                     if($isExistKey == true){
+                       $ids[] ='user-'. $vals.'-posts';
+                     fetchAndSetDataOnPostReaction($system, $this, $redisObject, $keys);
+                     }
+                 }
+
+                 
+
+                 }
     }
 
 
@@ -7469,6 +7588,36 @@ class User
             /* insert new vote */
             $db->query(sprintf("INSERT INTO posts_polls_options_users (user_id, poll_id, option_id) VALUES (%s, %s, %s)", secure($this->_data['user_id'], 'int'), secure($poll['poll_id'], 'int'), secure($option_id, 'int'))) or _error("SQL_ERROR_THROWEN");
         }
+               
+                /**
+                 * Get author friend from redis
+                 */
+                 $ids = [];
+                 $redisObject = new RedisClass();
+                 $rediskeyname = 'user-' . $post['author_id'];
+                 $isExist = $redisObject->isRedisKeyExist($rediskeyname);
+                 if($isExist == true){
+                 $getValuesFromRedis = $redisObject->getValueFromKey($rediskeyname);
+                 $jsonValue = json_decode($getValuesFromRedis, true);
+               //  array_push($jsonValue['friends_ids'],$post['author_id']);
+                                
+                 foreach($jsonValue['friends_ids'] as  $vals){
+                     $keys = 'user-'. $vals.'-posts';
+                     $isExistKey = $redisObject->isRedisKeyExist($keys);
+                     if($isExistKey == true){
+                       $ids[] ='user-'. $vals.'-posts';
+                     // fetchAndSetDataOnPostReaction($system, $this, $redisObject, $keys);
+                     }
+                 }
+
+                 
+
+                 }
+
+                
+                    print_r($ids);
+                 die;
+            
 
                 // //for current user post
                 //      $redisPostKey = 'user-' . $this->_data['user_id'] . '-posts';

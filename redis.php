@@ -90,4 +90,15 @@ class RedisClass
             echo $e->getMessage();
         }
     }
+
+
+    function multipleGetRedisdata($data){
+        try {
+            $redisObj = $this->redis;
+            // setting the value in redis
+            return $redisObj->mGet($data);
+        } catch (Exception $e) {
+            echo $e->getMessage();
+        }
+    }
 }

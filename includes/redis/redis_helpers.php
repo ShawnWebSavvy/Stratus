@@ -447,4 +447,19 @@ function usersProfilePhotosSection($user_id, $user,$redisObject, $type){
 
 }
 
+function syncDataOnFriendsPostAction($redisObject,$keys,$post_id,$user_id,$system, $userObj){
+    $posts =  $redisObject->getValueFromKey($keys);
+    $jsonValue = json_decode($posts, true);
+    $single_post = [];
+    foreach ($jsonValue as $key => $item) {
+
+        if($item['post_id'] == $post_id){
+            $single_post[$keys] = $item;
+                      //  fetchAndSetDataOnPostReaction($system, $userObj, $redisObject, $keys);
+         }
+    }
+
+    return $single_post;
+  //  print_r($single_post); die;
+}
 
