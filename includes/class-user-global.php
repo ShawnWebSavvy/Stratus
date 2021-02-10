@@ -8192,13 +8192,25 @@ class UserGlobal
         $messages = [];
         if ($last_message_id !== null) {
             /* get all messages after the last_message_id */
-            $messages_query = sprintf("SELECT conversations_global_messages.message_id, conversations_global_messages.message, conversations_global_messages.image, conversations_global_messages.voice_note, conversations_global_messages.time, users.user_id, users.user_name, global_profile.user_firstname as user_firstname, global_profile.user_lastname as user_lastname, users.user_gender, users.global_user_picture, users.user_subscribed, users.user_verified FROM conversations_global_messages INNER JOIN users ON conversations_global_messages.user_id = users.user_id LEFT JOIN global_profile ON users.user_id = global_profile.user_id WHERE conversations_global_messages.conversation_id = %s AND conversations_global_messages.message_id > %s", secure($conversation_id, 'int'), secure($last_message_id, 'int'));
+            $messages_query = sprintf("SELECT conversations_global_messages.message_id, conversations_global_messages.message, conversations_global_messages.image, conversations_global_messages.voice_note, conversations_global_messages.time, users.user_id, users.user_name, global_profile.user_firstname as user_firstname, global_profile.user_lastname as user_lastname, users.user_gender, users.global_user_picture, users.user_subscribed, users.user_verified, picture_photo.source as user_picture_full FROM conversations_global_messages INNER JOIN users ON conversations_global_messages.user_id = users.user_id LEFT JOIN global_profile ON users.user_id = global_profile.user_id LEFT JOIN posts_photos as picture_photo ON users.user_picture_id = picture_photo.photo_id WHERE conversations_global_messages.conversation_id = %s AND conversations_global_messages.message_id > %s", secure($conversation_id, 'int'), secure($last_message_id, 'int'));
         } else {
-            $messages_query = sprintf("SELECT * FROM ( SELECT conversations_global_messages.message_id, conversations_global_messages.message, conversations_global_messages.image, conversations_global_messages.voice_note, conversations_global_messages.time, users.user_id, users.user_name, global_profile.user_firstname as user_firstname, global_profile.user_lastname as user_lastname, users.user_gender, users.global_user_picture, users.user_subscribed, users.user_verified FROM conversations_global_messages INNER JOIN users ON conversations_global_messages.user_id = users.user_id LEFT JOIN global_profile ON users.user_id = global_profile.user_id WHERE conversations_global_messages.conversation_id = %s ORDER BY conversations_global_messages.message_id DESC LIMIT %s,%s ) messages ORDER BY messages.message_id ASC", secure($conversation_id, 'int'), secure($offset, 'int', false), secure($system['max_results'], 'int', false));
+            $messages_query = sprintf("SELECT * FROM ( SELECT conversations_global_messages.message_id, conversations_global_messages.message, conversations_global_messages.image, conversations_global_messages.voice_note, conversations_global_messages.time, users.user_id, users.user_name, global_profile.user_firstname as user_firstname, global_profile.user_lastname as user_lastname, users.user_gender, users.global_user_picture, users.user_subscribed, users.user_verified, picture_photo.source as user_picture_full FROM conversations_global_messages INNER JOIN users ON conversations_global_messages.user_id = users.user_id LEFT JOIN global_profile ON users.user_id = global_profile.user_id LEFT JOIN posts_photos as picture_photo ON users.user_picture_id = picture_photo.photo_id WHERE conversations_global_messages.conversation_id = %s ORDER BY conversations_global_messages.message_id DESC LIMIT %s,%s ) messages ORDER BY messages.message_id ASC", secure($conversation_id, 'int'), secure($offset, 'int', false), secure($system['max_results'], 'int', false));
         }
         $get_messages = $db->query($messages_query) or _error("SQL_ERROR_THROWEN");
         while ($message = $get_messages->fetch_assoc()) {
             $message['user_picture'] = get_picture($message['global_user_picture'], $message['user_gender']);
+
+            $message['user_picture_full'] = ($message['user_picture_full']) ? $system['system_uploads'] . '/' . $message['user_picture_full'] : $message['user_picture_full'];
+            if ($message['user_picture'] != "") {
+        
+                $message['user_picture'] =  $system['system_url'].'/includes/wallet-api/image-exist-api.php?userPicture=' . $message['user_picture'] . '&userPictureFull=' . $message['user_picture_full'] . '&type=1';
+            }
+            if ($message['user_picture'] == "") {
+                $message['user_picture'] =  $system['system_url'] . '/content/themes/' . $system['theme'] . '/images/user_defoult_img.jpg';
+            }
+
+
+
             $message['message'] = $this->_parse(["text" => $message['message'], "decode_mentions" => false, "decode_hashtags" => false]);
             /* return */
             $messages[] = $message;
@@ -9041,7 +9053,7 @@ class UserGlobal
         } else {
             $selectQuery = sprintf("SELECT hashtags.hashtag, hashtags_posts.id as hash_post, COUNT(hashtags_posts.id) AS frequency,hashtags_posts.postHubType FROM hashtags INNER JOIN hashtags_posts as hashtags_posts ON hashtags.hashtag_id = hashtags_posts.hashtag_id WHERE hashtags_posts.created_at > DATE_SUB(CURDATE(), INTERVAL 1 %s) GROUP BY hashtags_posts.hashtag_id,hashtags_posts.postHubType ORDER BY frequency DESC LIMIT %s", secure($system['trending_hashtags_interval'], "", false), secure($system['trending_hashtags_limit'], 'int', false));
         }
-        $get_trending_hashtags = $db->query($selectQuery) or _error("SQL_ERROR_THROWEN");
+        $get_trending_hashtags = $db->query($selectQuery);
         if ($get_trending_hashtags->num_rows > 0) {
             while ($hashtag = $get_trending_hashtags->fetch_assoc()) {
                 $hashtag['hashtag'] = html_entity_decode($hashtag['hashtag'], ENT_QUOTES);
