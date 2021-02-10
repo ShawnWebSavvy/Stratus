@@ -283,10 +283,10 @@
 
     <!-- Crop Profile Picture & Reposition Cover Photo -->
     {if $page == "started" || $page == "profile" || $page == "page" || $page == "group" || $page == "event"}
-        <script src="{$system['system_uploads_assets']}/includes/assets/js/plugins/jquery-ui.touch-punch/jquery-ui.touch-punch.min.js"></script>
-        <script src="{$system['system_uploads_assets']}/includes/assets/js/plugins/jquery.imagedrag/jquery.imagedrag.min.js"></script>
-        <script src="{$system['system_uploads_assets']}/includes/assets/js/plugins/rcrop/rcrop.min.js"></script>
-        <link rel="stylesheet" type='text/css' href="{$system['system_uploads_assets']}/includes/assets/js/plugins/rcrop/rcrop.min.css">
+        <script src="{$system['system_uploads_assets']}/includes/assets/js/plugins/jquery-ui.touch-punch/jquery-ui.touch-punch.min.js" {if !$user->_logged_in}defer{/if}></script>
+        <script src="{$system['system_uploads_assets']}/includes/assets/js/plugins/jquery.imagedrag/jquery.imagedrag.min.js" {if !$user->_logged_in}defer{/if}></script>
+        <script src="{$system['system_uploads_assets']}/includes/assets/js/plugins/rcrop/rcrop.min.js" {if !$user->_logged_in}defer{/if}></script>
+        <link rel="stylesheet" type='text/css' href="{$system['system_uploads_assets']}/includes/assets/js/plugins/rcrop/rcrop.min.css" {if !$user->_logged_in}defer{/if}>
     {/if}
     <!-- Crop Profile Picture & Reposition Cover Photo -->
 
