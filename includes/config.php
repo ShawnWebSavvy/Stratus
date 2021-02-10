@@ -7,14 +7,14 @@ if (isset($_SERVER['HTTPS']) && strtolower($_SERVER['HTTPS']) == 'on') {
 }
 $protocol = $is_secure ? 'https' : 'http';
 $system_url =  $protocol . "://" . $_SERVER['HTTP_HOST'];
-define("DB_NAME", "s2_stratus");
-define("DB_USER", "s2_stratu");
-define("DB_PASSWORD", "cs3gnMHw");
-define("DB_HOST", "10.1.0.16");
-// define("DB_NAME", "investment");
-// define("DB_USER", "root");
-// define("DB_PASSWORD", "");
-// define("DB_HOST", "localhost");
+define("DB_NAME", "sngine");
+define("DB_USER", "root");
+define("DB_PASSWORD", "");
+define("DB_HOST", "localhost");
+// define("DB_NAME", "s2_stratus");
+// define("DB_USER", "s2_stratu");
+// define("DB_PASSWORD", "cs3gnMHw");
+// define("DB_HOST", "10.1.0.16");
 define("DB_PORT", "3306");
 define("SYS_URL", "http://localhost/stratus");
 define("API_BASE_URL", "https://ws.stage-apollo.xyz/api");
@@ -23,3 +23,7 @@ define("DEFAULT_LOCALE", "en_us");
 define("LICENCE_KEY", "2dZZzu6jS-3DMmA-2iBui-2OlV7-4zfJK-b6c299384b5a");
 define("PLY_URL", "https://playtube.stratus-stage.xyz");
 define("PLAYTUBE_LINK", "https://playtube.stratus-stage.xyz/logout");
+// define("PLY_URL", "http://localhost/playtube");
+
+
+// define("PLAYTUBE_LINK", "http://localhost/playtube/logout");

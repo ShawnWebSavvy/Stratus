@@ -4,10 +4,10 @@ require_once(ABSPATH . 'includes/users_functions.php');
 
 function getNewGroups($user_id, $userObj, $redisObject)
 {
-    $redisGroupKey = 'user-' . $user_id . '-groups';
-    $isKeyExistOnRedis = $redisObject->isRedisKeyExist($redisGroupKey);
+    // $redisGroupKey = 'user-' . $user_id . '-groups';
+    // $isKeyExistOnRedis = $redisObject->isRedisKeyExist($redisGroupKey);
     // $redisObject->deleteValueFromKey($redisGroupKey);
-    $expirationTime =  $redisObject->checkRedisObjectTimeToLive($redisGroupKey);
+    // $expirationTime =  $redisObject->checkRedisObjectTimeToLive($redisGroupKey);
 
     //if ($isKeyExistOnRedis == false && $expirationTime == -2) {
 
@@ -18,9 +18,9 @@ function getNewGroups($user_id, $userObj, $redisObject)
         'results' => 5,
     ]);
     $jsonValue = json_encode($new_groups_data);
-    $redisObject->setValueWithExpireInRedis($redisGroupKey, 60, $jsonValue);
-    $getValuesFromRedis = $redisObject->getValueFromKey($redisGroupKey);
-    $jsonValue = json_decode($getValuesFromRedis, true);
+    // $redisObject->setValueWithExpireInRedis($redisGroupKey, 60, $jsonValue);
+    // $getValuesFromRedis = $redisObject->getValueFromKey($redisGroupKey);
+    // $jsonValue = json_decode($getValuesFromRedis, true);
     $new_groups = $jsonValue;
     // } else {
     //     $getValuesFromRedis = $redisObject->getValueFromKey($redisGroupKey);
@@ -33,9 +33,9 @@ function getNewGroups($user_id, $userObj, $redisObject)
 
 function getEventsLists($user_id, $userObj, $redisObject)
 {
-    $redisGroupKey = 'user-' . $user_id . '-events';
+    // $redisGroupKey = 'user-' . $user_id . '-events';
     //echo $redisGroupKey; die;
-    $isKeyExistOnRedis = $redisObject->isRedisKeyExist($redisGroupKey);
+    // $isKeyExistOnRedis = $redisObject->isRedisKeyExist($redisGroupKey);
 
     // if ($isKeyExistOnRedis == false) {
     /* get user pages */
@@ -47,8 +47,8 @@ function getEventsLists($user_id, $userObj, $redisObject)
     $jsonValue = json_encode($data);
     // print_r($jsonValue);die;
     // $redisObject->setValueWithRedis($redisGroupKey, $jsonValue);
-    $getValuesFromRedis = $redisObject->getValueFromKey($redisGroupKey);
-    $jsonValue = json_decode($getValuesFromRedis, true);
+    // $getValuesFromRedis = $redisObject->getValueFromKey($redisGroupKey);
+    // $jsonValue = json_decode($getValuesFromRedis, true);
     $response = $jsonValue;
     // } else {
     //     $getValuesFromRedis = $redisObject->getValueFromKey($redisGroupKey);
@@ -61,9 +61,9 @@ function getEventsLists($user_id, $userObj, $redisObject)
 
 function getSuggestedPages($user_id, $userObj, $redisObject)
 {
-    $redisGroupKey = 'user-' . $user_id . '-pages';
+    // $redisGroupKey = 'user-' . $user_id . '-pages';
     //echo $redisGroupKey; die;
-    $isKeyExistOnRedis = $redisObject->isRedisKeyExist($redisGroupKey);
+    // $isKeyExistOnRedis = $redisObject->isRedisKeyExist($redisGroupKey);
 
     // if ($isKeyExistOnRedis == false) {
     /* get user pages */
@@ -74,9 +74,9 @@ function getSuggestedPages($user_id, $userObj, $redisObject)
     ]);
     $jsonValue = json_encode($data);
     // $redisObject->setValueWithRedis($redisGroupKey, $jsonValue);
-    $getValuesFromRedis = $redisObject->getValueFromKey($redisGroupKey);
-    $jsonValue = json_decode($getValuesFromRedis, true);
-    $response = $jsonValue;
+    // $getValuesFromRedis = $redisObject->getValueFromKey($redisGroupKey);
+    // $jsonValue = json_decode($getValuesFromRedis, true);
+    // $response = $jsonValue;
     // } else {
     //     $getValuesFromRedis = $redisObject->getValueFromKey($redisGroupKey);
     //     $jsonValue = json_decode($getValuesFromRedis, true);
@@ -88,18 +88,18 @@ function getSuggestedPages($user_id, $userObj, $redisObject)
 
 function getSuggestedPeoples($user_id, $userObj, $redisObject)
 {
-    $redisGroupKey = 'user-' . $user_id . '-people-suggest';
+    // $redisGroupKey = 'user-' . $user_id . '-people-suggest';
     //echo $redisGroupKey; die;
-    $isKeyExistOnRedis = $redisObject->isRedisKeyExist($redisGroupKey);
+    // $isKeyExistOnRedis = $redisObject->isRedisKeyExist($redisGroupKey);
 
     //if ($isKeyExistOnRedis == false) {
     /* get user pages */
     $data = $userObj->get_new_people(0, true);
     $jsonValue = json_encode($data);
     // $redisObject->setValueWithRedis($redisGroupKey, $jsonValue);
-    $getValuesFromRedis = $redisObject->getValueFromKey($redisGroupKey);
-    $jsonValue = json_decode($getValuesFromRedis, true);
-    $response = $jsonValue;
+    // $getValuesFromRedis = $redisObject->getValueFromKey($redisGroupKey);
+    // $jsonValue = json_decode($getValuesFromRedis, true);
+    // $response = $jsonValue;
     // } else {
     //     $getValuesFromRedis = $redisObject->getValueFromKey($redisGroupKey);
     //     $jsonValue = json_decode($getValuesFromRedis, true);
@@ -111,8 +111,8 @@ function getSuggestedPeoples($user_id, $userObj, $redisObject)
 
 function fetchPostDataForTimeline($user_id, $userObj, $redisObject, $system)
 {
-    $redisPostKey = 'user-' . $user_id . '-posts';
-    $isKeyExistOnRedis = $redisObject->isRedisKeyExist($redisPostKey);
+    // $redisPostKey = 'user-' . $user_id . '-posts';
+    // $isKeyExistOnRedis = $redisObject->isRedisKeyExist($redisPostKey);
     //if ($isKeyExistOnRedis == false) {
     /* get user pages */
     $boosted_posts = [];
@@ -127,11 +127,11 @@ function fetchPostDataForTimeline($user_id, $userObj, $redisObject, $system)
     if (!empty($boosted_posts)) {
         $postsdata = array_merge($boosted_posts, $postsdata);
     }
-    $jsonValue = json_encode($postsdata);
+    // $jsonValue = json_encode($postsdata);
     // $redisObject->setValueWithRedis($redisPostKey, $jsonValue);
-    $getPostsFromRedis = $redisObject->getValueFromKey($redisPostKey);
-    $jsonValue_ = json_decode($getPostsFromRedis, true);
-    $posts = $jsonValue_;
+    // $getPostsFromRedis = $redisObject->getValueFromKey($redisPostKey);
+    // $jsonValue_ = json_decode($getPostsFromRedis, true);
+    // $posts = $jsonValue_;
     // } else {
     //     $getPostsFromRedis = $redisObject->getValueFromKey($redisPostKey);
     //     $jsonValue = json_decode($getPostsFromRedis, true);
@@ -143,11 +143,11 @@ function fetchPostDataForTimeline($user_id, $userObj, $redisObject, $system)
 
 function cachedUserData($db, $system, $user_id, $user_token)
 {
-    $redisObject = new RedisClass();
-    $response = [];
-    $redisPostKey = 'user-' . $user_id;
+    // $redisObject = new RedisClass();
+    // $response = [];
+    // $redisPostKey = 'user-' . $user_id;
     $userClassObject = new userClass();
-    $isKeyExistOnRedis = $redisObject->isRedisKeyExist($redisPostKey);
+    // $isKeyExistOnRedis = $redisObject->isRedisKeyExist($redisPostKey);
     //if ($isKeyExistOnRedis == false) {
     /* get user pages */
     $userQuery = sprintf(
@@ -236,9 +236,9 @@ function cachedUserData($db, $system, $user_id, $user_token)
         }
         $jsonValue = json_encode($_data);
         // $redisObject->setValueWithRedis($redisPostKey, $jsonValue);
-        $getPostsFromRedis = $redisObject->getValueFromKey($redisPostKey);
-        $jsonValueRes = json_decode($getPostsFromRedis, true);
-        $response = $jsonValueRes;
+        // $getPostsFromRedis = $redisObject->getValueFromKey($redisPostKey);
+        // $jsonValueRes = json_decode($getPostsFromRedis, true);
+        // $response = $jsonValueRes;
     }
     // } else {
     //     $getDataFromRedis = $redisObject->getValueFromKey($redisPostKey);
@@ -266,8 +266,8 @@ function fetchAndSetDataOnPostReaction($system, $userObj, $redisObject, $redisPo
 
 function getFeelings($user_id, $redisObject)
 {
-    $rediskeyname = 'user-' . $user_id . '-getfeelings';
-    $isKeyExistOnRedis = $redisObject->isRedisKeyExist($rediskeyname);
+    // $rediskeyname = 'user-' . $user_id . '-getfeelings';
+    // $isKeyExistOnRedis = $redisObject->isRedisKeyExist($rediskeyname);
 
     //if ($isKeyExistOnRedis == false) {
     /* get feelings */
@@ -287,8 +287,8 @@ function getFeelings($user_id, $redisObject)
 
 function getFeelingTypes($user_id, $redisObject)
 {
-    $rediskeyname = 'user-' . $user_id . '-getfeelingsTypes';
-    $isKeyExistOnRedis = $redisObject->isRedisKeyExist($rediskeyname);
+    // $rediskeyname = 'user-' . $user_id . '-getfeelingsTypes';
+    // $isKeyExistOnRedis = $redisObject->isRedisKeyExist($rediskeyname);
 
     //if ($isKeyExistOnRedis == false) {
     /* get feelingtypes */
@@ -308,17 +308,17 @@ function getFeelingTypes($user_id, $redisObject)
 
 function getMyStory($user_id, $userObj, $redisObject)
 {
-    $rediskeyname = 'user-' . $user_id . '-getmystory';
-    $isKeyExistOnRedis = $redisObject->isRedisKeyExist($rediskeyname);
+    // $rediskeyname = 'user-' . $user_id . '-getmystory';
+    // $isKeyExistOnRedis = $redisObject->isRedisKeyExist($rediskeyname);
 
     //if ($isKeyExistOnRedis == false) {
     /* get my stories */
     $data = $userObj->get_my_story();
     $jsonValue = json_encode($data);
     // $redisObject->setValueWithRedis($rediskeyname, $jsonValue);
-    $getValuesFromRedis = $redisObject->getValueFromKey($rediskeyname);
-    $jsonValue = json_decode($getValuesFromRedis, true);
-    $response = $jsonValue;
+    // $getValuesFromRedis = $redisObject->getValueFromKey($rediskeyname);
+    // $jsonValue = json_decode($getValuesFromRedis, true);
+    // $response = $jsonValue;
     // } else {
     //     $getValuesFromRedis = $redisObject->getValueFromKey($rediskeyname);
     //     $jsonValue = json_decode($getValuesFromRedis, true);
@@ -329,16 +329,16 @@ function getMyStory($user_id, $userObj, $redisObject)
 
 function getAllStories($user_id, $userObj, $redisObject)
 {
-    $rediskeyname = 'user-' . $user_id . '-getotherstory';
-    $isKeyExistOnRedis = $redisObject->isRedisKeyExist($rediskeyname);
+    // $rediskeyname = 'user-' . $user_id . '-getotherstory';
+    // $isKeyExistOnRedis = $redisObject->isRedisKeyExist($rediskeyname);
 
     //if ($isKeyExistOnRedis == false) {
     /* get user stories */
     $data = $userObj->get_stories();
     $jsonValue = json_encode($data);
     // $redisObject->setValueWithRedis($rediskeyname, $jsonValue);
-    $getValuesFromRedis = $redisObject->getValueFromKey($rediskeyname);
-    $jsonValue = json_decode($getValuesFromRedis, true);
+    // $getValuesFromRedis = $redisObject->getValueFromKey($rediskeyname);
+    // $jsonValue = json_decode($getValuesFromRedis, true);
     $response = $jsonValue;
     // } else {
     //     $getValuesFromRedis = $redisObject->getValueFromKey($rediskeyname);
