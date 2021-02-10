@@ -218,7 +218,7 @@ try {
 	// [4] check for new posts
 	if (isset($_POST['last_post']) && !isset($_POST['custom_boosted'])) {
 		$posts = $user->get_posts(array('get' => $_POST['get'], 'filter' => $_POST['filter'], 'id' => $_POST['id'], 'last_post_id' => $_POST['last_post']));
-		if ($posts&&!empty($posts)) {
+		if ($posts && !empty($posts)) {
 			/* get user pages */
 		
 			$posts = array_reverse($posts);
