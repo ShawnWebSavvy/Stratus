@@ -1251,6 +1251,7 @@ class User
                 break;
 
             case 'friend-accept':
+
                 /* check if there is a friend request from the target to the viewer */
                 $check = $db->query(sprintf("SELECT COUNT(*) as count FROM friends WHERE user_one_id = %s AND user_two_id = %s AND status = 0", secure($id, 'int'), secure($this->_data['user_id'], 'int'))) or _error("SQL_ERROR_THROWEN");
                 /* if no -> return */
@@ -1265,7 +1266,35 @@ class User
                 $this->createConversations($this->_data['user_id'], $id);
                 //    $this->post_conversation_message("", "", "", $conversation_id = null, $recipients = null);
                 /* - new add in conversation when friends to show in message page list --- */
+                          //update user redis
+                      $new_response = [];
+                      $redisObject = new RedisClass();
+                      $redisPostKey = 'user-' . $this->_data['user_id'];
+                      $getDataFromRedis = $redisObject->getValueFromKey($redisPostKey);
+                      $isKeyExist = $redisObject->isRedisKeyExist($redisPostKey);
+                      if($isKeyExist == true){
+                      $jsonValuesRes = json_decode($getDataFromRedis, true);
+                      array_push( $jsonValuesRes['friends_ids'], $id);
+                      array_push( $jsonValuesRes['followings_ids'], $id);
+                     // print_r($jsonValuesRes); die;
+                      $new_response = json_encode($jsonValuesRes);
+                      $redisObject->setValueWithRedis($redisPostKey, $new_response);
+                      }
+                      $new_response = [];
+                      $redisObject = new RedisClass();
+                      $redisPostKey = 'user-' . $id;
+                      $getDataFromRedis = $redisObject->getValueFromKey($redisPostKey);
+                      $isKeyExist = $redisObject->isRedisKeyExist($redisPostKey);
+                      if($isKeyExist == true){
+                      $jsonValuesRes = json_decode($getDataFromRedis, true);
+                      array_push( $jsonValuesRes['friends_ids'], $this->_data['user_id']);
+                      array_push( $jsonValuesRes['followings_ids'], $this->_data['user_id']);
+                     // print_r($jsonValuesRes); die;
+                      $new_response = json_encode($jsonValuesRes);
+                      $redisObject->setValueWithRedis($redisPostKey, $new_response);
+                      }
 
+                      //Redis block
                 break;
 
             case 'friend-decline':
@@ -3921,6 +3950,8 @@ class User
         if ($system['save_live_enabled']) {
             $this->stop_live_recording($post_id, $post['live']['agora_uid'], $post['live']['agora_channel_name'], $post['live']['agora_resource_id'], $post['live']['agora_sid']);
         }
+
+        
     }
 
 
@@ -5206,16 +5237,17 @@ class User
                 if (isset($args['id']) && !is_numeric($args['id'])) {
                     _error(400);
                 }
-                $id = $args['id'];
-                // echo "<pre>";
-                // print_r($this->_data['user_id']);
+                 $id = $args['id'];
+                //  echo "<pre>";
+                // // print_r($this->_data['user_id']);
                 // print_r($args);
-                // die;
+               // die;
                 /* get target user's posts */
                 /* check if there is a viewer user */
                 if ($this->_logged_in) {
                     /* check if the target user is the viewer */
                     if ($id == $this->_data['user_id']) {
+                       
                         /* get all posts */
                         $where_query .= "WHERE (";
                         /* get all target posts */
@@ -5379,6 +5411,7 @@ class User
         if ($last_post_id != null && $get != 'popular' && $get != 'saved' && $get != 'memories') { /* excluded as not ordered by post_id */
             $get_postsQuery = sprintf("SELECT * FROM (SELECT posts.post_id FROM posts " . $where_query . ") posts WHERE posts.post_id > %s ORDER BY posts.post_id DESC", secure($last_post_id, 'int'));
         } else {
+            $order_query = "ORDER BY posts.post_id DESC";
             $limit_statement = ($get_all) ? "" : sprintf("LIMIT %s, %s", secure($offset, 'int', false), secure($system['max_results'], 'int', false)); /* get_all for cases like download user's posts */
             $get_postsQuery = "SELECT posts.post_id FROM posts " . $where_query . " " . $order_query . " " . $limit_statement;
         }
@@ -5395,6 +5428,7 @@ class User
                 }
             }
         }
+
         return $posts;
     }
 
@@ -5910,6 +5944,8 @@ class User
             $where_query .= "(posts.user_id = $me AND posts.boosted = '0' AND posts.user_type = 'user')";
             /* get posts from friends still followed */
             $friends_ids = array_intersect($this->_data['friends_ids'], $this->_data['followings_ids']);
+            //  echo "<pre>";
+           //  print_r($friends_ids); die;
             if ($friends_ids) {
                 $friends_list = implode(',', $friends_ids);
                 /* viewer friends posts -> authors */
@@ -6352,6 +6388,10 @@ class User
                      $redisPostKey = 'user-' . $this->_data['user_id'] . '-posts';
                      $redisObject = new RedisClass();
                      fetchAndSetDataOnPostReaction($system, $this,$redisObject,$redisPostKey);
+
+                       //profile post
+                        $redisTimelinekey = 'profile-posts-'.$this->_data['user_id'];
+                        fetchAndSetDataOnPostReaction($system, $this,$redisObject,$redisTimelinekey);
         return $totalCounts;
     }
 
@@ -6440,6 +6480,8 @@ class User
     {
         global $db;
         /* get all user posts */
+
+        	
         switch ($node_type) {
             case 'user':
                 $get_posts = $db->query(sprintf("SELECT post_id FROM posts WHERE user_id = %s AND user_type = 'user'", secure($node_id, 'int'))) or _error("SQL_ERROR_THROWEN");
@@ -6462,6 +6504,8 @@ class User
                 $this->delete_post($post['post_id'], false);
             }
         }
+
+        
     }
 
 
@@ -6654,6 +6698,29 @@ class User
         if ($post['in_event'] && !$event['event_approved']) {
             $this->delete_notification($post['event_admin'], 'event_post_pending', $post['event_title'], $post['event_id'] . "-[guid=]" . $post['post_id']);
         }
+
+            //Redis block
+                $redisPostKey = 'user-' . $this->_data['user_id'] . '-posts';
+        	$redisObject = new RedisClass();
+			 $isKeyExist = $redisObject->isRedisKeyExist($redisPostKey);
+            if($isKeyExist == true){
+				$new_response = [];
+                $new_data =[];
+				//$jsonEncData = json_encode($posts);
+			    	$getPostsFromRedis = $redisObject->getValueFromKey($redisPostKey);
+                	$jsonValuesRes = json_decode($getPostsFromRedis, true);
+
+                  foreach ($jsonValuesRes as $key => $val)
+                    {
+                        if ($val["post_id"] !== $post_id) {
+                            $new_data[] = $val;
+                        }                      
+                    }
+					 $new_response = json_encode($new_data);
+				     $redisObject->setValueWithRedis($redisPostKey, $new_response);
+			}
+             //Redis block
+
         return $refresh;
     }
 
@@ -7203,6 +7270,10 @@ class User
                        $redisPostKey = 'user-' . $this->_data['user_id'] . '-posts';
                      $redisObject = new RedisClass();
                      fetchAndSetDataOnPostReaction($system, $this,$redisObject,$redisPostKey);
+
+                     //profile post
+                     $redisTimelinekey = 'profile-posts-'.$this->_data['user_id'];
+                     fetchAndSetDataOnPostReaction($system, $this,$redisObject,$redisTimelinekey);
                     // $getPostsFromRedis = $redisObject->getValueFromKey($redisPostKey);
                     // $jsonValue_ = json_decode($getPostsFromRedis, true);
                     // print_r($jsonValue_); die;
@@ -7227,6 +7298,10 @@ class User
                      $redisPostKey = 'user-' . $this->_data['user_id'] . '-posts';
                      $redisObject = new RedisClass();
                      fetchAndSetDataOnPostReaction($system, $this,$redisObject,$redisPostKey);
+
+                     //profile post
+                     $redisTimelinekey = 'profile-posts-'.$this->_data['user_id'];
+                     fetchAndSetDataOnPostReaction($system, $this,$redisObject,$redisTimelinekey);
     }
 
 
@@ -7266,6 +7341,10 @@ class User
                     $redisPostKey = 'user-' . $this->_data['user_id'] . '-posts';
                      $redisObject = new RedisClass();
                      fetchAndSetDataOnPostReaction($system, $this,$redisObject,$redisPostKey);
+
+                     //profile post
+                     $redisTimelinekey = 'profile-posts-'.$this->_data['user_id'];
+                     fetchAndSetDataOnPostReaction($system, $this,$redisObject,$redisTimelinekey);
 
             /**
              * update redis
@@ -7328,7 +7407,7 @@ class User
      */
     public function add_vote($option_id)
     {
-        global $db;
+        global $db,$system;
         /* get poll */
         $get_poll = $db->query(sprintf("SELECT posts_polls.* FROM posts_polls_options INNER JOIN posts_polls ON posts_polls_options.poll_id = posts_polls.poll_id WHERE option_id = %s", secure($option_id, 'int'))) or _error("SQL_ERROR_THROWEN");
         if ($get_poll->num_rows == 0) {
@@ -7352,6 +7431,21 @@ class User
             /* post notification */
             $this->post_notification(array('to_user_id' => $post['author_id'], 'action' => 'vote', 'hub' => "LocalHub", 'node_type' => 'post', 'node_url' => $post['post_id']));
         }
+
+                // //for current user post
+                //      $redisPostKey = 'user-' . $this->_data['user_id'] . '-posts';
+                //      $redisObject = new RedisClass();
+                //      fetchAndSetDataOnPostReaction($system, $this,$redisObject,$redisPostKey);
+                //      //profile post
+                //      $redisTimelinekey = 'profile-posts-'.$this->_data['user_id'];
+                //      fetchAndSetDataOnPostReaction($system, $this,$redisObject,$redisTimelinekey);
+                // //for author post  
+                //      $redisPostKey = 'user-' . $post['author_id'] . '-posts';
+                //      $redisObject = new RedisClass();
+                //      fetchAndSetDataOnPostReaction($system, $this,$redisObject,$redisPostKey);
+                //      //profile post
+                //      $redisTimelinekey = 'profile-posts-'.$post['author_id'];
+                //      fetchAndSetDataOnPostReaction($system, $this,$redisObject,$redisTimelinekey);   
     }
 
 
@@ -7399,7 +7493,7 @@ class User
      */
     public function change_vote($option_id, $checked_id)
     {
-        global $db;
+        global $db,$system;
         /* get poll */
         $get_poll = $db->query(sprintf("SELECT posts_polls.* FROM posts_polls_options INNER JOIN posts_polls ON posts_polls_options.poll_id = posts_polls.poll_id WHERE option_id = %s", secure($option_id, 'int'))) or _error("SQL_ERROR_THROWEN");
         if ($get_poll->num_rows == 0) {
@@ -7421,6 +7515,21 @@ class User
             /* insert new vote */
             $db->query(sprintf("INSERT INTO posts_polls_options_users (user_id, poll_id, option_id) VALUES (%s, %s, %s)", secure($this->_data['user_id'], 'int'), secure($poll['poll_id'], 'int'), secure($option_id, 'int'))) or _error("SQL_ERROR_THROWEN");
         }
+
+                // //for current user post
+                //      $redisPostKey = 'user-' . $this->_data['user_id'] . '-posts';
+                //      $redisObject = new RedisClass();
+                //      fetchAndSetDataOnPostReaction($system, $this,$redisObject,$redisPostKey);
+                //      //profile post
+                //      $redisTimelinekey = 'profile-posts-'.$this->_data['user_id'];
+                //      fetchAndSetDataOnPostReaction($system, $this,$redisObject,$redisTimelinekey);
+                // //for author post  
+                //      $redisPostKey = 'user-' . $post['author_id'] . '-posts';
+                //      $redisObject = new RedisClass();
+                //      fetchAndSetDataOnPostReaction($system, $this,$redisObject,$redisPostKey);
+                //      //profile post
+                //      $redisTimelinekey = 'profile-posts-'.$post['author_id'];
+                //      fetchAndSetDataOnPostReaction($system, $this,$redisObject,$redisTimelinekey);   
     }
 
 
@@ -7914,6 +8023,10 @@ class User
         $redisObject = new RedisClass();
         $redisObject->deleteValueFromKey($redisPostKey);
         fetchPostDataForTimeline($this->_data['user_id'], $this, $redisObject, $system);
+
+        //profile post
+         $redisTimelinekey = 'profile-posts-'.$this->_data['user_id'];
+         fetchAndSetDataOnPostReaction($system, $this,$redisObject,$redisTimelinekey);
         /* return */
         return $comment;
     }
@@ -8646,7 +8759,7 @@ class User
      */
     public function react_photo($photo_id, $reaction)
     {
-        global $db, $date;
+        global $db, $date,$system;
         /* check reation */
         if (!in_array($reaction, ['like', 'love', 'haha', 'yay', 'wow', 'sad', 'angry'])) {
             _error(403);
@@ -8692,6 +8805,9 @@ class User
             /**
              * update redis
              */
+            //profile post
+                     $redisTimelinekey = 'profile-posts-'.$this->_data['user_id'];
+                     fetchAndSetDataOnPostReaction($system, $this,$redisObject,$redisTimelinekey);
     }
 
 
@@ -8704,7 +8820,7 @@ class User
      */
     public function unreact_photo($photo_id, $reaction)
     {
-        global $db;
+        global $db,$system;
         /* (check|get) photo */
         $photo = $this->get_photo($photo_id);
         if (!$photo) {
@@ -8731,6 +8847,10 @@ class User
             /**
              * update redis
              */
+
+            //profile post
+                     $redisTimelinekey = 'profile-posts-'.$this->_data['user_id'];
+                     fetchAndSetDataOnPostReaction($system, $this,$redisObject,$redisTimelinekey);
     }
 
 
@@ -14619,6 +14739,27 @@ class User
                 $this->set_custom_fields($args, "user", "settings", $this->_data['user_id']);
                 /* update user */
                 $db->query(sprintf("UPDATE users SET user_firstname = %s, user_lastname = %s, user_gender = %s, user_country = %s, user_birthdate = %s, user_relationship = %s, user_biography = %s, user_website = %s WHERE user_id = %s", secure($args['firstname']), secure($args['lastname']), secure($args['gender']), secure($args['country'], 'int'), secure($args['birth_date']), secure($args['relationship']), secure($args['biography']), secure($args['website']), secure($this->_data['user_id'], 'int'))) or _error("SQL_ERROR_THROWEN");
+
+                // print_r($args); die;
+                  $new_response = [];
+                  $redisObject = new RedisClass();
+                  $redisPostKey = 'user-' . $this->_data['user_id'];
+                  $getPostsFromRedis = $redisObject->getValueFromKey($redisPostKey);
+                  $jsonValuesRes = json_decode($getPostsFromRedis, true);
+                  $jsonValuesRes['user_firstname'] = $args['firstname'];
+                  $jsonValuesRes['user_lastname'] = $args['lastname'];
+                  $jsonValuesRes['user_gender'] = $args['gender'];
+                  $jsonValuesRes['user_country'] = $args['country'];
+                  $jsonValuesRes['user_birth_date'] = $args['birth_date'];
+                  $jsonValuesRes['user_relationship'] = $args['relationship'];
+                  $jsonValuesRes['user_biography'] = $args['biography'];
+                  $jsonValuesRes['user_website'] = ($args['website'] !== null) ? $args['website'] :"";
+                  $new_response = json_encode($jsonValuesRes);
+                    //$redisObject->deleteValueFromKey($redisPostKey);
+                    $redisObject->setValueWithRedis($redisPostKey, $new_response);
+                    //  $aa = $redisObject->getValueFromKey($redisPostKey);
+                //   echo "<pre>";
+                //    print_r($); die;
                 break;
 
                 /*-- Global profile edit --*/
