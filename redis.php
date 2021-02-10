@@ -7,8 +7,8 @@ class RedisClass
     {
         if ($this->redis === NULL) {
             try {
-                $this->redis = new Redis();
-                $this->redis->connect('127.0.0.1', 6379);
+                // $this->redis = new Redis();
+                // $this->redis->connect('127.0.0.1', 6379);
             } catch (Exception $e) {
                 echo $e->getMessage();
             }
@@ -51,8 +51,8 @@ class RedisClass
     function getStoredKeys()
     {
         try {
-            $redisObj = $this->redis;
-            return $redisObj->keys("*");
+            // $redisObj = $this->redis;
+            // return $redisObj->keys("*");
         } catch (Exception $e) {
             echo $e->getMessage();
         }
