@@ -121,6 +121,8 @@ try {
 			$userGlobal->disallow_post($_POST['id']);
 			break;
 
+	
+*/
 		case 'disable_comments':
 			// disable post comments
 			$userGlobal->disable_post_comments($_POST['id']);
@@ -130,7 +132,6 @@ try {
 			// enable post comments
 			$userGlobal->enable_post_comments($_POST['id']);
 			break;
-*/
 		case 'delete_comment':
 			// delete comment
 			$userGlobal->global_delete_comment($_POST['id']);
