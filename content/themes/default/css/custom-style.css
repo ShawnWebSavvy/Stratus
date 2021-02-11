@@ -527,7 +527,7 @@ body.group-localhub.group-localhub a.alert-link {
     color: #fff;
 }
 body.group-localhub.group-localhub button.close ,body.group-localhub.group-localhub button.close:hover {
-    color: #fff;
+    color: #000;
     opacity: 1;
 }
 body.group-localhub.group-localhub button.close:hover {
