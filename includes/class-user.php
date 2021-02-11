@@ -424,10 +424,23 @@ class User
         $followings = [];
         $offset *= $system['min_results_even'];
         $limit_statement = ($get_all) ? "" : sprintf("LIMIT %s, %s", secure($offset, 'int', false), secure($system['min_results_even'], 'int', false));
-        $get_followings = $db->query(sprintf('SELECT users.user_id, users.user_name, users.user_firstname, users.user_lastname, users.user_gender, users.user_picture, users.user_subscribed, users.user_verified FROM followings INNER JOIN users ON (followings.following_id = users.user_id) WHERE followings.user_id = %s ' . $limit_statement, secure($user_id, 'int'))) or _error("SQL_ERROR_THROWEN");
+        $get_followings = $db->query(sprintf('SELECT users.user_id, users.user_name, users.user_firstname, users.user_lastname, users.user_gender, users.user_picture, users.user_subscribed, users.user_verified, picture_photo.source as user_picture_full FROM followings INNER JOIN users ON (followings.following_id = users.user_id) LEFT JOIN posts_photos as picture_photo ON users.user_picture_id = picture_photo.photo_id  WHERE followings.user_id = %s ' . $limit_statement, secure($user_id, 'int'))) or _error("SQL_ERROR_THROWEN");
         if ($get_followings->num_rows > 0) {
             while ($following = $get_followings->fetch_assoc()) {
                 $following['user_picture'] = get_picture($following['user_picture'], $following['user_gender']);
+
+
+                                
+                $following['user_picture_full'] = ($following['user_picture_full']) ? $system['system_uploads'] . '/' . $following['user_picture_full'] : $following['user_picture_full'];
+                if ($following['user_picture'] != "") {
+            
+                    $following['user_picture'] =  $system['system_url'].'/includes/wallet-api/image-exist-api.php?userPicture=' . $following['user_picture'] . '&userPictureFull=' . $following['user_picture_full'] . '&type=1';
+                }
+                if ($following['user_picture'] == "") {
+                    $following['user_picture'] =  $system['system_url'] . '/content/themes/' . $system['theme'] . '/images/user_defoult_img.jpg';
+                }
+
+
                 /* get the connection between the viewer & the target */
                 $following['connection'] = $this->connection($following['user_id'], false);
                 $followings[] = $following;
@@ -451,10 +464,22 @@ class User
         $followers = [];
         $offset *= $system['min_results_even'];
         $limit_statement = ($get_all) ? "" : sprintf("LIMIT %s, %s", secure($offset, 'int', false), secure($system['min_results_even'], 'int', false));
-        $get_followers = $db->query(sprintf('SELECT users.user_id, users.user_name, users.user_firstname, users.user_lastname, users.user_gender, users.user_picture, users.user_subscribed, users.user_verified FROM followings INNER JOIN users ON (followings.user_id = users.user_id) WHERE followings.following_id = %s ' . $limit_statement, secure($user_id, 'int'))) or _error("SQL_ERROR_THROWEN");
+        $get_followers = $db->query(sprintf('SELECT users.user_id, users.user_name, users.user_firstname, users.user_lastname, users.user_gender, users.user_picture, users.user_subscribed, users.user_verified, picture_photo.source as user_picture_full  FROM followings INNER JOIN users ON (followings.user_id = users.user_id) LEFT JOIN posts_photos as picture_photo ON users.user_picture_id = picture_photo.photo_id WHERE followings.following_id = %s ' . $limit_statement, secure($user_id, 'int'))) or _error("SQL_ERROR_THROWEN");
         if ($get_followers->num_rows > 0) {
             while ($follower = $get_followers->fetch_assoc()) {
                 $follower['user_picture'] = get_picture($follower['user_picture'], $follower['user_gender']);
+
+                $follower['user_picture_full'] = ($follower['user_picture_full']) ? $system['system_uploads'] . '/' . $follower['user_picture_full'] : $follower['user_picture_full'];
+                if ($follower['user_picture'] != "") {
+            
+                    $follower['user_picture'] =  $system['system_url'].'/includes/wallet-api/image-exist-api.php?userPicture=' . $follower['user_picture'] . '&userPictureFull=' . $follower['user_picture_full'] . '&type=1';
+                }
+                if ($follower['user_picture'] == "") {
+                    $follower['user_picture'] =  $system['system_url'] . '/content/themes/' . $system['theme'] . '/images/user_defoult_img.jpg';
+                }
+
+
+
                 /* get the connection between the viewer & the target */
                 $follower['connection'] = $this->connection($follower['user_id'], false);
                 $followers[] = $follower;
@@ -1899,18 +1924,29 @@ class User
             if ($user_id == $this->_data['user_id']) {
                 return "me";
             }
+            // die(count())
+            $friends = self::get_friends_ids($this->_data['user_id']);
+            $friend_request_sent = self::get_friend_requests_sent_ids();
+            $friend_request_receive = self::get_friend_requests_ids();
             /* check if the viewer & the target are friends */
-            if (in_array($user_id, $this->_data['friends_ids'])) {
+            if(!empty($friends)&&in_array($user_id, $friends)){
+                
                 return "remove";
+                
             }
+           
             /* check if the target sent a request to the viewer */
-            if (in_array($user_id, $this->_data['friend_requests_ids'])) {
+            if(!empty($friend_request_receive)&&in_array($user_id, $friend_request_receive)){
                 return "request";
             }
             /* check if the viewer sent a request to the target */
-            if (in_array($user_id, $this->_data['friend_requests_sent_ids'])) {
+          
+            
+            if (!empty($friend_request_sent)&&in_array($user_id, $friend_request_sent)) {
                 return "cancel";
             }
+            
+            
             /* check if the viewer declined the friend request to the target */
             if ($this->friendship_declined($user_id)) {
                 return "declined";
@@ -4259,16 +4295,37 @@ class User
      */
     public function popover($id, $type)
     { //echo $id."======type========".$type;
-        global $db;
+        global  $system, $db;
         $profile = [];
         /* check the type to get */
         if ($type == "user") {
             /* get user info */
-            $get_profile = $db->query(sprintf("SELECT * FROM users WHERE user_id = %s", secure($id, 'int'))) or _error("SQL_ERROR_THROWEN");
+            // $get_profile = $db->query(sprintf("SELECT * FROM users WHERE user_id = %s", secure($id, 'int'))) or _error("SQL_ERROR_THROWEN");
+
+
+
+            $get_profile = $db->query(sprintf("SELECT users.*, picture_photo.source as user_picture_full FROM users LEFT JOIN posts_photos as picture_photo ON users.user_picture_id = picture_photo.photo_id WHERE user_id = %s", secure($id, 'int'))) or _error("SQL_ERROR_THROWEN");
+
+
             if ($get_profile->num_rows > 0) {
                 $profile = $get_profile->fetch_assoc();
                 /* get profile picture */
                 $profile['user_picture'] = get_picture($profile['user_picture'], $profile['user_gender']);
+                
+                
+
+                
+                $profile['user_picture_full'] = ($profile['user_picture_full']) ? $system['system_uploads'] . '/' . $profile['user_picture_full'] : $profile['user_picture_full'];
+                if ($profile['user_picture'] != "") {
+            
+                    $profile['user_picture'] =  $system['system_url'].'/includes/wallet-api/image-exist-api.php?userPicture=' . $profile['user_picture'] . '&userPictureFull=' . $profile['user_picture_full'] . '&type=1';
+                }
+                if ($profile['user_picture'] == "") {
+                    $profile['user_picture'] =  $system['system_url'] . '/content/themes/' . $system['theme'] . '/images/user_defoult_img.jpg';
+                }
+
+
+
                 /* get followers count */
                 $profile['followers_count'] = count($this->get_followers_ids($profile['user_id']));
                 /* get mutual friends count between the viewer and the target */
@@ -4277,11 +4334,15 @@ class User
                 }
                 /* get the connection between the viewer & the target */
                 if ($profile['user_id'] != $this->_data['user_id']) {
-                    $profile['we_friends'] = (in_array($profile['user_id'], $this->_data['friends_ids'])) ? true : false;
-                    $profile['he_request'] = (in_array($profile['user_id'], $this->_data['friend_requests_ids'])) ? true : false;
-                    $profile['i_request'] = (in_array($profile['user_id'], $this->_data['friend_requests_sent_ids'])) ? true : false;
+                    $friends = self::get_friends_ids($this->_data['user_id']);
+                    $friend_request_sent = self::get_friend_requests_sent_ids();
+                    $friend_request_receive = self::get_friend_requests_ids();
+                    $profile['we_friends'] = count($friends)>0?((in_array($profile['user_id'],$friends)) ? true : false):false;
+                    $profile['he_request'] = count($friend_request_receive)>0?((in_array($profile['user_id'],$friend_request_receive)) ? true : false):false;
+                    $profile['i_request'] = count($friend_request_sent)>0?((in_array($profile['user_id'], $friend_request_sent)) ? true : false):false;
                     $profile['i_follow'] = (in_array($profile['user_id'], $this->_data['followings_ids'])) ? true : false;
                 }
+                // echo'<pre>'; print_r($profile);die;
             }
         } else {
             /* get page info */

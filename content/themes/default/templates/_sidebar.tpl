@@ -21,7 +21,7 @@
                     </a>
                 </li>
             </ul>
-         
+
             <!-- local hub sub menu starts -->
             <ul
                 class="main-side-nav main-left-side-nav left-sidebar-{if ($active_page=='LocalHub')}second-ul active {else}first-ul{/if}">
@@ -352,7 +352,7 @@ class="main-side-nav main-left-side-nav left-sidebar first-ul">
             <!-- Logiut starts -->
             <ul class="main-side-nav main-left-side-nav left-sidebar-five-ul">
                 <li>
-                <a href="{$system['system_url']}/signout" onclick=window.open("{PLAYTUBE_LINK}","_self") >
+                    <a href="{$system['system_url']}/signout">
                         <div class="svg-container">
                             <img src="{$system['system_uploads_assets']}/content/themes/default/images/svg/svgImg/logOutNew.svg"
                                 class="blackicon">

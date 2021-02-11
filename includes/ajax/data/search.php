@@ -31,6 +31,7 @@ try {
 		/* return */
 		$return['results'] = $smarty->fetch("ajax.search.tpl");
 	}
+	// echo '<pre>'; print_r($results);die;
 
 	// return & exit
 	return_json($return);
