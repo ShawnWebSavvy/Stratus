@@ -160,7 +160,7 @@
         <!-- reactions -->
 
 
-        <div class="action-btn unselectable reactions-wrappers {if $photo['i_react']}js_unreact-photo{/if} js_react-photo"
+        <div class="action-btn unselectable reactions-wrappers {if $photo['i_react']}js_unreact-post{/if} js_react-post"
             data-reaction="{if !$post['reaction']}love{/if}" data-type="photos" data-id="{$post['post_id']}">
             <!-- reaction-btn -->
             <div class="reaction-btn">

@@ -62,12 +62,19 @@
                                                 <!-- feeling action -->
                                                 <!-- post feeling -->
                                                 {if $postsItem['feeling_action']}
+
+                                                    <a {$postsItem['posthub']}
+                                                        href="{$system['system_url']}/{if $postsItem['posthub'] == 'GlobalHub'}global-profile-posts{else}posts{/if}/{$postsItem['post_id']}"
+                                                        class=""
+                                                        data-id="{$postsItem['post_id']}">
                                                 <span class="post-title">
                                                     {if $postsItem['post_type'] != "" && $postsItem['post_type'] !=
                                                     "map"} & {/if}{__("is")} {__($postsItem["feeling_action"])}
                                                     {__($postsItem["feeling_value"])} <i
                                                         class="twa twa-lg twa-{$postsItem['feeling_icon']}"></i>
                                                 </span>
+                                                </a>
+
                                                 {/if}
                                                 {if $_get != 'posts_group' && $postsItem['in_group']}
                                                 <i class="fa fa-caret-right ml5 mr5"></i>
@@ -253,15 +260,20 @@
                                                         </div>
                                                     </div>
                                                     {else}
+                                                        <a {$postsItem['posthub']}
+                                                        href="{$system['system_url']}/{if $postsItem['posthub'] == 'GlobalHub'}global-profile-posts{else}posts{/if}/{$postsItem['post_id']}"
+                                                        class="js_lightbox_custom"
+                                                        data-id="{$postsItem['post_id']}">
                                                     <div class="post-text js_readmore" dir="auto">{$postsItem['text']}
                                                     </div>
+                                                    </a>
                                                     {/if}
 
 
                                                     {if $postsItem['photos_num']>0 }
                                                     <a {$postsItem['posthub']}
                                                         href="{$system['system_url']}/{if $postsItem['posthub'] == 'GlobalHub'}global-profile-photo{else}photos{/if}/{$postsItem['photos'][0]['photo_id']}"
-                                                        class="js_lightbox"
+                                                        class="js_lightbox_custom"
                                                         data-id="{$postsItem['photos'][0]['photo_id']}"
                                                         data-image="{$system['system_uploads']}/{$postsItem['photos'][0]['source']}"
                                                         data-context="{if $postsItem['post_type'] == 'product'}post{else}album{/if}">

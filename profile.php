@@ -85,7 +85,7 @@ try {
 		$friends = $user->get_friends_ids($user->_data['user_id']);
 		$friend_request_sent = $user->get_friend_requests_sent_ids();
 		$friend_request_receive = $user->get_friend_requests_ids();
-		
+		// echo "<pre>"; print_r($friend_request_sent);
 		$profile['we_friends'] = count($friends)>0?((in_array($profile['user_id'],$friends)) ? true : false):false;
         $profile['he_request'] = count($friend_request_receive)>0?((in_array($profile['user_id'],$friend_request_receive)) ? true : false):false;
         $profile['i_request'] = count($friend_request_sent)>0?((in_array($profile['user_id'], $friend_request_sent)) ? true : false):false;
@@ -100,7 +100,7 @@ try {
 		$profile['mutual_friends_count'] = $user->get_mutual_friends_count($profile['user_id']);
 		$profile['mutual_friends'] = $user->get_mutual_friends($profile['user_id']);
 	}
-
+// echo "<pre>"; print_r($profile); die;
 
 	// [2] get view content
 	switch ($_GET['view']) {
