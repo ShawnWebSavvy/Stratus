@@ -69,7 +69,7 @@
               class="btn-add-textarea btn btn-sm btn-success ml5 btn-antier-green btn-publisher twitter-post-plus-button">+</button>
           </div>
         </div>
-        <button class="btn btn-sm btn-primary btn-block " style="width: 20%;">
+        <button class="btn btn-sm btn-primary btn-block " style="width: 20%;" id="add_product">
           {__("Add Product")}
         </button>
       </div>

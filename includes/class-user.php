@@ -1924,18 +1924,29 @@ class User
             if ($user_id == $this->_data['user_id']) {
                 return "me";
             }
+            // die(count())
+            $friends = self::get_friends_ids($this->_data['user_id']);
+            $friend_request_sent = self::get_friend_requests_sent_ids();
+            $friend_request_receive = self::get_friend_requests_ids();
             /* check if the viewer & the target are friends */
-            if (in_array($user_id, $this->_data['friends_ids'])) {
+            if(!empty($friends)&&in_array($user_id, $friends)){
+                
                 return "remove";
+                
             }
+           
             /* check if the target sent a request to the viewer */
-            if (in_array($user_id, $this->_data['friend_requests_ids'])) {
+            if(!empty($friend_request_receive)&&in_array($user_id, $friend_request_receive)){
                 return "request";
             }
             /* check if the viewer sent a request to the target */
-            if (in_array($user_id, $this->_data['friend_requests_sent_ids'])) {
+          
+            
+            if (!empty($friend_request_sent)&&in_array($user_id, $friend_request_sent)) {
                 return "cancel";
             }
+            
+            
             /* check if the viewer declined the friend request to the target */
             if ($this->friendship_declined($user_id)) {
                 return "declined";
@@ -4323,11 +4334,15 @@ class User
                 }
                 /* get the connection between the viewer & the target */
                 if ($profile['user_id'] != $this->_data['user_id']) {
-                    $profile['we_friends'] = (in_array($profile['user_id'], $this->_data['friends_ids'])) ? true : false;
-                    $profile['he_request'] = (in_array($profile['user_id'], $this->_data['friend_requests_ids'])) ? true : false;
-                    $profile['i_request'] = (in_array($profile['user_id'], $this->_data['friend_requests_sent_ids'])) ? true : false;
+                    $friends = self::get_friends_ids($this->_data['user_id']);
+                    $friend_request_sent = self::get_friend_requests_sent_ids();
+                    $friend_request_receive = self::get_friend_requests_ids();
+                    $profile['we_friends'] = count($friends)>0?((in_array($profile['user_id'],$friends)) ? true : false):false;
+                    $profile['he_request'] = count($friend_request_receive)>0?((in_array($profile['user_id'],$friend_request_receive)) ? true : false):false;
+                    $profile['i_request'] = count($friend_request_sent)>0?((in_array($profile['user_id'], $friend_request_sent)) ? true : false):false;
                     $profile['i_follow'] = (in_array($profile['user_id'], $this->_data['followings_ids'])) ? true : false;
                 }
+                // echo'<pre>'; print_r($profile);die;
             }
         } else {
             /* get page info */

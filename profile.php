@@ -82,9 +82,17 @@ try {
 	/* get the connection &  mutual friends */
 	if ($user->_logged_in && $profile['user_id'] != $user->_data['user_id']) {
 		/* get the connection */
-		$profile['we_friends'] = (in_array($profile['user_id'], $user->_data['friends_ids'])) ? true : false;
-		$profile['he_request'] = (in_array($profile['user_id'], $user->_data['friend_requests_ids'])) ? true : false;
-		$profile['i_request'] = (in_array($profile['user_id'], $user->_data['friend_requests_sent_ids'])) ? true : false;
+		$friends = $user->get_friends_ids($user->_data['user_id']);
+		$friend_request_sent = $user->get_friend_requests_sent_ids();
+		$friend_request_receive = $user->get_friend_requests_ids();
+		
+		$profile['we_friends'] = count($friends)>0?((in_array($profile['user_id'],$friends)) ? true : false):false;
+        $profile['he_request'] = count($friend_request_receive)>0?((in_array($profile['user_id'],$friend_request_receive)) ? true : false):false;
+        $profile['i_request'] = count($friend_request_sent)>0?((in_array($profile['user_id'], $friend_request_sent)) ? true : false):false;
+
+		// $profile['we_friends'] = (in_array($profile['user_id'], $user->_data['friends_ids'])) ? true : false;
+		// $profile['he_request'] = (in_array($profile['user_id'], $user->_data['friend_requests_ids'])) ? true : false;
+		// $profile['i_request'] = (in_array($profile['user_id'], $user->_data['friend_requests_sent_ids'])) ? true : false;
 		$profile['i_follow'] = (in_array($profile['user_id'], $user->_data['followings_ids'])) ? true : false;
 		$profile['friendship_declined'] = $user->friendship_declined($profile['user_id']);
 		$profile['i_poked'] = $user->poked($profile['user_id']);
