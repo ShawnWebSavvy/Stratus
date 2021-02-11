@@ -802,15 +802,16 @@ $(function () {
                 (product.category = publisher.find('select[name="category"]').val()), (product.status = publisher.find('select[name="status"]').val());
                 var textarea = publisher.find("textarea"),
                     photos = publisher.data("photos");
-                button_status(_this, "loading"),
+                // button_status(_this, "loading"),
                     $.post(
                         api["posts/product"],
                         { do: "publish", product: JSON.stringify(product), message: textarea.val(), photos: JSON.stringify(photos) },
                         function (response) {
-                            button_status(_this, "reset"),
+                            // button_status(_this, "reset"),
                                 response.error
                                     ? publisher.find(".alert.alert-danger").html(response.message).slideDown()
-                                    : response.callback && (eval(response.callback), $(".no-post-to-show").css("display", "none"), $("#modal").modal("toggle"));
+                                    : response.callback && (eval(response.callback))
+                                        // $(".no-post-to-show").css("display", "none"), $("#modal").modal("toggle"));
                         },
                         "json"
                     ).fail(function () {
@@ -818,6 +819,10 @@ $(function () {
                     });
             }
         }),
+        $('#add_product').on('click', function () {
+            // alert('enter');
+            $('#ajax-sell-new-product').trigger('reset'); 
+        });
         $("body").on("click", ".js_publisher-album", function () {
             var _this = $(this),
                 publisher = _this.parents(".publisher"),

@@ -858,7 +858,7 @@
             <img onclick="onimgTagclick(this)" id="thumb_src_tag_{$_post['post_id']}" data-vid="{$_post['post_id']}"
                 data-video="{$system['system_uploads']}/{$_post['video']['source']}"
                 src="{$system['system_uploads']}/{$_post['video']['thumbnail']}" alt="" style="width:100%">
-            <img id="hide_play_img{$_post['post_id']}" src="https://www.myaccelerate.io/images/play-btn.png"
+            <img id="hide_play_img{$_post['post_id']}" class="play_video_icon" src="https://www.myaccelerate.io/images/play-btn.png"
                 alt="play_btn"
                 style="width: 17%; position: absolute; right: 0px; left: 39%; top: 42%; pointer-events: none;">
             <!-- <video style="display:none;" class="js_fluidplayer thumb_crsp_video_tag" id="video-{$_post['video']['video_id']}{if $pinned || $boosted}-{$_post['post_id']}{/if}" {if $user->_logged_in}onplay="update_media_views('video', {$_post['video']['video_id']})"{/if} {if $_post['video']['thumbnail']}poster="{$system['system_uploads']}/{$_post['video']['thumbnail']}"{/if} controls preload="auto" style="width:100%;height:100%;" width="100%" height="100%">

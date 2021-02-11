@@ -104,7 +104,7 @@ function data_heartbeat() {
             
             let last_id_column = document.getElementsByClassName('bricklayer-column')[0];
             // data["last_post"] = posts_stream.find(".unpinned_post").eq(0).data("id") || 0;
-            data["last_post"] = document.getElementsByClassName('carsds')[0].dataset.id || 0;
+            data["last_post"] = last_id_column.getElementsByClassName('carsds')[0].dataset.id || 0;
             data["last_post_pinned"] = posts_stream.find('.pinned_post').first().data("id") || 0;
             // console.log("data[last_post]",data["last_post"]);
         }

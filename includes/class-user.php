@@ -424,10 +424,23 @@ class User
         $followings = [];
         $offset *= $system['min_results_even'];
         $limit_statement = ($get_all) ? "" : sprintf("LIMIT %s, %s", secure($offset, 'int', false), secure($system['min_results_even'], 'int', false));
-        $get_followings = $db->query(sprintf('SELECT users.user_id, users.user_name, users.user_firstname, users.user_lastname, users.user_gender, users.user_picture, users.user_subscribed, users.user_verified FROM followings INNER JOIN users ON (followings.following_id = users.user_id) WHERE followings.user_id = %s ' . $limit_statement, secure($user_id, 'int'))) or _error("SQL_ERROR_THROWEN");
+        $get_followings = $db->query(sprintf('SELECT users.user_id, users.user_name, users.user_firstname, users.user_lastname, users.user_gender, users.user_picture, users.user_subscribed, users.user_verified, picture_photo.source as user_picture_full FROM followings INNER JOIN users ON (followings.following_id = users.user_id) LEFT JOIN posts_photos as picture_photo ON users.user_picture_id = picture_photo.photo_id  WHERE followings.user_id = %s ' . $limit_statement, secure($user_id, 'int'))) or _error("SQL_ERROR_THROWEN");
         if ($get_followings->num_rows > 0) {
             while ($following = $get_followings->fetch_assoc()) {
                 $following['user_picture'] = get_picture($following['user_picture'], $following['user_gender']);
+
+
+                                
+                $following['user_picture_full'] = ($following['user_picture_full']) ? $system['system_uploads'] . '/' . $following['user_picture_full'] : $following['user_picture_full'];
+                if ($following['user_picture'] != "") {
+            
+                    $following['user_picture'] =  $system['system_url'].'/includes/wallet-api/image-exist-api.php?userPicture=' . $following['user_picture'] . '&userPictureFull=' . $following['user_picture_full'] . '&type=1';
+                }
+                if ($following['user_picture'] == "") {
+                    $following['user_picture'] =  $system['system_url'] . '/content/themes/' . $system['theme'] . '/images/user_defoult_img.jpg';
+                }
+
+
                 /* get the connection between the viewer & the target */
                 $following['connection'] = $this->connection($following['user_id'], false);
                 $followings[] = $following;
@@ -451,10 +464,22 @@ class User
         $followers = [];
         $offset *= $system['min_results_even'];
         $limit_statement = ($get_all) ? "" : sprintf("LIMIT %s, %s", secure($offset, 'int', false), secure($system['min_results_even'], 'int', false));
-        $get_followers = $db->query(sprintf('SELECT users.user_id, users.user_name, users.user_firstname, users.user_lastname, users.user_gender, users.user_picture, users.user_subscribed, users.user_verified FROM followings INNER JOIN users ON (followings.user_id = users.user_id) WHERE followings.following_id = %s ' . $limit_statement, secure($user_id, 'int'))) or _error("SQL_ERROR_THROWEN");
+        $get_followers = $db->query(sprintf('SELECT users.user_id, users.user_name, users.user_firstname, users.user_lastname, users.user_gender, users.user_picture, users.user_subscribed, users.user_verified, picture_photo.source as user_picture_full  FROM followings INNER JOIN users ON (followings.user_id = users.user_id) LEFT JOIN posts_photos as picture_photo ON users.user_picture_id = picture_photo.photo_id WHERE followings.following_id = %s ' . $limit_statement, secure($user_id, 'int'))) or _error("SQL_ERROR_THROWEN");
         if ($get_followers->num_rows > 0) {
             while ($follower = $get_followers->fetch_assoc()) {
                 $follower['user_picture'] = get_picture($follower['user_picture'], $follower['user_gender']);
+
+                $follower['user_picture_full'] = ($follower['user_picture_full']) ? $system['system_uploads'] . '/' . $follower['user_picture_full'] : $follower['user_picture_full'];
+                if ($follower['user_picture'] != "") {
+            
+                    $follower['user_picture'] =  $system['system_url'].'/includes/wallet-api/image-exist-api.php?userPicture=' . $follower['user_picture'] . '&userPictureFull=' . $follower['user_picture_full'] . '&type=1';
+                }
+                if ($follower['user_picture'] == "") {
+                    $follower['user_picture'] =  $system['system_url'] . '/content/themes/' . $system['theme'] . '/images/user_defoult_img.jpg';
+                }
+
+
+
                 /* get the connection between the viewer & the target */
                 $follower['connection'] = $this->connection($follower['user_id'], false);
                 $followers[] = $follower;
@@ -1226,6 +1251,7 @@ class User
                 break;
 
             case 'friend-accept':
+
                 /* check if there is a friend request from the target to the viewer */
                 $check = $db->query(sprintf("SELECT COUNT(*) as count FROM friends WHERE user_one_id = %s AND user_two_id = %s AND status = 0", secure($id, 'int'), secure($this->_data['user_id'], 'int'))) or _error("SQL_ERROR_THROWEN");
                 /* if no -> return */
@@ -1240,7 +1266,35 @@ class User
                 $this->createConversations($this->_data['user_id'], $id);
                 //    $this->post_conversation_message("", "", "", $conversation_id = null, $recipients = null);
                 /* - new add in conversation when friends to show in message page list --- */
+                          //update user redis
+                      $new_response = [];
+                      $redisObject = new RedisClass();
+                      $redisPostKey = 'user-' . $this->_data['user_id'];
+                      $getDataFromRedis = $redisObject->getValueFromKey($redisPostKey);
+                      $isKeyExist = $redisObject->isRedisKeyExist($redisPostKey);
+                      if($isKeyExist == true){
+                      $jsonValuesRes = json_decode($getDataFromRedis, true);
+                      array_push( $jsonValuesRes['friends_ids'], $id);
+                      array_push( $jsonValuesRes['followings_ids'], $id);
+                     // print_r($jsonValuesRes); die;
+                      $new_response = json_encode($jsonValuesRes);
+                      $redisObject->setValueWithRedis($redisPostKey, $new_response);
+                      }
+                      $new_response = [];
+                      $redisObject = new RedisClass();
+                      $redisPostKey = 'user-' . $id;
+                      $getDataFromRedis = $redisObject->getValueFromKey($redisPostKey);
+                      $isKeyExist = $redisObject->isRedisKeyExist($redisPostKey);
+                      if($isKeyExist == true){
+                      $jsonValuesRes = json_decode($getDataFromRedis, true);
+                      array_push( $jsonValuesRes['friends_ids'], $this->_data['user_id']);
+                      array_push( $jsonValuesRes['followings_ids'], $this->_data['user_id']);
+                     // print_r($jsonValuesRes); die;
+                      $new_response = json_encode($jsonValuesRes);
+                      $redisObject->setValueWithRedis($redisPostKey, $new_response);
+                      }
 
+                      //Redis block
                 break;
 
             case 'friend-decline':
@@ -1259,7 +1313,7 @@ class User
 
             case 'friend-add':
                 /* check blocking */
-                if ($this->blocked($id)) {
+                if ($this->blocked($id)) { 
                     _error(403);
                 }
                 /* check if there is any relation between the viewer & the target */
@@ -1870,18 +1924,29 @@ class User
             if ($user_id == $this->_data['user_id']) {
                 return "me";
             }
+            // die(count())
+            $friends = self::get_friends_ids($this->_data['user_id']);
+            $friend_request_sent = self::get_friend_requests_sent_ids();
+            $friend_request_receive = self::get_friend_requests_ids();
             /* check if the viewer & the target are friends */
-            if (in_array($user_id, $this->_data['friends_ids'])) {
+            if(!empty($friends)&&in_array($user_id, $friends)){
+                
                 return "remove";
+                
             }
+           
             /* check if the target sent a request to the viewer */
-            if (in_array($user_id, $this->_data['friend_requests_ids'])) {
+            if(!empty($friend_request_receive)&&in_array($user_id, $friend_request_receive)){
                 return "request";
             }
             /* check if the viewer sent a request to the target */
-            if (in_array($user_id, $this->_data['friend_requests_sent_ids'])) {
+          
+            
+            if (!empty($friend_request_sent)&&in_array($user_id, $friend_request_sent)) {
                 return "cancel";
             }
+            
+            
             /* check if the viewer declined the friend request to the target */
             if ($this->friendship_declined($user_id)) {
                 return "declined";
@@ -4230,16 +4295,37 @@ class User
      */
     public function popover($id, $type)
     { //echo $id."======type========".$type;
-        global $db;
+        global  $system, $db;
         $profile = [];
         /* check the type to get */
         if ($type == "user") {
             /* get user info */
-            $get_profile = $db->query(sprintf("SELECT * FROM users WHERE user_id = %s", secure($id, 'int'))) or _error("SQL_ERROR_THROWEN");
+            // $get_profile = $db->query(sprintf("SELECT * FROM users WHERE user_id = %s", secure($id, 'int'))) or _error("SQL_ERROR_THROWEN");
+
+
+
+            $get_profile = $db->query(sprintf("SELECT users.*, picture_photo.source as user_picture_full FROM users LEFT JOIN posts_photos as picture_photo ON users.user_picture_id = picture_photo.photo_id WHERE user_id = %s", secure($id, 'int'))) or _error("SQL_ERROR_THROWEN");
+
+
             if ($get_profile->num_rows > 0) {
                 $profile = $get_profile->fetch_assoc();
                 /* get profile picture */
                 $profile['user_picture'] = get_picture($profile['user_picture'], $profile['user_gender']);
+                
+                
+
+                
+                $profile['user_picture_full'] = ($profile['user_picture_full']) ? $system['system_uploads'] . '/' . $profile['user_picture_full'] : $profile['user_picture_full'];
+                if ($profile['user_picture'] != "") {
+            
+                    $profile['user_picture'] =  $system['system_url'].'/includes/wallet-api/image-exist-api.php?userPicture=' . $profile['user_picture'] . '&userPictureFull=' . $profile['user_picture_full'] . '&type=1';
+                }
+                if ($profile['user_picture'] == "") {
+                    $profile['user_picture'] =  $system['system_url'] . '/content/themes/' . $system['theme'] . '/images/user_defoult_img.jpg';
+                }
+
+
+
                 /* get followers count */
                 $profile['followers_count'] = count($this->get_followers_ids($profile['user_id']));
                 /* get mutual friends count between the viewer and the target */
@@ -4248,11 +4334,15 @@ class User
                 }
                 /* get the connection between the viewer & the target */
                 if ($profile['user_id'] != $this->_data['user_id']) {
-                    $profile['we_friends'] = (in_array($profile['user_id'], $this->_data['friends_ids'])) ? true : false;
-                    $profile['he_request'] = (in_array($profile['user_id'], $this->_data['friend_requests_ids'])) ? true : false;
-                    $profile['i_request'] = (in_array($profile['user_id'], $this->_data['friend_requests_sent_ids'])) ? true : false;
+                    $friends = self::get_friends_ids($this->_data['user_id']);
+                    $friend_request_sent = self::get_friend_requests_sent_ids();
+                    $friend_request_receive = self::get_friend_requests_ids();
+                    $profile['we_friends'] = count($friends)>0?((in_array($profile['user_id'],$friends)) ? true : false):false;
+                    $profile['he_request'] = count($friend_request_receive)>0?((in_array($profile['user_id'],$friend_request_receive)) ? true : false):false;
+                    $profile['i_request'] = count($friend_request_sent)>0?((in_array($profile['user_id'], $friend_request_sent)) ? true : false):false;
                     $profile['i_follow'] = (in_array($profile['user_id'], $this->_data['followings_ids'])) ? true : false;
                 }
+                // echo'<pre>'; print_r($profile);die;
             }
         } else {
             /* get page info */
@@ -5869,6 +5959,8 @@ class User
             $where_query .= "(posts.user_id = $me AND posts.boosted = '0' AND posts.user_type = 'user')";
             /* get posts from friends still followed */
             $friends_ids = array_intersect($this->_data['friends_ids'], $this->_data['followings_ids']);
+            //  echo "<pre>";
+           //  print_r($friends_ids); die;
             if ($friends_ids) {
                 $friends_list = implode(',', $friends_ids);
                 /* viewer friends posts -> authors */
@@ -6403,6 +6495,8 @@ class User
     {
         global $db;
         /* get all user posts */
+
+        	
         switch ($node_type) {
             case 'user':
                 $get_posts = $db->query(sprintf("SELECT post_id FROM posts WHERE user_id = %s AND user_type = 'user'", secure($node_id, 'int'))) or _error("SQL_ERROR_THROWEN");
@@ -6425,6 +6519,8 @@ class User
                 $this->delete_post($post['post_id'], false);
             }
         }
+
+        
     }
 
 
@@ -6617,6 +6713,29 @@ class User
         if ($post['in_event'] && !$event['event_approved']) {
             $this->delete_notification($post['event_admin'], 'event_post_pending', $post['event_title'], $post['event_id'] . "-[guid=]" . $post['post_id']);
         }
+
+            //Redis block
+                $redisPostKey = 'user-' . $this->_data['user_id'] . '-posts';
+        	$redisObject = new RedisClass();
+			 $isKeyExist = $redisObject->isRedisKeyExist($redisPostKey);
+            if($isKeyExist == true){
+				$new_response = [];
+                $new_data =[];
+				//$jsonEncData = json_encode($posts);
+			    	$getPostsFromRedis = $redisObject->getValueFromKey($redisPostKey);
+                	$jsonValuesRes = json_decode($getPostsFromRedis, true);
+
+                  foreach ($jsonValuesRes as $key => $val)
+                    {
+                        if ($val["post_id"] !== $post_id) {
+                            $new_data[] = $val;
+                        }                      
+                    }
+					 $new_response = json_encode($new_data);
+				     $redisObject->setValueWithRedis($redisPostKey, $new_response);
+			}
+             //Redis block
+
         return $refresh;
     }
 
@@ -7303,7 +7422,7 @@ class User
      */
     public function add_vote($option_id)
     {
-        global $db;
+        global $db,$system;
         /* get poll */
         $get_poll = $db->query(sprintf("SELECT posts_polls.* FROM posts_polls_options INNER JOIN posts_polls ON posts_polls_options.poll_id = posts_polls.poll_id WHERE option_id = %s", secure($option_id, 'int'))) or _error("SQL_ERROR_THROWEN");
         if ($get_poll->num_rows == 0) {
@@ -7327,6 +7446,21 @@ class User
             /* post notification */
             $this->post_notification(array('to_user_id' => $post['author_id'], 'action' => 'vote', 'hub' => "LocalHub", 'node_type' => 'post', 'node_url' => $post['post_id']));
         }
+
+                // //for current user post
+                //      $redisPostKey = 'user-' . $this->_data['user_id'] . '-posts';
+                //      $redisObject = new RedisClass();
+                //      fetchAndSetDataOnPostReaction($system, $this,$redisObject,$redisPostKey);
+                //      //profile post
+                //      $redisTimelinekey = 'profile-posts-'.$this->_data['user_id'];
+                //      fetchAndSetDataOnPostReaction($system, $this,$redisObject,$redisTimelinekey);
+                // //for author post  
+                //      $redisPostKey = 'user-' . $post['author_id'] . '-posts';
+                //      $redisObject = new RedisClass();
+                //      fetchAndSetDataOnPostReaction($system, $this,$redisObject,$redisPostKey);
+                //      //profile post
+                //      $redisTimelinekey = 'profile-posts-'.$post['author_id'];
+                //      fetchAndSetDataOnPostReaction($system, $this,$redisObject,$redisTimelinekey);   
     }
 
 
@@ -7374,7 +7508,7 @@ class User
      */
     public function change_vote($option_id, $checked_id)
     {
-        global $db;
+        global $db,$system;
         /* get poll */
         $get_poll = $db->query(sprintf("SELECT posts_polls.* FROM posts_polls_options INNER JOIN posts_polls ON posts_polls_options.poll_id = posts_polls.poll_id WHERE option_id = %s", secure($option_id, 'int'))) or _error("SQL_ERROR_THROWEN");
         if ($get_poll->num_rows == 0) {
@@ -7396,6 +7530,21 @@ class User
             /* insert new vote */
             $db->query(sprintf("INSERT INTO posts_polls_options_users (user_id, poll_id, option_id) VALUES (%s, %s, %s)", secure($this->_data['user_id'], 'int'), secure($poll['poll_id'], 'int'), secure($option_id, 'int'))) or _error("SQL_ERROR_THROWEN");
         }
+
+                // //for current user post
+                //      $redisPostKey = 'user-' . $this->_data['user_id'] . '-posts';
+                //      $redisObject = new RedisClass();
+                //      fetchAndSetDataOnPostReaction($system, $this,$redisObject,$redisPostKey);
+                //      //profile post
+                //      $redisTimelinekey = 'profile-posts-'.$this->_data['user_id'];
+                //      fetchAndSetDataOnPostReaction($system, $this,$redisObject,$redisTimelinekey);
+                // //for author post  
+                //      $redisPostKey = 'user-' . $post['author_id'] . '-posts';
+                //      $redisObject = new RedisClass();
+                //      fetchAndSetDataOnPostReaction($system, $this,$redisObject,$redisPostKey);
+                //      //profile post
+                //      $redisTimelinekey = 'profile-posts-'.$post['author_id'];
+                //      fetchAndSetDataOnPostReaction($system, $this,$redisObject,$redisTimelinekey);   
     }
 
 

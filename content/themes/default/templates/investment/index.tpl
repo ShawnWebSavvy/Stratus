@@ -162,7 +162,9 @@
                                         </div>
                                     </div>
                                 {/foreach}
-                                <div class="coinDetailSection">
+                                <div class="coinDetailSection"  style="display: flex;
+                                flex-direction: column;
+                                justify-content: space-between;">
                                     <div class="coinSectionHeader">
                                         <img src="{$system['system_url']}/content/themes/default/images/investment/gsx.svg"
                                                     alt="bit coin">
@@ -179,7 +181,7 @@
                                             </p>
                                         </div>
                                     </div>
-                                    <div class="GraphSection">
+                                    <div class="GraphSection" style="height: 100%">
                                     <div class="graphSectionHeader">
                                         <h3><span class="coin_price">0.1</span> USD</h3>
                                     </div>

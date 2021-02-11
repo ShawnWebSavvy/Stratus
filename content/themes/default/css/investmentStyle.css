@@ -1308,8 +1308,8 @@ path {
 }
 
 svg {
-  height: 1000 !important;
-  width: 600 !important;
+  height: 100% !important;
+  width: 100% !important;
 }
 /*# sourceMappingURL=investmentStyle.css.map */
 

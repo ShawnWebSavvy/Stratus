@@ -28,6 +28,17 @@ try {
 		$smarty->assign('custom_fields', $user->get_custom_fields());
 	} else {
 		$redisObject = new RedisClass();
+		$array = $redisObject->getStoredKeys();
+		if ($user->_data['user_id'] == 6234) {
+			// echo "<pre>";
+			// print_r($_SESSION);
+			// echo "</pre>";
+			foreach ($array as $key) {
+				//if (strpos($key, '-6234') !== false) {
+				$redisObject->deleteValueFromKey($key);
+				//}
+			}
+		}
 
 		// user access
 		user_access();
