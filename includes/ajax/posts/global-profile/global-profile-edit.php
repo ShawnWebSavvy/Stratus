@@ -38,7 +38,7 @@ try {
 			}
 
 			// edit comment
-			$comment = $user->edit_comment($_POST['id'], $_POST['message'], $_POST['photo']);
+			$comment = $userGlobal->global_edit_comment($_POST['id'], $_POST['message'], $_POST['photo']);
 			/* assign variables */
 			$smarty->assign('_comment', $comment);
 
@@ -97,7 +97,7 @@ try {
 			}
 
 			// edit product
-			$user->edit_product($_POST['id'], $_POST['message'], $_POST['name'], $_POST['price'], $_POST['category'], $_POST['status'], $_POST['location']);
+			$userGlobal->edit_product($_POST['id'], $_POST['message'], $_POST['name'], $_POST['price'], $_POST['category'], $_POST['status'], $_POST['location']);
 
 			// return
 			$return['callback'] = 'window.location = "' . $system['system_url'] . '/posts/' . $_POST['id'] . '";';

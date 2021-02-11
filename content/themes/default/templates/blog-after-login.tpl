@@ -283,7 +283,7 @@
                             {if $article['article']['cover']}
                             <div class="mb20">
                                 <img class="img-fluid"
-                                    src="{$system['system_uploads']}/{$article['article']['parsed_cover']}">
+                                    src="{$system['system_uploads']}/{$article['article']['cover']}">
                             </div>
                             {/if}
                             <!-- article cover -->
