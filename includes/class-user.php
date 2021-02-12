@@ -1153,6 +1153,7 @@ class User
                 switch ($result['node_type']) {
                     case 'user':
                         $result['user_picture'] = get_picture($result['user_picture'], $result['user_gender']);
+                        $result['user_picture'] = $system['system_url'] . '/includes/wallet-api/image-exist-api.php?userPicture=' . $result['user_picture'] . '&userPictureFull=' . $result['user_picture_full'];
                         /* get the connection between the viewer & the target */
                         $result['connection'] = $this->connection($result['user_id']);
                         break;
