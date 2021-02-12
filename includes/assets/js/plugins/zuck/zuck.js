@@ -1222,11 +1222,11 @@
           if (data.items[0].type == "video") {
             /*var srcBackground =(option("avatars") || !preview || preview =="" ? get(data,"photo")
             : preview); */
-            var srcBackground = window.location + "content/themes/default/images/video_square_white.png";
+            var srcBackground = window.location.origin + "/content/themes/default/images/video_square_white.png";
           } else {
             var srcBackground = items[0].src;
           }
-          var getUrl = window.location;
+          var getUrl = window.location.origin;
           var baseUrl = getUrl.protocol + "//" + getUrl.host + "/"
           //console.log("===zusssck====srcBackgrosund", getUrl.protocol);
         }
