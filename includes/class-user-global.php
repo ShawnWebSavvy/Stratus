@@ -9053,13 +9053,13 @@ class UserGlobal
         } else {
             $selectQuery = sprintf("SELECT hashtags.hashtag, hashtags_posts.id as hash_post, COUNT(hashtags_posts.id) AS frequency,hashtags_posts.postHubType FROM hashtags INNER JOIN hashtags_posts as hashtags_posts ON hashtags.hashtag_id = hashtags_posts.hashtag_id WHERE hashtags_posts.created_at > DATE_SUB(CURDATE(), INTERVAL 1 %s) GROUP BY hashtags_posts.hashtag_id,hashtags_posts.postHubType ORDER BY frequency DESC LIMIT %s", secure($system['trending_hashtags_interval'], "", false), secure($system['trending_hashtags_limit'], 'int', false));
         }
-        $get_trending_hashtags = $db->query($selectQuery);
-        if ($get_trending_hashtags->num_rows > 0) {
-            while ($hashtag = $get_trending_hashtags->fetch_assoc()) {
-                $hashtag['hashtag'] = html_entity_decode($hashtag['hashtag'], ENT_QUOTES);
-                $hashtags[] = $hashtag;
-            }
-        }
+        // $get_trending_hashtags = $db->query($selectQuery) or _error("SQL_ERROR_THROWEN");
+        // if ($get_trending_hashtags->num_rows > 0) {
+        //     while ($hashtag = $get_trending_hashtags->fetch_assoc()) {
+        //         $hashtag['hashtag'] = html_entity_decode($hashtag['hashtag'], ENT_QUOTES);
+        //         $hashtags[] = $hashtag;
+        //     }
+        // }
 
         return $hashtags;
     }

@@ -218,8 +218,12 @@ try {
 	// [4] check for new posts
 	if (isset($_POST['last_post']) && !isset($_POST['custom_boosted'])) {
 		$posts = $user->get_posts(array('get' => $_POST['get'], 'filter' => $_POST['filter'], 'id' => $_POST['id'], 'last_post_id' => $_POST['last_post']));
-		if ($posts) {
+		if ($posts && !empty($posts)) {
 			/* get user pages */
+		
+			$posts = array_reverse($posts);
+			// echo '<pre>';print_r($posts);die;
+		
 			$pages = $user->get_pages(array('managed' => true, 'user_id' => $user->_data['user_id']));
 			$smarty->assign('pages', $pages);
 			/* get user pages */
@@ -230,6 +234,8 @@ try {
 			$smarty->assign('posts', $posts);
 			/* return */
 			$return['posts'] = $smarty->fetch("ajax.posts.tpl");
+		}else{
+			$return['posts'] = "";
 		}
 	}
 

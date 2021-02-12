@@ -31,6 +31,7 @@ try {
 
 	// get (user|page) popover
 	$profile = $user->popover($_GET['uid'], $_GET['type']);
+	// echo '<pre>'; print_r($profile); die;
 	if($profile) {
 		/* assign variables */
 		$smarty->assign('type', $_GET['type']);
