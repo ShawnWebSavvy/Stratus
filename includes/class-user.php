@@ -7473,22 +7473,33 @@ class User
         //Redis Block
         	$redisObject = new RedisClass();
 
-                //for author post  
-                     $redisAuthorKey = 'user-' . $post['author_id'] . '-posts';
-                     fetchAndSetDataOnPostReaction($system, $this,$redisObject,$redisAuthorKey);
-                     $authorTimelineData = $redisObject->getValueFromKey($redisAuthorKey);
+            //update current logged in user response
+                  $redisKey = 'user-' . $this->_data['user_id'] . '-posts';
+                     fetchAndSetDataOnPostReaction($system, $this,$redisObject,$redisKey);
+                     $authorTimelineData = $redisObject->getValueFromKey($redisKey);
                      $decodedAuthorData = json_decode($authorTimelineData, TRUE);
-                     $newUpdate =  searchSubArray($decodedAuthorData, 'post_id', $poll['post_id']);
 
-                      $search_res = array_search($option_id, array_column($newUpdate['poll']['options'], 'option_id'));
-                     if($search_res!==false){
-                                        $newUpdate['poll']['options'][$search_res]['checked'] = false;
-                                         $newUpdate['poll']['options'][$search_res]['votes'] = (string) $newUpdate['poll']['options'][$search_res]['votes'] + 1;
+                    //  $newUpdate =  searchSubArray($decodedAuthorData, 'post_id', $poll['post_id']);
+
+                    //    $search_res = array_search($option_id, array_column($newUpdate['poll']['options'], 'option_id'));
+                    // //    $check_res = array_search($checked_id, array_column($newUpdate['poll']['options'], 'option_id'));
+                    //  if($search_res!==false){
+                    //                     $newUpdate['poll']['options'][$search_res]['checked'] = false;
+                    //                     //  $newUpdate['poll']['options'][$search_res]['votes'] = (string) $newUpdate['poll']['options'][$search_res]['votes'] + 1;
+                    //                     //   $newUpdate['poll']['options'][$check_res]['votes'] = ($newUpdate['poll']['options'][$check_res]['votes'] == 0) ? 0 : (string) $newUpdate['poll']['options'][$check_res]['votes'] - 1 ;
                                                                        
-                                }   
-                    //  echo  "<pre>";
-                    // print_r($newUpdate); die("HERER");
-              $ids = $this->get_friends_ids($post['author_id']);
+                    //             }   
+                    //   echo  "<pre>";
+                    //  print_r($newUpdate); die("HERER");
+               $ids = $this->get_friends_ids($post['author_id']);
+               if (($key = array_search($this->_data['user_id'], $ids)) !== false) {
+                    unset($ids[$key]);
+                }
+               if($post['author_id'] !== $this->_data['user_id']){
+                   array_push($ids , $post['author_id'] );
+               }
+
+              // print_r($ids); die;
         
               foreach($ids as $id){
                   $userKeys = 'user-' .$id. '-posts';
@@ -7496,8 +7507,18 @@ class User
                     if($isUserExist == true){
                             $getPostsFromRedis = $redisObject->getValueFromKey($userKeys);
                             $jsonValuesRes = json_decode($getPostsFromRedis, true);
+                            $search_vals =  searchSubArray($jsonValuesRes, 'post_id', $poll['post_id']);
+                           // print_r($search_vals); die;
+                             $search_res = array_search($option_id, array_column($search_vals['poll']['options'], 'option_id'));
+                             if($search_res!==false){
+                                  $search_vals['poll']['options'][$search_res]['votes'] = (string) $search_vals['poll']['options'][$search_res]['votes'] + 1;
+                              
+                             }
+
                             $new_vals =  removeElementWithValue($jsonValuesRes, 'post_id', $poll['post_id']);
-                            array_unshift($new_vals,$newUpdate);
+                            //array_unshift($new_vals,$newUpdate);
+                            array_unshift($new_vals,$search_vals);
+
 
                             $jsonEncodedVals = json_encode($new_vals);
                             $redisObject->setValueWithRedis($userKeys, $jsonEncodedVals);
@@ -7544,20 +7565,63 @@ class User
         }
 
         
-                //for current user post
-                     $redisPostKey = 'user-' . $this->_data['user_id'] . '-posts';
-                     $redisObject = new RedisClass();
-                     fetchAndSetDataOnPostReaction($system, $this,$redisObject,$redisPostKey);
-                     //profile post
-                     $redisTimelinekey = 'profile-posts-'.$this->_data['user_id'];
-                     fetchAndSetDataOnPostReaction($system, $this,$redisObject,$redisTimelinekey);
-                //for author post  
-                     $redisPostKey = 'user-' . $post['author_id'] . '-posts';
-                     $redisObject = new RedisClass();
-                     fetchAndSetDataOnPostReaction($system, $this,$redisObject,$redisPostKey);
-                     //profile post
-                     $redisTimelinekey = 'profile-posts-'.$post['author_id'];
-                     fetchAndSetDataOnPostReaction($system, $this,$redisObject,$redisTimelinekey);
+                               //Redis Block
+        	// $redisObject = new RedisClass();
+
+            // //update current logged in user response
+            //       $redisKey = 'user-' . $this->_data['user_id'] . '-posts';
+            //          fetchAndSetDataOnPostReaction($system, $this,$redisObject,$redisKey);
+            //          $authorTimelineData = $redisObject->getValueFromKey($redisKey);
+            //          $decodedAuthorData = json_decode($authorTimelineData, TRUE);
+
+            //         //  $newUpdate =  searchSubArray($decodedAuthorData, 'post_id', $poll['post_id']);
+
+            //         //    $search_res = array_search($option_id, array_column($newUpdate['poll']['options'], 'option_id'));
+            //         // //    $check_res = array_search($checked_id, array_column($newUpdate['poll']['options'], 'option_id'));
+            //         //  if($search_res!==false){
+            //         //                     $newUpdate['poll']['options'][$search_res]['checked'] = false;
+            //         //                     //  $newUpdate['poll']['options'][$search_res]['votes'] = (string) $newUpdate['poll']['options'][$search_res]['votes'] + 1;
+            //         //                     //   $newUpdate['poll']['options'][$check_res]['votes'] = ($newUpdate['poll']['options'][$check_res]['votes'] == 0) ? 0 : (string) $newUpdate['poll']['options'][$check_res]['votes'] - 1 ;
+                                                                       
+            //         //             }   
+            //         //   echo  "<pre>";
+            //         //  print_r($newUpdate); die("HERER");
+            //    $ids = $this->get_friends_ids($post['author_id']);
+            //    if (($key = array_search($this->_data['user_id'], $ids)) !== false) {
+            //         unset($ids[$key]);
+            //     }
+            //    if($post['author_id'] !== $this->_data['user_id']){
+            //        array_push($ids , $post['author_id'] );
+            //    }
+
+            //   // print_r($ids); die;
+        
+            //   foreach($ids as $id){
+            //       $userKeys = 'user-' .$id. '-posts';
+            //       $isUserExist = $redisObject->isRedisKeyExist($userKeys);
+            //         if($isUserExist == true){
+            //                 $getPostsFromRedis = $redisObject->getValueFromKey($userKeys);
+            //                 $jsonValuesRes = json_decode($getPostsFromRedis, true);
+            //                 $search_vals =  searchSubArray($jsonValuesRes, 'post_id', $poll['post_id']);
+            //                // print_r($search_vals); die;
+            //                  $search_res = array_search($option_id, array_column($search_vals['poll']['options'], 'option_id'));
+            //                  if($search_res!==false){
+            //                       $search_vals['poll']['options'][$search_res]['votes'] = (string) $search_vals['poll']['options'][$search_res]['votes'] + 1;
+                              
+            //                  }
+
+            //                 $new_vals =  removeElementWithValue($jsonValuesRes, 'post_id', $poll['post_id']);
+            //                 //array_unshift($new_vals,$newUpdate);
+            //                 array_unshift($new_vals,$search_res);
+
+
+            //                 $jsonEncodedVals = json_encode($new_vals);
+            //                 $redisObject->setValueWithRedis($userKeys, $jsonEncodedVals);
+            //         }
+            
+            //   }
+
+           //Redis Block
     }
 
 
@@ -7592,34 +7656,26 @@ class User
             /* insert new vote */
             $db->query(sprintf("INSERT INTO posts_polls_options_users (user_id, poll_id, option_id) VALUES (%s, %s, %s)", secure($this->_data['user_id'], 'int'), secure($poll['poll_id'], 'int'), secure($option_id, 'int'))) or _error("SQL_ERROR_THROWEN");
         }
-        //Redis Block
+
+                            //Redis Block
         	$redisObject = new RedisClass();
 
             //update current logged in user response
                   $redisKey = 'user-' . $this->_data['user_id'] . '-posts';
                      fetchAndSetDataOnPostReaction($system, $this,$redisObject,$redisKey);
-                     $authorTimelineData = $redisObject->getValueFromKey($redisKey);
-                     $decodedAuthorData = json_decode($authorTimelineData, TRUE);
+                    // $authorTimelineData = $redisObject->getValueFromKey($redisKey);
+                    // $decodedAuthorData = json_decode($authorTimelineData, TRUE);
 
-                    //     echo "<pre>";
-                    //  print_r($decodedAuthorData); die;
+                    //  $newUpdate =  searchSubArray($decodedAuthorData, 'post_id', $poll['post_id']);
 
-                //update response for author & its friends
-
-                    //  $redisAuthorKey = 'user-' . $post['author_id'] . '-posts';
-                    //  fetchAndSetDataOnPostReaction($system, $this,$redisObject,$redisAuthorKey);
-                    //  $authorTimelineData = $redisObject->getValueFromKey($redisAuthorKey);
-                    //  $decodedAuthorData = json_decode($authorTimelineData, TRUE);
-                     $newUpdate =  searchSubArray($decodedAuthorData, 'post_id', $poll['post_id']);
-
-                       $search_res = array_search($option_id, array_column($newUpdate['poll']['options'], 'option_id'));
-                    //    $check_res = array_search($checked_id, array_column($newUpdate['poll']['options'], 'option_id'));
-                     if($search_res!==false){
-                                        $newUpdate['poll']['options'][$search_res]['checked'] = false;
-                                         $newUpdate['poll']['options'][$search_res]['votes'] = (string) $newUpdate['poll']['options'][$search_res]['votes'] + 1;
-                                        //   $newUpdate['poll']['options'][$check_res]['votes'] = ($newUpdate['poll']['options'][$check_res]['votes'] == 0) ? 0 : (string) $newUpdate['poll']['options'][$check_res]['votes'] - 1 ;
+                    //    $search_res = array_search($option_id, array_column($newUpdate['poll']['options'], 'option_id'));
+                    // //    $check_res = array_search($checked_id, array_column($newUpdate['poll']['options'], 'option_id'));
+                    //  if($search_res!==false){
+                    //                     $newUpdate['poll']['options'][$search_res]['checked'] = false;
+                    //                     //  $newUpdate['poll']['options'][$search_res]['votes'] = (string) $newUpdate['poll']['options'][$search_res]['votes'] + 1;
+                    //                     //   $newUpdate['poll']['options'][$check_res]['votes'] = ($newUpdate['poll']['options'][$check_res]['votes'] == 0) ? 0 : (string) $newUpdate['poll']['options'][$check_res]['votes'] - 1 ;
                                                                        
-                                }   
+                    //             }   
                     //   echo  "<pre>";
                     //  print_r($newUpdate); die("HERER");
                $ids = $this->get_friends_ids($post['author_id']);
@@ -7638,8 +7694,25 @@ class User
                     if($isUserExist == true){
                             $getPostsFromRedis = $redisObject->getValueFromKey($userKeys);
                             $jsonValuesRes = json_decode($getPostsFromRedis, true);
+                            $search_vals =  searchSubArray($jsonValuesRes, 'post_id', $poll['post_id']);
+                            //print_r($search_vals); die;
+                             $search_res = array_search($option_id, array_column($search_vals['poll']['options'], 'option_id'));
+                             if($search_res!==false){
+                                  $search_vals['poll']['options'][$search_res]['votes'] = (string) $search_vals['poll']['options'][$search_res]['votes'] + 1;
+                                //    $search_vals['poll']['options'][$checked_id]['votes'] = (string) $search_vals['poll']['options'][$search_res]['votes'] + 1;
+                              
+                             }
+                              $checked_res = array_search($checked_id, array_column($search_vals['poll']['options'], 'option_id'));
+                               if($checked_res!==false){
+                                  $search_vals['poll']['options'][$checked_res]['votes'] = (string) $search_vals['poll']['options'][$checked_res]['votes'] -1 ;
+                                //    $search_vals['poll']['options'][$checked_id]['votes'] = (string) $search_vals['poll']['options'][$search_res]['votes'] + 1;
+                              
+                             }
+
                             $new_vals =  removeElementWithValue($jsonValuesRes, 'post_id', $poll['post_id']);
-                            array_unshift($new_vals,$newUpdate);
+                            //array_unshift($new_vals,$newUpdate);
+                            array_unshift($new_vals,$search_vals);
+
 
                             $jsonEncodedVals = json_encode($new_vals);
                             $redisObject->setValueWithRedis($userKeys, $jsonEncodedVals);
