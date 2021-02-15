@@ -1,5 +1,7 @@
 <?php
-
+// ini_set('display_errors', 1);
+// ini_set('display_startup_errors', 1);
+// error_reporting(E_ALL);
 /**
  * index
  *
@@ -28,7 +30,16 @@ try {
 		$smarty->assign('custom_fields', $user->get_custom_fields());
 	} else {
 		$redisObject = new RedisClass();
-
+		// $array = $redisObject->getStoredKeys();
+		// if ($user->_data['user_id'] == 50) {
+		// 	echo "<pre>";
+		// 	print_r($array);
+		// 	foreach ($array as $key) {
+		// 		$redisObject->deleteValueFromKey($key);
+		// 	}
+		// 	die;
+		// }
+		// die;
 		// user access
 		user_access();
 		$smarty->assign('active_page', 'LocalHub');
@@ -62,7 +73,7 @@ try {
 
 				$posts = fetchPostDataForTimeline($user->_data['user_id'], $user, $redisObject, $system);
 
-				//	echo "<pre>";print_r($posts);die;
+				//echo "<pre>";print_r($posts);die;
 				/* get user pages */
 				$pages = $user->get_pages(array('managed' => true, 'user_id' => $user->_data['user_id']));
 				$smarty->assign('pages', $pages);
