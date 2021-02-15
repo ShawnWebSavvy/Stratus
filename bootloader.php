@@ -22,13 +22,11 @@ if ($user->_logged_in) {
     $user->_data['friend_requests'] = $user->get_friend_requests();
 
     /* all_blogs_categories */
-
-    $blogs_categories = $user->get_blogs_categories();
+    $blogs_categories = get_blogs_categories($user);
     $smarty->assign('all_blogs_categories', $blogs_categories);
+
     /* get All friend */
-
-    $user->_data['all_friends'] = $user->get_friends($user->_data['user_id'], $offset = 0, $get_all = true);
-
+    $user->_data['all_friends'] = getAllFriends($user, $offset = 0, $get_all = true);
 
     /* get search log */
     $user->_data['search_log'] = $user->get_search_log();
