@@ -1,11 +1,12 @@
 {if !$standalone}<div class="carsds" data-id="{$post['post_id']}" post-type="{$post['post_type']}">{/if}
     <!-- post -->
     {if $subactive_page === "profile"}
-    <div class='post{if $_get == " posts_profile" && $user->_data[' user_id']==$post['author_id'] && ($post['is_hidden']
-        || $post['is_anonymous'])} is_hidden{/if}{if ($post['in_group'] && !$post['group_approved']) OR
-        ($post['in_event'] && !$post['event_approved'])}pending{/if} {$post['status_post']}" data-id="{$post['post_id']}'>
-        {else}
-        <div class=" post{if $_get==" posts_profile" && $user->_data['user_id'] == $post['author_id'] &&
+        <div class="post{if $_get == " posts_profile" && $user->_data['user_id'] == $post['author_id'] &&
+    ($post['is_hidden'] || $post['is_anonymous'])} is_hidden{/if}{if ($post['in_group'] && !$post['group_approved'])
+    OR ($post['in_event'] && !$post['event_approved'])}pending{/if} {$post['status_post']}"
+    data-id="{$post['post_id']}">
+    {else}
+    <div class="post{if $_get == " posts_profile" && $user->_data['user_id'] == $post['author_id'] &&
         ($post['is_hidden'] || $post['is_anonymous'])} is_hidden{/if}{if $post['boosted'] == "1"} boosted{/if}{if
         $post['boosted'] == "0"} non_promoted{/if}{if ($post['in_group'] && !$post['group_approved']) OR
         ($post['in_event'] && !$post['event_approved'])}pending{/if} {$post['status_post']}"

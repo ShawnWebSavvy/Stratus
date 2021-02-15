@@ -1240,7 +1240,6 @@ $(function () {
                         function (response) {
                             $("#modal").modal("hide");
                             bricklayer.redraw();
-
                             // !response.refresh || ("profile" != current_page && "page" != current_page && "index" != current_page && "group" != current_page && "event" != current_page)
                             //     ? response.callback && eval(response.callback)
                             //     : location.reload();
