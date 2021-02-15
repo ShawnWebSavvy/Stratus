@@ -9590,4 +9590,104 @@ class UserGlobal
         }
         return $events;
     }
+    /**
+     * disable_post_comments
+     *
+     * @param integer $post_id
+     * @return void
+     */
+    public function disable_post_comments($post_id)
+    {
+        global $db;
+        /* (check|get) post */
+        $post = $this->global_check_post($post_id);
+        if (!$post) {
+            _error(403);
+        }
+        /* check if viewer can edit post */
+        if (!$post['manage_post']) {
+            _error(403);
+        }
+        /* trun off post commenting */
+        $db->query(sprintf("UPDATE global_posts SET comments_disabled = '1' WHERE post_id = %s", secure($post_id, 'int'))) or _error("SQL_ERROR_THROWEN");
+    }
+
+
+    /**
+     * enable_post_comments
+     *
+     * @param integer $post_id
+     * @return void
+     */
+    public function enable_post_comments($post_id)
+    {
+        global $db;
+        /* (check|get) post */
+        $post = $this->global_check_post($post_id);
+        if (!$post) {
+            _error(403);
+        }
+        /* check if viewer can edit post */
+        if (!$post['manage_post']) {
+            _error(403);
+        }
+
+        /* trun on post commenting */
+        $db->query(sprintf("UPDATE global_posts SET comments_disabled = '0' WHERE post_id = %s", secure($post_id, 'int'))) or _error("SQL_ERROR_THROWEN");
+    }
+
+       /**
+     * edit_comment
+     *
+     * @param integer $comment_id
+     * @param string $message
+     * @param string $photo
+     * @return array
+     */
+    public function global_edit_comment($comment_id, $message, $photo)
+    {
+        global $db, $system;
+        /* (check|get) comment */
+        $comment = $this->global_get_comment($comment_id);
+        if (!$comment) {
+            _error(403);
+        }
+        /* check if viewer can manage comment [Edit] */
+        $comment['edit_comment'] = false;
+        if ($this->_logged_in) {
+            /* viewer is (admins|moderators)] */
+            if ($this->_data['user_group'] < 3) {
+                $comment['edit_comment'] = true;
+            }
+            /* viewer is the author of comment */
+            if ($this->_data['user_id'] == $comment['author_id']) {
+                $comment['edit_comment'] = true;
+            }
+        }
+        if (!$comment['edit_comment']) {
+            _error(400);
+        }
+        /* check post max length */
+        if ($system['max_comment_length'] > 0 && $this->_data['user_group'] >= 3) {
+            if (strlen($message) >= $system['max_comment_length']) {
+                modal("MESSAGE", __("Text Length Limit Reached"), __("Your message characters length is over the allowed limit") . " (" . $system['max_comment_length'] . " " . __("Characters") . ")");
+            }
+        }
+        /* update comment */
+        $comment['text'] = $message;
+        $comment['image'] = (!is_empty($comment['image'])) ? $comment['image'] : $photo;
+        $db->query(sprintf("UPDATE global_posts_comments SET text = %s, image = %s WHERE comment_id = %s", secure($comment['text']), secure($comment['image']), secure($comment_id, 'int'))) or _error("SQL_ERROR_THROWEN");
+        /* post mention notifications if any */
+        if ($comment['node_type'] == "comment") {
+            $this->post_mentions($comment['text'], $comment['parent_comment']['node_id'], "reply_" . $comment['parent_comment']['node_type'], 'comment_' . $comment['comment_id'], array($comment['post']['author_id'], $comment['parent_comment']['author_id']));
+        } else {
+            $this->post_mentions($comment['text'], $comment['node_id'], "comment_" . $comment['node_type'], 'comment_' . $comment['comment_id'], array($comment['post']['author_id']));
+        }
+        /* parse text */
+        $comment['text_plain'] = htmlentities($comment['text'], ENT_QUOTES, 'utf-8');
+        $comment['text'] = $this->_parse(["text" => $comment['text_plain']]);
+        /* return */
+        return $comment;
+    }
+
 }
