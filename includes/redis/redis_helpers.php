@@ -264,7 +264,7 @@ function fetchAndSetDataOnPostReaction($system, $userObj, $redisObject, $redisPo
         $postsdata = array_merge($boosted_posts, $postsdata);
     }
     $jsonValue = json_encode($postsdata);
-    // $redisObject->setValueWithRedis($redisPostKey, $jsonValue);
+     $redisObject->setValueWithRedis($redisPostKey, $jsonValue);
 }
 
 function getFeelings($user_id, $redisObject)
