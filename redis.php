@@ -90,4 +90,17 @@ class RedisClass
             echo $e->getMessage();
         }
     }
+
+
+
+      function scanValues($cursor, $pattern)
+    {
+        try {
+            $redisObj = $this->redis;
+            // setting the value in redis
+           return  $redisObj->scan($cursor, 'match', $pattern);
+        } catch (Exception $e) {
+            echo $e->getMessage();
+        }
+    }
 }

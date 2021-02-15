@@ -113,7 +113,9 @@ function fetchPostDataForTimeline($user_id, $userObj, $redisObject, $system)
 {
     $redisPostKey = 'user-' . $user_id . '-posts';
     $isKeyExistOnRedis = $redisObject->isRedisKeyExist($redisPostKey);
-    //if ($isKeyExistOnRedis == false) {
+
+  //  print_r($isKeyExistOnRedis); die;
+    if ($isKeyExistOnRedis == false) {
     /* get user pages */
     $boosted_posts = [];
     // get boosted post
@@ -122,23 +124,24 @@ function fetchPostDataForTimeline($user_id, $userObj, $redisObject, $system)
     }
     // get posts (newsfeed)
     $postsdata = $userObj->get_posts_all();
-    // print_r($postsdata); die;
+ 
 
     if (!empty($boosted_posts)) {
         $postsdata = array_merge($boosted_posts, $postsdata);
     }
     $jsonValue = json_encode($postsdata);
-    // $redisObject->setValueWithRedis($redisPostKey, $jsonValue);
+     $redisObject->setValueWithRedis($redisPostKey, $jsonValue);
     $getPostsFromRedis = $redisObject->getValueFromKey($redisPostKey);
     $jsonValue_ = json_decode($getPostsFromRedis, true);
     $posts = $jsonValue_;
-    // } else {
-    //     $getPostsFromRedis = $redisObject->getValueFromKey($redisPostKey);
-    //     $jsonValue = json_decode($getPostsFromRedis, true);
-    //     $posts = $jsonValue;
-    // }
+    } else {
+        $getPostsFromRedis = $redisObject->getValueFromKey($redisPostKey);
+        $jsonValue = json_decode($getPostsFromRedis, true);
+        $posts = $jsonValue;
+    }
 
-    return $postsdata;
+
+    return $posts;
 }
 
 function cachedUserData($db, $system, $user_id, $user_token)
@@ -431,4 +434,41 @@ function usersProfilePhotosSection($user_id, $user, $redisObject, $type)
     }
 
     return $data;
+}
+
+
+
+function quick_find_a(&$array, $property, $value_to_find, &$first_index) {
+    $l = 0;
+    $r = count($array) - 1;
+    $m = 0;
+    while ($l <= $r) {
+        $m = floor(($l + $r) / 2);
+        if ($array[$m]->{$property} < $value_to_find) {
+            $l = $m + 1;
+        } else if ($array[$m]->{$property} > $value_to_find) {
+            $r = $m - 1;
+        } else {
+            $first_index = $m;
+            return $array[$m];
+        }
+    }
+    return FALSE;
+}
+
+function searchSubArray($array, $key, $value) {   
+    foreach ($array as $subarray){  
+        if (isset($subarray[$key]) && $subarray[$key] == $value)
+          return $subarray;       
+    } 
+}
+
+function removeElementWithValue($array, $key, $value){
+     foreach($array as $subKey => $subArray){
+          if($subArray[$key] == $value){
+               unset($array[$subKey]);
+          }
+     }
+     $array = array_values($array);
+     return $array;
 }

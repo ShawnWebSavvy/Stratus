@@ -6554,6 +6554,7 @@ class User
         $this->delete_hashtags($post_id);
         /* delete post */
         $refresh = false;
+
         $db->query(sprintf("DELETE FROM notifications WHERE node_url = %s", secure($post_id, 'int'))) or _error("SQL_ERROR_THROWEN");
         $db->query(sprintf("DELETE FROM posts WHERE post_id = %s", secure($post_id, 'int'))) or _error("SQL_ERROR_THROWEN");
         switch ($post['post_type']) {
@@ -6715,28 +6716,29 @@ class User
             $this->delete_notification($post['event_admin'], 'event_post_pending', $post['event_title'], $post['event_id'] . "-[guid=]" . $post['post_id']);
         }
 
-            //Redis block
-                $redisPostKey = 'user-' . $this->_data['user_id'] . '-posts';
+        
+                    //Redis block
+            $redisPostKey = 'user-' . $this->_data['user_id'] . '-posts';
         	$redisObject = new RedisClass();
 			 $isKeyExist = $redisObject->isRedisKeyExist($redisPostKey);
             if($isKeyExist == true){
-				$new_response = [];
-                $new_data =[];
-				//$jsonEncData = json_encode($posts);
-			    	$getPostsFromRedis = $redisObject->getValueFromKey($redisPostKey);
-                	$jsonValuesRes = json_decode($getPostsFromRedis, true);
-
-                  foreach ($jsonValuesRes as $key => $val)
-                    {
-                        if ($val["post_id"] !== $post_id) {
-                            $new_data[] = $val;
-                        }                      
+              $ids = $this->get_friends_ids($this->_data['user_id']);
+              array_push($ids , $this->_data['user_id'] );
+              foreach($ids as $id){
+                  $userKeys = 'user-' .$id. '-posts';
+                  $isUserExist = $redisObject->isRedisKeyExist($userKeys);
+                    if($isUserExist == true){
+                            $getPostsFromRedis = $redisObject->getValueFromKey($userKeys);
+                            $jsonValuesRes = json_decode($getPostsFromRedis, true);
+                            $new_vals =  removeElementWithValue($jsonValuesRes, 'post_id', $post_id);
+                            $jsonEncodedVals = json_encode($new_vals);
+                            $redisObject->setValueWithRedis($userKeys, $jsonEncodedVals);
                     }
-					 $new_response = json_encode($new_data);
-				     $redisObject->setValueWithRedis($redisPostKey, $new_response);
+            
+              }
+
 			}
              //Redis block
-
         return $refresh;
     }
 
@@ -7440,6 +7442,45 @@ class User
             _error(403);
         }
         /* insert user vote */
+
+
+
+            $redisPostKey = 'user-' . $this->_data['user_id'] . '-posts';
+        	$redisObject = new RedisClass();
+			 $isKeyExist = $redisObject->isRedisKeyExist($redisPostKey);
+            if($isKeyExist == true){
+                //for author post  
+                     $redisAuthorKey = 'user-' . $post['author_id'] . '-posts';
+                     fetchAndSetDataOnPostReaction($system, $this,$redisObject,$redisAuthorKey);
+                     $authorTimelineData = $redisObject->getValueFromKey($redisAuthorKey);
+                     $decodedAuthorData = json_decode($authorTimelineData, TRUE);
+
+                  //    print_r($decodedAuthorData);  
+                    $newUpdate =  searchSubArray($decodedAuthorData, 'post_id', $poll['post_id']);
+                     echo  "<pre>";
+                    print_r($newUpdate); die("HERER");
+              $ids = $this->get_friends_ids($post['author_id']);
+            //  array_push($ids , $post['author_id'] );
+              foreach($ids as $id){
+                  $userKeys = 'user-' .$id. '-posts';
+                  $isUserExist = $redisObject->isRedisKeyExist($userKeys);
+                    if($isUserExist == true){
+                            $getPostsFromRedis = $redisObject->getValueFromKey($userKeys);
+                            $jsonValuesRes = json_decode($getPostsFromRedis, true);
+                            $new_vals =  removeElementWithValue($jsonValuesRes, 'post_id', $poll['post_id']);
+                            array_unshift($new_vals,$newUpdate);
+
+                            //$jsonEncodedVals = json_encode($new_vals);
+                            //$redisObject->setValueWithRedis($userKeys, $jsonEncodedVals);
+                    }
+            
+              }
+
+			}
+
+
+        die;
+        
         $vote = $db->query(sprintf("INSERT INTO posts_polls_options_users (user_id, poll_id, option_id) VALUES (%s, %s, %s)", secure($this->_data['user_id'], 'int'), secure($poll['poll_id'], 'int'), secure($option_id, 'int')));
         if ($vote) {
             /* update poll votes */

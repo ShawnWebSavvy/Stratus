@@ -73,7 +73,7 @@ try {
 
 				$posts = fetchPostDataForTimeline($user->_data['user_id'], $user, $redisObject, $system);
 
-				//	echo "<pre>";print_r($posts);die;
+					//echo "<pre>";print_r($posts);die;
 				/* get user pages */
 				$pages = $user->get_pages(array('managed' => true, 'user_id' => $user->_data['user_id']));
 				$smarty->assign('pages', $pages);
