@@ -101,7 +101,7 @@ function data_heartbeat() {
         if (data["get"] === "posts_profile") {
             data["custom_pinned"] = "custom_pinned";
             data["last_post_boosted"] = posts_stream.find(".unpinned_post").first().data("id") || 0;
-            
+
             let last_id_column = document.getElementsByClassName('bricklayer-column')[0];
             // data["last_post"] = posts_stream.find(".unpinned_post").eq(0).data("id") || 0;
             data["last_post"] = last_id_column.getElementsByClassName('carsds')[0].dataset.id || 0;
@@ -192,7 +192,7 @@ function data_heartbeat() {
                         bricklayer.redraw();
                     }
                 }
-                response.posts && (posts_stream.find("ul:first").prepend(response.posts), setTimeout(photo_grid(), 200)), setTimeout("data_heartbeat();", min_data_heartbeat);
+                response.posts && (posts_stream.find("ul:first").prepend(), setTimeout(photo_grid(), 200)), setTimeout("data_heartbeat();", min_data_heartbeat);
             }
         },
         "json"

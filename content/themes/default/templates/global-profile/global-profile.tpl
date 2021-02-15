@@ -74,12 +74,12 @@
                      <div class="profile_avatar_img">
                         <div class="profile-avatar-wrapper">
                            <!--<img {if $profile['user_picture_id']} {if $user->_logged_in && $profile['user_picture_lightbox']}class="js_lightbox"{/if} data-id="{$profile['user_picture_id']}" data-context="album" data-image="{$profile['user_picture_full']}" {elseif !$profile['user_picture_default']} class="js_lightbox-nodata" data-image="{$profile['user_picture']}" {/if}  src="{$profile['user_picture']}" alt="{$profile['user_firstname']} {$profile['user_lastname']}"> -->
-                           <img {if $profile['global_user_picture_id']} {if $user->_logged_in &&
+                              <img {if $profile['global_user_picture_id']} {if $user->_logged_in &&
                            $profile['user_picture_lightbox']}class="js_lightbox"{/if}
                            data-id="{$profile['global_user_picture_id']}" data-context="album"
                            data-image="{$profile['global_user_picture']}" {elseif !$profile['user_picture_default']}
                            class="js_lightbox-nodata" data-image="{$profile['user_picture']}" {/if}
-                           src="{$system_url}/{$profile['global_user_picture']}" alt="{$profile['user_firstname']}
+                           src="{$profile['global_user_picture']}" alt="{$profile['user_firstname']}
                            {$profile['user_lastname']}">
                            {if $profile['user_id'] == $user->_data['user_id']}
                            <!-- buttons -->

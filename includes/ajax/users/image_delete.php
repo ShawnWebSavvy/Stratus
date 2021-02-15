@@ -136,12 +136,14 @@ try {
 			_error(400);
 			break;
 	}
-
+    $redisObject = new RedisClass();
+    $redisPostKey = 'user-' . $user->_data['user_id'];
+    $userClassObject = new userClass();
+    $redisObject->deleteValueFromKey($redisPostKey);
+    cachedUserData($db, $system, $user->_data['user_id'], $user->_data['active_session_token']);
 	// return & exit
 	return_json($return);
 
 } catch (Exception $e) {
 	modal("ERROR", __("Error"), $e->getMessage());
 }
-
-?>

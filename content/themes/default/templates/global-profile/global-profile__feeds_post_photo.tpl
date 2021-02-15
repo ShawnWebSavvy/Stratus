@@ -105,7 +105,7 @@
         <span class="float-right">
             <!-- comments -->
             <span class="pointer js_comments-toggle new" id="stratus_globalhub_{$post['post_id']}">
-                <i class="fa fa-comments"></i> {$photo['comments']} {__("Comments")}
+                <i class="fa fa-comments"></i> {$post['comments']} {__("Comments")}
             </span>
             <!-- comments -->
 
