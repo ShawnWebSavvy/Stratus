@@ -4,6 +4,7 @@
 require('../../bootstrap.php');
 
 $picture = $_GET['picture'];
+$pictureFull = $_GET['picture_full'];
 $type = $_GET['type'];
 
 //$checkImage = '404';
@@ -72,7 +73,26 @@ if ($picture) {
 }
 
 if ($checkImage != '200'||!$picture) {
-    $picture = set_defoult_img($type);
+
+
+    if ($pictureFull != "" || $pictureFull != "https://cdn1.stratus.co/uploads/") {
+        if (isset($_GET['type_url'])) {
+            $picture = $pictureFull;
+        } else {
+            $picture = $system['system_uploads'] . '/' . $pictureFull;
+        }
+    } else {
+        $picture = set_defoult_img($type);
+    }
+
+
+    $checkImage = image_exist($picture);
+
+    if ($checkImage != '200') {
+        $picture = set_defoult_img($type);
+    }
+
+  
 }
 
 

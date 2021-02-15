@@ -4652,6 +4652,8 @@ class User
             $post['user_id'] = $_page['page_id'];
             $post['user_type'] = "page";
             $post['post_author_picture'] = get_picture($_page['page_picture'], "page");
+
+            
             $post['post_author_url'] = $system['system_url'] . '/pages/' . $_page['page_name'];
             $post['post_author_name'] = $_page['page_title'];
             $post['post_author_verified'] = $this->_data['page_verified'];
@@ -5966,6 +5968,9 @@ class User
             $me = $this->_data['user_id'];
             $where_query .= "(posts.user_id = $me AND posts.boosted = '0' AND posts.user_type = 'user')";
             /* get posts from friends still followed */
+
+            // var_dump($this->_data['followings_ids']); die;
+
             $friends_ids = array_intersect($this->_data['friends_ids'], $this->_data['followings_ids']);
             //  echo "<pre>";
            //  print_r($friends_ids); die;
@@ -6265,6 +6270,9 @@ class User
         } else {
             /* page */
             $post['post_author_picture'] = get_picture($post['page_picture'], "page");
+
+            $post['post_author_picture'] = $system['system_url'] . '/includes/wallet-api/get-picture-api.php?picture=' .  $post['post_author_picture'] .'&picture_full=&type=page&type_url=1';
+
             $post['post_author_url'] = $system['system_url'] . '/pages/' . $post['page_name'];
             $post['post_author_name'] = $post['page_title'];
             $post['post_author_verified'] = $post['page_verified'];
@@ -9263,20 +9271,20 @@ class User
         $offset *= $results;
         /* get suggested pages */
         if ($promoted) {
-            $get_pages = $db->query(sprintf("SELECT * FROM pages WHERE page_boosted = '1' ORDER BY RAND() LIMIT %s", $system['max_results'])) or _error("SQL_ERROR_THROWEN");
+            $get_pages = $db->query(sprintf("SELECT *, picture_photo.source as page_picture_full FROM pages LEFT JOIN posts_photos as picture_photo ON pages.page_picture_id = picture_photo.photo_id WHERE page_boosted = '1' ORDER BY RAND() LIMIT %s", $system['max_results'])) or _error("SQL_ERROR_THROWEN");
         } elseif ($suggested) {
             $pages_ids = $this->get_pages_ids();
             $random_statement = ($random) ? "ORDER BY RAND()" : "";
             if (count($pages_ids) > 0) {
                 /* make a list from liked pages */
                 $pages_list = implode(',', $pages_ids);
-                $get_pages = $db->query(sprintf("SELECT * FROM pages WHERE page_id NOT IN (%s) " . $random_statement . " LIMIT %s, %s", $pages_list, secure($offset, 'int', false), secure($results, 'int', false))) or _error("SQL_ERROR_THROWEN");
+                $get_pages = $db->query(sprintf("SELECT * , picture_photo.source as page_picture_full FROM pages LEFT JOIN posts_photos as picture_photo ON pages.page_picture_id = picture_photo.photo_id WHERE page_id NOT IN (%s) " . $random_statement . " LIMIT %s, %s", $pages_list, secure($offset, 'int', false), secure($results, 'int', false))) or _error("SQL_ERROR_THROWEN");
             } else {
-                $get_pages = $db->query(sprintf("SELECT * FROM pages " . $random_statement . " LIMIT %s, %s", secure($offset, 'int', false), secure($results, 'int', false))) or _error("SQL_ERROR_THROWEN");
+                $get_pages = $db->query(sprintf("SELECT * , picture_photo.source as page_picture_full FROM pages LEFT JOIN posts_photos as picture_photo ON pages.page_picture_id = picture_photo.photo_id " . $random_statement . " LIMIT %s, %s", secure($offset, 'int', false), secure($results, 'int', false))) or _error("SQL_ERROR_THROWEN");
             }
             /* get the "viewer" boosted pages */
         } elseif ($boosted) {
-            $get_pages = $db->query(sprintf("SELECT * FROM pages WHERE page_boosted = '1' AND page_boosted_by = %s LIMIT %s, %s", secure($this->_data['user_id'], 'int'), secure($offset, 'int', false), secure($results, 'int', false))) or _error("SQL_ERROR_THROWEN");
+            $get_pages = $db->query(sprintf("SELECT * , picture_photo.source as page_picture_full FROM pages LEFT JOIN posts_photos as picture_photo ON pages.page_picture_id = picture_photo.photo_id WHERE page_boosted = '1' AND page_boosted_by = %s LIMIT %s, %s", secure($this->_data['user_id'], 'int'), secure($offset, 'int', false), secure($results, 'int', false))) or _error("SQL_ERROR_THROWEN");
             /* get the "taget" all pages who admin */
         } elseif ($managed) {
             $get_pages = $db->query(sprintf("SELECT pages.* FROM pages_admins INNER JOIN pages ON pages_admins.page_id = pages.page_id WHERE pages_admins.user_id = %s ORDER BY page_id DESC", secure($user_id, 'int'))) or _error("SQL_ERROR_THROWEN");
@@ -9286,20 +9294,21 @@ class User
             /* get the "target" liked pages*/
         } else {
             /* get the target user's privacy */
-            $get_privacy = $db->query(sprintf("SELECT user_privacy_pages FROM users WHERE user_id = %s", secure($user_id, 'int'))) or _error("SQL_ERROR_THROWEN");
+            $get_privacy = $db->query(sprintf("SELECT user_privacy_pages FROM users  WHERE user_id = %s", secure($user_id, 'int'))) or _error("SQL_ERROR_THROWEN");
             $privacy = $get_privacy->fetch_assoc();
             /* check the target user's privacy  */
             if (!$this->check_privacy($privacy['user_privacy_pages'], $user_id)) {
                 return $pages;
             }
-            $get_pages = $db->query(sprintf("SELECT pages.* FROM pages INNER JOIN pages_likes ON pages.page_id = pages_likes.page_id WHERE pages_likes.user_id = %s LIMIT %s, %s", secure($user_id, 'int'), secure($offset, 'int', false), secure($results, 'int', false))) or _error("SQL_ERROR_THROWEN");
+            $get_pages = $db->query(sprintf("SELECT pages.* , picture_photo.source as page_picture_full FROM pages LEFT JOIN posts_photos as picture_photo ON pages.page_picture_id = picture_photo.photo_id INNER JOIN pages_likes ON pages.page_id = pages_likes.page_id WHERE pages_likes.user_id = %s LIMIT %s, %s", secure($user_id, 'int'), secure($offset, 'int', false), secure($results, 'int', false))) or _error("SQL_ERROR_THROWEN");
         }
         if ($get_pages->num_rows > 0) {
             while ($page = $get_pages->fetch_assoc()) {
                 $page['page_picture'] = get_picture($page['page_picture'], 'page');
 
-                
-                $page['page_picture'] = $system['system_url'] . '/includes/wallet-api/get-picture-api.php?picture=' . $page['page_picture'] . '&type=page';
+                $page['page_picture_full'] = ($page['page_picture_full']) ? $system['system_uploads'] . '/' . $page['page_picture_full'] : $page['page_picture_full'];
+
+                $page['page_picture'] = $system['system_url'] . '/includes/wallet-api/get-picture-api.php?picture=' . $page['page_picture'] .'&picture_full='.$page['page_picture_full']. '&type=page&type_url=1';
 
                 /* check if the viewer liked the page */
                 $page['i_like'] = $this->check_page_membership($this->_data['user_id'], $page['page_id']);
@@ -9807,6 +9816,8 @@ class User
         if ($get_groups->num_rows > 0) {
             while ($group = $get_groups->fetch_assoc()) {
                 $group['group_picture'] = get_picture($group['group_picture'], 'group');
+                $group['group_picture'] = $system['system_url'] . '/includes/wallet-api/get-picture-api.php?picture='.$group['group_picture'] .'&picture_full=&type=group&type_url=1';         
+
                 /* check if the viewer joined the group */
                 $group['i_joined'] = $this->check_group_membership($this->_data['user_id'], $group['group_id']);;
                 $groups[] = $group;
@@ -10336,6 +10347,9 @@ class User
         if ($get_events->num_rows > 0) {
             while ($event = $get_events->fetch_assoc()) {
                 $event['event_picture'] = get_picture($event['event_cover'], 'event');
+
+                $event['event_picture'] =  $system['system_url'] . '/includes/wallet-api/get-picture-api.php?picture=' .  $event['event_picture'] .'&picture_full=&type=page&type_url=1';
+
                 /* check if the viewer joined the event */
                 $event['i_joined'] = $this->check_event_membership($this->_data['user_id'], $event['event_id']);;
                 $events[] = $event;
