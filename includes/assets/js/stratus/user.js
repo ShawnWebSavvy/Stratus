@@ -230,8 +230,12 @@ function onimgTagclick(e) {
         '" type="video/mp4"><source src="' +
         s +
         '" type="video/webm"></video>'
-    ),
-        $("#hide_play_img" + a).hide(),
+    );
+
+        // $("#hide_play_img" + a).hide(),
+
+        $(e).closest('div').find(".play_video_icon").hide();
+
         $(t).hide();
 }
 (api["data/live"] = ajax_path + "data/live.php"),

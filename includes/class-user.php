@@ -1340,7 +1340,10 @@ class User
                 /* post new notification */
                 $this->post_notification(array('to_user_id' => $id, 'action' => 'friend_add', 'hub' => "LocalHub", 'node_url' => $this->_data['user_name']));
                 /* follow */
-                $this->_follow($id);
+
+                //add following table
+                // $this->_follow($id);
+
                 /*Update Users Profile in RDM */
                 $redisObject = new RedisClass();
                 $redisPostKey = 'user-' . $this->_data['user_id'];
