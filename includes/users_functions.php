@@ -1,8 +1,9 @@
-<?php 
+<?php
 
-class userClass {
+class userClass
+{
 
-        /**
+    /**
      * get_friends_ids
      *
      * @param integer $user_id
@@ -21,7 +22,7 @@ class userClass {
         return $friends;
     }
 
-      /**
+    /**
      * get_followings_ids
      *
      * @param integer $user_id
@@ -41,7 +42,7 @@ class userClass {
     }
 
 
-        /**
+    /**
      * get_friend_requests_ids
      *
      * @return array
@@ -60,7 +61,7 @@ class userClass {
     }
 
 
-        /**
+    /**
      * get_friend_requests_sent_ids
      *
      * @return array
@@ -79,7 +80,7 @@ class userClass {
     }
 
 
-        /* ------------------------------- */
+    /* ------------------------------- */
     /* Modules */
     /* ------------------------------- */
 
@@ -116,11 +117,4 @@ class userClass {
         }
         return false;
     }
-
-
-
-
-
 }
-
-?>
