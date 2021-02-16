@@ -48,7 +48,7 @@
     {if $page =='sign'}
     <link rel="stylesheet" href="{$system['system_uploads_assets']}/content/themes/default/css/bootstrap.min.css"  {if !$user->_logged_in}defer{/if}>
     <link rel="stylesheet" type='text/css'
-        href="{$system['system_uploads_assets']}/content/themes/default/css/login.css"  {if !$user->_logged_in}defer{/if}>
+        href="http://localhost/stratus/content/themes/default/css/login.css"  {if !$user->_logged_in}defer{/if}>
     <link rel="stylesheet" type='text/css'
         href="{$system['system_uploads_assets']}/content/themes/default/css/custom.css"  {if !$user->_logged_in}defer{/if}>
     <link rel="stylesheet" type='text/css'

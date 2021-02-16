@@ -288,8 +288,6 @@ $(function () {
     }
     async function _reply(element) {
         var today = Math.round((new Date()).getTime() / 1000);
-
-        console.log(today);
         await new Promise(r => setTimeout(r, 100));
         var _this = $(element);
         var comment = _this.parents(".comment");
@@ -771,7 +769,7 @@ $(function () {
                                 publisher.find(".publisher-slider").slideUp();
                                 publisher.find(".publisher-emojis").fadeOut();
                                 /* attache the new post */
-                                $(".js_posts_stream").find("ul:first").prepend(response.post);
+                                $(".js_posts_stream").find("ul:first").prepend();
                                 /* release the loading status */
                                 posts_stream.removeData("loading");
                                 /* rerun photo grid */

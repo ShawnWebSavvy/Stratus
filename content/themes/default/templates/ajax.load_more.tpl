@@ -90,7 +90,7 @@ $get == 'discover' }
 
 {elseif $get == 'friends'}
 {foreach $data as $_user}
-{include file='__feeds_user.tpl' _tpl="list" page="people" _connection="remove"}
+{include file='__feeds_user.tpl' _tpl="box" page="people" _connection="remove"}
 {/foreach}
 
 {elseif $get == 'followers' || $get == 'followings' || $get == 'page_invites' || $get == 'group_members' || $get ==
