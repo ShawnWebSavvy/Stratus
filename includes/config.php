@@ -4,7 +4,7 @@ define("DB_USER", "s2_stratu");
 define("DB_PASSWORD", "cs3gnMHw");
 define("DB_HOST", "10.1.0.16");
 define("DB_PORT", "3306");
-define("SYS_URL", "http://localhost/redis");
+define("SYS_URL", "http://localhost/stratus");
 define("API_BASE_URL", "https://ws.stage-apollo.xyz/api");
 define("DEBUGGING", true);
 define("DEFAULT_LOCALE", "en_us");
