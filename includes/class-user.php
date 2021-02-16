@@ -6763,6 +6763,24 @@ class User
                 }
             }
         }
+        $redisPostKey = 'profile-posts-' . $this->_data['user_id'];
+        $redisObject = new RedisClass();
+        $isKeyExist = $redisObject->isRedisKeyExist($redisPostKey);
+        if ($isKeyExist == true) {
+            $ids = $this->get_friends_ids($this->_data['user_id']);
+            array_push($ids, $this->_data['user_id']);
+            foreach ($ids as $id) {
+                $userKeys = 'profile-posts-' . $id;
+                $isUserExist = $redisObject->isRedisKeyExist($userKeys);
+                if ($isUserExist == true) {
+                    $getPostsFromRedis = $redisObject->getValueFromKey($userKeys);
+                    $jsonValuesRes = json_decode($getPostsFromRedis, true);
+                    $new_vals =  removeElementWithValue($jsonValuesRes, 'post_id', $post_id);
+                    $jsonEncodedVals = json_encode($new_vals);
+                    $redisObject->setValueWithRedis($userKeys, $jsonEncodedVals);
+                }
+            }
+        }
         //Redis block
         return $refresh;
     }
@@ -7294,6 +7312,7 @@ class User
         if ($this->blocked($post['author_id'])) {
             _error(403);
         }
+        $redisObject = new RedisClass();
         /* react the post */
         if ($post['i_react']) {
             /* remove any previous reaction */
@@ -7307,23 +7326,19 @@ class User
             /* points balance */
             $this->points_balance("delete", $this->_data['user_id'], "posts_reactions");
 
-            /**
-             * update Redis
-             */
-            $redisPostKey = 'user-' . $this->_data['user_id'] . '-posts';
-            $redisObject = new RedisClass();
-            fetchAndSetDataOnPostReaction($system, $this, $redisObject, $redisPostKey);
+            // /**
+            //  * update Redis
+            //  */
+            // $redisPostKey = 'user-' . $this->_data['user_id'] . '-posts';
+            // fetchAndSetDataOnPostReaction($system, $this, $redisObject, $redisPostKey);
 
-            //profile post
-            $redisTimelinekey = 'profile-posts-' . $this->_data['user_id'];
-            fetchAndSetDataOnPostReaction($system, $this, $redisObject, $redisTimelinekey);
+            // //profile post
+            // $redisTimelinekey = 'profile-posts-' . $this->_data['user_id'];
+            // fetchAndSetDataOnPostReaction($system, $this, $redisObject, $redisTimelinekey);
             // $getPostsFromRedis = $redisObject->getValueFromKey($redisPostKey);
             // $jsonValue_ = json_decode($getPostsFromRedis, true);
-            // print_r($jsonValue_); die;
             // $redisObject->deleteValueFromKey($redisPostKey);
             // fetchPostDataForTimeline($this->_data['user_id'], $this, $redisObject, $system);
-
-
             /**
              * update redis
              */
@@ -7339,12 +7354,57 @@ class User
         $this->points_balance("add", $this->_data['user_id'], "posts_reactions", $reaction_id);
 
         $redisPostKey = 'user-' . $this->_data['user_id'] . '-posts';
-        $redisObject = new RedisClass();
         fetchAndSetDataOnPostReaction($system, $this, $redisObject, $redisPostKey);
 
         //profile post
         $redisTimelinekey = 'profile-posts-' . $this->_data['user_id'];
         fetchAndSetDataOnPostReaction($system, $this, $redisObject, $redisTimelinekey);
+
+        /* Get Curent user POst Array */
+        $redisTimelinekey = 'user-' . $this->_data['user_id'] . '-posts';
+        $getDataFromRedis = $redisObject->getValueFromKey($redisTimelinekey);
+        $jsonValue = json_decode($getDataFromRedis, true);
+        $arrayforrepalce = array();
+        if (count($jsonValue) > 0) {
+            $arrayforrepalce  = searchSubArray($jsonValue, 'post_id', $post_id);
+        }
+
+
+        /* Get Friend List and Updated Redis */
+        $idList = $this->get_friends_ids($post['author_id']);
+        $followId = $this->get_followings_ids($post['author_id']);
+        if ($this->_data['user_id'] !== $post['author_id']) {
+            array_push($idList, $post['author_id']);
+        }
+        $friendsList = array_unique(array_merge($followId, $idList));
+
+        foreach ($friendsList as $ids) {
+            $redisTimelinekey = 'user-' . $ids . '-posts'; //'profile-posts-' . $ids;
+            $isKeyExistOnRedis = $redisObject->isRedisKeyExist($redisTimelinekey);
+            if ($isKeyExistOnRedis) {
+                $getDataFromRedis = $redisObject->getValueFromKey($redisTimelinekey);
+                $jsonValue = json_decode($getDataFromRedis, true);
+                if (count($jsonValue) > 0 && count($arrayforrepalce) > 0) {
+                    $i = 0;
+                    foreach ($jsonValue as $values) {
+                        if ($jsonValue[$i]['post_id'] === $post_id) {
+                            $jsonValue[$i]['reactions'] = $arrayforrepalce['reactions'];
+                            $jsonValue[$i]["reaction_like_count"] = $arrayforrepalce['reaction_like_count'];
+                            $jsonValue[$i]["reaction_love_count"] = $arrayforrepalce['reaction_love_count'];
+                            $jsonValue[$i]["reaction_haha_count"] = $arrayforrepalce['reaction_haha_count'];
+                            $jsonValue[$i]["reaction_yay_count"] = $arrayforrepalce['reaction_yay_count'];
+                            $jsonValue[$i]["reaction_wow_count"] = $arrayforrepalce['reaction_wow_count'];
+                            $jsonValue[$i]["reaction_sad_count"] = $arrayforrepalce['reaction_sad_count'];
+                            $jsonValue[$i]["reaction_angry_count"] = $arrayforrepalce['reaction_angry_count'];
+                            $jsonValue[$i]["reactions_total_count"] = $arrayforrepalce['reactions_total_count'];
+                        }
+                        $i++;
+                    }
+                    $data = json_encode($jsonValue);
+                    $redisObject->setValueWithRedis($redisTimelinekey, $data);
+                }
+            }
+        }
     }
 
 
@@ -7396,6 +7456,59 @@ class User
             $this->delete_notification($post['author_id'], 'react_' . $reaction, 'post', $post_id);
             /* points balance */
             $this->points_balance("delete", $this->_data['user_id'], "posts_reactions");
+
+            $redisPostKey = 'user-' . $this->_data['user_id'] . '-posts';
+            fetchAndSetDataOnPostReaction($system, $this, $redisObject, $redisPostKey);
+
+            //profile post
+            $redisTimelinekey = 'profile-posts-' . $this->_data['user_id'];
+            fetchAndSetDataOnPostReaction($system, $this, $redisObject, $redisTimelinekey);
+
+            /* Get Curent user POst Array */
+            $redisTimelinekey = 'user-' . $this->_data['user_id'] . '-posts';
+            $getDataFromRedis = $redisObject->getValueFromKey($redisTimelinekey);
+            $jsonValue = json_decode($getDataFromRedis, true);
+            $arrayforrepalce = array();
+            if (count($jsonValue) > 0) {
+                $arrayforrepalce  = searchSubArray($jsonValue, 'post_id', $post_id);
+            }
+
+
+            /* Get Friend List and Updated Redis */
+            $idList = $this->get_friends_ids($post['author_id']);
+            $followId = $this->get_followings_ids($post['author_id']);
+            if ($this->_data['user_id'] !== $post['author_id']) {
+                array_push($idList, $post['author_id']);
+            }
+            $friendsList = array_unique(array_merge($followId, $idList));
+
+            foreach ($friendsList as $ids) {
+                $redisTimelinekey = 'user-' . $ids . '-posts'; //'profile-posts-' . $ids;
+                $isKeyExistOnRedis = $redisObject->isRedisKeyExist($redisTimelinekey);
+                if ($isKeyExistOnRedis) {
+                    $getDataFromRedis = $redisObject->getValueFromKey($redisTimelinekey);
+                    $jsonValue = json_decode($getDataFromRedis, true);
+                    if (count($jsonValue) > 0 && count($arrayforrepalce) > 0) {
+                        $i = 0;
+                        foreach ($jsonValue as $values) {
+                            if ($jsonValue[$i]['post_id'] === $post_id) {
+                                $jsonValue[$i]['reactions'] = $arrayforrepalce['reactions'];
+                                $jsonValue[$i]["reaction_like_count"] = $arrayforrepalce['reaction_like_count'];
+                                $jsonValue[$i]["reaction_love_count"] = $arrayforrepalce['reaction_love_count'];
+                                $jsonValue[$i]["reaction_haha_count"] = $arrayforrepalce['reaction_haha_count'];
+                                $jsonValue[$i]["reaction_yay_count"] = $arrayforrepalce['reaction_yay_count'];
+                                $jsonValue[$i]["reaction_wow_count"] = $arrayforrepalce['reaction_wow_count'];
+                                $jsonValue[$i]["reaction_sad_count"] = $arrayforrepalce['reaction_sad_count'];
+                                $jsonValue[$i]["reaction_angry_count"] = $arrayforrepalce['reaction_angry_count'];
+                                $jsonValue[$i]["reactions_total_count"] = $arrayforrepalce['reactions_total_count'];
+                            }
+                            $i++;
+                        }
+                        $data = json_encode($jsonValue);
+                        $redisObject->setValueWithRedis($redisTimelinekey, $data);
+                    }
+                }
+            }
         }
     }
 
