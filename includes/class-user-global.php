@@ -2781,11 +2781,12 @@ class UserGlobal
     }
 
     public function global_profile_get_child_post($post_id, $get_comments = true, $pass_privacy_check = false)
-    { //echo "".$post_id; exit;
+    {
+        //  echo "".$post_id; exit;
         global $db, $system;
         $childPostArray = [];
         $postFinalQuery = sprintf("SELECT * FROM global_posts as posts  where parentId =" . $post_id . " order by post_id desc");
-
+        
         $get_posts = $db->query($postFinalQuery) or _error("SQL_ERROR_THROWEN");
         if ($get_posts->num_rows > 0) {
             while ($childpost = $get_posts->fetch_assoc()) {
@@ -4270,7 +4271,7 @@ class UserGlobal
      * @param boolean $pass_check
      * @return array
      */
-    public function global_get_photos($id, $type = 'user', $offset = 0, $pass_check = true)
+    public function global_get_photos($id, $type = 'user',$user_id=null, $offset = 0, $pass_check = true)
     {
         global $db, $system;
         $photos = [];
@@ -4279,12 +4280,18 @@ class UserGlobal
                 $offset *= $system['max_results_even'];
                 if (!$pass_check) {
                     /* check the album */
-                    $album = $this->get_album($id, false);
+                    $album = $this->global_get_album($id, false);
                     if (!$album) {
                         return $photos;
                     }
                 }
-                $get_photos = $db->query(sprintf("SELECT posts_photos.photo_id, posts_photos.source, posts_photos.blur, posts.user_id, posts.user_type, posts.privacy FROM global_posts_photos as posts_photos INNER JOIN  global_posts as posts ON posts_photos.post_id = posts.post_id WHERE posts_photos.album_id = %s ORDER BY posts_photos.photo_id DESC LIMIT %s, %s", secure($id, 'int'), secure($offset, 'int', false), secure($system['max_results_even'], 'int', false))) or _error("SQL_ERROR_THROWEN");
+                // echo'<pre>'; print_r($user_id);die;
+                if(!empty($user_id)){
+                    $get_photos = $db->query(sprintf("SELECT posts_photos.photo_id, posts_photos.source, posts_photos.blur, posts.user_id, posts.user_type, posts.privacy FROM global_posts_photos as posts_photos INNER JOIN  global_posts as posts ON posts_photos.post_id = posts.post_id WHERE posts_photos.album_id = %s And posts.user_id= %s ORDER BY posts_photos.photo_id DESC LIMIT %s, %s", secure($id, 'int'), secure($user_id, 'int'), secure($offset, 'int', false), secure($system['max_results_even'], 'int', false))) or _error("SQL_ERROR_THROWEN");
+                }else{
+                    $get_photos = $db->query(sprintf("SELECT posts_photos.photo_id, posts_photos.source, posts_photos.blur, posts.user_id, posts.user_type, posts.privacy FROM global_posts_photos as posts_photos INNER JOIN  global_posts as posts ON posts_photos.post_id = posts.post_id WHERE posts_photos.album_id = %s ORDER BY posts_photos.photo_id DESC LIMIT %s, %s", secure($id, 'int'), secure($offset, 'int', false), secure($system['max_results_even'], 'int', false))) or _error("SQL_ERROR_THROWEN");
+                }
+                
                 if ($get_photos->num_rows > 0) {
                     while ($photo = $get_photos->fetch_assoc()) {
                         /* check the photo privacy */
@@ -4796,7 +4803,7 @@ class UserGlobal
      * @return array
      */
     public function global_get_album($album_id, $full_details = true)
-    {
+    {   
         global $db, $system;
         $get_album = $db->query(sprintf("SELECT posts_photos_albums.*, users.user_name, users.user_album_pictures, users.user_album_covers, users.user_album_timeline, pages.page_id, pages.page_name, pages.page_admin, pages.page_album_pictures, pages.page_album_covers, pages.page_album_timeline, `groups`.group_name, `groups`.group_admin, `groups`.group_album_pictures, `groups`.group_album_covers, `groups`.group_album_timeline, `events`.event_admin, `events`.event_album_covers, `events`.event_album_timeline FROM global_posts_photos_albums as posts_photos_albums LEFT JOIN users ON posts_photos_albums.user_id = users.user_id AND posts_photos_albums.user_type = 'user' LEFT JOIN pages ON posts_photos_albums.user_id = pages.page_id AND posts_photos_albums.user_type = 'page' LEFT JOIN `groups` ON posts_photos_albums.in_group = '1' AND posts_photos_albums.group_id = `groups`.group_id LEFT JOIN `events` ON posts_photos_albums.in_event = '1' AND posts_photos_albums.event_id = `events`.event_id WHERE NOT (users.user_name <=> NULL AND pages.page_name <=> NULL) AND posts_photos_albums.album_id = %s", secure($album_id, 'int'))) or _error("SQL_ERROR_THROWEN");
         if ($get_album->num_rows == 0) {
@@ -4849,7 +4856,7 @@ class UserGlobal
             $album['cover']['blur'] = $cover['blur'];
         }
         /* get album total photos count */
-        $get_album_photos_count = $db->query(sprintf("SELECT COUNT(*) as count FROM posts_photos WHERE album_id = %s", secure($album_id, 'int'))) or _error("SQL_ERROR");
+        $get_album_photos_count = $db->query(sprintf("SELECT COUNT(*) as count FROM global_posts_photos WHERE album_id = %s", secure($album_id, 'int'))) or _error("SQL_ERROR");
         $album['photos_count'] = $get_album_photos_count->fetch_assoc()['count'];
         /* check if viewer can manage album [Edit|Update|Delete] */
         $album['is_page_admin'] = $this->check_page_adminship($this->_data['user_id'], $album['page_id']);
@@ -4882,7 +4889,7 @@ class UserGlobal
         }
         /* get album photos */
         if ($full_details) {
-            $album['photos'] = $this->global_get_photos($album_id, 'album');
+            $album['photos'] = $this->global_get_photos($album_id, 'album',$album['author_id']);
         }
         return $album;
     }
@@ -7153,6 +7160,7 @@ class UserGlobal
     public function get_album($album_id, $full_details = true)
     {
         global $db, $system;
+        
         $albumGet = sprintf("SELECT posts_photos_albums.*, users.user_name, users.user_album_pictures, users.global_user_album_covers, users.user_album_timeline, pages.page_id, pages.page_name, pages.page_admin, pages.page_album_pictures, pages.page_album_covers, pages.page_album_timeline, `groups`.group_name, `groups`.group_admin, `groups`.group_album_pictures, `groups`.group_album_covers, `groups`.group_album_timeline, `events`.event_admin, `events`.event_album_covers, `events`.event_album_timeline FROM global_posts_photos_albums as posts_photos_albums LEFT JOIN users ON posts_photos_albums.user_id = users.user_id AND posts_photos_albums.user_type = 'user' LEFT JOIN pages ON posts_photos_albums.user_id = pages.page_id AND posts_photos_albums.user_type = 'page' LEFT JOIN `groups` ON posts_photos_albums.in_group = '1' AND posts_photos_albums.group_id = `groups`.group_id LEFT JOIN `events` ON posts_photos_albums.in_event = '1' AND posts_photos_albums.event_id = `events`.event_id WHERE NOT (users.user_name <=> NULL AND pages.page_name <=> NULL) AND posts_photos_albums.album_id = %s", secure($album_id, 'int'));
         $get_album = $db->query($albumGet) or _error("SQL_ERROR_THROWEN");
         if ($get_album->num_rows == 0) {
@@ -7206,8 +7214,11 @@ class UserGlobal
             $album['cover']['blur'] = $cover['blur'];
         }
         /* get album total photos count */
-        $get_album_photos_count = $db->query(sprintf("SELECT COUNT(*) as count FROM posts_photos WHERE album_id = %s", secure($album_id, 'int'))) or _error("SQL_ERROR");
+        $get_album_photos_count = $db->query(sprintf("SELECT COUNT(*) as count FROM global_posts_photos WHERE album_id = %s", secure($album_id, 'int'))) or _error("SQL_ERROR");
+        
+        // echo'<pre>';print_r($get_album_photos_count->fetch_assoc());die;
         $album['photos_count'] = $get_album_photos_count->fetch_assoc()['count'];
+
         /* check if viewer can manage album [Edit|Update|Delete] */
         $album['is_page_admin'] = $this->check_page_adminship($this->_data['user_id'], $album['page_id']);
         $album['is_group_admin'] = $this->check_group_adminship($this->_data['user_id'], $album['group_id']);
