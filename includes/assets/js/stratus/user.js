@@ -896,7 +896,9 @@ function onimgTagclick(e) {
                         });
                 }),
                 $("body").on("click", ".js_friend-accept, .js_friend-decline", function () {
+                
                     var id = $(this).data("uid"),
+                        _this = $(this),
                         parent = $(this).parent(),
                         accept = parent.find(".js_friend-accept"),
                         decline = parent.find(".js_friend-decline"),
@@ -908,13 +910,25 @@ function onimgTagclick(e) {
                             api["users/connect"],
                             { do: _do, id: id },
                             function (response) {
-                                response.callback
-                                    ? (parent.find(".loader").remove(), accept.show(), decline.show(), eval(response.callback))
-                                    : (parent.find(".loader").remove(),
-                                        accept.remove(),
-                                        decline.remove(),
-                                        "friend-accept" == _do &&
-                                        $('<button type="button" class="btn btn-success btn-delete js_friend-remove" data-uid="' + id + '"><i class="fa fa-check mr5"></i>' + __.Friends + "</button>").insertBefore(".button-messages-profile"));
+                                if (response.callback) {
+                                    parent.find(".loader").remove();
+                                    accept.show();
+                                    decline.show();
+                                    eval(response.callback);
+                                } else {
+                                    if (_do == "friend-accept") {
+                                        _this.after(
+                                            '<button type="button" class="btn btn-success btn-delete js_friend-remove" data-uid="' +
+                                            id +
+                                            '"><i class="fa fa-check mr5"></i>' +
+                                            __["Friends"] +
+                                            "</button>"
+                                        );
+                                    }
+                                    accept.remove();
+                                    decline.remove();
+                                    parent.find(".loader").remove();
+                                }
                             },
                             "json"
                         ).fail(function () {
