@@ -285,13 +285,13 @@ try {
 		case 'photos':
 			/* get photos */
 				$profile['photos'] = $user->get_photos($profile['user_id']);
-			$profile['photos'] = usersProfilePhotosSection($user->_data['user_id'],$user, $redisObject,'photos');
+			$profile['photos'] = usersProfilePhotosSection($profile['user_id'],$user, $redisObject,'photos');
 			break;
 
 		case 'albums':
 			/* get albums */
 			$profile['albums'] = $user->get_albums($profile['user_id']);
-			$profile['albums'] = usersProfilePhotosSection($user->_data['user_id'],$user, $redisObject,'albums');
+			$profile['albums'] = usersProfilePhotosSection($profile['user_id'],$user, $redisObject,'albums');
 			break;
 
 		case 'album':
