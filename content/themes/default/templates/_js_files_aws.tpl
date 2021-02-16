@@ -381,7 +381,7 @@
 
 {if $user->_logged_in}
     <script src="{$system['system_uploads_assets']}/includes/assets/js/stratus/user.js?{$cacheremovejs}" {if !$user->_logged_in}defer{/if}></script>
-    <script src="{$system['system_uploads_assets']}/includes/assets/js/stratus/post.js?{$cacheremovejs}" {if !$user->_logged_in}defer{/if}></script>
+    <script src="{$system['system_url']}/includes/assets/js/stratus/post.js?{$cacheremovejs}" {if !$user->_logged_in}defer{/if}></script>
     <script src="{$system['system_uploads_assets']}/includes/assets/js/stratus/chat.js?{$cacheremovejs}" {if !$user->_logged_in}defer{/if}></script>
     <script src="{$system['system_uploads_assets']}/includes/assets/js/stratus/showads.js?{$cacheremovejs}" {if !$user->_logged_in}defer{/if}></script>
     {if $system['live_enabled'] && $page == "live"}
