@@ -723,7 +723,7 @@ function onimgTagclick(e) {
                             } else if ("x-image" == handle) {
                                 var image_path = uploads_path + "/" + response.file;
                                 parent.css("background-image", "url(" + image_path + ")"), parent.find(".js_x-image-input").val(response.file).change(), parent.find("button").show();
-                                $("body .js_publisher").prop("disabled", !1);
+                                $("body .js_publisher").prop("disabled", !1); 
                             }
                         } else if ("video" == type)
                             if ("publisher" == handle) {
