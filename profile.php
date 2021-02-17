@@ -180,19 +180,16 @@ try {
 			/* get pages */
 			if ($system['pages_enabled']) {
 				$profile['pages'] = $user->get_pages(array('user_id' => $profile['user_id'], 'results' => $system['min_results_even']));
-				// $smarty->assign('pages', $profile['pages']);
 			}
 
 			/* get groups */
 			if ($system['groups_enabled']) {
 				$profile['groups'] = $user->get_groups(array('user_id' => $profile['user_id'], 'results' => $system['min_results_even']));
-				// $smarty->assign('groups',$profile['groups']);
 			}
 
 			/* get events */
 			if ($system['events_enabled']) {
 				$profile['events'] = $user->get_events(array('user_id' => $profile['user_id'], 'results' => $system['min_results_even']));
-				// $smarty->assign('events',$profile['events']);
 			}
 
 			/* get posts */

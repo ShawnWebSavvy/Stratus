@@ -94,10 +94,11 @@ function modal() {
     }
     $(".modal-content:last").html(render_template(arguments[0], arguments[1])), "function" == typeof initialize_modal && initialize_modal();
 }
-function confirm(e, t, a) {
-    modal("#modal-confirm", { title: e, message: t }),
+function confirm(arr) {
+    modal("#modal-confirm", { title: arr[0], message: arr[1] }),
         $("#modal-confirm-ok").click(function () {
-            button_status($(this), "loading"), a && a();
+            button_status($(this), "loading"), arr[2] && arr[2]();
+            // console.log(e,t,a);
         });
 }
 function render_template(e, t) {
