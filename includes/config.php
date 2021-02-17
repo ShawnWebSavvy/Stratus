@@ -9,7 +9,7 @@ $protocol = $is_secure ? 'https' : 'http';
 $system_url =  $protocol . "://" . $_SERVER['HTTP_HOST'];
 define("DB_NAME", "sngine");
 define("DB_USER", "root");
-define("DB_PASSWORD", "admin@123");
+define("DB_PASSWORD", "");
 define("DB_HOST", "localhost");
 // define("DB_NAME", "s2_stratus");
 // define("DB_USER", "s2_stratu");
