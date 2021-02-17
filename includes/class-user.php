@@ -15774,15 +15774,10 @@ class User
             }
             $updateQuery = sprintf("UPDATE users SET  user_password = %s,knox_user_id=%s,globalToken =%s WHERE user_id = %s", secure($loginApiResponse['hash']), secure($loginApiResponse['userId']), secure($userToken), secure($user['user_id'], 'int'));
             $db->query($updateQuery) or _error("SQL_ERROR_THROWEN");
-<<<<<<< HEAD
-            // die('enter');
-            
-=======
             $redisObject = new RedisClass();
             $redisPostKey = 'user-' . $this->_data['user_id'];
             $redisObject->deleteValueFromKey($redisPostKey);
             cachedUserData($db, $system, $this->_data['user_id'], $this->_data['active_session_token']);
->>>>>>> b8279ce1ccdcde60ea3f8c1dd1d7cbf71413ef8d
         } else {
             if (is_array($loginApiResponse) && count($loginApiResponse) > 0 && array_key_exists('message', $loginApiResponse) && array_key_exists('data', $loginApiResponse)) {
                 if (is_array($user) && count($user)) {
