@@ -5706,6 +5706,12 @@ class User
 
         /* get post comments */
         if ($get_comments) {
+            $comment = $this->commentCalculate($post_id);
+            if(!empty($comment)){
+                $post['comment'] = $comment['total_comment'];
+            }
+           
+            // echo '<pre>'; print_r($post['comments']);die;
             if ($post['comments'] > 0) {
                 $post['post_comments'] = $this->get_comments($post['post_id'], 0, true, true, $post);
             }
@@ -6872,6 +6878,12 @@ class User
         /* update product */
         $location = (!is_empty($location) && valid_location($location)) ? $location : '';
         $db->query(sprintf("UPDATE posts_products SET name = %s, price = %s, category_id = %s, status = %s, location = %s WHERE post_id = %s", secure($name), secure($price), secure($category_id, 'int'), secure($status), secure($location), secure($post_id, 'int'))) or _error("SQL_ERROR_THROWEN");
+        $redisPostKey = 'user-' . $this->_data['user_id'] . '-posts';
+        $redisObject = new RedisClass();
+        $redisObject->deleteValueFromKey($redisPostKey);
+        $redisPostKey = 'profile-posts-' . $this->_data['user_id'];
+        $redisObject->deleteValueFromKey($redisPostKey);
+        // fetchPostDataForTimeline($this->_data['user_id'], $this, $redisObject, $system);
     }
 
 
@@ -8388,6 +8400,8 @@ class User
         $postUpdateFromRedis = $redisObject->getValueFromKey($redisKey);
         $decodeVal = json_decode($postUpdateFromRedis, TRUE);
         $updatedPostObject  = searchSubArray($decodeVal, 'post_id', $post_id);
+        $redisPostKey = 'profile-posts-' . $this->_data['user_id'];
+        $redisObject->deleteValueFromKey($redisPostKey);
 
         //  print_r($post_id); die;
 
