@@ -30,16 +30,6 @@ try {
 		$smarty->assign('custom_fields', $user->get_custom_fields());
 	} else {
 		$redisObject = new RedisClass();
-		// $array = $redisObject->getStoredKeys();
-		// if ($user->_data['user_id'] == 50) {
-		// 	echo "<pre>";
-		// 	print_r($array);
-		// 	foreach ($array as $key) {
-		// 		$redisObject->deleteValueFromKey($key);
-		// 	}
-		// 	die;
-		// }
-		// die;
 		// user access
 		user_access();
 		$smarty->assign('active_page', 'LocalHub');

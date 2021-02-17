@@ -57,8 +57,10 @@
                                                     data-uid="{$postsItem['user_id']}"> <a class="post-author"
                                                         href="{$postsItem['post_author_url']}">{$postsItem['post_author_name']}</a>
                                                 </span>
+                                                {if $postsItem['user_verified']==1}
                                                 <i data-toggle="tooltip" data-placement="top" title="Verified User"
                                                     class="fa fa-check-circle fa-fw verified-badge"></i>
+                                                {/if}
                                                 <!-- feeling action -->
                                                 <!-- post feeling -->
                                                 {if $postsItem['feeling_action']}

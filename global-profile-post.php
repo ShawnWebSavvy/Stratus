@@ -24,13 +24,15 @@ try {
 	$userGlobal = new UserGlobal();
 	// get post
 	$post = $userGlobal->global_profile_get_post($_GET['post_id']);
-
-	$post['childPostData'] = $userGlobal->global_profile_get_child_post($post['post_id'], true, true);
-	if ($post['childPostData']) {
-		$post['childPostExists'] = true;
-	} else {
-		$post['childPostExists'] = false;
+	if(!empty($post)){
+		$post['childPostData'] = $userGlobal->global_profile_get_child_post($post['post_id'], true, true);
+		if ($post['childPostData']) {
+			$post['childPostExists'] = true;
+		} else {
+			$post['childPostExists'] = false;
+		}
 	}
+	
 	if (!$post) {
 		_error(404);
 	}

@@ -134,7 +134,8 @@ function fetchPostDataForTimeline($user_id, $userObj, $redisObject, $system)
             $postsdata = array_merge($boosted_posts, $postsdata);
         }
         $jsonValue = json_encode($postsdata);
-        $redisObject->setValueWithRedis($redisPostKey, $jsonValue);
+        //$redisObject->setValueWithRedis($redisPostKey, $jsonValue);
+         $redisObject->setValueWithExpireInRedis($redisPostKey, 3600, $jsonValue);
         $getPostsFromRedis = $redisObject->getValueFromKey($redisPostKey);
         $jsonValue_ = json_decode($getPostsFromRedis, true);
         $posts = $jsonValue_;

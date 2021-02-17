@@ -85,21 +85,24 @@ try {
 			//$posts = array_reverse($posts)
 		}
 		if ($posts) {
-			$redisPostKey = 'user-' . $user->_data['user_id'] . '-posts';
-        	$redisObject = new RedisClass();
-			 $isKeyExist = $redisObject->isRedisKeyExist($redisPostKey);
-            if($isKeyExist == true){
-				$new_response = [];
-				//$jsonEncData = json_encode($posts);
-			    	$getPostsFromRedis = $redisObject->getValueFromKey($redisPostKey);
-                	$jsonValuesRes = json_decode($getPostsFromRedis, true);
-					foreach ($posts as $value) {
-					  $jsonValuesRes[] = $value;
-					}
+			//Redis Block
+			// $redisPostKey = 'user-' . $user->_data['user_id'] . '-posts';
+        	// $redisObject = new RedisClass();
+			//  $isKeyExist = $redisObject->isRedisKeyExist($redisPostKey);
+            // if($isKeyExist == true){
+			// 	$new_response = [];
+			// 	//$jsonEncData = json_encode($posts);
+			//     	$getPostsFromRedis = $redisObject->getValueFromKey($redisPostKey);
+            //     	$jsonValuesRes = json_decode($getPostsFromRedis, true);
+			// 		foreach ($posts as $value) {
+			// 		  //$jsonValuesRes[] = $value;
+			// 		  array_unshift($jsonValuesRes , $value);
+			// 		}
             		
-					$new_response = json_encode($jsonValuesRes);
-				    $redisObject->setValueWithRedis($redisPostKey, $new_response);
-			}
+			// 		$new_response = json_encode($jsonValuesRes);
+			// 	    $redisObject->setValueWithRedis($redisPostKey, $new_response);
+			// }
+			//RedisBlock
 			/* get user pages */
 			$pages = $user->get_pages(array('managed' => true, 'user_id' => $user->_data['user_id']));
 			$smarty->assign('pages', $pages);
