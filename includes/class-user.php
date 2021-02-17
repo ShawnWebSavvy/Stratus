@@ -5040,11 +5040,6 @@ class User
         $redisPostKey = 'user-' . $this->_data['user_id'] . '-posts';
         $redisObject = new RedisClass();
         $redisObject->deleteValueFromKey($redisPostKey);
-<<<<<<< HEAD
-        $redisPostKey = 'profile-posts-' . $this->_data['user_id'];
-        $redisObject->deleteValueFromKey($redisPostKey);
-        fetchPostDataForTimeline($this->_data['user_id'], $this, $redisObject, $system);
-=======
         $redisPostProfileKey = 'profile-posts-' . $this->_data['user_id'];
         $redisObject->deleteValueFromKey($redisPostKey);
         fetchAndSetDataOnPostReaction($system, $this, $redisObject, $redisPostKey);
@@ -5072,7 +5067,6 @@ class User
         }
 
         //RedisBlock
->>>>>>> ec411402c8da1e75d064eefd8ed2cea15bd92b6a
         // return
         return $post;
     }
@@ -6800,8 +6794,6 @@ class User
                 }
             }
         }
-<<<<<<< HEAD
-=======
         $redisPostKey = 'profile-posts-' . $this->_data['user_id'];
         $redisObject = new RedisClass();
         $isKeyExist = $redisObject->isRedisKeyExist($redisPostKey);
@@ -6820,7 +6812,6 @@ class User
                 }
             }
         }
->>>>>>> ec411402c8da1e75d064eefd8ed2cea15bd92b6a
         //Redis block
         return $refresh;
     }
@@ -7372,25 +7363,6 @@ class User
             /* points balance */
             $this->points_balance("delete", $this->_data['user_id'], "posts_reactions");
 
-<<<<<<< HEAD
-            /**
-             * update Redis
-             */
-            $redisPostKey = 'user-' . $this->_data['user_id'] . '-posts';
-            $redisObject = new RedisClass();
-            fetchAndSetDataOnPostReaction($system, $this, $redisObject, $redisPostKey);
-
-            //profile post
-            $redisTimelinekey = 'profile-posts-' . $this->_data['user_id'];
-            fetchAndSetDataOnPostReaction($system, $this, $redisObject, $redisTimelinekey);
-            // $getPostsFromRedis = $redisObject->getValueFromKey($redisPostKey);
-            // $jsonValue_ = json_decode($getPostsFromRedis, true);
-            // print_r($jsonValue_); die;
-            // $redisObject->deleteValueFromKey($redisPostKey);
-            // fetchPostDataForTimeline($this->_data['user_id'], $this, $redisObject, $system);
-
-
-=======
             // /**
             //  * update Redis
             //  */
@@ -7404,7 +7376,6 @@ class User
             // $jsonValue_ = json_decode($getPostsFromRedis, true);
             // $redisObject->deleteValueFromKey($redisPostKey);
             // fetchPostDataForTimeline($this->_data['user_id'], $this, $redisObject, $system);
->>>>>>> ec411402c8da1e75d064eefd8ed2cea15bd92b6a
             /**
              * update redis
              */
@@ -7420,17 +7391,11 @@ class User
         $this->points_balance("add", $this->_data['user_id'], "posts_reactions", $reaction_id);
 
         $redisPostKey = 'user-' . $this->_data['user_id'] . '-posts';
-<<<<<<< HEAD
-        $redisObject = new RedisClass();
-=======
->>>>>>> ec411402c8da1e75d064eefd8ed2cea15bd92b6a
         fetchAndSetDataOnPostReaction($system, $this, $redisObject, $redisPostKey);
 
         //profile post
         $redisTimelinekey = 'profile-posts-' . $this->_data['user_id'];
         fetchAndSetDataOnPostReaction($system, $this, $redisObject, $redisTimelinekey);
-<<<<<<< HEAD
-=======
 
         /* Get Curent user POst Array */
         $redisTimelinekey = 'user-' . $this->_data['user_id'] . '-posts';
@@ -7477,7 +7442,6 @@ class User
                 }
             }
         }
->>>>>>> ec411402c8da1e75d064eefd8ed2cea15bd92b6a
     }
 
 
@@ -7684,23 +7648,6 @@ class User
         //Redis Block
         $redisObject = new RedisClass();
 
-<<<<<<< HEAD
-        //for author post  
-        $redisAuthorKey = 'user-' . $post['author_id'] . '-posts';
-        fetchAndSetDataOnPostReaction($system, $this, $redisObject, $redisAuthorKey);
-        $authorTimelineData = $redisObject->getValueFromKey($redisAuthorKey);
-        $decodedAuthorData = json_decode($authorTimelineData, TRUE);
-        $newUpdate =  searchSubArray($decodedAuthorData, 'post_id', $poll['post_id']);
-
-        $search_res = array_search($option_id, array_column($newUpdate['poll']['options'], 'option_id'));
-        if ($search_res !== false) {
-            $newUpdate['poll']['options'][$search_res]['checked'] = false;
-            $newUpdate['poll']['options'][$search_res]['votes'] = (string) $newUpdate['poll']['options'][$search_res]['votes'] + 1;
-        }
-        //  echo  "<pre>";
-        // print_r($newUpdate); die("HERER");
-        $ids = $this->get_friends_ids($post['author_id']);
-=======
         //update current logged in user response
         $redisKey = 'user-' . $this->_data['user_id'] . '-posts';
         fetchAndSetDataOnPostReaction($system, $this, $redisObject, $redisKey);
@@ -7728,7 +7675,6 @@ class User
         }
 
         // print_r($ids); die;
->>>>>>> ec411402c8da1e75d064eefd8ed2cea15bd92b6a
 
         foreach ($ids as $id) {
             $userKeys = 'user-' . $id . '-posts';
@@ -7736,10 +7682,6 @@ class User
             if ($isUserExist == true) {
                 $getPostsFromRedis = $redisObject->getValueFromKey($userKeys);
                 $jsonValuesRes = json_decode($getPostsFromRedis, true);
-<<<<<<< HEAD
-                $new_vals =  removeElementWithValue($jsonValuesRes, 'post_id', $poll['post_id']);
-                array_unshift($new_vals, $newUpdate);
-=======
                 $search_vals =  searchSubArray($jsonValuesRes, 'post_id', $poll['post_id']);
                 // print_r($search_vals); die;
                 $search_res = array_search($option_id, array_column($search_vals['poll']['options'], 'option_id'));
@@ -7751,18 +7693,11 @@ class User
                 //array_unshift($new_vals,$newUpdate);
                 array_unshift($new_vals, $search_vals);
 
->>>>>>> ec411402c8da1e75d064eefd8ed2cea15bd92b6a
 
                 $jsonEncodedVals = json_encode($new_vals);
                 $redisObject->setValueWithRedis($userKeys, $jsonEncodedVals);
             }
         }
-<<<<<<< HEAD
-
-        //Redis Block
-
-=======
->>>>>>> ec411402c8da1e75d064eefd8ed2cea15bd92b6a
     }
 
 
@@ -7800,22 +7735,6 @@ class User
         }
 
 
-<<<<<<< HEAD
-        //for current user post
-        $redisPostKey = 'user-' . $this->_data['user_id'] . '-posts';
-        $redisObject = new RedisClass();
-        fetchAndSetDataOnPostReaction($system, $this, $redisObject, $redisPostKey);
-        //profile post
-        $redisTimelinekey = 'profile-posts-' . $this->_data['user_id'];
-        fetchAndSetDataOnPostReaction($system, $this, $redisObject, $redisTimelinekey);
-        //for author post  
-        $redisPostKey = 'user-' . $post['author_id'] . '-posts';
-        $redisObject = new RedisClass();
-        fetchAndSetDataOnPostReaction($system, $this, $redisObject, $redisPostKey);
-        //profile post
-        $redisTimelinekey = 'profile-posts-' . $post['author_id'];
-        fetchAndSetDataOnPostReaction($system, $this, $redisObject, $redisTimelinekey);
-=======
         //Redis Block
         $redisObject = new RedisClass();
         //update current logged in user response
@@ -7863,7 +7782,6 @@ class User
 
 
         //Redis Block
->>>>>>> ec411402c8da1e75d064eefd8ed2cea15bd92b6a
     }
 
 
@@ -7938,8 +7856,6 @@ class User
 
         // print_r($ids); die;
 
-<<<<<<< HEAD
-=======
         //Redis Block
         $redisObject = new RedisClass();
 
@@ -8033,7 +7949,6 @@ class User
 
         // print_r($ids); die;
 
->>>>>>> ec411402c8da1e75d064eefd8ed2cea15bd92b6a
         foreach ($ids as $id) {
             $userKeys = 'user-' . $id . '-posts';
             $isUserExist = $redisObject->isRedisKeyExist($userKeys);
@@ -8552,11 +8467,6 @@ class User
         $redisPostKey = 'profile-posts-' . $this->_data['user_id'];
         $redisObject->deleteValueFromKey($redisPostKey);
 
-<<<<<<< HEAD
-        //profile post
-        $redisTimelinekey = 'profile-posts-' . $this->_data['user_id'];
-        fetchAndSetDataOnPostReaction($system, $this, $redisObject, $redisTimelinekey);
-=======
         //  print_r($post_id); die;
 
         $ids = $this->get_friends_ids($post['author_id']);
@@ -8611,7 +8521,6 @@ class User
 
         //Redis Block
 
->>>>>>> ec411402c8da1e75d064eefd8ed2cea15bd92b6a
         /* return */
         return $comment;
     }
