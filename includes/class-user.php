@@ -7260,7 +7260,7 @@ class User
             $redisObject = new RedisClass();
             /* unboost post */
             $db->query(sprintf("UPDATE posts SET boosted = '0', boosted_by = NULL WHERE post_id = %s", secure($post_id, 'int'))) or _error("SQL_ERROR_THROWEN");
-            updateReactions($system, $this, $redisObject, $post_id, $post['author_id']);
+            //updateReactions($system, $this, $redisObject, $post_id, $post['author_id']);
             /* update user */
             $db->query(sprintf("UPDATE users SET user_boosted_posts = IF(user_boosted_posts=0,0,user_boosted_posts-1) WHERE user_id = %s", secure($this->_data['user_id'], 'int'))) or _error("SQL_ERROR_THROWEN");
             $redisObject = new RedisClass();
@@ -7280,6 +7280,7 @@ class User
     public function pin_post($post_id)
     {
         global $db, $system;
+        $redisObject = new RedisClass();
         /* (check|get) post */
         $post = $this->_check_post($post_id);
         if (!$post) {
@@ -7313,7 +7314,6 @@ class User
                 } else {
                     /* update user */
                     $db->query(sprintf("UPDATE users SET user_pinned_post = %s WHERE user_id = %s", secure($post_id, 'int'), secure($post['author_id'], 'int'))) or _error("SQL_ERROR_THROWEN");
-                    $redisObject = new RedisClass();
                     $redisPostKey = 'user-' . $this->_data['user_id'];
                     $redisObject->deleteValueFromKey($redisPostKey);
                     cachedUserData($db, $system, $this->_data['user_id'], $this->_data['active_session_token']);
@@ -7323,6 +7323,7 @@ class User
                 $db->query(sprintf("UPDATE pages SET page_pinned_post = %s WHERE page_id = %s", secure($post_id, 'int'), secure($post['user_id'], 'int'))) or _error("SQL_ERROR_THROWEN");
             }
         }
+        updateReactions($system, $this, $redisObject, $post_id, $post['author_id']);
     }
 
 
@@ -7335,6 +7336,8 @@ class User
     public function unpin_post($post_id)
     {
         global $db, $system;
+
+        $redisObject = new RedisClass();
         /* (check|get) post */
         $post = $this->_check_post($post_id);
         if (!$post) {
@@ -7368,7 +7371,6 @@ class User
                 } else {
                     /* update user */
                     $db->query(sprintf("UPDATE users SET user_pinned_post = '0' WHERE user_id = %s", secure($post['user_id'], 'int'))) or _error("SQL_ERROR_THROWEN");
-                    $redisObject = new RedisClass();
                     $redisPostKey = 'user-' . $this->_data['user_id'];
                     $redisObject->deleteValueFromKey($redisPostKey);
                     cachedUserData($db, $system, $this->_data['user_id'], $this->_data['active_session_token']);
@@ -7378,6 +7380,7 @@ class User
                 $db->query(sprintf("UPDATE pages SET page_pinned_post = '0' WHERE page_id = %s", secure($post['user_id'], 'int'))) or _error("SQL_ERROR_THROWEN");
             }
         }
+        updateReactions($system, $this, $redisObject, $post_id, $post['author_id']);
     }
 
 
@@ -7574,6 +7577,19 @@ class User
         }
         /* hide the post */
         $db->query(sprintf("INSERT INTO posts_hidden (user_id, post_id) VALUES (%s, %s)", secure($this->_data['user_id'], 'int'), secure($post_id, 'int'))) or _error("SQL_ERROR_THROWEN");
+
+
+        $redisObject = new RedisClass();
+        $userKey = 'user-' . $this->_data['user_id'] . '-posts';
+        $getPostsFromRedis = $redisObject->getValueFromKey($userKey);
+        $jsonValuesRes = json_decode($getPostsFromRedis, true);
+        foreach ($jsonValuesRes as $key => $post) {
+            if ($post['post_id'] == $post_id) {
+                $jsonValuesRes[$key]['is_hidden'] = "1";
+            }
+        }
+        $jsonEncodedVals = json_encode($jsonValuesRes);
+        $redisObject->setValueWithRedis($userKey, $jsonEncodedVals);
     }
 
 
