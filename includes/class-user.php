@@ -6973,18 +6973,6 @@ class User
         }
         /* set post as hidden */
         $db->query(sprintf("UPDATE posts SET is_hidden = '1' WHERE post_id = %s", secure($post_id, 'int'))) or _error("SQL_ERROR_THROWEN");
-
-         $redisObject = new RedisClass();
-            $userKey = 'user-' . $this->_data['user_id'] . '-posts';
-            $getPostsFromRedis = $redisObject->getValueFromKey($userKey);
-            $jsonValuesRes = json_decode($getPostsFromRedis, true);
-            foreach($jsonValuesRes as $key => $post){
-                if($post['post_id'] == $post_id){
-                $jsonValuesRes[$key]['is_hidden'] = "1";
-                }
-            }
-            $jsonEncodedVals = json_encode($jsonValuesRes);
-            $redisObject->setValueWithRedis($userKey, $jsonEncodedVals);
     }
 
 
@@ -7012,18 +7000,6 @@ class User
         }
         /* set post as not hidden */
         $db->query(sprintf("UPDATE posts SET is_hidden = '0' WHERE post_id = %s", secure($post_id, 'int'))) or _error("SQL_ERROR_THROWEN");
-
-         $redisObject = new RedisClass();
-            $userKey = 'user-' . $this->_data['user_id'] . '-posts';
-            $getPostsFromRedis = $redisObject->getValueFromKey($userKey);
-            $jsonValuesRes = json_decode($getPostsFromRedis, true);
-            foreach($jsonValuesRes as $key => $post){
-                if($post['post_id'] == $post_id){
-                $jsonValuesRes[$key]['is_hidden'] = "0";
-                }
-            }
-            $jsonEncodedVals = json_encode($jsonValuesRes);
-            $redisObject->setValueWithRedis($userKey, $jsonEncodedVals);
     }
 
 
@@ -7176,18 +7152,6 @@ class User
         if (!$post['i_save']) {
             $db->query(sprintf("INSERT INTO posts_saved (post_id, user_id, time) VALUES (%s, %s, %s)", secure($post_id, 'int'), secure($this->_data['user_id'], 'int'), secure($date))) or _error("SQL_ERROR_THROWEN");
         }
-          $redisObject = new RedisClass();
-          $userKey = 'user-' . $this->_data['user_id'] . '-posts';
-          $getPostsFromRedis = $redisObject->getValueFromKey($userKey);
-          $jsonValuesRes = json_decode($getPostsFromRedis, true);
-          foreach($jsonValuesRes  as $key => $post){
-                if($post['post_id'] == $post_id){
-                    $jsonValuesRes[$key]['i_save'] = true;
-                }
-          }
-            $jsonEncodedVals = json_encode($jsonValuesRes);
-            $redisObject->setValueWithRedis($userKey, $jsonEncodedVals);
-
     }
 
 
@@ -7209,18 +7173,6 @@ class User
         if ($post['i_save']) {
             $db->query(sprintf("DELETE FROM posts_saved WHERE post_id = %s AND user_id = %s", secure($post_id, 'int'), secure($this->_data['user_id'], 'int'))) or _error("SQL_ERROR_THROWEN");
         }
-
-           $redisObject = new RedisClass();
-          $userKey = 'user-' . $this->_data['user_id'] . '-posts';
-          $getPostsFromRedis = $redisObject->getValueFromKey($userKey);
-          $jsonValuesRes = json_decode($getPostsFromRedis, true);
-          foreach($jsonValuesRes  as $key => $post){
-                if($post['post_id'] == $post_id){
-                    $jsonValuesRes[$key]['i_save'] = false;
-                }
-          }
-            $jsonEncodedVals = json_encode($jsonValuesRes);
-            $redisObject->setValueWithRedis($userKey, $jsonEncodedVals);
     }
 
 
@@ -7606,18 +7558,6 @@ class User
         }
         /* hide the post */
         $db->query(sprintf("INSERT INTO posts_hidden (user_id, post_id) VALUES (%s, %s)", secure($this->_data['user_id'], 'int'), secure($post_id, 'int'))) or _error("SQL_ERROR_THROWEN");
-
-            $redisObject = new RedisClass();
-            $userKey = 'user-' . $this->_data['user_id'] . '-posts';
-            $getPostsFromRedis = $redisObject->getValueFromKey($userKey);
-            $jsonValuesRes = json_decode($getPostsFromRedis, true);
-            foreach($jsonValuesRes as $key => $post){
-                if($post['post_id'] == $post_id){
-                $jsonValuesRes[$key]['is_hidden'] = "1";
-                }
-            }
-            $jsonEncodedVals = json_encode($jsonValuesRes);
-            $redisObject->setValueWithRedis($userKey, $jsonEncodedVals);
     }
 
 
@@ -7637,18 +7577,6 @@ class User
         }
         /* unhide the post */
         $db->query(sprintf("DELETE FROM posts_hidden WHERE user_id = %s AND post_id = %s", secure($this->_data['user_id'], 'int'), secure($post_id, 'int'))) or _error("SQL_ERROR_THROWEN");
-
-        $redisObject = new RedisClass();
-            $userKey = 'user-' . $this->_data['user_id'] . '-posts';
-            $getPostsFromRedis = $redisObject->getValueFromKey($userKey);
-            $jsonValuesRes = json_decode($getPostsFromRedis, true);
-            foreach($jsonValuesRes as $key => $post){
-                if($post['post_id'] == $post_id){
-                $jsonValuesRes[$key]['is_hidden'] = "0";
-                }
-            }
-            $jsonEncodedVals = json_encode($jsonValuesRes);
-            $redisObject->setValueWithRedis($userKey, $jsonEncodedVals);
     }
 
 
