@@ -286,42 +286,62 @@ $(function () {
                     modal("#modal-message", { title: __.Error, message: __["There is something that went wrong!"] });
                 }));
     }
-    function _reply(element) {
-        var _this = $(element),
-            comment = _this.parents(".comment"),
-            stream = comment.find(".js_replies"),
-            handle = "comment",
-            id = comment.data("id"),
-            textarea = comment.find("textarea.js_post-reply"),
-            message = textarea.val(),
-            attachments = comment.find(".comment-attachments"),
-            attachments_voice_notes = comment.find(".comment-voice-notes"),
-            photo = comment.data("photos"),
-            voice_note = comment.data("voice_notes");
-        (!is_empty(message) || photo || voice_note) &&
-            $.post(
-                api["posts/comment"],
-                { handle: handle, id: id, message: message, photo: JSON.stringify(photo), voice_note: JSON.stringify(voice_note) },
-                function (response) {
-                    response.callback
-                        ? eval(response.callback)
-                        : (textarea.val(""),
-                            textarea.attr("style", ""),
-                            attachments.hide(),
-                            attachments.find("li.item").remove(),
-                            comment.removeData("photos"),
-                            comment.find(".x-form-tools-attach").show(),
-                            comment.removeData("voice_notes"),
-                            comment.find(".x-form-tools-voice").show(),
-                            attachments_voice_notes.hide(),
-                            attachments_voice_notes.find(".js_voice-success-message").hide(),
-                            attachments_voice_notes.find(".js_voice-start").show(),
-                            stream.append(response.comment));
-                },
-                "json"
-            ).fail(function () {
-                modal("#modal-message", { title: __.Error, message: __["There is something that went wrong!"] });
+    async function _reply(element) {
+        var today = Math.round((new Date()).getTime() / 1000);
+        await new Promise(r => setTimeout(r, 100));
+        var _this = $(element);
+        var comment = _this.parents(".comment");
+        var stream = comment.find(".js_replies");
+        var handle = "comment";
+        var id = comment.data("id");
+        var textarea = comment.find("textarea.js_post-reply");
+        comment.find("textarea.js_post-reply").val();
+        var message = textarea.val();
+        var attachments = comment.find(".comment-attachments");
+        var attachments_voice_notes = comment.find(".comment-voice-notes");
+        /* get photo from comment data */
+        var photo = comment.data("photos");
+        /* get voice note from comment data */
+        var voice_note = comment.data("voice_notes");
+        /* check if message is empty */
+        if (is_empty(message) && !photo && !voice_note) {
+            return;
+        }
+        $.post(
+            api["posts/comment"],
+            {
+                handle: handle,
+                id: id,
+                message: message,
+                photo: JSON.stringify(photo),
+                voice_note: JSON.stringify(voice_note),
+            },
+            function (response) {
+                /* check if there is a callback */
+                if (response.callback) {
+                    eval(response.callback);
+                } else {
+                    textarea.val("");
+                    textarea.attr("style", "");
+                    attachments.hide();
+                    attachments.find("li.item").remove();
+                    comment.removeData("photos");
+                    comment.find(".x-form-tools-attach").show();
+                    comment.removeData("voice_notes");
+                    comment.find(".x-form-tools-voice").show();
+                    attachments_voice_notes.hide();
+                    attachments_voice_notes.find(".js_voice-success-message").hide();
+                    attachments_voice_notes.find(".js_voice-start").show();
+                    stream.append(response.comment);
+                }
+            },
+            "json"
+        ).fail(function () {
+            modal("#modal-message", {
+                title: __["Error"],
+                message: __["There is something that went wrong!"],
             });
+        });
     }
     function _update_comment(element) {
         var _this = $(element),
@@ -749,7 +769,7 @@ $(function () {
                                 publisher.find(".publisher-slider").slideUp();
                                 publisher.find(".publisher-emojis").fadeOut();
                                 /* attache the new post */
-                                $(".js_posts_stream").find("ul:first").prepend(response.post);
+                                $(".js_posts_stream").find("ul:first").prepend();
                                 /* release the loading status */
                                 posts_stream.removeData("loading");
                                 /* rerun photo grid */
@@ -802,47 +822,52 @@ $(function () {
                 (product.category = publisher.find('select[name="category"]').val()), (product.status = publisher.find('select[name="status"]').val());
                 var textarea = publisher.find("textarea"),
                     photos = publisher.data("photos");
-                button_status(_this, "loading"),
-                    $.post(
-                        api["posts/product"],
-                        { do: "publish", product: JSON.stringify(product), message: textarea.val(), photos: JSON.stringify(photos) },
-                        function (response) {
-                            button_status(_this, "reset"),
-                                response.error
-                                    ? publisher.find(".alert.alert-danger").html(response.message).slideDown()
-                                    : response.callback && (eval(response.callback), $(".no-post-to-show").css("display", "none"), $("#modal").modal("toggle"));
-                        },
-                        "json"
-                    ).fail(function () {
-                        button_status(_this, "reset"), modal("#modal-message", { title: __.Error, message: __["There is something that went wrong!"] });
-                    });
+                // button_status(_this, "loading"),
+                $.post(
+                    api["posts/product"],
+                    { do: "publish", product: JSON.stringify(product), message: textarea.val(), photos: JSON.stringify(photos) },
+                    function (response) {
+                        // button_status(_this, "reset"),
+                        response.error
+                            ? publisher.find(".alert.alert-danger").html(response.message).slideDown()
+                            : response.callback && (eval(response.callback))
+                        // $(".no-post-to-show").css("display", "none"), $("#modal").modal("toggle"));
+                    },
+                    "json"
+                ).fail(function () {
+                    button_status(_this, "reset"), modal("#modal-message", { title: __.Error, message: __["There is something that went wrong!"] });
+                });
             }
         }),
-        $("body").on("click", ".js_publisher-album", function () {
-            var _this = $(this),
-                publisher = _this.parents(".publisher"),
-                id = publisher.data("id"),
-                textarea = publisher.find("textarea"),
-                attachments = publisher.find(".attachments"),
-                photos = publisher.data("photos"),
-                location_meta = publisher.find('.publisher-meta[data-meta="location"]'),
-                location = location_meta.find("input"),
-                feeling_meta = publisher.find('.publisher-meta[data-meta="feelings"]'),
-                feeling = feeling_meta.find("input"),
-                privacy = publisher.find(".btn-group").data("value");
-            void 0 !== photos &&
-                (button_status(_this, "loading"),
-                    $.post(
-                        api["albums/action"],
-                        { do: "add_photos", id: id, message: textarea.val(), photos: JSON.stringify(photos), feeling_action: feeling.data("action"), feeling_value: feeling.val(), location: location.val(), privacy: privacy },
-                        function (response) {
-                            response.callback && (button_status(_this, "reset"), eval(response.callback));
-                        },
-                        "json"
-                    ).fail(function () {
-                        button_status(_this, "reset"), modal("#modal-message", { title: __.Error, message: __["There is something that went wrong!"] });
-                    }));
-        }),
+        $('#add_product').on('click', function () {
+            // alert('enter');
+            $('#ajax-sell-new-product').trigger('reset');
+        });
+    $("body").on("click", ".js_publisher-album", function () {
+        var _this = $(this),
+            publisher = _this.parents(".publisher"),
+            id = publisher.data("id"),
+            textarea = publisher.find("textarea"),
+            attachments = publisher.find(".attachments"),
+            photos = publisher.data("photos"),
+            location_meta = publisher.find('.publisher-meta[data-meta="location"]'),
+            location = location_meta.find("input"),
+            feeling_meta = publisher.find('.publisher-meta[data-meta="feelings"]'),
+            feeling = feeling_meta.find("input"),
+            privacy = publisher.find(".btn-group").data("value");
+        void 0 !== photos &&
+            (button_status(_this, "loading"),
+                $.post(
+                    api["albums/action"],
+                    { do: "add_photos", id: id, message: textarea.val(), photos: JSON.stringify(photos), feeling_action: feeling.data("action"), feeling_value: feeling.val(), location: location.val(), privacy: privacy },
+                    function (response) {
+                        response.callback && (button_status(_this, "reset"), eval(response.callback));
+                    },
+                    "json"
+                ).fail(function () {
+                    button_status(_this, "reset"), modal("#modal-message", { title: __.Error, message: __["There is something that went wrong!"] });
+                }));
+    }),
         (window.AudioContext = window.AudioContext || window.webkitAudioContext),
         (navigator.getUserMedia = navigator.getUserMedia || navigator.webkitGetUserMedia || navigator.mozGetUserMedia),
         $("body").on("click", ".js_voice-start", function () {
@@ -1148,27 +1173,40 @@ $(function () {
                 .focus();
         }),
         $("body").on("click", ".js_edit-post", function () {
-            var e = $(this).parents(".post");
-            e.find(".post-edit").length > 0 ||
-                (e
-                    .find(".post-replace")
-                    .hide()
-                    .after(render_template("#edit-post", { text: e.find(".post-text-plain").text() })),
-                    autosize(e.find(".post-edit textarea")));
-        }),
-        $("body").on("click", ".js_unedit-post", function () {
-            var e = $(this).parents(".post");
-            e.find(".post-edit").remove(), e.find(".post-replace").show();
-        }),
-        $("body").on("keydown", "textarea.js_update-post", function (e) {
-            $(window).width() >= 970 && 13 == e.keyCode && e.shiftKey;
-        }),
-        $("body").on("click", "li.js_update-post", function () {
-            $(window).width() < 970 && _update_post(this);
-        }),
-        $("body").on("click", ".js_publisher_updatebtn", function () {
+            var post = $(this).parents(".post");
+            if (post.find(".post-edit").length > 0) {
+                return;
+            }
+            post.find(".post-replace").hide().after(
+                render_template("#edit-post", {
+                    text: post.find(".post-text-plain").text(),
+                })
+            );
+            autosize(post.find(".post-edit textarea"));
+        });
+    $("body").on("click", ".js_unedit-post", function () {
+        var e = $(this).parents(".post");
+        e.find(".post-edit").remove(), e.find(".post-replace").show();
+    }),
+        $("body").on("keydown", "textarea.js_update-post", function (event) {
+            if (
+                $(window).width() >= 970 &&
+                event.keyCode == 13 &&
+                event.shiftKey == 0
+            ) {
+                // event.preventDefault();
+                // _update_post(this);
+            }
+        });
+    $("body").on("click", "li.js_update-post", function () {
+        if ($(window).width() < 970) {
             _update_post(this);
-        }),
+        }
+    });
+
+    $("body").on("click", ".js_publisher_updatebtn", function () {
+        _update_post(this);
+    }),
         $("body").on("click", ".js_edit-privacy", function () {
             var _this = $(this),
                 post = _this.parents(".post"),
@@ -1200,7 +1238,6 @@ $(function () {
                         function (response) {
                             $("#modal").modal("hide");
                             bricklayer.redraw();
-
                             // !response.refresh || ("profile" != current_page && "page" != current_page && "index" != current_page && "group" != current_page && "event" != current_page)
                             //     ? response.callback && eval(response.callback)
                             //     : location.reload();

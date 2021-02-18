@@ -602,7 +602,7 @@
                </div>
             </div>
             <!-- content panel -->
-           <div class="col-md-12 col-xl-9 col-lg-8 js_conversation-container">
+            <div class="col-md-12 col-xl-9 col-lg-8 js_conversation-container">
                <!-- profile-tabs -->
                <div class="profile-header-tabs custom-tabs for-mobile">
                   <ul>

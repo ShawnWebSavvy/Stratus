@@ -1322,8 +1322,9 @@ $(function () {
           button_status(_this, "reset");
           eval(response.callback);
         } else {
+         
           if (response.post) {
-            //window.location.reload();
+            $(".js_posts_stream").find("ul:first").prepend(response.post);
           }
           $(".no_data_img_").css("display", "none");
           /* button reset */
@@ -1397,7 +1398,7 @@ $(function () {
           $(".divAppendTextarea").html(htmlData);
           $(".divAppendTextarea").css("display", "none");
           $(".wrapFootershowHide").css("display", "flex");
-          //$(".js_posts_stream").find("ul:first").prepend(response.post);
+
           /* release the loading status */
           posts_stream.removeData("loading");
           /* rerun photo grid */
@@ -2200,7 +2201,10 @@ $(function () {
                 current_page == "event")
             ) {
               location.reload();
-            } else if (response.callback) {
+            } else if (response.refresh="delete_single_post") {
+              window.location.replace(document.referrer)
+            }
+            else if (response.callback) {
               eval(response.callback);
             }
           },

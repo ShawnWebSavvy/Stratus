@@ -37,6 +37,9 @@
 
 <script id="modal-success" type="text/template">
     <div class="modal-body text-center">
+    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+        </button>
         <!-- <div class="big-icon success">
             <i class="fa fa-thumbs-up fa-3x"></i>
         </div> -->
@@ -48,6 +51,9 @@
 
 <script id="modal-error" type="text/template">
     <div class="modal-body text-center">
+    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+        </button>
         <div class="big-icon error">
             <i class="fa fa-times fa-3x"></i>
         </div>
@@ -71,6 +77,9 @@
 
 <script id="modal-loading" type="text/template">
     <div class="modal-body text-center">
+    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+        </button>
         <div class="spinner-border text-primary"></div>
     </div>
 </script>
@@ -840,6 +849,9 @@
             </h6>
         </div>
         <div class="modal-body text-center">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+        </button>
             <h3>{literal}{{name}}{/literal}</h3>
             <p class="text-lg js_chat-calling-message">{__("Connecting")}<span class="loading-dots"></span></p>
             
@@ -869,6 +881,9 @@
             </h6>
         </div>
         <div class="modal-body text-center">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+        </button>
             <div class="position-relative mb10" style="height: 106px;">
                 <div class="profile-avatar-wrapper static">
                     <img src="{literal}{{image}}{/literal}" alt="{literal}{{name}}{/literal}" style="width: 98px; height: 98px;">
@@ -1062,6 +1077,9 @@
                 </button>
             </div>
             <div class="modal-body text-center">
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+        </button>
                 <img class="img-fluid" src="{$system['system_uploads']}/{$gift['image']}">
             </div>
         </script>
@@ -1579,6 +1597,9 @@
                 </button>
             </div>
             <div class="modal-body text-center">
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+        </button>
                 <img id="cropped-profile-picture" src="{literal}{{image}}{/literal}" style="max-width: 100%;">
             </div>
             <div class="modal-footer">
@@ -1681,6 +1702,9 @@
                 </button>
             </div>
             <div class="modal-body text-center">
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+        </button>
                 <div class="row justify-content-center" style="margin-left: -5px; margin-right: -5px;">
                     {if $system['paypal_enabled']}
                         <div class="col-12 col-sm-4 plr5">

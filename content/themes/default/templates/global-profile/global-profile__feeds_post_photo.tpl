@@ -105,7 +105,7 @@
         <span class="float-right">
             <!-- comments -->
             <span class="pointer js_comments-toggle new" id="stratus_globalhub_{$post['post_id']}">
-                <i class="fa fa-comments"></i> {$photo['comments']} {__("Comments")}
+                <i class="fa fa-comments"></i> {$post['comments']} {__("Comments")}
             </span>
             <!-- comments -->
 
@@ -160,7 +160,7 @@
         <!-- reactions -->
 
 
-        <div class="action-btn unselectable reactions-wrappers {if $photo['i_react']}js_unreact-photo{/if} js_react-photo"
+        <div class="action-btn unselectable reactions-wrappers {if $photo['i_react']}js_unreact-post{/if} js_react-post"
             data-reaction="{if !$post['reaction']}love{/if}" data-type="photos" data-id="{$post['post_id']}">
             <!-- reaction-btn -->
             <div class="reaction-btn">

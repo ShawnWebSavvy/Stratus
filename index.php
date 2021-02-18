@@ -28,18 +28,6 @@ try {
 		$smarty->assign('custom_fields', $user->get_custom_fields());
 	} else {
 		$redisObject = new RedisClass();
-		$array = $redisObject->getStoredKeys();
-		if ($user->_data['user_id'] == 6234) {
-			// echo "<pre>";
-			// print_r($_SESSION);
-			// echo "</pre>";
-			foreach ($array as $key) {
-				//if (strpos($key, '-6234') !== false) {
-				$redisObject->deleteValueFromKey($key);
-				//}
-			}
-		}
-
 		// user access
 		user_access();
 		$smarty->assign('active_page', 'LocalHub');
@@ -73,7 +61,7 @@ try {
 
 				$posts = fetchPostDataForTimeline($user->_data['user_id'], $user, $redisObject, $system);
 
-				//	echo "<pre>";print_r($posts);die;
+				//echo "<pre>";print_r($posts);die;
 				/* get user pages */
 				$pages = $user->get_pages(array('managed' => true, 'user_id' => $user->_data['user_id']));
 				$smarty->assign('pages', $pages);

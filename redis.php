@@ -58,6 +58,29 @@ class RedisClass
         }
     }
 
+    function getStoredKeysbyID($keyId)
+    {
+        try {
+            $redisObj = $this->redis;
+            return $redisObj->keys($keyId);
+        } catch (Exception $e) {
+            echo $e->getMessage();
+        }
+    }
+
+    function deleteUserData($array)
+    {
+        try {
+            $redisObj = $this->redis;
+            // deleting the value from redis
+            foreach ($array as $key) {
+                $this->deleteValueFromKey($key);
+            }
+        } catch (Exception $e) {
+            echo $e->getMessage();
+        }
+    }
+
     function isRedisKeyExist($key)
     {
         try {
@@ -86,6 +109,19 @@ class RedisClass
             $redisObj = $this->redis;
             // setting the value in redis
             $redisObj->setex($key, $ttl, $data);
+        } catch (Exception $e) {
+            echo $e->getMessage();
+        }
+    }
+
+
+
+      function scanValues($cursor, $pattern)
+    {
+        try {
+            $redisObj = $this->redis;
+            // setting the value in redis
+           return  $redisObj->scan($cursor, 'match', $pattern);
         } catch (Exception $e) {
             echo $e->getMessage();
         }

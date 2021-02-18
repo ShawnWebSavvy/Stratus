@@ -290,7 +290,7 @@ try {
 			// exit;
 			/* get posts */
 			$posts = $userGlobal->global_profile_get_posts(array('get' => 'posts_profile', 'id' => $profile['user_id']));
-			//echo "<pre>";print_r($posts); exit;
+			// echo "<pre>";print_r(count($posts)); exit;
 			/* assign variables */
 			$smarty->assign('profile', $posts);
 			$smarty->assign('posts_count', count($posts));
@@ -300,10 +300,14 @@ try {
 
 		case 'album':
 			/* get album */
-			$album = $userGlobal->get_album($_GET['id']);
+			$album = $userGlobal->global_get_album($_GET['id']);
 			if (!$album || $album['in_group'] || $album['user_type'] == "page" || ($album['user_type'] == "user" && $album['user_id'] != $profile['user_id'])) {
 				_error(404);
 			}
+				// echo "<pre>";
+			// print_r($userGlobal->_data['user_id']);
+			// print_r($profile);
+			// exit;
 			/* assign variables */
 			$smarty->assign('album', $album);
 
