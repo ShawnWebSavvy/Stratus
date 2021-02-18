@@ -146,8 +146,8 @@ function load_more(element) {
                         }
 
                         if ((data.offset++, response.append ? stream.append(response.data) : stream.prepend(response.data), $(window).width() > 1024)) {
-                            if ($("body #landing_feeds_post_ul").length > 0) var macyInstance = Macy({ container: ".feeds_post_ul", trueOrder: !0, columns: 2, waitForImages: !0 });
-                            if ($("body #feeds_post_ul").length > 0) var macyInstance = Macy({ container: ".feeds_post_ul", trueOrder: !0, columns: 2, waitForImages: !0 });
+                            // if ($("body #landing_feeds_post_ul").length > 0) var macyInstance = Macy({ container: ".feeds_post_ul", trueOrder: !0, columns: 2, waitForImages: !0 });
+                            // if ($("body #feeds_post_ul").length > 0) var macyInstance = Macy({ container: ".feeds_post_ul", trueOrder: !0, columns: 2, waitForImages: !0 }); macyInstance.recalculate();
                         }
                         setTimeout(photo_grid(), 200), "messages" == data.get && ((chat_widget = _this.parents(".chat-widget, .panel-messages")), color_chat_box(chat_widget, chat_widget.data("color")));
                     } else remove ? _this.remove() : (_this.addClass("done"), text.text(__["There is no more data to show"]));
