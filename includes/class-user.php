@@ -5036,36 +5036,48 @@ class User
         $this->points_balance("add", $this->_data['user_id'], "post", $post['post_id']);
 
         //RedisBlock
+        //Update posts on timeline
         $post_id = $post['post_id'];
         $redisPostKey = 'user-' . $this->_data['user_id'] . '-posts';
         $redisObject = new RedisClass();
         $redisObject->deleteValueFromKey($redisPostKey);
-        $redisPostProfileKey = 'profile-posts-' . $this->_data['user_id'];
-        $redisObject->deleteValueFromKey($redisPostKey);
         fetchAndSetDataOnPostReaction($system, $this, $redisObject, $redisPostKey);
-       // fetchPostDataForTimeline($this->_data['user_id'], $this, $redisObject, $system);
-        fetchAndSetDataOnPostReaction($system, $this, $redisObject, $redisPostProfileKey);
+
+        //Updtae Posts in Profile PAGE
+        $postsList = $redisObject->getValueFromKey($redisPostKey);
+        $decodePost = json_decode($postsList, TRUE);
+        $arrayforrepalce = array();
+        if (count($decodePost) > 0) {
+            $arrayforrepalce = searchSubArray($decodePost, 'post_id', $post_id);
+        }
+        $redisPostProfileKey = 'profile-posts-' . $this->_data['user_id'];
+        $postsLists = $redisObject->getValueFromKey($redisPostProfileKey);
+        $decodePosts = json_decode($postsLists, TRUE);
+        array_unshift($decodePosts, $arrayforrepalce);
+        $encodedePosts = json_encode($decodePosts);
+        $redisObject->setValueWithRedis($redisPostProfileKey, $encodedePosts);
+
+        //Update Friends POST
         $postUpdateFromRedis = $redisObject->getValueFromKey($redisPostKey);
         $decodeVal = json_decode($postUpdateFromRedis, TRUE);
         $updatedPostObject  = searchSubArray($decodeVal, 'post_id', $post_id);
 
-         $ids = $this->get_friends_ids($this->_data['user_id']);
-         $followersId = $this->get_followings_ids($this->_data['user_id']);
-         $idsList = array_unique(array_merge($ids, $followersId));
+        $ids = $this->get_friends_ids($this->_data['user_id']);
+        $followersId = $this->get_followings_ids($this->_data['user_id']);
+        $idsList = array_unique(array_merge($ids, $followersId));
         foreach ($idsList as $id) {
             $userKeys = 'user-' . $id . '-posts';
             $isUserExist = $redisObject->isRedisKeyExist($userKeys);
             if ($isUserExist == true) {
                 $getPostsFromRedis = $redisObject->getValueFromKey($userKeys);
                 $jsonValuesRes = json_decode($getPostsFromRedis, true);
-                         array_unshift($jsonValuesRes , $updatedPostObject);
+                array_unshift($jsonValuesRes, $updatedPostObject);
 
                 $jsonEncodedVals = json_encode($jsonValuesRes);
-               // print_r($jsonEncodedVals); die;
+                // print_r($jsonEncodedVals); die;
                 $redisObject->setValueWithRedis($userKeys, $jsonEncodedVals);
             }
         }
-
         //RedisBlock
         // return
         return $post;
@@ -5732,10 +5744,10 @@ class User
         /* get post comments */
         if ($get_comments) {
             $comment = $this->commentCalculate($post_id);
-            if(!empty($comment)){
+            if (!empty($comment)) {
                 $post['comment'] = $comment['total_comment'];
             }
-           
+
             // echo '<pre>'; print_r($post['comments']);die;
             if ($post['comments'] > 0) {
                 $post['post_comments'] = $this->get_comments($post['post_id'], 0, true, true, $post);
@@ -6945,7 +6957,7 @@ class User
      */
     public function disallow_post($post_id)
     {
-        global $db;
+        global $db, $system;
         /* (check|get) post */
         $post = $this->_check_post($post_id);
         if (!$post) {
@@ -6999,7 +7011,7 @@ class User
      */
     public function disable_post_comments($post_id)
     {
-        global $db;
+        global $db, $system;
         /* (check|get) post */
         $post = $this->_check_post($post_id);
         if (!$post) {
@@ -7011,6 +7023,8 @@ class User
         }
         /* trun off post commenting */
         $db->query(sprintf("UPDATE posts SET comments_disabled = '1' WHERE post_id = %s", secure($post_id, 'int'))) or _error("SQL_ERROR_THROWEN");
+        $redisObject = new RedisClass();
+        updateReactions($system, $this, $redisObject, $post_id, $post['author_id']);
     }
 
 
@@ -7022,7 +7036,7 @@ class User
      */
     public function enable_post_comments($post_id)
     {
-        global $db;
+        global $db, $system;
         /* (check|get) post */
         $post = $this->_check_post($post_id);
         if (!$post) {
@@ -7034,6 +7048,8 @@ class User
         }
         /* trun on post commenting */
         $db->query(sprintf("UPDATE posts SET comments_disabled = '0' WHERE post_id = %s", secure($post_id, 'int'))) or _error("SQL_ERROR_THROWEN");
+        $redisObject = new RedisClass();
+        updateReactions($system, $this, $redisObject, $post_id, $post['author_id']);
     }
 
 
@@ -7168,7 +7184,7 @@ class User
      */
     public function boost_post($post_id)
     {
-        global $db;
+        global $db, $system;
         /* (check|get) post */
         $post = $this->_check_post($post_id);
         if (!$post) {
@@ -7188,10 +7204,16 @@ class User
         }
         /* boost post */
         if (!$post['boosted']) {
+            $redisObject = new RedisClass();
             /* boost post */
             $db->query(sprintf("UPDATE posts SET boosted = '1', boosted_by = %s WHERE post_id = %s", secure($this->_data['user_id'], 'int'), secure($post_id, 'int'))) or _error("SQL_ERROR_THROWEN");
+            updateReactions($system, $this, $redisObject, $post_id, $post['author_id']);
             /* update user */
             $db->query(sprintf("UPDATE users SET user_boosted_posts = user_boosted_posts + 1 WHERE user_id = %s", secure($this->_data['user_id'], 'int'))) or _error("SQL_ERROR_THROWEN");
+
+            $redisPostKey = 'user-' . $this->_data['user_id'];
+            $redisObject->deleteValueFromKey($redisPostKey);
+            cachedUserData($db, $system, $this->_data['user_id'], $this->_data['active_session_token']);
         }
     }
 
@@ -7204,7 +7226,7 @@ class User
      */
     public function unboost_post($post_id)
     {
-        global $db;
+        global $db, $system;
         /* (check|get) post */
         $post = $this->_check_post($post_id);
         if (!$post) {
@@ -7216,10 +7238,16 @@ class User
         }
         /* unboost post */
         if ($post['boosted']) {
+            $redisObject = new RedisClass();
             /* unboost post */
             $db->query(sprintf("UPDATE posts SET boosted = '0', boosted_by = NULL WHERE post_id = %s", secure($post_id, 'int'))) or _error("SQL_ERROR_THROWEN");
+            updateReactions($system, $this, $redisObject, $post_id, $post['author_id']);
             /* update user */
             $db->query(sprintf("UPDATE users SET user_boosted_posts = IF(user_boosted_posts=0,0,user_boosted_posts-1) WHERE user_id = %s", secure($this->_data['user_id'], 'int'))) or _error("SQL_ERROR_THROWEN");
+            $redisObject = new RedisClass();
+            $redisPostKey = 'user-' . $this->_data['user_id'];
+            $redisObject->deleteValueFromKey($redisPostKey);
+            cachedUserData($db, $system, $this->_data['user_id'], $this->_data['active_session_token']);
         }
     }
 
@@ -7232,7 +7260,7 @@ class User
      */
     public function pin_post($post_id)
     {
-        global $db;
+        global $db, $system;
         /* (check|get) post */
         $post = $this->_check_post($post_id);
         if (!$post) {
@@ -7266,6 +7294,10 @@ class User
                 } else {
                     /* update user */
                     $db->query(sprintf("UPDATE users SET user_pinned_post = %s WHERE user_id = %s", secure($post_id, 'int'), secure($post['author_id'], 'int'))) or _error("SQL_ERROR_THROWEN");
+                    $redisObject = new RedisClass();
+                    $redisPostKey = 'user-' . $this->_data['user_id'];
+                    $redisObject->deleteValueFromKey($redisPostKey);
+                    cachedUserData($db, $system, $this->_data['user_id'], $this->_data['active_session_token']);
                 }
             } else {
                 /* update page */
@@ -7283,7 +7315,7 @@ class User
      */
     public function unpin_post($post_id)
     {
-        global $db;
+        global $db, $system;
         /* (check|get) post */
         $post = $this->_check_post($post_id);
         if (!$post) {
@@ -7317,6 +7349,10 @@ class User
                 } else {
                     /* update user */
                     $db->query(sprintf("UPDATE users SET user_pinned_post = '0' WHERE user_id = %s", secure($post['user_id'], 'int'))) or _error("SQL_ERROR_THROWEN");
+                    $redisObject = new RedisClass();
+                    $redisPostKey = 'user-' . $this->_data['user_id'];
+                    $redisObject->deleteValueFromKey($redisPostKey);
+                    cachedUserData($db, $system, $this->_data['user_id'], $this->_data['active_session_token']);
                 }
             } else {
                 /* update page */
@@ -7390,58 +7426,7 @@ class User
         /* points balance */
         $this->points_balance("add", $this->_data['user_id'], "posts_reactions", $reaction_id);
 
-        $redisPostKey = 'user-' . $this->_data['user_id'] . '-posts';
-        fetchAndSetDataOnPostReaction($system, $this, $redisObject, $redisPostKey);
-
-        //profile post
-        $redisTimelinekey = 'profile-posts-' . $this->_data['user_id'];
-        fetchAndSetDataOnPostReaction($system, $this, $redisObject, $redisTimelinekey);
-
-        /* Get Curent user POst Array */
-        $redisTimelinekey = 'user-' . $this->_data['user_id'] . '-posts';
-        $getDataFromRedis = $redisObject->getValueFromKey($redisTimelinekey);
-        $jsonValue = json_decode($getDataFromRedis, true);
-        $arrayforrepalce = array();
-        if (count($jsonValue) > 0) {
-            $arrayforrepalce  = searchSubArray($jsonValue, 'post_id', $post_id);
-        }
-
-
-        /* Get Friend List and Updated Redis */
-        $idList = $this->get_friends_ids($post['author_id']);
-        $followId = $this->get_followings_ids($post['author_id']);
-        if ($this->_data['user_id'] !== $post['author_id']) {
-            array_push($idList, $post['author_id']);
-        }
-        $friendsList = array_unique(array_merge($followId, $idList));
-
-        foreach ($friendsList as $ids) {
-            $redisTimelinekey = 'user-' . $ids . '-posts'; //'profile-posts-' . $ids;
-            $isKeyExistOnRedis = $redisObject->isRedisKeyExist($redisTimelinekey);
-            if ($isKeyExistOnRedis) {
-                $getDataFromRedis = $redisObject->getValueFromKey($redisTimelinekey);
-                $jsonValue = json_decode($getDataFromRedis, true);
-                if (count($jsonValue) > 0 && count($arrayforrepalce) > 0) {
-                    $i = 0;
-                    foreach ($jsonValue as $values) {
-                        if ($jsonValue[$i]['post_id'] === $post_id) {
-                            $jsonValue[$i]['reactions'] = $arrayforrepalce['reactions'];
-                            $jsonValue[$i]["reaction_like_count"] = $arrayforrepalce['reaction_like_count'];
-                            $jsonValue[$i]["reaction_love_count"] = $arrayforrepalce['reaction_love_count'];
-                            $jsonValue[$i]["reaction_haha_count"] = $arrayforrepalce['reaction_haha_count'];
-                            $jsonValue[$i]["reaction_yay_count"] = $arrayforrepalce['reaction_yay_count'];
-                            $jsonValue[$i]["reaction_wow_count"] = $arrayforrepalce['reaction_wow_count'];
-                            $jsonValue[$i]["reaction_sad_count"] = $arrayforrepalce['reaction_sad_count'];
-                            $jsonValue[$i]["reaction_angry_count"] = $arrayforrepalce['reaction_angry_count'];
-                            $jsonValue[$i]["reactions_total_count"] = $arrayforrepalce['reactions_total_count'];
-                        }
-                        $i++;
-                    }
-                    $data = json_encode($jsonValue);
-                    $redisObject->setValueWithRedis($redisTimelinekey, $data);
-                }
-            }
-        }
+        updateReactions($system, $this, $redisObject, $post_id, $post['author_id']);
     }
 
 
@@ -7884,10 +7869,10 @@ class User
 
         //update response for author & its friends
 
-        //  $redisAuthorKey = 'user-' . $post['author_id'] . '-posts';
-        //  fetchAndSetDataOnPostReaction($system, $this,$redisObject,$redisAuthorKey);
-        //  $authorTimelineData = $redisObject->getValueFromKey($redisAuthorKey);
-        //  $decodedAuthorData = json_decode($authorTimelineData, TRUE);
+        $redisAuthorKey = 'user-' . $post['author_id'] . '-posts';
+        fetchAndSetDataOnPostReaction($system, $this, $redisObject, $redisAuthorKey);
+        $authorTimelineData = $redisObject->getValueFromKey($redisAuthorKey);
+        $decodedAuthorData = json_decode($authorTimelineData, TRUE);
         $newUpdate =  searchSubArray($decodedAuthorData, 'post_id', $poll['post_id']);
 
         $search_res = array_search($option_id, array_column($newUpdate['poll']['options'], 'option_id'));
@@ -8438,9 +8423,9 @@ class User
             array_push($ids, $post['author_id']);
         }
 
-            $followersId = $this->get_followings_ids($post['author_id']);
-            $idsList = array_unique(array_merge($ids, $followersId));
-      
+        $followersId = $this->get_followings_ids($post['author_id']);
+        $idsList = array_unique(array_merge($ids, $followersId));
+
         foreach ($idsList as $id) {
             $userKeys = 'user-' . $id . '-posts';
             $isUserExist = $redisObject->isRedisKeyExist($userKeys);
@@ -8592,7 +8577,7 @@ class User
      */
     public function delete_comment($comment_id)
     {
-        global $db,$system;
+        global $db, $system;
         /* (check|get) comment */
         $comment = $this->get_comment($comment_id);
         if (!$comment) {
@@ -8680,8 +8665,8 @@ class User
             if ($author_id !== $this->_data['user_id']) {
                 array_push($ids, $author_id);
             }
-             $followersId = $this->get_followings_ids($author_id);
-             $idsList = array_unique(array_merge($ids, $followersId));
+            $followersId = $this->get_followings_ids($author_id);
+            $idsList = array_unique(array_merge($ids, $followersId));
 
             foreach ($idsList as $id) {
                 $userKeys = 'user-' . $id . '-posts';
@@ -8693,7 +8678,7 @@ class User
 
                         if ($res['post_id'] == $node_id) {
                             // $search_res = array_search($comment_id, array_column($search_vals['post_comments'], 'comment_id'));
-                             $jsonValuesRes[$key]['comments'] = $updatedPostObject['comments'];
+                            $jsonValuesRes[$key]['comments'] = $updatedPostObject['comments'];
                             $jsonValuesRes[$key]['post_comments'] = $updatedPost;
                         }
                     }
@@ -8788,8 +8773,8 @@ class User
             array_push($ids, $author_id);
         }
 
-         $followersId = $this->get_followings_ids($post['author_id']);
-         $idsList = array_unique(array_merge($ids, $followersId));
+        $followersId = $this->get_followings_ids($author_id);
+        $idsList = array_unique(array_merge($ids, $followersId));
 
         foreach ($idsList as $id) {
             $userKeys = 'user-' . $id . '-posts';
@@ -8800,7 +8785,7 @@ class User
                 foreach ($jsonValuesRes  as $key => $res) {
 
                     if ($res['post_id'] == $node_id) {
-                         $jsonValuesRes[$key]['comments'] = $updatedPostObject['comments'];
+                        $jsonValuesRes[$key]['comments'] = $updatedPostObject['comments'];
                         $jsonValuesRes[$key]['post_comments'] = $updatedPostObject['post_comments'];
                     }
                 }
@@ -8846,18 +8831,18 @@ class User
      */
     public function react_comment($comment_id, $reaction)
     {
-        global $db, $date,$system;
+        global $db, $date, $system;
         /* check reation */
         if (!in_array($reaction, ['like', 'love', 'haha', 'yay', 'wow', 'sad', 'angry'])) {
             _error(403);
         }
         /* (check|get) comment */
         $comment = $this->get_comment($comment_id);
-        if($comment['node_type'] == 'post'){
-             $post_id = $comment['post']['post_id'];
-             $author_id =  $comment['post']['author_id'];
+        if ($comment['node_type'] == 'post') {
+            $post_id = $comment['post']['post_id'];
+            $author_id =  $comment['post']['author_id'];
         }
-      
+
         if (!$comment) {
             _error(403);
         }
@@ -8909,7 +8894,7 @@ class User
                 break;
         }
 
-              //Redis Block
+        //Redis Block
         $redisObject = new RedisClass();
         //update current logged in user response
         $redisKey = 'user-' . $this->_data['user_id'] . '-posts';
@@ -8929,8 +8914,8 @@ class User
             array_push($ids, $author_id);
         }
 
-         $followersId = $this->get_followings_ids($author_id);
-         $idsList = array_unique(array_merge($ids, $followersId));
+        $followersId = $this->get_followings_ids($author_id);
+        $idsList = array_unique(array_merge($ids, $followersId));
 
         foreach ($idsList as $id) {
             $userKeys = 'user-' . $id . '-posts';
@@ -8949,7 +8934,7 @@ class User
                 $redisObject->setValueWithRedis($userKeys, $jsonEncodedVals);
             }
         }
-       
+
         //Redis Block
 
     }
@@ -8964,7 +8949,7 @@ class User
      */
     public function unreact_comment($comment_id, $reaction)
     {
-        global $db,$system;
+        global $db, $system;
         /* check reation */
         if (!in_array($reaction, ['like', 'love', 'haha', 'yay', 'wow', 'sad', 'angry'])) {
             _error(403);
@@ -8974,9 +8959,9 @@ class User
         if (!$comment) {
             _error(403);
         }
-          if($comment['node_type'] == 'post'){
-             $post_id = $comment['post']['post_id'];
-             $author_id =  $comment['post']['author_id'];
+        if ($comment['node_type'] == 'post') {
+            $post_id = $comment['post']['post_id'];
+            $author_id =  $comment['post']['author_id'];
         }
         /* check blocking */
         if ($this->blocked($comment['author_id'])) {
@@ -9007,7 +8992,7 @@ class User
         }
 
 
-                      //Redis Block
+        //Redis Block
         $redisObject = new RedisClass();
         //update current logged in user response
         $redisKey = 'user-' . $this->_data['user_id'] . '-posts';
@@ -9016,7 +9001,8 @@ class User
         $decodeVal = json_decode($postUpdateFromRedis, TRUE);
         $updatedPostObject  = searchSubArray($decodeVal, 'post_id', $post_id);
 
-          print_r($updatedPostObject); die;
+        print_r($updatedPostObject);
+        die;
 
         $ids = $this->get_friends_ids($author_id);
 
@@ -9027,8 +9013,8 @@ class User
             array_push($ids, $author_id);
         }
 
-         $followersId = $this->get_followings_ids($author_id);
-         $idsList = array_unique(array_merge($ids, $followersId));
+        $followersId = $this->get_followings_ids($author_id);
+        $idsList = array_unique(array_merge($ids, $followersId));
 
         foreach ($idsList as $id) {
             $userKeys = 'user-' . $id . '-posts';
@@ -9047,7 +9033,7 @@ class User
                 $redisObject->setValueWithRedis($userKeys, $jsonEncodedVals);
             }
         }
-       
+
         //Redis Block
     }
 
@@ -9480,6 +9466,8 @@ class User
         //profile post
         $redisTimelinekey = 'profile-posts-' . $this->_data['user_id'];
         fetchAndSetDataOnPostReaction($system, $this, $redisObject, $redisTimelinekey);
+
+        //updateReactions($system, $this, $redisObject, $post_id, $post['author_id']);
     }
 
 
