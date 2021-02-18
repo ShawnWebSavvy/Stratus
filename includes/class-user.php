@@ -7604,6 +7604,7 @@ class User
         /* hide the post */
         $db->query(sprintf("INSERT INTO posts_hidden (user_id, post_id) VALUES (%s, %s)", secure($this->_data['user_id'], 'int'), secure($post_id, 'int'))) or _error("SQL_ERROR_THROWEN");
 
+
             $redisObject = new RedisClass();
             $userKey = 'user-' . $this->_data['user_id'] . '-posts';
             $getPostsFromRedis = $redisObject->getValueFromKey($userKey);
