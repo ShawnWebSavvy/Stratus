@@ -24,6 +24,6 @@
 	</div>
 	<!-- no posts -->
 </div>
+{/if}
 <script src="{$system['system_uploads_assets']}/content/themes/default/js/bricklayer.min.js"  {if !$user->_logged_in}defer{/if}></script>
 <script src="{$system['system_uploads_assets']}/content/themes/default/js/bricklayer-custom.js"  {if !$user->_logged_in}defer{/if}></script>
-{/if}
