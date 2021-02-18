@@ -2201,7 +2201,10 @@ $(function () {
                 current_page == "event")
             ) {
               location.reload();
-            } else if (response.callback) {
+            } else if (response.refresh="delete_single_post") {
+              window.location.replace(document.referrer)
+            }
+            else if (response.callback) {
               eval(response.callback);
             }
           },

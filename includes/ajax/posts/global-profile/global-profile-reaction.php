@@ -32,7 +32,10 @@ try {
 			$refresh = $userGlobal->delete_post($_POST['id']);
 			//if ($refresh) {
 			/* return */
-			$return['refresh'] = true;
+			if ($refresh) {
+				$return['refresh'] ="delete_single_post";
+			}
+			// $return['refresh'] = true;
 			//}
 			break;
 			/*
