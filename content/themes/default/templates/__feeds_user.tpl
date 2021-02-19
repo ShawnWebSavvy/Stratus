@@ -1,10 +1,9 @@
 {if $_tpl == "box"}
-<div class="col-md-6 col-lg-4 mb10">
+<div class="col-md-6 col-lg-4 mb10 {$_user['connection']}">
     <div class="ui-box">
         <div class="img">
             <a href="{$system['system_url']}/{$_user['user_name']}">
-                <img alt="{$_user['user_firstname']} {$_user['user_lastname']}"
-                    src="{$_user['user_picture']}" />
+                <img alt="{$_user['user_firstname']} {$_user['user_lastname']}" src="{$_user['user_picture']}" />
             </a>
         </div>
         <div class="mt10">
@@ -131,7 +130,7 @@
 {elseif $_tpl == "list"}
 <li class="feeds-item" {if $_user['id']}data-id="{$_user['id']}" {/if}>
     <div class="data-container searchSectionWrap">
-        <div class="_user_detail_sec">
+        <div class="_user_detail_sec hmmm">
             <div class="user__imgs">
                 <a class="data-avatar" href="{$system['system_url']}/{$_user['user_name']}{if $_search}?ref=qs{/if}">
                     <img class="lazyload" data-src="{$_user['user_picture']}"

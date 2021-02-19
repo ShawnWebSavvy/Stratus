@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="14px" height="11px" viewBox="0 0 14 11" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <title>Icon</title>
+    <defs>
+        <polygon id="path-1" points="13.2631579 2.94736842 4.42105263 11.7894737 0.368421053 7.73684211 1.40736842 6.69789474 4.42105263 9.70421053 12.2242105 1.90842105"></polygon>
+    </defs>
+    <g id="Work-In-Progress" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="Home/Local-Hub/Friends-profile-Copy" transform="translate(-1395.000000, -633.000000)">
+            <g id="Group-7" transform="translate(1137.000000, 151.000000)">
+                <g id="Elements/Suggested-Groups" transform="translate(6.000000, 418.000000)">
+                    <g id="User/02" transform="translate(0.000000, 50.000000)">
+                        <g id="Button" transform="translate(245.000000, 5.000000)">
+                            <g id="Icon" transform="translate(7.368421, 7.368421)">
+                                <mask id="mask-2" fill="white">
+                                    <use xlink:href="#path-1"></use>
+                                </mask>
+                                <use id="Shape" fill="#355DFF" xlink:href="#path-1"></use>
+                            </g>
+                        </g>
+                    </g>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>

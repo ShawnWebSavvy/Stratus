@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="14px" height="16px" viewBox="0 0 14 16" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <title>Path</title>
+    <g id="Symbols" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="assets/card-01" transform="translate(-200.000000, -129.000000)" fill="#FF4E4E" fill-rule="nonzero">
+            <g id="assets/％-growth-number" transform="translate(200.000000, 126.000000)">
+                <g id="arrow-up" transform="translate(0.000000, 3.000000)">
+                    <polygon id="Path" points="0.3 6.7 1.7 8.1 6 3.8 6 16 8 16 8 3.8 12.3 8.1 13.7 6.7 7 0"></polygon>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>
