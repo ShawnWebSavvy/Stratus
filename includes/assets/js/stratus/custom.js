@@ -1,7 +1,25 @@
+function onimgTagclick(e) {
+    const t = "body #" + $(e).attr("id"),
+        s = $(e).attr("data-video"),
+        a = $(e).attr("data-vid");
+    $(t).after(
+        '<video class="js_fluidplayer thumb_crsp_video_tag" id="video-' +
+        a +
+        '" onplay="update_media_views("video", ' +
+        a +
+        ')" controls  preload="auto" style="width:100%;height:100%;" width="100%" height="100%"><source src="' +
+        s +
+        '" type="video/mp4"><source src="' +
+        s +
+        '" type="video/webm"></video>'
+    ),
+        $("#hide_play_img" + a).hide(),
+        $(t).hide();
+}
 $(document).ready(function () {
-    $(window).scroll(function() {    
+    $(window).scroll(function () {
         var scroll = $(window).scrollTop();
-    
+
         if (scroll >= 100) {
             $("body").addClass("scrolled");
         } else {

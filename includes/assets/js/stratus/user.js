@@ -216,24 +216,7 @@ function init_picture_position() {
     var e = $(".js_position-cover-cropped").data("init-position");
     $(".profile-cover-wrapper").imagedrag({ position: e, input: ".js_position-picture-val" });
 }
-function onimgTagclick(e) {
-    const t = "body #" + $(e).attr("id"),
-        s = $(e).attr("data-video"),
-        a = $(e).attr("data-vid");
-    $(t).after(
-        '<video class="js_fluidplayer thumb_crsp_video_tag" id="video-' +
-        a +
-        '" onplay="update_media_views("video", ' +
-        a +
-        ')" controls  preload="auto" style="width:100%;height:100%;" width="100%" height="100%"><source src="' +
-        s +
-        '" type="video/mp4"><source src="' +
-        s +
-        '" type="video/webm"></video>'
-    ),
-        $("#hide_play_img" + a).hide(),
-        $(t).hide();
-}
+
 (api["data/live"] = ajax_path + "data/live.php"),
     (api["data/upload"] = ajax_path + "data/upload.php"),
     (api["data/reset"] = ajax_path + "data/reset.php"),
@@ -723,7 +706,7 @@ function onimgTagclick(e) {
                             } else if ("x-image" == handle) {
                                 var image_path = uploads_path + "/" + response.file;
                                 parent.css("background-image", "url(" + image_path + ")"), parent.find(".js_x-image-input").val(response.file).change(), parent.find("button").show();
-                                $("body .js_publisher").prop("disabled", !1); 
+                                $("body .js_publisher").prop("disabled", !1);
                             }
                         } else if ("video" == type)
                             if ("publisher" == handle) {
@@ -897,7 +880,7 @@ function onimgTagclick(e) {
                         });
                 }),
                 $("body").on("click", ".js_friend-accept, .js_friend-decline", function () {
-                
+
                     var id = $(this).data("uid"),
                         _this = $(this),
                         parent = $(this).parent(),
