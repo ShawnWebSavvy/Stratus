@@ -122,42 +122,42 @@ function load_more(element) {
             _this.addClass("loading"),
             text.hide(),
             loading.removeClass("x-hidden"),
-            $.post(
-                api["data/load"],
-                data,
-                function (response) {
-                    if ((_this.removeClass("loading"), text.show(), loading.addClass("x-hidden"), response.callback)) eval(response.callback);
-                    else if (response.data) {
-                        var datatta = response.data;
-                        var ArrayVal = datatta.split('<div class="carsds"');
-                        var loopArray = [];
-                        if (ArrayVal.length > 0) {
-                            for (var i = 1; i < ArrayVal.length; i++) {
-                                loopArray.push('<div class="carsds"' + ArrayVal[i])
-                            }
+            data.page = _this.data("page")
+        $.post(
+            api["data/load"],
+            data,
+            function (response) {
+                if ((_this.removeClass("loading"), text.show(), loading.addClass("x-hidden"), response.callback)) eval(response.callback);
+                else if (response.data) {
+                    var datatta = response.data;
+                    var ArrayVal = datatta.split('<div class="carsds"');
+                    var loopArray = [];
+                    if (ArrayVal.length > 0) {
+                        for (var i = 1; i < ArrayVal.length; i++) {
+                            loopArray.push('<div class="carsds"' + ArrayVal[i])
                         }
+                    }
 
-                        for (var ik = 0; ik < loopArray.length; ik++) {
-                            var values = loopArray[ik];
-                            var d = document.createElement('div');
-                            d.innerHTML = values;
-                            var valuesPost = d.firstChild;
-                            bricklayer.append(valuesPost)
-                        }
+                    for (var ik = 0; ik < loopArray.length; ik++) {
+                        var values = loopArray[ik];
+                        var d = document.createElement('div');
+                        d.innerHTML = values;
+                        var valuesPost = d.firstChild;
+                        bricklayer.append(valuesPost)
+                    }
 
-                        if ((data.offset++, response.append ? stream.append(response.data) : stream.prepend(response.data), $(window).width() > 1024)) {
-                            if ($("body #landing_feeds_post_ul").length > 0) var macyInstance = Macy({ container: ".feeds_post_ul", trueOrder: !0, columns: 2, waitForImages: !0 });
-                            if ($("body #feeds_post_ul").length > 0) var macyInstance = Macy({ container: ".feeds_post_ul", trueOrder: !0, columns: 2, waitForImages: !0 });
-                            stream.append(response.data)
-                        }
-                        setTimeout(photo_grid(), 200), "messages" == data.get && ((chat_widget = _this.parents(".chat-widget, .panel-messages")), color_chat_box(chat_widget, chat_widget.data("color")));
-                    } else remove ? _this.remove() : (_this.addClass("done"), text.text(__["There is no more data to show"]));
-                    _this.data("offset", data.offset);
-                },
-                "json"
-            ).fail(function () {
-                _this.removeClass("loading"), text.show(), loading.addClass("x-hidden"), modal("#modal-message", { title: __.Error, message: __["There is something that went wrong!"] });
-            });
+                    if ((data.offset++, response.append ? stream.append(response.data) : stream.prepend(response.data), $(window).width() > 1024)) {
+                        if ($("body #landing_feeds_post_ul").length > 0) var macyInstance = Macy({ container: ".feeds_post_ul", trueOrder: !0, columns: 2, waitForImages: !0 });
+                        if ($("body #feeds_post_ul").length > 0) var macyInstance = Macy({ container: ".feeds_post_ul", trueOrder: !0, columns: 2, waitForImages: !0 }); //macyInstance.recalculate();
+                    }
+                    setTimeout(photo_grid(), 200), "messages" == data.get && ((chat_widget = _this.parents(".chat-widget, .panel-messages")), color_chat_box(chat_widget, chat_widget.data("color")));
+                } else remove ? _this.remove() : (_this.addClass("done"), text.text(__["There is no more data to show"]));
+                _this.data("offset", data.offset);
+            },
+            "json"
+        ).fail(function () {
+            _this.removeClass("loading"), text.show(), loading.addClass("x-hidden"), modal("#modal-message", { title: __.Error, message: __["There is something that went wrong!"] });
+        });
     }
 }
 function photo_grid() {

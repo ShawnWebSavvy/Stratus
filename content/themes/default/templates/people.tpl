@@ -194,7 +194,7 @@
                                 <!-- see-more -->
 
                                 <div class="alert alert-info see-more js_see-more" data-uid="{$user->_data['user_id']}"
-                                    data-get="friends">
+                                    data-get="friends" data-page="people">
                                     <span>{__("Load More")}</span>
                                     <div class="loader loader_small x-hidden"></div>
                                 </div>

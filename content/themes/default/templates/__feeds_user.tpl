@@ -1,10 +1,9 @@
 {if $_tpl == "box"}
-<div class="col-md-6 col-lg-4 mb10">
+<div class="col-md-6 col-lg-4 mb10 {$_user['connection']}">
     <div class="ui-box">
         <div class="img">
             <a href="{$system['system_url']}/{$_user['user_name']}">
-                <img alt="{$_user['user_firstname']} {$_user['user_lastname']}"
-                    src="{$_user['user_picture']}" />
+                <img alt="{$_user['user_firstname']} {$_user['user_lastname']}" src="{$_user['user_picture']}" />
             </a>
         </div>
         <div class="mt10">

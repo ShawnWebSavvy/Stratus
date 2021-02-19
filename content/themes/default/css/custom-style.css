@@ -606,3 +606,12 @@ a.js_lightbox_custom {
     display: block !important;
     text-align: center;
 }
+img.stratus-thumbsrc {
+    object-fit: contain !important;
+    width: 100% !important;
+    height: 300px;
+}
+video.stratus-customvideo {
+    height: 350px !important;
+    width: 1000px !important;
+}

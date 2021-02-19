@@ -602,7 +602,7 @@
                </div>
             </div>
             <!-- content panel -->
-           <div class="col-md-12 col-xl-9 col-lg-8 js_conversation-container">
+            <div class="col-md-12 col-xl-9 col-lg-8 js_conversation-container">
                <!-- profile-tabs -->
                <div class="profile-header-tabs custom-tabs for-mobile">
                   <ul>
@@ -726,7 +726,7 @@
                            {if count($profile['friends']) >= $system['min_results_even']}
                            <!-- see-more -->
                            <div class="alert alert-info see-more mt0 mb20 js_see-more" data-get="friends"
-                              data-uid="{$profile['user_id']}">
+                              data-page="profile" data-uid="{$profile['user_id']}">
                               <span>{__("Load More")}</span>
                               <div class="loader loader_small x-hidden"></div>
                            </div>
