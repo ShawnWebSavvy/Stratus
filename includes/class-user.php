@@ -9653,7 +9653,7 @@ class User
             $album['cover']['blur'] = $cover['blur'];
         }
         /* get album total photos count */
-        // $get_album_photos_count = $db->query(sprintf("SELECT COUNT(*) as count FROM posts_photos WHERE album_id = %s", secure($album_id, 'int'))) or _error("SQL_ERROR");
+        $get_album_photos_count = $db->query(sprintf("SELECT COUNT(*) as count FROM posts_photos WHERE album_id = %s", secure($album_id, 'int'))) or _error("SQL_ERROR");
 
         $photoscnt = [];
         $get_photos = $db->query(sprintf("SELECT posts.user_id, posts.privacy FROM posts_photos INNER JOIN posts ON posts_photos.post_id = posts.post_id WHERE posts_photos.album_id = %s ORDER BY posts_photos.photo_id DESC LIMIT %s, %s", secure($album_id, 'int'), secure($offset, 'int', false), secure($system['max_results_even'], 'int', false))) or _error("SQL_ERROR_THROWEN");
@@ -9671,9 +9671,9 @@ class User
             }
         }
 
-        // $album['photos_count'] = $get_album_photos_count->fetch_assoc()['count'];
+        $album['photos_count'] = $get_album_photos_count->fetch_assoc()['count'];
         //echo count($photoscnt); die;
-        $album['photos_count'] = count($photoscnt);
+        // $album['photos_count'] = count($photoscnt);
 
         /* check if viewer can manage album [Edit|Update|Delete] */
         $album['is_page_admin'] = $this->check_page_adminship($this->_data['user_id'], $album['page_id']);
