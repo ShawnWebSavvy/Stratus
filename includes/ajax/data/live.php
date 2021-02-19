@@ -67,8 +67,10 @@ try {
 
 	// [4] check for new posts
 	if (isset($_POST['last_post']) && isset($_POST['custom_boosted'])) {
-		//print_r('here11111111'); die;
-	//	print_r($_POST); die;
+		// print_r('here11111111');
+		// die;
+		// print_r($_POST);
+		// die;
 
 		$boosted_posts = array();
 		// get boosted post
@@ -87,18 +89,18 @@ try {
 		if ($posts) {
 			//Redis Block
 			// $redisPostKey = 'user-' . $user->_data['user_id'] . '-posts';
-        	// $redisObject = new RedisClass();
+			// $redisObject = new RedisClass();
 			//  $isKeyExist = $redisObject->isRedisKeyExist($redisPostKey);
-            // if($isKeyExist == true){
+			// if($isKeyExist == true){
 			// 	$new_response = [];
 			// 	//$jsonEncData = json_encode($posts);
 			//     	$getPostsFromRedis = $redisObject->getValueFromKey($redisPostKey);
-            //     	$jsonValuesRes = json_decode($getPostsFromRedis, true);
+			//     	$jsonValuesRes = json_decode($getPostsFromRedis, true);
 			// 		foreach ($posts as $value) {
 			// 		  //$jsonValuesRes[] = $value;
 			// 		  array_unshift($jsonValuesRes , $value);
 			// 		}
-            		
+
 			// 		$new_response = json_encode($jsonValuesRes);
 			// 	    $redisObject->setValueWithRedis($redisPostKey, $new_response);
 			// }
@@ -119,7 +121,7 @@ try {
 
 	if (isset($_POST['last_post_pinned']) && isset($_POST['custom_pinned'])) {
 		/* get followers count */
-	
+
 
 
 		$profile['followers_count'] = count($user->get_followers_ids($profile['user_id']));
@@ -167,12 +169,17 @@ try {
 		}
 
 		/* get posts */
-		$posts_unpin = $user->get_posts(array('get' => 'posts_profile', 'id' => $user->_data['user_id']));
-		$user->get_boosted_all(array('get' => $_POST['get'], 'filter' => $_POST['filter'], 'id' => $profile['user_id'], 'last_post_id' => $_POST['last_post_pinned']));
+		//$posts_unpin = $user->get_posts(array('get' => 'posts_profile', 'id' => $user->_data['user_id']));
+		$posts_unpin = $user->get_boosted_all(array('get' => $_POST['get'], 'filter' => $_POST['filter'], 'id' => $profile['user_id'], 'last_post_id' => $_POST['last_post_boosted']));
 		$postsUnpin = array();
 		$pinnedPost = array();
 		$i = 0;
 		$k = 0;
+
+		if (empty($posts_unpin)) {
+			$posts_unpin = array();
+		}
+
 		if (count($posts_unpin) > 0) {
 			foreach ($posts_unpin as $post) {
 				if ($profile['user_pinned_post'] != $post['post_id']) {
@@ -193,8 +200,6 @@ try {
 		} else {
 			$posts = $postsUnpin;
 		}
-		// echo "<pre>";
-		// print_r($posts);
 
 		/* prepare publisher */
 		$smarty->assign('feelings', get_feelings());
@@ -211,36 +216,37 @@ try {
 		/* assign variables */
 		$smarty->assign('groups', $groups);
 		$smarty->assign("userpage", "profile");
-		/* assign variables */
 		$smarty->assign('posts', $posts);
+		/* assign variables */
 
 		/* return */
 		$return['posts'] = $smarty->fetch("ajax.posts.tpl");
 	}
 
+	/*Below COde commented by KK */
 	// [4] check for new posts
-	if (isset($_POST['last_post']) && !isset($_POST['custom_boosted'])) {
-		$posts = $user->get_posts(array('get' => $_POST['get'], 'filter' => $_POST['filter'], 'id' => $_POST['id'], 'last_post_id' => $_POST['last_post']));
-		if ($posts && !empty($posts)) {
-			/* get user pages */
-		
-			$posts = array_reverse($posts);
-			// echo '<pre>';print_r($posts);die;
-		
-			$pages = $user->get_pages(array('managed' => true, 'user_id' => $user->_data['user_id']));
-			$smarty->assign('pages', $pages);
-			/* get user pages */
-			$groups = $user->get_groups(array('get_all' => true, 'user_id' => $user->_data['user_id']));
-			/* assign variables */
-			$smarty->assign('groups', $groups);
-			/* assign variables */
-			$smarty->assign('posts', $posts);
-			/* return */
-			$return['posts'] = $smarty->fetch("ajax.posts.tpl");
-		}else{
-			$return['posts'] = "";
-		}
-	}
+	// if (isset($_POST['last_post']) && !isset($_POST['custom_boosted'])) {
+	// 	$posts = $user->get_posts(array('get' => $_POST['get'], 'filter' => $_POST['filter'], 'id' => $_POST['id'], 'last_post_id' => $_POST['last_post']));
+	// 	if ($posts && !empty($posts)) {
+	// 		/* get user pages */
+
+	// 		$posts = array_reverse($posts);
+	// 		// echo '<pre>';print_r($posts);die;
+
+	// 		$pages = $user->get_pages(array('managed' => true, 'user_id' => $user->_data['user_id']));
+	// 		$smarty->assign('pages', $pages);
+	// 		/* get user pages */
+	// 		$groups = $user->get_groups(array('get_all' => true, 'user_id' => $user->_data['user_id']));
+	// 		/* assign variables */
+	// 		$smarty->assign('groups', $groups);
+	// 		/* assign variables */
+	// 		$smarty->assign('posts', $posts);
+	// 		/* return */
+	// 		$return['posts'] = $smarty->fetch("ajax.posts.tpl");
+	// 	} else {
+	// 		$return['posts'] = "";
+	// 	}
+	// }
 
 	// return & exit
 	return_json($return);

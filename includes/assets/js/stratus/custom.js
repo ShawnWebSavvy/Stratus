@@ -3,7 +3,7 @@ function onimgTagclick(e) {
         s = $(e).attr("data-video"),
         a = $(e).attr("data-vid");
     $(t).after(
-        '<video class="js_fluidplayer thumb_crsp_video_tag" id="video-' +
+        '<video class="js_fluidplayer stratus-customvideo thumb_crsp_video_tag" id="video-' +
         a +
         '" onplay="update_media_views("video", ' +
         a +

@@ -63,14 +63,7 @@ try {
 	if ($profile['user_picture'] == "") {
 		$profile['user_picture'] = $system['system_url'] . '/content/themes/' . $system['theme'] . '/images/user_defoult_img.jpg';
 	}
-	// if ($user->_data['user_id'] == 3441) {
-	// echo "<pre>";
-	// print_r($user->_data);
-	// 	echo "<br>" . $profile['user_picture'];
-	// 	echo image_exist($profile['user_picture']);
-	// 	echo "</pre>";
-	// }
-	// die;
+
 	$profile['user_picture_lightbox'] = $user->check_privacy($profile['user_picture_privacy'], $profile['user_id']);
 	/* get profile cover */
 	$profile['user_cover_default'] = ($profile['user_cover']) ? false : true;
@@ -169,8 +162,6 @@ try {
 			/* get friends */
 			$profile['friends'] = $user->get_friends($profile['user_id']);
 			if (count($profile['friends']) > 0) {
-				//				$profile['friends_count'] = count($user->get_friends_ids($profile['user_id']));
-
 				$profile['friends_count'] = $user->get_friends_count($profile['user_id']);
 			}
 
