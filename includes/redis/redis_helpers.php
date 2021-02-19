@@ -366,7 +366,12 @@ function getAllStories($user_id, $userObj, $redisObject)
 
 function syncProfilePagePostsWithRedis($user_id, $user, $profile, $redisObject)
 {
-    $rediskeyname = 'profile-posts-' . $profile['user_id'];
+    if ($user->_data['user_id'] == $profile['user_id']) {
+        $rediskeyname = 'profile-posts-' . $profile['user_id'];
+    } else {
+        $rediskeyname = 'profile-posts-others-' . $profile['user_id'];
+    }
+
     $isKeyExistOnRedis = $redisObject->isRedisKeyExist($rediskeyname);
 
     // $redisObject->deleteValueFromKey($rediskeyname);

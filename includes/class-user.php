@@ -5051,11 +5051,12 @@ class User
             $arrayforrepalce = searchSubArray($decodePost, 'post_id', $post_id);
         }
         $redisPostProfileKey = 'profile-posts-' . $this->_data['user_id'];
-        $postsLists = $redisObject->getValueFromKey($redisPostProfileKey);
-        $decodePosts = json_decode($postsLists, TRUE);
-        array_unshift($decodePosts, $arrayforrepalce);
-        $encodedePosts = json_encode($decodePosts);
-        $redisObject->setValueWithRedis($redisPostProfileKey, $encodedePosts);
+        $redisObject->deleteValueFromKey($redisPostProfileKey);
+        // $postsLists = $redisObject->getValueFromKey($redisPostProfileKey);
+        // $decodePosts = json_decode($postsLists, TRUE);
+        // array_unshift($decodePosts, $arrayforrepalce);
+        // $encodedePosts = json_encode($decodePosts);
+        // $redisObject->setValueWithRedis($redisPostProfileKey, $encodedePosts);
 
         //Update Friends POST
         $postUpdateFromRedis = $redisObject->getValueFromKey($redisPostKey);
@@ -6973,6 +6974,12 @@ class User
         }
         /* set post as hidden */
         $db->query(sprintf("UPDATE posts SET is_hidden = '1' WHERE post_id = %s", secure($post_id, 'int'))) or _error("SQL_ERROR_THROWEN");
+        $redisObject = new RedisClass();
+        $rediskeyname = 'profile-posts-' . $post['author_id'];
+        $redisObject->deleteValueFromKey($rediskeyname);
+        $rediskeyname = 'profile-posts-others-' . $post['author_id'];
+        $redisObject->deleteValueFromKey($rediskeyname);
+        updateReactions($system, $this, $redisObject, $post_id, $post['author_id']);
     }
 
 
@@ -6984,7 +6991,7 @@ class User
      */
     public function allow_post($post_id)
     {
-        global $db;
+        global $db, $system;
         /* (check|get) post */
         $post = $this->_check_post($post_id);
         if (!$post) {
@@ -7000,6 +7007,12 @@ class User
         }
         /* set post as not hidden */
         $db->query(sprintf("UPDATE posts SET is_hidden = '0' WHERE post_id = %s", secure($post_id, 'int'))) or _error("SQL_ERROR_THROWEN");
+        $redisObject = new RedisClass();
+        $rediskeyname = 'profile-posts-' . $post['author_id'];
+        $redisObject->deleteValueFromKey($rediskeyname);
+        $rediskeyname = 'profile-posts-others-' . $post['author_id'];
+        $redisObject->deleteValueFromKey($rediskeyname);
+        updateReactions($system, $this, $redisObject, $post_id, $post['author_id']);
     }
 
 
