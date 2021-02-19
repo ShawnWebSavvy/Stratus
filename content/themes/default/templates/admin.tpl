@@ -110,6 +110,11 @@
                                                 <i class="fa fa-chart-pie fa-fw mr10"></i>{__("Investment Settings")}
                                             </a>
                                         </li>
+                                        <li {if $view=="settings" && $sub_view=="investment" }class="active" {/if}>
+                                            <a href="{$system['system_url']}/{$control_panel['url']}/settings/referral">
+                                                <i class="fa fa-chart-pie fa-fw mr10"></i>{__("Investment Referral Settings")}
+                                            </a>
+                                        </li>
                                     </ul>
                                 </div>
                             </li>

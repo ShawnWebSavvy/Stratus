@@ -207,6 +207,10 @@ try {
 					// page header
 					page_header($control_panel['title'] . " &rsaquo; " . __("Investment Settings"));
 					break;
+				case 'referral':
+					// page header
+					page_header($control_panel['title'] . " &rsaquo; " . __("Investment Referral Settings"));
+					break;
 				default:
 					_error(404);
 					break;
@@ -230,7 +234,6 @@ try {
 					case 'exchanges':
 						// page header
 						page_header($control_panel['title'] . " &rsaquo; " ."Investment Exchanges");
-	
 						// get data
 						require('includes/class-pager.php');
 						$exchanges = InvestmentHelper::getAdminExchangeDetail('investment/admin/settings/exchanges');
@@ -243,10 +246,16 @@ try {
 							$params['exchangeId'] = $_GET['exchange_id'];
 							$params['tradePair']= $_GET['trade'];
 							$detail = InvestmentHelper::getAdminSettingDetail('investment/admin/settings/fee/',$params);
+							
 							$price = $detail['price'];
 							$detail = $detail['list']['0'];
+							require('includes/investment-referral-helper.php');
+							// echo '<pre>'; print_r($detail);die;
+							$advanced = InvestmentReferralHelper::advanced_option($detail['referral_extend_bonus']);
+							// echo '<pre>'; print_r($advanced);die;
 							$smarty->assign('detail', $detail);
 							$smarty->assign('price', $price);
+							$smarty->assign('advanced', $advanced);
 							$smarty->assign('exchange_name', $_GET['exchange']);
 							$smarty->assign('exchange_id', $_GET['exchange_id']);
 							break;

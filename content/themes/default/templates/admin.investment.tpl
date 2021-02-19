@@ -246,7 +246,92 @@
                                 </div>
                             </div>
                         </div>
-
+                        <div class="form-group form-row">
+                            <div class="form-table-row">
+                            
+                                <div class="gaps-2x"></div>
+                                <div class="card-text ico-setting setting-token-referral">
+                                    <div class="row">
+                                        <div class="col-lg-3 col-sm-6">
+                                            <div class="input-item input-with-label">
+                                                <label class="form-control-label">Referral System</label>
+                                                <!-- <div class="input-wrap input-wrap-switch">
+                                                    <input class="input-switch switch-toggle" data-switch="switch-to-referral" name="referral_system" type="checkbox" {{ get_setting('referral_system')==1 ? 'checked ' : '' }}id="referral-system-enable">
+                                                    <label for="referral-system-enable"><span>Disable</span><span class="over">Enable</span></label>
+                                                </div> -->
+                                            </div>
+                                        </div>
+                                        <div class="col-12">
+                                            <div class="switch-content switch-to-referral">
+                                                <h5 class="card-title-sm text-secondary">Referral User <small class="ucap text-primary">(who referred)</small></h5>
+                                                <div class="row">
+                                                    
+                                                    <div class="col-lg-3 col-sm-6">
+                                                        <div class="input-item input-with-label">
+                                                            <label class="form-control-label">Offering Type</label>
+                                                            <div class="input-wrap">
+                                                                <h1>{$detail['referral_calc']}</h1>
+                                                                <select class="form-control" name="referral_calc">
+                                                                    <option { ($detail['referral_calc'] == 'percent')?'selected' : '' } value="percent">Percent</option>
+                                                                    <option { ($detail['referral_calc'] == 'fixed')?'selected' : ''  } value="fixed">Fixed/Flat</option>
+                                                                </select>
+                                                            </div>                                        
+                                                            <span class="form-control-label">Choose whether the referral bonus will calculated as percentage or fixed amount.</span>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-sm-12 col-lg-3">
+                                                        <div class="input-item input-with-label">
+                                                            <label class="form-control-label">Bonus - Offer Amount</label>
+                                                            <div class="input-wrap wide-15">
+                                                                <input type="number" class="form-control" min="0" name="referral_bonus" value="{$detail['referral_bonus']}">
+                                                                <span class="input-hint input-hint-lg"><span>&nbsp;&nbsp;</span></span>
+                                                            </div>
+                                                            <div class="form-control-label">Specify bonus amount for who referred.</div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                {if $advanced && $advanced->valid > 0 && $advanced->options}
+                                                <div class="sap sap-gap mt-3"></div>
+                                                <div class="row">
+                                                    <div class="col-12">
+                                                        <h5 class="card-title-sm text-secondary">Advanced Options</h5>
+                                                        <div class="row">
+                                                            {foreach $advanced->options as $opt}
+                                                        
+                                                            <div class="col-lg-4 col-sm-8" id="referral-level{$opt['id']}">
+                                                                <div class="input-item input-with-label">
+                                                                    <label class="form-control-label">{$opt['title']} - Bonus Offer</label>
+                                                                    <div class="row guttar-10px">
+                                                                        <div class="col-7">
+                                                                            <div class="input-wrap">
+                                                                                <select class="form-control" name="{$advanced->keys}[l{$opt['id']}][type]">
+                                                                                    <option { $opt['type'] == 'percent'? 'selected ' : '' } value="percent">Percent</option>
+                                                                                    <option { $opt['type'] == 'fixed'? 'selected ' : ''  }value="fixed">Fixed</option>
+                                                                                </select>
+                                                                            </div>
+                                                                        </div>
+                                                                        <div class="col-5">
+                                                                            <div class="input-wrap">
+                                                                                <input type="number" class="form-control" min="0" name="{$advanced->keys}[l{$opt['id']}][amount]" value="{$opt['amount']}">
+                                                                                <span class="input-hint input-hint-lg"><span>&nbsp;&nbsp;</span></span>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="input-note">Set '{$opt['title']}' bonus amount for each time.</div>
+                                                                </div>
+                                                            </div>
+                                                            {/foreach}
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                {/if}
+                                            </div>
+                                        </div>                                    
+                                    </div>
+                                        
+                                </div>
+                            </div>
+                        </div>
                         <!-- <div class="form-group form-row">
                             <label class="col-md-3 form-control-label">
                                 Activated
