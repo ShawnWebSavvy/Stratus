@@ -121,9 +121,6 @@ try {
 
 	if (isset($_POST['last_post_pinned']) && isset($_POST['custom_pinned'])) {
 		/* get followers count */
-
-
-
 		$profile['followers_count'] = count($user->get_followers_ids($profile['user_id']));
 
 		/* get custom fields */
@@ -221,32 +218,36 @@ try {
 
 		/* return */
 		$return['posts'] = $smarty->fetch("ajax.posts.tpl");
+		echo "<pre>";
+		print_r($return);
+		die;
+		return_json($return);
 	}
 
 	/*Below COde commented by KK */
 	// [4] check for new posts
-	// if (isset($_POST['last_post']) && !isset($_POST['custom_boosted'])) {
-	// 	$posts = $user->get_posts(array('get' => $_POST['get'], 'filter' => $_POST['filter'], 'id' => $_POST['id'], 'last_post_id' => $_POST['last_post']));
-	// 	if ($posts && !empty($posts)) {
-	// 		/* get user pages */
+	if (isset($_POST['last_post']) && !isset($_POST['custom_boosted'])) {
+		$posts = $user->get_posts(array('get' => $_POST['get'], 'filter' => $_POST['filter'], 'id' => $_POST['id'], 'last_post_id' => $_POST['last_post']));
+		if ($posts && !empty($posts)) {
+			/* get user pages */
 
-	// 		$posts = array_reverse($posts);
-	// 		// echo '<pre>';print_r($posts);die;
+			$posts = array_reverse($posts);
+			// echo '<pre>';print_r($posts);die;
 
-	// 		$pages = $user->get_pages(array('managed' => true, 'user_id' => $user->_data['user_id']));
-	// 		$smarty->assign('pages', $pages);
-	// 		/* get user pages */
-	// 		$groups = $user->get_groups(array('get_all' => true, 'user_id' => $user->_data['user_id']));
-	// 		/* assign variables */
-	// 		$smarty->assign('groups', $groups);
-	// 		/* assign variables */
-	// 		$smarty->assign('posts', $posts);
-	// 		/* return */
-	// 		$return['posts'] = $smarty->fetch("ajax.posts.tpl");
-	// 	} else {
-	// 		$return['posts'] = "";
-	// 	}
-	// }
+			$pages = $user->get_pages(array('managed' => true, 'user_id' => $user->_data['user_id']));
+			$smarty->assign('pages', $pages);
+			/* get user pages */
+			$groups = $user->get_groups(array('get_all' => true, 'user_id' => $user->_data['user_id']));
+			/* assign variables */
+			$smarty->assign('groups', $groups);
+			/* assign variables */
+			$smarty->assign('posts', $posts);
+			/* return */
+			$return['posts'] = $smarty->fetch("ajax.posts.tpl");
+		} else {
+			$return['posts'] = "";
+		}
+	}
 
 	// return & exit
 	return_json($return);

@@ -91,9 +91,9 @@ $get == 'discover' }
 {elseif $get == 'friends'}
 {foreach $data as $_user}
 {if $pageview == 'profile'}
-{include file='__feeds_user.tpl' _tpl="box" page="$pageview" _connection="remove"}
+{include file='__feeds_user.tpl' _tpl="box" page="$pageview" _connection=$_user["connection"]}
 {else}
-{include file='__feeds_user.tpl' _tpl="list" page="$pageview" _connection="remove"}
+{include file='__feeds_user.tpl' _tpl="list" page="$pageview" _connection=$_user["connection"]}
 {/if}
 {/foreach}
 

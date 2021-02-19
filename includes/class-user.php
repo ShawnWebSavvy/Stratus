@@ -6975,6 +6975,10 @@ class User
         /* set post as hidden */
         $db->query(sprintf("UPDATE posts SET is_hidden = '1' WHERE post_id = %s", secure($post_id, 'int'))) or _error("SQL_ERROR_THROWEN");
         $redisObject = new RedisClass();
+        $rediskeyname = 'profile-posts-' . $post['author_id'];
+        $redisObject->deleteValueFromKey($rediskeyname);
+        $rediskeyname = 'profile-posts-others-' . $post['author_id'];
+        $redisObject->deleteValueFromKey($rediskeyname);
         updateReactions($system, $this, $redisObject, $post_id, $post['author_id']);
     }
 
@@ -7004,6 +7008,10 @@ class User
         /* set post as not hidden */
         $db->query(sprintf("UPDATE posts SET is_hidden = '0' WHERE post_id = %s", secure($post_id, 'int'))) or _error("SQL_ERROR_THROWEN");
         $redisObject = new RedisClass();
+        $rediskeyname = 'profile-posts-' . $post['author_id'];
+        $redisObject->deleteValueFromKey($rediskeyname);
+        $rediskeyname = 'profile-posts-others-' . $post['author_id'];
+        $redisObject->deleteValueFromKey($rediskeyname);
         updateReactions($system, $this, $redisObject, $post_id, $post['author_id']);
     }
 
