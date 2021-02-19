@@ -16,7 +16,7 @@ define("DB_HOST", "localhost");
 // define("DB_PASSWORD", "cs3gnMHw");
 // define("DB_HOST", "10.1.0.16");
 define("DB_PORT", "3306");
-define("SYS_URL", "http://localhost/redis");
+define("SYS_URL", "http://localhost/stratus");
 //define("API_BASE_URL", "https://ws.stage-apollo.xyz/api");
 define("API_BASE_URL", "https://ws.knoxglobal.com/api");
 define("DEBUGGING", true);
