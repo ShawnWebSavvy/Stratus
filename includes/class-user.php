@@ -915,7 +915,7 @@ class User
         global $db, $system;
         $results = [];
         /* search users */
-        $searchUsers = sprintf('SELECT user_id, user_name, user_firstname, user_lastname, user_gender, user_picture, user_subscribed, user_verified FROM users WHERE user_firstname != "" AND user_name LIKE %1$s OR user_firstname LIKE %1$s OR user_lastname LIKE %1$s OR CONCAT(user_firstname,  " ", user_lastname) LIKE %1$s LIMIT %2$s', secure($query, 'search'), secure($system['min_results'], 'int', false));
+        $searchUsers = sprintf('SELECT user_id, user_name, user_firstname, user_lastname, user_gender, user_picture, picture_photo.source as user_picture_full, user_subscribed, user_verified FROM users LEFT JOIN posts_photos as picture_photo ON users.user_picture_id = picture_photo.photo_id WHERE user_firstname != "" AND user_name LIKE %1$s OR user_firstname LIKE %1$s OR user_lastname LIKE %1$s OR CONCAT(user_firstname,  " ", user_lastname) LIKE %1$s LIMIT %2$s', secure($query, 'search'), secure($system['min_results'], 'int', false));
         $get_users = $db->query($searchUsers) or _error("SQL_ERROR_THROWEN");
         if ($get_users->num_rows > 0) {
             while ($user = $get_users->fetch_assoc()) {
@@ -4529,6 +4529,7 @@ class User
         if ($get_stories->num_rows > 0) {
             while ($_story = $get_stories->fetch_assoc()) {
                 $story['id'] = $_story['story_id'];
+                $story['user_id'] = $_story['user_id'];
                 $story['photo'] = get_picture($_story['user_picture'], $_story['user_gender']);
                 $story['name'] = $_story['user_firstname'] . " " . $_story['user_lastname'];
                 $story['lastUpdated'] = strtotime($_story['time']);
@@ -4547,6 +4548,16 @@ class User
                 $stories[] = $story;
             }
         }
+//         echo "<pre>";
+// print_r($stories);
+        $searchResult = array_filter($stories, function ($story) {
+            return $story['user_id'] == $this->_data['user_id'];
+        });
+        
+        // $removeArray = array_keys($searchResult);
+        // unset($stories[$removeArray[0]]);
+        // array_unshift($stories, $searchResult[$removeArray[0]]);
+        //print_r($stories);die;
         return array("array" => $stories, "json" => json_encode($stories));
     }
 
@@ -6925,18 +6936,18 @@ class User
 
 
         //profile post
-         $redisTimelinekey = 'profile-posts-'.$this->_data['user_id'];
-            $timelineData = $redisObject->getValueFromKey($redisTimelinekey);
-            $decodeVal = json_decode($timelineData, TRUE);
-              foreach ($decodeVal  as $key => $res) {
-                    if ($res['post_id'] == $post_id) {
+        $redisTimelinekey = 'profile-posts-' . $this->_data['user_id'];
+        $timelineData = $redisObject->getValueFromKey($redisTimelinekey);
+        $decodeVal = json_decode($timelineData, TRUE);
+        foreach ($decodeVal  as $key => $res) {
+            if ($res['post_id'] == $post_id) {
 
-                        $decodeVal[$key] = $updatedPostObject;
-                    }
-                }
+                $decodeVal[$key] = $updatedPostObject;
+            }
+        }
 
-                $newJsonVals = json_encode($decodeVal);
-                $redisObject->setValueWithRedis($redisTimelinekey, $newJsonVals);
+        $newJsonVals = json_encode($decodeVal);
+        $redisObject->setValueWithRedis($redisTimelinekey, $newJsonVals);
 
         //Redis Block
         /* return */
