@@ -4875,6 +4875,47 @@
             </div>
         </form>
         <!-- Analytics -->
+     {elseif $sub_view == "investment"}
+
+        <!-- card-header -->
+        <div class="card-header with-icon">
+            <!-- panel title -->
+            <i class="fa fa-cog mr10"></i>{__("Settings")} &rsaquo; {__("Investment")}
+            <!-- panel title -->
+        </div>
+        <!-- card-header -->
+
+        <form class="js_ajax-forms admin-settings-analytics-form" data-url="admin/settings.php?edit=investment">
+            <div class="card-body">
+                <div class="form-table-row">
+                    <div class="avatar">
+                        {include file='__svg_icons.tpl' icon="website_live" width="40px" height="40px"}
+                    </div>
+                    <div>
+                        <div class="form-control-label h6">{__("Investment Module")}</div>
+                        <div class="form-text d-none d-sm-block">{__("Turn the entire Investment Module On and Off")}</div>
+                    </div>
+                    <div class="text-right">
+                        <label class="switch" for="investment_module_status">
+                            <input type="checkbox" name="investment_module_status" id="investment_module_status"
+                                {if $system['investment_module_status']}checked{/if}>
+                            <span class="slider round"></span>
+                        </label>
+                    </div>
+                </div>
+
+                <!-- success -->
+                <div class="alert alert-success mb0 x-hidden"></div>
+                <!-- success -->
+
+                <!-- error -->
+                <div class="alert alert-danger mb0 x-hidden"></div>
+                <!-- error -->
+            </div>
+            <div class="card-footer text-right">
+                <button type="submit" class="btn btn-success btn-antier-green">{__("Save Changes")}</button>
+            </div>
+        </form>
 
     {/if}
 

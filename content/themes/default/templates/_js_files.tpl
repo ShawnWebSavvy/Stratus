@@ -353,7 +353,7 @@
     <!-- Twilio -->
     <!-- Agora -->
     {if $system['live_enabled']}
-        <script src="https://cdn.agora.io/sdk/release/AgoraRTCSDK-3.2.1.js"></script>
+        <script src="https://cdn.agora.io/sdk/release/AgoraRTCSDK-3.4.0.js"></script>
     {/if}
     <!-- Agora -->
     <!-- Easytimer -->
@@ -369,6 +369,8 @@
         <script src="https://cdn.datatables.net/v/bs4/dt-1.10.20/datatables.min.js"></script>
     {/if}
     <!-- Datatables -->
+    <script src="{$system['system_url']}/includes/assets/js/plugins/swipeMobile/swipeMobile.js"></script>
+    <script type="text/javascript" src="http://mbostock.github.com/d3/d3.js?2.5.0"></script>
 
 {/if}
 <!-- Dependencies Plugins -->
@@ -386,6 +388,12 @@
     <script src="{$system['system_url']}/includes/assets/js/stratus/showads.js?{$cacheremovejs}" {if !$user->_logged_in}defer{/if}></script>
     {if $system['live_enabled'] && $page == "live"}
         <script src="{$system['system_url']}/includes/assets/js/stratus/live.js"></script>
+    {/if}
+    {if $page == "investment/activity" || $page == "investment/buy_sell"  || $page == "investment/index" }
+        <script src="{$system['system_url']}/includes/assets/js/stratus/investment.js?{$cacheremovejs}" defer></script>
+        <script src="{$system['system_uploads_assets']}/includes/assets/js/stratus/swipMobileCode.js?{$cacheremovejs}" defer></script>
+        <script src="{$system['system_url']}/includes/assets/js/plugins/graph/d3.js?{$cacheremovejs}" defer></script>
+        <script src="https://unpkg.com/flickity@2.2.2/dist/flickity.pkgd.min.js"></script>
     {/if}
 {/if}
 <!-- Sngine [JS] -->

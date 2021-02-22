@@ -105,11 +105,34 @@
                                                 <i class="fa fa-chart-pie fa-fw mr10"></i>{__("Analytics Settings")}
                                             </a>
                                         </li>
+                                        <li {if $view=="settings" && $sub_view=="investment" }class="active" {/if}>
+                                            <a href="{$system['system_url']}/{$control_panel['url']}/settings/investment">
+                                                <i class="fa fa-chart-pie fa-fw mr10"></i>{__("Investment Settings")}
+                                            </a>
+                                        </li>
                                     </ul>
                                 </div>
                             </li>
                             <!-- Settings -->
-
+                                <li> 
+                                <a href="#investment" data-toggle="collapse"> 
+                                    <i class="fa fa-money-bill-alt fa-fw mr10" style="color: #F44336"></i>Investment
+                                </a> 
+                                <div class="collapse  {if $view == "investment"}show{/if}" id="investment">
+                                    <ul>
+                                        <li  {if $view=="investment" && ($sub_view=="exchanges" || $sub_view=="exchange") }class="active"{/if}> 
+                                            <a href="{$system['system_url']}/{$control_panel['url']}/investment/exchanges">
+                                                List Exchanges
+                                            </a> 
+                                        </li>
+                                        <li  {if $view=="investment" && $sub_view=="transactions" }class="active"{/if}> 
+                                            <a href="{$system['system_url']}/{$control_panel['url']}/investment/transactions">
+                                                List Transactions
+                                            </a>
+                                        </li>
+                                    </ul>
+                                </div> 
+                            </li>
                             <!-- Themes -->
                             <li {if $view=="themes" }class="active" {/if}>
                                 <a href="{$system['system_url']}/{$control_panel['url']}/themes">

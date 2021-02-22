@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="311px" height="113px" viewBox="0 0 311 113" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <title>GraphChnage</title>
+    <g id="InvestPlatform" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="Home/Knox-PRO/Home" transform="translate(-696.000000, -816.000000)">
+            <g id="assets" transform="translate(279.000000, 619.000000)">
+                <g id="assets-board" transform="translate(0.000000, 72.000000)">
+                    <g id="assets/card-01-copy" transform="translate(394.000000, 0.000000)">
+                        <g id="GraphChnage" transform="translate(24.000000, 125.000000)">
+                            <text id="🤑Price-Copy" font-family="Helvetica" font-size="21" font-weight="normal" line-spacing="30" fill="#16161F">
+                                <tspan x="0" y="20">2.589.3 USD</tspan>
+                            </text>
+                            <g id="Group" transform="translate(0.000000, 40.000000)" stroke="#FF7A68" stroke-linecap="round" stroke-linejoin="round" stroke-width="2">
+                                <g id="assets/chart/01">
+                                    <path d="M0,72 C14.0764676,54.6374789 29.3259741,45.9562184 45.7485196,45.9562184 C70.3823378,45.9562184 73.7605525,62.889099 93.2565976,62.889099 C107.000393,62.889099 93.2219113,36 138.429151,36 C155.114808,36 187.567131,16.3332214 202.689493,16.3332214 C224.015745,16.3332214 217.755046,21.7387541 229.693018,20.6733704 C250.972805,18.7742925 253.083559,21.7387541 265.131405,16.3332214 C276.02987,11.4433841 286.619636,0 308.993641,0" id="line-chart" transform="translate(154.496820, 36.000000) scale(-1, 1) translate(-154.496820, -36.000000) "></path>
+                                </g>
+                            </g>
+                            <g id="Group" transform="translate(176.000000, 0.000000)">
+                                <g id="assets/％-growth-number" transform="translate(0.000000, 1.000000)">
+                                    <g id="arrow-up" transform="translate(7.000000, 11.000000) scale(1, -1) translate(-7.000000, -11.000000) translate(0.000000, 3.000000)" fill="#FF7A68" fill-rule="nonzero">
+                                        <polygon id="Path" points="0.3 6.7 1.7 8.1 6 3.8 6 16 8 16 8 3.8 12.3 8.1 13.7 6.7 7 0"></polygon>
+                                    </g>
+                                    <text id="％-growth" font-family="Helvetica" font-size="14" font-weight="normal" line-spacing="20" fill="#16161F">
+                                        <tspan x="22" y="14">-2.73%</tspan>
+                                    </text>
+                                </g>
+                            </g>
+                        </g>
+                    </g>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>

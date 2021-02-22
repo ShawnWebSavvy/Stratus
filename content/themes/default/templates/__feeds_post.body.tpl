@@ -852,7 +852,7 @@
             </div>
         </div>
         {elseif $_post['post_type'] == "video" && $_post['video']}
-        <div>
+        <div style="position: relative;">
             <!-- show thumbnail -->
             {if $_post['video']['thumbnail']}
             <img class="stratus-thumbsrc" onclick="onimgTagclick(this)" id="thumb_src_tag_{$_post['post_id']}"
@@ -909,7 +909,7 @@
                     $_post['live']['video_thumbnail']}poster="{$system['system_uploads']}/{$_post['live']['video_thumbnail']}"
                     {/if} controls preload="auto" controls preload="auto" style="width:100%;height:100%;" width="100%"
                     height="100%">
-                    <source src="{$system['system_agora_uploads']}/{$_post['live']['agora_file']}"
+                    <source src="{$system['system_uploads_assets']}/{$_post['live']['agora_file']}"
                         type="application/x-mpegURL">
                 </video>
             </div>
