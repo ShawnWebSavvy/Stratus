@@ -606,3 +606,6 @@ a.js_lightbox_custom {
     display: block !important;
     text-align: center;
 }
+.body-scroll-disabled{
+    overflow-y: hidden !important;
+}
