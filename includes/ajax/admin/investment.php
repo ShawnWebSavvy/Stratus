@@ -50,15 +50,16 @@ try {
             if($_POST['status']=='on'){
                 $params['is_active'] = 1;
             }
-           
             $params['markup'] = $_POST['markup_price'];
             $params['markdown'] = $_POST['markdown_price'];
 			$params['buy_fees'] = $_POST['buy_fees'];
 			$params['sell_fees'] = $_POST['sell_fees'];
 			$params['trade_pair'] = $_POST['trade'];
 			$params['exchangeId'] = $_POST['exchange_id'];
-			
-            // echo'<pre>';print_r($params) ;die;
+			$params['referral_calc'] = $_POST['referral_calc'];
+			$params['referral_bonus'] = $_POST['referral_bonus'];
+			$params['referral_extend_bonus'] = json_encode($_POST['referral_extend_bonus']);
+			// echo'<pre>';print_r($params) ;die;
 			$checkStoreDetails  = httpPostCurl('investment/admin/settings/save_settings',$system['investment_api_base_url'],$params);
 			// $checkStoreDetails  = httpPostCurl('investment/admin/settings/save_settings','localhost:3018/',$params);
             if (!isset($checkStoreDetails['error'])) {

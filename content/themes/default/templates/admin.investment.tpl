@@ -270,10 +270,10 @@
                                                         <div class="input-item input-with-label">
                                                             <label class="form-control-label">Offering Type</label>
                                                             <div class="input-wrap">
-                                                                <h1>{$detail['referral_calc']}</h1>
+                                                               
                                                                 <select class="form-control" name="referral_calc">
-                                                                    <option { ($detail['referral_calc'] == 'percent')?'selected' : '' } value="percent">Percent</option>
-                                                                    <option { ($detail['referral_calc'] == 'fixed')?'selected' : ''  } value="fixed">Fixed/Flat</option>
+                                                                    <option {if $detail['referral_calc'] == 'percent'} selected {/if} value="percent">Percent</option>
+                                                                    <option {if $detail['referral_calc'] == 'fixed'} selected {/if} value="fixed">Fixed/Flat</option>
                                                                 </select>
                                                             </div>                                        
                                                             <span class="form-control-label">Choose whether the referral bonus will calculated as percentage or fixed amount.</span>
@@ -283,7 +283,7 @@
                                                         <div class="input-item input-with-label">
                                                             <label class="form-control-label">Bonus - Offer Amount</label>
                                                             <div class="input-wrap wide-15">
-                                                                <input type="number" class="form-control" min="0" name="referral_bonus" value="{$detail['referral_bonus']}">
+                                                                <input type="number" class="form-control" min="0" name="referral_bonus" value="{$detail['referral_bonus']}" oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*?)\..*/g, '$1');">
                                                                 <span class="input-hint input-hint-lg"><span>&nbsp;&nbsp;</span></span>
                                                             </div>
                                                             <div class="form-control-label">Specify bonus amount for who referred.</div>
@@ -305,14 +305,14 @@
                                                                         <div class="col-7">
                                                                             <div class="input-wrap">
                                                                                 <select class="form-control" name="{$advanced->keys}[l{$opt['id']}][type]">
-                                                                                    <option { $opt['type'] == 'percent'? 'selected ' : '' } value="percent">Percent</option>
-                                                                                    <option { $opt['type'] == 'fixed'? 'selected ' : ''  }value="fixed">Fixed</option>
+                                                                                    <option {if $opt['type'] == 'percent'} selected {/if} value="percent">Percent</option>
+                                                                                    <option {if $opt['type'] == 'fixed'} selected {/if} value="fixed">Fixed</option>
                                                                                 </select>
                                                                             </div>
                                                                         </div>
                                                                         <div class="col-5">
                                                                             <div class="input-wrap">
-                                                                                <input type="number" class="form-control" min="0" name="{$advanced->keys}[l{$opt['id']}][amount]" value="{$opt['amount']}">
+                                                                                <input type="number" class="form-control" min="0" name="{$advanced->keys}[l{$opt['id']}][amount]" value="{$opt['amount']}" oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*?)\..*/g, '$1');">
                                                                                 <span class="input-hint input-hint-lg"><span>&nbsp;&nbsp;</span></span>
                                                                             </div>
                                                                         </div>
