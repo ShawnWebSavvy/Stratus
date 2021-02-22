@@ -852,7 +852,7 @@
             </div>
         </div>
         {elseif $_post['post_type'] == "video" && $_post['video']}
-        <div>
+        <div style="position: relative;">
             <!-- show thumbnail -->
             {if $_post['video']['thumbnail']}
             <img class="stratus-thumbsrc" onclick="onimgTagclick(this)" id="thumb_src_tag_{$_post['post_id']}"

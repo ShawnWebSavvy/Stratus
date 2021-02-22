@@ -718,7 +718,7 @@
                         </div>
                         <div class="card-body pb0">
                            {if $profile['friends_count'] > 0}
-                           <ul class="row">
+                           <ul class="row wrverv">
                               {foreach $profile['friends'] as $_user}
                               {include file='__feeds_user.tpl' _tpl="box" _connection=$_user["connection"]}
                               {/foreach}
