@@ -69,11 +69,11 @@ class InvestmentHelper {
         return $return;
     }
 
-    public static function buySellOrder($params){
-        global $db,$system;
-        $result  =  httpPostCurl('investment/place_order/',$system['investment_api_base_url'],$params);
-        return $result;
-    }
+    // public static function buySellOrder($params){
+    //     global $db,$system;
+    //     $result  =  httpPostCurl('investment/place_order/',$system['investment_api_base_url'],$params);
+    //     return $result;
+    // }
         
     public static function savePurchaseTokenOrder($action,$token_name,$token_value,$amount,$user_data){
         global $db,$system;   
@@ -81,16 +81,34 @@ class InvestmentHelper {
             $params['symbol'] = strtoupper($_POST['token_name']).'_USDT';
             $params['side'] = 'buy'; 
             $token_price = self::get_ticker_price(strtoupper($token_name));
+            
             $token_value=round($amount/$token_price['data']['buy_price'], 5);
-            $fees = 1;
             $fees        = $token_price['data']['buy_fees'];
             $fees_token = round($token_value*$fees/100,5);
             $receive_token = round($token_value-$fees_token,5);
             $params['size'] = $receive_token;
-            $result = InvestmentHelper::buySellOrder($params);
-            // $order_id = rand(999,99999);
-            if(isset($result['data']['data']['order_id'])){
+
+            /*
+
+            */
+            require('investment-referral-helper.php');
+            $transaction = [];
+            $transaction['id'] = 1;
+            $transaction['user'] = $user_data['user_id'];
+            $transaction['token_price'] = $amount;
+            $transaction['token_name'] = $_POST['token_name'];
+            $referral  = new InvestmentReferralHelper((object)$transaction);
+            $referral->addToken('refer_by');
+
+
+
+
+
+            // $result = InvestmentHelper::buySellOrder($params);
+            $order_id = rand(999,99999);
+            // if(isset($result['data']['data']['order_id'])){
             // if(isset($order_id)){
+                // $order_id = $result['data']['data']['order_id'];
                 $db->query(sprintf("INSERT INTO investment_transactions (user_id, order_id, tokens, currency, tnx_type ,amount, receive_amount, recieve_token, fees, status) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s)", secure($user_data['user_id'], 'int'), secure($order_id), secure($token_value), secure($token_name), secure($action),secure($amount),secure($amount), secure($receive_token), secure($fees), secure('completed') )) or _error("SQL_ERROR_THROWEN");
                 $investment_id = $db->insert_id;
                 if($investment_id){
@@ -100,12 +118,22 @@ class InvestmentHelper {
                     $wallet_name =$token_name.'_wallet';
                     // die($receive_token);
                     $db->query(sprintf("UPDATE users SET $wallet_name = $wallet_name + %s WHERE user_id = %s", secure($receive_token), secure($user_data['user_id'], 'int'))) or _error("SQL_ERROR_THROWEN");
+                    //Referral System
+                    // require('investment-referral-helper.php');
+                    // $transaction = [];
+                    // $transaction['id'] = $investment_id;
+                    // $transaction['user'] = $user_data['user_id'];
+                    // $transaction['token_price'] = $token_price;
+                    // $transaction['token_name'] = $_POST['token_name'];
+                    // $referral  = new InvestmentReferralHelper((object)$transaction);
+                    // $referral->addToken('refer_by');
+
                 }
                 return true;
                 // echo '<pre>'; print_r($save); die;
-            }else{
-                return false;
-            }
+            // }else{
+            //     return false;
+            // }
             
         }catch(Exception $e){
             // echo '<pre>'; print_r($e); die;
@@ -129,6 +157,7 @@ class InvestmentHelper {
             $result = InvestmentHelper::buySellOrder($params);
             // $order_id = rand(999,99999);
             if(isset($result['data']['data']['order_id'])){
+                $order_id = $result['data']['data']['order_id'];
             // if(isset($order_id)){
                 $db->query(sprintf("INSERT INTO investment_transactions (user_id, order_id, tokens, currency, tnx_type ,amount, receive_amount, recieve_token, fees, status) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s)", secure($user_data['user_id'], 'int'), secure($order_id), secure($token_value), secure($token_name), secure($action),secure($amount),secure($receive_amount), secure($token_value), secure($fees), secure('completed') )) or _error("SQL_ERROR_THROWEN");
                 $investment_id = $db->insert_id;
@@ -148,24 +177,10 @@ class InvestmentHelper {
             
         }catch(Exception $e){
             // echo '<pre>'; print_r($e); die;
-            return $false;
+            return false;
         }
         
     }
-
-    // public static function getAllActiveTokens(){
-    //     global $db,$system;
-    //     $tokens = $db->query("SELECT * FROM investment_coins") or _error("SQL_ERROR_THROWEN");
-    //     $return = [];
-    //     if ($tokens->num_rows > 0) {
-    //         while ($token = $tokens->fetch_assoc()) {
-    //             $token['wallet_name'] = $token['short_name'].'_wallet';
-    //             $return[] = $token;
-                
-    //         }
-    //     }
-    //     return $return;
-    // }
 
     public static function getAdminExchangeDetail($api_suffix)
     {   

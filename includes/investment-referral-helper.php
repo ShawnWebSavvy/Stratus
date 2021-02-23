@@ -3,15 +3,23 @@
 class InvestmentReferralHelper
 {
 	protected $transaction;
-	public function __construct(Transaction $transaction)
-	{
-		$this->transaction = $transaction;
+    protected $referralSeting;
+    public function __construct($transaction)
+	{   
+        global $db, $system;
+        $this->transaction = $transaction;
+        $referral  =  httpGetCurl('investment/get_referral_setting/'.$transaction->token_name.'_usdt',$system['investment_api_base_url']);
+        if (!isset($referral['referral_calc'])) {
+            throw new Exception(__("Something Went Wrong!! Please try again"));
+        }
+        $this->referralSeting = $referral;
  	}
 
  	public function addToken($action='refer_by') {
+                //  echo '<pre>'; print_r($this->getWhoRefer());die;
 		if($this->getWhoRefer() == false) return false;
 
-		$actions = ['refer_to']; 
+		$actions = ['refer_by']; 
 		if(!in_array($action, $actions)) return false;
 
         return $this->addReferralBonuses($this->transaction->user);
@@ -48,117 +56,97 @@ class InvestmentReferralHelper
 
     /* @function createTransaction()  @version v1.1  @since 1.0.3 */
 	protected function createTransaction($level, $user_id, $prev_user=null) {
-		
-        $token = $this->calculate($level);
-        $unsold = IcoStage::get_stages($this->transaction->stage)->unsold;
+        global $db, $system;
+   
+        $amount = $this->calculate($level);
+        // echo '<pre>'; print_r($level); die;
 
-        if($token < 1) return false;
-        if($token > $unsold) return false;
+        if($amount < 0) return false;
+        // if($token > $unsold) return false;
 
-        $tc = new TC();
-        $transaction = null;
-        $stage = $this->transaction->stage;
-        $currency = $this->transaction->currency;
-        $currency_rate = $this->transaction->currency_rate;
-        $base_currency = $this->transaction->base_currency;
-        $base_currency_rate = $this->transaction->base_currency_rate;
-        $token_add = round($token, min_decimal());
-        $token_price = round($tc->calc_token($token, 'price')->$currency, max_decimal());
-        $zero_level = ($level=='lv0'||$level=='level0') ? true : false;
-
-        $save_data = [
-            'created_at' => now()->toDateTimeString(),
-            'tnx_id' => set_id(rand(100, 999), 'trnx'),
-            'tnx_type' => ($zero_level==true) ? 'bonus' : 'referral',
-            'tnx_time' => now()->toDateTimeString(),
-            'tokens' => $token_add,
-            'bonus_on_base' => 0,
-            'bonus_on_token' => 0,
-            'total_bonus' => 0,
-            'total_tokens' => $token_add,
-            'stage' => $stage,
-            'user' => $user_id,
-            'amount' => $token_price,
-            'base_amount' => 0,
-            'base_currency' => $base_currency,
-            'base_currency_rate' => $base_currency_rate,
-            'currency' => $currency,
-            'currency_rate' => $currency_rate,
-            'receive_currency' => null,
-            'all_currency_rate' => null,
-            'payment_method' => 'system',
-            'payment_to' => '',
-            'added_by' => set_added_by('00'),
-            'checked_by' => json_encode(['name' => 'System', 'id' => '0']),
-            'checked_time' => now()->toDateTimeString(),
-            'details' => ($zero_level==true) ? 'Bonus Token for Referral Join' : 'Referral Bonus on Token Purchase',
-            'extra' => json_encode($this->getBonusMeta($level, $user_id, $prev_user)),
-            'status' => 'new',
-        ];
-
-        // $transaction = (object) $save_data;
-        $iid = Transaction::insertGetId($save_data);
-        if ($iid != null) {
-            $transaction = Transaction::where('id', $iid)->first();
-            $transaction->tnx_id = set_id($iid, 'trnx');
-            $transaction->status = 'approved';
-            $transaction->save();
-
-            IcoStage::token_add_to_account($transaction, 'add');
-            IcoStage::token_add_to_account($transaction, null, 'add');
-        } else {
-            Transaction::where('id', $iid)->delete();
+        try{
+            $transaction = null;
+            $zero_level = ($level=='lv0'||$level=='level0') ? true : false;
+            $order_id = rand(100, 9999);
+         
+            $base_currency = 'usd';
+            $currency = NULL;
+            $tnx_type = ($zero_level==true) ? 'bonus' : 'referral';
+    
+            $details = ($zero_level==true) ? 'Bonus Token for Referral Join' : 'Referral Bonus on Token Purchase';
+            $extra = json_encode($this->getBonusMeta($level, $user_id, $prev_user));
+        
+            $db->query(sprintf("INSERT INTO investment_transactions (user_id, order_id, base_currency, tnx_type ,amount, receive_amount, details, extra, status) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s)", secure($user_id, 'int'), secure($order_id), secure($base_currency), secure($tnx_type),secure($amount),secure($amount), secure($details), secure($extra), secure('completed') )) or _error("SQL_ERROR_THROWEN");
+            
+            $investment_id = $db->insert_id;
+            if($investment_id){
+                // die($db->insert_id.'enter');
+                $db->query(sprintf("INSERT INTO ads_users_wallet_transactions (user_id, investment_id, node_type, node_id, amount, type, date,paymentMode) VALUES (%s, %s, %s, %s, %s, %s, %s, %s)", secure($user_data['user_id'], 'int'), secure($investment_id), secure('Investment Referral Bonus'), secure(0, 'int'), secure($amount), secure('in'), secure(date('Y-m-d h:i:m')), secure('wallet'))) or _error("SQL_ERROR_THROWEN");
+                $db->query(sprintf("UPDATE users SET user_wallet_balance = user_wallet_balance + $amount, refer_bonus = refer_bonus + $amount WHERE user_id = $user_id")) or _error("SQL_ERROR_THROWEN");
+                $transaction =  $db->query(sprintf("SELECT * from investment_transactions WHERE id = %s",secure($investment_id))) or _error("SQL_ERROR_THROWEN");
+                if ($transaction->num_rows > 0) {
+                    $order_id = printf('%06s', $investment_id);
+                    $db->query(sprintf("UPDATE investment_transactions SET order_id = %s WHERE id = %s", secure($order_id),  secure($investment_id, 'int'))) or _error("SQL_ERROR_THROWEN");
+                    $transaction =  (object)$transaction->fetch_assoc();
+                    $transaction->order_id = $order_id;
+                }
+            }else{
+                $db->query(sprintf('DELETE from investment_transactions WHERE id = $investment_id'));
+            }      
+            return $transaction;
+        }catch(Exception $e){
+            die($e);
         }
-        return $transaction;
+       
 	}
 
     protected function addReferralBonuses($user_id) {
         $return = []; 
         $referrals = $this->getSettings('all');
-        $prev_user = $refer_by = $is_allowed = null;
+                // echo'<pre>'; print_r($referrals); die;
+        $prev_user = $refer_by = null;
 
         foreach ($referrals as $ref) {
             $TNX = null;
             $level = 'lv'.$ref->level;
         
             if(!empty($user_id)) {
-                $is_allowed = $this->isBonusAllow($level, $user_id);
                 
                 $refer_user = $this->getWhoRefer($user_id) ?? null;
                 $refer_by   = (isset($refer_user->id)) ? $refer_user->id : false;
 
-                if($is_allowed==true) {
-                    $TNX = $this->createTransaction($level, $user_id, $prev_user);
-                    if(!empty($TNX)) {
-                        $user_token = (double)(($TNX->user==$this->transaction->user) ? $TNX->total_tokens : 0);
-                        $refer_token = (double)(($TNX->user==$this->transaction->user) ? 0 : $TNX->total_tokens);
+                $TNX = $this->createTransaction($level, $user_id, $prev_user);
+                // echo '<pre>'; print_r($TNX);die;
+                // if(!empty($TNX)) {
+                //     $user_token = (double)(($TNX->user_id==$this->transaction->user_id) ? $TNX->amount : 0);
+                //     $refer_token = (double)(($TNX->user_id==$this->transaction->user_id) ? 0 : $TNX->total_tokens);
 
-                        if($refer_by==false) {
-                            $refAcc = Referral::where(['user_id' => $TNX->user])->first(); 
-                            $user_bonus = (isset($refAcc->user_bonus) ? ((double)$refAcc->user_bonus + $user_token) : $user_token);
-                            $refer_bonus = (isset($refAcc->refer_bonus) ? ((double)$refAcc->refer_bonus + $refer_token) : $refer_token);
-                            $updateRef = Referral::updateOrCreate(
-                                ['user_id' => $TNX->user], 
-                                ['user_bonus' => $user_bonus, 'refer_bonus' => $refer_bonus]
-                            );
-                            if($updateRef->refer_by==null) {
-                                $updateRef->refer_by = 0;
-                                $updateRef->save();
-                            }
-                        } else {
-                            $refAcc = Referral::where(['user_id' => $TNX->user, 'refer_by' => $refer_by])->first();
-                            $user_bonus = (isset($refAcc->user_bonus) ? ((double)$refAcc->user_bonus + $user_token) : $user_token);
-                            $refer_bonus = (isset($refAcc->refer_bonus) ? ((double)$refAcc->refer_bonus + $refer_token) : $refer_token);
-                            Referral::updateOrCreate(
-                                ['user_id' => $TNX->user, 'refer_by' => $refer_by], 
-                                ['user_bonus' => $user_bonus, 'refer_bonus' => $refer_bonus]
-                            );
-                        }
-                    }
-                }
+                //     if($refer_by==false) {
+                //         $refAcc = Referral::where(['user_id' => $TNX->user])->first(); 
+                //         $user_bonus = (isset($refAcc->user_bonus) ? ((double)$refAcc->user_bonus + $user_token) : $user_token);
+                //         $refer_bonus = (isset($refAcc->refer_bonus) ? ((double)$refAcc->refer_bonus + $refer_token) : $refer_token);
+                //         $updateRef = Referral::updateOrCreate(
+                //             ['user_id' => $TNX->user], 
+                //             ['user_bonus' => $user_bonus, 'refer_bonus' => $refer_bonus]
+                //         );
+                //         if($updateRef->refer_by==null) {
+                //             $updateRef->refer_by = 0;
+                //             $updateRef->save();
+                //         }
+                //     } else {
+                //         $refAcc = Referral::where(['user_id' => $TNX->user, 'refer_by' => $refer_by])->first();
+                //         $user_bonus = (isset($refAcc->user_bonus) ? ((double)$refAcc->user_bonus + $user_token) : $user_token);
+                //         $refer_bonus = (isset($refAcc->refer_bonus) ? ((double)$refAcc->refer_bonus + $refer_token) : $refer_token);
+                //         Referral::updateOrCreate(
+                //             ['user_id' => $TNX->user, 'refer_by' => $refer_by], 
+                //             ['user_bonus' => $user_bonus, 'refer_bonus' => $refer_bonus]
+                //         );
+                //     }
+                // }
+            
             }
 
-            $return[] = ['level' => $ref->level, 'user' => $user_id, 'allowed' => $is_allowed, 'token' => ($TNX->total_tokens ?? 0), 'prev' => ($prev_user ?? 0), 'next' => $refer_by, 'status' => (($TNX) ? true : false), 'tranx' => ($TNX ?? null)];
+            $return[] = ['level' => $ref->level, 'user' => $user_id, 'token' => ($TNX->total_tokens ?? 0), 'prev' => ($prev_user ?? 0), 'next' => $refer_by, 'status' => (($TNX) ? true : false), 'tranx' => ($TNX ?? null)];
             $prev_user = $user_id; $user_id = $refer_by;
             if(empty($refer_by)) break;
         }
@@ -167,13 +155,20 @@ class InvestmentReferralHelper
     }
 
 	protected function getWhoRefer($user_id=null) {
+        global $db,$system;   
         $refer = false;
         $user = (empty($user_id)) ? $this->transaction->user : $user_id;
-        $get_user = User::where('id', $user)->select(['id', 'name', 'email', 'tokenBalance', 'referral'])->first();
-    
-        if(!empty($get_user->referral) && (!$get_user->referee == null)){
-            $refer = $get_user->referee ?? User::find($get_user->referral);
+        // $get_user = User::where('id', $user)->select(['id', 'name', 'email', 'tokenBalance', 'referral'])->first();
+        $get_user = $db->query(sprintf("SELECT * from  users WHERE user_id = %s", secure($user, 'int'))) or _error("SQL_ERROR_THROWEN");
+        if ($get_user->num_rows == 0) {
+            return false;
         }
+        $get_user =  $get_user->fetch_assoc();
+
+        if(!empty($get_user['user_referrer_id']) && (!$get_user['user_referrer_id'] == null)){
+            $refer = $get_user['user_referrer_id'] ?$get_user['user_referrer_id']:'';
+        }
+
 		return (!empty($refer)) ? $refer : false;
 	}
 
@@ -216,7 +211,8 @@ class InvestmentReferralHelper
 
     private function getAmount($level='lv1') : float {
         $percent = $this->getType($level, 'percent');
-    	$bonus = $this->getSettings($level, 'bonus');
+        $bonus = $this->getSettings($level, 'bonus');
+       
         $amount = ($percent && $bonus > 100) ? 100 : $bonus;
         return abs($amount);
     }
@@ -224,10 +220,9 @@ class InvestmentReferralHelper
     protected function calcAmount($level='lv1') {
         $percent = $this->getType($level, 'percent');
         $amount = $this->getAmount($level);
-
         if($percent==true) {
-            $tokens = $this->transaction->tokens;
-            return ($tokens * $amount / 100);
+            $token_amount = $this->transaction->token_price;
+            return ($token_amount * $amount / 100);
         } else {
             return $amount;
         }
@@ -248,11 +243,11 @@ class InvestmentReferralHelper
                 'calc'  => $calc,
                 'who'   => $whois,
                 'type'  => ($joined) ? 'join' : 'invite',
-                'allow' => $this->isAllow($level),
-                'count' => $this->countTnx($user_id, $level),
-                'tokens' => $this->transaction->tokens,
+                // 'allow' => $this->isAllow($level),
+                // 'count' => $this->countTnx($user_id, $level),
+                'amount' => $this->transaction->token_price,
                 'tnx_by' => $this->transaction->user,
-                'tnx_id' => $this->transaction->tnx_id,
+                'order_id' => $this->transaction->order_id,
             ];
         }
 
@@ -260,23 +255,27 @@ class InvestmentReferralHelper
     }
 
     public function getSettings($for='lv1', $out=null) {
+       
         $settings = [
-            'lv0' => (object) [
-                'level' => 0,
-                'allow' => get_setting('referral_allow_join', 'all_time'),
-                'calc' => get_setting('referral_calc_join', 'percent'),
-                'bonus' => (float) get_setting('referral_bonus_join', 0)
-            ],
+            // 'lv0' => (object) [
+            //     'level' => 0,
+            //     'allow' => get_setting('referral_allow_join', 'all_time'),
+            //     'calc' => get_setting('referral_calc_join', 'percent'),
+            //     'bonus' => (float) get_setting('referral_bonus_join', 0)
+            // ],
             'lv1' => (object) [
                 'level' => 1,
-                'allow' => get_setting('referral_allow', 'all_time'),
-                'calc' => get_setting('referral_calc', 'percent'),
-                'bonus' => (float) get_setting('referral_bonus', 0)
+                // 'allow' => get_setting('referral_allow', 'all_time'),
+                'calc' => $this->referralSeting['referral_calc'],
+                'bonus' => (float) $this->referralSeting['referral_bonus']
             ]
+
+            
         ];
         if(!empty($this->getAdvanced())) {
             $settings = array_merge($settings, $this->getAdvanced());
         }
+        // echo'<pre>'; print_r($settings); die;
 
         if($for=='all') return ($out=='levels') ? count($settings) : $settings;
 
@@ -286,7 +285,7 @@ class InvestmentReferralHelper
         if($out=='all') return $level_set;
         if(empty($out)) return false;
 
-        if(in_array($out, ['level', 'allow', 'calc', 'bonus'])) {
+        if(in_array($out, ['level', 'calc', 'bonus'])) {
             return (isset($level_set->$out)) ? $level_set->$out : false;
         }
 
@@ -307,18 +306,17 @@ class InvestmentReferralHelper
 
         $advanced = true;
         if($advanced) {
-            $extend = json_decode( gws('referral_extend_bonus'), TRUE);
+            $extend = json_decode( $this->referralSeting['referral_extend_bonus'], TRUE);
             if(!empty($extend) && is_array($extend)) {
                 foreach ($extend as $lv => $data) {
                     $lv_n = (int) str_replace('l', '', $lv);
                     $level = ($lv_n+1);
                     $calc = $data['type'] ?? 'percent'; 
-                    $allow = $data['allow'] ?? '1'; 
                     $bonus = $data['amount'] ?? 0;
 
                     $return['lv'.$level] = (object) [ 
                         'level' => $level, 
-                        'allow' => $allow, 
+                        // 'allow' => $allow, 
                         'calc' => $calc, 
                         'bonus' => (float) $bonus
                     ];
