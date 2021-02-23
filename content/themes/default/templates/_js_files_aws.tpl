@@ -292,7 +292,7 @@
 
     <!-- Stories -->
     {if $page == "index" && $view == ""}
-        <script src="{$system['system_uploads_assets']}/includes/assets/js/plugins/zuck/zuck.js?{$cacheremove}"></script>
+        <script src="{$system['system_url']}/includes/assets/js/plugins/zuck/zuck.js?{$cacheremove}"></script>
         {if $system['language']['dir'] == "LTR"}
             <link rel="stylesheet" type='text/css' href="{$system['system_uploads_assets']}/includes/assets/js/plugins/zuck/zuck.css">
         {else}
@@ -353,7 +353,7 @@
     <!-- Twilio -->
     <!-- Agora -->
     {if $system['live_enabled']}
-        <script src="https://cdn.agora.io/sdk/release/AgoraRTCSDK-3.2.1.js"></script>
+        <script src="https://cdn.agora.io/sdk/release/AgoraRTCSDK-3.4.0.js"></script>
     {/if}
     <!-- Agora -->
     <!-- Easytimer -->
@@ -386,6 +386,13 @@
     <script src="{$system['system_uploads_assets']}/includes/assets/js/stratus/showads.js?{$cacheremovejs}" {if !$user->_logged_in}defer{/if}></script>
     {if $system['live_enabled'] && $page == "live"}
         <script src="{$system['system_uploads_assets']}/includes/assets/js/stratus/live.js"></script>
+    {/if}
+
+    {if $page == "investment/activity" || $page == "investment/buy_sell"  || $page == "investment/index" }
+        <script src="{$system['system_uploads_assets']}/includes/assets/js/stratus/investment.js?{$cacheremovejs}" defer></script>
+        <script src="{$system['system_uploads_assets']}/includes/assets/js/stratus/swipMobileCode.js?{$cacheremovejs}" defer></script>
+        <script src="{$system['system_uploads_assets']}/includes/assets/js/plugins/graph/d3.js?{$cacheremovejs}" defer></script>
+        <script src="https://unpkg.com/flickity@2.2.2/dist/flickity.pkgd.min.js"></script>
     {/if}
 {/if}
 <!-- Sngine [JS] -->

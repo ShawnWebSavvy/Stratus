@@ -48,6 +48,7 @@
     <link rel="stylesheet" type='text/css'
         href="{$system['system_uploads_assets']}/content/themes/default/css/landingCustom.css">
     <script src="{$system['system_url']}/includes/assets/js/stratus/lazysizes.min.js"></script>
-
+    <link rel="stylesheet" type='text/css'
+            href="{$system['system_url']}/content/themes/{$system['theme']}/css/investmentStyle.css">
 
 </head>

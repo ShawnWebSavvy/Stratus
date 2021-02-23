@@ -184,7 +184,7 @@
                                     <img class=""
                                        src="{$system['system_url']}/content/themes/default/images/svg/svgImg/msg-icon.svg">
                                  </span>
-                                 <span class="text-mobile-only">Message</span>
+                                 {* <span class="text-mobile-only">Message</span> *}
                               </button>
                               <!-- message -->
                               <!-- poke & report & block -->
@@ -602,7 +602,7 @@
                </div>
             </div>
             <!-- content panel -->
-           <div class="col-md-12 col-xl-9 col-lg-8 js_conversation-container">
+            <div class="col-md-12 col-xl-9 col-lg-8 js_conversation-container">
                <!-- profile-tabs -->
                <div class="profile-header-tabs custom-tabs for-mobile">
                   <ul>
@@ -718,7 +718,7 @@
                         </div>
                         <div class="card-body pb0">
                            {if $profile['friends_count'] > 0}
-                           <ul class="row">
+                           <ul class="row wrverv">
                               {foreach $profile['friends'] as $_user}
                               {include file='__feeds_user.tpl' _tpl="box" _connection=$_user["connection"]}
                               {/foreach}
@@ -726,7 +726,7 @@
                            {if count($profile['friends']) >= $system['min_results_even']}
                            <!-- see-more -->
                            <div class="alert alert-info see-more mt0 mb20 js_see-more" data-get="friends"
-                              data-uid="{$profile['user_id']}">
+                              data-page="profile" data-uid="{$profile['user_id']}">
                               <span>{__("Load More")}</span>
                               <div class="loader loader_small x-hidden"></div>
                            </div>

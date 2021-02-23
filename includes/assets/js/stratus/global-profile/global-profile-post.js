@@ -2202,7 +2202,7 @@ $(function () {
             ) {
               location.reload();
             } else if (response.refresh="delete_single_post") {
-              window.history.back();
+              window.location.replace(document.referrer)
             }
             else if (response.callback) {
               eval(response.callback);
