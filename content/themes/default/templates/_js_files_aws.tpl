@@ -292,7 +292,7 @@
 
     <!-- Stories -->
     {if $page == "index" && $view == ""}
-        <script src="{$system['system_url']}/includes/assets/js/plugins/zuck/zuck.js?{$cacheremove}"></script>
+        <script src="{$system['system_uploads_assets']}/includes/assets/js/plugins/zuck/zuck.js?{$cacheremove}"></script>
         {if $system['language']['dir'] == "LTR"}
             <link rel="stylesheet" type='text/css' href="{$system['system_uploads_assets']}/includes/assets/js/plugins/zuck/zuck.css">
         {else}
