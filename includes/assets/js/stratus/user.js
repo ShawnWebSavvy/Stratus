@@ -231,7 +231,6 @@ function init_picture_position() {
     var e = $(".js_position-cover-cropped").data("init-position");
     $(".profile-cover-wrapper").imagedrag({ position: e, input: ".js_position-picture-val" });
 }
-
 (api["data/live"] = ajax_path + "data/live.php"),
     (api["data/upload"] = ajax_path + "data/upload.php"),
     (api["data/reset"] = ajax_path + "data/reset.php"),

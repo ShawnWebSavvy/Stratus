@@ -37,7 +37,14 @@ try {
 	/* get page picture */
 	$spage['page_picture_default'] = ($spage['page_picture']) ? false : true;
 	$spage['page_picture'] = get_picture($spage['page_picture'], 'page');
+
+
 	$spage['page_picture_full'] = ($spage['page_picture_full']) ? $system['system_uploads'] . '/' . $spage['page_picture_full'] : $spage['page_picture_full'];
+
+
+	$spage['page_picture'] = $system['system_url'] . '/includes/wallet-api/get-picture-api.php?picture=' . $spage['page_picture'] .'&picture_full='.$spage['page_picture_full']. '&type=page&type_url=1';
+
+
 	/* get page cover */
 	$spage['page_cover'] = ($spage['page_cover']) ? $system['system_uploads'] . '/' . $spage['page_cover'] : $spage['page_cover'];
 	$spage['page_cover_full'] = ($spage['page_cover_full']) ? $system['system_uploads'] . '/' . $spage['page_cover_full'] : $spage['page_cover_full'];

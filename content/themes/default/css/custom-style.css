@@ -618,3 +618,6 @@ video.stratus-customvideo {
 .markit_page_rhs .market-categories-section-right-side ul.side-nav li a.Food-Beverage::before {
     background-image: url(../images/svg/svgImg/newfood1.svg);
 }
+.body-scroll-disabled{
+    overflow-y: hidden !important;
+}
