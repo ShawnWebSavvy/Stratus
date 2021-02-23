@@ -325,7 +325,7 @@ body.publisher-focus .custom_modal_style{overflow-x:hidden;overflow-y:auto;}
 .publisher.globalpublishrmodalwidth,.publisher.loclpublishrmodalwidth,.publisher.add_product{min-height:calc(100% - (1.75rem * 2));background-color:transparent;}
 .custom_modal_style .modal-content{box-shadow:none !important;}
 .publisher .custom_modal_style .modal-content{position:relative;display:-webkit-box;display:-ms-flexbox;display:flex;-webkit-box-orient:vertical;-webkit-box-direction:normal;-ms-flex-direction:column;flex-direction:column;width:100%;pointer-events:auto;background-color:#fff;background-clip:padding-box;border:none;}
-video{max-width:100% !important;max-height:100% !important;height:100%;}
+video{max-width:100% !important;max-height:100% !important;height:100%; outline: none !important;}
  .post-header .post-meta span{display:inline-block;}
 .dropdown-menu .dropdown-item{display:flex;align-items:center;}
 .dropdown-menu .dropdown-item.js_hide-post{display:flex;align-items:flex-start;flex-direction:column;}
@@ -620,4 +620,17 @@ video.stratus-customvideo {
 }
 .body-scroll-disabled{
     overflow-y: hidden !important;
+}
+.chat-widget-head .js_chat-box-status + a {
+    -webkit-line-clamp: 4;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    -webkit-box-orient: vertical;
+    width: 110px;
+    white-space: nowrap;
+    max-height: 7.75rem;
+    height: 16px;
+}
+.image {
+    text-align: center;
 }
