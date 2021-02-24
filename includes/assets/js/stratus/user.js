@@ -930,10 +930,18 @@ function onimgTagclick(e) {
                                             "</button>"
                                         );
                                     }
+
+                                    if (_do == "friend-decline") {
+                                        _this.closest('.feeds-item').remove();
+                                    }
+
+
                                     accept.remove();
                                     decline.remove();
                                     parent.find(".loader").remove();
                                 }
+
+                              
                             },
                             "json"
                         ).fail(function () {
