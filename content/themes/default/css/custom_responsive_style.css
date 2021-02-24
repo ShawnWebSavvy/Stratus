@@ -299,9 +299,9 @@ body .btn._toggle_btn{position:relative!important;top:0;left:0}
 ._toggle_ ._toggle_btn .fas.fa-times{display:block}
 ._toggle_ ._toggle_btn .fas.fa-ellipsis-v{display:none}
 ._toggle_btn:focus{outline:0}
-._toggle_btn:hover{color:#dbe1eb}
+/* ._toggle_btn:hover{color:#dbe1eb} */
 .about_content_sec{display:none}
-._toggle_ .about_content_sec{display:block}
+._toggle_ .about_content_sec{display:block;padding-top: 30px;padding-bottom: 30px;}
 .profileUpdatesDesign{position:relative!important}
 .about_content_sec .about-list{flex-direction:column}
 .adsbuttonSection{display:flex;flex-wrap:wrap}
@@ -393,7 +393,7 @@ body.login-index-body .card .js_panel .card-body{padding-bottom:30px}
 div.stories.carousel .story{flex-shrink:0}
 body .btn._toggle_btn{position:relative!important;top:0;left:0}
 ._toggle_btn:focus{outline:0}
-._toggle_btn:hover{color:#dbe1eb}
+/* ._toggle_btn:hover{color:#dbe1eb} */
 ._search_sec{flex:0 0 100%;max-width:calc(100% - 100px);margin-bottom:15px}
 .people-friends-page ._frnd_rqst_sec .page_topbar{flex-wrap:wrap}
 .discover_sec{display:none}

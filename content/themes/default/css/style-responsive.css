@@ -54,7 +54,7 @@ body.night-mode .user-card-avatar{background:#212121}
 .user-card-info .info{font-size:12px;line-height:15px}
 .buttonWrapPopOver{display:flex;flex-wrap:wrap;padding-top:6px;justify-content:center}
 .buttonWrapPopOver button{margin-bottom:10px}
-.buttonWrapPopOver a,.buttonWrapPopOver button{padding:8px 20px;margin-left:6px;max-width:100%!important;width:auto!important;height:auto!important;display:flex;align-items:center}
+.buttonWrapPopOver a,.buttonWrapPopOver button{padding:8px 20px;margin-left:6px;margin-right: 0px; max-width:100%!important;width:auto!important;height:auto!important;display:flex;align-items:center}
 .buttonWrapPopOver a.js_chat_start.hoverClass,.buttonWrapPopOver button{background-color:#000}
 .user-card-meta{padding-left:96px;padding-top:10px;font-size:12px}
 .user-card-meta .fa{color:#b2b2b2}
@@ -277,7 +277,7 @@ body.group-localhub .profile-mobile-layout .col-lg-5,body.group-localhub .profil
 body.global-profile-localhub .profile-mobile-layout .col-lg-5,body.global-profile-localhub .profile-mobile-layout .col-lg-7{width:100%}
 body.group-localhub .profile-mobile-layout .col-lg-5,body.profile-localhub .profile-mobile-layout .col-lg-5{padding:0}
 body.global-profile-localhub .profile-mobile-layout .col-lg-5{padding:0}
-body.group-localhub .profile-mobile-layout .profileUpdatesDesign,body.profile-localhub .profile-mobile-layout .profileUpdatesDesign{background-color:#fff;border-radius:10px;max-width:100%;padding:30px;margin-bottom:25px}
+body.group-localhub .profile-mobile-layout .profileUpdatesDesign,body.profile-localhub .profile-mobile-layout .profileUpdatesDesign{background-color:#fff;border-radius:10px;max-width:100%;padding: 30px;margin-bottom:25px}
 body.global-profile-localhub .profile-mobile-layout .profileUpdatesDesign{background-color:#fff;border-radius:10px;max-width:100%;padding:30px;margin-bottom:25px}
 body.group-localhub .right-sidebar.js_sticky-sidebar,body.profile-localhub .right-sidebar.js_sticky-sidebar{display:none!important}
 body.global-profile-localhub .right-sidebar.js_sticky-sidebar{display:none!important}
@@ -330,7 +330,7 @@ body.profile-localhub .profile-mobile-layout{display:flex;flex-direction:column;
 body.profile-localhub .button-profile-option.desktop-only{display:none!important}
 body.profile-localhub .profile-mobile-layout .col-lg-5,body.profile-localhub .profile-mobile-layout .col-lg-7{width:100%}
 body.profile-localhub .profile-mobile-layout .col-lg-5{padding:0}
-body.profile-localhub .profile-mobile-layout .profileUpdatesDesign{background-color:#fff;border-radius:10px;max-width:100%;padding:30px;margin-bottom:25px}
+body.profile-localhub .profile-mobile-layout .profileUpdatesDesign{background-color:#fff;border-radius:10px;max-width:100%;padding:0px 30px;margin-bottom:25px}
 body.profile-localhub .right-sidebar.js_sticky-sidebar{display:none!important}
 body.profile-localhub .main-header{box-shadow:none}
 body.profile-localhub .container.offcanvas{padding-bottom:160px}

@@ -509,7 +509,13 @@ div#search-results .js_friend-accept {
 	max-width: 80px;
 }
 .profileUpdatesDesign .about-list-item {
-word-break: break-all;
+word-break: break-all;width: 100%;
+}
+.profileUpdatesDesign .about-list-item .about_list_text{
+    word-break: break-all;width: 100%;
+}
+.profileUpdatesDesign .about-list-item .about_list_text a{
+    text-align: left;
 }
 /* body.group-localhub.group-localhub .alert-info {
     color: #fff !important;
