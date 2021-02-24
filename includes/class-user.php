@@ -852,7 +852,7 @@ class User
             }
         }
         /* search users */
-        $get_users = $db->query(sprintf('SELECT user_id, user_name, user_firstname, user_lastname, user_gender, user_picture, user_subscribed, user_verified FROM users WHERE users.user_firstname != "" and user_name LIKE %1$s OR user_firstname LIKE %1$s OR user_lastname LIKE %1$s OR CONCAT(user_firstname,  " ", user_lastname) LIKE %1$s ORDER BY user_firstname ASC LIMIT %2$s, %3$s', secure($query, 'search'), secure($offset, 'int', false), secure($system['max_results'], 'int', false))) or _error("SQL_ERROR_THROWEN");
+        $get_users = $db->query(sprintf('SELECT user_id, user_name, user_firstname, user_lastname, user_gender, user_picture, picture_photo.source as user_picture_full, user_subscribed, user_verified FROM users LEFT JOIN posts_photos as picture_photo ON users.user_picture_id = picture_photo.photo_id WHERE users.user_firstname != "" and user_name LIKE %1$s OR user_firstname LIKE %1$s OR user_lastname LIKE %1$s OR CONCAT(user_firstname,  " ", user_lastname) LIKE %1$s ORDER BY user_firstname ASC LIMIT %2$s, %3$s', secure($query, 'search'), secure($offset, 'int', false), secure($system['max_results'], 'int', false))) or _error("SQL_ERROR_THROWEN");
         if ($get_users->num_rows > 0) {
             while ($user = $get_users->fetch_assoc()) {
                 $user['user_picture'] = get_picture($user['user_picture'], $user['user_gender']);
@@ -4506,6 +4506,9 @@ class User
         foreach ($videos as $video) { //print_r($videos);
             $db->query(sprintf("INSERT INTO stories_media (story_id, source, is_photo, text, time) VALUES (%s, %s, '0', %s, %s)", secure($story_id, 'int'), secure($video), secure($message), secure($date))) or _error("SQL_ERROR_THROWEN");
         }
+
+        $authors = $this->_data['friends_ids'];
+
         $redisObject = new RedisClass();
         $rediskeyname = 'user-' . $this->_data['user_id'] . '-getotherstory';
         $redisObject->deleteValueFromKey($rediskeyname);
@@ -4513,6 +4516,14 @@ class User
         $redisObject->deleteValueFromKey($rediskeyname);
         getMyStory($this->_data['user_id'], $this, $redisObject, $system);
         getAllStories($this->_data['user_id'], $this, $redisObject, $system);
+
+        for ($ik = 0; $ik < count($authors); $ik++) {
+            $rediskeyname = 'user-' . $authors[$ik] . '-getotherstory';
+            $isKeyExistOnRedis = $redisObject->isRedisKeyExist($rediskeyname);
+            if ($isKeyExistOnRedis) {
+                $redisObject->deleteValueFromKey($rediskeyname);
+            }
+        }
     }
 
     /**
@@ -4599,6 +4610,15 @@ class User
         $redisObject->deleteValueFromKey($rediskeyname);
         getMyStory($this->_data['user_id'], $this, $redisObject, $system);
         getAllStories($this->_data['user_id'], $this, $redisObject, $system);
+
+        $authors = $this->_data['friends_ids'];
+        for ($ik = 0; $ik < count($authors); $ik++) {
+            $rediskeyname = 'user-' . $authors[$ik] . '-getotherstory';
+            $isKeyExistOnRedis = $redisObject->isRedisKeyExist($rediskeyname);
+            if ($isKeyExistOnRedis) {
+                $redisObject->deleteValueFromKey($rediskeyname);
+            }
+        }
     }
 
 
@@ -4695,7 +4715,7 @@ class User
             $post['user_type'] = "page";
             $post['post_author_picture'] = get_picture($_page['page_picture'], "page");
 
-            
+
             $post['post_author_url'] = $system['system_url'] . '/pages/' . $_page['page_name'];
             $post['post_author_name'] = $_page['page_title'];
             $post['post_author_verified'] = $this->_data['page_verified'];
@@ -5778,7 +5798,7 @@ class User
             }
         }
 
-      
+
         return $post;
     }
 
@@ -6341,7 +6361,7 @@ class User
             // if ($post['user_picture_full'] == "") {
             //     $post['user_picture_full'] = $system['system_uploads_assets'] . '/content/themes/' . $system['theme'] . '/images/user_defoult_img.jpg';
             // }
-            
+
             $post['post_author_picture'] = $system['system_url'] . '/' . 'includes/wallet-api/image-exist-api.php?userPicture=' . $post['post_author_picture'] . '&userPictureFull=' . $system['system_uploads'] . '/' . $post['user_picture_full'];
 
             $post['post_author_url'] = $system['system_url'] . '/' . $post['user_name'];
@@ -6359,7 +6379,7 @@ class User
             /* page */
             $post['post_author_picture'] = get_picture($post['page_picture'], "page");
 
-            $post['post_author_picture'] = $system['system_url'] . '/includes/wallet-api/get-picture-api.php?picture=' .  $post['post_author_picture'] .'&picture_full=&type=page&type_url=1';
+            $post['post_author_picture'] = $system['system_url'] . '/includes/wallet-api/get-picture-api.php?picture=' .  $post['post_author_picture'] . '&picture_full=&type=page&type_url=1';
 
             $post['post_author_url'] = $system['system_url'] . '/pages/' . $post['page_name'];
             $post['post_author_name'] = $post['page_title'];
@@ -10059,7 +10079,7 @@ class User
 
                 $page['page_picture_full'] = ($page['page_picture_full']) ? $system['system_uploads'] . '/' . $page['page_picture_full'] : $page['page_picture_full'];
 
-                $page['page_picture'] = $system['system_url'] . '/includes/wallet-api/get-picture-api.php?picture=' . $page['page_picture'] .'&picture_full='.$page['page_picture_full']. '&type=page&type_url=1';
+                $page['page_picture'] = $system['system_url'] . '/includes/wallet-api/get-picture-api.php?picture=' . $page['page_picture'] . '&picture_full=' . $page['page_picture_full'] . '&type=page&type_url=1';
 
                 /* check if the viewer liked the page */
                 $page['i_like'] = $this->check_page_membership($this->_data['user_id'], $page['page_id']);
@@ -10567,7 +10587,7 @@ class User
         if ($get_groups->num_rows > 0) {
             while ($group = $get_groups->fetch_assoc()) {
                 $group['group_picture'] = get_picture($group['group_picture'], 'group');
-                $group['group_picture'] = $system['system_url'] . '/includes/wallet-api/get-picture-api.php?picture='.$group['group_picture'] .'&picture_full=&type=group&type_url=1';         
+                $group['group_picture'] = $system['system_url'] . '/includes/wallet-api/get-picture-api.php?picture=' . $group['group_picture'] . '&picture_full=&type=group&type_url=1';
 
                 /* check if the viewer joined the group */
                 $group['i_joined'] = $this->check_group_membership($this->_data['user_id'], $group['group_id']);;
@@ -11099,7 +11119,7 @@ class User
             while ($event = $get_events->fetch_assoc()) {
                 $event['event_picture'] = get_picture($event['event_cover'], 'event');
 
-                $event['event_picture'] =  $system['system_url'] . '/includes/wallet-api/get-picture-api.php?picture=' .  $event['event_picture'] .'&picture_full=&type=page&type_url=1';
+                $event['event_picture'] =  $system['system_url'] . '/includes/wallet-api/get-picture-api.php?picture=' .  $event['event_picture'] . '&picture_full=&type=page&type_url=1';
 
                 /* check if the viewer joined the event */
                 $event['i_joined'] = $this->check_event_membership($this->_data['user_id'], $event['event_id']);;

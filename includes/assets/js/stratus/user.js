@@ -128,8 +128,6 @@ function data_heartbeat() {
         api["data/live"],
         data,
         function (response) {
-            console.log(data)
-            console.log(response)
             if (response.callback) eval(response.callback);
             else {
                 if (response.requests) {
