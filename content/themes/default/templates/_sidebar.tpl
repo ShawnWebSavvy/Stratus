@@ -254,7 +254,7 @@
             <!-- sub of global end -->
             <!-- Global Hub End here -->
             <!-- playtube -->
-            {* <ul
+             <ul
             class="main-side-nav main-left-side-nav left-sidebar first-ul">
                 <li>
                     <a href="{PLY_URL}?dtl={$encodedUserDetails}" class="{$page}">
@@ -268,7 +268,7 @@
                         <span class="nav-text">{__("Video Hub")}</span>
                     </a>
                 </li>
-            </ul> *}
+            </ul> 
             <!-- playtube -->
 
             <!-- Blog Hub starts-->
