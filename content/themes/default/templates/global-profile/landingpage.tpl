@@ -321,7 +321,7 @@
                                                     </div>
                                                     {/if}
 
-                                                    <p>{$postsItem['origin']['post_type']}</p>
+                                                  
                                                    {if $postsItem['origin']['post_type'] == "audio" && $postsItem['origin']['audio']}
                                                     <div class="plr10">
                                                         <audio class="js_audio" id="audio-{$postsItem['origin']['audio']['audio_id']}" {if
@@ -333,6 +333,43 @@
                                                         </audio>
                                                     </div>
                                                     {/if}
+
+
+                                                {if $postsItem['post_type']=="file" }
+                                                    <div class="post-downloader">
+                                                        <div class="icon">
+                                                            <i class="fa fa-file-alt fa-2x"></i>
+                                                        </div>
+                                                        <div class="info">
+                                                            <strong>{__("File Type")}</strong>: {get_extension({$postsItem['file']['source']})}
+                                                            <div class="mt10">
+                                                                <a class="btn btn-primary "
+                                                                    href="{$system['system_uploads']}/{$postsItem['file']['source']}">{__("Download")}</a>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                {/if}
+
+
+                                                {if $postsItem['origin']['post_type']=="file" }
+                                                    <div class="post-downloader">
+                                                        <div class="icon">
+                                                            <i class="fa fa-file-alt fa-2x"></i>
+                                                        </div>
+                                                        <div class="info">
+                                                            <strong>{__("File Type")}</strong>: {get_extension({$postsItem['origin']['file']['source']})}
+                                                            <div class="mt10">
+                                                                <a class="btn btn-primary "
+                                                                    href="{$system['system_uploads']}/{$postsItem['origin']['file']['source']}">{__("Download")}</a>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                {/if}
+
+
+
+
+
 
 
                                                 </div>
