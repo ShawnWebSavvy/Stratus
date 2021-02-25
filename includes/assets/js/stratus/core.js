@@ -678,32 +678,33 @@ function button_status(e, t) {
     }),
 
 
-    $(document).off('mouseup', '.dropdown-toggle.post_custm_option').on('mouseup', '.dropdown-toggle.post_custm_option', function () {
-        if ($(this).closest('.dropdown').hasClass('show')) {
-            $('body').removeClass('body-scroll-disabled');
-        } else {
-            setTimeout(function () {
-                if (!$(this).closest('.dropdown').hasClass('show')) {
-                    $('body').addClass('body-scroll-disabled');
-                } else {
-                    $('body').removeClass('body-scroll-disabled');
-                }
-            }, 0);
-        }
-    }),
-    $(document).off('mouseup', '.js_posts-filter').on('mouseup', '.js_posts-filter', function () {
-        if ($(this).hasClass('show')) {
-            $('body').removeClass('body-scroll-disabled');
-        } else {
-            setTimeout(function () {
-                if (!$(this).hasClass('show')) {
-                    $('body').addClass('body-scroll-disabled');
-                } else {
-                    $('body').removeClass('body-scroll-disabled');
-                }
-            }, 0);
-        }
-    }),
+    // $(document).off('mouseup', '.dropdown-toggle.post_custm_option').on('mouseup', '.dropdown-toggle.post_custm_option', function () {
+    //     if ($(this).closest('.dropdown').hasClass('show')) {
+    //         $('body').removeClass('body-scroll-disabled');
+    //     } else {
+    //         setTimeout(function () {
+    //             if (!$(this).closest('.dropdown').hasClass('show')) {
+    //                 $('body').addClass('body-scroll-disabled');
+    //             } else {
+    //                 $('body').removeClass('body-scroll-disabled');
+    //             }
+    //         }, 0);
+    //     }
+    // }),
+    // $(document).off('mouseup', '.js_posts-filter').on('mouseup', '.js_posts-filter', function () {
+        
+    //     if ($(this).hasClass('show')) {
+    //         $('body').removeClass('body-scroll-disabled');
+    //     } else {
+    //         setTimeout(function () {
+    //             if (!$(this).hasClass('show')) {
+    //                 $('body').addClass('body-scroll-disabled');
+    //             } else {
+    //                 $('body').removeClass('body-scroll-disabled');
+    //             }
+    //         }, 0);
+    //     }
+    // }),
 
     $("body").click(function () {
         $(".__overlay__").hasClass("clr_overlay_") && $(".__overlay__").removeClass("clr_overlay_");
