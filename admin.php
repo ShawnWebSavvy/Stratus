@@ -274,7 +274,7 @@ try {
 						
 					case 'transactions':
 						$insights = [];
-						$tnx_type = ($_GET['tnx_type'] == 'sell') ? 'sell' : 'buy';
+						$tnx_type = ($_GET['tnx_type'] == '') ? 'buy' : $_GET['tnx_type'];
 						$get_transactions = $db->query("SELECT COUNT(*) as count FROM investment_transactions WHERE tnx_type = '$tnx_type'") or _error("SQL_ERROR");
 						$insights['transactions'] = $get_transactions->fetch_assoc()['count'];
 						// get data
@@ -287,15 +287,25 @@ try {
 						$params['url'] = $system['system_url'] . '/' . $control_panel['url'] . '/investment/transactions?page=%s&tnx_type='.$tnx_type;
 						$pager = new Pager($params);
 						$limit_query = $pager->getLimitSql();
-						$get_rows = $db->query("SELECT * FROM investment_transactions WHERE tnx_type = '$tnx_type' ORDER BY id DESC " . $limit_query) or _error("SQL_ERROR");
+						$get_rows = $db->query("SELECT * FROM investment_transactions INNER JOIN users ON users.user_id=investment_transactions.user_id  WHERE tnx_type = '$tnx_type' ORDER BY id DESC " . $limit_query) or _error("SQL_ERROR");
 						
 						// $rows = [];
 						if ($get_rows->num_rows > 0) {
 							while ($row = $get_rows->fetch_assoc()) {
+								if($tnx_type=='referral'){
+									
+									$row['extra'] = json_decode($row['extra'],true);
+									$get_user = $db->query(sprintf("SELECT user_firstname, user_lastname, user_name from  users WHERE user_id = %s", secure($row['extra']['who'], 'int'))) or _error("SQL_ERROR_THROWEN");
+									if ($get_user->num_rows == 0) {
+										return false;
+									}
+									$get_user =  ($get_user->num_rows>0)?$get_user->fetch_assoc():"";
+									$row['refer_by'] = $get_user;
+								}
 								$rows[] = $row;
 							}
 						}
-						
+						// echo '<pre>'; print_r($rows);die;
 						// echo '<pre>'; print_r($pager->getPager());
 						
 						// assign variables
@@ -308,7 +318,7 @@ try {
 					case 'find':
 						// die('enter');
 						$insights = [];
-						$tnx_type = ($_GET['tnx_type'] == 'sell') ? 'sell' : 'buy';
+						$tnx_type = ($_GET['tnx_type'] == '') ? 'buy' : $_GET['tnx_type'];
 						$search  = $_GET['query'];
 						// die($search);
 						$get_transactions = $db->query("SELECT COUNT(*) as count FROM investment_transactions WHERE tnx_type = '$tnx_type' and order_id = '$search'") or _error("SQL_ERROR");
@@ -332,7 +342,7 @@ try {
 							}
 						}
 						
-						// echo '<pre>'; print_r($pager->getPager());
+						// echo '<pre>'; print_r($tnx_type
 						
 						// assign variables
 						$smarty->assign('insights', $insights);

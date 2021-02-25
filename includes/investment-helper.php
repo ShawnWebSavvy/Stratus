@@ -81,62 +81,37 @@ class InvestmentHelper {
             $params['symbol'] = strtoupper($_POST['token_name']).'_USDT';
             $params['side'] = 'buy'; 
             $token_price = self::get_ticker_price(strtoupper($token_name));
-            
             $token_value=round($amount/$token_price['data']['buy_price'], 5);
+            $fees = 1;
             $fees        = $token_price['data']['buy_fees'];
             $fees_token = round($token_value*$fees/100,5);
             $receive_token = round($token_value-$fees_token,5);
             $params['size'] = $receive_token;
-
-            /*
-
-            */
-            require('investment-referral-helper.php');
-            $transaction = [];
-            $transaction['id'] = 1;
-            $transaction['user'] = $user_data['user_id'];
-            $transaction['token_price'] = $amount;
-            $transaction['token_name'] = $_POST['token_name'];
-            $referral  = new InvestmentReferralHelper((object)$transaction);
-            $referral->addToken('refer_by');
-
-
-
-
-
             // $result = InvestmentHelper::buySellOrder($params);
             $order_id = rand(999,99999);
             // if(isset($result['data']['data']['order_id'])){
-            // if(isset($order_id)){
-                // $order_id = $result['data']['data']['order_id'];
-                $db->query(sprintf("INSERT INTO investment_transactions (user_id, order_id, tokens, currency, tnx_type ,amount, receive_amount, recieve_token, fees, status) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s)", secure($user_data['user_id'], 'int'), secure($order_id), secure($token_value), secure($token_name), secure($action),secure($amount),secure($amount), secure($receive_token), secure($fees), secure('completed') )) or _error("SQL_ERROR_THROWEN");
+            if(isset($order_id)){
+                $db->query(sprintf("INSERT INTO investment_transactions (user_id, order_id, base_currency, tokens, currency, tnx_type ,amount, receive_amount, recieve_token, fees, status) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)", secure($user_data['user_id'], 'int'),secure($order_id),secure('usd'), secure($token_value), secure($token_name), secure($action),secure($amount),secure($amount), secure($receive_token), secure($fees), secure('completed') )) or _error("SQL_ERROR_THROWEN");
                 $investment_id = $db->insert_id;
+                // die($db->insert_id.'enter');
                 if($investment_id){
-                    // die($db->insert_id.'enter');
+                   
                     $db->query(sprintf("INSERT INTO ads_users_wallet_transactions (user_id, investment_id, node_type, node_id, amount, type, date,paymentMode) VALUES (%s, %s, %s, %s, %s, %s, %s, %s)", secure($user_data['user_id'], 'int'), secure($investment_id), secure('purchase_coin'), secure(0, 'int'), secure($amount), secure('out'), secure(date('Y-m-d h:i:m')), secure('wallet'))) or _error("SQL_ERROR_THROWEN");
                     $db->query(sprintf('UPDATE users SET user_wallet_balance = IF(user_wallet_balance-%1$s<=0,0,user_wallet_balance-%1$s) WHERE user_id = %2$s', secure($amount), secure($user_data['user_id'], 'int'))) or _error("SQL_ERROR_THROWEN");
                     $wallet_name =$token_name.'_wallet';
                     // die($receive_token);
                     $db->query(sprintf("UPDATE users SET $wallet_name = $wallet_name + %s WHERE user_id = %s", secure($receive_token), secure($user_data['user_id'], 'int'))) or _error("SQL_ERROR_THROWEN");
-                    //Referral System
-                    // require('investment-referral-helper.php');
-                    // $transaction = [];
-                    // $transaction['id'] = $investment_id;
-                    // $transaction['user'] = $user_data['user_id'];
-                    // $transaction['token_price'] = $token_price;
-                    // $transaction['token_name'] = $_POST['token_name'];
-                    // $referral  = new InvestmentReferralHelper((object)$transaction);
-                    // $referral->addToken('refer_by');
-
+                    $db->query(sprintf("INSERT INTO crons (user_id, item_id) VALUES (%s, %s)", secure($user_data['user_id'], 'int'), secure($investment_id))) or _error("SQL_ERROR_THROWEN");
+                
                 }
                 return true;
                 // echo '<pre>'; print_r($save); die;
-            // }else{
-            //     return false;
-            // }
+            }else{
+                return false;
+            }
             
         }catch(Exception $e){
-            // echo '<pre>'; print_r($e); die;
+            echo '<pre>'; print_r($e); die;
             return false;
         }
         
@@ -154,11 +129,10 @@ class InvestmentHelper {
             $fees_amount = round($amount*$fees/100,5);
             $receive_amount = round($amount-$fees_amount,2);
             // die($token_value);
-            $result = InvestmentHelper::buySellOrder($params);
-            // $order_id = rand(999,99999);
-            if(isset($result['data']['data']['order_id'])){
-                $order_id = $result['data']['data']['order_id'];
-            // if(isset($order_id)){
+            // $result = InvestmentHelper::buySellOrder($params);
+            $order_id = rand(999,99999);
+            // if(isset($result['data']['data']['order_id'])){
+            if(isset($order_id)){
                 $db->query(sprintf("INSERT INTO investment_transactions (user_id, order_id, tokens, currency, tnx_type ,amount, receive_amount, recieve_token, fees, status) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s)", secure($user_data['user_id'], 'int'), secure($order_id), secure($token_value), secure($token_name), secure($action),secure($amount),secure($receive_amount), secure($token_value), secure($fees), secure('completed') )) or _error("SQL_ERROR_THROWEN");
                 $investment_id = $db->insert_id;
                 if($investment_id){
@@ -177,10 +151,24 @@ class InvestmentHelper {
             
         }catch(Exception $e){
             // echo '<pre>'; print_r($e); die;
-            return false;
+            return $false;
         }
         
     }
+
+    // public static function getAllActiveTokens(){
+    //     global $db,$system;
+    //     $tokens = $db->query("SELECT * FROM investment_coins") or _error("SQL_ERROR_THROWEN");
+    //     $return = [];
+    //     if ($tokens->num_rows > 0) {
+    //         while ($token = $tokens->fetch_assoc()) {
+    //             $token['wallet_name'] = $token['short_name'].'_wallet';
+    //             $return[] = $token;
+                
+    //         }
+    //     }
+    //     return $return;
+    // }
 
     public static function getAdminExchangeDetail($api_suffix)
     {   

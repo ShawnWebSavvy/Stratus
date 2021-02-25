@@ -395,6 +395,9 @@
                     <li class="nav-item">
                         <a class="nav-link {if $tnx_type=='sell'  }active{/if}" href="{$system['system_url']}/{$control_panel['url']}/investment/transactions?tnx_type=sell">Sell</a>
                     </li>
+                     <li class="nav-item">
+                        <a class="nav-link {if $tnx_type=='referral'  }active{/if}" href="{$system['system_url']}/{$control_panel['url']}/investment/transactions?tnx_type=referral">Referral</a>
+                    </li>
                 </ul>
             </div>
             <br>
@@ -404,17 +407,28 @@
                         <tr>
                             <th>{__("TRANX ID")}</th>
                             <th>{__("Order Type")}</th>
-                            <th>{__("Trade Pair")}</th>
                             {if $tnx_type == 'buy'}
-                            <th>{__("Token")}</th>
-                            <th>{__("Fees(%)")}</th>
-                            <th>{__("Recieve Token")}</th>
-                            <th>{__("Paid Amount")}</th>
-                            {else}
-                            <th>{__("Token")}</th>
-                            <th>{__("Amount")}</th>
-                            <th>{__("Fees(%)")}</th>
-                            <th>{__("Recieve Amount")}</th>
+                                <th>{__("Trade Pair")}</th>
+                                <th>{__("Token Added To")}</th>
+                                <th>{__("Token")}</th>
+                                <th>{__("Fees(%)")}</th>
+                                <th>{__("Recieve Token")}</th>
+                                <th>{__("Paid Amount")}</th>
+                            {else if $tnx_type == 'sell'}
+                                <th>{__("Trade Pair")}</th>
+                                <th>{__("Token Added To")}</th>
+                                <th>{__("Token")}</th>
+                                <th>{__("Amount")}</th>
+                                <th>{__("Fees(%)")}</th>
+                                <th>{__("Recieve Amount")}</th>
+                            {else}  
+                                <th>{__("Amount Added To")}</th>
+                                <th>{__("Amount")}</th>
+                                <th>{__("From TRANX ID")}</th>
+                                <th>{__("Referral Bonus For")}</th>
+                                <th>{__("Bonus Apply")}</th>
+                                <th>{__("Details")}</th>
+                                
                             {/if}
                             <th>{__("Status")}</th>
                         </tr>
@@ -429,17 +443,37 @@
                                     <td>
                                         {$row['tnx_type']|ucfirst}
                                     </td>
-                                    <td>{$row['currency']|strtoupper}/USDT</td>
+
                                     {if $tnx_type == 'buy'}
-                                    <td>{$row['tokens']}</td>
-                                    <td>{$row['fees']}</td>
-                                    <td>{$row['recieve_token']}</td>
-                                    <td>{$row['amount']}</td>
+                                        <td>{$row['currency']|strtoupper}/USDT</td>
+                                        <td><a href="{$system['system_url']}/{$row['user_name']}" target="_blank">{$row['user_name']}</a></td>
+                                        <td>{$row['tokens']}</td>
+                                        <td>{$row['fees']}</td>
+                                        <td>{$row['recieve_token']}</td>
+                                        <td>{$row['amount']}</td>
+                                    {else if $tnx_type == 'sell'}
+                                        <td>{$row['currency']|strtoupper}/USDT</td>
+                                        <td><a href="{$system['system_url']}/{$row['user_name']}" target="_blank">{$row['user_name']}</a></td>
+                                        <td>{$row['tokens']}</td>
+                                        <td>{$row['amount']}</td>
+                                        <td>{$row['fees']}</td>
+                                        <td>{$row['receive_amount']}</td>
                                     {else}
-                                    <td>{$row['tokens']}</td>
-                                    <td>{$row['amount']}</td>
-                                    <td>{$row['fees']}</td>
-                                    <td>{$row['receive_amount']}</td>
+                                        <td><a href="{$system['system_url']}/{$row['user_name']}" target="_blank">{$row['user_name']}</a></td>
+                                        <!-- <td><a href="{$system['system_url']}/{$row['user_name']}" target="_blank">{$row['user_name']}</a></td> -->
+                                        <td>${$row['amount']}</td>
+                                        <td>{$row['extra']['order_id']}</td>
+                                        <td><a href="{$system['system_url']}/{$row['refer_by']['user_name']}" target="_blank">{$row['refer_by']['user_name']}</a></td>
+                                        <td>
+                                            {if $row['extra']['calc']=='fixed'}
+                                                ${$row['extra']['bonus']}({$row['extra']['calc']})
+                                            {else}
+                                                {$row['extra']['bonus']}%
+                                            {/if}
+                                            -
+                                            {$row['extra']['level']|upper}
+                                        </td>
+                                        <td>{$row['details']}</td>
                                     {/if}
 
                                     <td>

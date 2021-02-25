@@ -36,15 +36,19 @@ class User
             $system['system_uploads'] = $system['system_uploads_url'];
         }
         if (isset($_COOKIE[$this->_cookie_user_id]) && isset($_COOKIE[$this->_cookie_user_token])) {
-
-            $response_data = cachedUserData($db, $system, $_COOKIE[$this->_cookie_user_id], $_COOKIE[$this->_cookie_user_token]);
-            //print_r($response_data);
-            if (!empty($response_data) > 0) {
-                $this->_data = $response_data;
+            $userQuery = sprintf("SELECT users.*, users_sessions.*, posts_photos.source as user_picture_full, packages.*,country.country_name as user_country_name FROM users INNER JOIN users_sessions ON users.user_id = users_sessions.user_id LEFT JOIN posts_photos ON users.user_picture_id = posts_photos.photo_id LEFT JOIN packages ON users.user_subscribed = '1' AND users.user_package = packages.package_id left join system_countries as country on country.country_id = users.user_country  WHERE users_sessions.user_id = %s AND users_sessions.session_token = %s", secure($_COOKIE[$this->_cookie_user_id], 'int'), secure($_COOKIE[$this->_cookie_user_token]));
+            $get_user = $db->query($userQuery) or _error("SQL_ERROR_THROWEN");
+            if ($get_user->num_rows > 0) {
+                $this->_data = $get_user->fetch_assoc();
+                /* check unusual login */
+                if ($system['unusual_login_enabled']) {
+                    if ($this->_data['user_browser'] != get_user_browser() || $this->_data['user_os'] != get_user_os() || $this->_data['user_ip'] != get_user_ip()) {
+                        return;
+                    }
+                }
                 $this->_logged_in = true;
                 $this->_is_admin = ($this->_data['user_group'] == 1) ? true : false;
                 $this->_is_moderator = ($this->_data['user_group'] == 2) ? true : false;
-
                 /* update user language */
                 if ($system['current_language'] != $this->_data['user_language']) {
                     $updateQ = sprintf("UPDATE users SET user_language = %s WHERE user_id = %s", secure($system['current_language']), secure($this->_data['user_id'], 'int'));
@@ -52,13 +56,87 @@ class User
                 }
                 /* update user last seen */
                 $db->query(sprintf("UPDATE users SET user_last_seen = NOW() WHERE user_id = %s", secure($this->_data['user_id'], 'int'))) or _error("SQL_ERROR_THROWEN");
-                // $redisObject = new RedisClass();
-                // $redisPostKey = 'user-' . $this->_data['user_id'];
-                // $redisObject->deleteValueFromKey($redisPostKey);
-                // cachedUserData($db, $system, $this->_data['user_id'], $this->_data['active_session_token']);
+                /* active session */
+                $this->_data['active_session_id'] = $this->_data['session_id'];
+                $this->_data['active_session_token'] = $this->_data['session_token'];
+                /* get user picture */
+                $this->_data['user_picture_default'] = ($this->_data['user_picture']) ? false : true;
+                $this->_data['user_picture_raw'] = $this->_data['user_picture'];
+                $this->_data['user_picture'] = get_picture($this->_data['user_picture'], $this->_data['user_gender']);
+                $this->_data['user_picture_full'] = ($this->_data['user_picture_full']) ? $system['system_uploads'] . '/' . $this->_data['user_picture_full'] : $this->_data['user_picture_full'];
+                //                if ($this->_data['user_picture'] != "") {
+                //                    $checkImage = image_exist($this->_data['user_picture']);
+                //                    if ($checkImage != '200') {
+                //                        $this->_data['user_picture'] = $this->_data['user_picture_full'];
+                //                    }
+                //                }
+                // if ($this->_data['user_picture_full'] == "") {
+                //     $this->_data['user_picture_full'] = $system['system_uploads_assets'] . '/content/themes/' . $system['theme'] . '/images/user_defoult_img.jpg';
+                // }
+
+                $this->_data['user_picture'] = $system['system_url'] . '/includes/wallet-api/image-exist-api.php?userPicture=' . $this->_data['user_picture'] . '&userPictureFull=' . $system['system_uploads'] . '/' . $this->_data['user_picture_full'] . '&type=1';
+                // echo "<pre>";
+                // print_r($this->_data);
+                // die;
+                /* get all friends ids */
+                $this->_data['friends_ids'] = $this->get_friends_ids($this->_data['user_id']);
+                /* get all followings ids */
+                $this->_data['followings_ids'] = $this->get_followings_ids($this->_data['user_id']);
+                /* get all friend requests ids */
+                $this->_data['friend_requests_ids'] = $this->get_friend_requests_ids();
+                /* get all friend requests sent ids */
+                $this->_data['friend_requests_sent_ids'] = $this->get_friend_requests_sent_ids();
+                /* check boost permission */
+                $this->_data['can_boost_posts'] = false;
+                $this->_data['can_boost_pages'] = false;
+                if ($system['packages_enabled'] && ($this->_is_admin || $this->_data['user_subscribed'])) {
+                    if ($this->_is_admin || ($this->_data['boost_posts_enabled'] && ($this->_data['user_boosted_posts'] < $this->_data['boost_posts']))) {
+                        $this->_data['can_boost_posts'] = true;
+                    }
+                    if ($this->_is_admin || ($this->_data['boost_pages_enabled'] && ($this->_data['user_boosted_pages'] < $this->_data['boost_pages']))) {
+                        $this->_data['can_boost_pages'] = true;
+                    }
+                }
+                /* check pages permission */
+                if ($system['pages_enabled']) {
+                    $this->_data['can_create_pages'] = $this->check_module_permission($system['pages_permission']);
+                }
+                /* check groups permission */
+                if ($system['groups_enabled']) {
+                    $this->_data['can_create_groups'] = $this->check_module_permission($system['groups_permission']);
+                }
+                /* check events permission */
+                if ($system['events_enabled']) {
+                    $this->_data['can_create_events'] = $this->check_module_permission($system['events_permission']);
+                }
+                /* check blogs permission */
+                if ($system['blogs_enabled']) {
+                    $this->_data['can_write_articles'] = $this->check_module_permission($system['blogs_permission']);
+                }
+                /* check market permission */
+                if ($system['market_enabled']) {
+                    $this->_data['can_sell_products'] = $this->check_module_permission($system['market_permission']);
+                }
+                /* check forums permission */
+                if ($system['forums_enabled']) {
+                    $this->_data['can_use_forums'] = $this->check_module_permission($system['forums_permission']);
+                }
+                /* check movies permission */
+                if ($system['movies_enabled']) {
+                    $this->_data['can_watch_movies'] = $this->check_module_permission($system['movies_permission']);
+                }
+                /* check games permission */
+                if ($system['games_enabled']) {
+                    $this->_data['can_play_games'] = $this->check_module_permission($system['games_permission']);
+                }
+                /* check games permission */
+                if ($system['live_enabled']) {
+                    $this->_data['can_go_live'] = $this->check_module_permission($system['live_permission']);
+                }
             }
         }
     }
+
 
 
     /* ------------------------------- */
@@ -428,23 +506,10 @@ class User
         $followings = [];
         $offset *= $system['min_results_even'];
         $limit_statement = ($get_all) ? "" : sprintf("LIMIT %s, %s", secure($offset, 'int', false), secure($system['min_results_even'], 'int', false));
-        $get_followings = $db->query(sprintf('SELECT users.user_id, users.user_name, users.user_firstname, users.user_lastname, users.user_gender, users.user_picture, users.user_subscribed, users.user_verified, picture_photo.source as user_picture_full FROM followings INNER JOIN users ON (followings.following_id = users.user_id) LEFT JOIN posts_photos as picture_photo ON users.user_picture_id = picture_photo.photo_id  WHERE followings.user_id = %s ' . $limit_statement, secure($user_id, 'int'))) or _error("SQL_ERROR_THROWEN");
+        $get_followings = $db->query(sprintf('SELECT users.user_id, users.user_name, users.user_firstname, users.user_lastname, users.user_gender, users.user_picture, users.user_subscribed, users.user_verified FROM followings INNER JOIN users ON (followings.following_id = users.user_id) WHERE followings.user_id = %s ' . $limit_statement, secure($user_id, 'int'))) or _error("SQL_ERROR_THROWEN");
         if ($get_followings->num_rows > 0) {
             while ($following = $get_followings->fetch_assoc()) {
                 $following['user_picture'] = get_picture($following['user_picture'], $following['user_gender']);
-
-
-
-                $following['user_picture_full'] = ($following['user_picture_full']) ? $system['system_uploads'] . '/' . $following['user_picture_full'] : $following['user_picture_full'];
-                if ($following['user_picture'] != "") {
-
-                    $following['user_picture'] =  $system['system_url'] . '/includes/wallet-api/image-exist-api.php?userPicture=' . $following['user_picture'] . '&userPictureFull=' . $following['user_picture_full'] . '&type=1';
-                }
-                if ($following['user_picture'] == "") {
-                    $following['user_picture'] =  $system['system_url'] . '/content/themes/' . $system['theme'] . '/images/user_defoult_img.jpg';
-                }
-
-
                 /* get the connection between the viewer & the target */
                 $following['connection'] = $this->connection($following['user_id'], false);
                 $followings[] = $following;
@@ -468,22 +533,10 @@ class User
         $followers = [];
         $offset *= $system['min_results_even'];
         $limit_statement = ($get_all) ? "" : sprintf("LIMIT %s, %s", secure($offset, 'int', false), secure($system['min_results_even'], 'int', false));
-        $get_followers = $db->query(sprintf('SELECT users.user_id, users.user_name, users.user_firstname, users.user_lastname, users.user_gender, users.user_picture, users.user_subscribed, users.user_verified, picture_photo.source as user_picture_full  FROM followings INNER JOIN users ON (followings.user_id = users.user_id) LEFT JOIN posts_photos as picture_photo ON users.user_picture_id = picture_photo.photo_id WHERE followings.following_id = %s ' . $limit_statement, secure($user_id, 'int'))) or _error("SQL_ERROR_THROWEN");
+        $get_followers = $db->query(sprintf('SELECT users.user_id, users.user_name, users.user_firstname, users.user_lastname, users.user_gender, users.user_picture, users.user_subscribed, users.user_verified FROM followings INNER JOIN users ON (followings.user_id = users.user_id) WHERE followings.following_id = %s ' . $limit_statement, secure($user_id, 'int'))) or _error("SQL_ERROR_THROWEN");
         if ($get_followers->num_rows > 0) {
             while ($follower = $get_followers->fetch_assoc()) {
                 $follower['user_picture'] = get_picture($follower['user_picture'], $follower['user_gender']);
-
-                $follower['user_picture_full'] = ($follower['user_picture_full']) ? $system['system_uploads'] . '/' . $follower['user_picture_full'] : $follower['user_picture_full'];
-                if ($follower['user_picture'] != "") {
-
-                    $follower['user_picture'] =  $system['system_url'] . '/includes/wallet-api/image-exist-api.php?userPicture=' . $follower['user_picture'] . '&userPictureFull=' . $follower['user_picture_full'] . '&type=1';
-                }
-                if ($follower['user_picture'] == "") {
-                    $follower['user_picture'] =  $system['system_url'] . '/content/themes/' . $system['theme'] . '/images/user_defoult_img.jpg';
-                }
-
-
-
                 /* get the connection between the viewer & the target */
                 $follower['connection'] = $this->connection($follower['user_id'], false);
                 $followers[] = $follower;
@@ -768,10 +821,10 @@ class User
             $skipped_list = implode(',', $skipped_array);
             /* get users */
             //$getUserQuery = sprintf('SELECT user_id, user_name, user_firstname, user_lastname, user_gender, user_picture, user_subscribed, user_verified FROM users WHERE user_id != %1$s AND user_id NOT IN (%2$s) AND (user_name LIKE %3$s OR user_firstname LIKE %3$s OR user_lastname LIKE %3$s OR CONCAT(user_firstname,  " ", user_lastname) LIKE %3$s) ORDER BY user_firstname ASC LIMIT %4$s', secure($this->_data['user_id'], 'int'), $skipped_list, secure($query, 'search'), secure($system['min_results'], 'int', false) );
-            $getUserQuery = sprintf('SELECT user_id, user_name, user_firstname, user_lastname, user_gender, user_picture, user_subscribed, picture_photo.source as user_picture_full, user_verified FROM users LEFT JOIN posts_photos as picture_photo ON users.user_picture_id = picture_photo.photo_id WHERE user_id != %1$s AND (user_name LIKE %2$s OR user_firstname LIKE %2$s OR user_lastname LIKE %2$s OR CONCAT(user_firstname,  " ", user_lastname) LIKE %2$s) ORDER BY user_firstname ASC LIMIT %3$s', secure($this->_data['user_id'], 'int'), secure($query, 'search'), secure($system['min_results'], 'int', false));
+            $getUserQuery = sprintf('SELECT user_id, user_name, user_firstname, user_lastname, user_gender, user_picture, user_subscribed, user_verified FROM users WHERE user_id != %1$s AND (user_name LIKE %2$s OR user_firstname LIKE %2$s OR user_lastname LIKE %2$s OR CONCAT(user_firstname,  " ", user_lastname) LIKE %2$s) ORDER BY user_firstname ASC LIMIT %3$s', secure($this->_data['user_id'], 'int'), secure($query, 'search'), secure($system['min_results'], 'int', false));
         } else {
             /* get users */
-            $getUserQuery = sprintf('SELECT user_id, user_name, user_firstname, user_lastname, user_gender, user_picture, user_subscribed, picture_photo.source as user_picture_full, user_verified FROM users LEFT JOIN posts_photos as picture_photo ON users.user_picture_id = picture_photo.photo_id WHERE user_id != %1$s AND (user_name LIKE %2$s OR user_firstname LIKE %2$s OR user_lastname LIKE %2$s OR CONCAT(user_firstname,  " ", user_lastname) LIKE %2$s) ORDER BY user_firstname ASC LIMIT %3$s', secure($this->_data['user_id'], 'int'), secure($query, 'search'), secure($system['min_results'], 'int', false));
+            $getUserQuery = sprintf('SELECT user_id, user_name, user_firstname, user_lastname, user_gender, user_picture, user_subscribed, user_verified FROM users WHERE user_id != %1$s AND (user_name LIKE %2$s OR user_firstname LIKE %2$s OR user_lastname LIKE %2$s OR CONCAT(user_firstname,  " ", user_lastname) LIKE %2$s) ORDER BY user_firstname ASC LIMIT %3$s', secure($this->_data['user_id'], 'int'), secure($query, 'search'), secure($system['min_results'], 'int', false));
         }
         $get_users = $db->query($getUserQuery) or _error("SQL_ERROR_THROWEN");
         if ($get_users->num_rows > 0) {
@@ -781,7 +834,6 @@ class User
                     continue;
                 }
                 $user['user_picture'] = get_picture($user['user_picture'], $user['user_gender']);
-                $user['user_picture'] = $system['system_url'] . '/includes/wallet-api/image-exist-api.php?userPicture=' . $user['user_picture'] . '&userPictureFull=' . $system['system_uploads'] . '/' . $user['user_picture_full'];
                 if ($mentioned) {
                     $fullName = $user['user_firstname'] . " " . $user['user_lastname'];
                     if ($user['user_firstname'] != "" && $user['user_lastname']) {
@@ -916,7 +968,7 @@ class User
         global $db, $system;
         $results = [];
         /* search users */
-        $searchUsers = sprintf('SELECT user_id, user_name, user_firstname, user_lastname, user_gender, user_picture, picture_photo.source as user_picture_full, user_subscribed, user_verified FROM users LEFT JOIN posts_photos as picture_photo ON users.user_picture_id = picture_photo.photo_id WHERE user_firstname != "" AND user_name LIKE %1$s OR user_firstname LIKE %1$s OR user_lastname LIKE %1$s OR CONCAT(user_firstname,  " ", user_lastname) LIKE %1$s LIMIT %2$s', secure($query, 'search'), secure($system['min_results'], 'int', false));
+        $searchUsers = sprintf('SELECT user_id, user_name, user_firstname, user_lastname, user_gender, user_picture, user_subscribed, user_verified FROM users WHERE user_firstname != "" AND user_name LIKE %1$s OR user_firstname LIKE %1$s OR user_lastname LIKE %1$s OR CONCAT(user_firstname,  " ", user_lastname) LIKE %1$s LIMIT %2$s', secure($query, 'search'), secure($system['min_results'], 'int', false));
         $get_users = $db->query($searchUsers) or _error("SQL_ERROR_THROWEN");
         if ($get_users->num_rows > 0) {
             while ($user = $get_users->fetch_assoc()) {
@@ -1158,7 +1210,6 @@ class User
                 switch ($result['node_type']) {
                     case 'user':
                         $result['user_picture'] = get_picture($result['user_picture'], $result['user_gender']);
-                        $result['user_picture'] = $system['system_url'] . '/includes/wallet-api/image-exist-api.php?userPicture=' . $result['user_picture'] . '&userPictureFull=' . $result['user_picture_full'];
                         /* get the connection between the viewer & the target */
                         $result['connection'] = $this->connection($result['user_id']);
                         break;
@@ -1249,25 +1300,14 @@ class User
                 $db->query(sprintf("DELETE FROM followings WHERE user_id = %s AND following_id = %s", secure($id, 'int'), secure($this->_data['user_id'], 'int'))) or _error("SQL_ERROR_THROWEN");
                 /* block the user */
                 $db->query(sprintf("INSERT INTO users_blocks (user_id, blocked_id) VALUES (%s, %s)", secure($this->_data['user_id'], 'int'), secure($id, 'int'))) or _error("SQL_ERROR_THROWEN");
-                /*Update Users Profile in RDM */
-                $redisObject = new RedisClass();
-                $redisPostKey = 'user-' . $this->_data['user_id'];
-                $redisObject->deleteValueFromKey($redisPostKey);
-                cachedUserData($db, $system, $this->_data['user_id'], $this->_data['active_session_token']);
                 break;
 
             case 'unblock':
                 /* unblock the user */
                 $db->query(sprintf("DELETE FROM users_blocks WHERE user_id = %s AND blocked_id = %s", secure($this->_data['user_id'], 'int'), secure($id, 'int'))) or _error("SQL_ERROR_THROWEN");
-                /*Update Users Profile in RDM */
-                $redisObject = new RedisClass();
-                $redisPostKey = 'user-' . $this->_data['user_id'];
-                $redisObject->deleteValueFromKey($redisPostKey);
-                cachedUserData($db, $system, $this->_data['user_id'], $this->_data['active_session_token']);
                 break;
 
             case 'friend-accept':
-
                 /* check if there is a friend request from the target to the viewer */
                 $check = $db->query(sprintf("SELECT COUNT(*) as count FROM friends WHERE user_one_id = %s AND user_two_id = %s AND status = 0", secure($id, 'int'), secure($this->_data['user_id'], 'int'))) or _error("SQL_ERROR_THROWEN");
                 /* if no -> return */
@@ -1282,11 +1322,7 @@ class User
                 $this->createConversations($this->_data['user_id'], $id);
                 //    $this->post_conversation_message("", "", "", $conversation_id = null, $recipients = null);
                 /* - new add in conversation when friends to show in message page list --- */
-                /*Update Users Profile in RDM */
-                $redisObject = new RedisClass();
-                $redisPostKey = 'user-' . $this->_data['user_id'];
-                $redisObject->deleteValueFromKey($redisPostKey);
-                cachedUserData($db, $system, $this->_data['user_id'], $this->_data['active_session_token']);
+
                 break;
 
             case 'friend-decline':
@@ -1301,11 +1337,6 @@ class User
 
                 /* unfollow */
                 $this->_unfollow($id);
-                /*Update Users Profile in RDM */
-                $redisObject = new RedisClass();
-                $redisPostKey = 'user-' . $this->_data['user_id'];
-                $redisObject->deleteValueFromKey($redisPostKey);
-                cachedUserData($db, $system, $this->_data['user_id'], $this->_data['active_session_token']);
                 break;
 
             case 'friend-add':
@@ -1341,15 +1372,7 @@ class User
                 /* post new notification */
                 $this->post_notification(array('to_user_id' => $id, 'action' => 'friend_add', 'hub' => "LocalHub", 'node_url' => $this->_data['user_name']));
                 /* follow */
-
-                //add following table
-                // $this->_follow($id);
-
-                /*Update Users Profile in RDM */
-                $redisObject = new RedisClass();
-                $redisPostKey = 'user-' . $this->_data['user_id'];
-                $redisObject->deleteValueFromKey($redisPostKey);
-                cachedUserData($db, $system, $this->_data['user_id'], $this->_data['active_session_token']);
+                $this->_follow($id);
                 break;
 
             case 'friend-cancel':
@@ -1363,11 +1386,6 @@ class User
                 $db->query(sprintf("UPDATE users SET user_live_requests_counter = IF(user_live_requests_counter=0,0,user_live_requests_counter-1), user_live_notifications_counter = IF(user_live_notifications_counter=0,0,user_live_notifications_counter-1) WHERE user_id = %s", secure($id, 'int'))) or _error("SQL_ERROR_THROWEN");
                 /* unfollow */
                 $this->_unfollow($id);
-                /*Update Users Profile in RDM */
-                $redisObject = new RedisClass();
-                $redisPostKey = 'user-' . $this->_data['user_id'];
-                $redisObject->deleteValueFromKey($redisPostKey);
-                cachedUserData($db, $system, $this->_data['user_id'], $this->_data['active_session_token']);
                 break;
 
             case 'friend-remove':
@@ -1377,29 +1395,14 @@ class User
                 if ($check->fetch_assoc()['count'] == 0) return;
                 /* delete this friend */
                 $db->query(sprintf('DELETE FROM friends WHERE (user_one_id = %1$s AND user_two_id = %2$s AND status = 1) OR (user_one_id = %2$s AND user_two_id = %1$s AND status = 1)', secure($this->_data['user_id'], 'int'),  secure($id, 'int'))) or _error("SQL_ERROR_THROWEN");
-                /*Update Users Profile in RDM */
-                $redisObject = new RedisClass();
-                $redisPostKey = 'user-' . $this->_data['user_id'];
-                $redisObject->deleteValueFromKey($redisPostKey);
-                cachedUserData($db, $system, $this->_data['user_id'], $this->_data['active_session_token']);
                 break;
 
             case 'follow':
                 $this->_follow($id);
-                /*Update Users Profile in RDM */
-                $redisObject = new RedisClass();
-                $redisPostKey = 'user-' . $this->_data['user_id'];
-                $redisObject->deleteValueFromKey($redisPostKey);
-                cachedUserData($db, $system, $this->_data['user_id'], $this->_data['active_session_token']);
                 break;
 
             case 'unfollow':
                 $this->_unfollow($id);
-                /*Update Users Profile in RDM */
-                $redisObject = new RedisClass();
-                $redisPostKey = 'user-' . $this->_data['user_id'];
-                $redisObject->deleteValueFromKey($redisPostKey);
-                cachedUserData($db, $system, $this->_data['user_id'], $this->_data['active_session_token']);
                 break;
 
             case 'poke':
@@ -1464,10 +1467,6 @@ class User
                     $db->query(sprintf("UPDATE pages SET page_boosted = '1', page_boosted_by = %s WHERE page_id = %s", secure($this->_data['user_id'], 'int'), secure($id, 'int'))) or _error("SQL_ERROR_THROWEN");
                     /* update user */
                     $db->query(sprintf("UPDATE users SET user_boosted_pages = user_boosted_pages + 1 WHERE user_id = %s", secure($this->_data['user_id'], 'int'))) or _error("SQL_ERROR_THROWEN");
-                    $redisObject = new RedisClass();
-                    $redisPostKey = 'user-' . $this->_data['user_id'];
-                    $redisObject->deleteValueFromKey($redisPostKey);
-                    cachedUserData($db, $system, $this->_data['user_id'], $this->_data['active_session_token']);
                 }
                 break;
 
@@ -1953,28 +1952,18 @@ class User
             if ($user_id == $this->_data['user_id']) {
                 return "me";
             }
-            // die(count())
-            $friends = self::get_friends_ids($this->_data['user_id']);
-            $friend_request_sent = self::get_friend_requests_sent_ids();
-            $friend_request_receive = self::get_friend_requests_ids();
             /* check if the viewer & the target are friends */
-            if (!empty($friends) && in_array($user_id, $friends)) {
-
+            if (in_array($user_id, $this->_data['friends_ids'])) {
                 return "remove";
             }
-
             /* check if the target sent a request to the viewer */
-            if (!empty($friend_request_receive) && in_array($user_id, $friend_request_receive)) {
+            if (in_array($user_id, $this->_data['friend_requests_ids'])) {
                 return "request";
             }
             /* check if the viewer sent a request to the target */
-
-
-            if (!empty($friend_request_sent) && in_array($user_id, $friend_request_sent)) {
+            if (in_array($user_id, $this->_data['friend_requests_sent_ids'])) {
                 return "cancel";
             }
-
-
             /* check if the viewer declined the friend request to the target */
             if ($this->friendship_declined($user_id)) {
                 return "declined";
@@ -2126,12 +2115,6 @@ class User
             $db->query(sprintf('DELETE FROM friends WHERE user_one_id = %1$s OR user_two_id = %1$s', secure($user_id, 'int'))) or _error("SQL_ERROR_THROWEN");
             /* delete all user following connections */
             $db->query(sprintf('DELETE FROM followings WHERE user_id = %1$s OR following_id = %1$s', secure($user_id, 'int'))) or _error("SQL_ERROR_THROWEN");
-
-            $redisObject = new RedisClass();
-            $array = $redisObject->getStoredKeysbyID('*-' . $user_id);
-            $array1 = $redisObject->getStoredKeysbyID('*-' . $user_id . '-*');
-            $redisObject->deleteUserData($array);
-            $redisObject->deleteUserData($array1);
         }
     }
 
@@ -3484,7 +3467,7 @@ class User
         /* check if posting the message to (new || existed) conversation */
         if ($conversation_id == null) {
             /* [first] check previous conversation between (viewer & recipients) */
-            $mutual_conversation = $this->get_mutual_conversation($recipients, true);
+            $mutual_conversation = $this->get_mutual_conversation($recipients);
             if (!$mutual_conversation) {
                 /* [1] there is no conversation between viewer and the recipients -> start new one */
                 /* insert conversation */
@@ -3965,44 +3948,6 @@ class User
         foreach ($this->_data['friends_ids'] as $friend_id) {
             $this->post_notification(array('to_user_id' => $friend_id, 'action' => 'live_stream', 'node_type' => 'post', 'node_url' => $post_id));
         }
-                 //RedisBlock
-        //Update posts on timeline
-        $redisPostKey = 'user-' . $this->_data['user_id'] . '-posts';
-        $redisObject = new RedisClass();
-        $redisObject->deleteValueFromKey($redisPostKey);
-        fetchAndSetDataOnPostReaction($system, $this, $redisObject, $redisPostKey);
-
-        //Updtae Posts in Profile PAGE
-        $postsList = $redisObject->getValueFromKey($redisPostKey);
-        $decodePost = json_decode($postsList, TRUE);
-        $arrayforrepalce = array();
-        if (count($decodePost) > 0) {
-            $arrayforrepalce = searchSubArray($decodePost, 'post_id', $post_id);
-        }
-        $redisPostProfileKey = 'profile-posts-' . $this->_data['user_id'];
-        $redisObject->deleteValueFromKey($redisPostProfileKey);
-
-        //Update Friends POST
-        $postUpdateFromRedis = $redisObject->getValueFromKey($redisPostKey);
-        $decodeVal = json_decode($postUpdateFromRedis, TRUE);
-        $updatedPostObject  = searchSubArray($decodeVal, 'post_id', $post_id);
-
-        $ids = $this->get_friends_ids($this->_data['user_id']);
-        $followersId = $this->get_followings_ids($this->_data['user_id']);
-        $idsList = array_unique(array_merge($ids, $followersId));
-        foreach ($idsList as $id) {
-            $userKeys = 'user-' . $id . '-posts';
-            $isUserExist = $redisObject->isRedisKeyExist($userKeys);
-            if ($isUserExist == true) {
-                $getPostsFromRedis = $redisObject->getValueFromKey($userKeys);
-                $jsonValuesRes = json_decode($getPostsFromRedis, true);
-                array_unshift($jsonValuesRes, $updatedPostObject);
-
-                $jsonEncodedVals = json_encode($jsonValuesRes);
-                // print_r($jsonEncodedVals); die;
-                $redisObject->setValueWithRedis($userKeys, $jsonEncodedVals);
-            }
-        }
         return $post_id;
     }
 
@@ -4032,46 +3977,6 @@ class User
         /* stop live recording */
         if ($system['save_live_enabled']) {
             $this->stop_live_recording($post_id, $post['live']['agora_uid'], $post['live']['agora_channel_name'], $post['live']['agora_resource_id'], $post['live']['agora_sid']);
-        }
-
-        //RedisBlock
-        //Update posts on timeline
-        $post_id = $post['post_id'];
-        $redisPostKey = 'user-' . $this->_data['user_id'] . '-posts';
-        $redisObject = new RedisClass();
-        $redisObject->deleteValueFromKey($redisPostKey);
-        fetchAndSetDataOnPostReaction($system, $this, $redisObject, $redisPostKey);
-
-        //Updtae Posts in Profile PAGE
-        $postsList = $redisObject->getValueFromKey($redisPostKey);
-        $decodePost = json_decode($postsList, TRUE);
-        $arrayforrepalce = array();
-        if (count($decodePost) > 0) {
-            $arrayforrepalce = searchSubArray($decodePost, 'post_id', $post_id);
-        }
-        $redisPostProfileKey = 'profile-posts-' . $this->_data['user_id'];
-        $redisObject->deleteValueFromKey($redisPostProfileKey);
-
-        //Update Friends POST
-        $postUpdateFromRedis = $redisObject->getValueFromKey($redisPostKey);
-        $decodeVal = json_decode($postUpdateFromRedis, TRUE);
-        $updatedPostObject  = searchSubArray($decodeVal, 'post_id', $post_id);
-
-        $ids = $this->get_friends_ids($this->_data['user_id']);
-        $followersId = $this->get_followings_ids($this->_data['user_id']);
-        $idsList = array_unique(array_merge($ids, $followersId));
-        foreach ($idsList as $id) {
-            $userKeys = 'user-' . $id . '-posts';
-            $isUserExist = $redisObject->isRedisKeyExist($userKeys);
-            if ($isUserExist == true) {
-                $getPostsFromRedis = $redisObject->getValueFromKey($userKeys);
-                $jsonValuesRes = json_decode($getPostsFromRedis, true);
-                array_unshift($jsonValuesRes, $updatedPostObject);
-
-                $jsonEncodedVals = json_encode($jsonValuesRes);
-                // print_r($jsonEncodedVals); die;
-                $redisObject->setValueWithRedis($userKeys, $jsonEncodedVals);
-            }
         }
     }
 
@@ -4191,7 +4096,6 @@ class User
         }
         /* update post */
         $db->query(sprintf("UPDATE posts_live SET agora_resource_id = %s, agora_sid = %s WHERE post_id = %s", secure($resourceId), secure($sid), secure($post_id, 'int'))) or _error("SQL_ERROR_THROWEN");
-      
     }
 
 
@@ -4406,37 +4310,16 @@ class User
      */
     public function popover($id, $type)
     { //echo $id."======type========".$type;
-        global  $system, $db;
+        global $db;
         $profile = [];
         /* check the type to get */
         if ($type == "user") {
             /* get user info */
-            // $get_profile = $db->query(sprintf("SELECT * FROM users WHERE user_id = %s", secure($id, 'int'))) or _error("SQL_ERROR_THROWEN");
-
-
-
-            $get_profile = $db->query(sprintf("SELECT users.*, picture_photo.source as user_picture_full FROM users LEFT JOIN posts_photos as picture_photo ON users.user_picture_id = picture_photo.photo_id WHERE user_id = %s", secure($id, 'int'))) or _error("SQL_ERROR_THROWEN");
-
-
+            $get_profile = $db->query(sprintf("SELECT * FROM users WHERE user_id = %s", secure($id, 'int'))) or _error("SQL_ERROR_THROWEN");
             if ($get_profile->num_rows > 0) {
                 $profile = $get_profile->fetch_assoc();
                 /* get profile picture */
                 $profile['user_picture'] = get_picture($profile['user_picture'], $profile['user_gender']);
-
-
-
-
-                $profile['user_picture_full'] = ($profile['user_picture_full']) ? $system['system_uploads'] . '/' . $profile['user_picture_full'] : $profile['user_picture_full'];
-                if ($profile['user_picture'] != "") {
-
-                    $profile['user_picture'] =  $system['system_url'] . '/includes/wallet-api/image-exist-api.php?userPicture=' . $profile['user_picture'] . '&userPictureFull=' . $profile['user_picture_full'] . '&type=1';
-                }
-                if ($profile['user_picture'] == "") {
-                    $profile['user_picture'] =  $system['system_url'] . '/content/themes/' . $system['theme'] . '/images/user_defoult_img.jpg';
-                }
-
-
-
                 /* get followers count */
                 $profile['followers_count'] = count($this->get_followers_ids($profile['user_id']));
                 /* get mutual friends count between the viewer and the target */
@@ -4445,15 +4328,11 @@ class User
                 }
                 /* get the connection between the viewer & the target */
                 if ($profile['user_id'] != $this->_data['user_id']) {
-                    $friends = self::get_friends_ids($this->_data['user_id']);
-                    $friend_request_sent = self::get_friend_requests_sent_ids();
-                    $friend_request_receive = self::get_friend_requests_ids();
-                    $profile['we_friends'] = count($friends) > 0 ? ((in_array($profile['user_id'], $friends)) ? true : false) : false;
-                    $profile['he_request'] = count($friend_request_receive) > 0 ? ((in_array($profile['user_id'], $friend_request_receive)) ? true : false) : false;
-                    $profile['i_request'] = count($friend_request_sent) > 0 ? ((in_array($profile['user_id'], $friend_request_sent)) ? true : false) : false;
+                    $profile['we_friends'] = (in_array($profile['user_id'], $this->_data['friends_ids'])) ? true : false;
+                    $profile['he_request'] = (in_array($profile['user_id'], $this->_data['friend_requests_ids'])) ? true : false;
+                    $profile['i_request'] = (in_array($profile['user_id'], $this->_data['friend_requests_sent_ids'])) ? true : false;
                     $profile['i_follow'] = (in_array($profile['user_id'], $this->_data['followings_ids'])) ? true : false;
                 }
-                // echo'<pre>'; print_r($profile);die;
             }
         } else {
             /* get page info */
@@ -4585,13 +4464,6 @@ class User
         foreach ($videos as $video) { //print_r($videos);
             $db->query(sprintf("INSERT INTO stories_media (story_id, source, is_photo, text, time) VALUES (%s, %s, '0', %s, %s)", secure($story_id, 'int'), secure($video), secure($message), secure($date))) or _error("SQL_ERROR_THROWEN");
         }
-        $redisObject = new RedisClass();
-        $rediskeyname = 'user-' . $this->_data['user_id'] . '-getotherstory';
-        $redisObject->deleteValueFromKey($rediskeyname);
-        $rediskeyname = 'user-' . $this->_data['user_id'] . '-getmystory';
-        $redisObject->deleteValueFromKey($rediskeyname);
-        getMyStory($this->_data['user_id'], $this, $redisObject, $system);
-        getAllStories($this->_data['user_id'], $this, $redisObject, $system);
     }
 
     /**
@@ -4612,7 +4484,6 @@ class User
         if ($get_stories->num_rows > 0) {
             while ($_story = $get_stories->fetch_assoc()) {
                 $story['id'] = $_story['story_id'];
-                $story['user_id'] = $_story['user_id'];
                 $story['photo'] = get_picture($_story['user_picture'], $_story['user_gender']);
                 $story['name'] = $_story['user_firstname'] . " " . $_story['user_lastname'];
                 $story['lastUpdated'] = strtotime($_story['time']);
@@ -4630,16 +4501,6 @@ class User
                 }
                 $stories[] = $story;
             }
-        }
-        //         echo "<pre>";
-        // print_r($stories);
-        $searchResult = array_filter($stories, function ($story) {
-            return $story['user_id'] == $this->_data['user_id'];
-        });
-        if (count($searchResult) > 0) {
-            $removeArray = array_keys($searchResult);
-            unset($stories[$removeArray[0]]);
-            array_unshift($stories, $searchResult[$removeArray[0]]);
         }
         return array("array" => $stories, "json" => json_encode($stories));
     }
@@ -4671,13 +4532,6 @@ class User
     {
         global $db, $system;
         $check_story = $db->query(sprintf("DELETE FROM stories WHERE time>=DATE_SUB(NOW(), INTERVAL 1 DAY) AND user_id = %s", secure($this->_data['user_id'], 'int'))) or _error("SQL_ERROR_THROWEN");
-        $redisObject = new RedisClass();
-        $rediskeyname = 'user-' . $this->_data['user_id'] . '-getotherstory';
-        $redisObject->deleteValueFromKey($rediskeyname);
-        $rediskeyname = 'user-' . $this->_data['user_id'] . '-getmystory';
-        $redisObject->deleteValueFromKey($rediskeyname);
-        getMyStory($this->_data['user_id'], $this, $redisObject, $system);
-        getAllStories($this->_data['user_id'], $this, $redisObject, $system);
     }
 
 
@@ -4773,8 +4627,6 @@ class User
             $post['user_id'] = $_page['page_id'];
             $post['user_type'] = "page";
             $post['post_author_picture'] = get_picture($_page['page_picture'], "page");
-
-            
             $post['post_author_url'] = $system['system_url'] . '/pages/' . $_page['page_name'];
             $post['post_author_name'] = $_page['page_title'];
             $post['post_author_verified'] = $this->_data['page_verified'];
@@ -5131,51 +4983,6 @@ class User
         /* points balance */
         $this->points_balance("add", $this->_data['user_id'], "post", $post['post_id']);
 
-        //RedisBlock
-        //Update posts on timeline
-        $post_id = $post['post_id'];
-        $redisPostKey = 'user-' . $this->_data['user_id'] . '-posts';
-        $redisObject = new RedisClass();
-        $redisObject->deleteValueFromKey($redisPostKey);
-        fetchAndSetDataOnPostReaction($system, $this, $redisObject, $redisPostKey);
-
-        //Updtae Posts in Profile PAGE
-        $postsList = $redisObject->getValueFromKey($redisPostKey);
-        $decodePost = json_decode($postsList, TRUE);
-        $arrayforrepalce = array();
-        if (count($decodePost) > 0) {
-            $arrayforrepalce = searchSubArray($decodePost, 'post_id', $post_id);
-        }
-        $redisPostProfileKey = 'profile-posts-' . $this->_data['user_id'];
-        $redisObject->deleteValueFromKey($redisPostProfileKey);
-        // $postsLists = $redisObject->getValueFromKey($redisPostProfileKey);
-        // $decodePosts = json_decode($postsLists, TRUE);
-        // array_unshift($decodePosts, $arrayforrepalce);
-        // $encodedePosts = json_encode($decodePosts);
-        // $redisObject->setValueWithRedis($redisPostProfileKey, $encodedePosts);
-
-        //Update Friends POST
-        $postUpdateFromRedis = $redisObject->getValueFromKey($redisPostKey);
-        $decodeVal = json_decode($postUpdateFromRedis, TRUE);
-        $updatedPostObject  = searchSubArray($decodeVal, 'post_id', $post_id);
-
-        $ids = $this->get_friends_ids($this->_data['user_id']);
-        $followersId = $this->get_followings_ids($this->_data['user_id']);
-        $idsList = array_unique(array_merge($ids, $followersId));
-        foreach ($idsList as $id) {
-            $userKeys = 'user-' . $id . '-posts';
-            $isUserExist = $redisObject->isRedisKeyExist($userKeys);
-            if ($isUserExist == true) {
-                $getPostsFromRedis = $redisObject->getValueFromKey($userKeys);
-                $jsonValuesRes = json_decode($getPostsFromRedis, true);
-                array_unshift($jsonValuesRes, $updatedPostObject);
-
-                $jsonEncodedVals = json_encode($jsonValuesRes);
-                // print_r($jsonEncodedVals); die;
-                $redisObject->setValueWithRedis($userKeys, $jsonEncodedVals);
-            }
-        }
-        //RedisBlock
         // return
         return $post;
     }
@@ -5417,8 +5224,8 @@ class User
                     _error(400);
                 }
                 $id = $args['id'];
-                //  echo "<pre>";
-                // // print_r($this->_data['user_id']);
+                // echo "<pre>";
+                // print_r($this->_data['user_id']);
                 // print_r($args);
                 // die;
                 /* get target user's posts */
@@ -5426,7 +5233,6 @@ class User
                 if ($this->_logged_in) {
                     /* check if the target user is the viewer */
                     if ($id == $this->_data['user_id']) {
-
                         /* get all posts */
                         $where_query .= "WHERE (";
                         /* get all target posts */
@@ -5590,7 +5396,6 @@ class User
         if ($last_post_id != null && $get != 'popular' && $get != 'saved' && $get != 'memories') { /* excluded as not ordered by post_id */
             $get_postsQuery = sprintf("SELECT * FROM (SELECT posts.post_id FROM posts " . $where_query . ") posts WHERE posts.post_id > %s ORDER BY posts.post_id DESC", secure($last_post_id, 'int'));
         } else {
-            $order_query = "ORDER BY posts.post_id DESC";
             $limit_statement = ($get_all) ? "" : sprintf("LIMIT %s, %s", secure($offset, 'int', false), secure($system['max_results'], 'int', false)); /* get_all for cases like download user's posts */
             $get_postsQuery = "SELECT posts.post_id FROM posts " . $where_query . " " . $order_query . " " . $limit_statement;
         }
@@ -5607,7 +5412,6 @@ class User
                 }
             }
         }
-
         return $posts;
     }
 
@@ -5787,12 +5591,6 @@ class User
                     return false;
                 }
                 $post['video'] = $get_video->fetch_assoc();
-
-                // var_dump($post['video']['thumbnail']); die;
-
-                //$post['video']['thumbnail'] = $system['system_url'] . '/includes/wallet-api/get-picture-api.php?picture=' . $system['system_uploads'] . '/' . $post['video']['thumbnail'] . '&type=movie';
-
-
                 break;
 
             case 'audio':
@@ -5846,18 +5644,11 @@ class User
 
         /* get post comments */
         if ($get_comments) {
-            $comment = $this->commentCalculate($post_id);
-            if (!empty($comment)) {
-                $post['comment'] = $comment['total_comment'];
-            }
-
-            // echo '<pre>'; print_r($post['comments']);die;
             if ($post['comments'] > 0) {
                 $post['post_comments'] = $this->get_comments($post['post_id'], 0, true, true, $post);
             }
         }
 
-      
         return $post;
     }
 
@@ -6135,12 +5926,7 @@ class User
             $me = $this->_data['user_id'];
             $where_query .= "(posts.user_id = $me AND posts.boosted = '0' AND posts.user_type = 'user')";
             /* get posts from friends still followed */
-
-            // var_dump($this->_data['followings_ids']); die;
-
             $friends_ids = array_intersect($this->_data['friends_ids'], $this->_data['followings_ids']);
-            //  echo "<pre>";
-            //  print_r($friends_ids); die;
             if ($friends_ids) {
                 $friends_list = implode(',', $friends_ids);
                 /* viewer friends posts -> authors */
@@ -6420,7 +6206,6 @@ class User
             // if ($post['user_picture_full'] == "") {
             //     $post['user_picture_full'] = $system['system_uploads_assets'] . '/content/themes/' . $system['theme'] . '/images/user_defoult_img.jpg';
             // }
-            
             $post['post_author_picture'] = $system['system_url'] . '/' . 'includes/wallet-api/image-exist-api.php?userPicture=' . $post['post_author_picture'] . '&userPictureFull=' . $system['system_uploads'] . '/' . $post['user_picture_full'];
 
             $post['post_author_url'] = $system['system_url'] . '/' . $post['user_name'];
@@ -6437,9 +6222,6 @@ class User
         } else {
             /* page */
             $post['post_author_picture'] = get_picture($post['page_picture'], "page");
-
-            $post['post_author_picture'] = $system['system_url'] . '/includes/wallet-api/get-picture-api.php?picture=' .  $post['post_author_picture'] .'&picture_full=&type=page&type_url=1';
-
             $post['post_author_url'] = $system['system_url'] . '/pages/' . $post['page_name'];
             $post['post_author_name'] = $post['page_title'];
             $post['post_author_verified'] = $post['page_verified'];
@@ -6565,7 +6347,7 @@ class User
      */
     public function shareCount($post_id)
     {
-        global $db, $date, $system;
+        global $db, $date;
         /* check if the viewer can share the post */
         $post = $this->_check_post($post_id, true);
         if (!$post || $post['privacy'] != 'public') {
@@ -6584,13 +6366,6 @@ class User
         } else {
             $totalCounts = 0;
         }
-        $redisPostKey = 'user-' . $this->_data['user_id'] . '-posts';
-        $redisObject = new RedisClass();
-        fetchAndSetDataOnPostReaction($system, $this, $redisObject, $redisPostKey);
-
-        //profile post
-        $redisTimelinekey = 'profile-posts-' . $this->_data['user_id'];
-        fetchAndSetDataOnPostReaction($system, $this, $redisObject, $redisTimelinekey);
         return $totalCounts;
     }
 
@@ -6679,8 +6454,6 @@ class User
     {
         global $db;
         /* get all user posts */
-
-
         switch ($node_type) {
             case 'user':
                 $get_posts = $db->query(sprintf("SELECT post_id FROM posts WHERE user_id = %s AND user_type = 'user'", secure($node_id, 'int'))) or _error("SQL_ERROR_THROWEN");
@@ -6735,9 +6508,6 @@ class User
         $this->delete_hashtags($post_id);
         /* delete post */
         $refresh = false;
-
-        $redisObject = new RedisClass();
-
         $db->query(sprintf("DELETE FROM notifications WHERE node_url = %s", secure($post_id, 'int'))) or _error("SQL_ERROR_THROWEN");
         $db->query(sprintf("DELETE FROM posts WHERE post_id = %s", secure($post_id, 'int'))) or _error("SQL_ERROR_THROWEN");
         switch ($post['post_type']) {
@@ -6775,13 +6545,6 @@ class User
                             delete_uploads_file($post['user_picture']);
                             /* return */
                             $refresh = true;
-                            $redisPostKey = 'user-' . $this->_data['user_id'];
-                            $redisObject->deleteValueFromKey($redisPostKey);
-                            cachedUserData($db, $system, $this->_data['user_id'], $this->_data['active_session_token']);
-                            $redisPostKey = 'user-' . $this->_data['user_id'] . '-posts';
-                            $redisObject->deleteValueFromKey($redisPostKey);
-                            $redisPostKey = 'profile-posts-' . $this->_data['user_id'];
-                            $redisObject->deleteValueFromKey($redisPostKey);
                         }
                         break;
 
@@ -6905,44 +6668,6 @@ class User
         if ($post['in_event'] && !$event['event_approved']) {
             $this->delete_notification($post['event_admin'], 'event_post_pending', $post['event_title'], $post['event_id'] . "-[guid=]" . $post['post_id']);
         }
-
-
-        //Redis block
-        $redisPostKey = 'user-' . $this->_data['user_id'] . '-posts';
-        $isKeyExist = $redisObject->isRedisKeyExist($redisPostKey);
-        if ($isKeyExist == true) {
-            $ids = $this->get_friends_ids($this->_data['user_id']);
-            array_push($ids, $this->_data['user_id']);
-            foreach ($ids as $id) {
-                $userKeys = 'user-' . $id . '-posts';
-                $isUserExist = $redisObject->isRedisKeyExist($userKeys);
-                if ($isUserExist == true) {
-                    $getPostsFromRedis = $redisObject->getValueFromKey($userKeys);
-                    $jsonValuesRes = json_decode($getPostsFromRedis, true);
-                    $new_vals =  removeElementWithValue($jsonValuesRes, 'post_id', $post_id);
-                    $jsonEncodedVals = json_encode($new_vals);
-                    $redisObject->setValueWithRedis($userKeys, $jsonEncodedVals);
-                }
-            }
-        }
-        $redisPostKey = 'profile-posts-' . $this->_data['user_id'];
-        $isKeyExist = $redisObject->isRedisKeyExist($redisPostKey);
-        if ($isKeyExist == true) {
-            $ids = $this->get_friends_ids($this->_data['user_id']);
-            array_push($ids, $this->_data['user_id']);
-            foreach ($ids as $id) {
-                $userKeys = 'profile-posts-' . $id;
-                $isUserExist = $redisObject->isRedisKeyExist($userKeys);
-                if ($isUserExist == true) {
-                    $getPostsFromRedis = $redisObject->getValueFromKey($userKeys);
-                    $jsonValuesRes = json_decode($getPostsFromRedis, true);
-                    $new_vals =  removeElementWithValue($jsonValuesRes, 'post_id', $post_id);
-                    $jsonEncodedVals = json_encode($new_vals);
-                    $redisObject->setValueWithRedis($userKeys, $jsonEncodedVals);
-                }
-            }
-        }
-        //Redis block
         return $refresh;
     }
 
@@ -6999,62 +6724,6 @@ class User
         $post['text'] = $this->_parse(["text" => $post['text_plain'], "trending_hashtags" => true, "post_id" => $post_id]);
         /* get post colored pattern */
         $post['colored_pattern'] = $this->get_posts_colored_pattern($post['colored_pattern']);
-
-
-        //Redis Block
-        $redisObject = new RedisClass();
-        //update current logged in user response
-        $redisKey = 'user-' . $this->_data['user_id'] . '-posts';
-        fetchAndSetDataOnPostReaction($system, $this, $redisObject, $redisKey);
-        $postUpdateFromRedis = $redisObject->getValueFromKey($redisKey);
-        $decodeVal = json_decode($postUpdateFromRedis, TRUE);
-        $updatedPostObject  = searchSubArray($decodeVal, 'post_id', $post_id);
-
-
-        $ids = $this->get_friends_ids($post['author_id']);
-        if (($key = array_search($this->_data['user_id'], $ids)) !== false) {
-            unset($ids[$key]);
-        }
-        if ($post['author_id'] !== $this->_data['user_id']) {
-            array_push($ids, $post['author_id']);
-        }
-
-        $followersId = $this->get_followings_ids($post['author_id']);
-        $idsList = array_unique(array_merge($ids, $followersId));
-
-        foreach ($idsList as $id) {
-            $userKeys = 'user-' . $id . '-posts';
-            $isUserExist = $redisObject->isRedisKeyExist($userKeys);
-            if ($isUserExist == true) {
-                $getPostsFromRedis = $redisObject->getValueFromKey($userKeys);
-                $jsonValuesRes = json_decode($getPostsFromRedis, true);
-                foreach ($jsonValuesRes  as $key => $res) {
-
-                    if ($res['post_id'] == $post_id) {
-                        // $jsonValuesRes[$key]['comments'] = $updatedPostObject['comments'];
-                        $jsonValuesRes[$key] = $updatedPostObject;
-                    }
-                }
-                $jsonEncodedVals = json_encode($jsonValuesRes);
-                $redisObject->setValueWithRedis($userKeys, $jsonEncodedVals);
-            }
-        }
-
-
-        //profile post
-        $redisTimelinekey = 'profile-posts-' . $this->_data['user_id'];
-        $timelineData = $redisObject->getValueFromKey($redisTimelinekey);
-        $decodeVal = json_decode($timelineData, TRUE);
-        foreach ($decodeVal  as $key => $res) {
-            if ($res['post_id'] == $post_id) {
-                $decodeVal[$key] = $updatedPostObject;
-            }
-        }
-
-        $newJsonVals = json_encode($decodeVal);
-        $redisObject->setValueWithRedis($redisTimelinekey, $newJsonVals);
-
-        //Redis Block
         /* return */
         return $post;
     }
@@ -7089,12 +6758,6 @@ class User
         /* update product */
         $location = (!is_empty($location) && valid_location($location)) ? $location : '';
         $db->query(sprintf("UPDATE posts_products SET name = %s, price = %s, category_id = %s, status = %s, location = %s WHERE post_id = %s", secure($name), secure($price), secure($category_id, 'int'), secure($status), secure($location), secure($post_id, 'int'))) or _error("SQL_ERROR_THROWEN");
-        $redisPostKey = 'user-' . $this->_data['user_id'] . '-posts';
-        $redisObject = new RedisClass();
-        $redisObject->deleteValueFromKey($redisPostKey);
-        $redisPostKey = 'profile-posts-' . $this->_data['user_id'];
-        $redisObject->deleteValueFromKey($redisPostKey);
-        // fetchPostDataForTimeline($this->_data['user_id'], $this, $redisObject, $system);
     }
 
 
@@ -7131,7 +6794,7 @@ class User
      */
     public function disallow_post($post_id)
     {
-        global $db, $system;
+        global $db;
         /* (check|get) post */
         $post = $this->_check_post($post_id);
         if (!$post) {
@@ -7147,12 +6810,6 @@ class User
         }
         /* set post as hidden */
         $db->query(sprintf("UPDATE posts SET is_hidden = '1' WHERE post_id = %s", secure($post_id, 'int'))) or _error("SQL_ERROR_THROWEN");
-        $redisObject = new RedisClass();
-        $rediskeyname = 'profile-posts-' . $post['author_id'];
-        $redisObject->deleteValueFromKey($rediskeyname);
-        $rediskeyname = 'profile-posts-others-' . $post['author_id'];
-        $redisObject->deleteValueFromKey($rediskeyname);
-        updateReactions($system, $this, $redisObject, $post_id, $post['author_id']);
     }
 
 
@@ -7164,7 +6821,7 @@ class User
      */
     public function allow_post($post_id)
     {
-        global $db, $system;
+        global $db;
         /* (check|get) post */
         $post = $this->_check_post($post_id);
         if (!$post) {
@@ -7180,12 +6837,6 @@ class User
         }
         /* set post as not hidden */
         $db->query(sprintf("UPDATE posts SET is_hidden = '0' WHERE post_id = %s", secure($post_id, 'int'))) or _error("SQL_ERROR_THROWEN");
-        $redisObject = new RedisClass();
-        $rediskeyname = 'profile-posts-' . $post['author_id'];
-        $redisObject->deleteValueFromKey($rediskeyname);
-        $rediskeyname = 'profile-posts-others-' . $post['author_id'];
-        $redisObject->deleteValueFromKey($rediskeyname);
-        updateReactions($system, $this, $redisObject, $post_id, $post['author_id']);
     }
 
 
@@ -7197,7 +6848,7 @@ class User
      */
     public function disable_post_comments($post_id)
     {
-        global $db, $system;
+        global $db;
         /* (check|get) post */
         $post = $this->_check_post($post_id);
         if (!$post) {
@@ -7209,8 +6860,6 @@ class User
         }
         /* trun off post commenting */
         $db->query(sprintf("UPDATE posts SET comments_disabled = '1' WHERE post_id = %s", secure($post_id, 'int'))) or _error("SQL_ERROR_THROWEN");
-        $redisObject = new RedisClass();
-        updateReactions($system, $this, $redisObject, $post_id, $post['author_id']);
     }
 
 
@@ -7222,7 +6871,7 @@ class User
      */
     public function enable_post_comments($post_id)
     {
-        global $db, $system;
+        global $db;
         /* (check|get) post */
         $post = $this->_check_post($post_id);
         if (!$post) {
@@ -7234,8 +6883,6 @@ class User
         }
         /* trun on post commenting */
         $db->query(sprintf("UPDATE posts SET comments_disabled = '0' WHERE post_id = %s", secure($post_id, 'int'))) or _error("SQL_ERROR_THROWEN");
-        $redisObject = new RedisClass();
-        updateReactions($system, $this, $redisObject, $post_id, $post['author_id']);
     }
 
 
@@ -7370,7 +7017,7 @@ class User
      */
     public function boost_post($post_id)
     {
-        global $db, $system;
+        global $db;
         /* (check|get) post */
         $post = $this->_check_post($post_id);
         if (!$post) {
@@ -7390,16 +7037,10 @@ class User
         }
         /* boost post */
         if (!$post['boosted']) {
-            $redisObject = new RedisClass();
             /* boost post */
             $db->query(sprintf("UPDATE posts SET boosted = '1', boosted_by = %s WHERE post_id = %s", secure($this->_data['user_id'], 'int'), secure($post_id, 'int'))) or _error("SQL_ERROR_THROWEN");
-            updateReactions($system, $this, $redisObject, $post_id, $post['author_id']);
             /* update user */
             $db->query(sprintf("UPDATE users SET user_boosted_posts = user_boosted_posts + 1 WHERE user_id = %s", secure($this->_data['user_id'], 'int'))) or _error("SQL_ERROR_THROWEN");
-
-            $redisPostKey = 'user-' . $this->_data['user_id'];
-            $redisObject->deleteValueFromKey($redisPostKey);
-            cachedUserData($db, $system, $this->_data['user_id'], $this->_data['active_session_token']);
         }
     }
 
@@ -7412,7 +7053,7 @@ class User
      */
     public function unboost_post($post_id)
     {
-        global $db, $system;
+        global $db;
         /* (check|get) post */
         $post = $this->_check_post($post_id);
         if (!$post) {
@@ -7424,16 +7065,10 @@ class User
         }
         /* unboost post */
         if ($post['boosted']) {
-            $redisObject = new RedisClass();
             /* unboost post */
             $db->query(sprintf("UPDATE posts SET boosted = '0', boosted_by = NULL WHERE post_id = %s", secure($post_id, 'int'))) or _error("SQL_ERROR_THROWEN");
-            //updateReactions($system, $this, $redisObject, $post_id, $post['author_id']);
             /* update user */
             $db->query(sprintf("UPDATE users SET user_boosted_posts = IF(user_boosted_posts=0,0,user_boosted_posts-1) WHERE user_id = %s", secure($this->_data['user_id'], 'int'))) or _error("SQL_ERROR_THROWEN");
-            $redisObject = new RedisClass();
-            $redisPostKey = 'user-' . $this->_data['user_id'];
-            $redisObject->deleteValueFromKey($redisPostKey);
-            cachedUserData($db, $system, $this->_data['user_id'], $this->_data['active_session_token']);
         }
     }
 
@@ -7446,8 +7081,7 @@ class User
      */
     public function pin_post($post_id)
     {
-        global $db, $system;
-        $redisObject = new RedisClass();
+        global $db;
         /* (check|get) post */
         $post = $this->_check_post($post_id);
         if (!$post) {
@@ -7481,16 +7115,12 @@ class User
                 } else {
                     /* update user */
                     $db->query(sprintf("UPDATE users SET user_pinned_post = %s WHERE user_id = %s", secure($post_id, 'int'), secure($post['author_id'], 'int'))) or _error("SQL_ERROR_THROWEN");
-                    $redisPostKey = 'user-' . $this->_data['user_id'];
-                    $redisObject->deleteValueFromKey($redisPostKey);
-                    cachedUserData($db, $system, $this->_data['user_id'], $this->_data['active_session_token']);
                 }
             } else {
                 /* update page */
                 $db->query(sprintf("UPDATE pages SET page_pinned_post = %s WHERE page_id = %s", secure($post_id, 'int'), secure($post['user_id'], 'int'))) or _error("SQL_ERROR_THROWEN");
             }
         }
-        updateReactions($system, $this, $redisObject, $post_id, $post['author_id']);
     }
 
 
@@ -7502,9 +7132,7 @@ class User
      */
     public function unpin_post($post_id)
     {
-        global $db, $system;
-
-        $redisObject = new RedisClass();
+        global $db;
         /* (check|get) post */
         $post = $this->_check_post($post_id);
         if (!$post) {
@@ -7538,16 +7166,12 @@ class User
                 } else {
                     /* update user */
                     $db->query(sprintf("UPDATE users SET user_pinned_post = '0' WHERE user_id = %s", secure($post['user_id'], 'int'))) or _error("SQL_ERROR_THROWEN");
-                    $redisPostKey = 'user-' . $this->_data['user_id'];
-                    $redisObject->deleteValueFromKey($redisPostKey);
-                    cachedUserData($db, $system, $this->_data['user_id'], $this->_data['active_session_token']);
                 }
             } else {
                 /* update page */
                 $db->query(sprintf("UPDATE pages SET page_pinned_post = '0' WHERE page_id = %s", secure($post['user_id'], 'int'))) or _error("SQL_ERROR_THROWEN");
             }
         }
-        updateReactions($system, $this, $redisObject, $post_id, $post['author_id']);
     }
 
 
@@ -7560,7 +7184,7 @@ class User
      */
     public function react_post($post_id, $reaction)
     {
-        global $db, $date, $system;
+        global $db, $date;
         /* check reation */
         if (!in_array($reaction, ['like', 'love', 'haha', 'yay', 'wow', 'sad', 'angry'])) {
             _error(403);
@@ -7574,7 +7198,6 @@ class User
         if ($this->blocked($post['author_id'])) {
             _error(403);
         }
-        $redisObject = new RedisClass();
         /* react the post */
         if ($post['i_react']) {
             /* remove any previous reaction */
@@ -7582,28 +7205,10 @@ class User
             /* update post reaction counter */
             $reaction_field = "reaction_" . $post['i_reaction'] . "_count";
             $db->query(sprintf("UPDATE posts SET $reaction_field = IF($reaction_field=0,0,$reaction_field-1) WHERE post_id = %s", secure($post_id, 'int'))) or _error("SQL_ERROR_THROWEN");
-
             /* delete notification */
             $this->delete_notification($post['author_id'], 'react_' . $post['i_reaction'], 'post', $post_id);
             /* points balance */
             $this->points_balance("delete", $this->_data['user_id'], "posts_reactions");
-
-            // /**
-            //  * update Redis
-            //  */
-            // $redisPostKey = 'user-' . $this->_data['user_id'] . '-posts';
-            // fetchAndSetDataOnPostReaction($system, $this, $redisObject, $redisPostKey);
-
-            // //profile post
-            // $redisTimelinekey = 'profile-posts-' . $this->_data['user_id'];
-            // fetchAndSetDataOnPostReaction($system, $this, $redisObject, $redisTimelinekey);
-            // $getPostsFromRedis = $redisObject->getValueFromKey($redisPostKey);
-            // $jsonValue_ = json_decode($getPostsFromRedis, true);
-            // $redisObject->deleteValueFromKey($redisPostKey);
-            // fetchPostDataForTimeline($this->_data['user_id'], $this, $redisObject, $system);
-            /**
-             * update redis
-             */
         }
         $db->query(sprintf("INSERT INTO posts_reactions (user_id, post_id, reaction, reaction_time) VALUES (%s, %s, %s, %s)", secure($this->_data['user_id'], 'int'), secure($post_id, 'int'), secure($reaction), secure($date))) or _error("SQL_ERROR_THROWEN");
         $reaction_id = $db->insert_id;
@@ -7614,8 +7219,6 @@ class User
         $this->post_notification(array('to_user_id' => $post['author_id'], 'action' => 'react_' . $reaction, 'hub' => "LocalHub", 'node_type' => 'post', 'node_url' => $post_id));
         /* points balance */
         $this->points_balance("add", $this->_data['user_id'], "posts_reactions", $reaction_id);
-
-        updateReactions($system, $this, $redisObject, $post_id, $post['author_id']);
     }
 
 
@@ -7628,7 +7231,7 @@ class User
      */
     public function unreact_post($post_id, $reaction)
     {
-        global $db, $system;
+        global $db;
         /* check reation */
         if (!in_array($reaction, ['like', 'love', 'haha', 'yay', 'wow', 'sad', 'angry'])) {
             _error(403);
@@ -7648,78 +7251,10 @@ class User
             /* update post reaction counter */
             $reaction_field = "reaction_" . $reaction . "_count";
             $db->query(sprintf("UPDATE posts SET $reaction_field = IF($reaction_field=0,0,$reaction_field-1) WHERE post_id = %s", secure($post_id, 'int'))) or _error("SQL_ERROR_THROWEN");
-
-            /**
-             * update Redis
-             */
-            $redisPostKey = 'user-' . $this->_data['user_id'] . '-posts';
-            $redisObject = new RedisClass();
-            fetchAndSetDataOnPostReaction($system, $this, $redisObject, $redisPostKey);
-
-            //profile post
-            $redisTimelinekey = 'profile-posts-' . $this->_data['user_id'];
-            fetchAndSetDataOnPostReaction($system, $this, $redisObject, $redisTimelinekey);
-
-            /**
-             * update redis
-             */
             /* delete notification */
             $this->delete_notification($post['author_id'], 'react_' . $reaction, 'post', $post_id);
             /* points balance */
             $this->points_balance("delete", $this->_data['user_id'], "posts_reactions");
-
-            $redisPostKey = 'user-' . $this->_data['user_id'] . '-posts';
-            fetchAndSetDataOnPostReaction($system, $this, $redisObject, $redisPostKey);
-
-            //profile post
-            $redisTimelinekey = 'profile-posts-' . $this->_data['user_id'];
-            fetchAndSetDataOnPostReaction($system, $this, $redisObject, $redisTimelinekey);
-
-            /* Get Curent user POst Array */
-            $redisTimelinekey = 'user-' . $this->_data['user_id'] . '-posts';
-            $getDataFromRedis = $redisObject->getValueFromKey($redisTimelinekey);
-            $jsonValue = json_decode($getDataFromRedis, true);
-            $arrayforrepalce = array();
-            if (count($jsonValue) > 0) {
-                $arrayforrepalce  = searchSubArray($jsonValue, 'post_id', $post_id);
-            }
-
-
-            /* Get Friend List and Updated Redis */
-            $idList = $this->get_friends_ids($post['author_id']);
-            $followId = $this->get_followings_ids($post['author_id']);
-            if ($this->_data['user_id'] !== $post['author_id']) {
-                array_push($idList, $post['author_id']);
-            }
-            $friendsList = array_unique(array_merge($followId, $idList));
-
-            foreach ($friendsList as $ids) {
-                $redisTimelinekey = 'user-' . $ids . '-posts'; //'profile-posts-' . $ids;
-                $isKeyExistOnRedis = $redisObject->isRedisKeyExist($redisTimelinekey);
-                if ($isKeyExistOnRedis) {
-                    $getDataFromRedis = $redisObject->getValueFromKey($redisTimelinekey);
-                    $jsonValue = json_decode($getDataFromRedis, true);
-                    if (count($jsonValue) > 0 && count($arrayforrepalce) > 0) {
-                        $i = 0;
-                        foreach ($jsonValue as $values) {
-                            if ($jsonValue[$i]['post_id'] === $post_id) {
-                                $jsonValue[$i]['reactions'] = $arrayforrepalce['reactions'];
-                                $jsonValue[$i]["reaction_like_count"] = $arrayforrepalce['reaction_like_count'];
-                                $jsonValue[$i]["reaction_love_count"] = $arrayforrepalce['reaction_love_count'];
-                                $jsonValue[$i]["reaction_haha_count"] = $arrayforrepalce['reaction_haha_count'];
-                                $jsonValue[$i]["reaction_yay_count"] = $arrayforrepalce['reaction_yay_count'];
-                                $jsonValue[$i]["reaction_wow_count"] = $arrayforrepalce['reaction_wow_count'];
-                                $jsonValue[$i]["reaction_sad_count"] = $arrayforrepalce['reaction_sad_count'];
-                                $jsonValue[$i]["reaction_angry_count"] = $arrayforrepalce['reaction_angry_count'];
-                                $jsonValue[$i]["reactions_total_count"] = $arrayforrepalce['reactions_total_count'];
-                            }
-                            $i++;
-                        }
-                        $data = json_encode($jsonValue);
-                        $redisObject->setValueWithRedis($redisTimelinekey, $data);
-                    }
-                }
-            }
         }
     }
 
@@ -7744,19 +7279,6 @@ class User
         }
         /* hide the post */
         $db->query(sprintf("INSERT INTO posts_hidden (user_id, post_id) VALUES (%s, %s)", secure($this->_data['user_id'], 'int'), secure($post_id, 'int'))) or _error("SQL_ERROR_THROWEN");
-
-
-        $redisObject = new RedisClass();
-        $userKey = 'user-' . $this->_data['user_id'] . '-posts';
-        $getPostsFromRedis = $redisObject->getValueFromKey($userKey);
-        $jsonValuesRes = json_decode($getPostsFromRedis, true);
-        foreach ($jsonValuesRes as $key => $post) {
-            if ($post['post_id'] == $post_id) {
-                $jsonValuesRes[$key]['is_hidden'] = "1";
-            }
-        }
-        $jsonEncodedVals = json_encode($jsonValuesRes);
-        $redisObject->setValueWithRedis($userKey, $jsonEncodedVals);
     }
 
 
@@ -7787,7 +7309,7 @@ class User
      */
     public function add_vote($option_id)
     {
-        global $db, $system;
+        global $db;
         /* get poll */
         $get_poll = $db->query(sprintf("SELECT posts_polls.* FROM posts_polls_options INNER JOIN posts_polls ON posts_polls_options.poll_id = posts_polls.poll_id WHERE option_id = %s", secure($option_id, 'int'))) or _error("SQL_ERROR_THROWEN");
         if ($get_poll->num_rows == 0) {
@@ -7804,86 +7326,12 @@ class User
             _error(403);
         }
         /* insert user vote */
-
         $vote = $db->query(sprintf("INSERT INTO posts_polls_options_users (user_id, poll_id, option_id) VALUES (%s, %s, %s)", secure($this->_data['user_id'], 'int'), secure($poll['poll_id'], 'int'), secure($option_id, 'int')));
         if ($vote) {
             /* update poll votes */
             $db->query(sprintf("UPDATE posts_polls SET votes = votes + 1 WHERE poll_id = %s", secure($poll['poll_id'], 'int'))) or _error("SQL_ERROR_THROWEN");
             /* post notification */
             $this->post_notification(array('to_user_id' => $post['author_id'], 'action' => 'vote', 'hub' => "LocalHub", 'node_type' => 'post', 'node_url' => $post['post_id']));
-        }
-
-        // //for current user post
-        //      $redisPostKey = 'user-' . $this->_data['user_id'] . '-posts';
-        //      $redisObject = new RedisClass();
-        //      fetchAndSetDataOnPostReaction($system, $this,$redisObject,$redisPostKey);
-        //      //profile post
-        //      $redisTimelinekey = 'profile-posts-'.$this->_data['user_id'];
-        //      fetchAndSetDataOnPostReaction($system, $this,$redisObject,$redisTimelinekey);
-        // //for author post  
-        //      $redisPostKey = 'user-' . $post['author_id'] . '-posts';
-        //      $redisObject = new RedisClass();
-        //      fetchAndSetDataOnPostReaction($system, $this,$redisObject,$redisPostKey);
-        //      //profile post
-        //      $redisTimelinekey = 'profile-posts-'.$post['author_id'];
-        //      fetchAndSetDataOnPostReaction($system, $this,$redisObject,$redisTimelinekey);   
-
-
-
-
-
-        //Redis Block
-        $redisObject = new RedisClass();
-
-        //update current logged in user response
-        $redisKey = 'user-' . $this->_data['user_id'] . '-posts';
-        fetchAndSetDataOnPostReaction($system, $this, $redisObject, $redisKey);
-        $authorTimelineData = $redisObject->getValueFromKey($redisKey);
-        $decodedAuthorData = json_decode($authorTimelineData, TRUE);
-
-        //  $newUpdate =  searchSubArray($decodedAuthorData, 'post_id', $poll['post_id']);
-
-        //    $search_res = array_search($option_id, array_column($newUpdate['poll']['options'], 'option_id'));
-        // //    $check_res = array_search($checked_id, array_column($newUpdate['poll']['options'], 'option_id'));
-        //  if($search_res!==false){
-        //                     $newUpdate['poll']['options'][$search_res]['checked'] = false;
-        //                     //  $newUpdate['poll']['options'][$search_res]['votes'] = (string) $newUpdate['poll']['options'][$search_res]['votes'] + 1;
-        //                     //   $newUpdate['poll']['options'][$check_res]['votes'] = ($newUpdate['poll']['options'][$check_res]['votes'] == 0) ? 0 : (string) $newUpdate['poll']['options'][$check_res]['votes'] - 1 ;
-
-        //             }   
-        //   echo  "<pre>";
-        //  print_r($newUpdate); die("HERER");
-        $ids = $this->get_friends_ids($post['author_id']);
-        if (($key = array_search($this->_data['user_id'], $ids)) !== false) {
-            unset($ids[$key]);
-        }
-        if ($post['author_id'] !== $this->_data['user_id']) {
-            array_push($ids, $post['author_id']);
-        }
-
-        // print_r($ids); die;
-
-        foreach ($ids as $id) {
-            $userKeys = 'user-' . $id . '-posts';
-            $isUserExist = $redisObject->isRedisKeyExist($userKeys);
-            if ($isUserExist == true) {
-                $getPostsFromRedis = $redisObject->getValueFromKey($userKeys);
-                $jsonValuesRes = json_decode($getPostsFromRedis, true);
-                $search_vals =  searchSubArray($jsonValuesRes, 'post_id', $poll['post_id']);
-                // print_r($search_vals); die;
-                $search_res = array_search($option_id, array_column($search_vals['poll']['options'], 'option_id'));
-                if ($search_res !== false) {
-                    $search_vals['poll']['options'][$search_res]['votes'] = (string) $search_vals['poll']['options'][$search_res]['votes'] + 1;
-                }
-
-                $new_vals =  removeElementWithValue($jsonValuesRes, 'post_id', $poll['post_id']);
-                //array_unshift($new_vals,$newUpdate);
-                array_unshift($new_vals, $search_vals);
-
-
-                $jsonEncodedVals = json_encode($new_vals);
-                $redisObject->setValueWithRedis($userKeys, $jsonEncodedVals);
-            }
         }
     }
 
@@ -7896,7 +7344,7 @@ class User
      */
     public function delete_vote($option_id)
     {
-        global $db, $system;
+        global $db;
         /* get poll */
         $get_poll = $db->query(sprintf("SELECT posts_polls.* FROM posts_polls_options INNER JOIN posts_polls ON posts_polls_options.poll_id = posts_polls.poll_id WHERE option_id = %s", secure($option_id, 'int'))) or _error("SQL_ERROR_THROWEN");
         if ($get_poll->num_rows == 0) {
@@ -7920,55 +7368,6 @@ class User
             /* delete notification */
             $this->delete_notification($post['author_id'], 'vote', 'post', $post['post_id']);
         }
-
-
-        //Redis Block
-        $redisObject = new RedisClass();
-        //update current logged in user response
-        $redisKey = 'user-' . $this->_data['user_id'] . '-posts';
-        fetchAndSetDataOnPostReaction($system, $this, $redisObject, $redisKey);
-        $ids = $this->get_friends_ids($post['author_id']);
-        if (($key = array_search($this->_data['user_id'], $ids)) !== false) {
-            unset($ids[$key]);
-        }
-        if ($post['author_id'] !== $this->_data['user_id']) {
-            array_push($ids, $post['author_id']);
-        }
-
-        foreach ($ids as $id) {
-            $userKeys = 'user-' . $id . '-posts';
-            $isUserExist = $redisObject->isRedisKeyExist($userKeys);
-            if ($isUserExist == true) {
-                $getPostsFromRedis = $redisObject->getValueFromKey($userKeys);
-                $jsonValuesRes = json_decode($getPostsFromRedis, true);
-                $search_vals =  searchSubArray($jsonValuesRes, 'post_id', $poll['post_id']);
-                //print_r($search_vals); die;
-                $search_res = array_search($option_id, array_column($search_vals['poll']['options'], 'option_id'));
-                if ($search_res !== false) {
-                    $search_vals['poll']['options'][$search_res]['votes'] = (string) $search_vals['poll']['options'][$search_res]['votes'] - 1;
-                    //    $search_vals['poll']['options'][$checked_id]['votes'] = (string) $search_vals['poll']['options'][$search_res]['votes'] + 1;
-
-                }
-                //   $checked_res = array_search($checked_id, array_column($search_vals['poll']['options'], 'option_id'));
-                //    if($checked_res!==false){
-                //       $search_vals['poll']['options'][$checked_res]['votes'] = (string) $search_vals['poll']['options'][$checked_res]['votes'] -1 ;
-                //     //    $search_vals['poll']['options'][$checked_id]['votes'] = (string) $search_vals['poll']['options'][$search_res]['votes'] + 1;
-
-                //  }
-
-                $new_vals =  removeElementWithValue($jsonValuesRes, 'post_id', $poll['post_id']);
-                //array_unshift($new_vals,$newUpdate);
-                array_unshift($new_vals, $search_vals);
-
-
-                $jsonEncodedVals = json_encode($new_vals);
-                $redisObject->setValueWithRedis($userKeys, $jsonEncodedVals);
-            }
-        }
-
-
-
-        //Redis Block
     }
 
 
@@ -7981,7 +7380,7 @@ class User
      */
     public function change_vote($option_id, $checked_id)
     {
-        global $db, $system;
+        global $db;
         /* get poll */
         $get_poll = $db->query(sprintf("SELECT posts_polls.* FROM posts_polls_options INNER JOIN posts_polls ON posts_polls_options.poll_id = posts_polls.poll_id WHERE option_id = %s", secure($option_id, 'int'))) or _error("SQL_ERROR_THROWEN");
         if ($get_poll->num_rows == 0) {
@@ -8003,154 +7402,6 @@ class User
             /* insert new vote */
             $db->query(sprintf("INSERT INTO posts_polls_options_users (user_id, poll_id, option_id) VALUES (%s, %s, %s)", secure($this->_data['user_id'], 'int'), secure($poll['poll_id'], 'int'), secure($option_id, 'int'))) or _error("SQL_ERROR_THROWEN");
         }
-        //Redis Block
-        $redisObject = new RedisClass();
-
-        //update current logged in user response
-        $redisKey = 'user-' . $this->_data['user_id'] . '-posts';
-        fetchAndSetDataOnPostReaction($system, $this, $redisObject, $redisKey);
-        $authorTimelineData = $redisObject->getValueFromKey($redisKey);
-        $decodedAuthorData = json_decode($authorTimelineData, TRUE);
-
-        //     echo "<pre>";
-        //  print_r($decodedAuthorData); die;
-
-        //update response for author & its friends
-
-        //  $redisAuthorKey = 'user-' . $post['author_id'] . '-posts';
-        //  fetchAndSetDataOnPostReaction($system, $this,$redisObject,$redisAuthorKey);
-        //  $authorTimelineData = $redisObject->getValueFromKey($redisAuthorKey);
-        //  $decodedAuthorData = json_decode($authorTimelineData, TRUE);
-        $newUpdate =  searchSubArray($decodedAuthorData, 'post_id', $poll['post_id']);
-
-        $search_res = array_search($option_id, array_column($newUpdate['poll']['options'], 'option_id'));
-        //    $check_res = array_search($checked_id, array_column($newUpdate['poll']['options'], 'option_id'));
-        if ($search_res !== false) {
-            $newUpdate['poll']['options'][$search_res]['checked'] = false;
-            $newUpdate['poll']['options'][$search_res]['votes'] = (string) $newUpdate['poll']['options'][$search_res]['votes'] + 1;
-            //   $newUpdate['poll']['options'][$check_res]['votes'] = ($newUpdate['poll']['options'][$check_res]['votes'] == 0) ? 0 : (string) $newUpdate['poll']['options'][$check_res]['votes'] - 1 ;
-
-        }
-        //   echo  "<pre>";
-        //  print_r($newUpdate); die("HERER");
-        $ids = $this->get_friends_ids($post['author_id']);
-        if (($key = array_search($this->_data['user_id'], $ids)) !== false) {
-            unset($ids[$key]);
-        }
-        if ($post['author_id'] !== $this->_data['user_id']) {
-            array_push($ids, $post['author_id']);
-        }
-
-        // print_r($ids); die;
-
-        //Redis Block
-        $redisObject = new RedisClass();
-
-        //update current logged in user response
-        $redisKey = 'user-' . $this->_data['user_id'] . '-posts';
-        fetchAndSetDataOnPostReaction($system, $this, $redisObject, $redisKey);
-        // $authorTimelineData = $redisObject->getValueFromKey($redisKey);
-        // $decodedAuthorData = json_decode($authorTimelineData, TRUE);
-
-        //  $newUpdate =  searchSubArray($decodedAuthorData, 'post_id', $poll['post_id']);
-
-        //    $search_res = array_search($option_id, array_column($newUpdate['poll']['options'], 'option_id'));
-        // //    $check_res = array_search($checked_id, array_column($newUpdate['poll']['options'], 'option_id'));
-        //  if($search_res!==false){
-        //                     $newUpdate['poll']['options'][$search_res]['checked'] = false;
-        //                     //  $newUpdate['poll']['options'][$search_res]['votes'] = (string) $newUpdate['poll']['options'][$search_res]['votes'] + 1;
-        //                     //   $newUpdate['poll']['options'][$check_res]['votes'] = ($newUpdate['poll']['options'][$check_res]['votes'] == 0) ? 0 : (string) $newUpdate['poll']['options'][$check_res]['votes'] - 1 ;
-
-        //             }   
-        //   echo  "<pre>";
-        //  print_r($newUpdate); die("HERER");
-        $ids = $this->get_friends_ids($post['author_id']);
-        if (($key = array_search($this->_data['user_id'], $ids)) !== false) {
-            unset($ids[$key]);
-        }
-        if ($post['author_id'] !== $this->_data['user_id']) {
-            array_push($ids, $post['author_id']);
-        }
-
-        // print_r($ids); die;
-
-        foreach ($ids as $id) {
-            $userKeys = 'user-' . $id . '-posts';
-            $isUserExist = $redisObject->isRedisKeyExist($userKeys);
-            if ($isUserExist == true) {
-                $getPostsFromRedis = $redisObject->getValueFromKey($userKeys);
-                $jsonValuesRes = json_decode($getPostsFromRedis, true);
-                $search_vals =  searchSubArray($jsonValuesRes, 'post_id', $poll['post_id']);
-                //print_r($search_vals); die;
-                $search_res = array_search($option_id, array_column($search_vals['poll']['options'], 'option_id'));
-                if ($search_res !== false) {
-                    $search_vals['poll']['options'][$search_res]['votes'] = (string) $search_vals['poll']['options'][$search_res]['votes'] + 1;
-                    //    $search_vals['poll']['options'][$checked_id]['votes'] = (string) $search_vals['poll']['options'][$search_res]['votes'] + 1;
-
-                }
-                $checked_res = array_search($checked_id, array_column($search_vals['poll']['options'], 'option_id'));
-                if ($checked_res !== false) {
-                    $search_vals['poll']['options'][$checked_res]['votes'] = (string) $search_vals['poll']['options'][$checked_res]['votes'] - 1;
-                    //    $search_vals['poll']['options'][$checked_id]['votes'] = (string) $search_vals['poll']['options'][$search_res]['votes'] + 1;
-
-                }
-
-                $new_vals =  removeElementWithValue($jsonValuesRes, 'post_id', $poll['post_id']);
-                //array_unshift($new_vals,$newUpdate);
-                array_unshift($new_vals, $search_vals);
-
-
-                $jsonEncodedVals = json_encode($new_vals);
-                $redisObject->setValueWithRedis($userKeys, $jsonEncodedVals);
-            }
-        }
-
-        //     echo "<pre>";
-        //  print_r($decodedAuthorData); die;
-
-        //update response for author & its friends
-
-        $redisAuthorKey = 'user-' . $post['author_id'] . '-posts';
-        fetchAndSetDataOnPostReaction($system, $this, $redisObject, $redisAuthorKey);
-        $authorTimelineData = $redisObject->getValueFromKey($redisAuthorKey);
-        $decodedAuthorData = json_decode($authorTimelineData, TRUE);
-        $newUpdate =  searchSubArray($decodedAuthorData, 'post_id', $poll['post_id']);
-
-        $search_res = array_search($option_id, array_column($newUpdate['poll']['options'], 'option_id'));
-        //    $check_res = array_search($checked_id, array_column($newUpdate['poll']['options'], 'option_id'));
-        if ($search_res !== false) {
-            $newUpdate['poll']['options'][$search_res]['checked'] = false;
-            $newUpdate['poll']['options'][$search_res]['votes'] = (string) $newUpdate['poll']['options'][$search_res]['votes'] + 1;
-            //   $newUpdate['poll']['options'][$check_res]['votes'] = ($newUpdate['poll']['options'][$check_res]['votes'] == 0) ? 0 : (string) $newUpdate['poll']['options'][$check_res]['votes'] - 1 ;
-
-        }
-        //   echo  "<pre>";
-        //  print_r($newUpdate); die("HERER");
-        $ids = $this->get_friends_ids($post['author_id']);
-        if (($key = array_search($this->_data['user_id'], $ids)) !== false) {
-            unset($ids[$key]);
-        }
-        if ($post['author_id'] !== $this->_data['user_id']) {
-            array_push($ids, $post['author_id']);
-        }
-
-        // print_r($ids); die;
-
-        foreach ($ids as $id) {
-            $userKeys = 'user-' . $id . '-posts';
-            $isUserExist = $redisObject->isRedisKeyExist($userKeys);
-            if ($isUserExist == true) {
-                $getPostsFromRedis = $redisObject->getValueFromKey($userKeys);
-                $jsonValuesRes = json_decode($getPostsFromRedis, true);
-                $new_vals =  removeElementWithValue($jsonValuesRes, 'post_id', $poll['post_id']);
-                array_unshift($new_vals, $newUpdate);
-
-                $jsonEncodedVals = json_encode($new_vals);
-                $redisObject->setValueWithRedis($userKeys, $jsonEncodedVals);
-            }
-        }
-
-        //Redis Block
     }
 
 
@@ -8192,7 +7443,7 @@ class User
      * @param boolean $top_sorted
      * @return array
      */
-    public function get_comments($node_id, $offset = 0, $is_post = true, $pass_privacy_check = true, $post = array(), $top_sorted = false,  $last_comment_id = null)
+    public function get_comments($node_id, $offset = 0, $is_post = true, $pass_privacy_check = true, $post = array(), $top_sorted = false)
     {
         global $db, $system;
         $comments = [];
@@ -8209,12 +7460,7 @@ class User
                 }
             }
             /* get post comments */
-            
-            if(!$last_comment_id) {
-                $get_comments = $db->query(sprintf("SELECT posts_comments.*, posts_photos.source as user_picture_full, users.user_name, users.user_picture_id, users.user_firstname, users.user_lastname, users.user_gender, users.user_picture, users.user_verified, pages.* FROM posts_comments LEFT JOIN users ON posts_comments.user_id = users.user_id AND posts_comments.user_type = 'user' LEFT JOIN posts_photos ON users.user_picture_id = posts_photos.photo_id LEFT JOIN pages ON posts_comments.user_id = pages.page_id AND posts_comments.user_type = 'page' WHERE NOT (users.user_name <=> NULL AND pages.page_name <=> NULL) AND posts_comments.node_type = 'post' AND posts_comments.node_id = %s " . $order_query . " LIMIT %s, %s", secure($node_id, 'int'), secure($offset, 'int', false), secure($system['min_results'], 'int', false))) or _error("SQL_ERROR_THROWEN");
-            } else {
-                $get_comments = $db->query(sprintf("SELECT posts_comments.*, posts_photos.source as user_picture_full, users.user_name, users.user_picture_id, users.user_firstname, users.user_lastname, users.user_gender, users.user_picture, users.user_verified, pages.* FROM posts_comments LEFT JOIN users ON posts_comments.user_id = users.user_id AND posts_comments.user_type = 'user' LEFT JOIN posts_photos ON users.user_picture_id = posts_photos.photo_id LEFT JOIN pages ON posts_comments.user_id = pages.page_id AND posts_comments.user_type = 'page' WHERE NOT (users.user_name <=> NULL AND pages.page_name <=> NULL) AND posts_comments.node_type = 'post' AND posts_comments.node_id = %s AND posts_comments.comment_id > %s ". $order_query . " LIMIT %s, %s", secure($node_id, 'int'), secure($last_comment_id, 'int'), secure($offset, 'int', false), secure($system['min_results'], 'int', false))) or _error("SQL_ERROR_THROWEN");
-            }
+            $get_comments = $db->query(sprintf("SELECT posts_comments.*, posts_photos.source as user_picture_full, users.user_name, users.user_picture_id, users.user_firstname, users.user_lastname, users.user_gender, users.user_picture, users.user_verified, pages.* FROM posts_comments LEFT JOIN users ON posts_comments.user_id = users.user_id AND posts_comments.user_type = 'user' LEFT JOIN posts_photos ON users.user_picture_id = posts_photos.photo_id LEFT JOIN pages ON posts_comments.user_id = pages.page_id AND posts_comments.user_type = 'page' WHERE NOT (users.user_name <=> NULL AND pages.page_name <=> NULL) AND posts_comments.node_type = 'post' AND posts_comments.node_id = %s " . $order_query . " LIMIT %s, %s", secure($node_id, 'int'), secure($offset, 'int', false), secure($system['min_results'], 'int', false))) or _error("SQL_ERROR_THROWEN");
         } else {
             /* get photo comments */
             /* check privacy */
@@ -8541,7 +7787,6 @@ class User
             case 'post':
                 /* (check|get) post */
                 $post = $this->_check_post($node_id, false, false);
-                $post_id = $node_id;
                 if (!$post) {
                     _error(403);
                 }
@@ -8550,7 +7795,6 @@ class User
             case 'photo':
                 /* (check|get) photo */
                 $photo = $this->get_photo($node_id);
-                $post_id = $photo['post_id'];
                 if (!$photo) {
                     _error(403);
                 }
@@ -8564,7 +7808,6 @@ class User
                     _error(403);
                 }
                 $post = $parent_comment['post'];
-                $post_id = $parent_comment['node_id'];
                 break;
         }
 
@@ -8647,71 +7890,6 @@ class User
 
         /* points balance */
         $this->points_balance("add", $this->_data['user_id'], "comment", $comment['comment_id']);
-
-        //Redis Block
-        $redisObject = new RedisClass();
-        //update current logged in user response
-        $redisKey = 'user-' . $this->_data['user_id'] . '-posts';
-        fetchAndSetDataOnPostReaction($system, $this, $redisObject, $redisKey);
-        $postUpdateFromRedis = $redisObject->getValueFromKey($redisKey);
-        $decodeVal = json_decode($postUpdateFromRedis, TRUE);
-        $updatedPostObject  = searchSubArray($decodeVal, 'post_id', $post_id);
-        $redisPostKey = 'profile-posts-' . $this->_data['user_id'];
-        $redisObject->deleteValueFromKey($redisPostKey);
-
-        //  print_r($post_id); die;
-
-        $ids = $this->get_friends_ids($post['author_id']);
-        if (($key = array_search($this->_data['user_id'], $ids)) !== false) {
-            unset($ids[$key]);
-        }
-        if ($post['author_id'] !== $this->_data['user_id']) {
-            array_push($ids, $post['author_id']);
-        }
-
-        $followersId = $this->get_followings_ids($post['author_id']);
-        $idsList = array_unique(array_merge($ids, $followersId));
-
-        foreach ($idsList as $id) {
-            $userKeys = 'user-' . $id . '-posts';
-            $isUserExist = $redisObject->isRedisKeyExist($userKeys);
-            if ($isUserExist == true) {
-                $getPostsFromRedis = $redisObject->getValueFromKey($userKeys);
-                $jsonValuesRes = json_decode($getPostsFromRedis, true);
-                foreach ($jsonValuesRes  as $key => $res) {
-
-                    if ($res['post_id'] == $post_id) {
-                        $jsonValuesRes[$key]['comments'] = $updatedPostObject['comments'];
-                        $jsonValuesRes[$key]['post_comments'] = $updatedPostObject['post_comments'];
-                    }
-                }
-                // $search_vals =  searchSubArray($jsonValuesRes, 'post_id', $poll['post_id']);
-                // $search_vals['post_comments'] = $updatedPostObject['post_comments'];
-                //print_r($search_vals); die;
-                //  $search_res = array_search($option_id, array_column($search_vals['poll']['options'], 'option_id'));
-                //  if($search_res!==false){
-                //       $search_vals['poll']['options'][$search_res]['votes'] = (string) $search_vals['poll']['options'][$search_res]['votes'] + 1;
-                //     //    $search_vals['poll']['options'][$checked_id]['votes'] = (string) $search_vals['poll']['options'][$search_res]['votes'] + 1;
-
-                //  }
-
-                // $new_vals =  removeElementWithValue($jsonValuesRes, 'post_id', $node_id);
-                //array_unshift($new_vals,$newUpdate);
-                // array_unshift($new_vals,$updatedPostObject);
-
-
-                //  print_r($jsonValuesRes); die;
-                $jsonEncodedVals = json_encode($jsonValuesRes);
-                $redisObject->setValueWithRedis($userKeys, $jsonEncodedVals);
-            }
-        }
-
-
-        // //profile post
-        //  $redisTimelinekey = 'profile-posts-'.$this->_data['user_id'];
-        //  fetchAndSetDataOnPostReaction($system, $this,$redisObject,$redisTimelinekey);
-
-        //Redis Block
 
         /* return */
         return $comment;
@@ -8823,7 +8001,7 @@ class User
      */
     public function delete_comment($comment_id)
     {
-        global $db, $system;
+        global $db;
         /* (check|get) comment */
         $comment = $this->get_comment($comment_id);
         if (!$comment) {
@@ -8889,57 +8067,6 @@ class User
             }
             /* points balance */
             $this->points_balance("delete", $comment['author_id'], "comment");
-
-            //Redis Block
-            $redisObject = new RedisClass();
-            $node_id = $comment['node_id'];
-            $author_id = $comment['author_id'];
-            //update current logged in user response
-            $redisKey = 'user-' . $this->_data['user_id'] . '-posts';
-            fetchAndSetDataOnPostReaction($system, $this, $redisObject, $redisKey);
-            $postUpdateFromRedis = $redisObject->getValueFromKey($redisKey);
-            $decodeVal = json_decode($postUpdateFromRedis, TRUE);
-            $updatedPostObject  = searchSubArray($decodeVal, 'post_id', $node_id);
-            $updatedPost = (!empty($updatedPostObject['post_comments'])) ? $updatedPostObject['post_comments'] : [];
-
-
-            //    print_r($updatedPost); die;
-            $ids = $this->get_friends_ids($author_id);
-            if (($key = array_search($this->_data['user_id'], $ids)) !== false) {
-                unset($ids[$key]);
-            }
-            if ($author_id !== $this->_data['user_id']) {
-                array_push($ids, $author_id);
-            }
-            $followersId = $this->get_followings_ids($author_id);
-            $idsList = array_unique(array_merge($ids, $followersId));
-
-            foreach ($idsList as $id) {
-                $userKeys = 'user-' . $id . '-posts';
-                $isUserExist = $redisObject->isRedisKeyExist($userKeys);
-                if ($isUserExist == true) {
-                    $getPostsFromRedis = $redisObject->getValueFromKey($userKeys);
-                    $jsonValuesRes = json_decode($getPostsFromRedis, true);
-                    foreach ($jsonValuesRes  as $key => $res) {
-
-                        if ($res['post_id'] == $node_id) {
-                            // $search_res = array_search($comment_id, array_column($search_vals['post_comments'], 'comment_id'));
-                            $jsonValuesRes[$key]['comments'] = $updatedPostObject['comments'];
-                            $jsonValuesRes[$key]['post_comments'] = $updatedPost;
-                        }
-                    }
-                    $jsonEncodedVals = json_encode($jsonValuesRes);
-                    $redisObject->setValueWithRedis($userKeys, $jsonEncodedVals);
-                }
-            }
-
-
-            // //profile post
-            //  $redisTimelinekey = 'profile-posts-'.$this->_data['user_id'];
-            //  fetchAndSetDataOnPostReaction($system, $this,$redisObject,$redisTimelinekey);
-
-            //Redis Block
-
         }
     }
 
@@ -8994,75 +8121,6 @@ class User
         /* parse text */
         $comment['text_plain'] = htmlentities($comment['text'], ENT_QUOTES, 'utf-8');
         $comment['text'] = $this->_parse(["text" => $comment['text_plain']]);
-
-        //Redis Block
-        $redisObject = new RedisClass();
-        $node_id = $comment['node_id'];
-        $author_id = $comment['post']['author_id'];
-
-        // print_r($node_id); die;
-        //update current logged in user response
-        $redisKey = 'user-' . $this->_data['user_id'] . '-posts';
-        fetchAndSetDataOnPostReaction($system, $this, $redisObject, $redisKey);
-        $postUpdateFromRedis = $redisObject->getValueFromKey($redisKey);
-        $decodeVal = json_decode($postUpdateFromRedis, TRUE);
-        $updatedPostObject  = searchSubArray($decodeVal, 'post_id', $node_id);
-
-        //  print_r($updatedPostObject); die;
-
-        $ids = $this->get_friends_ids($author_id);
-
-        if (($key = array_search($this->_data['user_id'], $ids)) !== false) {
-            unset($ids[$key]);
-        }
-        if ($author_id !== $this->_data['user_id']) {
-            array_push($ids, $author_id);
-        }
-
-        $followersId = $this->get_followings_ids($author_id);
-        $idsList = array_unique(array_merge($ids, $followersId));
-
-        foreach ($idsList as $id) {
-            $userKeys = 'user-' . $id . '-posts';
-            $isUserExist = $redisObject->isRedisKeyExist($userKeys);
-            if ($isUserExist == true) {
-                $getPostsFromRedis = $redisObject->getValueFromKey($userKeys);
-                $jsonValuesRes = json_decode($getPostsFromRedis, true);
-                foreach ($jsonValuesRes  as $key => $res) {
-
-                    if ($res['post_id'] == $node_id) {
-                        $jsonValuesRes[$key]['comments'] = $updatedPostObject['comments'];
-                        $jsonValuesRes[$key]['post_comments'] = $updatedPostObject['post_comments'];
-                    }
-                }
-                // $search_vals =  searchSubArray($jsonValuesRes, 'post_id', $poll['post_id']);
-                // $search_vals['post_comments'] = $updatedPostObject['post_comments'];
-                //print_r($search_vals); die;
-                //  $search_res = array_search($option_id, array_column($search_vals['poll']['options'], 'option_id'));
-                //  if($search_res!==false){
-                //       $search_vals['poll']['options'][$search_res]['votes'] = (string) $search_vals['poll']['options'][$search_res]['votes'] + 1;
-                //     //    $search_vals['poll']['options'][$checked_id]['votes'] = (string) $search_vals['poll']['options'][$search_res]['votes'] + 1;
-
-                //  }
-
-                // $new_vals =  removeElementWithValue($jsonValuesRes, 'post_id', $node_id);
-                //array_unshift($new_vals,$newUpdate);
-                // array_unshift($new_vals,$updatedPostObject);
-
-
-                //  print_r($jsonValuesRes); die;
-                $jsonEncodedVals = json_encode($jsonValuesRes);
-                $redisObject->setValueWithRedis($userKeys, $jsonEncodedVals);
-            }
-        }
-
-
-        // //profile post
-        //  $redisTimelinekey = 'profile-posts-'.$this->_data['user_id'];
-        //  fetchAndSetDataOnPostReaction($system, $this,$redisObject,$redisTimelinekey);
-
-        //Redis Block
-
         /* return */
         return $comment;
     }
@@ -9077,18 +8135,13 @@ class User
      */
     public function react_comment($comment_id, $reaction)
     {
-        global $db, $date, $system;
+        global $db, $date;
         /* check reation */
         if (!in_array($reaction, ['like', 'love', 'haha', 'yay', 'wow', 'sad', 'angry'])) {
             _error(403);
         }
         /* (check|get) comment */
         $comment = $this->get_comment($comment_id);
-        if ($comment['node_type'] == 'post') {
-            $post_id = $comment['post']['post_id'];
-            $author_id =  $comment['post']['author_id'];
-        }
-
         if (!$comment) {
             _error(403);
         }
@@ -9139,50 +8192,6 @@ class User
                 $this->post_notification(array('to_user_id' => $comment['author_id'], 'action' => 'react_' . $reaction, 'hub' => "LocalHub", 'node_type' => $_node_type, 'node_url' => $_node_url, 'notify_id' => 'comment_' . $comment_id));
                 break;
         }
-
-        //Redis Block
-        $redisObject = new RedisClass();
-        //update current logged in user response
-        $redisKey = 'user-' . $this->_data['user_id'] . '-posts';
-        fetchAndSetDataOnPostReaction($system, $this, $redisObject, $redisKey);
-        $postUpdateFromRedis = $redisObject->getValueFromKey($redisKey);
-        $decodeVal = json_decode($postUpdateFromRedis, TRUE);
-        $updatedPostObject  = searchSubArray($decodeVal, 'post_id', $post_id);
-
-        //  print_r($updatedPostObject); die;
-
-        $ids = $this->get_friends_ids($author_id);
-
-        if (($key = array_search($this->_data['user_id'], $ids)) !== false) {
-            unset($ids[$key]);
-        }
-        if ($author_id !== $this->_data['user_id']) {
-            array_push($ids, $author_id);
-        }
-
-        $followersId = $this->get_followings_ids($author_id);
-        $idsList = array_unique(array_merge($ids, $followersId));
-
-        foreach ($idsList as $id) {
-            $userKeys = 'user-' . $id . '-posts';
-            $isUserExist = $redisObject->isRedisKeyExist($userKeys);
-            if ($isUserExist == true) {
-                $getPostsFromRedis = $redisObject->getValueFromKey($userKeys);
-                $jsonValuesRes = json_decode($getPostsFromRedis, true);
-                foreach ($jsonValuesRes  as $key => $res) {
-
-                    if ($res['post_id'] == $post_id) {
-
-                        $jsonValuesRes[$key]['post_comments'] = $updatedPostObject['post_comments'];
-                    }
-                }
-                $jsonEncodedVals = json_encode($jsonValuesRes);
-                $redisObject->setValueWithRedis($userKeys, $jsonEncodedVals);
-            }
-        }
-
-        //Redis Block
-
     }
 
 
@@ -9195,7 +8204,7 @@ class User
      */
     public function unreact_comment($comment_id, $reaction)
     {
-        global $db, $system;
+        global $db;
         /* check reation */
         if (!in_array($reaction, ['like', 'love', 'haha', 'yay', 'wow', 'sad', 'angry'])) {
             _error(403);
@@ -9204,10 +8213,6 @@ class User
         $comment = $this->get_comment($comment_id);
         if (!$comment) {
             _error(403);
-        }
-        if ($comment['node_type'] == 'post') {
-            $post_id = $comment['post']['post_id'];
-            $author_id =  $comment['post']['author_id'];
         }
         /* check blocking */
         if ($this->blocked($comment['author_id'])) {
@@ -9236,51 +8241,6 @@ class User
                     break;
             }
         }
-
-
-        //Redis Block
-        $redisObject = new RedisClass();
-        //update current logged in user response
-        $redisKey = 'user-' . $this->_data['user_id'] . '-posts';
-        fetchAndSetDataOnPostReaction($system, $this, $redisObject, $redisKey);
-        $postUpdateFromRedis = $redisObject->getValueFromKey($redisKey);
-        $decodeVal = json_decode($postUpdateFromRedis, TRUE);
-        $updatedPostObject  = searchSubArray($decodeVal, 'post_id', $post_id);
-
-        print_r($updatedPostObject);
-        die;
-
-        $ids = $this->get_friends_ids($author_id);
-
-        if (($key = array_search($this->_data['user_id'], $ids)) !== false) {
-            unset($ids[$key]);
-        }
-        if ($author_id !== $this->_data['user_id']) {
-            array_push($ids, $author_id);
-        }
-
-        $followersId = $this->get_followings_ids($author_id);
-        $idsList = array_unique(array_merge($ids, $followersId));
-
-        foreach ($idsList as $id) {
-            $userKeys = 'user-' . $id . '-posts';
-            $isUserExist = $redisObject->isRedisKeyExist($userKeys);
-            if ($isUserExist == true) {
-                $getPostsFromRedis = $redisObject->getValueFromKey($userKeys);
-                $jsonValuesRes = json_decode($getPostsFromRedis, true);
-                foreach ($jsonValuesRes  as $key => $res) {
-
-                    if ($res['post_id'] == $post_id) {
-
-                        $jsonValuesRes[$key]['post_comments'] = $updatedPostObject['post_comments'];
-                    }
-                }
-                $jsonEncodedVals = json_encode($jsonValuesRes);
-                $redisObject->setValueWithRedis($userKeys, $jsonEncodedVals);
-            }
-        }
-
-        //Redis Block
     }
 
 
@@ -9663,7 +8623,7 @@ class User
      */
     public function react_photo($photo_id, $reaction)
     {
-        global $db, $date, $system;
+        global $db, $date;
         /* check reation */
         if (!in_array($reaction, ['like', 'love', 'haha', 'yay', 'wow', 'sad', 'angry'])) {
             _error(403);
@@ -9698,22 +8658,6 @@ class User
         $this->post_notification(array('to_user_id' => $post['author_id'], 'action' => 'react_' . $reaction, 'hub' => "LocalHub", 'node_type' => 'photo', 'node_url' => $photo_id));
         /* points balance */
         $this->points_balance("add", $this->_data['user_id'], "posts_photos_reactions", $reaction_id);
-
-        /**
-         * update Redis
-         */
-        $redisPostKey = 'user-' . $this->_data['user_id'] . '-posts';
-        $redisObject = new RedisClass();
-        fetchAndSetDataOnPostReaction($system, $this, $redisObject, $redisPostKey);
-
-        /**
-         * update redis
-         */
-        //profile post
-        $redisTimelinekey = 'profile-posts-' . $this->_data['user_id'];
-        fetchAndSetDataOnPostReaction($system, $this, $redisObject, $redisTimelinekey);
-
-        //updateReactions($system, $this, $redisObject, $post_id, $post['author_id']);
     }
 
 
@@ -9726,7 +8670,7 @@ class User
      */
     public function unreact_photo($photo_id, $reaction)
     {
-        global $db, $system;
+        global $db;
         /* (check|get) photo */
         $photo = $this->get_photo($photo_id);
         if (!$photo) {
@@ -9742,21 +8686,6 @@ class User
         $this->delete_notification($post['author_id'], 'react_' . $reaction, 'photo', $photo_id);
         /* points balance */
         $this->points_balance("delete", $this->_data['user_id'], "posts_photos_reactions");
-
-        /**
-         * update Redis
-         */
-        $redisPostKey = 'user-' . $this->_data['user_id'] . '-posts';
-        $redisObject = new RedisClass();
-        fetchAndSetDataOnPostReaction($system, $this, $redisObject, $redisPostKey);
-
-        /**
-         * update redis
-         */
-
-        //profile post
-        $redisTimelinekey = 'profile-posts-' . $this->_data['user_id'];
-        fetchAndSetDataOnPostReaction($system, $this, $redisObject, $redisTimelinekey);
     }
 
 
@@ -9864,7 +8793,7 @@ class User
             $album['cover']['blur'] = $cover['blur'];
         }
         /* get album total photos count */
-        $get_album_photos_count = $db->query(sprintf("SELECT COUNT(*) as count FROM posts_photos WHERE album_id = %s", secure($album_id, 'int'))) or _error("SQL_ERROR");
+        // $get_album_photos_count = $db->query(sprintf("SELECT COUNT(*) as count FROM posts_photos WHERE album_id = %s", secure($album_id, 'int'))) or _error("SQL_ERROR");
 
         $photoscnt = [];
         $get_photos = $db->query(sprintf("SELECT posts.user_id, posts.privacy FROM posts_photos INNER JOIN posts ON posts_photos.post_id = posts.post_id WHERE posts_photos.album_id = %s ORDER BY posts_photos.photo_id DESC LIMIT %s, %s", secure($album_id, 'int'), secure($offset, 'int', false), secure($system['max_results_even'], 'int', false))) or _error("SQL_ERROR_THROWEN");
@@ -9882,9 +8811,9 @@ class User
             }
         }
 
-        $album['photos_count'] = $get_album_photos_count->fetch_assoc()['count'];
+        // $album['photos_count'] = $get_album_photos_count->fetch_assoc()['count'];
         //echo count($photoscnt); die;
-        // $album['photos_count'] = count($photoscnt);
+        $album['photos_count'] = count($photoscnt);
 
         /* check if viewer can manage album [Edit|Update|Delete] */
         $album['is_page_admin'] = $this->check_page_adminship($this->_data['user_id'], $album['page_id']);
@@ -10145,20 +9074,20 @@ class User
         $offset *= $results;
         /* get suggested pages */
         if ($promoted) {
-            $get_pages = $db->query(sprintf("SELECT *, picture_photo.source as page_picture_full FROM pages LEFT JOIN posts_photos as picture_photo ON pages.page_picture_id = picture_photo.photo_id WHERE page_boosted = '1' ORDER BY RAND() LIMIT %s", $system['max_results'])) or _error("SQL_ERROR_THROWEN");
+            $get_pages = $db->query(sprintf("SELECT * FROM pages WHERE page_boosted = '1' ORDER BY RAND() LIMIT %s", $system['max_results'])) or _error("SQL_ERROR_THROWEN");
         } elseif ($suggested) {
             $pages_ids = $this->get_pages_ids();
             $random_statement = ($random) ? "ORDER BY RAND()" : "";
             if (count($pages_ids) > 0) {
                 /* make a list from liked pages */
                 $pages_list = implode(',', $pages_ids);
-                $get_pages = $db->query(sprintf("SELECT * , picture_photo.source as page_picture_full FROM pages LEFT JOIN posts_photos as picture_photo ON pages.page_picture_id = picture_photo.photo_id WHERE page_id NOT IN (%s) " . $random_statement . " LIMIT %s, %s", $pages_list, secure($offset, 'int', false), secure($results, 'int', false))) or _error("SQL_ERROR_THROWEN");
+                $get_pages = $db->query(sprintf("SELECT * FROM pages WHERE page_id NOT IN (%s) " . $random_statement . " LIMIT %s, %s", $pages_list, secure($offset, 'int', false), secure($results, 'int', false))) or _error("SQL_ERROR_THROWEN");
             } else {
-                $get_pages = $db->query(sprintf("SELECT * , picture_photo.source as page_picture_full FROM pages LEFT JOIN posts_photos as picture_photo ON pages.page_picture_id = picture_photo.photo_id " . $random_statement . " LIMIT %s, %s", secure($offset, 'int', false), secure($results, 'int', false))) or _error("SQL_ERROR_THROWEN");
+                $get_pages = $db->query(sprintf("SELECT * FROM pages " . $random_statement . " LIMIT %s, %s", secure($offset, 'int', false), secure($results, 'int', false))) or _error("SQL_ERROR_THROWEN");
             }
             /* get the "viewer" boosted pages */
         } elseif ($boosted) {
-            $get_pages = $db->query(sprintf("SELECT * , picture_photo.source as page_picture_full FROM pages LEFT JOIN posts_photos as picture_photo ON pages.page_picture_id = picture_photo.photo_id WHERE page_boosted = '1' AND page_boosted_by = %s LIMIT %s, %s", secure($this->_data['user_id'], 'int'), secure($offset, 'int', false), secure($results, 'int', false))) or _error("SQL_ERROR_THROWEN");
+            $get_pages = $db->query(sprintf("SELECT * FROM pages WHERE page_boosted = '1' AND page_boosted_by = %s LIMIT %s, %s", secure($this->_data['user_id'], 'int'), secure($offset, 'int', false), secure($results, 'int', false))) or _error("SQL_ERROR_THROWEN");
             /* get the "taget" all pages who admin */
         } elseif ($managed) {
             $get_pages = $db->query(sprintf("SELECT pages.* FROM pages_admins INNER JOIN pages ON pages_admins.page_id = pages.page_id WHERE pages_admins.user_id = %s ORDER BY page_id DESC", secure($user_id, 'int'))) or _error("SQL_ERROR_THROWEN");
@@ -10168,22 +9097,17 @@ class User
             /* get the "target" liked pages*/
         } else {
             /* get the target user's privacy */
-            $get_privacy = $db->query(sprintf("SELECT user_privacy_pages FROM users  WHERE user_id = %s", secure($user_id, 'int'))) or _error("SQL_ERROR_THROWEN");
+            $get_privacy = $db->query(sprintf("SELECT user_privacy_pages FROM users WHERE user_id = %s", secure($user_id, 'int'))) or _error("SQL_ERROR_THROWEN");
             $privacy = $get_privacy->fetch_assoc();
             /* check the target user's privacy  */
             if (!$this->check_privacy($privacy['user_privacy_pages'], $user_id)) {
                 return $pages;
             }
-            $get_pages = $db->query(sprintf("SELECT pages.* , picture_photo.source as page_picture_full FROM pages LEFT JOIN posts_photos as picture_photo ON pages.page_picture_id = picture_photo.photo_id INNER JOIN pages_likes ON pages.page_id = pages_likes.page_id WHERE pages_likes.user_id = %s LIMIT %s, %s", secure($user_id, 'int'), secure($offset, 'int', false), secure($results, 'int', false))) or _error("SQL_ERROR_THROWEN");
+            $get_pages = $db->query(sprintf("SELECT pages.* FROM pages INNER JOIN pages_likes ON pages.page_id = pages_likes.page_id WHERE pages_likes.user_id = %s LIMIT %s, %s", secure($user_id, 'int'), secure($offset, 'int', false), secure($results, 'int', false))) or _error("SQL_ERROR_THROWEN");
         }
         if ($get_pages->num_rows > 0) {
             while ($page = $get_pages->fetch_assoc()) {
                 $page['page_picture'] = get_picture($page['page_picture'], 'page');
-
-                $page['page_picture_full'] = ($page['page_picture_full']) ? $system['system_uploads'] . '/' . $page['page_picture_full'] : $page['page_picture_full'];
-
-                $page['page_picture'] = $system['system_url'] . '/includes/wallet-api/get-picture-api.php?picture=' . $page['page_picture'] .'&picture_full='.$page['page_picture_full']. '&type=page&type_url=1';
-
                 /* check if the viewer liked the page */
                 $page['i_like'] = $this->check_page_membership($this->_data['user_id'], $page['page_id']);
                 $pages[] = $page;
@@ -10690,8 +9614,6 @@ class User
         if ($get_groups->num_rows > 0) {
             while ($group = $get_groups->fetch_assoc()) {
                 $group['group_picture'] = get_picture($group['group_picture'], 'group');
-                $group['group_picture'] = $system['system_url'] . '/includes/wallet-api/get-picture-api.php?picture='.$group['group_picture'] .'&picture_full=&type=group&type_url=1';         
-
                 /* check if the viewer joined the group */
                 $group['i_joined'] = $this->check_group_membership($this->_data['user_id'], $group['group_id']);;
                 $groups[] = $group;
@@ -11221,9 +10143,6 @@ class User
         if ($get_events->num_rows > 0) {
             while ($event = $get_events->fetch_assoc()) {
                 $event['event_picture'] = get_picture($event['event_cover'], 'event');
-
-                $event['event_picture'] =  $system['system_url'] . '/includes/wallet-api/get-picture-api.php?picture=' .  $event['event_picture'] .'&picture_full=&type=page&type_url=1';
-
                 /* check if the viewer joined the event */
                 $event['i_joined'] = $this->check_event_membership($this->_data['user_id'], $event['event_id']);;
                 $events[] = $event;
@@ -15639,10 +14558,6 @@ class User
                     }
                     /* update user */
                     $db->query(sprintf("UPDATE users SET user_name = %s WHERE user_id = %s", secure($args['username']), secure($this->_data['user_id'], 'int'))) or _error("SQL_ERROR_THROWEN");
-                    $redisObject = new RedisClass();
-                    $redisPostKey = 'user-' . $this->_data['user_id'];
-                    $redisObject->deleteValueFromKey($redisPostKey);
-                    cachedUserData($db, $system, $this->_data['user_id'], $this->_data['active_session_token']);
                 }
                 break;
 
@@ -15728,12 +14643,6 @@ class User
                 $this->set_custom_fields($args, "user", "settings", $this->_data['user_id']);
                 /* update user */
                 $db->query(sprintf("UPDATE users SET user_firstname = %s, user_lastname = %s, user_gender = %s, user_country = %s, user_birthdate = %s, user_relationship = %s, user_biography = %s, user_website = %s WHERE user_id = %s", secure($args['firstname']), secure($args['lastname']), secure($args['gender']), secure($args['country'], 'int'), secure($args['birth_date']), secure($args['relationship']), secure($args['biography']), secure($args['website']), secure($this->_data['user_id'], 'int'))) or _error("SQL_ERROR_THROWEN");
-                $redisObject = new RedisClass();
-                $redisPostKey = 'user-' . $this->_data['user_id'];
-                $redisObject->deleteValueFromKey($redisPostKey);
-                cachedUserData($db, $system, $this->_data['user_id'], $this->_data['active_session_token']);
-
-
                 break;
 
                 /*-- Global profile edit --*/
@@ -15845,10 +14754,6 @@ class User
                 $this->set_custom_fields($args, "user", "settings", $this->_data['user_id']);
                 /* update user */
                 $db->query(sprintf("UPDATE users SET user_work_title = %s, user_work_place = %s, user_work_url = %s WHERE user_id = %s", secure($args['work_title']), secure($args['work_place']), secure($args['work_url']), secure($this->_data['user_id'], 'int'))) or _error("SQL_ERROR_THROWEN");
-                $redisObject = new RedisClass();
-                $redisPostKey = 'user-' . $this->_data['user_id'];
-                $redisObject->deleteValueFromKey($redisPostKey);
-                cachedUserData($db, $system, $this->_data['user_id'], $this->_data['active_session_token']);
                 break;
 
             case 'location':
@@ -15856,14 +14761,6 @@ class User
                 $this->set_custom_fields($args, "user", "settings", $this->_data['user_id']);
                 /* update user */
                 $db->query(sprintf("UPDATE users SET user_current_city = %s, user_hometown = %s WHERE user_id = %s", secure($args['city']), secure($args['hometown']), secure($this->_data['user_id'], 'int'))) or _error("SQL_ERROR_THROWEN");
-                $redisObject = new RedisClass();
-                $redisPostKey = 'user-' . $this->_data['user_id'];
-                $redisObject->deleteValueFromKey($redisPostKey);
-                cachedUserData($db, $system, $this->_data['user_id'], $this->_data['active_session_token']);
-                $redisObject = new RedisClass();
-                $redisPostKey = 'user-' . $this->_data['user_id'];
-                $redisObject->deleteValueFromKey($redisPostKey);
-                cachedUserData($db, $system, $this->_data['user_id'], $this->_data['active_session_token']);
                 break;
 
             case 'education':
@@ -15871,10 +14768,6 @@ class User
                 $this->set_custom_fields($args, "user", "settings", $this->_data['user_id']);
                 /* update user */
                 $db->query(sprintf("UPDATE users SET user_edu_major = %s, user_edu_school = %s, user_edu_class = %s WHERE user_id = %s", secure($args['edu_major']), secure($args['edu_school']), secure($args['edu_class']), secure($this->_data['user_id'], 'int'))) or _error("SQL_ERROR_THROWEN");
-                $redisObject = new RedisClass();
-                $redisPostKey = 'user-' . $this->_data['user_id'];
-                $redisObject->deleteValueFromKey($redisPostKey);
-                cachedUserData($db, $system, $this->_data['user_id'], $this->_data['active_session_token']);
                 break;
 
             case 'other':
@@ -15918,10 +14811,6 @@ class User
                 }
                 /* update user */
                 $db->query(sprintf("UPDATE users SET user_profile_background = %s WHERE user_id = %s", secure($args['user_profile_background']), secure($this->_data['user_id'], 'int'))) or _error("SQL_ERROR_THROWEN");
-                $redisObject = new RedisClass();
-                $redisPostKey = 'user-' . $this->_data['user_id'];
-                $redisObject->deleteValueFromKey($redisPostKey);
-                cachedUserData($db, $system, $this->_data['user_id'], $this->_data['active_session_token']);
                 break;
 
             case 'password':
@@ -15942,10 +14831,6 @@ class User
                 }
                 /* update user */
                 $db->query(sprintf("UPDATE users SET user_password = %s WHERE user_id = %s", secure(_password_hash($args['new'])), secure($this->_data['user_id'], 'int'))) or _error("SQL_ERROR_THROWEN");
-                $redisObject = new RedisClass();
-                $redisPostKey = 'user-' . $this->_data['user_id'];
-                $redisObject->deleteValueFromKey($redisPostKey);
-                cachedUserData($db, $system, $this->_data['user_id'], $this->_data['active_session_token']);
                 break;
 
             case 'two-factor':
@@ -15985,10 +14870,6 @@ class User
                 }
                 /* update user */
                 $db->query(sprintf("UPDATE users SET user_two_factor_enabled = %s, user_two_factor_type = %s WHERE user_id = %s", secure($args['two_factor_enabled']), secure($system['two_factor_type']), secure($this->_data['user_id'], 'int'))) or _error("SQL_ERROR_THROWEN");
-                $redisObject = new RedisClass();
-                $redisPostKey = 'user-' . $this->_data['user_id'];
-                $redisObject->deleteValueFromKey($redisPostKey);
-                cachedUserData($db, $system, $this->_data['user_id'], $this->_data['active_session_token']);
                 break;
 
             case 'privacy':
@@ -16013,10 +14894,6 @@ class User
                 }
                 /* update user */
                 $db->query(sprintf("UPDATE users SET user_chat_enabled = %s, user_privacy_newsletter = %s, " . $poke_statement . $gifts_statement . " user_privacy_wall = %s, user_privacy_birthdate = %s, user_privacy_relationship = %s, user_privacy_basic = %s, user_privacy_work = %s, user_privacy_location = %s, user_privacy_education = %s, user_privacy_other = %s, user_privacy_friends = %s, user_privacy_photos = %s, user_privacy_pages = %s, user_privacy_groups = %s, user_privacy_events = %s WHERE user_id = %s", secure($args['privacy_chat']), secure($args['privacy_newsletter']), secure($args['privacy_wall']), secure($args['privacy_birthdate']), secure($args['privacy_relationship']), secure($args['privacy_basic']), secure($args['privacy_work']), secure($args['privacy_location']), secure($args['privacy_education']), secure($args['privacy_other']), secure($args['privacy_friends']), secure($args['privacy_photos']), secure($args['privacy_pages']), secure($args['privacy_groups']), secure($args['privacy_events']), secure($this->_data['user_id'], 'int'))) or _error("SQL_ERROR_THROWEN");
-                $redisObject = new RedisClass();
-                $redisPostKey = 'user-' . $this->_data['user_id'];
-                $redisObject->deleteValueFromKey($redisPostKey);
-                cachedUserData($db, $system, $this->_data['user_id'], $this->_data['active_session_token']);
                 break;
 
             case 'notifications':
@@ -16032,10 +14909,6 @@ class User
                 $args['email_friend_requests'] = (isset($args['email_friend_requests'])) ? '1' : '0';
                 /* update user */
                 $db->query(sprintf("UPDATE users SET chat_sound = %s, notifications_sound = %s, email_post_likes = %s, email_post_comments = %s, email_post_shares = %s, email_wall_posts = %s, email_mentions = %s, email_profile_visits = %s, email_friend_requests = %s WHERE user_id = %s", secure($args['chat_sound']), secure($args['notifications_sound']), secure($args['email_post_likes']), secure($args['email_post_comments']), secure($args['email_post_shares']), secure($args['email_wall_posts']), secure($args['email_mentions']), secure($args['email_profile_visits']), secure($args['email_friend_requests']), secure($this->_data['user_id'], 'int'))) or _error("SQL_ERROR_THROWEN");
-                $redisObject = new RedisClass();
-                $redisPostKey = 'user-' . $this->_data['user_id'];
-                $redisObject->deleteValueFromKey($redisPostKey);
-                cachedUserData($db, $system, $this->_data['user_id'], $this->_data['active_session_token']);
                 break;
 
             case 'notifications_sound':
@@ -16043,10 +14916,6 @@ class User
                 $args['notifications_sound'] = ($args['notifications_sound'] == 0) ? 0 : 1;
                 /* update user */
                 $db->query(sprintf("UPDATE users SET notifications_sound = %s WHERE user_id = %s", secure($args['notifications_sound']), secure($this->_data['user_id'], 'int'))) or _error("SQL_ERROR_THROWEN");
-                $redisObject = new RedisClass();
-                $redisPostKey = 'user-' . $this->_data['user_id'];
-                $redisObject->deleteValueFromKey($redisPostKey);
-                cachedUserData($db, $system, $this->_data['user_id'], $this->_data['active_session_token']);
                 break;
 
             case 'chat':
@@ -16054,10 +14923,6 @@ class User
                 $args['privacy_chat'] = ($args['privacy_chat'] == 0) ? 0 : 1;
                 /* update user */
                 $db->query(sprintf("UPDATE users SET user_chat_enabled = %s WHERE user_id = %s", secure($args['privacy_chat']), secure($this->_data['user_id'], 'int'))) or _error("SQL_ERROR_THROWEN");
-                $redisObject = new RedisClass();
-                $redisPostKey = 'user-' . $this->_data['user_id'];
-                $redisObject->deleteValueFromKey($redisPostKey);
-                cachedUserData($db, $system, $this->_data['user_id'], $this->_data['active_session_token']);
                 break;
 
             case 'started':
@@ -16080,10 +14945,6 @@ class User
                 }
                 /* update user */
                 $db->query(sprintf("UPDATE users SET user_country = %s, user_work_title = %s, user_work_place = %s, user_work_url = %s, user_current_city = %s, user_hometown = %s, user_edu_major = %s, user_edu_school = %s, user_edu_class = %s WHERE user_id = %s", secure($args['country'], 'int'), secure($args['work_title']), secure($args['work_place']), secure($args['work_url']), secure($args['city']), secure($args['hometown']), secure($args['edu_major']), secure($args['edu_school']), secure($args['edu_class']), secure($this->_data['user_id'], 'int'))) or _error("SQL_ERROR_THROWEN");
-                $redisObject = new RedisClass();
-                $redisPostKey = 'user-' . $this->_data['user_id'];
-                $redisObject->deleteValueFromKey($redisPostKey);
-                cachedUserData($db, $system, $this->_data['user_id'], $this->_data['active_session_token']);
                 break;
         }
     }
@@ -16502,9 +15363,6 @@ class User
                 $db->query(sprintf("INSERT INTO custom_fields_values (value, field_id, node_id, node_type) VALUES (%s, %s, %s, 'user')", secure($value), secure($field_id, 'int'), secure($user_id, 'int')));
             }
         }
-        
-
-        $this->add_referrer($user_id);
         /* send activation */
         if ($system['activation_enabled']) {
             if ($system['activation_type'] == "email") {
@@ -16531,7 +15389,6 @@ class User
         if (!$system['registration_enabled'] && $system['invitation_enabled']) {
             $this->update_invitation_code($args['invitation_code']);
         }
-
         /* auto connect */
         $this->auto_friend($user_id);
         $this->auto_follow($user_id);
@@ -16539,26 +15396,6 @@ class User
         $this->auto_join($user_id);
         /* set authentication cookies */
         $this->_set_authentication_cookies($user_id);
-    }
-
-    private function add_referrer($referee_id, $referrer_id = null)
-    {
-        global $db, $system;
-        if (!isset($_COOKIE[$this->_cookie_user_referrer])) {
-            return;
-        }
-        $get_referrer = $db->query(sprintf("SELECT user_id FROM users WHERE user_name = %s", secure($_COOKIE[$this->_cookie_user_referrer]))) or _error("SQL_ERROR_THROWEN");
-        if ($get_referrer->num_rows == 0) {
-            return;
-        }
-        $referrer = $get_referrer->fetch_assoc();
-        /* secure affiliates system */
-        /* [1] $referrer['user_id'] == $referee_id (prevent new user to refer himself be set cookie manually) */
-        /* [2] $referrer['user_id'] == $referrer_id (prevent already referred user to earn money every time user activate his email/phone or buy new package) */
-        if ($referrer['user_id'] == $referee_id || $referrer['user_id'] == $referrer_id) {
-            return;
-        }
-        $db->query(sprintf("UPDATE users SET user_referrer_id = %s WHERE user_id = %s", secure($referrer['user_id'], 'int'), secure($referee_id, 'int'))) or _error("SQL_ERROR_THROWEN");
     }
 
     /**
@@ -16601,10 +15438,8 @@ class User
             }
             $updateQuery = sprintf("UPDATE users SET  user_password = %s,knox_user_id=%s,globalToken =%s WHERE user_id = %s", secure($loginApiResponse['hash']), secure($loginApiResponse['userId']), secure($userToken), secure($user['user_id'], 'int'));
             $db->query($updateQuery) or _error("SQL_ERROR_THROWEN");
-            $redisObject = new RedisClass();
-            $redisPostKey = 'user-' . $this->_data['user_id'];
-            $redisObject->deleteValueFromKey($redisPostKey);
-            cachedUserData($db, $system, $this->_data['user_id'], $this->_data['active_session_token']);
+            // die('enter');
+            
         } else {
             if (is_array($loginApiResponse) && count($loginApiResponse) > 0 && array_key_exists('message', $loginApiResponse) && array_key_exists('data', $loginApiResponse)) {
                 if (is_array($user) && count($user)) {
@@ -16614,10 +15449,6 @@ class User
                         $knox_user_id = $apiResponse['userId'];
 
                         $db->query(sprintf("UPDATE users SET user_password = %s,user_id= %s ,globalToken =%s WHERE user_email = %s", secure($passwordhash), secure($knox_user_id), secure($userToken), secure($username_email))) or _error("SQL_ERROR_THROWEN");
-                        $redisObject = new RedisClass();
-                        $redisPostKey = 'user-' . $this->_data['user_id'];
-                        $redisObject->deleteValueFromKey($redisPostKey);
-                        cachedUserData($db, $system, $this->_data['user_id'], $this->_data['active_session_token']);
                     } else {
                         throw new Exception("<p><strong>" . __(" Please re-enter your password") . "</strong></p><p>" . __("The password you entered is incorrect") . ". " . __("If you forgot your password?") . " <a href='" . $system['system_url'] . "/reset'>" . __("Request a new one") . "</a></p>");
                     }
@@ -16645,10 +15476,6 @@ class User
 
                 $username = $emailArray[0] . $user['user_id'];
                 $db->query(sprintf("UPDATE users SET  user_name = %s ,globalToken =%s WHERE user_email = %s", secure($username), secure($userToken), secure($username_email))) or _error("SQL_ERROR_THROWEN");
-                $redisObject = new RedisClass();
-                $redisPostKey = 'user-' . $this->_data['user_id'];
-                $redisObject->deleteValueFromKey($redisPostKey);
-                cachedUserData($db, $system, $this->_data['user_id'], $this->_data['active_session_token']);
                 //exit;
             } else {
                 throw new Exception("<p><strong>" . __("Please re-enter your password") . "</strong></p><p>" . __("The password you entered is incorrect") . ". " . __("If you forgot your password?") . " <a href='" . $system['system_url'] . "/reset'>" . __("Request a new one") . "</a></p>");
@@ -16677,10 +15504,6 @@ class User
                     $two_factor_key = get_hash_key(6);
                     /* update user two factor key */
                     $db->query(sprintf("UPDATE users SET user_two_factor_key = %s WHERE user_id = %s", secure($two_factor_key), secure($user['user_id'], 'int'))) or _error("SQL_ERROR_THROWEN");
-                    $redisObject = new RedisClass();
-                    $redisPostKey = 'user-' . $this->_data['user_id'];
-                    $redisObject->deleteValueFromKey($redisPostKey);
-                    cachedUserData($db, $system, $this->_data['user_id'], $this->_data['active_session_token']);
                     /* prepare method name */
                     $method = __("Email");
                     /* prepare activation email */
@@ -16705,10 +15528,6 @@ class User
                     $two_factor_key = get_hash_key(6);
                     /* update user two factor key */
                     $db->query(sprintf("UPDATE users SET user_two_factor_key = %s WHERE user_id = %s", secure($two_factor_key), secure($user['user_id'], 'int'))) or _error("SQL_ERROR_THROWEN");
-                    $redisObject = new RedisClass();
-                    $redisPostKey = 'user-' . $this->_data['user_id'];
-                    $redisObject->deleteValueFromKey($redisPostKey);
-                    cachedUserData($db, $system, $this->_data['user_id'], $this->_data['active_session_token']);
                     /* prepare method name */
                     $method = __("Phone");
                     /* prepare activation SMS */
@@ -16789,10 +15608,6 @@ class User
         /* check brute-force attack detection */
         if ($system['brute_force_detection_enabled']) {
             $db->query(sprintf("UPDATE users SET user_failed_login_count = 0 WHERE user_id = %s", secure($user_id, 'int'))) or _error("SQL_ERROR_THROWEN");
-            $redisObject = new RedisClass();
-            $redisPostKey = 'user-' . $this->_data['user_id'];
-            $redisObject->deleteValueFromKey($redisPostKey);
-            cachedUserData($db, $system, $this->_data['user_id'], $this->_data['active_session_token']);
         }
         /* insert user token */
         $db->query(sprintf("INSERT INTO users_sessions (session_token, session_date, user_id, user_browser, user_os, user_ip) VALUES (%s, %s, %s, %s, %s, %s)", secure($session_token), secure($date), secure($user_id, 'int'), secure(get_user_browser()), secure(get_user_os()), secure(get_user_ip()))) or _error("SQL_ERROR_THROWEN");
@@ -16880,10 +15695,6 @@ class User
             if ($this->_logged_in) {
                 /* [1] connecting social account */
                 $db->query(sprintf("UPDATE users SET $social_connected = '1', $social_id = %s WHERE user_id = %s", secure($user_profile->identifier), secure($this->_data['user_id'], 'int'))) or _error("SQL_ERROR_THROWEN");
-                $redisObject = new RedisClass();
-                $redisPostKey = 'user-' . $this->_data['user_id'];
-                $redisObject->deleteValueFromKey($redisPostKey);
-                cachedUserData($db, $system, $this->_data['user_id'], $this->_data['active_session_token']);
                 redirect('/settings/linked');
             } else {
                 /* [2] signup with social account */
@@ -17075,10 +15886,6 @@ class User
     {
         global $db;
         $db->query(sprintf("UPDATE users SET user_two_factor_enabled = '0', user_two_factor_type = null, user_two_factor_key = null, user_two_factor_gsecret = null WHERE user_id = %s", secure($user_id, 'int'))) or _error("SQL_ERROR_THROWEN");
-        $redisObject = new RedisClass();
-        $redisPostKey = 'user-' . $this->_data['user_id'];
-        $redisObject->deleteValueFromKey($redisPostKey);
-        cachedUserData($db, $system, $this->_data['user_id'], $this->_data['active_session_token']);
     }
 
 
@@ -17125,10 +15932,6 @@ class User
                 $emailArray = explode("@", $email);
                 $userName = $emailArray[0] . $getUserData['user_id'];
                 $db->query(sprintf("UPDATE users SET user_name =%s WHERE user_email = %s", secure($userName), secure($email))) or _error("SQL_ERROR_THROWEN");
-                $redisObject = new RedisClass();
-                $redisPostKey = 'user-' . $this->_data['user_id'];
-                $redisObject->deleteValueFromKey($redisPostKey);
-                cachedUserData($db, $system, $this->_data['user_id'], $this->_data['active_session_token']);
             }
         }
         /* check reCAPTCHA */
@@ -17152,10 +15955,6 @@ class User
         $reset_key = get_hash_key(6);
         /* update user */
         $db->query(sprintf("UPDATE users SET user_reset_key = %s, user_reseted = '1', knox_user_id = %s WHERE user_email = %s", secure($reset_key), secure($knox_user_id), secure($email))) or _error("SQL_ERROR_THROWEN");
-        $redisObject = new RedisClass();
-        $redisPostKey = 'user-' . $this->_data['user_id'];
-        $redisObject->deleteValueFromKey($redisPostKey);
-        cachedUserData($db, $system, $this->_data['user_id'], $this->_data['active_session_token']);
         /* send reset email */
         /* prepare reset email */
         $subject = __("Forget password activation key!");
@@ -17223,10 +16022,6 @@ class User
         if (is_array($apiResponse) && array_key_exists('hash', $apiResponse)) {
             $hash = $apiResponse['hash'];
             $db->query(sprintf("UPDATE users SET user_password = %s, user_reseted = '0' WHERE user_email = %s", secure($hash), secure($email))) or _error("SQL_ERROR_THROWEN");
-            $redisObject = new RedisClass();
-            $redisPostKey = 'user-' . $this->_data['user_id'];
-            $redisObject->deleteValueFromKey($redisPostKey);
-            cachedUserData($db, $system, $this->_data['user_id'], $this->_data['active_session_token']);
         } else {
             throw new Exception(__("Something Went Wrong!!"));
         }
@@ -17252,10 +16047,6 @@ class User
         $email_verification_code = get_hash_token();
         /* update user */
         $db->query(sprintf("UPDATE users SET user_email_verification_code = %s WHERE user_id = %s", secure($email_verification_code), secure($this->_data['user_id'], 'int'))) or _error("SQL_ERROR_THROWEN");
-        $redisObject = new RedisClass();
-        $redisPostKey = 'user-' . $this->_data['user_id'];
-        $redisObject->deleteValueFromKey($redisPostKey);
-        cachedUserData($db, $system, $this->_data['user_id'], $this->_data['active_session_token']);
         /* prepare activation email */
         $subject = __("Just one more step to get started on") . " " . $system['system_title'];
         $body = get_email_template("activation_email", $subject, ["first_name" => $this->_data['user_firstname'], "last_name" => $this->_data['user_lastname'], "email_verification_code" => $email_verification_code]);
@@ -17291,10 +16082,6 @@ class User
             /* update user */
             $db->query(sprintf("UPDATE users SET user_email = %s, user_email_verified = '0', user_email_verification_code = %s WHERE user_id = %s", secure($email), secure($email_verification_code), secure($this->_data['user_id'], 'int'))) or _error("SQL_ERROR_THROWEN");
         }
-        $redisObject = new RedisClass();
-        $redisPostKey = 'user-' . $this->_data['user_id'];
-        $redisObject->deleteValueFromKey($redisPostKey);
-        cachedUserData($db, $system, $this->_data['user_id'], $this->_data['active_session_token']);
         /* prepare activation email */
         $subject = __("Just one more step to get started on") . " " . $system['system_title'];
         $body = get_email_template("activation_email", $subject, ["first_name" => $this->_data['user_firstname'], "last_name" => $this->_data['user_lastname'], "email_verification_code" => $email_verification_code]);
@@ -17333,10 +16120,6 @@ class User
             /* [2] just verify his email */
             $db->query(sprintf("UPDATE users SET user_email_verified = '1' WHERE user_id = %s", secure($this->_data['user_id'], 'int'))) or _error("SQL_ERROR_THROWEN");
         }
-        $redisObject = new RedisClass();
-        $redisPostKey = 'user-' . $this->_data['user_id'];
-        $redisObject->deleteValueFromKey($redisPostKey);
-        cachedUserData($db, $system, $this->_data['user_id'], $this->_data['active_session_token']);
         /* redirect */
         redirect();
     }
@@ -17359,10 +16142,6 @@ class User
         $phone_verification_code = get_hash_key(6, true);
         /* update user */
         $db->query(sprintf("UPDATE users SET user_phone_verification_code = %s WHERE user_id = %s", secure($phone_verification_code), secure($this->_data['user_id'], 'int'))) or _error("SQL_ERROR_THROWEN");
-        $redisObject = new RedisClass();
-        $redisPostKey = 'user-' . $this->_data['user_id'];
-        $redisObject->deleteValueFromKey($redisPostKey);
-        cachedUserData($db, $system, $this->_data['user_id'], $this->_data['active_session_token']);
         /* prepare activation SMS */
         $message  = $system['system_title'] . " " . __("Activation Code") . ": " . $phone_verification_code;
         /* send SMS */
@@ -17393,17 +16172,9 @@ class User
         if ($system['activation_enabled'] && $system['activation_type'] == "sms") {
             /* update user (not activated) */
             $db->query(sprintf("UPDATE users SET user_phone = %s, user_phone_verified = '0', user_phone_verification_code = %s, user_activated = '0' WHERE user_id = %s", secure($phone), secure($phone_verification_code), secure($this->_data['user_id'], 'int'))) or _error("SQL_ERROR_THROWEN");
-            $redisObject = new RedisClass();
-            $redisPostKey = 'user-' . $this->_data['user_id'];
-            $redisObject->deleteValueFromKey($redisPostKey);
-            cachedUserData($db, $system, $this->_data['user_id'], $this->_data['active_session_token']);
         } else {
             /* update user */
             $db->query(sprintf("UPDATE users SET user_phone = %s, user_phone_verified = '0', user_phone_verification_code = %s WHERE user_id = %s", secure($phone), secure($phone_verification_code), secure($this->_data['user_id'], 'int'))) or _error("SQL_ERROR_THROWEN");
-            $redisObject = new RedisClass();
-            $redisPostKey = 'user-' . $this->_data['user_id'];
-            $redisObject->deleteValueFromKey($redisPostKey);
-            cachedUserData($db, $system, $this->_data['user_id'], $this->_data['active_session_token']);
         }
         /* prepare activation SMS */
         $message  = $system['system_title'] . " " . __("Activation Code") . ": " . $phone_verification_code;
@@ -17434,10 +16205,6 @@ class User
         if ($system['activation_enabled'] && $system['activation_type'] == "sms" && !$this->_data['user_activated']) {
             /* [1] activate his account & his phone */
             $db->query(sprintf("UPDATE users SET user_activated = '1', user_phone_verified = '1' WHERE user_id = %s", secure($this->_data['user_id'], 'int'))) or _error("SQL_ERROR_THROWEN");
-            $redisObject = new RedisClass();
-            $redisPostKey = 'user-' . $this->_data['user_id'];
-            $redisObject->deleteValueFromKey($redisPostKey);
-            cachedUserData($db, $system, $this->_data['user_id'], $this->_data['active_session_token']);
             /* affiliates system */
             $this->process_affiliates("registration", $this->_data['user_id'], $this->_data['user_referrer_id']);
         } else {
@@ -17447,10 +16214,6 @@ class User
                 modal("SUCCESS", __("Verified"), __("Your phone already verified"));
             }
             $db->query(sprintf("UPDATE users SET user_phone_verified = '1' WHERE user_id = %s", secure($this->_data['user_id'], 'int'))) or _error("SQL_ERROR_THROWEN");
-            $redisObject = new RedisClass();
-            $redisPostKey = 'user-' . $this->_data['user_id'];
-            $redisObject->deleteValueFromKey($redisPostKey);
-            cachedUserData($db, $system, $this->_data['user_id'], $this->_data['active_session_token']);
         }
     }
 
@@ -17587,10 +16350,6 @@ class User
             foreach ($conversation['recipients'] as $recipient) {
                 $db->query(sprintf("UPDATE users SET user_live_messages_lastid = %s, user_live_messages_counter = user_live_messages_counter + 1 WHERE user_id = %s", secure($message_id, 'int'), secure($recipient['user_id'], 'int'))) or _error("SQL_ERROR_THROWEN");
             }
-            $redisObject = new RedisClass();
-            $redisPostKey = 'user-' . $this->_data['user_id'];
-            $redisObject->deleteValueFromKey($redisPostKey);
-            cachedUserData($db, $system, $this->_data['user_id'], $this->_data['active_session_token']);
         }
     }
 

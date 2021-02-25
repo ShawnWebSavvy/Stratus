@@ -100,15 +100,24 @@
                                 {if $transaction['tnx_type']=='buy'}
                                     <img src="{$system['system_url']}/content/themes/default/images/investment/withdraw.svg"
                                     alt="withdraw Icon">
-                                {else}
+                                {else if $transaction['tnx_type']=='sell'}
                                     <img src="{$system['system_url']}/content/themes/default/images/investment/sell.svg"
                                     alt="withdraw Icon">
+                                {else}
+                                    <img src="{$system['system_url']}/content/themes/default/images/investment/withdraw.svg"
+                                    alt="Referral Icon">
                                 {/if}
                                 
                                 <div class="activityDetails">
                                     <h3>{$transaction['tnx_type']|ucfirst} {$transaction['currency']|strtoupper}</h3>
                                     <h5>{$transaction['status']|ucfirst}</h5>
-                                    <p>{$transaction['recieve_token']|number_format:5} {$transaction['currency']|strtoupper}</p>
+                                    <p>
+                                        {if $transaction['tnx_type']=='referral'}
+                                            ${$transaction['amount']|number_format:2}
+                                        {else}
+                                            {$transaction['recieve_token']|number_format:5} {$transaction['currency']|strtoupper}
+                                        {/if}
+                                    </p>
                                 </div>
                                 <div class="activityDate">{$transaction['created_at']|date_format}</div>
                             </div>
