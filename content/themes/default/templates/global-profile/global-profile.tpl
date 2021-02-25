@@ -284,7 +284,7 @@
                   </div>
             </section>
             <!-- content panel -->
-            <div class="col-md-12 col-xl-3 col-lg-4 ">
+            <div class="col-md-12 col-xl-3 col-lg-4 about_sec">
                <div class="profileUpdatesDesign">
                   <!-- profile-header -->
 

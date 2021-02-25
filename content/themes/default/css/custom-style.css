@@ -536,10 +536,10 @@ body.group-localhub.group-localhub button.close ,body.group-localhub.group-local
     color: #000;
     opacity: 1;
 }
-body.group-localhub.group-localhub button.close:hover {
+/* body.group-localhub.group-localhub button.close:hover {
 	color: #fff;
     opacity: 0.7;
-}
+} */
 /* body.group-localhub.group-localhub .data-container.searchSectionWrap ._user_detail_sec {
     max-width: calc(100% - 180px);
     flex: 0 0 calc(100% - 180px);

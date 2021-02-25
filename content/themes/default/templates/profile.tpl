@@ -280,7 +280,7 @@
                </div>
                <!-- profile-header -->
             </section>
-            <div class="col-md-12 col-xl-3 col-lg-4">
+            <div class="col-md-12 col-xl-3 col-lg-4 about_sec">
                <div class="profileUpdatesDesign">
                   <!-- panel [mutual-friends] -->
                   {if $user->_logged_in && $user->_data['user_id'] != $profile['user_id'] && !$profile['we_friends'] &&

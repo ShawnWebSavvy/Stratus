@@ -285,7 +285,7 @@ body.group-localhub .main-header,body.profile-localhub .main-header{box-shadow:n
 body.global-profile-localhub .main-header{box-shadow:none}
 body.group-localhub .container.offcanvas,body.profile-localhub .container.offcanvas{padding-bottom:160px}
 body.global-profile-localhub .container.offcanvas{padding-bottom:160px}
-body.group-localhub .button-messages-profile,body.profile-localhub .button-messages-profile{height:58px;width:159px;border-radius:12px;background-color:#f7f7f7;font-size:15px}
+body.group-localhub .button-messages-profile,body.profile-localhub .button-messages-profile{height:58px;border-radius:12px;background-color:#f7f7f7;font-size:15px}
 body.global-profile-localhub .button-messages-profile{height:58px;width:159px;border-radius:12px;background-color:#f7f7f7;font-size:15px}
 body.group-localhub .button-messages-profile .text-mobile-only,body.profile-localhub .button-messages-profile .text-mobile-only{display:inline-block;font-size:14px;color:#000;font-weight:700}
 body.global-profile-localhub .button-messages-profile .text-mobile-only{display:inline-block;font-size:14px;color:#000;font-weight:700}
@@ -334,7 +334,7 @@ body.profile-localhub .profile-mobile-layout .profileUpdatesDesign{background-co
 body.profile-localhub .right-sidebar.js_sticky-sidebar{display:none!important}
 body.profile-localhub .main-header{box-shadow:none}
 body.profile-localhub .container.offcanvas{padding-bottom:160px}
-body.profile-localhub .button-messages-profile{height:58px;width:159px;border-radius:12px;background-color:#f7f7f7;font-size:15px}
+/* body.profile-localhub .button-messages-profile{height:58px;width:159px;border-radius:12px;background-color:#f7f7f7;font-size:15px} */
 body.profile-localhub .button-messages-profile .text-mobile-only{display:inline-block;font-size:14px;color:#000;font-weight:700}
 body.profile-localhub .profile-header-tabs.desktop_only{display:none}
 body.profile-localhub .logo-wrapper.for_desktop{display:none!important}
