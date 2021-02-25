@@ -639,8 +639,8 @@ function button_status(e, t) {
                     //         $('body').addClass('body-scroll-disabled');
                     //      }
                     //  }),
-  
-                
+
+
 
 
                     $("input[type=radio][name=share_to]").on("change", function () {
@@ -660,75 +660,89 @@ function button_status(e, t) {
     }),
 
 
-     $(document).off("mouseup",".dropdown-toggle-share").on("mouseup", ".dropdown-toggle-share", function () {
+    $(document).off("mouseup", ".dropdown-toggle-share").on("mouseup", ".dropdown-toggle-share", function () {
 
-        if($(this).closest('.dropdown').hasClass('show')){
+        if ($(this).closest('.dropdown').hasClass('show')) {
             $('body').removeClass('body-scroll-disabled');
             $("#__overlay__").removeClass("clr_overlay_");
         } else {
-            setTimeout( function () {
-               if(!$(this).closest('.dropdown').hasClass('show')){
-                   // alert('start 2');
-                   $('body').addClass('body-scroll-disabled');
-                } 
-   
-                $("#__overlay__").hasClass("clr_overlay_") ? $("#__overlay__").removeClass("clr_overlay_") : $("#__overlay__").addClass("clr_overlay_") 
-            }, 0 );
-        } 
-     }),
-
-
-     $(document).off('mouseup','.dropdown-toggle.post_custm_option').on('mouseup','.dropdown-toggle.post_custm_option',function () {
-        if($(this).closest('.dropdown').hasClass('show')){
-            $('body').removeClass('body-scroll-disabled');
-        } else {
-            setTimeout( function () {         
-                if(!$(this).closest('.dropdown').hasClass('show')){
-                     $('body').addClass('body-scroll-disabled');
-                   } else {
-                     $('body').removeClass('body-scroll-disabled');
-                   }
-            }, 0 );
-        }
-     }),
-     $(document).off('mouseup','.js_posts-filter').on('mouseup','.js_posts-filter',function () {
-        if($(this).hasClass('show')){
-            $('body').removeClass('body-scroll-disabled');
-        } else {
-            setTimeout( function () {
-                 if(!$(this).hasClass('show')){
+            setTimeout(function () {
+                if (!$(this).closest('.dropdown').hasClass('show')) {
+                    // alert('start 2');
                     $('body').addClass('body-scroll-disabled');
-                 } else {
-                    $('body').removeClass('body-scroll-disabled');
-                 }
-            }, 0 );
-        }
-     }), 
+                }
 
-     $("body").click(function () {
+                $("#__overlay__").hasClass("clr_overlay_") ? $("#__overlay__").removeClass("clr_overlay_") : $("#__overlay__").addClass("clr_overlay_")
+            }, 0);
+        }
+    }),
+
+
+    $(document).off('mouseup', '.dropdown-toggle.post_custm_option').on('mouseup', '.dropdown-toggle.post_custm_option', function () {
+        if ($(this).closest('.dropdown').hasClass('show')) {
+            $('body').removeClass('body-scroll-disabled');
+        } else {
+            setTimeout(function () {
+                if (!$(this).closest('.dropdown').hasClass('show')) {
+                    $('body').addClass('body-scroll-disabled');
+                } else {
+                    $('body').removeClass('body-scroll-disabled');
+                }
+            }, 0);
+        }
+    }),
+    $(document).off('mouseup', '.js_posts-filter').on('mouseup', '.js_posts-filter', function () {
+        if ($(this).hasClass('show')) {
+            $('body').removeClass('body-scroll-disabled');
+        } else {
+            setTimeout(function () {
+                if (!$(this).hasClass('show')) {
+                    $('body').addClass('body-scroll-disabled');
+                } else {
+                    $('body').removeClass('body-scroll-disabled');
+                }
+            }, 0);
+        }
+    }),
+
+    $("body").click(function () {
         $(".__overlay__").hasClass("clr_overlay_") && $(".__overlay__").removeClass("clr_overlay_");
         $(this).removeClass('body-scroll-disabled');
-     }),
-  
+    }),
 
+    $(document).on('click', '.stratus_local_share', function () {
+        var this_id = $(this).attr('id');
+        var show_id = this_id + '_enable';
 
-
-    $(document).on("click", ".stratus_local_share", function () {
-        var e = $(this).attr("id"),
-            t = e + "_enable";
         setTimeout(function () {
-            $("#" + e).attr("checked", !0),
-                "share_timeline" == e &&
+            $("#" + this_id).attr('checked', true);
+            if (this_id == "share_timeline") {
                 setTimeout(function () {
-                    $("#modal #share_timeline_enable #share_to_timeline").attr("checked", "checked"), $("#__overlay__").removeClass("clr_overlay_");
-                }, 100),
-                "share_social_media_enable" == t ? $(".modal-footer").addClass("x-hidden") : $(".modal-footer").removeClass("x-hidden"),
-                $("#modal")
-                    .find(".sharing_stratus")
-                    .each(function () {
-                        var e = $(this).attr("id");
-                        "share_post_enable" === t && ($("#modal #share_timeline_enable #share_to_timeline").prop("required", !0), $("#modal #share_timeline_enable #share_to_timeline").attr("checked", "checked")),
-                            t == e ? ($("#modal #" + e + " .x-hidden").prop("required", !0), $(this).removeClass("x-hidden")) : $(this).hasClass("x-hidden") || $(this).addClass("x-hidden");
-                    });
-        }, 2e3);
+                    $("#modal #share_timeline_enable #share_to_timeline").attr('checked', 'checked');
+                    //$('#modal').css("display","none");
+                    $("#__overlay__").removeClass("clr_overlay_");
+                }, 100);
+            }
+            if (show_id == "share_social_media_enable") {
+                $(".modal-footer").addClass("x-hidden");
+            } else {
+                $(".modal-footer").removeClass("x-hidden");
+            }
+            $('#modal').find('.sharing_stratus').each(function () {
+                var compare_id = $(this).attr('id');
+                if (show_id === "share_post_enable") {
+                    $("#modal #share_timeline_enable #share_to_timeline").prop('required', true);
+                    $("#modal #share_timeline_enable #share_to_timeline").attr('checked', 'checked');
+                }
+                if (show_id == compare_id) {
+                    $("#modal #" + compare_id + " .x-hidden").prop('required', true);
+                    $(this).removeClass("x-hidden");
+                } else {
+                    if (!$(this).hasClass("x-hidden")) {
+                        $(this).addClass("x-hidden");
+                    }
+                }
+                jQuery("body #stratus-sharebutton").removeClass("x-hidden");
+            });
+        }, 1300);
     });
