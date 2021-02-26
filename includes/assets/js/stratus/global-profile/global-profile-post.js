@@ -2201,7 +2201,8 @@ $(function () {
                 current_page == "event")
             ) {
               location.reload();
-            } else if (response.refresh="delete_single_post") {
+            } else if (response.refresh = "delete_single_post") {
+              $('.child-post-ul').html("");
               window.location.replace(document.referrer)
             }
             else if (response.callback) {
