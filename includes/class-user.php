@@ -5089,6 +5089,12 @@ class User
         }
         $redisPostProfileKey = 'profile-posts-' . $this->_data['user_id'];
         $redisObject->deleteValueFromKey($redisPostProfileKey);
+        if ($args['handle'] == "user") {
+            $redisPostProfileKey = 'profile-posts-' . $args['id'];
+            $redisObject->deleteValueFromKey($redisPostProfileKey);
+            $redisPostProfileKey = 'profile-posts-others-' . $post['wall_id'];
+            $redisObject->deleteValueFromKey($redisPostProfileKey);
+        }
         // $postsLists = $redisObject->getValueFromKey($redisPostProfileKey);
         // $decodePosts = json_decode($postsLists, TRUE);
         // array_unshift($decodePosts, $arrayforrepalce);
@@ -6659,6 +6665,7 @@ class User
         global $db, $system;
         /* (check|get) post */
         $post = $this->get_post($post_id, false, true);
+
         if (!$post) {
             if (!$return_errors) {
                 return;
@@ -6678,7 +6685,12 @@ class User
         $refresh = false;
 
         $redisObject = new RedisClass();
-
+        if ($post['wall_id'] > 0) {
+            $redisPostProfileKey = 'profile-posts-' . $post['wall_id'];
+            $redisObject->deleteValueFromKey($redisPostProfileKey);
+            $redisPostProfileKey = 'profile-posts-others-' . $post['wall_id'];
+            $redisObject->deleteValueFromKey($redisPostProfileKey);
+        }
         $db->query(sprintf("DELETE FROM notifications WHERE node_url = %s", secure($post_id, 'int'))) or _error("SQL_ERROR_THROWEN");
         $db->query(sprintf("DELETE FROM posts WHERE post_id = %s", secure($post_id, 'int'))) or _error("SQL_ERROR_THROWEN");
         switch ($post['post_type']) {
@@ -6836,13 +6848,13 @@ class User
                 $refresh = true;
                 break;
 
-            case 'shared':  
-             
-                $shares_count = $post['origin']['shares']>0 ? $post['origin']['shares']-1 : 0 ;
+            case 'shared':
+
+                $shares_count = $post['origin']['shares'] > 0 ? $post['origin']['shares'] - 1 : 0;
 
                 $db->query(sprintf("UPDATE `posts` SET shares = %s WHERE post_id = %s", secure($shares_count, 'int'), secure($post['origin']['post_id'], 'int'))) or _error("SQL_ERROR_THROWEN");
                 $refresh = true;
-                break;   
+                break;
         }
         /* points balance */
         $this->points_balance("delete", $post['author_id'], "post");
@@ -6959,7 +6971,8 @@ class User
         $decodeVal = json_decode($postUpdateFromRedis, TRUE);
         $updatedPostObject  = searchSubArray($decodeVal, 'post_id', $post_id);
 
-
+        // echo "<pre>";
+        // print_r($updatedPostObject);
         $ids = $this->get_friends_ids($post['author_id']);
         if (($key = array_search($this->_data['user_id'], $ids)) !== false) {
             unset($ids[$key]);
@@ -6992,17 +7005,19 @@ class User
 
         //profile post
         $redisTimelinekey = 'profile-posts-' . $this->_data['user_id'];
-        $timelineData = $redisObject->getValueFromKey($redisTimelinekey);
-        $decodeVal = json_decode($timelineData, TRUE);
-        foreach ($decodeVal  as $key => $res) {
-            if ($res['post_id'] == $post_id) {
-                $decodeVal[$key] = $updatedPostObject;
+        $isKeyExistOnRedis = $redisObject->isRedisKeyExist($redisTimelinekey);
+        if ($isKeyExistOnRedis) {
+            $timelineData = $redisObject->getValueFromKey($redisTimelinekey);
+            $decodeVal = json_decode($timelineData, TRUE);
+            foreach ($decodeVal  as $key => $res) {
+                if ($res['post_id'] == $post_id) {
+                    $decodeVal[$key] = $updatedPostObject;
+                }
             }
+
+            $newJsonVals = json_encode($decodeVal);
+            $redisObject->setValueWithRedis($redisTimelinekey, $newJsonVals);
         }
-
-        $newJsonVals = json_encode($decodeVal);
-        $redisObject->setValueWithRedis($redisTimelinekey, $newJsonVals);
-
         //Redis Block
         /* return */
         return $post;

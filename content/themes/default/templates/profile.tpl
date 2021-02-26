@@ -68,7 +68,7 @@
                            <img {if $profile['user_picture_id']} {if $user->_logged_in &&
                            $profile['user_picture_lightbox']}class="js_lightbox"{/if}
                            data-id="{$profile['user_picture_id']}"
-                           data-context="album" data-image="{$profile['user_picture_full']}" {elseif
+                           data-context="album" data-image="{$profile['user_picture']}" {elseif
                            !$profile['user_picture_default']} class="js_lightbox-nodata"
                            data-image="{$profile['user_picture']}" {/if} {if
                            $profile['user_picture_default']} src="{$profile['user_picture']}" {else}

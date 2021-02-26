@@ -9,7 +9,7 @@
 
         <!-- comment body -->
         <div class="comment-data">
-            <div class="commentDataActionWrap">
+            <div class="commentDataActionWrap" {if !$_is_reply}id="comment_edit_{$_comment['comment_id']}"{/if}>
                 <!-- comment author & text  -->
                 <div class="comment-inner-wrapper">
                     <div class="comment-inner js_notifier-flasher">

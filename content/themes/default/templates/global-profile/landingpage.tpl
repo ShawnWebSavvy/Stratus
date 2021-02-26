@@ -41,7 +41,8 @@
                         {if $postsNew}
                         <div class="bricklayer" id="landing_feeds_post_uls">
                             {foreach $postsNew as $postsItem}
-                            <div class="feeds_post" data-id="{$postsItem['post_id']}" post-type="">
+                            <div class="feeds_post" data-id="{$postsItem['post_id']}"
+                                post-type="{$postsItem['post_type']}">
                                 <div class="post" data-id="{$postsItem['post_id']}">
                                     <div class="post-body">
                                         <div class="post-header">
@@ -65,16 +66,15 @@
                                                 <!-- post feeling -->
                                                 {if $postsItem['feeling_action']}
 
-                                                    <a {$postsItem['posthub']}
-                                                        href="{$system['system_url']}/{if $postsItem['posthub'] == 'GlobalHub'}global-profile-posts{else}posts{/if}/{$postsItem['post_id']}"
-                                                        class=""
-                                                        data-id="{$postsItem['post_id']}">
-                                                <span class="post-title">
-                                                    {if $postsItem['post_type'] != "" && $postsItem['post_type'] !=
-                                                    "map"} & {/if}{__("is")} {__($postsItem["feeling_action"])}
-                                                    {__($postsItem["feeling_value"])} <i
-                                                        class="twa twa-lg twa-{$postsItem['feeling_icon']}"></i>
-                                                </span>
+                                                <a {$postsItem['posthub']}
+                                                    href="{$system['system_url']}/{if $postsItem['posthub'] == 'GlobalHub'}global-profile-posts{else}posts{/if}/{$postsItem['post_id']}"
+                                                    class="" data-id="{$postsItem['post_id']}">
+                                                    <span class="post-title">
+                                                        {if $postsItem['post_type'] != "" && $postsItem['post_type'] !=
+                                                        "map"} & {/if}{__("is")} {__($postsItem["feeling_action"])}
+                                                        {__($postsItem["feeling_value"])} <i
+                                                            class="twa twa-lg twa-{$postsItem['feeling_icon']}"></i>
+                                                    </span>
                                                 </a>
 
                                                 {/if}
@@ -225,6 +225,16 @@
                                                         style="max-height:none;">
                                                     </div>
                                                     <div class="post-text-translation x-hidden" dir="auto"></div>
+                                                    {if $postsItem['post_type'] == "shared"}
+                                                    <div class="mt10 {if $_snippet}x-hidden{/if}">
+                                                        <div class="post-media">
+                                                            <div class="post-media-meta">
+                                                                {include file='__feeds_post.body.tpl'
+                                                                _post=$postsItem['origin'] _shared=true}
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    {/if}
                                                     {if $postsItem['colored_pattern']}
                                                     <div class="post-colored" {if
                                                         $postsItem['colored_pattern']['type']=="color" }
@@ -262,12 +272,12 @@
                                                         </div>
                                                     </div>
                                                     {else}
-                                                        <a {$postsItem['posthub']}
+                                                    <a {$postsItem['posthub']}
                                                         href="{$system['system_url']}/{if $postsItem['posthub'] == 'GlobalHub'}global-profile-posts{else}posts{/if}/{$postsItem['post_id']}"
-                                                        class="js_lightbox_custom"
-                                                        data-id="{$postsItem['post_id']}">
-                                                    <div class="post-text js_readmore" dir="auto">{$postsItem['text']}
-                                                    </div>
+                                                        class="js_lightbox_custom" data-id="{$postsItem['post_id']}">
+                                                        <div class="post-text js_readmore" dir="auto">
+                                                            {$postsItem['text']}
+                                                        </div>
                                                     </a>
                                                     {/if}
 
@@ -288,7 +298,7 @@
                                                     <div class="image"><img
                                                             src="{$system['system_uploads']}/{$postsItem['origin']['photos'][0]['source']}">
                                                     </div>
-                                                   
+
                                                     {/if}
                                                     {if $postsItem['post_type']=="video" }
                                                     <div class="video">
@@ -300,71 +310,86 @@
                                                         </video>
                                                     </div>
                                                     {/if}
-                                                     {if $postsItem['origin']['post_type']=="video" }
-                                                      <div class="video">
-                                                          <video width="100%" height="315" controls>
-                                                              <source
-                                                                  src="{$system['system_uploads']}/{$postsItem['origin']['video']['source']}">
-                                                          </video>
-                                                      </div>
-                                                    {/if}
-
-                                                   {if $postsItem['post_type'] == "audio" && $postsItem['audio']}
-                                                    <div class="plr10">
-                                                        <audio class="js_audio" id="audio-{$postsItem['audio']['audio_id']}" {if
-                                                            $user->_logged_in}onplay="update_media_views('audio', {$postsItem['audio']['audio_id']})" {/if} controls
-                                                            preload="auto" style="width: 100%;">
-                                                            <source src="{$system['system_uploads']}/{$postsItem['audio']['source']}" type="audio/mpeg">
-                                                            <source src="{$system['system_uploads']}/{$postsItem['audio']['source']}" type="audio/mp3">
-                                                            {__("Your browser does not support HTML5 audio")}
-                                                        </audio>
+                                                    {if $postsItem['origin']['post_type']=="video" }
+                                                    <div class="video">
+                                                        <video width="100%" height="315" controls>
+                                                            <source
+                                                                src="{$system['system_uploads']}/{$postsItem['origin']['video']['source']}">
+                                                        </video>
                                                     </div>
                                                     {/if}
 
-                                                  
-                                                   {if $postsItem['origin']['post_type'] == "audio" && $postsItem['origin']['audio']}
+                                                    {if $postsItem['post_type'] == "audio" && $postsItem['audio']}
                                                     <div class="plr10">
-                                                        <audio class="js_audio" id="audio-{$postsItem['origin']['audio']['audio_id']}" {if
-                                                            $user->_logged_in}onplay="update_media_views('audio', {$postsItem['origin']['audio']['audio_id']})" {/if} controls
+                                                        <audio class="js_audio"
+                                                            id="audio-{$postsItem['audio']['audio_id']}" {if
+                                                            $user->_logged_in}onplay="update_media_views('audio',
+                                                            {$postsItem['audio']['audio_id']})" {/if} controls
                                                             preload="auto" style="width: 100%;">
-                                                            <source src="{$system['system_uploads']}/{$postsItem['origin']['audio']['source']}" type="audio/mpeg">
-                                                            <source src="{$system['system_uploads']}/{$postsItem['origin']['audio']['source']}" type="audio/mp3">
+                                                            <source
+                                                                src="{$system['system_uploads']}/{$postsItem['audio']['source']}"
+                                                                type="audio/mpeg">
+                                                            <source
+                                                                src="{$system['system_uploads']}/{$postsItem['audio']['source']}"
+                                                                type="audio/mp3">
                                                             {__("Your browser does not support HTML5 audio")}
                                                         </audio>
                                                     </div>
                                                     {/if}
 
 
-                                                {if $postsItem['post_type']=="file" }
+                                                    {if $postsItem['origin']['post_type'] == "audio" &&
+                                                    $postsItem['origin']['audio']}
+                                                    <div class="plr10">
+                                                        <audio class="js_audio"
+                                                            id="audio-{$postsItem['origin']['audio']['audio_id']}" {if
+                                                            $user->_logged_in}onplay="update_media_views('audio',
+                                                            {$postsItem['origin']['audio']['audio_id']})" {/if} controls
+                                                            preload="auto" style="width: 100%;">
+                                                            <source
+                                                                src="{$system['system_uploads']}/{$postsItem['origin']['audio']['source']}"
+                                                                type="audio/mpeg">
+                                                            <source
+                                                                src="{$system['system_uploads']}/{$postsItem['origin']['audio']['source']}"
+                                                                type="audio/mp3">
+                                                            {__("Your browser does not support HTML5 audio")}
+                                                        </audio>
+                                                    </div>
+                                                    {/if}
+
+
+                                                    {if $postsItem['post_type']=="file" }
                                                     <div class="post-downloader">
                                                         <div class="icon">
                                                             <i class="fa fa-file-alt fa-2x"></i>
                                                         </div>
                                                         <div class="info">
-                                                            <strong>{__("File Type")}</strong>: {get_extension({$postsItem['file']['source']})}
+                                                            <strong>{__("File Type")}</strong>:
+                                                            {get_extension({$postsItem['file']['source']})}
                                                             <div class="mt10">
                                                                 <a class="btn btn-primary "
                                                                     href="{$system['system_uploads']}/{$postsItem['file']['source']}">{__("Download")}</a>
                                                             </div>
                                                         </div>
                                                     </div>
-                                                {/if}
+                                                    {/if}
 
 
-                                                {if $postsItem['origin']['post_type']=="file" }
+                                                    {if $postsItem['origin']['post_type']=="file" }
                                                     <div class="post-downloader">
                                                         <div class="icon">
                                                             <i class="fa fa-file-alt fa-2x"></i>
                                                         </div>
                                                         <div class="info">
-                                                            <strong>{__("File Type")}</strong>: {get_extension({$postsItem['origin']['file']['source']})}
+                                                            <strong>{__("File Type")}</strong>:
+                                                            {get_extension({$postsItem['origin']['file']['source']})}
                                                             <div class="mt10">
                                                                 <a class="btn btn-primary "
                                                                     href="{$system['system_uploads']}/{$postsItem['origin']['file']['source']}">{__("Download")}</a>
                                                             </div>
                                                         </div>
                                                     </div>
-                                                {/if}
+                                                    {/if}
 
 
 
