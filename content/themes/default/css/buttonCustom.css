@@ -60,19 +60,3 @@ button.js_unlike-page img{transform:rotateX(180deg);padding:0!important;height:3
 #search-history.dropdown-search button.js_friend-add:hover,#search-results.dropdown-search button.js_friend-add:hover,#search-results.dropdown-search button.js_interest-event:hover,.btn.btn-info.js_event-invite:hover,.buttonWrapPopOver button.js_friend-add:hover,.js_friend-add:hover,.js_join-group:hover,.js_leave-group:hover,.js_page-invite:hover,.publishBtn:hover,button.js_group-invite:hover,div#modal .float-right._user_action_ button.js_friend-add:hover{background-color:#1269ff!important;color:#1e1f20}
 #search-history.dropdown-search button.js_friend-add img,#search-results.dropdown-search button.js_friend-add img{width:100%}
 div#modal .whoreactModal .float-right._user_action_ button.js_friend-remove img{ margin: 0 !important; }
-.whoreactModal .searchSectionWrap .usernamesWrapBlock ._user_action_ {display: flex;align-items: stretch;}
-.whoreactModal .searchSectionWrap .usernamesWrapBlock ._user_action_ button{
-    margin-bottom: 0;
-    margin-right: 0;
-    margin-left: 8px;
-}
-.whoreactModal .searchSectionWrap .usernamesWrapBlock ._user_action_ button{
-    margin-bottom: 0;
-    margin-right: 0;
-    margin-left: 8px;
-    background-color: #e5f0ff;
-}
-.whoreactModal .searchSectionWrap .usernamesWrapBlock ._user_action_ button span img{
-    margin-right: 0;
-    display: inline-block;
-}
