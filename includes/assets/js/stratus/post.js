@@ -311,47 +311,48 @@ $(function () {
 
         (!is_empty(message) || photo || voice_note) && (comment.data("sending", !0)),
 
-        $.post(
-            api["posts/comment"],
-            {
-                handle: handle,
-                id: id,
-                message: message,
-                photo: JSON.stringify(photo),
-                voice_note: JSON.stringify(voice_note),
-            },
-            function (response) {
-                /* check if there is a callback */
-                if (response.callback) {
-                    eval(response.callback);
-                } else {
-                    textarea.val("");
-                    textarea.attr("style", "");
-                    attachments.hide();
-                    attachments.find("li.item").remove();
-                    comment.removeData("photos");
-                    comment.find(".x-form-tools-attach").show();
-                    comment.removeData("voice_notes");
-                    comment.find(".x-form-tools-voice").show();
-                    attachments_voice_notes.hide();
-                    attachments_voice_notes.find(".js_voice-success-message").hide();
-                    attachments_voice_notes.find(".js_voice-start").show();
-                    stream.append(response.comment);
-                    comment.removeData("sending");
-                }
-            },
-            "json"
-        ).fail(function () {
-            modal("#modal-message", {
-                title: __["Error"],
-                message: __["There is something that went wrong!"],
+            $.post(
+                api["posts/comment"],
+                {
+                    handle: handle,
+                    id: id,
+                    message: message,
+                    photo: JSON.stringify(photo),
+                    voice_note: JSON.stringify(voice_note),
+                },
+                function (response) {
+                    /* check if there is a callback */
+                    if (response.callback) {
+                        eval(response.callback);
+                    } else {
+                        textarea.val("");
+                        textarea.attr("style", "");
+                        attachments.hide();
+                        attachments.find("li.item").remove();
+                        comment.removeData("photos");
+                        comment.find(".x-form-tools-attach").show();
+                        comment.removeData("voice_notes");
+                        comment.find(".x-form-tools-voice").show();
+                        attachments_voice_notes.hide();
+                        attachments_voice_notes.find(".js_voice-success-message").hide();
+                        attachments_voice_notes.find(".js_voice-start").show();
+                        stream.append(response.comment);
+                        comment.removeData("sending");
+                    }
+                },
+                "json"
+            ).fail(function () {
+                modal("#modal-message", {
+                    title: __["Error"],
+                    message: __["There is something that went wrong!"],
+                });
             });
-        });
     }
     function _update_comment(element) {
         var _this = $(element),
             comment = _this.closest(".comment"),
             id = comment.data("id"),
+            idchange = "comment_edit_" + id,
             textarea = comment.find("textarea.js_update-comment"),
             message = textarea.val(),
             photo = comment.data("photos");
@@ -360,7 +361,18 @@ $(function () {
                 api["posts/edit"],
                 { handle: "comment", id: id, message: message, photo: JSON.stringify(photo) },
                 function (response) {
-                    response.callback ? eval(response.callback) : (comment.find(".comment-edit").remove(), comment.find(".comment-replace").html(response.comment), comment.find(".comment-data").show());
+                    var myEle = document.getElementById(idchange);
+                    if (response.callback) {
+                        eval(response.callback);
+                    } else {
+                        comment.find(".comment-edit").remove();
+                        if (myEle) {
+                            comment.find("#" + idchange + " .comment-replace").html(response.comment);
+                        } else {
+                            comment.find(".comment-replace").html(response.comment);
+                        }
+                        comment.find(".comment-data").show();
+                    }
                 },
                 "json"
             ).fail(function () {

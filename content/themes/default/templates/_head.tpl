@@ -72,7 +72,7 @@
     <link rel="stylesheet" type='text/css'
         href="{$system['system_uploads_assets']}/content/themes/default/css/style.rtl.min.css"  {if !$user->_logged_in}defer{/if}>
     {/if}
-
+    <script src="https://cdn1.stratus.co/includes/assets/js/stratus/lazysizes.min.js"></script>
     <link rel="stylesheet" type='text/css'
         href="{$system['system_uploads_assets']}/content/themes/default/css/live_video_style.css"  {if !$user->_logged_in}defer{/if}>
     <link rel="stylesheet" type='text/css'
@@ -80,9 +80,10 @@
     <link rel="stylesheet" type='text/css'
         href="{$system['system_uploads_assets']}/content/themes/default/css/style-custom-light.css"  {if !$user->_logged_in}defer{/if}>
     <link rel="stylesheet" type='text/css'
-        href="{$system['system_uploads_assets']}/content/themes/default/css/custom_responsive_style.css"  {if !$user->_logged_in}defer{/if}>
+        href="{$system['system_url']}/content/themes/default/css/custom_responsive_style.css">
     <!-- CSS -->
-
+    <link rel="stylesheet" type='text/css'
+            href="{$system['system_url']}/content/themes/{$system['theme']}/css/investmentStyle.css">
     {/if}
 
     <!-- CSS -->

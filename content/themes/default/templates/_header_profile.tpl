@@ -455,14 +455,13 @@
                       </li>
                       {if $system['ads_enabled']}
                       <!-- search button start-->
-                      <li class="dropdown js_live-notifications walletButton searchBtnMobile"
-                        style="margin-left: auto !important;">
+                      <li class="dropdown js_live-notifications walletButton searchBtnMobile" style="margin-left: auto !important;">
                         {if $active_page=='LocalHub'}
                         <a class="dropdown-item" href="{$system['system_url']}/search">
                           {else}
                           <a class="dropdown-item" href="{$system['system_url']}/globalhub-search">
                             {/if}
-                            <div class="svg-container " style="width:24px; height:24px; ">
+                            <div class="svg-container" style="width:24px; height:24px; ">
                               <i class="fa fa-search"></i>
                             </div>
                           </a>

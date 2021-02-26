@@ -37,8 +37,8 @@ class User
         }
         if (isset($_COOKIE[$this->_cookie_user_id]) && isset($_COOKIE[$this->_cookie_user_token])) {
 
-            $response_data =  cachedUserData($db, $system, $_COOKIE[$this->_cookie_user_id], $_COOKIE[$this->_cookie_user_token]);
-
+            $response_data = cachedUserData($db, $system, $_COOKIE[$this->_cookie_user_id], $_COOKIE[$this->_cookie_user_token]);
+            //print_r($response_data);
             if (!empty($response_data) > 0) {
                 $this->_data = $response_data;
                 $this->_logged_in = true;
@@ -52,10 +52,10 @@ class User
                 }
                 /* update user last seen */
                 $db->query(sprintf("UPDATE users SET user_last_seen = NOW() WHERE user_id = %s", secure($this->_data['user_id'], 'int'))) or _error("SQL_ERROR_THROWEN");
-                $redisObject = new RedisClass();
-                $redisPostKey = 'user-' . $this->_data['user_id'];
-                $redisObject->deleteValueFromKey($redisPostKey);
-                cachedUserData($db, $system, $this->_data['user_id'], $this->_data['active_session_token']);
+                // $redisObject = new RedisClass();
+                // $redisPostKey = 'user-' . $this->_data['user_id'];
+                // $redisObject->deleteValueFromKey($redisPostKey);
+                // cachedUserData($db, $system, $this->_data['user_id'], $this->_data['active_session_token']);
             }
         }
     }
@@ -768,10 +768,10 @@ class User
             $skipped_list = implode(',', $skipped_array);
             /* get users */
             //$getUserQuery = sprintf('SELECT user_id, user_name, user_firstname, user_lastname, user_gender, user_picture, user_subscribed, user_verified FROM users WHERE user_id != %1$s AND user_id NOT IN (%2$s) AND (user_name LIKE %3$s OR user_firstname LIKE %3$s OR user_lastname LIKE %3$s OR CONCAT(user_firstname,  " ", user_lastname) LIKE %3$s) ORDER BY user_firstname ASC LIMIT %4$s', secure($this->_data['user_id'], 'int'), $skipped_list, secure($query, 'search'), secure($system['min_results'], 'int', false) );
-            $getUserQuery = sprintf('SELECT user_id, user_name, user_firstname, user_lastname, user_gender, user_picture, user_subscribed, user_verified FROM users WHERE user_id != %1$s AND (user_name LIKE %2$s OR user_firstname LIKE %2$s OR user_lastname LIKE %2$s OR CONCAT(user_firstname,  " ", user_lastname) LIKE %2$s) ORDER BY user_firstname ASC LIMIT %3$s', secure($this->_data['user_id'], 'int'), secure($query, 'search'), secure($system['min_results'], 'int', false));
+            $getUserQuery = sprintf('SELECT user_id, user_name, user_firstname, user_lastname, user_gender, user_picture, user_subscribed, picture_photo.source as user_picture_full, user_verified FROM users LEFT JOIN posts_photos as picture_photo ON users.user_picture_id = picture_photo.photo_id WHERE user_id != %1$s AND (user_name LIKE %2$s OR user_firstname LIKE %2$s OR user_lastname LIKE %2$s OR CONCAT(user_firstname,  " ", user_lastname) LIKE %2$s) ORDER BY user_firstname ASC LIMIT %3$s', secure($this->_data['user_id'], 'int'), secure($query, 'search'), secure($system['min_results'], 'int', false));
         } else {
             /* get users */
-            $getUserQuery = sprintf('SELECT user_id, user_name, user_firstname, user_lastname, user_gender, user_picture, user_subscribed, user_verified FROM users WHERE user_id != %1$s AND (user_name LIKE %2$s OR user_firstname LIKE %2$s OR user_lastname LIKE %2$s OR CONCAT(user_firstname,  " ", user_lastname) LIKE %2$s) ORDER BY user_firstname ASC LIMIT %3$s', secure($this->_data['user_id'], 'int'), secure($query, 'search'), secure($system['min_results'], 'int', false));
+            $getUserQuery = sprintf('SELECT user_id, user_name, user_firstname, user_lastname, user_gender, user_picture, user_subscribed, picture_photo.source as user_picture_full, user_verified FROM users LEFT JOIN posts_photos as picture_photo ON users.user_picture_id = picture_photo.photo_id WHERE user_id != %1$s AND (user_name LIKE %2$s OR user_firstname LIKE %2$s OR user_lastname LIKE %2$s OR CONCAT(user_firstname,  " ", user_lastname) LIKE %2$s) ORDER BY user_firstname ASC LIMIT %3$s', secure($this->_data['user_id'], 'int'), secure($query, 'search'), secure($system['min_results'], 'int', false));
         }
         $get_users = $db->query($getUserQuery) or _error("SQL_ERROR_THROWEN");
         if ($get_users->num_rows > 0) {
@@ -781,6 +781,7 @@ class User
                     continue;
                 }
                 $user['user_picture'] = get_picture($user['user_picture'], $user['user_gender']);
+                $user['user_picture'] = $system['system_url'] . '/includes/wallet-api/image-exist-api.php?userPicture=' . $user['user_picture'] . '&userPictureFull=' . $system['system_uploads'] . '/' . $user['user_picture_full'];
                 if ($mentioned) {
                     $fullName = $user['user_firstname'] . " " . $user['user_lastname'];
                     if ($user['user_firstname'] != "" && $user['user_lastname']) {
@@ -851,7 +852,7 @@ class User
             }
         }
         /* search users */
-        $get_users = $db->query(sprintf('SELECT user_id, user_name, user_firstname, user_lastname, user_gender, user_picture, user_subscribed, user_verified FROM users WHERE users.user_firstname != "" and user_name LIKE %1$s OR user_firstname LIKE %1$s OR user_lastname LIKE %1$s OR CONCAT(user_firstname,  " ", user_lastname) LIKE %1$s ORDER BY user_firstname ASC LIMIT %2$s, %3$s', secure($query, 'search'), secure($offset, 'int', false), secure($system['max_results'], 'int', false))) or _error("SQL_ERROR_THROWEN");
+        $get_users = $db->query(sprintf('SELECT user_id, user_name, user_firstname, user_lastname, user_gender, user_picture, picture_photo.source as user_picture_full, user_subscribed, user_verified FROM users LEFT JOIN posts_photos as picture_photo ON users.user_picture_id = picture_photo.photo_id WHERE users.user_firstname != "" and user_name LIKE %1$s OR user_firstname LIKE %1$s OR user_lastname LIKE %1$s OR CONCAT(user_firstname,  " ", user_lastname) LIKE %1$s ORDER BY user_firstname ASC LIMIT %2$s, %3$s', secure($query, 'search'), secure($offset, 'int', false), secure($system['max_results'], 'int', false))) or _error("SQL_ERROR_THROWEN");
         if ($get_users->num_rows > 0) {
             while ($user = $get_users->fetch_assoc()) {
                 $user['user_picture'] = get_picture($user['user_picture'], $user['user_gender']);
@@ -915,7 +916,7 @@ class User
         global $db, $system;
         $results = [];
         /* search users */
-        $searchUsers = sprintf('SELECT user_id, user_name, user_firstname, user_lastname, user_gender, user_picture, user_subscribed, user_verified FROM users WHERE user_firstname != "" AND user_name LIKE %1$s OR user_firstname LIKE %1$s OR user_lastname LIKE %1$s OR CONCAT(user_firstname,  " ", user_lastname) LIKE %1$s LIMIT %2$s', secure($query, 'search'), secure($system['min_results'], 'int', false));
+        $searchUsers = sprintf('SELECT user_id, user_name, user_firstname, user_lastname, user_gender, user_picture, picture_photo.source as user_picture_full, user_subscribed, user_verified FROM users LEFT JOIN posts_photos as picture_photo ON users.user_picture_id = picture_photo.photo_id WHERE user_firstname != "" AND user_name LIKE %1$s OR user_firstname LIKE %1$s OR user_lastname LIKE %1$s OR CONCAT(user_firstname,  " ", user_lastname) LIKE %1$s LIMIT %2$s', secure($query, 'search'), secure($system['min_results'], 'int', false));
         $get_users = $db->query($searchUsers) or _error("SQL_ERROR_THROWEN");
         if ($get_users->num_rows > 0) {
             while ($user = $get_users->fetch_assoc()) {
@@ -4505,6 +4506,9 @@ class User
         foreach ($videos as $video) { //print_r($videos);
             $db->query(sprintf("INSERT INTO stories_media (story_id, source, is_photo, text, time) VALUES (%s, %s, '0', %s, %s)", secure($story_id, 'int'), secure($video), secure($message), secure($date))) or _error("SQL_ERROR_THROWEN");
         }
+
+        $authors = $this->_data['friends_ids'];
+
         $redisObject = new RedisClass();
         $rediskeyname = 'user-' . $this->_data['user_id'] . '-getotherstory';
         $redisObject->deleteValueFromKey($rediskeyname);
@@ -4512,6 +4516,14 @@ class User
         $redisObject->deleteValueFromKey($rediskeyname);
         getMyStory($this->_data['user_id'], $this, $redisObject, $system);
         getAllStories($this->_data['user_id'], $this, $redisObject, $system);
+
+        for ($ik = 0; $ik < count($authors); $ik++) {
+            $rediskeyname = 'user-' . $authors[$ik] . '-getotherstory';
+            $isKeyExistOnRedis = $redisObject->isRedisKeyExist($rediskeyname);
+            if ($isKeyExistOnRedis) {
+                $redisObject->deleteValueFromKey($rediskeyname);
+            }
+        }
     }
 
     /**
@@ -4532,6 +4544,7 @@ class User
         if ($get_stories->num_rows > 0) {
             while ($_story = $get_stories->fetch_assoc()) {
                 $story['id'] = $_story['story_id'];
+                $story['user_id'] = $_story['user_id'];
                 $story['photo'] = get_picture($_story['user_picture'], $_story['user_gender']);
                 $story['name'] = $_story['user_firstname'] . " " . $_story['user_lastname'];
                 $story['lastUpdated'] = strtotime($_story['time']);
@@ -4549,6 +4562,16 @@ class User
                 }
                 $stories[] = $story;
             }
+        }
+        //         echo "<pre>";
+        // print_r($stories);
+        $searchResult = array_filter($stories, function ($story) {
+            return $story['user_id'] == $this->_data['user_id'];
+        });
+        if (count($searchResult) > 0) {
+            $removeArray = array_keys($searchResult);
+            unset($stories[$removeArray[0]]);
+            array_unshift($stories, $searchResult[$removeArray[0]]);
         }
         return array("array" => $stories, "json" => json_encode($stories));
     }
@@ -4587,6 +4610,15 @@ class User
         $redisObject->deleteValueFromKey($rediskeyname);
         getMyStory($this->_data['user_id'], $this, $redisObject, $system);
         getAllStories($this->_data['user_id'], $this, $redisObject, $system);
+
+        $authors = $this->_data['friends_ids'];
+        for ($ik = 0; $ik < count($authors); $ik++) {
+            $rediskeyname = 'user-' . $authors[$ik] . '-getotherstory';
+            $isKeyExistOnRedis = $redisObject->isRedisKeyExist($rediskeyname);
+            if ($isKeyExistOnRedis) {
+                $redisObject->deleteValueFromKey($rediskeyname);
+            }
+        }
     }
 
 
@@ -4683,7 +4715,7 @@ class User
             $post['user_type'] = "page";
             $post['post_author_picture'] = get_picture($_page['page_picture'], "page");
 
-            
+
             $post['post_author_url'] = $system['system_url'] . '/pages/' . $_page['page_name'];
             $post['post_author_name'] = $_page['page_title'];
             $post['post_author_verified'] = $this->_data['page_verified'];
@@ -5056,11 +5088,18 @@ class User
             $arrayforrepalce = searchSubArray($decodePost, 'post_id', $post_id);
         }
         $redisPostProfileKey = 'profile-posts-' . $this->_data['user_id'];
-        $postsLists = $redisObject->getValueFromKey($redisPostProfileKey);
-        $decodePosts = json_decode($postsLists, TRUE);
-        array_unshift($decodePosts, $arrayforrepalce);
-        $encodedePosts = json_encode($decodePosts);
-        $redisObject->setValueWithRedis($redisPostProfileKey, $encodedePosts);
+        $redisObject->deleteValueFromKey($redisPostProfileKey);
+        if ($args['handle'] == "user") {
+            $redisPostProfileKey = 'profile-posts-' . $args['id'];
+            $redisObject->deleteValueFromKey($redisPostProfileKey);
+            $redisPostProfileKey = 'profile-posts-others-' . $post['wall_id'];
+            $redisObject->deleteValueFromKey($redisPostProfileKey);
+        }
+        // $postsLists = $redisObject->getValueFromKey($redisPostProfileKey);
+        // $decodePosts = json_decode($postsLists, TRUE);
+        // array_unshift($decodePosts, $arrayforrepalce);
+        // $encodedePosts = json_encode($decodePosts);
+        // $redisObject->setValueWithRedis($redisPostProfileKey, $encodedePosts);
 
         //Update Friends POST
         $postUpdateFromRedis = $redisObject->getValueFromKey($redisPostKey);
@@ -5698,7 +5737,7 @@ class User
 
                 // var_dump($post['video']['thumbnail']); die;
 
-                $post['video']['thumbnail'] = $system['system_url'] . '/includes/wallet-api/get-picture-api.php?picture=' . $system['system_uploads'] . '/' . $post['video']['thumbnail'] . '&type=movie';
+                //$post['video']['thumbnail'] = $system['system_url'] . '/includes/wallet-api/get-picture-api.php?picture=' . $system['system_uploads'] . '/' . $post['video']['thumbnail'] . '&type=movie';
 
 
                 break;
@@ -5765,7 +5804,7 @@ class User
             }
         }
 
-      
+
         return $post;
     }
 
@@ -6328,7 +6367,7 @@ class User
             // if ($post['user_picture_full'] == "") {
             //     $post['user_picture_full'] = $system['system_uploads_assets'] . '/content/themes/' . $system['theme'] . '/images/user_defoult_img.jpg';
             // }
-            
+
             $post['post_author_picture'] = $system['system_url'] . '/' . 'includes/wallet-api/image-exist-api.php?userPicture=' . $post['post_author_picture'] . '&userPictureFull=' . $system['system_uploads'] . '/' . $post['user_picture_full'];
 
             $post['post_author_url'] = $system['system_url'] . '/' . $post['user_name'];
@@ -6346,7 +6385,7 @@ class User
             /* page */
             $post['post_author_picture'] = get_picture($post['page_picture'], "page");
 
-            $post['post_author_picture'] = $system['system_url'] . '/includes/wallet-api/get-picture-api.php?picture=' .  $post['post_author_picture'] .'&picture_full=&type=page&type_url=1';
+            $post['post_author_picture'] = $system['system_url'] . '/includes/wallet-api/get-picture-api.php?picture=' .  $post['post_author_picture'] . '&picture_full=&type=page&type_url=1';
 
             $post['post_author_url'] = $system['system_url'] . '/pages/' . $post['page_name'];
             $post['post_author_name'] = $post['page_title'];
@@ -6626,6 +6665,7 @@ class User
         global $db, $system;
         /* (check|get) post */
         $post = $this->get_post($post_id, false, true);
+
         if (!$post) {
             if (!$return_errors) {
                 return;
@@ -6644,6 +6684,13 @@ class User
         /* delete post */
         $refresh = false;
 
+        $redisObject = new RedisClass();
+        if ($post['wall_id'] > 0) {
+            $redisPostProfileKey = 'profile-posts-' . $post['wall_id'];
+            $redisObject->deleteValueFromKey($redisPostProfileKey);
+            $redisPostProfileKey = 'profile-posts-others-' . $post['wall_id'];
+            $redisObject->deleteValueFromKey($redisPostProfileKey);
+        }
         $db->query(sprintf("DELETE FROM notifications WHERE node_url = %s", secure($post_id, 'int'))) or _error("SQL_ERROR_THROWEN");
         $db->query(sprintf("DELETE FROM posts WHERE post_id = %s", secure($post_id, 'int'))) or _error("SQL_ERROR_THROWEN");
         switch ($post['post_type']) {
@@ -6681,6 +6728,13 @@ class User
                             delete_uploads_file($post['user_picture']);
                             /* return */
                             $refresh = true;
+                            $redisPostKey = 'user-' . $this->_data['user_id'];
+                            $redisObject->deleteValueFromKey($redisPostKey);
+                            cachedUserData($db, $system, $this->_data['user_id'], $this->_data['active_session_token']);
+                            $redisPostKey = 'user-' . $this->_data['user_id'] . '-posts';
+                            $redisObject->deleteValueFromKey($redisPostKey);
+                            $redisPostKey = 'profile-posts-' . $this->_data['user_id'];
+                            $redisObject->deleteValueFromKey($redisPostKey);
                         }
                         break;
 
@@ -6794,13 +6848,13 @@ class User
                 $refresh = true;
                 break;
 
-            case 'shared':  
-             
-                $shares_count = $post['origin']['shares']>0 ? $post['origin']['shares']-1 : 0 ;
+            case 'shared':
+
+                $shares_count = $post['origin']['shares'] > 0 ? $post['origin']['shares'] - 1 : 0;
 
                 $db->query(sprintf("UPDATE `posts` SET shares = %s WHERE post_id = %s", secure($shares_count, 'int'), secure($post['origin']['post_id'], 'int'))) or _error("SQL_ERROR_THROWEN");
                 $refresh = true;
-                break;   
+                break;
         }
         /* points balance */
         $this->points_balance("delete", $post['author_id'], "post");
@@ -6816,7 +6870,6 @@ class User
 
         //Redis block
         $redisPostKey = 'user-' . $this->_data['user_id'] . '-posts';
-        $redisObject = new RedisClass();
         $isKeyExist = $redisObject->isRedisKeyExist($redisPostKey);
         if ($isKeyExist == true) {
             $ids = $this->get_friends_ids($this->_data['user_id']);
@@ -6834,7 +6887,6 @@ class User
             }
         }
         $redisPostKey = 'profile-posts-' . $this->_data['user_id'];
-        $redisObject = new RedisClass();
         $isKeyExist = $redisObject->isRedisKeyExist($redisPostKey);
         if ($isKeyExist == true) {
             $ids = $this->get_friends_ids($this->_data['user_id']);
@@ -6908,6 +6960,65 @@ class User
         $post['text'] = $this->_parse(["text" => $post['text_plain'], "trending_hashtags" => true, "post_id" => $post_id]);
         /* get post colored pattern */
         $post['colored_pattern'] = $this->get_posts_colored_pattern($post['colored_pattern']);
+
+
+        //Redis Block
+        $redisObject = new RedisClass();
+        //update current logged in user response
+        $redisKey = 'user-' . $this->_data['user_id'] . '-posts';
+        fetchAndSetDataOnPostReaction($system, $this, $redisObject, $redisKey);
+        $postUpdateFromRedis = $redisObject->getValueFromKey($redisKey);
+        $decodeVal = json_decode($postUpdateFromRedis, TRUE);
+        $updatedPostObject  = searchSubArray($decodeVal, 'post_id', $post_id);
+
+        // echo "<pre>";
+        // print_r($updatedPostObject);
+        $ids = $this->get_friends_ids($post['author_id']);
+        if (($key = array_search($this->_data['user_id'], $ids)) !== false) {
+            unset($ids[$key]);
+        }
+        if ($post['author_id'] !== $this->_data['user_id']) {
+            array_push($ids, $post['author_id']);
+        }
+
+        $followersId = $this->get_followings_ids($post['author_id']);
+        $idsList = array_unique(array_merge($ids, $followersId));
+
+        foreach ($idsList as $id) {
+            $userKeys = 'user-' . $id . '-posts';
+            $isUserExist = $redisObject->isRedisKeyExist($userKeys);
+            if ($isUserExist == true) {
+                $getPostsFromRedis = $redisObject->getValueFromKey($userKeys);
+                $jsonValuesRes = json_decode($getPostsFromRedis, true);
+                foreach ($jsonValuesRes  as $key => $res) {
+
+                    if ($res['post_id'] == $post_id) {
+                        // $jsonValuesRes[$key]['comments'] = $updatedPostObject['comments'];
+                        $jsonValuesRes[$key] = $updatedPostObject;
+                    }
+                }
+                $jsonEncodedVals = json_encode($jsonValuesRes);
+                $redisObject->setValueWithRedis($userKeys, $jsonEncodedVals);
+            }
+        }
+
+
+        //profile post
+        $redisTimelinekey = 'profile-posts-' . $this->_data['user_id'];
+        $isKeyExistOnRedis = $redisObject->isRedisKeyExist($redisTimelinekey);
+        if ($isKeyExistOnRedis) {
+            $timelineData = $redisObject->getValueFromKey($redisTimelinekey);
+            $decodeVal = json_decode($timelineData, TRUE);
+            foreach ($decodeVal  as $key => $res) {
+                if ($res['post_id'] == $post_id) {
+                    $decodeVal[$key] = $updatedPostObject;
+                }
+            }
+
+            $newJsonVals = json_encode($decodeVal);
+            $redisObject->setValueWithRedis($redisTimelinekey, $newJsonVals);
+        }
+        //Redis Block
         /* return */
         return $post;
     }
@@ -7000,6 +7111,12 @@ class User
         }
         /* set post as hidden */
         $db->query(sprintf("UPDATE posts SET is_hidden = '1' WHERE post_id = %s", secure($post_id, 'int'))) or _error("SQL_ERROR_THROWEN");
+        $redisObject = new RedisClass();
+        $rediskeyname = 'profile-posts-' . $post['author_id'];
+        $redisObject->deleteValueFromKey($rediskeyname);
+        $rediskeyname = 'profile-posts-others-' . $post['author_id'];
+        $redisObject->deleteValueFromKey($rediskeyname);
+        updateReactions($system, $this, $redisObject, $post_id, $post['author_id']);
     }
 
 
@@ -7011,7 +7128,7 @@ class User
      */
     public function allow_post($post_id)
     {
-        global $db;
+        global $db, $system;
         /* (check|get) post */
         $post = $this->_check_post($post_id);
         if (!$post) {
@@ -7027,6 +7144,12 @@ class User
         }
         /* set post as not hidden */
         $db->query(sprintf("UPDATE posts SET is_hidden = '0' WHERE post_id = %s", secure($post_id, 'int'))) or _error("SQL_ERROR_THROWEN");
+        $redisObject = new RedisClass();
+        $rediskeyname = 'profile-posts-' . $post['author_id'];
+        $redisObject->deleteValueFromKey($rediskeyname);
+        $rediskeyname = 'profile-posts-others-' . $post['author_id'];
+        $redisObject->deleteValueFromKey($rediskeyname);
+        updateReactions($system, $this, $redisObject, $post_id, $post['author_id']);
     }
 
 
@@ -9979,7 +10102,7 @@ class User
 
                 $page['page_picture_full'] = ($page['page_picture_full']) ? $system['system_uploads'] . '/' . $page['page_picture_full'] : $page['page_picture_full'];
 
-                $page['page_picture'] = $system['system_url'] . '/includes/wallet-api/get-picture-api.php?picture=' . $page['page_picture'] .'&picture_full='.$page['page_picture_full']. '&type=page&type_url=1';
+                $page['page_picture'] = $system['system_url'] . '/includes/wallet-api/get-picture-api.php?picture=' . $page['page_picture'] . '&picture_full=' . $page['page_picture_full'] . '&type=page&type_url=1';
 
                 /* check if the viewer liked the page */
                 $page['i_like'] = $this->check_page_membership($this->_data['user_id'], $page['page_id']);
@@ -10487,7 +10610,7 @@ class User
         if ($get_groups->num_rows > 0) {
             while ($group = $get_groups->fetch_assoc()) {
                 $group['group_picture'] = get_picture($group['group_picture'], 'group');
-                $group['group_picture'] = $system['system_url'] . '/includes/wallet-api/get-picture-api.php?picture='.$group['group_picture'] .'&picture_full=&type=group&type_url=1';         
+                $group['group_picture'] = $system['system_url'] . '/includes/wallet-api/get-picture-api.php?picture=' . $group['group_picture'] . '&picture_full=&type=group&type_url=1';
 
                 /* check if the viewer joined the group */
                 $group['i_joined'] = $this->check_group_membership($this->_data['user_id'], $group['group_id']);;
@@ -11019,7 +11142,7 @@ class User
             while ($event = $get_events->fetch_assoc()) {
                 $event['event_picture'] = get_picture($event['event_cover'], 'event');
 
-                $event['event_picture'] =  $system['system_url'] . '/includes/wallet-api/get-picture-api.php?picture=' .  $event['event_picture'] .'&picture_full=&type=page&type_url=1';
+                $event['event_picture'] =  $system['system_url'] . '/includes/wallet-api/get-picture-api.php?picture=' .  $event['event_picture'] . '&picture_full=&type=page&type_url=1';
 
                 /* check if the viewer joined the event */
                 $event['i_joined'] = $this->check_event_membership($this->_data['user_id'], $event['event_id']);;

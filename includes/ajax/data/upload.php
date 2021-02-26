@@ -310,6 +310,12 @@ try {
                         $redisPostKey = 'user-' . $user->_data['user_id'];
                         $redisObject->deleteValueFromKey($redisPostKey);
                         cachedUserData($db, $system, $user->_data['user_id'], $user->_data['active_session_token']);
+                        $redisPostProfileKey = 'profile-posts-' . $user->_data['user_id'];
+                        $redisObject->deleteValueFromKey($redisPostProfileKey);
+
+                        $redisPostKey = 'user-' . $user->_data['user_id'] . '-posts';
+                        $redisObject->deleteValueFromKey($redisPostKey);
+                        fetchAndSetDataOnPostReaction($system, $user, $redisObject, $redisPostKey);
                         break;
 
                     case 'cover-page':

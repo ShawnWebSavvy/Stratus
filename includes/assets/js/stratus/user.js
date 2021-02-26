@@ -96,15 +96,18 @@ function data_heartbeat() {
             data["custom_boosted"] = "custom_boosted";
             data["last_post_boosted"] = posts_stream.find('.boosted').first().data("id") || 0;
         }
-        // console.log("data[get]=>>>>>>>>>>>>", data["get"]);
-        // console.log("data[]=>>>>>>>>>>>>posts_stream.find(.unpinned_post).first().data(id)=>",posts_stream.find(".unpinned_post").first().data("id"));
+
         if (data["get"] === "posts_profile") {
             data["custom_pinned"] = "custom_pinned";
             data["last_post_boosted"] = posts_stream.find(".unpinned_post").first().data("id") || 0;
 
             let last_id_column = document.getElementsByClassName('bricklayer-column')[0];
-            // data["last_post"] = posts_stream.find(".unpinned_post").eq(0).data("id") || 0;
-            data["last_post"] = last_id_column.getElementsByClassName('carsds')[0].dataset.id || 0;
+            if (last_id_column) {
+                data["last_post"] = last_id_column.getElementsByClassName('carsds')[0].dataset.id || 0;
+            } else {
+                data["last_post"] = 0;
+            }
+
             data["last_post_pinned"] = posts_stream.find('.pinned_post').first().data("id") || 0;
             // console.log("data[last_post]",data["last_post"]);
         }
@@ -173,7 +176,7 @@ function data_heartbeat() {
                     $(".js_live-notifications").find("span.counterlive").text(notifications).show(), notifications_sound;
                 }
                 if (response.posts && response.posts != null) {
-                    // console.log("response.posts->>>>>>>", response.posts);
+                    //console.log("response.posts->>>>>>>", response.posts);
                     var datatta = response.posts;
                     var ArrayVal = datatta.split('<div class="carsds"');
                     var loopArray = [];
@@ -198,12 +201,22 @@ function data_heartbeat() {
         "json"
     );
 }
-function init_picture_crop(e) {
+// initialize picture crop
+function init_picture_crop(node) {
     setTimeout(function () {
-        $("#cropped-profile-picture").rcrop({ minSize: [200, 200], preserveAspectRatio: !0, grid: !0 });
-    }, 200),
-        modal("#crop-profile-picture", { image: e.data("image"), handle: e.data("handle"), id: e.data("id") });
+        $("#cropped-profile-picture").rcrop({
+            minSize: [200, 200],
+            preserveAspectRatio: true,
+            grid: true,
+        });
+    }, 200);
+    modal("#crop-profile-picture", {
+        image: node.data("image"),
+        handle: node.data("handle"),
+        id: node.data("id"),
+    });
 }
+
 function init_picture_position() {
     $(".profile-cover-change").hide(),
         $(".profile-cover-position").hide(),
@@ -215,28 +228,6 @@ function init_picture_position() {
         $(".js_position-cover-full").show();
     var e = $(".js_position-cover-cropped").data("init-position");
     $(".profile-cover-wrapper").imagedrag({ position: e, input: ".js_position-picture-val" });
-}
-function onimgTagclick(e) {
-    const t = "body #" + $(e).attr("id"),
-        s = $(e).attr("data-video"),
-        a = $(e).attr("data-vid");
-    $(t).after(
-        '<video class="js_fluidplayer thumb_crsp_video_tag" id="video-' +
-        a +
-        '" onplay="update_media_views("video", ' +
-        a +
-        ')" controls  preload="auto" style="width:100%;height:100%;" width="100%" height="100%"><source src="' +
-        s +
-        '" type="video/mp4"><source src="' +
-        s +
-        '" type="video/webm"></video>'
-    );
-
-        // $("#hide_play_img" + a).hide(),
-
-        $(e).closest('div').find(".play_video_icon").hide();
-
-        $(t).hide();
 }
 (api["data/live"] = ajax_path + "data/live.php"),
     (api["data/upload"] = ajax_path + "data/upload.php"),
@@ -696,8 +687,13 @@ function onimgTagclick(e) {
                                         init_picture_position();
                                     }, 1e3);
                             } else if ("picture-user" == handle || "picture-page" == handle || "picture-group" == handle) {
+                                /* update (user|page|group) picture */
                                 var image_path = uploads_path + "/" + response.file;
-                                $(".profile-avatar-wrapper img").attr("src", image_path), $(".js_init-crop-picture").data("image", image_path), init_picture_crop($(".js_init-crop-picture"));
+                                $(".profile-avatar-wrapper img").attr("src", image_path);
+                                /* update crop image source */
+                                $(".js_init-crop-picture").data("image", image_path);
+                                init_picture_crop($(".js_init-crop-picture"));
+
                             } else if ("publisher" == handle) {
                                 loader && loader.remove();
                                 var files = publisher.data("photos");
@@ -727,7 +723,7 @@ function onimgTagclick(e) {
                             } else if ("x-image" == handle) {
                                 var image_path = uploads_path + "/" + response.file;
                                 parent.css("background-image", "url(" + image_path + ")"), parent.find(".js_x-image-input").val(response.file).change(), parent.find("button").show();
-                                $("body .js_publisher").prop("disabled", !1); 
+                                $("body .js_publisher").prop("disabled", !1);
                             }
                         } else if ("video" == type)
                             if ("publisher" == handle) {
@@ -901,7 +897,7 @@ function onimgTagclick(e) {
                         });
                 }),
                 $("body").on("click", ".js_friend-accept, .js_friend-decline", function () {
-                
+
                     var id = $(this).data("uid"),
                         _this = $(this),
                         parent = $(this).parent(),

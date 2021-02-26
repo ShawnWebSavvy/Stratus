@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="48px" height="48px" viewBox="0 0 48 48" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <title>APL</title>
+    <g id="Symbols" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="APL">
+            <circle id="Oval" fill="#16161F" fill-rule="nonzero" cx="24" cy="24" r="24"></circle>
+            <polygon id="Fill-1" fill="#FFFFFF" points="19.097805 9.3485 21.9464011 15.0024561 11.753644 35.2299474 11.694 35.3485 17.1899931 35.3485 24.694 20.4558775 32.1761374 35.3038921 32.1980069 35.3485 37.694 35.3485 24.5934005 9.3485"></polygon>
+        </g>
+    </g>
+</svg>

@@ -120,7 +120,7 @@
         <!-- error -->
     </div>
     <div class="modal-footer">
-        <button type="submit" class="btn btn-success js_publisher-btn js_publisher-product  btn-antier-green">{__("Share")}</button>
+        <button type="submit" id="stratus-sharebutton" class="btn btn-success js_publisher-btn js_publisher-product  btn-antier-green x-hidden">{__("Share")}</button>
     </div>
 </form>
 
