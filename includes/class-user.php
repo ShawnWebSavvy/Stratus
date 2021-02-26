@@ -6835,6 +6835,14 @@ class User
                 $db->query(sprintf("DELETE FROM posts_articles WHERE post_id = %s", secure($post_id, 'int'))) or _error("SQL_ERROR_THROWEN");
                 $refresh = true;
                 break;
+
+            case 'shared':  
+             
+                $shares_count = $post['origin']['shares']>0 ? $post['origin']['shares']-1 : 0 ;
+
+                $db->query(sprintf("UPDATE `posts` SET shares = %s WHERE post_id = %s", secure($shares_count, 'int'), secure($post['origin']['post_id'], 'int'))) or _error("SQL_ERROR_THROWEN");
+                $refresh = true;
+                break;   
         }
         /* points balance */
         $this->points_balance("delete", $post['author_id'], "post");

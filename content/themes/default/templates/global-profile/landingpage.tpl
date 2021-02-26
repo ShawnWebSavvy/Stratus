@@ -288,6 +288,7 @@
                                                     <div class="image"><img
                                                             src="{$system['system_uploads']}/{$postsItem['origin']['photos'][0]['source']}">
                                                     </div>
+                                                   
                                                     {/if}
                                                     {if $postsItem['post_type']=="video" }
                                                     <div class="video">
@@ -299,6 +300,78 @@
                                                         </video>
                                                     </div>
                                                     {/if}
+                                                     {if $postsItem['origin']['post_type']=="video" }
+                                                      <div class="video">
+                                                          <video width="100%" height="315" controls>
+                                                              <source
+                                                                  src="{$system['system_uploads']}/{$postsItem['origin']['video']['source']}">
+                                                          </video>
+                                                      </div>
+                                                    {/if}
+
+                                                   {if $postsItem['post_type'] == "audio" && $postsItem['audio']}
+                                                    <div class="plr10">
+                                                        <audio class="js_audio" id="audio-{$postsItem['audio']['audio_id']}" {if
+                                                            $user->_logged_in}onplay="update_media_views('audio', {$postsItem['audio']['audio_id']})" {/if} controls
+                                                            preload="auto" style="width: 100%;">
+                                                            <source src="{$system['system_uploads']}/{$postsItem['audio']['source']}" type="audio/mpeg">
+                                                            <source src="{$system['system_uploads']}/{$postsItem['audio']['source']}" type="audio/mp3">
+                                                            {__("Your browser does not support HTML5 audio")}
+                                                        </audio>
+                                                    </div>
+                                                    {/if}
+
+                                                  
+                                                   {if $postsItem['origin']['post_type'] == "audio" && $postsItem['origin']['audio']}
+                                                    <div class="plr10">
+                                                        <audio class="js_audio" id="audio-{$postsItem['origin']['audio']['audio_id']}" {if
+                                                            $user->_logged_in}onplay="update_media_views('audio', {$postsItem['origin']['audio']['audio_id']})" {/if} controls
+                                                            preload="auto" style="width: 100%;">
+                                                            <source src="{$system['system_uploads']}/{$postsItem['origin']['audio']['source']}" type="audio/mpeg">
+                                                            <source src="{$system['system_uploads']}/{$postsItem['origin']['audio']['source']}" type="audio/mp3">
+                                                            {__("Your browser does not support HTML5 audio")}
+                                                        </audio>
+                                                    </div>
+                                                    {/if}
+
+
+                                                {if $postsItem['post_type']=="file" }
+                                                    <div class="post-downloader">
+                                                        <div class="icon">
+                                                            <i class="fa fa-file-alt fa-2x"></i>
+                                                        </div>
+                                                        <div class="info">
+                                                            <strong>{__("File Type")}</strong>: {get_extension({$postsItem['file']['source']})}
+                                                            <div class="mt10">
+                                                                <a class="btn btn-primary "
+                                                                    href="{$system['system_uploads']}/{$postsItem['file']['source']}">{__("Download")}</a>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                {/if}
+
+
+                                                {if $postsItem['origin']['post_type']=="file" }
+                                                    <div class="post-downloader">
+                                                        <div class="icon">
+                                                            <i class="fa fa-file-alt fa-2x"></i>
+                                                        </div>
+                                                        <div class="info">
+                                                            <strong>{__("File Type")}</strong>: {get_extension({$postsItem['origin']['file']['source']})}
+                                                            <div class="mt10">
+                                                                <a class="btn btn-primary "
+                                                                    href="{$system['system_uploads']}/{$postsItem['origin']['file']['source']}">{__("Download")}</a>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                {/if}
+
+
+
+
+
+
+
                                                 </div>
                                             </div>
                                         </div>

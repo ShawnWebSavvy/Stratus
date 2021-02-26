@@ -299,6 +299,7 @@ $(function () {
         var message = textarea.val();
         var attachments = comment.find(".comment-attachments");
         var attachments_voice_notes = comment.find(".comment-voice-notes");
+        if (comment.data("sending")) return !1;
         /* get photo from comment data */
         var photo = comment.data("photos");
         /* get voice note from comment data */
@@ -307,6 +308,9 @@ $(function () {
         if (is_empty(message) && !photo && !voice_note) {
             return;
         }
+
+        (!is_empty(message) || photo || voice_note) && (comment.data("sending", !0)),
+
         $.post(
             api["posts/comment"],
             {
@@ -333,6 +337,7 @@ $(function () {
                     attachments_voice_notes.find(".js_voice-success-message").hide();
                     attachments_voice_notes.find(".js_voice-start").show();
                     stream.append(response.comment);
+                    comment.removeData("sending");
                 }
             },
             "json"
