@@ -1036,7 +1036,7 @@
 <!-- Posts [Publisher|Comments] -->
 {if $page == "index" || $page == "global-profile/global-profile" || $page == "page" || $page == "group" || $page ==
 "event" || $page == "post" || $page == "photo" || $page == "market" || $page == "blogs" || $page == "directory" || $page
-== "search" || $page == "share" || $page == "global-profile/global-profile-timeline" || $page == "global-profile/global-profile-post"}
+== "search" || $page == "share" || $page == "global-profile/global-profile-timeline" || $page == "global-profile/global-profile-post"|| $page == "global-profile/global-profile-photo"}
 <!-- Publisher -->
 <script id="publisher-attachments-image-item" type="text/template">
             <li class="item deletable" data-src="{literal}{{src}}{/literal}">
