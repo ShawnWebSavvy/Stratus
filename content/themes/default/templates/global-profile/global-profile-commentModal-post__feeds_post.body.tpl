@@ -586,7 +586,7 @@
     <div class="mt10 {if $_snippet}x-hidden{/if}">
         <div class="post-media">
             <div class="post-media-meta">
-            {include file='global-profile/commentModal-post__feeds_post.body.tpl' _post=$_post['origin'] _shared=true}
+            {include file='global-profile/global-profile-commentModal-post__feeds_post.body.tpl' _post=$_post['origin'] _shared=true}
             </div>
         </div>
     </div>

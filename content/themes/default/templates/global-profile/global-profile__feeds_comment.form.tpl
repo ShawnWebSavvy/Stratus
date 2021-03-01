@@ -3,7 +3,7 @@
   <div class="comment-avatar feed-comment">
     <a class="comment-avatar-picture global-comment-avatar-picture"
       href="{$system['system_url']}/global-profile.php?username={$userGlobal->_data['user_name']}" style="
-        background-image: url({$userGlobal->_data['user_name']});
+        background-image: url({$userGlobal->_data['user_picture']});
       ">
     </a>
   </div>
