@@ -180,7 +180,7 @@
         <!-- reactions -->
 
         <!-- comment -->
-        <span class="action-btn js_comment {if $post['comments_disabled']}x-hidden{/if}">
+        <span class="action-btn  {if $post['comments_disabled']}x-hidden{/if}">
             <i class="icon-post icon_comment"></i> <span>{__("Comment")}</span>
         </span>
         <!-- comment -->

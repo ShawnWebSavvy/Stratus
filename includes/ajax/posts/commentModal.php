@@ -50,7 +50,7 @@ try {
 
 	$return['next'] = null;
 	$return['prev'] = null;
-	$return['lightbox'] = $smarty->fetch("global-profile/commentModal-post.tpl");
+	$return['lightbox'] = $smarty->fetch("commentModal-post.tpl");
 
 	// return & exit
 	return_json($return);

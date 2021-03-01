@@ -21,9 +21,12 @@ user_access(true);
 if (!in_array($_POST['handle'], array('me', 'user', 'page', 'group', 'event'))) {
 	_error(400);
 }
+
+
 /* filter link */
 if (isset($_POST['link'])) {
 	$_POST['link'] = json_decode($_POST['link']);
+	$_POST['link']->source_title = ($_POST['link']->source_title=='Error')?"":$_POST['link']->source_title;
 	if (!is_object($_POST['link'])) {
 		_error(400);
 	}
