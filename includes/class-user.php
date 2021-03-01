@@ -7084,6 +7084,62 @@ class User
         } else {
             _error(403);
         }
+        //Redis Block
+        $redisObject = new RedisClass();
+        //update current logged in user response
+        $redisKey = 'user-' . $this->_data['user_id'] . '-posts';
+        fetchAndSetDataOnPostReaction($system, $this, $redisObject, $redisKey);
+        $postUpdateFromRedis = $redisObject->getValueFromKey($redisKey);
+        $decodeVal = json_decode($postUpdateFromRedis, TRUE);
+        $updatedPostObject  = searchSubArray($decodeVal, 'post_id', $post_id);
+
+        // echo "<pre>";
+        // print_r($updatedPostObject);
+        $ids = $this->get_friends_ids($post['author_id']);
+        if (($key = array_search($this->_data['user_id'], $ids)) !== false) {
+            unset($ids[$key]);
+        }
+        if ($post['author_id'] !== $this->_data['user_id']) {
+            array_push($ids, $post['author_id']);
+        }
+
+        $followersId = $this->get_followings_ids($post['author_id']);
+        $idsList = array_unique(array_merge($ids, $followersId));
+
+        foreach ($idsList as $id) {
+            $userKeys = 'user-' . $id . '-posts';
+            $isUserExist = $redisObject->isRedisKeyExist($userKeys);
+            if ($isUserExist == true) {
+                $getPostsFromRedis = $redisObject->getValueFromKey($userKeys);
+                $jsonValuesRes = json_decode($getPostsFromRedis, true);
+                foreach ($jsonValuesRes  as $key => $res) {
+
+                    if ($res['post_id'] == $post_id) {
+                        // $jsonValuesRes[$key]['comments'] = $updatedPostObject['comments'];
+                        $jsonValuesRes[$key] = $updatedPostObject;
+                    }
+                }
+                $jsonEncodedVals = json_encode($jsonValuesRes);
+                $redisObject->setValueWithRedis($userKeys, $jsonEncodedVals);
+            }
+        }
+
+
+        //profile post
+        $redisTimelinekey = 'profile-posts-' . $this->_data['user_id'];
+        $isKeyExistOnRedis = $redisObject->isRedisKeyExist($redisTimelinekey);
+        if ($isKeyExistOnRedis) {
+            $timelineData = $redisObject->getValueFromKey($redisTimelinekey);
+            $decodeVal = json_decode($timelineData, TRUE);
+            foreach ($decodeVal  as $key => $res) {
+                if ($res['post_id'] == $post_id) {
+                    $decodeVal[$key] = $updatedPostObject;
+                }
+            }
+
+            $newJsonVals = json_encode($decodeVal);
+            $redisObject->setValueWithRedis($redisTimelinekey, $newJsonVals);
+        }
     }
 
 
@@ -9166,9 +9222,6 @@ class User
         $postUpdateFromRedis = $redisObject->getValueFromKey($redisKey);
         $decodeVal = json_decode($postUpdateFromRedis, TRUE);
         $updatedPostObject  = searchSubArray($decodeVal, 'post_id', $post_id);
-
-        print_r($updatedPostObject);
-        die;
 
         $ids = $this->get_friends_ids($author_id);
 
