@@ -42,7 +42,7 @@
             {/if}
             <!-- post top alert -->
 
-            {include file='global-profile/commentModal-post__feeds_post.body.tpl' _post=$post _shared=false}
+            {include file='global-profile/global-profile-commentModal-post__feeds_post.body.tpl' _post=$post _shared=false}
 
             <!-- post stats -->
             <div class="post-stats clearfix">
