@@ -16,7 +16,8 @@
                     <!-- notifications -->
                     <div class="card">
                         <div class="card-header with-icon">
-                             <img src="{$system['system_url']}/content/themes/default/images/svg/svgImg/notifications-icon.svg" class="blackicon"> {__("Your Notifications")}
+                            <img src="{$system['system_uploads_assets']}/content/themes/default/images/svg/svgImg/notifications-icon.svg"
+                                class="blackicon"> {__("Your Notifications")}
                         </div>
                         <div class="card-body pt0">
                             <ul class="main-notification-info-Wrap">
