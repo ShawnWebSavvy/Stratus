@@ -68,7 +68,7 @@
                            <img {if $profile['user_picture_id']} {if $user->_logged_in &&
                            $profile['user_picture_lightbox']}class="js_lightbox"{/if}
                            data-id="{$profile['user_picture_id']}"
-                           data-context="album" data-image="{$profile['user_picture_full']}" {elseif
+                           data-context="album" data-image="{$profile['user_picture']}" {elseif
                            !$profile['user_picture_default']} class="js_lightbox-nodata"
                            data-image="{$profile['user_picture']}" {/if} {if
                            $profile['user_picture_default']} src="{$profile['user_picture']}" {else}
@@ -239,7 +239,7 @@
                                        href="{$system['system_url']}/admincp/users/edit/{$profile['user_id']}">
                                        <span class="more_option_img">
                                           <img class=""
-                                             src="{$system['system_url']}/content/themes/default/images/svg/svgImg/Cog.svg">
+                                             src="{$system['system_uploads_assets']}/content/themes/default/images/svg/svgImg/Cog.svg">
                                        </span>
                                        {__("Edit in Admin Panel")}
                                     </a>
@@ -249,7 +249,7 @@
                                        href="{$system['system_url']}/modcp/users/edit/{$profile['user_id']}">
                                        <span class="more_option_img">
                                           <img class=""
-                                             src="{$system['system_url']}/content/themes/default/images/svg/svgImg/Cog.svg">
+                                             src="{$system['system_uploads_assets']}/content/themes/default/images/svg/svgImg/Cog.svg">
                                        </span>
                                        {__("Edit in Moderator Panel")}
                                     </a>
@@ -264,7 +264,7 @@
                                  <a href="{$system['system_url']}/settings/profile" class=" edit_profile_icon">
                                     <span class="edit_profile_img">
                                        <img class=""
-                                          src="{$system['system_url']}/content/themes/default/images/svg/svgImg/edit_icon_hover.svg">
+                                          src="{$system['system_uploads_assets']}/content/themes/default/images/svg/svgImg/edit_icon_hover.svg">
                                     </span>
                                  </a>
                               </div>
@@ -280,7 +280,7 @@
                </div>
                <!-- profile-header -->
             </section>
-            <div class="col-md-12 col-xl-3 col-lg-4">
+            <div class="col-md-12 col-xl-3 col-lg-4 about_sec">
                <div class="profileUpdatesDesign">
                   <!-- panel [mutual-friends] -->
                   {if $user->_logged_in && $user->_data['user_id'] != $profile['user_id'] && !$profile['we_friends'] &&

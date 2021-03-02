@@ -249,7 +249,7 @@ body.publisher-focus .publisher{border-radius:15px;}
 .iconLabel label{margin-bottom:0;}
 .iconLabel{display:flex;align-items:center;margin-bottom:15px;}
 .avatar .avtar_img{display:flex;align-items:center;justify-content:center;width:50px;height:50px;background-color:#e6f0ff;border-radius:10px;}
-.twa-headphones{background-image:url(../images/svg/svgImg/Speakers.svg) !important;background-size:20px !important;}
+.twa-headphones{background-image:url(../images/svg/svgImg/Speakers.svg) !important;background-size:contain !important;}
 .twa-video-game{background-image:url(../images/svg/svgImg/games.svg) !important;background-size:20px !important;}
 .twa-airplane{background-image:url(../images/svg/svgImg/traveling.svg) !important;background-size:20px !important;}
 .twa-mag-right{background-image:url(../images/svg/svgImg/nav_icon_nav_icon_explore.svg) !important;background-size:20px !important;}
@@ -509,7 +509,13 @@ div#search-results .js_friend-accept {
 	max-width: 80px;
 }
 .profileUpdatesDesign .about-list-item {
-word-break: break-all;
+word-break: break-all;width: 100%;
+}
+.profileUpdatesDesign .about-list-item .about_list_text{
+    word-break: break-all;width: 100%;
+}
+.profileUpdatesDesign .about-list-item .about_list_text a{
+    text-align: left;
 }
 /* body.group-localhub.group-localhub .alert-info {
     color: #fff !important;
@@ -530,10 +536,10 @@ body.group-localhub.group-localhub button.close ,body.group-localhub.group-local
     color: #000;
     opacity: 1;
 }
-body.group-localhub.group-localhub button.close:hover {
+/* body.group-localhub.group-localhub button.close:hover {
 	color: #fff;
     opacity: 0.7;
-}
+} */
 /* body.group-localhub.group-localhub .data-container.searchSectionWrap ._user_detail_sec {
     max-width: calc(100% - 180px);
     flex: 0 0 calc(100% - 180px);
@@ -617,6 +623,9 @@ video.stratus-customvideo {
 }
 .markit_page_rhs .market-categories-section-right-side ul.side-nav li a.Food-Beverage::before {
     background-image: url(../images/svg/svgImg/newfood1.svg);
+}
+.body-scroll-disabled{
+    overflow-y: hidden !important;
 }
 .chat-widget-head .js_chat-box-status + a {
     -webkit-line-clamp: 4;

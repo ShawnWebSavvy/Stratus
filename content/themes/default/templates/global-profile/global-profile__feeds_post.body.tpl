@@ -547,11 +547,13 @@
             <div class="source">{$_post['link']['source_host']|upper}</div>
          </a>
          {/if}
-         <div class="post-media-meta">
-            <a class="title mb5" href="{$_post['link']['source_url']}"
-               target="_blank">{$_post['link']['source_title']}</a>
-            <div class="text mb5">{$_post['link']['source_text']}</div>
-         </div>
+         {if $_post['link']['source_title']!='Error'}
+            <div class="post-media-meta">
+               <a class="title mb5" href="{$_post['link']['source_url']}"
+                  target="_blank">{$_post['link']['source_title']}</a>
+               <div class="text mb5">{$_post['link']['source_text']}</div>
+            </div>
+         {/if}
       </div>
    </div>
    {elseif $_post['post_type'] == "poll" && $_post['poll']}

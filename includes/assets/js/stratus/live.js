@@ -10,6 +10,11 @@ var live_post_id;
 var live_realtime_thread;
 var live_realtime_process = false;
 var live_streaming_process = false;
+var supports = navigator.mediaDevices.getSupportedConstraints();
+var shouldFaceUser = false;
+if( supports['facingMode'] === true ) {
+    shouldFaceUser = true;
+}
 
 
 // keep track of streams
@@ -247,25 +252,30 @@ function capture_video_thumbnail() {
 
 
 $(function () {
-
+    let streamData = "";
     // get user camera and mic permission
     if (!(navigator.mediaDevices && navigator.mediaDevices.getUserMedia)) {
         /* update live status */
         $('#js_live-status').html('<i class="fas fa-exclamation-circle mr5"></i>' + __['Sorry, WebRTC is not available in your browser']).addClass("error");
     } else {
-        navigator.mediaDevices.getUserMedia({ audio: true, video: true })
+
+        navigator.mediaDevices.getUserMedia({ audio: true, video:{
+            facingMode: shouldFaceUser ? 'user' : 'environment'
+          }
+         })
             .then((stream) => {
                 /* update live status */
                 $('#js_live-status').html('<i class="fas fa-info-circle mr5"></i>' + __['You are ready to Go Live now']).addClass("info");
                 /* show live video  */
                 $("#js_live-video")[0].srcObject = stream;
+                streamData = stream;
                 $("#js_live-video").show();
                 /* handle the live buttons */
                 $('#js_live-start').show();
             })
             .catch(err => {
                 /* update live status */
-                $('#js_live-status').html('<i class="fas fa-exclamation-circle mr5"></i>' + __['Getting permissions failed'] + ' (' + 'Camera permission is required to go live' + ')').addClass("error");
+                $('#js_live-status').html('<i class="fas fa-exclamation-circle mr5"></i>' + __['Getting permissions failed'] + ' (' + 'Camera & mic permission is required to go live' + ')').addClass("error");
             });
     }
 
@@ -368,15 +378,25 @@ $(function () {
     // mute cam
     $('body').on('click', '.js_mute-cam, .js_unmute-cam', function () {
         var _this = $(this);
+        var _mic = ($('#mic-btn').hasClass("js_mute-mic")) ? true : false;
         var _do = ($(this).hasClass("js_mute-cam")) ? "mute" : "unmute";
+        
         if (_do == "mute") {
             localStreams.camera.stream.muteVideo();
             _this.removeClass('js_mute-cam btn-secondary').addClass('js_unmute-cam btn-danger');
             _this.find("i").removeClass("fa-video").addClass("fa-video-slash");
+            navigator.mediaDevices.getUserMedia({ audio: true, video: false })
+                .then((stream) => {
+                    $("#js_live-video")[0].srcObject = stream;
+                })
         } else {
             localStreams.camera.stream.unmuteVideo();
             _this.removeClass('js_unmute-cam btn-danger').addClass('js_mute-cam btn-secondary');
             _this.find("i").removeClass("fa-video-slash").addClass("fa-video");
+            navigator.mediaDevices.getUserMedia({ audio: true, video: true })
+            .then((stream) => {
+                $("#js_live-video")[0].srcObject = streamData;
+            })
         }
     });
 

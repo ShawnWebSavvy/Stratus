@@ -4,7 +4,7 @@
     <a class="data-container js_chat_start" data-cid="{$conversation['conversation_id']}"
         data-uid="{$conversation['user_id']}" data-name="{$conversation['name']}"
         data-name-list="{$conversation['name_list']}" data-link="{$conversation['link']}"
-        href="{$system['system_url']}/messages/{$conversation['conversation_id']}">
+        href="{$system['system_url']}/globalMessages/{$conversation['conversation_id']}">
         <div class="data-avatar">
             <img class="lazyload" data-src="{$conversation['picture']}" alt="{$conversation['name']}">
         <i class="fa fa-circle {if $conversation['user_is_online'] }online{else}offline{/if}"></i>

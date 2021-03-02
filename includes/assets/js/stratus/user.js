@@ -128,7 +128,6 @@ function data_heartbeat() {
         api["data/live"],
         data,
         function (response) {
-            console.log(response)
             if (response.callback) eval(response.callback);
             else {
                 if (response.requests) {
@@ -177,7 +176,7 @@ function data_heartbeat() {
                     $(".js_live-notifications").find("span.counterlive").text(notifications).show(), notifications_sound;
                 }
                 if (response.posts && response.posts != null) {
-                    console.log("response.posts->>>>>>>", response.posts);
+                    //console.log("response.posts->>>>>>>", response.posts);
                     var datatta = response.posts;
                     var ArrayVal = datatta.split('<div class="carsds"');
                     var loopArray = [];
@@ -202,12 +201,22 @@ function data_heartbeat() {
         "json"
     );
 }
-function init_picture_crop(e) {
+// initialize picture crop
+function init_picture_crop(node) {
     setTimeout(function () {
-        $("#cropped-profile-picture").rcrop({ minSize: [200, 200], preserveAspectRatio: !0, grid: !0 });
-    }, 200),
-        modal("#crop-profile-picture", { image: e.data("image"), handle: e.data("handle"), id: e.data("id") });
+        $("#cropped-profile-picture").rcrop({
+            minSize: [200, 200],
+            preserveAspectRatio: true,
+            grid: true,
+        });
+    }, 200);
+    modal("#crop-profile-picture", {
+        image: node.data("image"),
+        handle: node.data("handle"),
+        id: node.data("id"),
+    });
 }
+
 function init_picture_position() {
     $(".profile-cover-change").hide(),
         $(".profile-cover-position").hide(),
@@ -220,7 +229,6 @@ function init_picture_position() {
     var e = $(".js_position-cover-cropped").data("init-position");
     $(".profile-cover-wrapper").imagedrag({ position: e, input: ".js_position-picture-val" });
 }
-
 (api["data/live"] = ajax_path + "data/live.php"),
     (api["data/upload"] = ajax_path + "data/upload.php"),
     (api["data/reset"] = ajax_path + "data/reset.php"),
@@ -679,8 +687,13 @@ function init_picture_position() {
                                         init_picture_position();
                                     }, 1e3);
                             } else if ("picture-user" == handle || "picture-page" == handle || "picture-group" == handle) {
+                                /* update (user|page|group) picture */
                                 var image_path = uploads_path + "/" + response.file;
-                                $(".profile-avatar-wrapper img").attr("src", image_path), $(".js_init-crop-picture").data("image", image_path), init_picture_crop($(".js_init-crop-picture"));
+                                $(".profile-avatar-wrapper img").attr("src", image_path);
+                                /* update crop image source */
+                                $(".js_init-crop-picture").data("image", image_path);
+                                init_picture_crop($(".js_init-crop-picture"));
+
                             } else if ("publisher" == handle) {
                                 loader && loader.remove();
                                 var files = publisher.data("photos");
@@ -913,10 +926,18 @@ function init_picture_position() {
                                             "</button>"
                                         );
                                     }
+
+                                    if (_do == "friend-decline") {
+                                        _this.closest('.feeds-item').remove();
+                                    }
+
+
                                     accept.remove();
                                     decline.remove();
                                     parent.find(".loader").remove();
                                 }
+
+                              
                             },
                             "json"
                         ).fail(function () {

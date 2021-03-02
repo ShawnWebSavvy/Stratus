@@ -191,7 +191,7 @@
                 </div>
                 <!-- profile-header -->
         </section>
-        <div class="col-md-12 col-xl-3 col-lg-4 aboutSectionWidth">
+        <div class="col-md-12 col-xl-3 col-lg-4 aboutSectionWidth about_sec">
             <div class="profileUpdatesDesign">
                 <!-- panel [about] -->
                 <div class="card">
