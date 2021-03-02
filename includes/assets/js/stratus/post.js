@@ -338,6 +338,7 @@ $(function () {
                         attachments_voice_notes.find(".js_voice-start").show();
                         stream.append(response.comment);
                         comment.removeData("sending");
+                        _this.closest('.js_reply-form').hide();
                     }
                 },
                 "json"

@@ -3965,8 +3965,7 @@ class User
         foreach ($this->_data['friends_ids'] as $friend_id) {
             $this->post_notification(array('to_user_id' => $friend_id, 'action' => 'live_stream', 'node_type' => 'post', 'node_url' => $post_id));
         }
-                 //RedisBlock
-        //Update posts on timeline
+
         $redisPostKey = 'user-' . $this->_data['user_id'] . '-posts';
         $redisObject = new RedisClass();
         $redisObject->deleteValueFromKey($redisPostKey);
@@ -4040,48 +4039,109 @@ class User
         }
 
         $post_id = $post['post_id'];
-        //Update posts on timeline
-        $redisPostKey = 'user-' . $this->_data['user_id'] . '-posts';
+
+
+        
+        //Redis Block
         $redisObject = new RedisClass();
-        $redisObject->deleteValueFromKey($redisPostKey);
-        fetchAndSetDataOnPostReaction($system, $this, $redisObject, $redisPostKey);
-
-        //Updtae Posts in Profile PAGE
-        $postsList = $redisObject->getValueFromKey($redisPostKey);
-        $decodePost = json_decode($postsList, TRUE);
-        $arrayforrepalce = array();
-        if (count($decodePost) > 0) {
-            $arrayforrepalce = searchSubArray($decodePost, 'post_id', $post_id);
-        }
-        $redisPostProfileKey = 'profile-posts-' . $this->_data['user_id'];
-        $redisObject->deleteValueFromKey($redisPostProfileKey);
-        if ($args['handle'] == "user") {
-            $redisPostProfileKey = 'profile-posts-' . $args['id'];
-            $redisObject->deleteValueFromKey($redisPostProfileKey);
-            $redisPostProfileKey = 'profile-posts-others-' . $post['wall_id'];
-            $redisObject->deleteValueFromKey($redisPostProfileKey);
-        }
-
-        $postUpdateFromRedis = $redisObject->getValueFromKey($redisPostKey);
+        //update current logged in user response
+        $redisKey = 'user-' . $this->_data['user_id'] . '-posts';
+        fetchAndSetDataOnPostReaction($system, $this, $redisObject, $redisKey);
+        $postUpdateFromRedis = $redisObject->getValueFromKey($redisKey);
         $decodeVal = json_decode($postUpdateFromRedis, TRUE);
         $updatedPostObject  = searchSubArray($decodeVal, 'post_id', $post_id);
 
-        $ids = $this->get_friends_ids($this->_data['user_id']);
-        $followersId = $this->get_followings_ids($this->_data['user_id']);
+        // echo "<pre>";
+        // print_r($updatedPostObject);
+        $ids = $this->get_friends_ids($post['author_id']);
+        if (($key = array_search($this->_data['user_id'], $ids)) !== false) {
+            unset($ids[$key]);
+        }
+        if ($post['author_id'] !== $this->_data['user_id']) {
+            array_push($ids, $post['author_id']);
+        }
+
+        $followersId = $this->get_followings_ids($post['author_id']);
         $idsList = array_unique(array_merge($ids, $followersId));
+
         foreach ($idsList as $id) {
             $userKeys = 'user-' . $id . '-posts';
             $isUserExist = $redisObject->isRedisKeyExist($userKeys);
             if ($isUserExist == true) {
                 $getPostsFromRedis = $redisObject->getValueFromKey($userKeys);
                 $jsonValuesRes = json_decode($getPostsFromRedis, true);
-                array_unshift($jsonValuesRes, $updatedPostObject);
+                foreach ($jsonValuesRes  as $key => $res) {
 
+                    if ($res['post_id'] == $post_id) {
+                        // $jsonValuesRes[$key]['comments'] = $updatedPostObject['comments'];
+                        $jsonValuesRes[$key] = $updatedPostObject;
+                    }
+                }
                 $jsonEncodedVals = json_encode($jsonValuesRes);
-                // print_r($jsonEncodedVals); die;
                 $redisObject->setValueWithRedis($userKeys, $jsonEncodedVals);
             }
         }
+
+
+        //profile post
+        $redisTimelinekey = 'profile-posts-' . $this->_data['user_id'];
+        $isKeyExistOnRedis = $redisObject->isRedisKeyExist($redisTimelinekey);
+        if ($isKeyExistOnRedis) {
+            $timelineData = $redisObject->getValueFromKey($redisTimelinekey);
+            $decodeVal = json_decode($timelineData, TRUE);
+            foreach ($decodeVal  as $key => $res) {
+                if ($res['post_id'] == $post_id) {
+                    $decodeVal[$key] = $updatedPostObject;
+                }
+            }
+
+            $newJsonVals = json_encode($decodeVal);
+            $redisObject->setValueWithRedis($redisTimelinekey, $newJsonVals);
+        }
+
+
+
+
+
+
+
+        //Update posts on timeline
+        // $redisPostKey = 'user-' . $this->_data['user_id'] . '-posts';
+        // $redisObject = new RedisClass();
+        // $redisObject->deleteValueFromKey($redisPostKey);
+        // fetchAndSetDataOnPostReaction($system, $this, $redisObject, $redisPostKey);
+
+        // //Updtae Posts in Profile PAGE
+        // $postsList = $redisObject->getValueFromKey($redisPostKey);
+        // $decodePost = json_decode($postsList, TRUE);
+        // $arrayforrepalce = array();
+        // if (count($decodePost) > 0) {
+        //     $arrayforrepalce = searchSubArray($decodePost, 'post_id', $post_id);
+        // }
+        // $redisPostProfileKey = 'profile-posts-' . $this->_data['user_id'];
+        // $redisObject->deleteValueFromKey($redisPostProfileKey);
+        
+
+        // $postUpdateFromRedis = $redisObject->getValueFromKey($redisPostKey);
+        // $decodeVal = json_decode($postUpdateFromRedis, TRUE);
+        // $updatedPostObject  = searchSubArray($decodeVal, 'post_id', $post_id);
+
+        // $ids = $this->get_friends_ids($this->_data['user_id']);
+        // $followersId = $this->get_followings_ids($this->_data['user_id']);
+        // $idsList = array_unique(array_merge($ids, $followersId));
+        // foreach ($idsList as $id) {
+        //     $userKeys = 'user-' . $id . '-posts';
+        //     $isUserExist = $redisObject->isRedisKeyExist($userKeys);
+        //     if ($isUserExist == true) {
+        //         $getPostsFromRedis = $redisObject->getValueFromKey($userKeys);
+        //         $jsonValuesRes = json_decode($getPostsFromRedis, true);
+        //         array_unshift($jsonValuesRes, $updatedPostObject);
+
+        //         $jsonEncodedVals = json_encode($jsonValuesRes);
+        //         // print_r($jsonEncodedVals); die;
+        //         $redisObject->setValueWithRedis($userKeys, $jsonEncodedVals);
+        //     }
+        // }
     }
 
 
