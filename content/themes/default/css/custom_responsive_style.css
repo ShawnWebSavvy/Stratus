@@ -1,4 +1,4 @@
-@import "../css/buttonCustom.css";
+@import "https://cdn1.stratus.co/content/themes/default/css/buttonCustom.css";
 .user-popover-wrapper{z-index:999999999;}
 .addproductWrap .colored-text-wrapper .js_publisher-scraper {height: 25px !important;}
 .comment-data{align-items:flex-start;justify-content:space-between;flex-direction:column}
