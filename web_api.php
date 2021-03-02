@@ -1,4 +1,4 @@
-<?php 
+<?php
 //require('bootstrap.php');
 require('bootloader.php');
 
@@ -10,16 +10,19 @@ if(isset($_GET['endpoint'])){
    $endpoint = $_GET['endpoint'];
 }else{
     $response = ["status" =>false,"code"=> 402, "msg" =>"Invalid endpoint"];
-     echo json_encode($response);    
+     echo json_encode($response);
 }
 
     switch ($endpoint) {
         case 'getWalletBalance':
                  getWalletBalance($token);
             break;
-        
+
+         case 'updateWalletBalance':
+                     updateWAlletBalanceFunction($token);
+                break;
+
         default:
-            # code...
             returnResponse(false,402,"Invalid Endpoint");
     }
 
