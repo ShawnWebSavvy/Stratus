@@ -13,8 +13,9 @@ function onimgTagclick(e) {
         s +
         '" type="video/webm"></video>'
     ),
-        $("#hide_play_img" + a).hide(),
-        $(t).hide();
+        //$("#hide_play_img" + a).hide(),
+        $(e).closest('div').find(".play_video_icon").hide();
+    $(t).hide();
 }
 $(document).ready(function () {
     $(window).scroll(function () {

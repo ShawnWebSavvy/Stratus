@@ -128,8 +128,9 @@
     </div>
 </div>
 {elseif $_tpl == "list"}
+{if $_user['user_id'] > 0}
 <li class="feeds-item" {if $_user['id']}data-id="{$_user['id']}" {/if}>
-    <div class="data-container searchSectionWrap">
+    <div class="data-container searchSectionWrap ssdssd">
         <div class="_user_detail_sec hmmm">
             <div class="user__imgs">
                 <a class="data-avatar" href="{$system['system_url']}/{$_user['user_name']}{if $_search}?ref=qs{/if}">
@@ -170,7 +171,6 @@
             </div>
         </div>
         <div class="data-content usernamesWrapBlock">
-
             <div class="float-right _user_action_">
                 <!-- buttons -->
                 {if $_connection == "request"}
@@ -274,4 +274,5 @@
         </div>
     </div>
 </li>
+{/if}
 {/if}

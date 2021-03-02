@@ -10,6 +10,11 @@ var live_post_id;
 var live_realtime_thread;
 var live_realtime_process = false;
 var live_streaming_process = false;
+var supports = navigator.mediaDevices.getSupportedConstraints();
+var shouldFaceUser = false;
+if( supports['facingMode'] === true ) {
+    shouldFaceUser = true;
+}
 
 
 // keep track of streams
@@ -253,7 +258,11 @@ $(function () {
         /* update live status */
         $('#js_live-status').html('<i class="fas fa-exclamation-circle mr5"></i>' + __['Sorry, WebRTC is not available in your browser']).addClass("error");
     } else {
-        navigator.mediaDevices.getUserMedia({ audio: true, video: true })
+
+        navigator.mediaDevices.getUserMedia({ audio: true, video:{
+            facingMode: shouldFaceUser ? 'user' : 'environment'
+          }
+         })
             .then((stream) => {
                 /* update live status */
                 $('#js_live-status').html('<i class="fas fa-info-circle mr5"></i>' + __['You are ready to Go Live now']).addClass("info");

@@ -953,7 +953,7 @@
             <div class="mb10 text-muted">
                 <span class="pages_icons">
                     <img class="blackIcon" alt="Check In" title="Check In"
-                        src="{$system['system_url']}/content/themes/default/images/svg/svgImg/addpostLocationHover.svg">
+                        src="{$system['system_uploads_assets']}/content/themes/default/images/svg/svgImg/addpostLocationHover.svg">
                 </span>
                 <span> {$_post['product']['location']} </span>
             </div>
@@ -971,7 +971,7 @@
                     <div class="title">
                         <span class="pages_icons">
                             <img class="blackIcon" alt="Check In" title="Check In"
-                                src="{$system['system_url']}/content/themes/default/images/svg/svgImg/blogNewsHover.svg">
+                                src="{$system['system_uploads_assets']}/content/themes/default/images/svg/svgImg/blogNewsHover.svg">
                         </span>
                         <span> {__("Type")} </span>
                     </div>

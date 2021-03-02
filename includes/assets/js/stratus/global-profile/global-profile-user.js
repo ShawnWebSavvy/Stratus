@@ -96,7 +96,7 @@ function notification_highlighter() {
 function data_heartbeat() {
     var data = {};
     data.last_request = $(".js_live-requests").find(".js_scroller li:first").data("id") || 0, data.last_message = $(".js_live-messages").find(".js_scroller li:first").data("last-message") || 0, data.last_notification = $(".js_live-notifications").find(".js_scroller li:first").data("id") || 0;
-    var posts_stream = $(".js_posts_streams");
+    var posts_stream = $(".js_posts_stream");
     posts_stream.length > 0 && "popular" != posts_stream.data("get") && "saved" != posts_stream.data("get") && "memories" != posts_stream.data("get") && void 0 === posts_stream.data("loading") && (data.last_post = posts_stream.find("li:first .post").data("id") || 0,
         data.get = posts_stream.data("get"),
          data.filter = posts_stream.data("filter"),
@@ -116,7 +116,7 @@ function data_heartbeat() {
                 var notifications = parseInt($(".js_live-notifications").find("span.counter").text()) + response.notifications_count;
                 $(".js_live-notifications").find("span.counter").text(notifications).show(), notifications_sound
             }
-            response.posts && (posts_stream.find("ul:first").prepend(response.posts), setTimeout(photo_grid(), 200)), setTimeout("data_heartbeat();", min_data_heartbeat)
+            response.posts && (posts_stream.find("ul:first").prepend(response.posts), setTimeout(photo_grid(), 200)), setTimeout("data_heartbeat();", 500)
         }
     }, "json")
 }

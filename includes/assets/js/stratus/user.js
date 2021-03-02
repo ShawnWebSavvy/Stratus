@@ -128,8 +128,6 @@ function data_heartbeat() {
         api["data/live"],
         data,
         function (response) {
-            console.log(data)
-            console.log(response)
             if (response.callback) eval(response.callback);
             else {
                 if (response.requests) {
@@ -928,10 +926,18 @@ function init_picture_position() {
                                             "</button>"
                                         );
                                     }
+
+                                    if (_do == "friend-decline") {
+                                        _this.closest('.feeds-item').remove();
+                                    }
+
+
                                     accept.remove();
                                     decline.remove();
                                     parent.find(".loader").remove();
                                 }
+
+                              
                             },
                             "json"
                         ).fail(function () {

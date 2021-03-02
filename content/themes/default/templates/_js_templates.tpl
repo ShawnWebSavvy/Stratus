@@ -1597,9 +1597,6 @@
                 </button>
             </div>
             <div class="modal-body text-center">
-            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-            <span aria-hidden="true">&times;</span>
-        </button>
                 <img id="cropped-profile-picture" src="{literal}{{image}}{/literal}" style="max-width: 100%;">
             </div>
             <div class="modal-footer">
