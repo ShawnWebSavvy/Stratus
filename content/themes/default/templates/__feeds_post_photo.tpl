@@ -203,33 +203,33 @@
                     <ul class="-list_items">
                         <li class="stratus_local_share" id="share_timeline"><label for="share_to_timeline"><span
                                     class="__list_icon"><img class="lazyload"
-                                        data-src="{$system['system_url']}/content/themes/default/images/share-timeline.svg"></span><span>Share
+                                        data-src="{$system['system_uploads_assets']}/content/themes/default/images/share-timeline.svg"></span><span>Share
                                     to Timeline</span></label>
                         </li>
 
                         {if $system['groups_enabled'] && count($groups) > 0}
                         <li class="stratus_local_share" id="share_group"><label for="share_to_group"><span
                                     class="__list_icon"> <img class="lazyload"
-                                        data-src="{$system['system_url']}/content/themes/default/images/share_grp.svg"></span><span>Share
+                                        data-src="{$system['system_uploads_assets']}/content/themes/default/images/share_grp.svg"></span><span>Share
                                     to Group</span></label>
                         </li>
                         {/if}
                         {if $system['pages_enabled'] && count($pages) > 0}
                         <li class="stratus_local_share" id="share_page"><label for="share_to_page"><span
                                     class="__list_icon"> <img class="lazyload"
-                                        data-src="{$system['system_url']}/content/themes/default/images/share-page.svg"></span><span>Share
+                                        data-src="{$system['system_uploads_assets']}/content/themes/default/images/share-page.svg"></span><span>Share
                                     to a Page </span></label>
                         </li>
                         {/if}
                         <li class="stratus_local_share" id="share_post"><label for="write_post"><span
                                     class="__list_icon"> <img class="lazyload"
-                                        data-src="{$system['system_url']}/content/themes/default/images/write-post.svg"></span><span>Write
+                                        data-src="{$system['system_uploads_assets']}/content/themes/default/images/write-post.svg"></span><span>Write
                                     post</span></label>
                         </li>
                         {if $system['social_share_enabled']}
                         <li class="stratus_local_share" id="share_social_media"><label for="share_to_sm"><span
                                     class="__list_icon"><img class="lazyload"
-                                        data-src="{$system['system_url']}/content/themes/default/images/share-sm.svg"></span><span>Share
+                                        data-src="{$system['system_uploads_assets']}/content/themes/default/images/share-sm.svg"></span><span>Share
                                     to Social Media</span></label>
                         </li>
                         {/if}

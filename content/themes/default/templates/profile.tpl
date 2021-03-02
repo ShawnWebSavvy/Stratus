@@ -239,7 +239,7 @@
                                        href="{$system['system_url']}/admincp/users/edit/{$profile['user_id']}">
                                        <span class="more_option_img">
                                           <img class=""
-                                             src="{$system['system_url']}/content/themes/default/images/svg/svgImg/Cog.svg">
+                                             src="{$system['system_uploads_assets']}/content/themes/default/images/svg/svgImg/Cog.svg">
                                        </span>
                                        {__("Edit in Admin Panel")}
                                     </a>
@@ -249,7 +249,7 @@
                                        href="{$system['system_url']}/modcp/users/edit/{$profile['user_id']}">
                                        <span class="more_option_img">
                                           <img class=""
-                                             src="{$system['system_url']}/content/themes/default/images/svg/svgImg/Cog.svg">
+                                             src="{$system['system_uploads_assets']}/content/themes/default/images/svg/svgImg/Cog.svg">
                                        </span>
                                        {__("Edit in Moderator Panel")}
                                     </a>
@@ -264,7 +264,7 @@
                                  <a href="{$system['system_url']}/settings/profile" class=" edit_profile_icon">
                                     <span class="edit_profile_img">
                                        <img class=""
-                                          src="{$system['system_url']}/content/themes/default/images/svg/svgImg/edit_icon_hover.svg">
+                                          src="{$system['system_uploads_assets']}/content/themes/default/images/svg/svgImg/edit_icon_hover.svg">
                                     </span>
                                  </a>
                               </div>
@@ -786,7 +786,7 @@
                            <!-- see-more -->
                            <div class="alert alert-info see-more mt0 mb20 js_see-more" data-get="followers"
                               data-uid="{$profile['user_id']}">
-                              <span>{__("See More")}</span>
+                              <span>{__("Load More")}</span>
                               <div class="loader loader_small x-hidden"></div>
                            </div>
                            <!-- see-more -->
@@ -847,7 +847,7 @@
                            <!-- see-more -->
                            <div class="alert alert-info see-more mt0 mb20 js_see-more" data-get="followings"
                               data-uid="{$profile['user_id']}">
-                              <span>{__("See More")}</span>
+                              <span>{__("Load More")}</span>
                               <div class="loader loader_small x-hidden"></div>
                            </div>
                            <!-- see-more -->
