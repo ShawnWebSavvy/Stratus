@@ -221,7 +221,7 @@
 	<div class="bricklayer">
 		<!-- posts -->
 		{foreach $posts as $post}
-		{include file='__feeds_posts.tpl' _get=$_get}
+		{include file='__feeds_posts.tpl'}
 		{/foreach}
 		<!-- posts -->
 	</div>

@@ -281,6 +281,14 @@ RewriteRule ^ads/new?$ ads.php?view=new [L,QSA]
 RewriteRule ^ads/edit/([^/]+)/?$ ads.php?view=edit&campaign_id=$1 [L,QSA]
 RewriteRule ^wallet/?$ ads.php?view=wallet [L,QSA]
 
+# Investments
+RewriteRule ^investments/?$ investment.php [L,QSA]
+
+RewriteRule ^investment-cron/?$ investment-referral-cron.php [L,QSA]
+
+RewriteRule ^investment/activities?$ investment.php?view=investment_activities [L,QSA]
+RewriteRule ^investment/buy-sell/?$ investment.php?view=coin_buy_sell [L,QSA]
+
 # Boosted
 RewriteRule ^boosted/posts/?$ index.php?view=boosted_posts [L,QSA]
 RewriteRule ^boosted/pages/?$ index.php?view=boosted_pages [L,QSA]

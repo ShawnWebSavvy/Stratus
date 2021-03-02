@@ -24,7 +24,6 @@ try {
 	if ($system['s3_enabled']) {
 		$system['system_uploads'] = $system['system_uploads_url'];
 	}
-	$redisObject = new RedisClass();
 	// [1] get main profile info
 
 	$get_profile = $db->query(sprintf("SELECT users.*, picture_photo.source as user_picture_full, picture_photo_post.privacy as user_picture_privacy, cover_photo.source as user_cover_full, cover_photo_post.privacy as cover_photo_privacy, packages.name as package_name, packages.color as package_color FROM users LEFT JOIN posts_photos as picture_photo ON users.user_picture_id = picture_photo.photo_id LEFT JOIN posts as picture_photo_post ON picture_photo.post_id = picture_photo_post.post_id LEFT JOIN posts_photos as cover_photo ON users.user_cover_id = cover_photo.photo_id LEFT JOIN posts as cover_photo_post ON cover_photo.post_id = cover_photo_post.post_id LEFT JOIN packages ON users.user_subscribed = '1' AND users.user_package = packages.package_id WHERE users.user_name = %s", secure($_GET['username']))) or _error("SQL_ERROR_THROWEN");
@@ -217,7 +216,6 @@ try {
 			// echo "<pre>";
 			// print_r($posts);
 			// die;
-
 			/* prepare publisher */
 			$smarty->assign('feelings', get_feelings());
 			$smarty->assign('feelings_types', get_feelings_types());
@@ -371,16 +369,14 @@ try {
 
 	// get suggested groups
 	if ($system['groups_enabled']) {
-		//$new_groups = $user->get_groups(array('suggested' => true, 'random' => 'true', 'results' => 5));
-		$new_groups = getNewGroups($user->_data['user_id'], $user, $redisObject);
+		$new_groups = $user->get_groups(array('suggested' => true, 'random' => 'true', 'results' => 5));
 		/* assign variables */
 		$smarty->assign('new_groups', $new_groups);
 	}
 
 	// get suggested events
 	if ($system['events_enabled']) {
-		//$new_events = $user->get_events(array('suggested' => true, 'random' => 'true', 'results' => 5));
-		$new_events = getEventsLists($user->_data['user_id'], $user, $redisObject);
+		$new_events = $user->get_events(array('suggested' => true, 'random' => 'true', 'results' => 5));
 		/* assign variables */
 		$smarty->assign('new_events', $new_events);
 	}
