@@ -254,12 +254,12 @@
             <!-- sub of global end -->
             <!-- Global Hub End here -->
             <!-- playtube -->
-            {* <ul
-            class="main-side-nav main-left-side-nav left-sidebar first-ul">
+            {* <ul class="main-side-nav main-left-side-nav left-sidebar first-ul">
                 <li>
                     <a href="{PLY_URL}?dtl={$encodedUserDetails}" class="{$page}">
                         <div class="svg-container">
-                            <img src="{$system['system_url']}/content/themes/default/images/svg/svgImg/video_hub_icon.svg" class="">
+                            <img src="{$system['system_url']}/content/themes/default/images/svg/svgImg/video_hub_icon.svg"
+                                class="">
                             <!-- <img src="{$system['system_url']}/content/themes/default/images/svg/svgImg/nav_icon_favourite.svg"
                             class="blackicon">
                             <img src="{$system['system_url']}/content/themes/default/images/svg/svgImg/nav_icon_favourits_active.svg"
@@ -308,17 +308,16 @@
                 </a>
                 </li>
             </ul>
-            
+
             {if $system['investment_module_status']}
-	        <ul class="main-side-nav main-left-side-nav left-sidebar-{if ($active_page=="Investment" )}second-ul
-                active{else}first-ul
-                {/if}">
-                <li {if $active_page=="Investment"  }class="active" {/if}>
+            <ul class="main-side-nav main-left-side-nav left-sidebar-{if ($active_page==" Investment" )}second-ul
+                active{else}first-ul {/if}">
+                <li {if $active_page=="Investment" }class="active" {/if}>
                     <a href=" {$system['system_url']}/investments">
                         <div class="svg-container ">
-                            <img src="{$system['system_url']}/content/themes/default/images/svg/svgImg/Wallet.svg"
+                            <img src="{$system['system_uploads_assets']}/content/themes/default/images/svg/svgImg/Wallet.svg"
                                 class="blackicon">
-                            <img src="{$system['system_url']}/content/themes/default/images/svg/svgImg/Wallet-active.svg"
+                            <img src="{$system['system_uploads_assets']}/content/themes/default/images/svg/svgImg/Wallet-active.svg"
                                 class="whiteicon">
 
                         </div>

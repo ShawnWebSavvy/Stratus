@@ -181,7 +181,7 @@ url({$profile['user_profile_background']}) fixed !important; background-size:
                         {else} {if $page == "index" && !$user->_logged_in}
                         <a href="{$system['system_url']}" class="logo {$page}">
                            <img class="img-fluid"
-                              src="{$system['system_url']}/content/themes/default/images/logo.png" />
+                              src="{$system['system_uploads_assets']}/content/themes/default/images/logo.png" />
                         </a>
                         {elseif (($page == "index" || $page == "profile" || $page == "pages" || $page == "people") &&
                         $active_page != "MarketHub" &&
@@ -209,33 +209,34 @@ url({$profile['user_profile_background']}) fixed !important; background-size:
                         {elseif ($page == "ads" && $view != "wallet") && $user->_logged_in}
                         <a href="{$system['system_url']}/ads" class="logo {$page}">
                            <img class="img-fluid"
-                              src="{$system['system_url']}/content/themes/default/images/logo_addHub.png" />
+                              src="{$system['system_uploads_assets']}/content/themes/default/images/logo_addHub.png" />
                         </a>
                         {elseif ($view == "wallet") && $user->_logged_in}
                         <a href="{$system['system_url']}/ads" class="logo {$page}">
                            <img class="img-fluid"
-                              src="{$system['system_url']}/content/themes/default/images/logo_wallet.png" />
+                              src="{$system['system_uploads_assets']}/content/themes/default/images/logo_wallet.png" />
                         </a>
                         {elseif ($page == "blogs" || $view =='articles') &&
                         $user->_logged_in}
                         <a href="{$system['system_url']}/blogs" class="logo {$page}">
                            <img class="img-fluid"
-                              src="{$system['system_url']}/content/themes/default/images/logo_blog.png" />
+                              src="{$system['system_uploads_assets']}/content/themes/default/images/logo_blog.png" />
                         </a>
                         {elseif ($page == "market" || $active_page == "MarketHub") && $user->_logged_in || $actPage}
                         <a href="{$system['system_url']}/market" class="logo {$page}">
                            <img class="img-fluid"
-                              src="{$system['system_url']}/content/themes/default/images/logo_marketHub.png" />
+                              src="{$system['system_uploads_assets']}/content/themes/default/images/logo_marketHub.png" />
                         </a>
-                        {elseif $page == "investment/activity" || $page == "investment/buy_sell"  || $page == "investment/index" && $user->_logged_in}
-                           <a href="{$system['system_url']}/investments" class="logo {$page}">
-                              <img class="img-fluid"
-                                src="{$system['system_uploads_assets']}/content/themes/default/images/investment/Investment-Hub.png" />
-                           </a>
+                        {elseif $page == "investment/activity" || $page == "investment/buy_sell" || $page ==
+                        "investment/index" && $user->_logged_in}
+                        <a href="{$system['system_url']}/investments" class="logo {$page}">
+                           <img class="img-fluid"
+                              src="{$system['system_uploads_assets']}/content/themes/default/images/investment/Investment-Hub.png" />
+                        </a>
                         {else}
                         <a href="{$system['system_url']}" class="logo {$page}">
                            <img class="img-fluid"
-                              src="{$system['system_url']}/content/themes/default/images/logo.png" />
+                              src="{$system['system_uploads_assets']}/content/themes/default/images/logo.png" />
                         </a>
                         {/if}
                         <!--{$system['system_title']}-->

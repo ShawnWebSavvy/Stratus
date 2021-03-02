@@ -3939,6 +3939,19 @@ class User
      * @param string $video_thumbnail
      * @return integer
      */
+        /* ------------------------------- */
+    /* Live Stream */
+    /* ------------------------------- */
+
+    /**
+     * create_live_post
+     * 
+     * @param string $agora_uid
+     * @param string $agora_token
+     * @param string $agora_channel_name
+     * @param string $video_thumbnail
+     * @return integer
+     */
     public function create_live_post($agora_uid, $agora_token, $agora_channel_name, $video_thumbnail)
     {
         global $db, $system, $date;
@@ -4040,8 +4053,6 @@ class User
 
         $post_id = $post['post_id'];
 
-
-        
         //Redis Block
         $redisObject = new RedisClass();
         //update current logged in user response
@@ -4081,8 +4092,6 @@ class User
                 $redisObject->setValueWithRedis($userKeys, $jsonEncodedVals);
             }
         }
-
-
         //profile post
         $redisTimelinekey = 'profile-posts-' . $this->_data['user_id'];
         $isKeyExistOnRedis = $redisObject->isRedisKeyExist($redisTimelinekey);
@@ -4098,50 +4107,6 @@ class User
             $newJsonVals = json_encode($decodeVal);
             $redisObject->setValueWithRedis($redisTimelinekey, $newJsonVals);
         }
-
-
-
-
-
-
-
-        //Update posts on timeline
-        // $redisPostKey = 'user-' . $this->_data['user_id'] . '-posts';
-        // $redisObject = new RedisClass();
-        // $redisObject->deleteValueFromKey($redisPostKey);
-        // fetchAndSetDataOnPostReaction($system, $this, $redisObject, $redisPostKey);
-
-        // //Updtae Posts in Profile PAGE
-        // $postsList = $redisObject->getValueFromKey($redisPostKey);
-        // $decodePost = json_decode($postsList, TRUE);
-        // $arrayforrepalce = array();
-        // if (count($decodePost) > 0) {
-        //     $arrayforrepalce = searchSubArray($decodePost, 'post_id', $post_id);
-        // }
-        // $redisPostProfileKey = 'profile-posts-' . $this->_data['user_id'];
-        // $redisObject->deleteValueFromKey($redisPostProfileKey);
-        
-
-        // $postUpdateFromRedis = $redisObject->getValueFromKey($redisPostKey);
-        // $decodeVal = json_decode($postUpdateFromRedis, TRUE);
-        // $updatedPostObject  = searchSubArray($decodeVal, 'post_id', $post_id);
-
-        // $ids = $this->get_friends_ids($this->_data['user_id']);
-        // $followersId = $this->get_followings_ids($this->_data['user_id']);
-        // $idsList = array_unique(array_merge($ids, $followersId));
-        // foreach ($idsList as $id) {
-        //     $userKeys = 'user-' . $id . '-posts';
-        //     $isUserExist = $redisObject->isRedisKeyExist($userKeys);
-        //     if ($isUserExist == true) {
-        //         $getPostsFromRedis = $redisObject->getValueFromKey($userKeys);
-        //         $jsonValuesRes = json_decode($getPostsFromRedis, true);
-        //         array_unshift($jsonValuesRes, $updatedPostObject);
-
-        //         $jsonEncodedVals = json_encode($jsonValuesRes);
-        //         // print_r($jsonEncodedVals); die;
-        //         $redisObject->setValueWithRedis($userKeys, $jsonEncodedVals);
-        //     }
-        // }
     }
 
 
@@ -4260,7 +4225,6 @@ class User
         }
         /* update post */
         $db->query(sprintf("UPDATE posts_live SET agora_resource_id = %s, agora_sid = %s WHERE post_id = %s", secure($resourceId), secure($sid), secure($post_id, 'int'))) or _error("SQL_ERROR_THROWEN");
-      
     }
 
 
@@ -7257,20 +7221,22 @@ class User
             $userKeys = 'user-' . $id . '-posts';
             $isUserExist = $redisObject->isRedisKeyExist($userKeys);
             if ($isUserExist == true) {
-                $getPostsFromRedis = $redisObject->getValueFromKey($userKeys);
-                $jsonValuesRes = json_decode($getPostsFromRedis, true);
-                foreach ($jsonValuesRes  as $key => $res) {
-
-                    if ($res['post_id'] == $post_id) {
-                        // $jsonValuesRes[$key]['comments'] = $updatedPostObject['comments'];
-                        $jsonValuesRes[$key] = $updatedPostObject;
-                    }
-                }
-                $jsonEncodedVals = json_encode($jsonValuesRes);
-                $redisObject->setValueWithRedis($userKeys, $jsonEncodedVals);
+                $redisObject->deleteValueFromKey($userKeys);
+                // $getPostsFromRedis = $redisObject->getValueFromKey($userKeys);
+                // $jsonValuesRes = json_decode($getPostsFromRedis, true);
+                // foreach ($jsonValuesRes  as $key => $res) {
+                //     if ($res['post_id'] == $post_id) {
+                //         if ($privacy === "me") {
+                //             unset($jsonValuesRes[$key]);
+                //         } else {
+                //             $jsonValuesRes[$key] = $updatedPostObject;
+                //         }
+                //     }
+                // }
+                // $jsonEncodedVals = json_encode($jsonValuesRes);
+                // $redisObject->setValueWithRedis($userKeys, $jsonEncodedVals);
             }
         }
-
 
         //profile post
         $redisTimelinekey = 'profile-posts-' . $this->_data['user_id'];
@@ -8320,7 +8286,7 @@ class User
      * @param boolean $top_sorted
      * @return array
      */
-    public function get_comments($node_id, $offset = 0, $is_post = true, $pass_privacy_check = true, $post = array(), $top_sorted = false,$last_comment_id = null)
+    public function get_comments($node_id, $offset = 0, $is_post = true, $pass_privacy_check = true, $post = array(), $top_sorted = false, $last_comment_id = null)
     {
         global $db, $system;
         $comments = [];
@@ -8337,12 +8303,11 @@ class User
                 }
             }
             /* get post comments */
-             if(!$last_comment_id) {
+            if (!$last_comment_id) {
                 $get_comments = $db->query(sprintf("SELECT posts_comments.*, posts_photos.source as user_picture_full, users.user_name, users.user_picture_id, users.user_firstname, users.user_lastname, users.user_gender, users.user_picture, users.user_verified, pages.* FROM posts_comments LEFT JOIN users ON posts_comments.user_id = users.user_id AND posts_comments.user_type = 'user' LEFT JOIN posts_photos ON users.user_picture_id = posts_photos.photo_id LEFT JOIN pages ON posts_comments.user_id = pages.page_id AND posts_comments.user_type = 'page' WHERE NOT (users.user_name <=> NULL AND pages.page_name <=> NULL) AND posts_comments.node_type = 'post' AND posts_comments.node_id = %s " . $order_query . " LIMIT %s, %s", secure($node_id, 'int'), secure($offset, 'int', false), secure($system['min_results'], 'int', false))) or _error("SQL_ERROR_THROWEN");
             } else {
-                $get_comments = $db->query(sprintf("SELECT posts_comments.*, posts_photos.source as user_picture_full, users.user_name, users.user_picture_id, users.user_firstname, users.user_lastname, users.user_gender, users.user_picture, users.user_verified, pages.* FROM posts_comments LEFT JOIN users ON posts_comments.user_id = users.user_id AND posts_comments.user_type = 'user' LEFT JOIN posts_photos ON users.user_picture_id = posts_photos.photo_id LEFT JOIN pages ON posts_comments.user_id = pages.page_id AND posts_comments.user_type = 'page' WHERE NOT (users.user_name <=> NULL AND pages.page_name <=> NULL) AND posts_comments.node_type = 'post' AND posts_comments.node_id = %s AND posts_comments.comment_id > %s ". $order_query . " LIMIT %s, %s", secure($node_id, 'int'), secure($last_comment_id, 'int'), secure($offset, 'int', false), secure($system['min_results'], 'int', false))) or _error("SQL_ERROR_THROWEN");
+                $get_comments = $db->query(sprintf("SELECT posts_comments.*, posts_photos.source as user_picture_full, users.user_name, users.user_picture_id, users.user_firstname, users.user_lastname, users.user_gender, users.user_picture, users.user_verified, pages.* FROM posts_comments LEFT JOIN users ON posts_comments.user_id = users.user_id AND posts_comments.user_type = 'user' LEFT JOIN posts_photos ON users.user_picture_id = posts_photos.photo_id LEFT JOIN pages ON posts_comments.user_id = pages.page_id AND posts_comments.user_type = 'page' WHERE NOT (users.user_name <=> NULL AND pages.page_name <=> NULL) AND posts_comments.node_type = 'post' AND posts_comments.node_id = %s AND posts_comments.comment_id > %s " . $order_query . " LIMIT %s, %s", secure($node_id, 'int'), secure($last_comment_id, 'int'), secure($offset, 'int', false), secure($system['min_results'], 'int', false))) or _error("SQL_ERROR_THROWEN");
             }
-            
         } else {
             /* get photo comments */
             /* check privacy */

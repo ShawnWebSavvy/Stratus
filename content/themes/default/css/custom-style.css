@@ -249,7 +249,7 @@ body.publisher-focus .publisher{border-radius:15px;}
 .iconLabel label{margin-bottom:0;}
 .iconLabel{display:flex;align-items:center;margin-bottom:15px;}
 .avatar .avtar_img{display:flex;align-items:center;justify-content:center;width:50px;height:50px;background-color:#e6f0ff;border-radius:10px;}
-.twa-headphones{background-image:url(../images/svg/svgImg/Speakers.svg) !important;background-size:20px !important;}
+.twa-headphones{background-image:url(../images/svg/svgImg/Speakers.svg) !important;background-size:contain !important;}
 .twa-video-game{background-image:url(../images/svg/svgImg/games.svg) !important;background-size:20px !important;}
 .twa-airplane{background-image:url(../images/svg/svgImg/traveling.svg) !important;background-size:20px !important;}
 .twa-mag-right{background-image:url(../images/svg/svgImg/nav_icon_nav_icon_explore.svg) !important;background-size:20px !important;}

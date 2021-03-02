@@ -11,7 +11,7 @@
         <div class="links">
           <ul>
             <li><a href="{$system['system_url']}/static/about">About us</a></li>
-            <li><a href="{$system['system_url']}/contacts">Contacts</a></li>
+            <li><a href="{$system['system_url']}/contacts">Contact Us</a></li>
             <!-- <li><a href="#">Our features</a></li> -->
           </ul>
           <p class="footer-copy-right desktop-view">
