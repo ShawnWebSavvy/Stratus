@@ -259,7 +259,7 @@ $(function () {
         $('#js_live-status').html('<i class="fas fa-exclamation-circle mr5"></i>' + __['Sorry, WebRTC is not available in your browser']).addClass("error");
     } else {
 
-        navigator.mediaDevices.getUserMedia({ audio: true, video: true,{
+        navigator.mediaDevices.getUserMedia({ audio: true, video:{
             facingMode: shouldFaceUser ? 'user' : 'environment'
           }
          })
