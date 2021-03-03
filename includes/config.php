@@ -1,5 +1,5 @@
 <?php
-define("DB_NAME", "sngine");
+define("DB_NAME", "stratus");
 define("DB_USER", "root");
 define("DB_PASSWORD", "root@123");
 define("DB_HOST", "localhost");
