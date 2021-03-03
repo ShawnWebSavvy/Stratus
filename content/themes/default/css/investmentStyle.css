@@ -1414,3 +1414,15 @@ select.flat-select:hover {
   position: absolute;
   left: 10px;
 }
+.comming_soon_text{
+  min-height: 267px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+}
+.comming_soon_text p {
+    font-size: 25px;
+    font-weight: 600;
+    color: #a7b4cb;
+}

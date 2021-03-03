@@ -12,6 +12,7 @@ $override_shutdown = true;
 
 // fetch bootloader
 require('bootloader.php');
+require('includes/investment-helper.php');
 
 // user access
 user_access();
@@ -202,14 +203,158 @@ try {
 					// page header
 					page_header($control_panel['title'] . " &rsaquo; " . __("Analytics Settings"));
 					break;
-
+				case 'investment':
+					// page header
+					page_header($control_panel['title'] . " &rsaquo; " . __("Investment Settings"));
+					break;
+				
 				default:
 					_error(404);
 					break;
 			}
 			break;
 
-		case 'themes':
+			case 'investment':
+				// check admin|moderator permission
+				if ($user->_is_moderator) {
+					_error(__('System Message'), __("You don't have the right permission to access this"));
+				}
+	
+				// get nested view content
+				// die($_GET['sub_view']);
+				switch ($_GET['sub_view']) {
+					case 'dashboard':
+						// page header
+
+						break;
+	
+					case 'exchanges':
+						// page header
+						page_header($control_panel['title'] . " &rsaquo; " ."Investment Exchanges");
+						// get data
+						require('includes/class-pager.php');
+						$exchanges = InvestmentHelper::getAdminExchangeDetail('investment/admin/settings/exchanges');
+						$smarty->assign('exchanges', $exchanges);
+						break;
+					case 'coin':
+						// die($_GET['edit']);
+						if(isset($_GET['exchange_id'])){
+							page_header($control_panel['title'] . " &rsaquo; " ."Investment Exchange Coin Edit");
+							$params['exchangeId'] = $_GET['exchange_id'];
+							$params['tradePair']= $_GET['trade'];
+							$detail = InvestmentHelper::getAdminSettingDetail('investment/admin/settings/fee/',$params);
+							
+							$price = $detail['price'];
+							$detail = $detail['list']['0'];
+							require('includes/investment-referral-helper.php');
+							// echo '<pre>'; print_r($detail);die;
+							$advanced = InvestmentReferralHelper::advanced_option($detail['referral_extend_bonus']);
+							// echo '<pre>'; print_r($advanced);die;
+							$smarty->assign('detail', $detail);
+							$smarty->assign('price', $price);
+							$smarty->assign('advanced', $advanced);
+							$smarty->assign('exchange_name', $_GET['exchange']);
+							$smarty->assign('exchange_id', $_GET['exchange_id']);
+							break;
+						}
+					case 'coins':
+						// die($_GET['exchange_id']);
+						if(isset($_GET['exchange_id'])&&isset($_GET['exchange'])){
+							page_header($control_panel['title'] . " &rsaquo; " ."Investment Exchange Coin Edit");
+							$details = InvestmentHelper::getAdminExchangeDetail('investment/admin/settings/fees/'.$_GET['exchange_id']);
+							// echo '<pre>'; print_r($details); die;
+							$smarty->assign('details', $details);
+							$smarty->assign('exchange_name', $_GET['exchange']);
+							$smarty->assign('exchange_id', $_GET['edit']);
+							break;
+						}
+						
+					case 'transactions':
+						$insights = [];
+						$tnx_type = ($_GET['tnx_type'] == '') ? 'buy' : $_GET['tnx_type'];
+						$get_transactions = $db->query("SELECT COUNT(*) as count FROM investment_transactions WHERE tnx_type = '$tnx_type'") or _error("SQL_ERROR");
+						$insights['transactions'] = $get_transactions->fetch_assoc()['count'];
+						// get data
+						require('includes/class-pager.php');
+						// die($tnx_type);
+						$params['selected_page'] = ((int) $_GET['page'] == 0) ? 1 : $_GET['page'];
+						$total = $db->query("SELECT COUNT(*) as count FROM investment_transactions WHERE tnx_type = '$tnx_type'") or _error("SQL_ERROR");
+						$params['total_items'] = $insights['transactions'];
+						$params['items_per_page'] = $system['max_results'];
+						$params['url'] = $system['system_url'] . '/' . $control_panel['url'] . '/investment/transactions?page=%s&tnx_type='.$tnx_type;
+						$pager = new Pager($params);
+						$limit_query = $pager->getLimitSql();
+						$get_rows = $db->query("SELECT * FROM investment_transactions INNER JOIN users ON users.user_id=investment_transactions.user_id  WHERE tnx_type = '$tnx_type' ORDER BY id DESC " . $limit_query) or _error("SQL_ERROR");
+						
+						// $rows = [];
+						if ($get_rows->num_rows > 0) {
+							while ($row = $get_rows->fetch_assoc()) {
+								if($tnx_type=='referral'){
+									
+									$row['extra'] = json_decode($row['extra'],true);
+									$get_user = $db->query(sprintf("SELECT user_firstname, user_lastname, user_name from  users WHERE user_id = %s", secure($row['extra']['who'], 'int'))) or _error("SQL_ERROR_THROWEN");
+									if ($get_user->num_rows == 0) {
+										return false;
+									}
+									$get_user =  ($get_user->num_rows>0)?$get_user->fetch_assoc():"";
+									$row['refer_by'] = $get_user;
+								}
+								$rows[] = $row;
+							}
+						}
+						// echo '<pre>'; print_r($rows);die;
+						// echo '<pre>'; print_r($pager->getPager());
+						
+						// assign variables
+						$smarty->assign('insights', $insights);
+						$smarty->assign('tnx_type', $tnx_type);
+						$smarty->assign('rows', $rows);
+						$smarty->assign('pager', $pager->getPager());
+						page_header($control_panel['title'] . " &rsaquo; " ."Investment Transactions");
+						break;
+					case 'find':
+						// die('enter');
+						$insights = [];
+						$tnx_type = ($_GET['tnx_type'] == '') ? 'buy' : $_GET['tnx_type'];
+						$search  = $_GET['query'];
+						// die($search);
+						$get_transactions = $db->query("SELECT COUNT(*) as count FROM investment_transactions WHERE tnx_type = '$tnx_type' and order_id = '$search'") or _error("SQL_ERROR");
+						$insights['transactions'] = $get_transactions->fetch_assoc()['count'];
+						// echo '<pre>'; print_r($insights);die;
+						require('includes/class-pager.php');
+						// die($tnx_type);
+						$params['selected_page'] = ((int) $_GET['page'] == 0) ? 1 : $_GET['page'];
+						$total = $db->query("SELECT COUNT(*) as count FROM investment_transactions WHERE tnx_type = '$tnx_type' and order_id ='$search'") or _error("SQL_ERROR");
+						$params['total_items'] = $insights['transactions'];
+						$params['items_per_page'] = $system['max_results'];
+						$params['url'] = $system['system_url'] . '/' . $control_panel['url'] . '/investment/transactions?page=%s&tnx_type='.$tnx_type;
+						$pager = new Pager($params);
+						$limit_query = $pager->getLimitSql();
+						$get_rows = $db->query("SELECT * FROM investment_transactions WHERE tnx_type = '$tnx_type' and order_id ='$search' ORDER BY id DESC " . $limit_query) or _error("SQL_ERROR");
+						
+						// $rows = [];
+						if ($get_rows->num_rows > 0) {
+							while ($row = $get_rows->fetch_assoc()) {
+								$rows[] = $row;
+							}
+						}
+						
+						// echo '<pre>'; print_r($tnx_type
+						
+						// assign variables
+						$smarty->assign('insights', $insights);
+						$smarty->assign('tnx_type', $tnx_type);
+						$smarty->assign('rows', $rows);
+						$smarty->assign('pager', $pager->getPager());
+						page_header($control_panel['title'] . " &rsaquo; " ."Investment Transactions");
+						break;
+					default:
+						_error(404);
+						break;
+				}
+				break;
+			
+			case 'themes':
 			// check admin|moderator permission
 			if ($user->_is_moderator) {
 				_error(__('System Message'), __("You don't have the right permission to access this"));
