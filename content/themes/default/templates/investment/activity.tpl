@@ -22,6 +22,11 @@
                                 role="tab" data-actionType="sell" aria-controls="pills-profile"
                                 aria-selected="false">Sell</a>
                         </li>
+                        <li class="nav-item">
+                            <a class="nav-link buySelltableTabs" id="pills-profile-tab11" data-toggle="pill" href="#referral"
+                                role="tab" data-actionType="referral" aria-controls="pills-profile"
+                                aria-selected="false">Referrals</a>
+                        </li>
                     </ul>
                     
                     <div class="tab-content" id="pills-tabContent">
@@ -40,6 +45,7 @@
                                         <thead>
                                             <tr>
                                                 <th>Date</th>
+                                                <th>Tranx NO</th>
                                                 <th>Trade Pair</th>
                                                 <th>Token</th>
                                                 <th>Fees(%)</th>
@@ -54,6 +60,7 @@
                                                 <td><span class=" "
                                                     data-time="{$buy_tnx['created_at']|date_format}">{$buy_tnx['created_at']|date_format}</span>
                                                 </td>
+                                                <td>{$buy_tnx['order_id']}</td>
                                                 <td>
                                                     <img src="{$system['system_url']}/content/themes/default/images/investment/withdraw.svg"
                                                         alt="withdraw Icon">
@@ -93,6 +100,7 @@
                                     <thead>
                                         <tr>
                                             <th>Date</th>
+                                            <th>Tranx NO</th>
                                             <th>Trade Pair</th>
                                             <th>Token</th>
                                             <th>Amount</th>
@@ -107,6 +115,7 @@
                                             <td><span class=" "
                                                 data-time="{$sell_tnx['created_at']|date_format}">{$sell_tnx['created_at']|date_format}</span>
                                             </td>
+                                            <td>{$sell_tnx['order_id']}</td>
                                             <td>
                                                 <img src="{$system['system_url']}/content/themes/default/images/investment/sell.svg"
                                                     alt="withdraw Icon">
@@ -119,6 +128,58 @@
                                             <td>{$sell_tnx['fees']}</td>
                                             <td>{$sell_tnx['receive_amount']}</td>
                                             <td>{$sell_tnx['status']}</td>
+                                        </tr>
+                                        {/foreach}
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+
+                        <div class="tab-pane fade" id="referral" role="tabpanel"
+                        aria-labelledby="pills-profile-tab11">
+                            <div class="section-title transactionTableChangeHeading">
+                                <img width="24px" class="mr10"
+                                    src="{$system['system_url']}/content/themes/{$system['theme']}/images/svg/svgImg/Wallet_icon_header.svg">
+                                <span>Latest Activities</span>
+                            </div>
+                            <div class="coinSelection">
+                            
+                                <table class="table table-borderless js_dataTable">
+                                    <thead>
+                                        <tr>
+                                            <th>Date</th>
+                                            <th>Tranx NO</th>
+                                            <th>Received Amount</th>
+                                            <th>Referral Bonus For</th>
+                                            <th>Bonus Apply</th>
+                                            <th>Details</th>
+                                            <th>Status</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        {foreach $all_transactions['referral'] as $referral}
+                                        <tr>
+                                            <td><span class=" "
+                                                data-time="{$referral['created_at']|date_format}">{$referral['created_at']|date_format}</span>
+                                            </td>
+                                            <td>{$referral['order_id']}</td>
+                                            <td>
+                                                <img src="{$system['system_url']}/content/themes/default/images/investment/withdraw.svg"
+                                                    alt="referral Icon">
+                                                ${$referral['amount']}
+                                            </td>
+                                            <td><a href="{$system['system_url']}/{$referral['refer_by']['user_name']}" target="_blank">{$referral['refer_by']['user_name']}</a></td>
+                                            <td>{if $referral['extra']['calc']=='fixed'}
+                                                    ${$referral['extra']['bonus']}({$referral['extra']['calc']})
+                                                {else}
+                                                    {$referral['extra']['bonus']}%
+                                                {/if}
+                                                -
+                                                {$referral['extra']['level']|upper}
+                                            </td>
+                                            <td>{$referral['details']}</td>
+                                            <td>{$referral['status']}</td>
+                                        
                                         </tr>
                                         {/foreach}
                                     </tbody>

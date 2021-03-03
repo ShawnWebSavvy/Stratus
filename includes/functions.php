@@ -2448,3 +2448,34 @@ function my_html_entity_decode(&$value)
 {
     $value = html_entity_decode($value, ENT_QUOTES);
 }
+
+function httpGetCurl($apiUrl,$base_url=null)
+{
+    $url      = $base_url . $apiUrl;
+    $curlInit = curl_init();
+    curl_setopt($curlInit, CURLOPT_URL, $url);
+    curl_setopt($curlInit, CURLOPT_RETURNTRANSFER, true);
+    //curl_setopt($ch,CURLOPT_HEADER, false);
+    $curlResponse = curl_exec($curlInit);
+    $curlResponse =  json_decode($curlResponse, true);
+    curl_close($curlInit);
+    return $curlResponse;
+}
+
+
+function httpPostCurl($apiUrl,$base_url=null,$params)
+{
+
+    $url      = $base_url . $apiUrl;
+    $curlInit = curl_init();
+    $postData = json_encode($params);
+    curl_setopt($curlInit, CURLOPT_HTTPHEADER, array('Content-Type: application/json'));
+    curl_setopt($curlInit, CURLOPT_URL, $url);
+    curl_setopt($curlInit, CURLOPT_RETURNTRANSFER, true);
+    curl_setopt($curlInit, CURLOPT_HEADER, false);
+    curl_setopt($curlInit, CURLOPT_POSTFIELDS, $postData);
+    $curlResponse = curl_exec($curlInit);
+    $curlResponse =  json_decode($curlResponse, true);
+    curl_close($curlInit);
+    return $curlResponse;
+}
