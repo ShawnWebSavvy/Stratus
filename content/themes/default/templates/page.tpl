@@ -83,6 +83,7 @@
                                 <div class="profile-avatar-crop {if $spage['page_picture_default']}x-hidden{/if}">
                                     <i class="fa fa-crop-alt js_init-crop-picture"
                                         data-image="{$spage['page_picture_full']}" data-handle="page"
+                                        data-system-url="{$system['system_url']}"
                                         data-id="{$spage['page_id']}"></i>
                                 </div>
                                 {if !$profile['user_picture_default']}
