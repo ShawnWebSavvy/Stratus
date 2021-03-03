@@ -33,7 +33,16 @@ function getWalletBalance($token){
 
             $result= $wallet_query->fetch_assoc();
             if(!empty($result)){
-              returnResponse(true,200,"Success",$result);
+              $user_details = array(
+                "user_id"=> $result['user_id'],
+                "user_name"=> $result['user_name'],
+               "user_email"=> $result['user_email'],
+                "user_affiliate_balance"=> $result['user_affiliate_balance'],
+                "user_wallet_balance"=> $result['user_wallet_balance'],
+                "user_points"=> $result['user_points'],
+
+              );
+              returnResponse(true,200,"Success",$user_details);
             }else{
               returnResponse(false,300,"Something went wrong");
 
