@@ -925,6 +925,7 @@ function init_picture_position() {
                                             __["Friends"] +
                                             "</button>"
                                         );
+                                        !isNaN(parseInt($('.friendsCount').text())) ? $('.friendsCount').html(parseInt($('.friendsCount').text()) + 1) : 0;
                                     }
 
                                     if (_do == "friend-decline") {
@@ -983,6 +984,11 @@ function init_picture_position() {
                                                     "</button>"
                                                 ),
                                             _this.remove());
+                                          
+                                            if (_do == "friend-remove") {
+                                                !isNaN(parseInt($('.friendsCount').text())) ? $('.friendsCount').html(parseInt($('.friendsCount').text()) - 1) : 0;
+                                            }
+    
                             },
                             "json"
                         ).fail(function () {

@@ -154,7 +154,13 @@ function agora_get_camera_devices() {
             var name = camera.label.split('(')[0];
             var optionId = 'camera_' + i;
             var deviceId = camera.deviceId;
-            if (i === 0 && localStreams.camera.camId === '') {
+          
+            if(shouldFaceUser===true){
+                if(i == 1){
+                    localStreams.camera.camId = deviceId;
+                }
+
+            }else{
                 localStreams.camera.camId = deviceId;
             }
             /* update camera-list */
