@@ -746,3 +746,10 @@ function button_status(e, t) {
             });
         }, 1300);
     });
+    $(document).on("click", "#add_post_show", function () {
+        if ($(this).hasClass("lessMore")) {
+          $(this).removeClass('lessMore');
+        } else {
+          $(this).addClass('lessMore');
+        }
+      });
