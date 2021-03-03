@@ -557,7 +557,10 @@ $(function () {
     });
   }
   /* delete story */
-  $("body").on("click", ".js_story-deleter", function () {
+  $("body").on("focus", ".js_story-deleter", function (event) {
+    event.stopPropagation(); 
+    event.stopImmediatePropagation();
+
     var id = $(this).data("id");
     confirm(
       __["Delete"],

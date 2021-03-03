@@ -194,7 +194,10 @@ $(function () {
     if (($("body").on("click", ".add-story", function () { }), $("#stories").length > 0))
         var stories = new Zuck("stories", { skin: "Stratus", avatars: !0, list: !1, backNative: !0, previousTap: !0, autoFullScreen: !1, localStorage: !1, stories: $("#stories").data("json") });
     if (
-        ($("body").on("click", ".js_story-deleter", function () {
+        ($("body").on("focus", ".js_story-deleter", function (event) {
+            event.stopPropagation(); 
+            event.stopImmediatePropagation();
+
             var id = $(this).data("id");
             confirm(__.Delete, __["Are you sure you want to delete this?"], function () {
                 $.post(

@@ -33,6 +33,9 @@
 .market-localhub .modal-dialog .modal-body{overflow-y:auto}
 .modal-open .modal{padding-bottom:30px}
 .js_story-deleter{position:absolute;z-index:2;background-color:transparent;color:#fff;left:255px;top:-2px;padding:0!important}
+
+.js_story-deleter.js_zuck_btn{ left:114px;top:-6px;}
+
 .body.group-localhub .js_leave-group{width:100%!important}
 .publisher-focus{overflow:hidden}
 .rightSideBarScroll button img{margin-right:0}
