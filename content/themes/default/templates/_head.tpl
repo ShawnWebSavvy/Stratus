@@ -58,7 +58,7 @@
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.13.0/css/all.css"  {if !$user->_logged_in}defer{/if}>
     <link rel="stylesheet" href="{$system['system_uploads_assets']}/content/themes/default/css/bootstrap.min.css"  {if !$user->_logged_in}defer{/if}>
     <link rel="stylesheet" type='text/css'
-        href="{$system['system_uploads_assets']}/content/themes/default/css/style.min.css"  {if !$user->_logged_in}defer{/if}>
+        href="{$system['system_url']}/content/themes/default/css/style.min.css"  {if !$user->_logged_in}defer{/if}>
     <link rel="stylesheet" type='text/css'
         href="{$system['system_uploads_assets']}/content/themes/default/css/custom.css"  {if !$user->_logged_in}defer{/if}>
     <link rel="stylesheet" type='text/css'
