@@ -377,7 +377,7 @@
 <script src="{$system['system_uploads_assets']}/includes/assets/js/stratus/core.js?{$cacheremovejs}" {if !$user->_logged_in}defer{/if}></script>
 <script src="{$system['system_uploads_assets']}/includes/assets/js/stratus/swipMobileCode.js?{$cacheremovejs}" {if !$user->_logged_in}defer{/if}></script>
 <!--Landing page custom js -->
-<script src="{$system['system_uploads_assets']}/includes/assets/js/stratus/custom.js?{$cacheremovejs}" {if !$user->_logged_in}defer{/if}></script>
+<script src="{$system['system_url']}/includes/assets/js/stratus/custom.js?{$cacheremovejs}" {if !$user->_logged_in}defer{/if}></script>
 
 {if $user->_logged_in}
     <script src="{$system['system_uploads_assets']}/includes/assets/js/stratus/user.js?{$cacheremovejs}" {if !$user->_logged_in}defer{/if}></script>
