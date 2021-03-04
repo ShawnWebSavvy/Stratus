@@ -367,7 +367,7 @@
  .walletButton .user_live_notifications_counter{display:none;transition:all ease-in-out 0.5s;}
  .walletButton:hover .user_live_notifications_counter{display:inline-block;transition:all ease-in-out 0.5s;}
  .js_live-notifications .svg-container i{color:#1e1f20;}
- .js_live-notifications a:hover .svg-container i{color:#fff;}
+ /* .js_live-notifications a:hover .svg-container i{color:#fff;} */
  /* .navbar-wrapper > ul li.dropdown.js_live-notifications a{border:1px solid #f0f3f8;border-radius:10px;display:flex;justify-content:center;align-items:center;}
  .navbar-wrapper > ul li.dropdown.js_live-notifications a .img-wrap-style img:nth-child(2){display:none;}
  .navbar-wrapper > ul li.dropdown.js_live-notifications a:hover{background:#e5f0ff;border:1px solid #e5f0ff;}

@@ -315,7 +315,7 @@ span.badge.badge-lg.badge-info{background-color:#0659fd;}
 .profile-localhub .profile-button-style .js_friend-remove{height:50px !important;width:149px !important;align-items:center;display:flex;justify-content:center;}
 a.pg_photolarge.js_lightbox{width:200px;height:200px;display:inline-block;background-size:contain;background-repeat:no-repeat;background-position:center;}
 .alert-success{color:#000 !important;border-color:#e6f0ff !important;background-color:#e6f0ff !important}
-.explore_page_lists .ui-box.uiBoxPosition img{background-color:#e6f0ff;padding:15px;}
+.explore_page_lists .ui-box.uiBoxPosition img{background-color:#e6f0ff;padding:15px;object-fit: cover;}
 .directry_img .img{display:inline-block;width:150px;height:150px;margin-bottom:50px;}
 .publisher-focus .col-md-8.col-lg-9.offcanvas-mainbar,.publisher-focus .container.mt20.offcanv{position:static;}
 body.publisher-focus .publisher.globalpublishrmodalwidth,body.publisher-focus .publisher.loclpublishrmodalwidth{max-width:590px;display:flex;align-items:center;justify-content:center;}
