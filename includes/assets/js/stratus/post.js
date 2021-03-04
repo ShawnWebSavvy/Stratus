@@ -1039,12 +1039,13 @@ $(function () {
                             // bricklayer.redraw();
                         }
 
-                        if ((data.offset++, response.append ? stream.append(response.data) : stream.prepend(response.data), $(window).width() > 1024)) {
+                        if ((data.offset++, response.append ? posts_stream.append(response.data) : posts_stream.prepend(response.data), $(window).width() > 1024)) {
                             // if ($("body #landing_feeds_post_ul").length > 0) var macyInstance = Macy({ container: ".feeds_post_ul", trueOrder: !0, columns: 2, waitForImages: !0 });
                             // if ($("body #feeds_post_ul").length > 0)
                                 // var macyInstance = Macy({ container: ".feeds_post_ul", trueOrder: !0, columns: 2, waitForImages: !0 });
                         }
-                        // response.callback ? eval(response.callback) : response.posts && (posts_loader.hide(), posts_stream.removeData("loading"), posts_stream.html(response.posts), setTimeout(photo_grid(), 200));
+                        posts_loader.hide(), posts_stream.removeData("loading"), posts_stream.html(response.posts), setTimeout(photo_grid(), 200)
+                        // response.callback ? eval(response.callback) : response.posts && ();
                     },
                     "json"
                 );

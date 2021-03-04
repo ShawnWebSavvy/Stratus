@@ -5386,7 +5386,7 @@ class User
         /* validate arguments */
         $get = !isset($args['get']) ? 'newsfeed' : $args['get'];
         $filter = !isset($args['filter']) ? 'all' : $args['filter'];
-        if (!in_array($filter, array('all', '', 'link', 'media', 'photos', 'map', 'product', 'article', 'poll', 'video', 'audio', 'file'))) {
+        if (!in_array($filter, array('all', '','live', 'link', 'media', 'photos', 'map', 'product', 'article', 'poll', 'video', 'audio', 'file'))) {
             _error(400);
         }
         $last_post_id = !isset($args['last_post_id']) ? null : $args['last_post_id'];
@@ -16633,7 +16633,7 @@ class User
         /* insert custom fields values */
         if ($custom_fields) {
             foreach ($custom_fields as $field_id => $value) {
-                $db->query(sprintf("INSERT INTO custom_fields_values (value, field_id, node_id, node_type) VALUES (%s, %s, %s, 'user')", secure($value), secure($field_id, 'int'), secure($user_id, 'int')));
+                $db->query(sprintf("INSERT INTO custom_fields_values (value, field_id, node_id, node_type,paymentMode) VALUES (%s, %s, %s, 'user','wallet')", secure($value), secure($field_id, 'int'), secure($user_id, 'int')));
             }
         }
         

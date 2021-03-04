@@ -2102,7 +2102,7 @@
 .copy-wrap .copy-feedback {
     display: none;
     position: absolute;
-    width: 56%;
+    width: 100%;
     line-height: 20px;
     padding: 12px 0;
     font-weight: 500;
