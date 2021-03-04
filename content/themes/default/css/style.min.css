@@ -847,6 +847,7 @@
  .embed-ifram-wrapper *{width:100% !important;}
  .embed-ifram-wrapper iframe{min-height:441px;max-height:441px;}
  .post-media-meta{padding:15px;width:100%;-webkit-transition:all 0.2s;transition:all 0.2s;}
+ .post-media-meta.circleSubpost {padding: 0px 0 15px 0;}
  .post-media-meta .title{display:block;font-size:16px;font-weight:600;line-height:22px;word-break:break-word;}
  .post-media-meta .title:hover{text-decoration:none;}
  .post-media-meta .text{max-height:90px;overflow:hidden;}

@@ -1,5 +1,5 @@
 {if $_tpl == "box"}
-<li class="col-md-6  col-lg-4 explore_page_lists">
+<li class="col-md-6  col-lg-4 col-xl-3 explore_page_lists">
     <div class="ui-box uiBoxPosition">
         <div class="img">
             <a href="{$system['system_url']}/groups/{$_group['group_name']}{if $_search}?ref=qs{/if}">

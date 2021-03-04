@@ -1105,7 +1105,7 @@
                            {if $profile['user_id'] == $user->_data['user_id'] || $profile['user_privacy_groups'] ==
                            "public" || ($profile['user_privacy_groups'] == "friends" && $profile['we_friends'])}
                            {if count($profile['groups']) > 0}
-                           <ul class="row">
+                           <ul class="row profileGroupWrap">
                               {foreach $profile['groups'] as $_group}
                               {include file='__feeds_group.tpl' _tpl="box"}
                               {/foreach}
