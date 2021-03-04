@@ -4875,7 +4875,7 @@
             </div>
         </form>
         <!-- Analytics -->
-     {elseif $sub_view == "investment"}
+    {elseif $sub_view == "investment"}
 
         <!-- card-header -->
         <div class="card-header with-icon">
@@ -4917,6 +4917,129 @@
             </div>
         </form>
 
-    {/if}
+    {elseif $sub_view == "referral"}
 
+        <!-- card-header -->
+        <div class="card-header with-icon">
+            <!-- panel title -->
+            <i class="fa fa-cog mr10"></i>{__("Settings")} &rsaquo; {__("Investment Referral")}
+            <!-- panel title -->
+        </div>
+        <!-- card-header -->
+
+        <form class="js_ajax-forms admin-settings-analytics-form" data-url="admin/settings.php?edit=investment">
+            <div class="card-body">
+                <div class="form-table-row">
+                    <div class="avatar">
+                        {include file='__svg_icons.tpl' icon="website_live" width="40px" height="40px"}
+                    </div>
+                    <div class="gaps-2x"></div>
+                    <div class="card-text ico-setting setting-token-referral">
+                        <div class="row">
+                            <div class="col-lg-3 col-sm-6">
+                                <div class="input-item input-with-label">
+                                    <label class="form-control-label">Referral System</label>
+                                    <div class="input-wrap input-wrap-switch">
+                                        <input class="input-switch switch-toggle" data-switch="switch-to-referral" name="referral_system" type="checkbox" {{ get_setting('referral_system')==1 ? 'checked ' : '' }}id="referral-system-enable">
+                                        <label for="referral-system-enable"><span>Disable</span><span class="over">Enable</span></label>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-12">
+                                <div class="switch-content switch-to-referral">
+                                    <h5 class="card-title-sm text-secondary">Referral User <small class="ucap text-primary">(who referred)</small></h5>
+                                    <div class="row">
+                                        
+                                        <div class="col-lg-3 col-sm-6">
+                                            <div class="input-item input-with-label">
+                                                <label class="form-control-label">Offering Type</label>
+                                                <div class="input-wrap">
+                                                    <select class="form-control" name="referral_calc">
+                                                        <option {{ get_setting('referral_calc') == 'percent' ? 'selected ' : '' }}value="percent">Percentage</option>
+                                                        <option {{ get_setting('referral_calc') == 'fixed' ? 'selected ' : '' }}value="fixed">Fixed/Flat</option>
+                                                    </select>
+                                                </div>                                        
+                                                <span class="form-control-label">Choose whether the referral bonus will calculated as percentage or fixed amount.</span>
+                                            </div>
+                                        </div>
+                                        <div class="col-sm-12 col-lg-3">
+                                            <div class="input-item input-with-label">
+                                                <label class="form-control-label">Bonus - Offer Amount</label>
+                                                <div class="input-wrap wide-15">
+                                                    <input type="number" class="form-control" min="0" name="referral_bonus" value="{{ get_setting('referral_bonus') }}">
+                                                    <span class="input-hint input-hint-lg"><span>&nbsp;&nbsp;</span></span>
+                                                </div>
+                                                <div class="form-control-label">Specify bonus amount for who referred.</div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    @if(!empty($advanced) && $advanced->valid > 0 && !empty($advanced->options))
+                                    <div class="sap sap-gap mt-3"></div>
+                                    <div class="row">
+                                        <div class="col-12">
+                                            <h5 class="card-title-sm text-secondary">Advanced Options</h5>
+                                            <div class="row">
+                                                @foreach($advanced->options as $opt)
+                                                <div class="col-lg-3 col-sm-6">
+                                                    <div class="input-item input-with-label">
+                                                        <label class="form-control-label">{{ $opt['title'] }} - Bonus Allowed</label>
+                                                        <div class="input-wrap">
+                                                            <select class="select select-block select-bordered" name="{{ $advanced->keys }}[l{{ $opt['id'] }}][allow]">
+                                                                <option {{ (isset($opt['allow']) && $opt['allow'] == 'all_time') ? 'selected ' : '' }}value="all_time">No Limit / Always</option>
+                                                                @foreach($advanced->steps as $step)
+                                                                <option {{ (isset($opt['allow']) && $opt['allow'] == $step) ? 'selected ' : '' }}value="{{ $step }}">Upto {{ to_num_token($step) }} Tokens</option>
+                                                                @endforeach
+                                                            </select>
+                                                        </div>
+                                                        <span class="input-note">Limit with referral bonus amount.</span>
+                                                    </div>
+                                                </div>
+                                                <div class="col-lg-3 col-sm-6" id="referral-level{{ $opt['id'] }}">
+                                                    <div class="input-item input-with-label">
+                                                        <label class="form-control-label">{{ $opt['title'] }} - Bonus Offer</label>
+                                                        <div class="row guttar-10px">
+                                                            <div class="col-7">
+                                                                <div class="input-wrap">
+                                                                    <select class="select select-block select-bordered" name="{{ $advanced->keys }}[l{{ $opt['id'] }}][type]">
+                                                                        <option {{(isset($opt['type']) && $opt['type'] == 'percent') ? 'selected ' : '' }}value="percent">Percent</option>
+                                                                        <option {{ (isset($opt['type']) && $opt['type'] == 'fixed') ? 'selected ' : '' }}value="fixed">Fixed</option>
+                                                                    </select>
+                                                                </div>
+                                                            </div>
+                                                            <div class="col-5">
+                                                                <div class="input-wrap">
+                                                                    <input type="number" class="input-bordered" min="0" name="{{ $advanced->keys }}[l{{ $opt['id'] }}][amount]" value="{{ (isset($opt['amount']) ? $opt['amount'] : 0) }}">
+                                                                    <span class="input-hint input-hint-lg"><span>&nbsp;&nbsp;</span></span>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="input-note">Set '{{ $opt['title'] }}' bonus amount for each time.</div>
+                                                    </div>
+                                                </div>
+                                                @endforeach
+                                            </div>
+                                        </div>
+                                    </div>
+                                    @endif
+                                </div>
+                            </div>                                    
+                        </div>
+                            
+                    </div>
+                </div>
+
+                <!-- success -->
+                <div class="alert alert-success mb0 x-hidden"></div>
+                <!-- success -->
+
+                <!-- error -->
+                <div class="alert alert-danger mb0 x-hidden"></div>
+                <!-- error -->
+            </div>
+            <div class="card-footer text-right">
+                <button type="submit" class="btn btn-success btn-antier-green">{__("Save Changes")}</button>
+            </div>
+        </form>
+
+    {/if}
 </div>

@@ -786,7 +786,7 @@
                            <!-- see-more -->
                            <div class="alert alert-info see-more mt0 mb20 js_see-more" data-get="followers"
                               data-uid="{$profile['user_id']}">
-                              <span>{__("See More")}</span>
+                              <span>{__("Load More")}</span>
                               <div class="loader loader_small x-hidden"></div>
                            </div>
                            <!-- see-more -->
@@ -847,7 +847,7 @@
                            <!-- see-more -->
                            <div class="alert alert-info see-more mt0 mb20 js_see-more" data-get="followings"
                               data-uid="{$profile['user_id']}">
-                              <span>{__("See More")}</span>
+                              <span>{__("Load More")}</span>
                               <div class="loader loader_small x-hidden"></div>
                            </div>
                            <!-- see-more -->
