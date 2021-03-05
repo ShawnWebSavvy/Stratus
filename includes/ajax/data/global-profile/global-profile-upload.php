@@ -21,7 +21,7 @@ is_ajax();
 
 // check secret
 if ($_SESSION['secret'] != $_POST['secret']) {
-    _error(403);
+    //_error(403);
 }
 
 // user access
@@ -275,7 +275,7 @@ try {
                             $db->query(sprintf("INSERT INTO global_posts_photos_albums (user_id, user_type, title, privacy) VALUES (%s, 'user', 'Cover Photos', 'public')", secure($user->_data['user_id'], 'int'))) or _error("SQL_ERROR_THROWEN");
                             $user->_data['user_album_covers'] = $db->insert_id;
                             /* update user cover album id */
-                            $db->query(sprintf("UPDATE users SET user_album_covers = %s WHERE user_id = %s", secure($user->_data['user_album_covers'], 'int'), secure($user->_data['user_id'], 'int'))) or _error("SQL_ERROR_THROWEN");
+                            $db->query(sprintf("UPDATE users SET global_user_album_covers = %s WHERE user_id = %s", secure($user->_data['user_album_covers'], 'int'), secure($user->_data['user_id'], 'int'))) or _error("SQL_ERROR_THROWEN");
                         }
                         /* insert updated cover photo post */
                         $db->query(sprintf("INSERT INTO global_posts (user_id, user_type, post_type, time, privacy) VALUES (%s, 'user', 'profile_cover', %s, 'public')", secure($user->_data['user_id'], 'int'), secure($date))) or _error("SQL_ERROR_THROWEN");

@@ -82,12 +82,16 @@ class UserGlobal
                 $this->_data['global_user_picture'] = $this->_data['user_picture'];
                 $this->_data['user_picture_full'] = ($this->_data['user_picture_full']) ? $system['system_uploads'] . '/' . $this->_data['user_picture_full'] : $this->_data['user_picture_full'];
 
-                if ($this->_data['user_picture'] == "") {
-                    $this->_data['user_picture'] = $system['system_url'] . '/content/themes/' . $system['theme'] . '/images/user_defoult_img.jpg';
-                }
-                if ($this->_data['global_user_picture'] == "") {
-                    $this->_data['global_user_picture'] = $system['system_url'] . '/content/themes/' . $system['theme'] . '/images/user_defoult_img.jpg';
-                }
+                // if ($this->_data['user_picture'] == "") {
+                //     $this->_data['user_picture'] = $system['system_url'] . '/content/themes/' . $system['theme'] . '/images/user_defoult_img.jpg';
+                // }
+                // if ($this->_data['global_user_picture'] == "") {
+                //     $this->_data['global_user_picture'] = $system['system_url'] . '/content/themes/' . $system['theme'] . '/images/user_defoult_img.jpg';
+                // }
+                // if ($this->_data['user_picture_full'] == "") {
+                //     $this->_data['user_picture_full'] = 'content/themes/default/images/user_defoult_img.jpg';
+                // }
+                $this->_data['global_user_picture'] = $system['system_url'] . '/' . 'includes/wallet-api/image-exist-api.php?userPicture=' . $this->_data['global_user_picture'] . '&userPictureFull=' . $system['system_uploads'] . '/' . $this->_data['user_picture_full'] . '&type=1';
 
                 /* get all friends ids */
                 $this->_data['friends_ids'] = $this->get_friends_ids($this->_data['user_id']);
@@ -316,19 +320,19 @@ class UserGlobal
                 case 'react_angry':
                     if ($system['email_post_likes'] && $receiver['email_post_likes']) {
                         if ($node_type == "post") {
-                            $notification['url'] = $system['system_url'] . '/posts/' . $node_url;
+                            $notification['url'] = $system['system_url'] . '/global-profile-posts/' . $node_url;
                             $notification['message'] = __("reacted to your post");
                         } elseif ($node_type == "photo") {
                             $notification['url'] = $system['system_url'] . '/photos/' . $node_url;
                             $notification['message'] = __("reacted to your photo");
                         } elseif ($node_type == "post_comment") {
-                            $notification['url'] = $system['system_url'] . '/posts/' . $node_url . $notify_id;
+                            $notification['url'] = $system['system_url'] . '/global-profile-posts/' . $node_url . $notify_id;
                             $notification['message'] = __("reacted to your comment");
                         } elseif ($node_type == "photo_comment") {
                             $notification['url'] = $system['system_url'] . '/photos/' . $node_url . $notify_id;
                             $notification['message'] = __("reacted to your comment");
                         } elseif ($node_type == "post_reply") {
-                            $notification['url'] = $system['system_url'] . '/posts/' . $node_url . $notify_id;
+                            $notification['url'] = $system['system_url'] . '/global-profile-posts/' . $node_url . $notify_id;
                             $notification['message'] = __("reacted to your reply");
                         } elseif ($node_type == "photo_reply") {
                             $notification['url'] = $system['system_url'] . '/photos/' . $node_url . $notify_id;
@@ -340,7 +344,7 @@ class UserGlobal
                 case 'comment':
                     if ($system['email_post_comments'] && $receiver['email_post_comments']) {
                         if ($node_type == "post") {
-                            $notification['url'] = $system['system_url'] . '/posts/' . $node_url . $notify_id;
+                            $notification['url'] = $system['system_url'] . '/global-profile-posts/' . $node_url . $notify_id;
                             $notification['message'] = __("commented on your post");
                         } elseif ($node_type == "photo") {
                             $notification['url'] = $system['system_url'] . '/photos/' . $node_url . $notify_id;
@@ -352,7 +356,7 @@ class UserGlobal
                 case 'reply':
                     if ($system['email_post_comments'] && $receiver['email_post_comments']) {
                         if ($node_type == "post") {
-                            $notification['url'] = $system['system_url'] . '/posts/' . $node_url . $notify_id;
+                            $notification['url'] = $system['system_url'] . '/global-profile-posts/' . $node_url . $notify_id;
                         } elseif ($node_type == "photo") {
                             $notification['url'] = $system['system_url'] . '/photos/' . $node_url . $notify_id;
                         }
@@ -362,7 +366,7 @@ class UserGlobal
 
                 case 'share':
                     if ($system['email_post_shares'] && $receiver['email_post_shares']) {
-                        $notification['url'] = $system['system_url'] . '/posts/' . $node_url;
+                        $notification['url'] = $system['system_url'] . '/global-profile-posts/' . $node_url;
                         $notification['message'] = __("shared your post");
                     }
                     break;
@@ -371,12 +375,12 @@ class UserGlobal
                     if ($system['email_mentions'] && $receiver['email_mentions']) {
                         switch ($node_type) {
                             case 'post':
-                                $notification['url'] = $system['system_url'] . '/posts/' . $node_url;
+                                $notification['url'] = $system['system_url'] . '/global-profile-posts/' . $node_url;
                                 $notification['message'] = __("mentioned you in a post");
                                 break;
 
                             case 'comment_post':
-                                $notification['url'] = $system['system_url'] . '/posts/' . $node_url . $notify_id;
+                                $notification['url'] = $system['system_url'] . '/global-profile-posts/' . $node_url . $notify_id;
                                 $notification['message'] = __("mentioned you in a comment");
                                 break;
 
@@ -386,7 +390,7 @@ class UserGlobal
                                 break;
 
                             case 'reply_post':
-                                $notification['url'] = $system['system_url'] . '/posts/' . $node_url . $notify_id;
+                                $notification['url'] = $system['system_url'] . '/global-profile-posts/' . $node_url . $notify_id;
                                 $notification['message'] = __("mentioned you in a reply");
                                 break;
 
@@ -407,7 +411,7 @@ class UserGlobal
 
                 case 'wall':
                     if ($system['email_wall_posts'] && $receiver['email_wall_posts']) {
-                        $notification['url'] = $system['system_url'] . '/posts/' . $node_url;
+                        $notification['url'] = $system['system_url'] . '/global-profile-posts/' . $node_url;
                         $notification['message'] = __("posted on your wall");
                     }
                     break;
@@ -470,19 +474,19 @@ class UserGlobal
                 case 'react_sad':
                 case 'react_angry':
                     if ($node_type == "post") {
-                        $notification['url'] = $system['system_url'] . '/posts/' . $node_url;
+                        $notification['url'] = $system['system_url'] . '/global-profile-posts/' . $node_url;
                         $notification['message'] = __("reacted to your post");
                     } elseif ($node_type == "photo") {
                         $notification['url'] = $system['system_url'] . '/photos/' . $node_url;
                         $notification['message'] = __("reacted to your photo");
                     } elseif ($node_type == "post_comment") {
-                        $notification['url'] = $system['system_url'] . '/posts/' . $node_url . $notify_id;
+                        $notification['url'] = $system['system_url'] . '/global-profile-posts/' . $node_url . $notify_id;
                         $notification['message'] = __("reacted to your comment");
                     } elseif ($node_type == "photo_comment") {
                         $notification['url'] = $system['system_url'] . '/photos/' . $node_url . $notify_id;
                         $notification['message'] = __("reacted to your comment");
                     } elseif ($node_type == "post_reply") {
-                        $notification['url'] = $system['system_url'] . '/posts/' . $node_url . $notify_id;
+                        $notification['url'] = $system['system_url'] . '/global-profile-posts/' . $node_url . $notify_id;
                         $notification['message'] = __("reacted to your reply");
                     } elseif ($node_type == "photo_reply") {
                         $notification['url'] = $system['system_url'] . '/photos/' . $node_url . $notify_id;
@@ -492,7 +496,7 @@ class UserGlobal
 
                 case 'comment':
                     if ($node_type == "post") {
-                        $notification['url'] = $system['system_url'] . '/posts/' . $node_url . $notify_id;
+                        $notification['url'] = $system['system_url'] . '/global-profile-posts/' . $node_url . $notify_id;
                         $notification['message'] = __("commented on your post");
                     } elseif ($node_type == "photo") {
                         $notification['url'] = $system['system_url'] . '/photos/' . $node_url . $notify_id;
@@ -502,7 +506,7 @@ class UserGlobal
 
                 case 'reply':
                     if ($node_type == "post") {
-                        $notification['url'] = $system['system_url'] . '/posts/' . $node_url . $notify_id;
+                        $notification['url'] = $system['system_url'] . '/global-profile-posts/' . $node_url . $notify_id;
                     } elseif ($node_type == "photo") {
                         $notification['url'] = $system['system_url'] . '/photos/' . $node_url . $notify_id;
                     }
@@ -510,24 +514,24 @@ class UserGlobal
                     break;
 
                 case 'share':
-                    $notification['url'] = $system['system_url'] . '/posts/' . $node_url;
+                    $notification['url'] = $system['system_url'] . '/global-profile-posts/' . $node_url;
                     $notification['message'] = __("shared your post");
                     break;
 
                 case 'vote':
-                    $notification['url'] = $system['system_url'] . '/posts/' . $node_url;
+                    $notification['url'] = $system['system_url'] . '/global-profile-posts/' . $node_url;
                     $notification['message'] = __("voted on your poll");
                     break;
 
                 case 'mention':
                     switch ($node_type) {
                         case 'post':
-                            $notification['url'] = $system['system_url'] . '/posts/' . $node_url;
+                            $notification['url'] = $system['system_url'] . '/global-profile-posts/' . $node_url;
                             $notification['message'] = __("mentioned you in a post");
                             break;
 
                         case 'comment_post':
-                            $notification['url'] = $system['system_url'] . '/posts/' . $node_url . $notify_id;
+                            $notification['url'] = $system['system_url'] . '/global-profile-posts/' . $node_url . $notify_id;
                             $notification['message'] = __("mentioned you in a comment");
                             break;
 
@@ -537,7 +541,7 @@ class UserGlobal
                             break;
 
                         case 'reply_post':
-                            $notification['url'] = $system['system_url'] . '/posts/' . $node_url . $notify_id;
+                            $notification['url'] = $system['system_url'] . '/global-profile-posts/' . $node_url . $notify_id;
                             $notification['message'] = __("mentioned you in a reply");
                             break;
 
@@ -554,7 +558,7 @@ class UserGlobal
                     // break;
 
                 case 'wall':
-                    $notification['url'] = $system['system_url'] . '/posts/' . $node_url;
+                    $notification['url'] = $system['system_url'] . '/posglobal-profile-poststs/' . $node_url;
                     $notification['message'] = __("posted on your wall");
                     break;
 
@@ -2777,11 +2781,12 @@ class UserGlobal
     }
 
     public function global_profile_get_child_post($post_id, $get_comments = true, $pass_privacy_check = false)
-    { //echo "".$post_id; exit;
+    {
+        //  echo "".$post_id; exit;
         global $db, $system;
         $childPostArray = [];
         $postFinalQuery = sprintf("SELECT * FROM global_posts as posts  where parentId =" . $post_id . " order by post_id desc");
-
+        
         $get_posts = $db->query($postFinalQuery) or _error("SQL_ERROR_THROWEN");
         if ($get_posts->num_rows > 0) {
             while ($childpost = $get_posts->fetch_assoc()) {
@@ -2844,13 +2849,13 @@ class UserGlobal
 
         //$post['post_author_picture'] = $this->_data['global_user_picture'];
         $post['post_author_picture'] = get_picture($this->_data['global_user_picture'], $this->_data['user_gender']);
-//        $checkImage = image_exist($post['post_author_picture']);
-//        if ($checkImage != 200) {
-//            $post['post_author_picture'] = $system['system_uploads'] . '/' . $this->_data['user_picture_full'];
-//        }
+        //        $checkImage = image_exist($post['post_author_picture']);
+        //        if ($checkImage != 200) {
+        //            $post['post_author_picture'] = $system['system_uploads'] . '/' . $this->_data['user_picture_full'];
+        //        }
         $post['post_author_url'] = $system['system_url'] . '/global-profile.php?username=' . $this->_data['user_name'];
 
-        $post['post_author_picture'] = 'includes/wallet-api/image-exist-api.php?userPicture='.$post['post_author_picture'].'&userPictureFull='.$this->_data['user_picture_full'];
+        $post['post_author_picture'] = $system['system_url'] . '/includes/wallet-api/image-exist-api.php?userPicture=' . $post['post_author_picture'] . '&userPictureFull=' . $this->_data['user_picture_full'];
 
         $post['post_author_name'] = $this->_data['user_firstname'] . " " . $this->_data['user_lastname'];
         $post['post_author_user_name'] = $this->_data['user_name'];
@@ -4139,12 +4144,12 @@ class UserGlobal
             /* user */
             if ($post['global_user_picture'] == "") {
                 $post['post_author_picture'] = get_picture($post['global_user_picture'], $post['user_gender']);
-//                $checkImage = image_exist($post['post_author_picture']);
-//                if ($checkImage != '200') {
-//                    $post['post_author_picture'] = $system['system_uploads'] . '/' . $this->_data['user_picture_full'];
-//                }
+                //                $checkImage = image_exist($post['post_author_picture']);
+                //                if ($checkImage != '200') {
+                //                    $post['post_author_picture'] = $system['system_uploads'] . '/' . $this->_data['user_picture_full'];
+                //                }
 
-                $post['post_author_picture'] = 'includes/wallet-api/image-exist-api.php?userPicture='.$post['post_author_picture'].'&userPictureFull='.$this->_data['user_picture_full'];
+                $post['post_author_picture'] = $system['system_url'] . '/includes/wallet-api/image-exist-api.php?userPicture=' . $post['post_author_picture'] . '&userPictureFull=' . $this->_data['user_picture_full'];
             } else {
                 $post['post_author_picture'] = $system['system_uploads'] . '/' . $post['global_user_picture'];
             }
@@ -4266,7 +4271,7 @@ class UserGlobal
      * @param boolean $pass_check
      * @return array
      */
-    public function global_get_photos($id, $type = 'user', $offset = 0, $pass_check = true)
+    public function global_get_photos($id, $type = 'user',$user_id=null, $offset = 0, $pass_check = true)
     {
         global $db, $system;
         $photos = [];
@@ -4275,12 +4280,18 @@ class UserGlobal
                 $offset *= $system['max_results_even'];
                 if (!$pass_check) {
                     /* check the album */
-                    $album = $this->get_album($id, false);
+                    $album = $this->global_get_album($id, false);
                     if (!$album) {
                         return $photos;
                     }
                 }
-                $get_photos = $db->query(sprintf("SELECT posts_photos.photo_id, posts_photos.source, posts_photos.blur, posts.user_id, posts.user_type, posts.privacy FROM global_posts_photos as posts_photos INNER JOIN  global_posts as posts ON posts_photos.post_id = posts.post_id WHERE posts_photos.album_id = %s ORDER BY posts_photos.photo_id DESC LIMIT %s, %s", secure($id, 'int'), secure($offset, 'int', false), secure($system['max_results_even'], 'int', false))) or _error("SQL_ERROR_THROWEN");
+                // echo'<pre>'; print_r($user_id);die;
+                if(!empty($user_id)){
+                    $get_photos = $db->query(sprintf("SELECT posts_photos.photo_id, posts_photos.source, posts_photos.blur, posts.user_id, posts.user_type, posts.privacy FROM global_posts_photos as posts_photos INNER JOIN  global_posts as posts ON posts_photos.post_id = posts.post_id WHERE posts_photos.album_id = %s And posts.user_id= %s ORDER BY posts_photos.photo_id DESC LIMIT %s, %s", secure($id, 'int'), secure($user_id, 'int'), secure($offset, 'int', false), secure($system['max_results_even'], 'int', false))) or _error("SQL_ERROR_THROWEN");
+                }else{
+                    $get_photos = $db->query(sprintf("SELECT posts_photos.photo_id, posts_photos.source, posts_photos.blur, posts.user_id, posts.user_type, posts.privacy FROM global_posts_photos as posts_photos INNER JOIN  global_posts as posts ON posts_photos.post_id = posts.post_id WHERE posts_photos.album_id = %s ORDER BY posts_photos.photo_id DESC LIMIT %s, %s", secure($id, 'int'), secure($offset, 'int', false), secure($system['max_results_even'], 'int', false))) or _error("SQL_ERROR_THROWEN");
+                }
+                
                 if ($get_photos->num_rows > 0) {
                     while ($photo = $get_photos->fetch_assoc()) {
                         /* check the photo privacy */
@@ -4756,7 +4767,8 @@ class UserGlobal
         $offset *= $system['max_results_even'];
         switch ($type) {
             case 'user':
-                $get_albums = $db->query(sprintf("SELECT album_id FROM global_posts_photos_albums as posts_photos_albums WHERE user_type = 'user' AND user_id = %s AND in_group = '0' AND in_event = '0' LIMIT %s, %s", secure($id, 'int'), secure($offset, 'int', false), secure($system['max_results_even'], 'int', false))) or _error("SQL_ERROR_THROWEN");
+                $userquery = sprintf("SELECT album_id FROM global_posts_photos_albums as posts_photos_albums WHERE user_type = 'user' AND user_id = %s AND in_group = '0' AND in_event = '0' LIMIT %s, %s", secure($id, 'int'), secure($offset, 'int', false), secure($system['max_results_even'], 'int', false));
+                $get_albums = $db->query($userquery) or _error("SQL_ERROR_THROWEN");
                 break;
 
             case 'page':
@@ -4791,7 +4803,7 @@ class UserGlobal
      * @return array
      */
     public function global_get_album($album_id, $full_details = true)
-    {
+    {   
         global $db, $system;
         $get_album = $db->query(sprintf("SELECT posts_photos_albums.*, users.user_name, users.user_album_pictures, users.user_album_covers, users.user_album_timeline, pages.page_id, pages.page_name, pages.page_admin, pages.page_album_pictures, pages.page_album_covers, pages.page_album_timeline, `groups`.group_name, `groups`.group_admin, `groups`.group_album_pictures, `groups`.group_album_covers, `groups`.group_album_timeline, `events`.event_admin, `events`.event_album_covers, `events`.event_album_timeline FROM global_posts_photos_albums as posts_photos_albums LEFT JOIN users ON posts_photos_albums.user_id = users.user_id AND posts_photos_albums.user_type = 'user' LEFT JOIN pages ON posts_photos_albums.user_id = pages.page_id AND posts_photos_albums.user_type = 'page' LEFT JOIN `groups` ON posts_photos_albums.in_group = '1' AND posts_photos_albums.group_id = `groups`.group_id LEFT JOIN `events` ON posts_photos_albums.in_event = '1' AND posts_photos_albums.event_id = `events`.event_id WHERE NOT (users.user_name <=> NULL AND pages.page_name <=> NULL) AND posts_photos_albums.album_id = %s", secure($album_id, 'int'))) or _error("SQL_ERROR_THROWEN");
         if ($get_album->num_rows == 0) {
@@ -4844,7 +4856,7 @@ class UserGlobal
             $album['cover']['blur'] = $cover['blur'];
         }
         /* get album total photos count */
-        $get_album_photos_count = $db->query(sprintf("SELECT COUNT(*) as count FROM posts_photos WHERE album_id = %s", secure($album_id, 'int'))) or _error("SQL_ERROR");
+        $get_album_photos_count = $db->query(sprintf("SELECT COUNT(*) as count FROM global_posts_photos WHERE album_id = %s", secure($album_id, 'int'))) or _error("SQL_ERROR");
         $album['photos_count'] = $get_album_photos_count->fetch_assoc()['count'];
         /* check if viewer can manage album [Edit|Update|Delete] */
         $album['is_page_admin'] = $this->check_page_adminship($this->_data['user_id'], $album['page_id']);
@@ -4877,7 +4889,7 @@ class UserGlobal
         }
         /* get album photos */
         if ($full_details) {
-            $album['photos'] = $this->global_get_photos($album_id, 'album');
+            $album['photos'] = $this->global_get_photos($album_id, 'album',$album['author_id']);
         }
         return $album;
     }
@@ -5060,22 +5072,22 @@ class UserGlobal
         /* reaction the post */
         if ($photo['i_react']) {
             /* remove any previous reaction */
-            $db->query(sprintf("DELETE FROM posts_photos_reactions WHERE user_id = %s AND photo_id = %s", secure($this->_data['user_id'], 'int'), secure($photo_id, 'int'))) or _error("SQL_ERROR_THROWEN");
+            $db->query(sprintf("DELETE FROM global_posts_photos_reactions WHERE user_id = %s AND photo_id = %s", secure($this->_data['user_id'], 'int'), secure($photo_id, 'int'))) or _error("SQL_ERROR_THROWEN");
             /* update photo reaction counter */
             $reaction_field = "reaction_" . $photo['i_reaction'] . "_count";
-            $db->query(sprintf("UPDATE posts_photos SET $reaction_field = IF($reaction_field=0,0,$reaction_field-1) WHERE photo_id = %s", secure($photo_id, 'int'))) or _error("SQL_ERROR_THROWEN");
+            $db->query(sprintf("UPDATE global_posts_photos SET $reaction_field = IF($reaction_field=0,0,$reaction_field-1) WHERE photo_id = %s", secure($photo_id, 'int'))) or _error("SQL_ERROR_THROWEN");
             /* delete notification */
             $this->delete_notification($post['author_id'], 'react_' . $photo['i_reaction'], 'photo', $photo_id);
         }
-        $db->query(sprintf("INSERT INTO posts_photos_reactions (user_id, photo_id, reaction, reaction_time) VALUES (%s, %s, %s, %s)", secure($this->_data['user_id'], 'int'), secure($photo_id, 'int'), secure($reaction), secure($date))) or _error("SQL_ERROR_THROWEN");
+        $db->query(sprintf("INSERT INTO global_posts_photos_reactions (user_id, photo_id, reaction, reaction_time) VALUES (%s, %s, %s, %s)", secure($this->_data['user_id'], 'int'), secure($photo_id, 'int'), secure($reaction), secure($date))) or _error("SQL_ERROR_THROWEN");
         $reaction_id = $db->insert_id;
         /* update photo reaction counter */
         $reaction_field = "reaction_" . $reaction . "_count";
-        $db->query(sprintf("UPDATE posts_photos SET $reaction_field = $reaction_field + 1 WHERE photo_id = %s", secure($photo_id, 'int'))) or _error("SQL_ERROR_THROWEN");
+        $db->query(sprintf("UPDATE global_posts_photos SET $reaction_field = $reaction_field + 1 WHERE photo_id = %s", secure($photo_id, 'int'))) or _error("SQL_ERROR_THROWEN");
         /* post notification */
         $this->post_notification(array('to_user_id' => $post['author_id'], 'action' => 'react_' . $reaction, 'hub' => "LocalHub", 'node_type' => 'photo', 'node_url' => $photo_id));
         /* points balance */
-        $this->points_balance("add", $this->_data['user_id'], "posts_photos_reactions", $reaction_id);
+        $this->points_balance("add", $this->_data['user_id'], "global_posts_photos_reactions", $reaction_id);
     }
 
 
@@ -5096,14 +5108,14 @@ class UserGlobal
         }
         $post = $photo['post'];
         /* unreact the photo */
-        $db->query(sprintf("DELETE FROM posts_photos_reactions WHERE user_id = %s AND photo_id = %s", secure($this->_data['user_id'], 'int'), secure($photo_id, 'int'))) or _error("SQL_ERROR_THROWEN");
+        $db->query(sprintf("DELETE FROM global_posts_photos_reactions WHERE user_id = %s AND photo_id = %s", secure($this->_data['user_id'], 'int'), secure($photo_id, 'int'))) or _error("SQL_ERROR_THROWEN");
         /* update photo reaction counter */
         $reaction_field = "reaction_" . $photo['i_reaction'] . "_count";
-        $db->query(sprintf("UPDATE posts_photos SET $reaction_field = IF($reaction_field=0,0,$reaction_field-1) WHERE photo_id = %s", secure($photo_id, 'int'))) or _error("SQL_ERROR_THROWEN");
+        $db->query(sprintf("UPDATE global_posts_photos SET $reaction_field = IF($reaction_field=0,0,$reaction_field-1) WHERE photo_id = %s", secure($photo_id, 'int'))) or _error("SQL_ERROR_THROWEN");
         /* delete notification */
         $this->delete_notification($post['author_id'], 'react_' . $reaction, 'photo', $photo_id);
         /* points balance */
-        $this->points_balance("delete", $this->_data['user_id'], "posts_photos_reactions");
+        $this->points_balance("delete", $this->_data['user_id'], "global_posts_photos_reactions");
     }
 
     /* ------------------------------- */
@@ -5860,9 +5872,10 @@ class UserGlobal
         $m = 1;
         $n = 1;
         foreach ($localPostArray as $key => $localpost) {
-            // echo $localPostArray[$key]['post_type']; echo "<br/>";
+
             if ($localPostArray[$key]['post_type'] == '' || $localPostArray[$key]['post_type'] == 'photos' || $localPostArray[$key]['post_type'] == 'video' || $localPostArray[$key]['post_type'] == 'profile_picture' || $localPostArray[$key]['post_type'] == 'profile_cover' || $localPostArray[$key]['post_type'] == 'shared' || $localPostArray[$key]['post_type'] == 'album' || $localPostArray[$key]['post_type'] == 'file' || $localPostArray[$key]['post_type'] == 'link' || $localPostArray[$key]['post_type'] == 'audio' || $localPostArray[$key]['post_type'] == 'poll') {
                 if ($i <= 2) {
+                    $localPostArray[$key]['posthub'] = "LocalHub";
                     $finalPostArray[] = $localPostArray[$key];
 
                     $i++;
@@ -5899,13 +5912,17 @@ class UserGlobal
                 }
             }
         }
-        //echo "<pre>";print_r($finalPostArray); exit;
         if (!empty($global_get_postsAarray[0])) {
+            $global_get_postsAarray[0]['posthub'] = "GlobalHub";
             $finalPostArray[] = $global_get_postsAarray[0];
         }
         if (!empty($global_get_postsAarray[1])) {
+            $global_get_postsAarray[1]['posthub'] = "GlobalHub";
             $finalPostArray[] = $global_get_postsAarray[1];
         }
+        // echo "<pre>";
+        // print_r($finalPostArray);
+        // die;
         return $finalPostArray;
     }
 
@@ -6891,15 +6908,15 @@ class UserGlobal
             while ($follower = $get_followers->fetch_assoc()) {
                 if ($follower['user_picture'] == "") {
                     $follower['user_picture'] = get_picture($follower['user_picture'], $follower['user_gender']);
-//                    $checkImage = image_exist($follower['user_picture']);
+                    //                    $checkImage = image_exist($follower['user_picture']);
                     if ($system['s3_enabled']) {
                         $system['system_uploads'] = $system['system_uploads_url'];
                     }
-//                    if ($checkImage != 200) {
-//                        $follower['user_picture'] = $system['system_uploads'] . '/' . $follower['user_picture_full'];
-//                    }
+                    //                    if ($checkImage != 200) {
+                    //                        $follower['user_picture'] = $system['system_uploads'] . '/' . $follower['user_picture_full'];
+                    //                    }
 
-                    $follower['user_picture'] = 'includes/wallet-api/image-exist-api.php?userPicture='.$follower['user_picture'].'&userPictureFull='.$system['system_uploads'] . '/' . $follower['user_picture_full'].'&type=1';
+                    $follower['user_picture'] = $system['system_url'] . '/includes/wallet-api/image-exist-api.php?userPicture=' . $follower['user_picture'] . '&userPictureFull=' . $system['system_uploads'] . '/' . $follower['user_picture_full'] . '&type=1';
                 } else {
                     $follower['user_picture'] = $system['system_uploads'] . '/' . $follower['user_picture'];
                 }
@@ -7143,7 +7160,9 @@ class UserGlobal
     public function get_album($album_id, $full_details = true)
     {
         global $db, $system;
-        $get_album = $db->query(sprintf("SELECT posts_photos_albums.*, users.user_name, users.user_album_pictures, users.user_album_covers, users.user_album_timeline, pages.page_id, pages.page_name, pages.page_admin, pages.page_album_pictures, pages.page_album_covers, pages.page_album_timeline, `groups`.group_name, `groups`.group_admin, `groups`.group_album_pictures, `groups`.group_album_covers, `groups`.group_album_timeline, `events`.event_admin, `events`.event_album_covers, `events`.event_album_timeline FROM posts_photos_albums LEFT JOIN users ON posts_photos_albums.user_id = users.user_id AND posts_photos_albums.user_type = 'user' LEFT JOIN pages ON posts_photos_albums.user_id = pages.page_id AND posts_photos_albums.user_type = 'page' LEFT JOIN `groups` ON posts_photos_albums.in_group = '1' AND posts_photos_albums.group_id = `groups`.group_id LEFT JOIN `events` ON posts_photos_albums.in_event = '1' AND posts_photos_albums.event_id = `events`.event_id WHERE NOT (users.user_name <=> NULL AND pages.page_name <=> NULL) AND posts_photos_albums.album_id = %s", secure($album_id, 'int'))) or _error("SQL_ERROR_THROWEN");
+        
+        $albumGet = sprintf("SELECT posts_photos_albums.*, users.user_name, users.user_album_pictures, users.global_user_album_covers, users.user_album_timeline, pages.page_id, pages.page_name, pages.page_admin, pages.page_album_pictures, pages.page_album_covers, pages.page_album_timeline, `groups`.group_name, `groups`.group_admin, `groups`.group_album_pictures, `groups`.group_album_covers, `groups`.group_album_timeline, `events`.event_admin, `events`.event_album_covers, `events`.event_album_timeline FROM global_posts_photos_albums as posts_photos_albums LEFT JOIN users ON posts_photos_albums.user_id = users.user_id AND posts_photos_albums.user_type = 'user' LEFT JOIN pages ON posts_photos_albums.user_id = pages.page_id AND posts_photos_albums.user_type = 'page' LEFT JOIN `groups` ON posts_photos_albums.in_group = '1' AND posts_photos_albums.group_id = `groups`.group_id LEFT JOIN `events` ON posts_photos_albums.in_event = '1' AND posts_photos_albums.event_id = `events`.event_id WHERE NOT (users.user_name <=> NULL AND pages.page_name <=> NULL) AND posts_photos_albums.album_id = %s", secure($album_id, 'int'));
+        $get_album = $db->query($albumGet) or _error("SQL_ERROR_THROWEN");
         if ($get_album->num_rows == 0) {
             return false;
         }
@@ -7176,15 +7195,16 @@ class UserGlobal
         } elseif ($album['user_type'] == "user") {
             $album['path'] = $album['user_name'];
             /* check if (cover|profile|timeline) album */
-            $album['can_delete'] = (($album_id == $album['user_album_pictures']) or ($album_id == $album['user_album_covers']) or ($album_id == $album['user_album_timeline'])) ? false : true;
+            $album['can_delete'] = (($album_id == $album['user_album_pictures']) or ($album_id == $album['global_user_album_covers']) or ($album_id == $album['user_album_timeline'])) ? false : true;
         } elseif ($album['user_type'] == "page") {
             $album['path'] = 'pages/' . $album['page_name'];
             /* check if (cover|profile|timeline) album */
             $album['can_delete'] = (($album_id == $album['user_album_timeline']) or ($album_id == $album['page_album_covers']) or ($album_id == $album['page_album_timeline'])) ? false : true;
         }
         /* get album cover photo */
-        $where_statement = ($album['user_type'] == "user" && !$album['in_group'] && !$album['in_event']) ? "posts.privacy = 'public' AND" : '';
-        $get_cover = $db->query(sprintf("SELECT source, blur FROM posts_photos INNER JOIN posts ON posts_photos.post_id = posts.post_id WHERE " . $where_statement . " posts_photos.album_id = %s ORDER BY photo_id DESC LIMIT 1", secure($album_id, 'int'))) or _error("SQL_ERROR_THROWEN");
+        $where_statement = ($album['user_type'] == "user" && !$album['in_group'] && !$album['in_event']) ? "global_posts.privacy = 'public' AND" : '';
+        $coverget = sprintf("SELECT source, blur FROM global_posts_photos INNER JOIN global_posts ON global_posts_photos.post_id = global_posts.post_id WHERE " . $where_statement . " global_posts_photos.album_id = %s ORDER BY photo_id DESC LIMIT 1", secure($album_id, 'int'));
+        $get_cover = $db->query($coverget) or _error("SQL_ERROR_THROWEN");
         if ($get_cover->num_rows == 0) {
             $album['cover']['source'] = $system['system_url'] . '/content/themes/' . $system['theme'] . '/images/blank_album.jpg';
             $album['cover']['blur'] = 0;
@@ -7194,8 +7214,11 @@ class UserGlobal
             $album['cover']['blur'] = $cover['blur'];
         }
         /* get album total photos count */
-        $get_album_photos_count = $db->query(sprintf("SELECT COUNT(*) as count FROM posts_photos WHERE album_id = %s", secure($album_id, 'int'))) or _error("SQL_ERROR");
+        $get_album_photos_count = $db->query(sprintf("SELECT COUNT(*) as count FROM global_posts_photos WHERE album_id = %s", secure($album_id, 'int'))) or _error("SQL_ERROR");
+        
+        // echo'<pre>';print_r($get_album_photos_count->fetch_assoc());die;
         $album['photos_count'] = $get_album_photos_count->fetch_assoc()['count'];
+
         /* check if viewer can manage album [Edit|Update|Delete] */
         $album['is_page_admin'] = $this->check_page_adminship($this->_data['user_id'], $album['page_id']);
         $album['is_group_admin'] = $this->check_group_adminship($this->_data['user_id'], $album['group_id']);
@@ -7225,6 +7248,7 @@ class UserGlobal
                 $album['manage_album'] = true;
             }
         }
+        //echo "<pre>";print_r($full_details);die;
         /* get album photos */
         if ($full_details) {
             $album['photos'] = $this->get_photos($album_id, 'album');
@@ -7249,6 +7273,7 @@ class UserGlobal
     {
         global $db, $system;
         $photos = [];
+
         switch ($type) {
             case 'album':
                 $offset *= $system['max_results_even'];
@@ -7259,7 +7284,8 @@ class UserGlobal
                         return $photos;
                     }
                 }
-                $get_photos = $db->query(sprintf("SELECT posts_photos.photo_id, posts_photos.source, posts_photos.blur, posts.user_id, posts.user_type, posts.privacy FROM posts_photos INNER JOIN posts ON posts_photos.post_id = posts.post_id WHERE posts_photos.album_id = %s ORDER BY posts_photos.photo_id DESC LIMIT %s, %s", secure($id, 'int'), secure($offset, 'int', false), secure($system['max_results_even'], 'int', false))) or _error("SQL_ERROR_THROWEN");
+                $query = sprintf("SELECT posts_photos.photo_id, posts_photos.source, posts_photos.blur, posts.user_id, posts.user_type, posts.privacy FROM global_posts_photos as posts_photos INNER JOIN global_posts as posts ON posts_photos.post_id = posts.post_id WHERE posts_photos.album_id = %s ORDER BY posts_photos.photo_id DESC LIMIT %s, %s", secure($id, 'int'), secure($offset, 'int', false), secure($system['max_results_even'], 'int', false));
+                $get_photos = $db->query($query) or _error("SQL_ERROR_THROWEN");
                 if ($get_photos->num_rows > 0) {
                     while ($photo = $get_photos->fetch_assoc()) {
                         /* check the photo privacy */
@@ -7471,12 +7497,12 @@ class UserGlobal
         if ($post['user_type'] == "user") {
             /* user */
             $post['post_author_picture'] = get_picture($post['user_picture'], $post['user_gender']);
-//            $checkImage = image_exist($post['post_author_picture']);
-//            if ($checkImage != '200') {
-//                $post['post_author_picture'] = $system['system_uploads'] . '/' . $this->_data['user_picture_full'];
-//            }
+            //            $checkImage = image_exist($post['post_author_picture']);
+            //            if ($checkImage != '200') {
+            //                $post['post_author_picture'] = $system['system_uploads'] . '/' . $this->_data['user_picture_full'];
+            //            }
 
-            $post['post_author_picture'] = 'includes/wallet-api/image-exist-api.php?userPicture='.$post['post_author_picture'].'&userPictureFull='.$this->_data['user_picture_full'];
+            $post['post_author_picture'] = $system['system_url'] . '/includes/wallet-api/image-exist-api.php?userPicture=' . $post['post_author_picture'] . '&userPictureFull=' . $this->_data['user_picture_full'];
 
             $post['post_author_url'] = $system['system_url'] . '/' . $post['user_name'];
             $post['post_author_name'] = $post['user_firstname'] . " " . $post['user_lastname'];
@@ -7613,6 +7639,7 @@ class UserGlobal
         }
         /* check if the viewer can share the post */
         $post = $this->global_check_post($post_id, true);
+
         if (!$post || $post['privacy'] != 'public') {
             _error(403);
         }
@@ -8176,13 +8203,25 @@ class UserGlobal
         $messages = [];
         if ($last_message_id !== null) {
             /* get all messages after the last_message_id */
-            $messages_query = sprintf("SELECT conversations_global_messages.message_id, conversations_global_messages.message, conversations_global_messages.image, conversations_global_messages.voice_note, conversations_global_messages.time, users.user_id, users.user_name, global_profile.user_firstname as user_firstname, global_profile.user_lastname as user_lastname, users.user_gender, users.global_user_picture, users.user_subscribed, users.user_verified FROM conversations_global_messages INNER JOIN users ON conversations_global_messages.user_id = users.user_id LEFT JOIN global_profile ON users.user_id = global_profile.user_id WHERE conversations_global_messages.conversation_id = %s AND conversations_global_messages.message_id > %s", secure($conversation_id, 'int'), secure($last_message_id, 'int'));
+            $messages_query = sprintf("SELECT conversations_global_messages.message_id, conversations_global_messages.message, conversations_global_messages.image, conversations_global_messages.voice_note, conversations_global_messages.time, users.user_id, users.user_name, global_profile.user_firstname as user_firstname, global_profile.user_lastname as user_lastname, users.user_gender, users.global_user_picture, users.user_subscribed, users.user_verified, picture_photo.source as user_picture_full FROM conversations_global_messages INNER JOIN users ON conversations_global_messages.user_id = users.user_id LEFT JOIN global_profile ON users.user_id = global_profile.user_id LEFT JOIN posts_photos as picture_photo ON users.user_picture_id = picture_photo.photo_id WHERE conversations_global_messages.conversation_id = %s AND conversations_global_messages.message_id > %s", secure($conversation_id, 'int'), secure($last_message_id, 'int'));
         } else {
-            $messages_query = sprintf("SELECT * FROM ( SELECT conversations_global_messages.message_id, conversations_global_messages.message, conversations_global_messages.image, conversations_global_messages.voice_note, conversations_global_messages.time, users.user_id, users.user_name, global_profile.user_firstname as user_firstname, global_profile.user_lastname as user_lastname, users.user_gender, users.global_user_picture, users.user_subscribed, users.user_verified FROM conversations_global_messages INNER JOIN users ON conversations_global_messages.user_id = users.user_id LEFT JOIN global_profile ON users.user_id = global_profile.user_id WHERE conversations_global_messages.conversation_id = %s ORDER BY conversations_global_messages.message_id DESC LIMIT %s,%s ) messages ORDER BY messages.message_id ASC", secure($conversation_id, 'int'), secure($offset, 'int', false), secure($system['max_results'], 'int', false));
+            $messages_query = sprintf("SELECT * FROM ( SELECT conversations_global_messages.message_id, conversations_global_messages.message, conversations_global_messages.image, conversations_global_messages.voice_note, conversations_global_messages.time, users.user_id, users.user_name, global_profile.user_firstname as user_firstname, global_profile.user_lastname as user_lastname, users.user_gender, users.global_user_picture, users.user_subscribed, users.user_verified, picture_photo.source as user_picture_full FROM conversations_global_messages INNER JOIN users ON conversations_global_messages.user_id = users.user_id LEFT JOIN global_profile ON users.user_id = global_profile.user_id LEFT JOIN posts_photos as picture_photo ON users.user_picture_id = picture_photo.photo_id WHERE conversations_global_messages.conversation_id = %s ORDER BY conversations_global_messages.message_id DESC LIMIT %s,%s ) messages ORDER BY messages.message_id ASC", secure($conversation_id, 'int'), secure($offset, 'int', false), secure($system['max_results'], 'int', false));
         }
         $get_messages = $db->query($messages_query) or _error("SQL_ERROR_THROWEN");
         while ($message = $get_messages->fetch_assoc()) {
             $message['user_picture'] = get_picture($message['global_user_picture'], $message['user_gender']);
+
+            $message['user_picture_full'] = ($message['user_picture_full']) ? $system['system_uploads'] . '/' . $message['user_picture_full'] : $message['user_picture_full'];
+            if ($message['user_picture'] != "") {
+        
+                $message['user_picture'] =  $system['system_url'].'/includes/wallet-api/image-exist-api.php?userPicture=' . $message['user_picture'] . '&userPictureFull=' . $message['user_picture_full'] . '&type=1';
+            }
+            if ($message['user_picture'] == "") {
+                $message['user_picture'] =  $system['system_url'] . '/content/themes/' . $system['theme'] . '/images/user_defoult_img.jpg';
+            }
+
+
+
             $message['message'] = $this->_parse(["text" => $message['message'], "decode_mentions" => false, "decode_hashtags" => false]);
             /* return */
             $messages[] = $message;
@@ -8945,19 +8984,22 @@ class UserGlobal
         $where = "";
         /* merge (friends, followings, friend requests & friend requests sent) and get the unique ids  */
         $old_people_ids = array_unique($this->_data['followings_ids']);
+
+        $profileName = "global_profile.user_firstname != '' and users.global_user_picture != '' and ";
+
         /* add the viewer to this list */
         $old_people_ids[] = $this->_data['user_id'];
         /* make a list from old people */
         $old_people_ids_list = implode(',', $old_people_ids);
-        $where .= sprintf("WHERE user_banned = '0' AND user_id NOT IN (%s)", $old_people_ids_list);
+        $where .= sprintf("WHERE " . $profileName . " users.user_banned = '0' AND users.user_id NOT IN (%s)", $old_people_ids_list);
         if ($system['activation_enabled']) {
             $where .= " AND user_activated = '1'";
         }
         /* get users */
         if ($random) {
-            $sqlSearch = sprintf("SELECT * FROM (SELECT user_id, user_name, user_firstname, user_lastname, user_gender, global_user_picture as user_picture, user_subscribed, user_verified, (%s * acos(cos(radians(%s)) * cos(radians(user_latitude)) * cos(radians(user_longitude) - radians(%s)) + sin(radians(%s)) * sin(radians(user_latitude))) ) AS distance FROM users " . $where . " HAVING distance < %s ORDER BY distance ASC LIMIT %s) tmp ORDER BY RAND() LIMIT %s", secure($unit, 'int'), secure($this->_data['user_latitude']), secure($this->_data['user_longitude']), secure($this->_data['user_latitude']), secure($distance, 'int'), secure($system['max_results'] * 2, 'int', false), secure($system['min_results'], 'int', false));
+            $sqlSearch =  sprintf("SELECT * FROM (SELECT users.user_id, users.user_name, global_profile.user_firstname, global_profile.user_lastname, global_profile.user_gender, global_user_picture as user_picture, picture_photo.source as user_picture_full, users.user_subscribed, country.country_name as user_country_name, users.user_verified, (%s * acos(cos(radians(%s)) * cos(radians(user_latitude)) * cos(radians(user_longitude) - radians(%s)) + sin(radians(%s)) * sin(radians(user_latitude))) ) AS distance FROM users LEFT JOIN posts_photos as picture_photo ON users.user_picture_id = picture_photo.photo_id INNER JOIN global_profile ON users.user_id=global_profile.user_id left join system_countries as country on country.country_id = users.user_country " . $where . " HAVING distance < %s ORDER BY distance ASC LIMIT %s) tmp ORDER BY distance ASC LIMIT %s, %s", secure($unit, 'int'), secure($this->_data['user_latitude']), secure($this->_data['user_longitude']), secure($this->_data['user_latitude']), secure($distance, 'int'), secure($system['max_results'] * 2, 'int', false), secure($offset, 'int', false), secure($system['min_results'], 'int', false));
         } else {
-            $sqlSearch = sprintf("SELECT user_id, user_name, user_firstname, user_lastname, user_gender, global_user_picture as user_picture, user_subscribed, user_verified, (%s * acos(cos(radians(%s)) * cos(radians(user_latitude)) * cos(radians(user_longitude) - radians(%s)) + sin(radians(%s)) * sin(radians(user_latitude))) ) AS distance FROM users " . $where . " HAVING distance < %s ORDER BY distance ASC LIMIT %s, %s", secure($unit, 'int'), secure($this->_data['user_latitude']), secure($this->_data['user_longitude']), secure($this->_data['user_latitude']), secure($distance, 'int'), secure($offset, 'int', false), secure($system['min_results'], 'int', false));
+            $sqlSearch = sprintf("SELECT * FROM (SELECT users.user_id, users.user_name, global_profile.user_firstname, global_profile.user_lastname, global_profile.user_gender, global_user_picture as user_picture, picture_photo.source as user_picture_full, users.user_subscribed, country.country_name as user_country_name, users.user_verified, (%s * acos(cos(radians(%s)) * cos(radians(user_latitude)) * cos(radians(user_longitude) - radians(%s)) + sin(radians(%s)) * sin(radians(user_latitude))) ) AS distance FROM users LEFT JOIN posts_photos as picture_photo ON users.user_picture_id = picture_photo.photo_id INNER JOIN global_profile ON users.user_id=global_profile.user_id left join system_countries as country on country.country_id = users.user_country " . $where . " HAVING distance < %s ORDER BY distance ASC LIMIT %s, %s", secure($unit, 'int'), secure($this->_data['user_latitude']), secure($this->_data['user_longitude']), secure($this->_data['user_latitude']), secure($distance, 'int'), secure($offset, 'int', false), secure($system['min_results'], 'int', false));
         }
         $get_users = $db->query($sqlSearch) or _error("SQL_ERROR_THROWEN");
         if ($get_users->num_rows > 0) {
@@ -9022,13 +9064,13 @@ class UserGlobal
         } else {
             $selectQuery = sprintf("SELECT hashtags.hashtag, hashtags_posts.id as hash_post, COUNT(hashtags_posts.id) AS frequency,hashtags_posts.postHubType FROM hashtags INNER JOIN hashtags_posts as hashtags_posts ON hashtags.hashtag_id = hashtags_posts.hashtag_id WHERE hashtags_posts.created_at > DATE_SUB(CURDATE(), INTERVAL 1 %s) GROUP BY hashtags_posts.hashtag_id,hashtags_posts.postHubType ORDER BY frequency DESC LIMIT %s", secure($system['trending_hashtags_interval'], "", false), secure($system['trending_hashtags_limit'], 'int', false));
         }
-        $get_trending_hashtags = $db->query($selectQuery) or _error("SQL_ERROR_THROWEN");
-        if ($get_trending_hashtags->num_rows > 0) {
-            while ($hashtag = $get_trending_hashtags->fetch_assoc()) {
-                $hashtag['hashtag'] = html_entity_decode($hashtag['hashtag'], ENT_QUOTES);
-                $hashtags[] = $hashtag;
-            }
-        }
+        // $get_trending_hashtags = $db->query($selectQuery) or _error("SQL_ERROR_THROWEN");
+        // if ($get_trending_hashtags->num_rows > 0) {
+        //     while ($hashtag = $get_trending_hashtags->fetch_assoc()) {
+        //         $hashtag['hashtag'] = html_entity_decode($hashtag['hashtag'], ENT_QUOTES);
+        //         $hashtags[] = $hashtag;
+        //     }
+        // }
 
         return $hashtags;
     }
@@ -9559,4 +9601,104 @@ class UserGlobal
         }
         return $events;
     }
+    /**
+     * disable_post_comments
+     *
+     * @param integer $post_id
+     * @return void
+     */
+    public function disable_post_comments($post_id)
+    {
+        global $db;
+        /* (check|get) post */
+        $post = $this->global_check_post($post_id);
+        if (!$post) {
+            _error(403);
+        }
+        /* check if viewer can edit post */
+        if (!$post['manage_post']) {
+            _error(403);
+        }
+        /* trun off post commenting */
+        $db->query(sprintf("UPDATE global_posts SET comments_disabled = '1' WHERE post_id = %s", secure($post_id, 'int'))) or _error("SQL_ERROR_THROWEN");
+    }
+
+
+    /**
+     * enable_post_comments
+     *
+     * @param integer $post_id
+     * @return void
+     */
+    public function enable_post_comments($post_id)
+    {
+        global $db;
+        /* (check|get) post */
+        $post = $this->global_check_post($post_id);
+        if (!$post) {
+            _error(403);
+        }
+        /* check if viewer can edit post */
+        if (!$post['manage_post']) {
+            _error(403);
+        }
+
+        /* trun on post commenting */
+        $db->query(sprintf("UPDATE global_posts SET comments_disabled = '0' WHERE post_id = %s", secure($post_id, 'int'))) or _error("SQL_ERROR_THROWEN");
+    }
+
+       /**
+     * edit_comment
+     *
+     * @param integer $comment_id
+     * @param string $message
+     * @param string $photo
+     * @return array
+     */
+    public function global_edit_comment($comment_id, $message, $photo)
+    {
+        global $db, $system;
+        /* (check|get) comment */
+        $comment = $this->global_get_comment($comment_id);
+        if (!$comment) {
+            _error(403);
+        }
+        /* check if viewer can manage comment [Edit] */
+        $comment['edit_comment'] = false;
+        if ($this->_logged_in) {
+            /* viewer is (admins|moderators)] */
+            if ($this->_data['user_group'] < 3) {
+                $comment['edit_comment'] = true;
+            }
+            /* viewer is the author of comment */
+            if ($this->_data['user_id'] == $comment['author_id']) {
+                $comment['edit_comment'] = true;
+            }
+        }
+        if (!$comment['edit_comment']) {
+            _error(400);
+        }
+        /* check post max length */
+        if ($system['max_comment_length'] > 0 && $this->_data['user_group'] >= 3) {
+            if (strlen($message) >= $system['max_comment_length']) {
+                modal("MESSAGE", __("Text Length Limit Reached"), __("Your message characters length is over the allowed limit") . " (" . $system['max_comment_length'] . " " . __("Characters") . ")");
+            }
+        }
+        /* update comment */
+        $comment['text'] = $message;
+        $comment['image'] = (!is_empty($comment['image'])) ? $comment['image'] : $photo;
+        $db->query(sprintf("UPDATE global_posts_comments SET text = %s, image = %s WHERE comment_id = %s", secure($comment['text']), secure($comment['image']), secure($comment_id, 'int'))) or _error("SQL_ERROR_THROWEN");
+        /* post mention notifications if any */
+        if ($comment['node_type'] == "comment") {
+            $this->post_mentions($comment['text'], $comment['parent_comment']['node_id'], "reply_" . $comment['parent_comment']['node_type'], 'comment_' . $comment['comment_id'], array($comment['post']['author_id'], $comment['parent_comment']['author_id']));
+        } else {
+            $this->post_mentions($comment['text'], $comment['node_id'], "comment_" . $comment['node_type'], 'comment_' . $comment['comment_id'], array($comment['post']['author_id']));
+        }
+        /* parse text */
+        $comment['text_plain'] = htmlentities($comment['text'], ENT_QUOTES, 'utf-8');
+        $comment['text'] = $this->_parse(["text" => $comment['text_plain']]);
+        /* return */
+        return $comment;
+    }
+
 }

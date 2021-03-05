@@ -6,7 +6,7 @@
 
         <!-- side panel -->
         {if $user->_logged_in}
-        <div class="col-12  offcanvas-sidebar js_sticky-sidebar">
+        <div class="col-12  offcanvas-sidebar js_sticky-sidebar" id="sidebarHiddSwip">
             {include file='_sidebar.tpl'}
         </div>
         {/if}
@@ -188,7 +188,7 @@
             <!-- profile-header -->
         </section>
         <!-- profile-tabs -->
-        <div class="profile-header-tabs for-mobile">
+        <div class="profile-header-tabs custom-tabs for-mobile">
             <ul>
                 {if $event['event_privacy'] == "public" || $event['i_joined'] || $event['i_admin']}
                 <li>
@@ -232,7 +232,7 @@
             </ul>
         </div>
         <!-- profile-tabs -->
-        <div class="col-lg-3 col-md-4 about_sec ">
+        <div class="col-md-12 col-xl-3 col-lg-4 about_sec ">
             <div class="profileUpdatesDesign">
                 <!-- panel [about] -->
                 <div class="card">
@@ -416,7 +416,7 @@
             </div>
         </div>
         <!-- content panel -->
-        <div class="col-md-9 col-md-8 sec_cstm_w {if $user->_logged_in} offcanvas-mainbar{/if} ">
+        <div class="col-md-12 col-xl-9 col-lg-8">
 
             <!-- profile-content -->
             <div class="row">

@@ -13,7 +13,7 @@
         </div>
         {* </a> *}
 
-        <div class="data-content">
+       <div class="data-content" style="padding-left: 10px;">
             <!-- {if $conversation['image'] != ''}
             <div class="float-right">
                 <img class="data-img lazyload" data-src="{$system['system_uploads']}/{$conversation['image']}" alt="">

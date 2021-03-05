@@ -71,7 +71,7 @@
 		people" || $page=="groups" || $page=="ads" || $page=="pages" || $page=="events" } active{/if} {$page}">
 
 		<li {if ($active_page=='GlobalHub' )}class="active" {/if}>
-			<a href="{$system['system_url']}/global-profile-timeline.php">
+			<a href="{$system['system_url']}/global-profile-timeline">
 				<div class="svg-container">
 					<img src="{$system['system_url']}/content/themes/default/images/svg/svgImg/nav_icon_globalHub-active.svg"
 						class="blackicon">

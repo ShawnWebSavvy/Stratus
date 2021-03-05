@@ -7,7 +7,7 @@
             {include file='__svg_icons.tpl' icon="spy" width="30px" height="30px"}
         </div>
         {else}
-        <a class="post-avatar-picture {$_post['post_author_online']}" href="{$_post['post_author_url']}"
+        <a class="post-avatar-picture" href="{$_post['post_author_url']}"
             style="background-image:url({$_post['post_author_picture']});">
         </a>
         {if $_post['post_author_online']}<i class="fa fa-circle online-dot"></i>{/if}
@@ -29,10 +29,10 @@
                     <div class="action no-desc">
                         <div class="post_images__">
                             <img style="height:20px;width:20px;"
-                                src="{$system['system_url']}/content/themes/default/images/svg/svgImg/blogNewsWhite.svg"
+                                src="{$system['system_uploads_assets']}/content/themes/default/images/svg/svgImg/blogNewsWhite.svg"
                                 class="blackicon">
                             <img style="height:20px;width:20px;"
-                                src="{$system['system_url']}/content/themes/default/images/svg/svgImg/blogNewsHover.svg"
+                                src="{$system['system_uploads_assets']}/content/themes/default/images/svg/svgImg/blogNewsHover.svg"
                                 class="whiteicon">
                         </div>
                         <span>{__("Mark as Sold")}</span>
@@ -43,10 +43,10 @@
                     <div class="action no-desc">
                         <div class="post_images__">
                             <img style="height:20px;width:20px;"
-                                src="{$system['system_url']}/content/themes/default/images/svg/svgImg/blogNewsWhite.svg"
+                                src="{$system['system_uploads_assets']}/content/themes/default/images/svg/svgImg/blogNewsWhite.svg"
                                 class="blackicon">
                             <img style="height:20px;width:20px;"
-                                src="{$system['system_url']}/content/themes/default/images/svg/svgImg/blogNewsHover.svg"
+                                src="{$system['system_uploads_assets']}/content/themes/default/images/svg/svgImg/blogNewsHover.svg"
                                 class="whiteicon">
                         </div>
                         <span>{__("Mark as Available")}</span>
@@ -60,10 +60,10 @@
                     <div class="action no-desc">
                         <div class="post_images__">
                             <img style="height:20px;width:20px;"
-                                src="{$system['system_url']}/content/themes/default/images/svg/svgImg/bookMark.svg"
+                                src="{$system['system_uploads_assets']}/content/themes/default/images/svg/svgImg/bookMark.svg"
                                 class="blackicon">
                             <img style="height:20px;width:20px;"
-                                src="{$system['system_url']}/content/themes/default/images/svg/svgImg/bookMarkHover.svg"
+                                src="{$system['system_uploads_assets']}/content/themes/default/images/svg/svgImg/bookMarkHover.svg"
                                 class="whiteicon">
                         </div>
                         <span>{__("Unsave Post")}</span>
@@ -74,10 +74,10 @@
                     <div class="action no-desc">
                         <div class="post_images__">
                             <img style="height:20px;width:20px;"
-                                src="{$system['system_url']}/content/themes/default/images/svg/svgImg/bookMark.svg"
+                                src="{$system['system_uploads_assets']}/content/themes/default/images/svg/svgImg/bookMark.svg"
                                 class="blackicon">
                             <img style="height:20px;width:20px;"
-                                src="{$system['system_url']}/content/themes/default/images/svg/svgImg/bookMarkHover.svg"
+                                src="{$system['system_uploads_assets']}/content/themes/default/images/svg/svgImg/bookMarkHover.svg"
                                 class="whiteicon">
                         </div>
                         <span>{__("Save Post")}</span>
@@ -93,10 +93,10 @@
                     <div class="action no-desc">
                         <div class="post_images__">
                             <img style="height:20px;width:20px;"
-                                src="{$system['system_url']}/content/themes/default/images/svg/svgImg/Boost_Post.svg"
+                                src="{$system['system_uploads_assets']}/content/themes/default/images/svg/svgImg/Boost_Post.svg"
                                 class="blackicon">
                             <img style="height:20px;width:20px;"
-                                src="{$system['system_url']}/content/themes/default/images/svg/svgImg/Boost_Post-hover.svg"
+                                src="{$system['system_uploads_assets']}/content/themes/default/images/svg/svgImg/Boost_Post-hover.svg"
                                 class="whiteicon">
                         </div>
                         <span>{__("Unboost Post")}</span>
@@ -108,10 +108,10 @@
                     <div class="action no-desc">
                         <div class="post_images__">
                             <img style="height:20px;width:20px;"
-                                src="{$system['system_url']}/content/themes/default/images/svg/svgImg/Boost_Post.svg"
+                                src="{$system['system_uploads_assets']}/content/themes/default/images/svg/svgImg/Boost_Post.svg"
                                 class="blackicon">
                             <img style="height:20px;width:20px;"
-                                src="{$system['system_url']}/content/themes/default/images/svg/svgImg/Boost_Post-hover.svg"
+                                src="{$system['system_uploads_assets']}/content/themes/default/images/svg/svgImg/Boost_Post-hover.svg"
                                 class="whiteicon">
                         </div>
                         <span>{__("Boost Post")}</span>
@@ -122,10 +122,10 @@
                     <div class="action no-desc">
                         <div class="post_images__">
                             <img style="height: 20px;width: 20px;"
-                                src="{$system['system_url']}/content/themes/default/images/svg/svgImg/Boost_Post.svg"
+                                src="{$system['system_uploads_assets']}/content/themes/default/images/svg/svgImg/Boost_Post.svg"
                                 class="blackicon">
                             <img style="height: 20px;width: 20px;"
-                                src="{$system['system_url']}/content/themes/default/images/svg/svgImg/Boost_Post-hover.svg"
+                                src="{$system['system_uploads_assets']}/content/themes/default/images/svg/svgImg/Boost_Post-hover.svg"
                                 class="whiteicon">
                         </div>
                         <span>{__("Boost Post")}</span>
@@ -143,9 +143,9 @@
                 <div class="dropdown-item pointer js_unpin-post">
                     <div class="action no-desc">
                         <div class="post_images__">
-                            <img src="{$system['system_url']}/content/themes/default/images/svg/svgImg/pin_Post.svg"
+                            <img src="{$system['system_uploads_assets']}/content/themes/default/images/svg/svgImg/pin_Post.svg"
                                 class="blackicon">
-                            <img src="{$system['system_url']}/content/themes/default/images/svg/svgImg/pin_Post-hover.svg"
+                            <img src="{$system['system_uploads_assets']}/content/themes/default/images/svg/svgImg/pin_Post-hover.svg"
                                 class="whiteicon">
                         </div>
                         <span>{__("Unpin Post")}</span>
@@ -155,9 +155,9 @@
                 <div class="dropdown-item pointer js_pin-post">
                     <div class="action no-desc">
                         <div class="post_images__">
-                            <img src="{$system['system_url']}/content/themes/default/images/svg/svgImg/pin_Post.svg"
+                            <img src="{$system['system_uploads_assets']}/content/themes/default/images/svg/svgImg/pin_Post.svg"
                                 class="blackicon">
-                            <img src="{$system['system_url']}/content/themes/default/images/svg/svgImg/pin_Post-hover.svg"
+                            <img src="{$system['system_uploads_assets']}/content/themes/default/images/svg/svgImg/pin_Post-hover.svg"
                                 class="whiteicon">
                         </div>
                         <span>{__("Pin Post")}</span>
@@ -173,9 +173,9 @@
                     data-url="posts/product.php?do=edit&post_id={$_post['post_id']}">
                     <div class="action no-desc">
                         <div class="post_images__">
-                            <img src="{$system['system_url']}/content/themes/default/images/svg/svgImg/edit_icon.svg"
+                            <img src="{$system['system_uploads_assets']}/content/themes/default/images/svg/svgImg/edit_icon.svg"
                                 class="blackicon">
-                            <img src="{$system['system_url']}/content/themes/default/images/svg/svgImg/edit_icon_hover.svg"
+                            <img src="{$system['system_uploads_assets']}/content/themes/default/images/svg/svgImg/edit_icon_hover.svg"
                                 class="whiteicon">
                         </div>
                         <span>{__("Edit Product")}</span>
@@ -185,9 +185,9 @@
                 <a href="{$system['system_url']}/blogs/edit/{$_post['post_id']}" class="dropdown-item pointer">
                     <div class="action no-desc">
                         <div class="post_images__">
-                            <img src="{$system['system_url']}/content/themes/default/images/svg/svgImg/edit_icon.svg"
+                            <img src="{$system['system_uploads_assets']}/content/themes/default/images/svg/svgImg/edit_icon.svg"
                                 class="blackicon">
-                            <img src="{$system['system_url']}/content/themes/default/images/svg/svgImg/edit_icon_hover.svg"
+                            <img src="{$system['system_uploads_assets']}/content/themes/default/images/svg/svgImg/edit_icon_hover.svg"
                                 class="whiteicon">
                         </div>
                         <span> {__("Edit Article")}</span>
@@ -197,9 +197,9 @@
                 <div class="dropdown-item pointer js_edit-post">
                     <div class="action no-desc">
                         <div class="post_images__">
-                            <img src="{$system['system_url']}/content/themes/default/images/svg/svgImg/edit_icon.svg"
+                            <img src="{$system['system_uploads_assets']}/content/themes/default/images/svg/svgImg/edit_icon.svg"
                                 class="blackicon">
-                            <img src="{$system['system_url']}/content/themes/default/images/svg/svgImg/edit_icon_hover.svg"
+                            <img src="{$system['system_uploads_assets']}/content/themes/default/images/svg/svgImg/edit_icon_hover.svg"
                                 class="whiteicon">
                         </div>
                         <span> {__("Edit Post")}</span>
@@ -215,9 +215,9 @@
                 <div class="dropdown-item pointer js_allow-post">
                     <div class="action no-desc">
                         <div class="post_images__">
-                            <img src="{$system['system_url']}/content/themes/default/images/svg/svgImg/Hide_form.svg"
+                            <img src="{$system['system_uploads_assets']}/content/themes/default/images/svg/svgImg/Hide_form.svg"
                                 class="blackicon">
-                            <img src="{$system['system_url']}/content/themes/default/images/svg/svgImg/Hide_form-hover.svg"
+                            <img src="{$system['system_uploads_assets']}/content/themes/default/images/svg/svgImg/Hide_form-hover.svg"
                                 class="whiteicon">
                         </div>
                         <span>{__("Allow on Timeline")}</span>
@@ -227,9 +227,9 @@
                 <div class="dropdown-item pointer js_disallow-post">
                     <div class="action no-desc">
                         <div class="post_images__">
-                            <img src="{$system['system_url']}/content/themes/default/images/svg/svgImg/Hide_form.svg"
+                            <img src="{$system['system_uploads_assets']}/content/themes/default/images/svg/svgImg/Hide_form.svg"
                                 class="blackicon">
-                            <img src="{$system['system_url']}/content/themes/default/images/svg/svgImg/Hide_form-hover.svg"
+                            <img src="{$system['system_uploads_assets']}/content/themes/default/images/svg/svgImg/Hide_form-hover.svg"
                                 class="whiteicon">
                         </div>
                         <span>{__("Hide from Timeline")}</span>
@@ -243,9 +243,9 @@
                 <div class="dropdown-item pointer js_enable-post-comments">
                     <div class="action no-desc">
                         <div class="post_images__">
-                            <img src="{$system['system_url']}/content/themes/default/images/svg/svgImg/timelineOff.svg"
+                            <img src="{$system['system_uploads_assets']}/content/themes/default/images/svg/svgImg/timelineOff.svg"
                                 class="blackicon">
-                            <img src="{$system['system_url']}/content/themes/default/images/svg/svgImg/timelineOff-hover.svg"
+                            <img src="{$system['system_uploads_assets']}/content/themes/default/images/svg/svgImg/timelineOff-hover.svg"
                                 class="whiteicon">
                         </div>
                         <span>{__("Turn on Commenting")}</span>
@@ -255,9 +255,9 @@
                 <div class="dropdown-item pointer js_disable-post-comments">
                     <div class="action no-desc">
                         <div class="post_images__">
-                            <img src="{$system['system_url']}/content/themes/default/images/svg/svgImg/modelCross.svg"
+                            <img src="{$system['system_uploads_assets']}/content/themes/default/images/svg/svgImg/modelCross.svg"
                                 class="blackicon">
-                            <img src="{$system['system_url']}/content/themes/default/images/svg/svgImg/modelCross_hover.svg"
+                            <img src="{$system['system_uploads_assets']}/content/themes/default/images/svg/svgImg/modelCross_hover.svg"
                                 class="whiteicon">
                         </div>
                         <span>{__("Turn off Commenting")}</span>
@@ -271,9 +271,9 @@
                     data-author-name="{$_post['post_author_name']}">
                     <div class="action ">
                         <div class="post_images__">
-                            <img src="{$system['system_url']}/content/themes/default/images/svg/svgImg/modelCross.svg"
+                            <img src="{$system['system_uploads_assets']}/content/themes/default/images/svg/svgImg/modelCross.svg"
                                 class="blackicon">
-                            <img src="{$system['system_url']}/content/themes/default/images/svg/svgImg/modelCross_hover.svg"
+                            <img src="{$system['system_uploads_assets']}/content/themes/default/images/svg/svgImg/modelCross_hover.svg"
                                 class="whiteicon">
                         </div>
                         {__("Unfollow")} {$_post['user_firstname']}
@@ -284,9 +284,9 @@
                 <div class="dropdown-item pointer js_hide-post">
                     <div class="action">
                         <div class="post_images__">
-                            <img src="{$system['system_url']}/content/themes/default/images/svg/svgImg/Hide_form.svg"
+                            <img src="{$system['system_uploads_assets']}/content/themes/default/images/svg/svgImg/Hide_form.svg"
                                 class="blackicon">
-                            <img src="{$system['system_url']}/content/themes/default/images/svg/svgImg/Hide_form-hover.svg"
+                            <img src="{$system['system_uploads_assets']}/content/themes/default/images/svg/svgImg/Hide_form-hover.svg"
                                 class="whiteicon">
                         </div>
                         {__("Hide this post")}
@@ -296,9 +296,9 @@
                 <div class="dropdown-item pointer js_report" data-handle="post" data-id="{$_post['post_id']}">
                     <div class="action no-desc">
                         <div class="post_images__">
-                            <img src="{$system['system_url']}/content/themes/default/images/svg/svgImg/nav_icon_adHub.svg"
+                            <img src="{$system['system_uploads_assets']}/content/themes/default/images/svg/svgImg/nav_icon_adHub.svg"
                                 class="blackicon">
-                            <img src="{$system['system_url']}/content/themes/default/images/svg/svgImg/nav_icon_adHub_active.svg"
+                            <img src="{$system['system_uploads_assets']}/content/themes/default/images/svg/svgImg/nav_icon_adHub_active.svg"
                                 class="whiteicon">
                         </div>
                         {__("Report post")}
@@ -310,9 +310,9 @@
                     class="dropdown-item openInNewTab">
                     <div class="action no-desc">
                         <div class="post_images__">
-                            <img src="{$system['system_url']}/content/themes/default/images/svg/svgImg/linking-img.svg"
+                            <img src="{$system['system_uploads_assets']}/content/themes/default/images/svg/svgImg/linking-img.svg"
                                 class="blackicon">
-                            <img src="{$system['system_url']}/content/themes/default/images/svg/svgImg/linking-img-hover.svg"
+                            <img src="{$system['system_uploads_assets']}/content/themes/default/images/svg/svgImg/linking-img-hover.svg"
                                 class="whiteicon">
                         </div>
                         <span> {__("Open post in new tab")}</span>
@@ -333,9 +333,9 @@
                 <div class="dropdown-item pointer js_delete-post">
                     <div class="action no-desc">
                         <div class="post_images__">
-                            <img src="{$system['system_url']}/content/themes/default/images/svg/svgImg/delete_icon.svg"
+                            <img src="{$system['system_uploads_assets']}/content/themes/default/images/svg/svgImg/delete_icon.svg"
                                 class="blackicon">
-                            <img src="{$system['system_url']}/content/themes/default/images/svg/svgImg/delete_icon_hover.svg"
+                            <img src="{$system['system_uploads_assets']}/content/themes/default/images/svg/svgImg/delete_icon_hover.svg"
                                 class="whiteicon">
                         </div>
                         <span>{__("Delete Post")}</span>
@@ -349,9 +349,9 @@
                 <div class="dropdown-item pointer js_delete-post">
                     <div class="action no-desc">
                         <div class="post_images__">
-                            <img src="{$system['system_url']}/content/themes/default/images/svg/svgImg/delete_icon.svg"
+                            <img src="{$system['system_uploads_assets']}/content/themes/default/images/svg/svgImg/delete_icon.svg"
                                 class="blackicon">
-                            <img src="{$system['system_url']}/content/themes/default/images/svg/svgImg/delete_icon_hover.svg"
+                            <img src="{$system['system_uploads_assets']}/content/themes/default/images/svg/svgImg/delete_icon_hover.svg"
                                 class="whiteicon">
                         </div>
                         <span>{__("Delete Post")}</span>
@@ -487,7 +487,7 @@
             {if $_get != 'posts_group' && $_post['in_group']}
             <i class="fa fa-caret-right ml5 mr5"></i>
             <!-- <i class="fa fa-users ml5 mr5"></i> -->
-            <img src="{$system['system_url']}/content/themes/default/images/svg/svgImg/newgroupIcon1.svg"
+            <img src="{$system['system_uploads_assets']}/content/themes/default/images/svg/svgImg/newgroupIcon1.svg"
                 class="ml5 mr5">
             <a href="{$system['system_url']}/groups/{$_post['group_name']}">{$_post['group_title']}</a>
 
@@ -535,7 +535,7 @@
                 title='{__("Shared with: Only Me")}'>
                 <button type="button" class="btn dropdown-toggle" data-toggle="dropdown" data-display="static">
                     <span class="share_sign_img" id="{$_post['post_id']}">
-                        <img src="{$system['system_url']}/content/themes/default/images/svg/svgImg/Hide_form.svg"
+                        <img src="{$system['system_uploads_assets']}/content/themes/default/images/svg/svgImg/Hide_form.svg"
                             class="blackicon">
                     </span>
                 </button>
@@ -544,7 +544,7 @@
                     title='{__("Shared with: Friends")}'>
                     <button type="button" class="btn dropdown-toggle" data-toggle="dropdown" data-display="static">
                         <span class="share_sign_img" id="{$_post['post_id']}">
-                            <img src="{$system['system_url']}/content/themes/default/images/svg/svgImg/friendsIcon.svg"
+                            <img src="{$system['system_uploads_assets']}/content/themes/default/images/svg/svgImg/friendsIcon.svg"
                                 class="blackicon">
                         </span>
                     </button>
@@ -553,7 +553,7 @@
                         title='{__("Shared with: Public")}'>
                         <button type="button" class="btn dropdown-toggle" data-toggle="dropdown" data-display="static">
                             <span class="share_sign_img" id="{$_post['post_id']}">
-                                <img src="{$system['system_url']}/content/themes/default/images/svg/svgImg/nav_icon_globalHub.svg"
+                                <img src="{$system['system_uploads_assets']}/content/themes/default/images/svg/svgImg/nav_icon_globalHub.svg"
                                     class="blackicon">
                             </span>
                         </button>
@@ -562,9 +562,9 @@
                             <div class="dropdown-item pointer js_edit-privacy" data-title='{__("Shared with: Public")}'
                                 data-value="public">
                                 <div class="post_images__">
-                                    <img src="{$system['system_url']}/content/themes/default/images/svg/svgImg/nav_icon_globalHub.svg"
+                                    <img src="{$system['system_uploads_assets']}/content/themes/default/images/svg/svgImg/nav_icon_globalHub.svg"
                                         class="blackicon">
-                                    <img src="{$system['system_url']}/content/themes/default/images/svg/svgImg/nav_icon_globalHub-active.svg"
+                                    <img src="{$system['system_uploads_assets']}/content/themes/default/images/svg/svgImg/nav_icon_globalHub-active.svg"
                                         class="whiteicon">
                                 </div>
                                 <span> {__("Public")}</span>
@@ -582,9 +582,9 @@
                             <div class="dropdown-item pointer js_edit-privacy" data-title='{__("Shared with: Only Me")}'
                                 data-value="me">
                                 <div class="post_images__">
-                                    <img src="{$system['system_url']}/content/themes/default/images/svg/svgImg/Hide_form.svg"
+                                    <img src="{$system['system_uploads_assets']}/content/themes/default/images/svg/svgImg/Hide_form.svg"
                                         class="blackicon">
-                                    <img src="{$system['system_url']}/content/themes/default/images/svg/svgImg/Hide_form-hover.svg"
+                                    <img src="{$system['system_uploads_assets']}/content/themes/default/images/svg/svgImg/Hide_form-hover.svg"
                                         class="whiteicon">
                                 </div>
                                 <span> {__("Only Me")} </span>
@@ -600,13 +600,13 @@
                     <!-- <i class="fa fa-users" data-toggle="tooltip" data-placement="top" title='{__("Shared with")} {__("Friends")}'></i> -->
                     <span class="share_sign_img" data-toggle="tooltip" data-placement="top"
                         title='{__("Shared with")} {__("Friends")}'> <img
-                            src="{$system['system_url']}/content/themes/default/images/svg/svgImg/friendsIcon.svg"
+                            src="{$system['system_uploads_assets']}/content/themes/default/images/svg/svgImg/friendsIcon.svg"
                             class="blackicon"> </span>
                     {elseif $_post['privacy'] == "public"}
                     <!-- <i class="fa fa-globe" data-toggle="tooltip" data-placement="top" title='{__("Shared with")} {__("Public")}'></i> -->
                     <span class="share_sign_img" data-toggle="tooltip" data-placement="top"
                         title='{__("Shared with")}: {__("Public")}'> <img
-                            src="{$system['system_url']}/content/themes/default/images/svg/svgImg/nav_icon_globalHub.svg"
+                            src="{$system['system_uploads_assets']}/content/themes/default/images/svg/svgImg/nav_icon_globalHub.svg"
                             class="blackicon"> </span>
                     {elseif $_post['privacy'] == "custom"}
                     <i class="fa fa-cog" data-toggle="tooltip" data-placement="top"
@@ -852,14 +852,14 @@
             </div>
         </div>
         {elseif $_post['post_type'] == "video" && $_post['video']}
-        <div>
+        <div style="position: relative;">
             <!-- show thumbnail -->
             {if $_post['video']['thumbnail']}
-            <img onclick="onimgTagclick(this)" id="thumb_src_tag_{$_post['post_id']}" data-vid="{$_post['post_id']}"
-                data-video="{$system['system_uploads']}/{$_post['video']['source']}"
+            <img class="stratus-thumbsrc" onclick="onimgTagclick(this)" id="thumb_src_tag_{$_post['post_id']}"
+                data-vid="{$_post['post_id']}" data-video="{$system['system_uploads']}/{$_post['video']['source']}"
                 src="{$system['system_uploads']}/{$_post['video']['thumbnail']}" alt="" style="width:100%">
-            <img id="hide_play_img{$_post['post_id']}" src="https://www.myaccelerate.io/images/play-btn.png"
-                alt="play_btn"
+            <img id="hide_play_img{$_post['post_id']}" class="play_video_icon"
+                src="https://www.myaccelerate.io/images/play-btn.png" alt="play_btn"
                 style="width: 17%; position: absolute; right: 0px; left: 39%; top: 42%; pointer-events: none;">
             <!-- <video style="display:none;" class="js_fluidplayer thumb_crsp_video_tag" id="video-{$_post['video']['video_id']}{if $pinned || $boosted}-{$_post['post_id']}{/if}" {if $user->_logged_in}onplay="update_media_views('video', {$_post['video']['video_id']})"{/if} {if $_post['video']['thumbnail']}poster="{$system['system_uploads']}/{$_post['video']['thumbnail']}"{/if} controls preload="auto" style="width:100%;height:100%;" width="100%" height="100%">
           <source src="{$system['system_uploads']}/{$_post['video']['source']}" type="video/mp4">
@@ -901,30 +901,30 @@
             </div>
         </div>
         {elseif $_post['post_type'] == "live" && $_post['live']}
-              {if $system['save_live_enabled'] && $_post['live']['live_ended'] && $_post['live']['live_recorded']}
-                  <div class="overflow-hidden">
-                      <div>
-                          <video class="js_fluidplayer"
-                              id="video-{$_post['live']['live_id']}{if $pinned || $boosted}-{$_post['post_id']}{/if}"
-                              {if
-                      $_post['live']['video_thumbnail']}poster="{$system['system_uploads']}/{$_post['live']['video_thumbnail']}" {/if} controls preload="auto" controls preload="auto"
-                          style="width:100%;height:100%;" width="100%" height="100%">
-                          <source src="{$system['system_agora_uploads']}/{$_post['live']['agora_file']}"
-                              type="application/x-mpegURL">
-                      </video>
-                  </div>
-              </div>
-              {else}
+        {if $system['save_live_enabled'] && $_post['live']['live_ended'] && $_post['live']['live_recorded']}
+        <div class="overflow-hidden">
+            <div>
+                <video class="js_fluidplayer"
+                    id="video-{$_post['live']['live_id']}{if $pinned || $boosted}-{$_post['post_id']}{/if}" {if
+                    $_post['live']['video_thumbnail']}poster="{$system['system_uploads']}/{$_post['live']['video_thumbnail']}"
+                    {/if} controls preload="auto" controls preload="auto" style="width:100%;height:100%;" width="100%"
+                    height="100%">
+                    <source src="{$system['system_uploads_assets']}/{$_post['live']['agora_file']}"
+                        type="application/x-mpegURL">
+                </video>
+            </div>
+        </div>
+        {else}
 
-              <div class="youtube-player with-live js_lightbox-live">
-                  <img src="{$system['system_uploads']}/{$_post['live']['video_thumbnail']}">
-                  <div class="fluid_initial_play play live_video_play"
-                      style="background-color:#3367d6;width:60px;height:60px;background-image:unset;">
-                      <div class="fluid_initial_play_button">
-                      </div>
-                  </div>
-              </div>
-              {/if}
+        <div class="youtube-player with-live js_lightbox-live">
+            <img src="{$system['system_uploads']}/{$_post['live']['video_thumbnail']}">
+            <div class="fluid_initial_play play live_video_play"
+                style="background-color:#3367d6;width:60px;height:60px;background-image:unset;">
+                <div class="fluid_initial_play_button">
+                </div>
+            </div>
+        </div>
+        {/if}
         {elseif $_post['post_type'] == "map"}
         <div class="post-map">
             <img src="https://maps.googleapis.com/maps/api/staticmap?center={$_post['location']}&amp;zoom=13&amp;size=600x250&amp;maptype=roadmap&amp;markers=color:red%7C{$_post['location']}&amp;key={$system['geolocation_key']}"
@@ -953,7 +953,7 @@
             <div class="mb10 text-muted">
                 <span class="pages_icons">
                     <img class="blackIcon" alt="Check In" title="Check In"
-                        src="{$system['system_url']}/content/themes/default/images/svg/svgImg/addpostLocationHover.svg">
+                        src="{$system['system_uploads_assets']}/content/themes/default/images/svg/svgImg/addpostLocationHover.svg">
                 </span>
                 <span> {$_post['product']['location']} </span>
             </div>
@@ -971,7 +971,7 @@
                     <div class="title">
                         <span class="pages_icons">
                             <img class="blackIcon" alt="Check In" title="Check In"
-                                src="{$system['system_url']}/content/themes/default/images/svg/svgImg/blogNewsHover.svg">
+                                src="{$system['system_uploads_assets']}/content/themes/default/images/svg/svgImg/blogNewsHover.svg">
                         </span>
                         <span> {__("Type")} </span>
                     </div>

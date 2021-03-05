@@ -3,7 +3,7 @@
 
         <!-- side panel -->
         {* {if $user->_logged_in}
-            <div class="col-12 d-block d-md-none offcanvas-sidebar mt20">
+            <div class="col-12 d-block d-md-none offcanvas-sidebar mt20" id="sidebarHiddSwip">
                 {include file='_sidebar.tpl'}
             </div>
         {/if} *}

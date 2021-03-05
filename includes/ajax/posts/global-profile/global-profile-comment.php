@@ -52,7 +52,7 @@ try {
 	$smarty->assign('_is_reply', ($_POST['handle'] == "comment") ? true : false);
 	$smarty->assign('_comment', $comment);
 	/* return */
-	$return['comment'] = $smarty->fetch("__feeds_comment.tpl");
+	$return['comment'] = $smarty->fetch("global-profile/__feeds_comment.tpl");
 
 	// return & exit
 	return_json($return);

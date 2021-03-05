@@ -1,5 +1,6 @@
 <!-- posts-filter -->
-
+<link rel="stylesheet" href="{$system['system_uploads_assets']}/content/themes/default/css/bricklayer.css"  {if !$user->_logged_in}defer{/if}>
+<link rel="stylesheet" href="{$system['system_uploads_assets']}/content/themes/default/css/bricklayer-custom.css"  {if !$user->_logged_in}defer{/if}>
 <div class="__overlay__" id="__overlay__"></div>
 <div class="posts-filter col-12">
 	<span>{if $_title}{$_title}{else}{__("Recent Updates")}{/if}</span>
@@ -13,9 +14,9 @@
 				<div class="dropdown-item pointer" data-title='{__("All")}' data-value="all">
 					<div class="imgHover">
 						<img alt="audio" title="All"
-							src="{$system['system_url']}/content/themes/default/images/svg/svgImg/FillterAll.svg">
+							src="{$system['system_uploads_assets']}/content/themes/default/images/svg/svgImg/FillterAll.svg">
 						<img alt="All" class="hoverIcon" title="All"
-							src="{$system['system_url']}/content/themes/default/images/svg/svgImg/FillterAllHover.svg">
+							src="{$system['system_uploads_assets']}/content/themes/default/images/svg/svgImg/FillterAllHover.svg">
 					</div>
 
 					{__("All")}
@@ -23,9 +24,9 @@
 				<div class="dropdown-item pointer" data-title='{__("Text")}' data-value="">
 					<div class="imgHover">
 						<img alt="Text" title="Text"
-							src="{$system['system_url']}/content/themes/default/images/svg/svgImg/nav_icon_messages.svg">
+							src="{$system['system_uploads_assets']}/content/themes/default/images/svg/svgImg/nav_icon_messages.svg">
 						<img alt="Text" class="hoverIcon" title="Text"
-							src="{$system['system_url']}/content/themes/default/images/svg/svgImg/nav_icon_nav_icon_messages_hover.svg">
+							src="{$system['system_uploads_assets']}/content/themes/default/images/svg/svgImg/nav_icon_nav_icon_messages_hover.svg">
 					</div>
 
 					{__("Text")}
@@ -33,18 +34,18 @@
 				<div class="dropdown-item pointer" data-title='{__("Links")}' data-value="link">
 					<div class="imgHover">
 						<img alt="Links" title="Links"
-							src="{$system['system_url']}/content/themes/default/images/svg/svgImg/at_icon.svg">
+							src="{$system['system_uploads_assets']}/content/themes/default/images/svg/svgImg/at_icon.svg">
 						<img alt="Links" class="hoverIcon" title="Links"
-							src="{$system['system_url']}/content/themes/default/images/svg/svgImg/at_icon_hover.svg">
+							src="{$system['system_uploads_assets']}/content/themes/default/images/svg/svgImg/at_icon_hover.svg">
 					</div>
 					{__("Links")}
 				</div>
 				<div class="dropdown-item pointer" data-title='{__("Media")}' data-value="media">
 					<div class="imgHover">
 						<img alt="Media" title="Media"
-							src="{$system['system_url']}/content/themes/default/images/svg/svgImg/FillterMedia.svg">
+							src="{$system['system_uploads_assets']}/content/themes/default/images/svg/svgImg/FillterMedia.svg">
 						<img alt="Media" class="hoverIcon" title="Media"
-							src="{$system['system_url']}/content/themes/default/images/svg/svgImg/FillterMediaHover.svg">
+							src="{$system['system_uploads_assets']}/content/themes/default/images/svg/svgImg/FillterMediaHover.svg">
 					</div>
 
 					{__("Media")}
@@ -57,9 +58,9 @@
 				<div class="dropdown-item pointer" data-title='{__("Photos")}' data-value="photos">
 					<div class="imgHover">
 						<img alt="Photos" title="Photos"
-							src="{$system['system_url']}/content/themes/default/images/svg/svgImg/photo_message_iconHover.svg">
+							src="{$system['system_uploads_assets']}/content/themes/default/images/svg/svgImg/photo_message_iconHover.svg">
 						<img alt="Photos" class="hoverIcon" title="Photos"
-							src="{$system['system_url']}/content/themes/default/images/svg/svgImg/photo_message_icon.svg">
+							src="{$system['system_uploads_assets']}/content/themes/default/images/svg/svgImg/photo_message_icon.svg">
 					</div>
 
 					{__("Photos")}
@@ -68,9 +69,9 @@
 				<div class="dropdown-item pointer" data-title='{__("Maps")}' data-value="map">
 					<div class="imgHover">
 						<img alt="Maps" title="Maps"
-							src="{$system['system_url']}/content/themes/default/images/svg/svgImg/addpostLocation.svg">
+							src="{$system['system_uploads_assets']}/content/themes/default/images/svg/svgImg/addpostLocation.svg">
 						<img alt="Maps" class="hoverIcon" title="Maps"
-							src="{$system['system_url']}/content/themes/default/images/svg/svgImg/addpostLocationHover.svg">
+							src="{$system['system_uploads_assets']}/content/themes/default/images/svg/svgImg/addpostLocationHover.svg">
 					</div>
 
 					{__("Maps")}
@@ -81,9 +82,9 @@
 				<div class="dropdown-item pointer" data-title='{__("Products")}' data-value="product">
 					<div class="imgHover">
 						<img alt="Products" title="Products"
-							src="{$system['system_url']}/content/themes/default/images/svg/svgImg/nav_icon_marketHub.svg">
+							src="{$system['system_uploads_assets']}/content/themes/default/images/svg/svgImg/nav_icon_marketHub.svg">
 						<img alt="Products" class="hoverIcon" title="Products"
-							src="{$system['system_url']}/content/themes/default/images/svg/svgImg/nav_icon_marketHub_active.svg">
+							src="{$system['system_uploads_assets']}/content/themes/default/images/svg/svgImg/nav_icon_marketHub_active.svg">
 					</div>
 					{__("Products")}
 				</div>
@@ -93,9 +94,9 @@
 				<div class="dropdown-item pointer" data-title='{__("Articles")}' data-value="article">
 					<div class="imgHover">
 						<img alt="Articles" title="Articles"
-							src="{$system['system_url']}/content/themes/default/images/svg/svgImg/coloredpost.svg">
+							src="{$system['system_uploads_assets']}/content/themes/default/images/svg/svgImg/coloredpost.svg">
 						<img alt="Articles" class="hoverIcon" title="Articles"
-							src="{$system['system_url']}/content/themes/default/images/svg/svgImg/coloredpostHover.svg">
+							src="{$system['system_uploads_assets']}/content/themes/default/images/svg/svgImg/coloredpostHover.svg">
 					</div>
 
 					{__("Articles")}
@@ -105,9 +106,9 @@
 				<div class="dropdown-item pointer" data-title='{__("Polls")}' data-value="poll">
 					<div class="imgHover">
 						<img alt="Polls" title="Polls"
-							src="{$system['system_url']}/content/themes/default/images/svg/svgImg/FillterPoll.svg">
+							src="{$system['system_uploads_assets']}/content/themes/default/images/svg/svgImg/FillterPoll.svg">
 						<img alt="Polls" class="hoverIcon" title="Polls"
-							src="{$system['system_url']}/content/themes/default/images/svg/svgImg/FillterPollHover.svg">
+							src="{$system['system_uploads_assets']}/content/themes/default/images/svg/svgImg/FillterPollHover.svg">
 					</div>
 
 					{__("Polls")}
@@ -117,9 +118,9 @@
 				<div class="dropdown-item pointer" data-title='{__("Videos")}' data-value="video">
 					<div class="imgHover">
 						<img alt="Videos" title="Videos"
-							src="{$system['system_url']}/content/themes/default/images/svg/svgImg/add_video_iconHover.svg">
+							src="{$system['system_uploads_assets']}/content/themes/default/images/svg/svgImg/add_video_iconHover.svg">
 						<img alt="Videos" class="hoverIcon" title="Videos"
-							src="{$system['system_url']}/content/themes/default/images/svg/svgImg/add_video_icon.svg">
+							src="{$system['system_uploads_assets']}/content/themes/default/images/svg/svgImg/add_video_icon.svg">
 					</div>
 
 					{__("Videos")}
@@ -129,9 +130,9 @@
 				<div class="dropdown-item pointer" data-title='{__("Audio")}' data-value="audio">
 					<div class="imgHover">
 						<img alt="Audios" title="Audio"
-							src="{$system['system_url']}/content/themes/default/images/svg/svgImg/add_voice_notesHover.svg">
+							src="{$system['system_uploads_assets']}/content/themes/default/images/svg/svgImg/add_voice_notesHover.svg">
 						<img alt="Audio" class="hoverIcon" title="Audio"
-							src="{$system['system_url']}/content/themes/default/images/svg/svgImg/add_voice_notes.svg">
+							src="{$system['system_uploads_assets']}/content/themes/default/images/svg/svgImg/add_voice_notes.svg">
 					</div>
 
 					{__("Audio")}
@@ -141,9 +142,9 @@
 				<div class="dropdown-item pointer" data-title='{__("Files")}' data-value="file">
 					<div class="imgHover">
 						<img alt="Files" title="Files"
-							src="{$system['system_url']}/content/themes/default/images/svg/svgImg/FillterFile.svg">
+							src="{$system['system_uploads_assets']}/content/themes/default/images/svg/svgImg/FillterFile.svg">
 						<img alt="Files" class="hoverIcon" title="Files"
-							src="{$system['system_url']}/content/themes/default/images/svg/svgImg/FillterFileHover.svg">
+							src="{$system['system_uploads_assets']}/content/themes/default/images/svg/svgImg/FillterFileHover.svg">
 					</div>
 
 					{__("Files")}
@@ -156,7 +157,8 @@
 	{if $user->_data['can_write_articles']}
 	<div class="float-right">
 		<a href="{$system['system_url']}/blogs/new" class="btn btn-sm _cmn_btn post-tpl">
-			<img src="{$system['system_url']}/content/themes/{$system['theme']}/images/svg/svgImg/filePlusIcon.svg">
+			<img
+				src="{$system['system_uploads_assets']}/content/themes/{$system['theme']}/images/svg/svgImg/filePlusIcon.svg">
 			{__("Add New Article")}
 		</a>
 	</div>
@@ -194,20 +196,38 @@
 	</div>
 </div>
 <!-- posts-loader -->
-
+{if $subactive_page}
+<style>
+	@media screen and (min-width: 700px) {
+		.bricklayer-column-sizer {
+			/* If page is greater than 700px, columns will be 5% wide. That means there will be lots of columns */
+			width: 100%;
+		}
+	}
+</style>
+{else}
+<style>
+	@media screen and (min-width: 700px) {
+		.bricklayer-column-sizer {
+			/* If page is greater than 700px, columns will be 5% wide. That means there will be lots of columns */
+			width: 50%;
+		}
+	}
+</style>
+{/if}
 <div class="js_posts_stream" id="posts_all" data-get="{$_get}" data-filter="{if $_filter}{$_filter}{else}all{/if}" {if
 	$_id}data-id="{$_id}" {/if}>
 	{if $posts}
-	<ul class="feeds_post_ul" id="{if $subactive_page}profile_feeds_post_ul{else}landing_feeds_post_ul{/if}">
+	<div class="bricklayer">
 		<!-- posts -->
 		{foreach $posts as $post}
-		{include file='__feeds_post.tpl' _get=$_get}
+		{include file='__feeds_posts.tpl'}
 		{/foreach}
 		<!-- posts -->
-	</ul>
+	</div>
 
 	<!-- see-more -->
-	<div class="alert alert-post see-more mb20 js_see-more {if $user->_logged_in}js_see-more-infinite{/if}"
+	<div class="alert alert-post see-more js_see-more {if $user->_logged_in}js_see-more-infinite{/if}"
 		data-get="{$_get}" data-filter="{if $_filter}{$_filter}{else}all{/if}" {if $_id}data-id="{$_id}" {/if}>
 		<span>{__("More Stories")}</span>
 		<div class="loader loader_small x-hidden"></div>
@@ -218,10 +238,13 @@
 		data-filter="{if $_filter}{$_filter}{else}all{/if}" {if $_id}data-id="{$_id}" {/if}>
 		<!-- no posts -->
 		<div class="text-center text-muted no-post-to-show">
-			<img width="100%" src="{$system['system_url']}/content/themes/{$system['theme']}/images/no_results3.png">
+			<img width="100%"
+				src="{$system['system_uploads_assets']}/content/themes/{$system['theme']}/images/no_results3.png">
 			<p class="mb10"><strong>{__("No posts to show")}</strong></p>
 		</div>
 		<!-- no posts -->
 	</div>
 	{/if}
 </div>
+<script src="{$system['system_uploads_assets']}/content/themes/default/js/bricklayer.min.js"  {if !$user->_logged_in}defer{/if}></script>
+<script src="{$system['system_uploads_assets']}/content/themes/default/js/bricklayer-custom.js"  {if !$user->_logged_in}defer{/if}></script>

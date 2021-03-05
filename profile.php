@@ -25,11 +25,13 @@ try {
 		$system['system_uploads'] = $system['system_uploads_url'];
 	}
 	// [1] get main profile info
+
 	$get_profile = $db->query(sprintf("SELECT users.*, picture_photo.source as user_picture_full, picture_photo_post.privacy as user_picture_privacy, cover_photo.source as user_cover_full, cover_photo_post.privacy as cover_photo_privacy, packages.name as package_name, packages.color as package_color FROM users LEFT JOIN posts_photos as picture_photo ON users.user_picture_id = picture_photo.photo_id LEFT JOIN posts as picture_photo_post ON picture_photo.post_id = picture_photo_post.post_id LEFT JOIN posts_photos as cover_photo ON users.user_cover_id = cover_photo.photo_id LEFT JOIN posts as cover_photo_post ON cover_photo.post_id = cover_photo_post.post_id LEFT JOIN packages ON users.user_subscribed = '1' AND users.user_package = packages.package_id WHERE users.user_name = %s", secure($_GET['username']))) or _error("SQL_ERROR_THROWEN");
 	if ($get_profile->num_rows == 0) {
 		_error(404);
 	}
 	$profile = $get_profile->fetch_assoc();
+
 	/* check if banned by the system */
 	if ($user->banned($profile['user_id'])) {
 		_error(404);
@@ -47,26 +49,9 @@ try {
 	$profile['user_picture'] = get_picture($profile['user_picture'], $profile['user_gender']);
 	$profile['user_picture_full'] = ($profile['user_picture_full']) ? $system['system_uploads'] . '/' . $profile['user_picture_full'] : $profile['user_picture_full'];
 
-	if ($profile['user_picture'] != "") {
-//		$checkImage = image_exist($profile['user_picture']);
-//		if ($checkImage != '200') {
-//			$profile['user_picture'] = $profile['user_picture_full'];
-//		}
 
+	$profile['user_picture'] = $system['system_url'] . '/includes/wallet-api/image-exist-api.php?userPicture=' . $profile['user_picture'] . '&userPictureFull=' . $profile['user_picture_full'] . '&type=1';
 
-
-        $profile['user_picture'] = 'includes/wallet-api/image-exist-api.php?userPicture='.$profile['user_picture'].'&userPictureFull='.$profile['user_picture_full'].'&type=1';
-	}
-	if ($profile['user_picture'] == "") {
-		$profile['user_picture'] = $system['system_url'] . '/content/themes/' . $system['theme'] . '/images/user_defoult_img.jpg';
-	}
-	// if ($user->_data['user_id'] == 3441) {
-	// 	echo "<pre>";
-	// 	print_r($profile);
-	// 	echo "<br>" . $profile['user_picture'];
-	// 	echo image_exist($profile['user_picture']);
-	// 	echo "</pre>";
-	// }
 
 	$profile['user_picture_lightbox'] = $user->check_privacy($profile['user_picture_privacy'], $profile['user_id']);
 	/* get profile cover */
@@ -79,9 +64,17 @@ try {
 	/* get the connection &  mutual friends */
 	if ($user->_logged_in && $profile['user_id'] != $user->_data['user_id']) {
 		/* get the connection */
-		$profile['we_friends'] = (in_array($profile['user_id'], $user->_data['friends_ids'])) ? true : false;
-		$profile['he_request'] = (in_array($profile['user_id'], $user->_data['friend_requests_ids'])) ? true : false;
-		$profile['i_request'] = (in_array($profile['user_id'], $user->_data['friend_requests_sent_ids'])) ? true : false;
+		$friends = $user->get_friends_ids($user->_data['user_id']);
+		$friend_request_sent = $user->get_friend_requests_sent_ids();
+		$friend_request_receive = $user->get_friend_requests_ids();
+		// echo "<pre>"; print_r($friend_request_sent);
+		$profile['we_friends'] = count($friends) > 0 ? ((in_array($profile['user_id'], $friends)) ? true : false) : false;
+		$profile['he_request'] = count($friend_request_receive) > 0 ? ((in_array($profile['user_id'], $friend_request_receive)) ? true : false) : false;
+		$profile['i_request'] = count($friend_request_sent) > 0 ? ((in_array($profile['user_id'], $friend_request_sent)) ? true : false) : false;
+
+		// $profile['we_friends'] = (in_array($profile['user_id'], $user->_data['friends_ids'])) ? true : false;
+		// $profile['he_request'] = (in_array($profile['user_id'], $user->_data['friend_requests_ids'])) ? true : false;
+		// $profile['i_request'] = (in_array($profile['user_id'], $user->_data['friend_requests_sent_ids'])) ? true : false;
 		$profile['i_follow'] = (in_array($profile['user_id'], $user->_data['followings_ids'])) ? true : false;
 		$profile['friendship_declined'] = $user->friendship_declined($profile['user_id']);
 		$profile['i_poked'] = $user->poked($profile['user_id']);
@@ -89,7 +82,7 @@ try {
 		$profile['mutual_friends_count'] = $user->get_mutual_friends_count($profile['user_id']);
 		$profile['mutual_friends'] = $user->get_mutual_friends($profile['user_id']);
 	}
-
+	// echo "<pre>"; print_r($profile); die;
 
 	// [2] get view content
 	switch ($_GET['view']) {
@@ -132,9 +125,9 @@ try {
 			}
 
 			/* get followers count */
-//			$profile['followers_count'] = count($user->get_followers_ids($profile['user_id']));
+			//			$profile['followers_count'] = count($user->get_followers_ids($profile['user_id']));
 
-            $profile['followers_count'] = $user->get_followers_count($profile['user_id']);
+			$profile['followers_count'] = $user->get_followers_count($profile['user_id']);
 
 			/* get custom fields */
 			$smarty->assign('custom_fields', $user->get_custom_fields(array("for" => "user", "get" => "profile", "node_id" => $profile['user_id'])));
@@ -158,9 +151,7 @@ try {
 			/* get friends */
 			$profile['friends'] = $user->get_friends($profile['user_id']);
 			if (count($profile['friends']) > 0) {
-//				$profile['friends_count'] = count($user->get_friends_ids($profile['user_id']));
-
-                $profile['friends_count'] = $user->get_friends_count($profile['user_id']);
+				$profile['friends_count'] = $user->get_friends_count($profile['user_id']);
 			}
 
 			/* get photos */
@@ -182,33 +173,49 @@ try {
 			}
 
 			/* get posts */
-			$posts_unpin = $user->get_posts(array('get' => 'posts_profile', 'id' => $profile['user_id']));
-			$postsUnpin = array();
-			$pinnedPost = array();
-			$i = 0;
-			$k = 0;
-			foreach ($posts_unpin as $post) {
-				if ($profile['user_pinned_post'] != $post['post_id']) {
-					$postsUnpin[$i] = $post;
-					$postsUnpin[$i]['status_post'] = "unpinned_post";
-					$i++;
-				} else {
-					$pinnedPost[$k] = $post;
-					$pinnedPost[$k]['status_post'] = "pinned_post";
-					$k++;
-				}
-			}
+			// $posts_unpin = $user->get_posts(array('get' => 'posts_profile', 'id' => $profile['user_id']));
+			// $postsUnpin = array();
+			// $pinnedPost = array();
+			// $i = 0;
+			// $k = 0;
+			// foreach ($posts_unpin as $post) {
+			// 	if ($profile['user_pinned_post'] != $post['post_id']) {
+			// 		$postsUnpin[$i] = $post;
+			// 		$postsUnpin[$i]['status_post'] = "unpinned_post";
+			// 		$i++;
+			// 	} else {
+			// 		$pinnedPost[$k] = $post;
+			// 		$pinnedPost[$k]['status_post'] = "pinned_post";
+			// 		$k++;
+			// 	}
+			// }
 
-			if (!empty($pinnedPost)) {
-				$posts = array_merge($pinnedPost, $postsUnpin);
-				//$posts = array_reverse($posts)
-			} else {
-				$posts = $postsUnpin;
-			}
+			// if (!empty($pinnedPost)) {
+			// 	$posts = array_merge($pinnedPost, $postsUnpin);
+			// 	//$posts = array_reverse($posts)
+			// } else {
+			// 	$posts = $postsUnpin;
+			// }
 			// echo "<pre>";
 			// print_r($posts);
 			// die;
+			// echo "<pre>";
+			// print_r($profile);
+			// die;
+			// 	if($user->_data['user_id'])
+			$posts = syncProfilePagePostsWithRedis($user->_data['user_id'], $user, $profile, $redisObject);
+			// if(!empty($posts)){
+			// 	function invenDescSort($item1,$item2)
+			// 	{
+			// 		if ($item1['post_id'] == $item2['post_id']) return 0;
+			// 		return ($item1['post_id'] < $item2['post_id']) ? 1 : -1;
+			// 	}
+			// 	usort($posts,'invenDescSort');
+			// }
 
+			// echo "<pre>";
+			// print_r($posts);
+			// die;
 			/* prepare publisher */
 			$smarty->assign('feelings', get_feelings());
 			$smarty->assign('feelings_types', get_feelings_types());
@@ -257,11 +264,13 @@ try {
 		case 'photos':
 			/* get photos */
 			$profile['photos'] = $user->get_photos($profile['user_id']);
+			$profile['photos'] = usersProfilePhotosSection($profile['user_id'], $user, $redisObject, 'photos');
 			break;
 
 		case 'albums':
 			/* get albums */
 			$profile['albums'] = $user->get_albums($profile['user_id']);
+			$profile['albums'] = usersProfilePhotosSection($profile['user_id'], $user, $redisObject, 'albums');
 			break;
 
 		case 'album':
@@ -345,13 +354,15 @@ try {
 	}
 
 	// get suggested peopel
-	$new_people = $user->get_new_people(0, true);
+	//$new_people = $user->get_new_people(0, true);
+	$new_people = getSuggestedPeoples($user->_data['user_id'], $user, $redisObject);
 	/* assign variables */
 	$smarty->assign('new_people', $new_people);
 
 	// get suggested pages
 	if ($system['pages_enabled']) {
-		$new_pages = $user->get_pages(array('suggested' => true, 'random' => 'true', 'results' => 5));
+		//	$new_pages = $user->get_pages(array('suggested' => true, 'random' => 'true', 'results' => 5));
+		$new_pages = getSuggestedPages($user->_data['user_id'], $user, $redisObject);
 		/* assign variables */
 		$smarty->assign('new_pages', $new_pages);
 	}

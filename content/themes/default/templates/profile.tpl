@@ -5,7 +5,7 @@
    <div class="__overlay__" id="__overlay__"></div>
    <div class="row">
       {if $user->_logged_in}
-      <div class="offcanvas-sidebar sidebar-left-ant">
+      <div class="offcanvas-sidebar sidebar-left-ant" id="sidebarHiddSwip">
          {include file='_sidebar.tpl'}
       </div>
       {/if}
@@ -68,7 +68,7 @@
                            <img {if $profile['user_picture_id']} {if $user->_logged_in &&
                            $profile['user_picture_lightbox']}class="js_lightbox"{/if}
                            data-id="{$profile['user_picture_id']}"
-                           data-context="album" data-image="{$profile['user_picture_full']}" {elseif
+                           data-context="album" data-image="{$profile['user_picture']}" {elseif
                            !$profile['user_picture_default']} class="js_lightbox-nodata"
                            data-image="{$profile['user_picture']}" {/if} {if
                            $profile['user_picture_default']} src="{$profile['user_picture']}" {else}
@@ -184,7 +184,7 @@
                                     <img class=""
                                        src="{$system['system_url']}/content/themes/default/images/svg/svgImg/msg-icon.svg">
                                  </span>
-                                 <span class="text-mobile-only">Message</span>
+                                 {* <span class="text-mobile-only">Message</span> *}
                               </button>
                               <!-- message -->
                               <!-- poke & report & block -->
@@ -239,7 +239,7 @@
                                        href="{$system['system_url']}/admincp/users/edit/{$profile['user_id']}">
                                        <span class="more_option_img">
                                           <img class=""
-                                             src="{$system['system_url']}/content/themes/default/images/svg/svgImg/Cog.svg">
+                                             src="{$system['system_uploads_assets']}/content/themes/default/images/svg/svgImg/Cog.svg">
                                        </span>
                                        {__("Edit in Admin Panel")}
                                     </a>
@@ -249,7 +249,7 @@
                                        href="{$system['system_url']}/modcp/users/edit/{$profile['user_id']}">
                                        <span class="more_option_img">
                                           <img class=""
-                                             src="{$system['system_url']}/content/themes/default/images/svg/svgImg/Cog.svg">
+                                             src="{$system['system_uploads_assets']}/content/themes/default/images/svg/svgImg/Cog.svg">
                                        </span>
                                        {__("Edit in Moderator Panel")}
                                     </a>
@@ -264,7 +264,7 @@
                                  <a href="{$system['system_url']}/settings/profile" class=" edit_profile_icon">
                                     <span class="edit_profile_img">
                                        <img class=""
-                                          src="{$system['system_url']}/content/themes/default/images/svg/svgImg/edit_icon_hover.svg">
+                                          src="{$system['system_uploads_assets']}/content/themes/default/images/svg/svgImg/edit_icon_hover.svg">
                                     </span>
                                  </a>
                               </div>
@@ -280,7 +280,7 @@
                </div>
                <!-- profile-header -->
             </section>
-            <div class="col-lg-3">
+            <div class="col-md-12 col-xl-3 col-lg-4 about_sec">
                <div class="profileUpdatesDesign">
                   <!-- panel [mutual-friends] -->
                   {if $user->_logged_in && $user->_data['user_id'] != $profile['user_id'] && !$profile['we_friends'] &&
@@ -602,9 +602,9 @@
                </div>
             </div>
             <!-- content panel -->
-            <div class="col-lg-9 js_conversation-container sec_cstm_w offcanvas-mainbar">
+            <div class="col-md-12 col-xl-9 col-lg-8 js_conversation-container">
                <!-- profile-tabs -->
-               <div class="profile-header-tabs for-mobile">
+               <div class="profile-header-tabs custom-tabs for-mobile">
                   <ul>
                      <li>
                         <a href="{$system['system_url']}/{$profile['user_name']}" {if $view=="" }class="active" {/if}>
@@ -718,7 +718,7 @@
                         </div>
                         <div class="card-body pb0">
                            {if $profile['friends_count'] > 0}
-                           <ul class="row">
+                           <ul class="row wrverv">
                               {foreach $profile['friends'] as $_user}
                               {include file='__feeds_user.tpl' _tpl="box" _connection=$_user["connection"]}
                               {/foreach}
@@ -726,7 +726,7 @@
                            {if count($profile['friends']) >= $system['min_results_even']}
                            <!-- see-more -->
                            <div class="alert alert-info see-more mt0 mb20 js_see-more" data-get="friends"
-                              data-uid="{$profile['user_id']}">
+                              data-page="profile" data-uid="{$profile['user_id']}">
                               <span>{__("Load More")}</span>
                               <div class="loader loader_small x-hidden"></div>
                            </div>
@@ -786,7 +786,7 @@
                            <!-- see-more -->
                            <div class="alert alert-info see-more mt0 mb20 js_see-more" data-get="followers"
                               data-uid="{$profile['user_id']}">
-                              <span>{__("See More")}</span>
+                              <span>{__("Load More")}</span>
                               <div class="loader loader_small x-hidden"></div>
                            </div>
                            <!-- see-more -->
@@ -847,7 +847,7 @@
                            <!-- see-more -->
                            <div class="alert alert-info see-more mt0 mb20 js_see-more" data-get="followings"
                               data-uid="{$profile['user_id']}">
-                              <span>{__("See More")}</span>
+                              <span>{__("Load More")}</span>
                               <div class="loader loader_small x-hidden"></div>
                            </div>
                            <!-- see-more -->

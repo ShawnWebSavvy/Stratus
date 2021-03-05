@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="64px" height="64px" viewBox="0 0 64 64" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <title>Group</title>
+    <g id="InvestPlatform" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="Home/Knox-PRO/Buy_Sell" transform="translate(-840.000000, -759.000000)">
+            <g id="assets" transform="translate(250.000000, 138.000000)">
+                <g id="Payment-Method" transform="translate(32.000000, 496.000000)">
+                    <g id="assets-board-copy-2" transform="translate(478.000000, 58.000000)">
+                        <g id="Group" transform="translate(80.000000, 67.000000)">
+                            <g id="Icon" fill="#E5E8EF" fill-rule="nonzero">
+                                <circle id="Oval" cx="32" cy="32" r="32"></circle>
+                            </g>
+                            <text id="🤑Price-Copy" font-family="Helvetica" font-size="63" font-weight="normal" line-spacing="32" fill="#FFFFFF">
+                                <tspan x="14" y="55">+</tspan>
+                            </text>
+                        </g>
+                    </g>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>

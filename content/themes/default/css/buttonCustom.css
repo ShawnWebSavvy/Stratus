@@ -27,16 +27,12 @@ div#modal .float-right._user_action_ button.js_friend-remove:hover { background-
 .js_friend-remove:hover span.btn_image_{display:none}
 button.btn:hover .btn_image{display:none}
 .btn img{width:18px;height:18px;margin-right:8px}
+.viewProfileButton img{width: 30px; height: 30px;margin-right: 0;}
 .friendsSearchbtn.btn img{width:30px;height:30px}
 button.js_like-page{padding:5px 15px}
 button.js_like-page img{padding:0!important;height:30px!important;width:30px!important;background-color:transparent!important;transition:all ease-in-out .5s}
 button.js_unlike-page{padding:5px 15px}
-.rightSideBarScroll button, .profileUpdatesDesign button {
-    font-size: 0 !important;
-    line-height: normal !important;
-    height: auto !important;
-    min-height: 37px;
-}
+.rightSideBarScroll button, .profileUpdatesDesign button {font-size: 0 !important;line-height: normal !important;height: auto !important;min-height: 37px;}
 button.js_unlike-page img{transform:rotateX(180deg);padding:0!important;height:30px!important;width:30px!important;background-color:transparent!important;transition:all ease-in-out .5s}
 .explore_page_lists .js_interest-event .svg-container img{padding:0;background-color:transparent}
 .explore_page_lists .js_uninterest-event img{padding:0!important;background-color:transparent!important}
@@ -64,3 +60,22 @@ button.js_unlike-page img{transform:rotateX(180deg);padding:0!important;height:3
 #search-history.dropdown-search button.js_friend-add:hover,#search-results.dropdown-search button.js_friend-add:hover,#search-results.dropdown-search button.js_interest-event:hover,.btn.btn-info.js_event-invite:hover,.buttonWrapPopOver button.js_friend-add:hover,.js_friend-add:hover,.js_join-group:hover,.js_leave-group:hover,.js_page-invite:hover,.publishBtn:hover,button.js_group-invite:hover,div#modal .float-right._user_action_ button.js_friend-add:hover{background-color:#1269ff!important;color:#1e1f20}
 #search-history.dropdown-search button.js_friend-add img,#search-results.dropdown-search button.js_friend-add img{width:100%}
 div#modal .whoreactModal .float-right._user_action_ button.js_friend-remove img{ margin: 0 !important; }
+.whoreactModal .searchSectionWrap .usernamesWrapBlock ._user_action_ {display: flex;align-items: stretch;}
+.whoreactModal .searchSectionWrap .usernamesWrapBlock ._user_action_ button{
+    margin-bottom: 0;
+    margin-right: 0;
+    margin-left: 8px;
+}
+.whoreactModal .searchSectionWrap .usernamesWrapBlock ._user_action_ button{
+    margin-bottom: 0;
+    margin-right: 0;
+    margin-left: 8px;
+    background-color: #e5f0ff;
+}
+.whoreactModal .searchSectionWrap .usernamesWrapBlock ._user_action_ button span img{
+    margin-right: 0;
+    display: inline-block;
+}
+div#modal .whoreactModal .float-right._user_action_ button.js_friend-remove img:nth-child(1) {
+    display: inline-block;
+}

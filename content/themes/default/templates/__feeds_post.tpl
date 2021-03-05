@@ -27,7 +27,7 @@
             {if $standalone && $boosted || $post['boosted'] == "1"}
             <div class="boosted-icon" data-toggle="tooltip" title="{__(" Promoted")}">
                 <img width="30px" height="30px"
-                    src="{$system['system_url']}/content/themes/{$system['theme']}/images/svg/svgImg/Featured.svg">
+                    src="{$system['system_uploads_assets']}/content/themes/{$system['theme']}/images/svg/svgImg/Featured.svg">
             </div>
             {/if}
 
@@ -98,8 +98,8 @@
                     <!-- comments & shares -->
                     <span class="float-right">
                         <!-- comments -->
-                        <span class="pointer js_comments-toggle stratus_localhub_{$post['post_id']}" id="stratus_localhub_{$post['post_id']}"
-                            parent-data-id="{$post['post_id']}">
+                        <span class="pointer js_comments-toggle stratus_localhub_{$post['post_id']}"
+                            id="stratus_localhub_{$post['post_id']}" parent-data-id="{$post['post_id']}">
                             <i class="fa fa-comments"></i> {$post['comments']} {__("Comments")}
                         </span>
                         <!-- comments -->
@@ -177,40 +177,40 @@
                             <i class="icon-post icon_share"></i>
                             <span>{__("Share")}</span>
                         </div>
-                        <div class="_share-dropdown_ dropdown-menu fade"
+                        <div class="_share-dropdown_ dropdown-menu fade _share_btn_element"
                             aria-labelledby="stratus_post_{$post['post_id']}" data-toggle="modal"
                             data-url="posts/share.php?do=create&post_id={$post['post_id']}">
                             <div class="share_icon_list">
                                 <ul class="-list_items">
                                     <li class="stratus_local_share" id="share_timeline"><label
                                             for="share_to_timeline"><span class="__list_icon"><img
-                                                    src="{$system['system_url']}/content/themes/default/images/share-timeline.svg"></span><span>Share
+                                                    src="{$system['system_uploads_assets']}/content/themes/default/images/share-timeline.svg"></span><span>Share
                                                 to Timeline</span></label>
                                     </li>
 
                                     {if $system['groups_enabled'] && count($groups) > 0}
                                     <li class="stratus_local_share" id="share_group"><label for="share_to_group"><span
                                                 class="__list_icon"> <img
-                                                    src="{$system['system_url']}/content/themes/default/images/share_grp.svg"></span><span>Share
+                                                    src="{$system['system_uploads_assets']}/content/themes/default/images/share_grp.svg"></span><span>Share
                                                 to Group</span></label>
                                     </li>
                                     {/if}
                                     {if $system['pages_enabled'] && count($pages) > 0}
                                     <li class="stratus_local_share" id="share_page"><label for="share_to_page"><span
                                                 class="__list_icon"> <img
-                                                    src="{$system['system_url']}/content/themes/default/images/share-page.svg"></span><span>Share
+                                                    src="{$system['system_uploads_assets']}/content/themes/default/images/share-page.svg"></span><span>Share
                                                 to a Page </span></label>
                                     </li>
                                     {/if}
                                     <li class="stratus_local_share" id="share_post"><label for="write_post"><span
                                                 class="__list_icon"> <img
-                                                    src="{$system['system_url']}/content/themes/default/images/write-post.svg"></span><span>Write
+                                                    src="{$system['system_uploads_assets']}/content/themes/default/images/write-post.svg"></span><span>Write
                                                 post</span></label>
                                     </li>
                                     {if $system['social_share_enabled']}
                                     <li class="stratus_local_share" id="share_social_media"><label
                                             for="share_to_sm"><span class="__list_icon"><img
-                                                    src="{$system['system_url']}/content/themes/default/images/share-sm.svg"></span><span>Share
+                                                    src="{$system['system_uploads_assets']}/content/themes/default/images/share-sm.svg"></span><span>Share
                                                 to Social Media</span></label>
                                     </li>
                                     {/if}

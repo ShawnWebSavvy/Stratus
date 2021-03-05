@@ -1,10 +1,9 @@
 {if $_tpl == "box"}
-<div class="col-md-6 col-lg-4 mb10">
+<div class="col-md-6 col-lg-4 mb10 {$_user['connection']}">
     <div class="ui-box">
         <div class="img">
             <a href="{$system['system_url']}/{$_user['user_name']}">
-                <img alt="{$_user['user_firstname']} {$_user['user_lastname']}"
-                    src="{$system['system_url']}/{$_user['user_picture']}" />
+                <img alt="{$_user['user_firstname']} {$_user['user_lastname']}" src="{$_user['user_picture']}" />
             </a>
         </div>
         <div class="mt10">
@@ -129,12 +128,13 @@
     </div>
 </div>
 {elseif $_tpl == "list"}
+{if $_user['user_id'] > 0}
 <li class="feeds-item" {if $_user['id']}data-id="{$_user['id']}" {/if}>
-    <div class="data-container searchSectionWrap">
-        <div class="_user_detail_sec">
+    <div class="data-container searchSectionWrap ssdssd">
+        <div class="_user_detail_sec hmmm">
             <div class="user__imgs">
                 <a class="data-avatar" href="{$system['system_url']}/{$_user['user_name']}{if $_search}?ref=qs{/if}">
-                    <img class="lazyload dddd" data-src="{$system['system_url']}/{$_user['user_picture']}"
+                    <img class="lazyload" data-src="{$_user['user_picture']}"
                         alt="{$_user['user_firstname']} {$_user['user_lastname']}"> {if
                     $_reaction}
                     <div class="data-reaction">
@@ -145,7 +145,7 @@
                     {/if}
                 </a>
             </div>
-            <div class="userNameWrap _user_details">
+            <div class="userNameWrap _user_details" style="width:100%;">
                 <div class="mt5">
                     <span class="name js_user-popover {$_user['user_lastname']}" data-uid="{$_user['user_id']}">
                         <a href="{$system['system_url']}/{$_user['user_name']}{if $_search}?ref=qs{/if}">{$_user['user_firstname']}
@@ -171,7 +171,6 @@
             </div>
         </div>
         <div class="data-content usernamesWrapBlock">
-
             <div class="float-right _user_action_">
                 <!-- buttons -->
                 {if $_connection == "request"}
@@ -275,4 +274,5 @@
         </div>
     </div>
 </li>
+{/if}
 {/if}
