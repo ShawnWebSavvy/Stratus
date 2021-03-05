@@ -110,6 +110,7 @@
                                                 <i class="fa fa-chart-pie fa-fw mr10"></i>{__("Investment Settings")}
                                             </a>
                                         </li>
+                                        
                                     </ul>
                                 </div>
                             </li>

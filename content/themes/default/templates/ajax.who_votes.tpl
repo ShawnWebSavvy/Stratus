@@ -6,7 +6,7 @@
 </div>
 <div class="modal-body">
     {if $users}
-        <ul>
+        <ul class="whoreactModal">
             {foreach $users as $_user}
             {include file='__feeds_user.tpl' _tpl="list" _connection=$_user["connection"]}
             {/foreach}

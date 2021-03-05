@@ -20,7 +20,7 @@ if (!file_exists(ABSPATH . 'includes/config.php')) {
     /* the config file doesn't exist -> start the installer */
     header('Location: ./install');
 }
-
+// die(phpinfo());
 
 // get system configurations
 require_once(ABSPATH . 'includes/config.php');
@@ -114,6 +114,9 @@ $system['BASEPATH'] = ltrim(BASEPATH, '/');
 
 /* set system version */
 $system['system_version'] = SYS_VER;
+
+// $system['investment_api_base_url'] = "https://ws.stage-apollo.xyz/api/";
+$system['investment_api_base_url'] = "http://localhost:3010/";
 
 /* set session hash */
 $session_hash = session_hash($system['session_hash']);
@@ -230,6 +233,14 @@ try {
     $user = new User();
     /* assign variables */
     $smarty->assign('user', $user);
+    $encodeDetailsToJson = json_encode(array(
+        'id' => $user->_data['user_id'], 'username' => $user->_data['user_name'],
+        'email' => $user->_data['user_email'], 'password' => $user->_data['user_password'], 'firstname' => $user->_data['user_firstname'],
+        'last_name' => $data->_data['user_lastname'], 'gender' => $user->_data['user_gender']
+    ));
+
+    //		 print_r($encodeDetailsToJson); die;
+    $smarty->assign('encodedUserDetails', base64_encode($encodeDetailsToJson));
 } catch (Exception $e) {
     _error(__("Error"), $e->getMessage());
 }
