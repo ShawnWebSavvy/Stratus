@@ -367,3 +367,5 @@ try {
 // page footer
 page_footer("index");
 $smarty->assign('page', "market");
+
+
