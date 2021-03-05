@@ -950,12 +950,14 @@
                                                     {__("Affiliates Credit")}
                                                     {elseif $transaction['node_type'] == "withdraw_points"}
                                                     {__("Points Credit")}
-                                                    {elseif $transaction['node_type'] == "purchase_coin"}
+                                                    {elseif $transaction['tnx_type'] == "buy"}
                                                       {$transaction['currency_detail']}
-                                                    {elseif $transaction['node_type'] == "sell_coin"}
+                                                    {elseif $transaction['tnx_type'] == "sell"}
                                                         {$transaction['currency_detail']}
-                                                    {elseif $transaction['node_type'] == "investment_referral_bonus"}
+                                                    {elseif $transaction['tnx_type'] == "referral"}
                                                         {__("Referral Bonus")}
+                                                    {elseif $transaction['node_type'] == "videohub_package_payment"}
+                                                    {__("Buy Video Hub Package")}
                                                     {elseif $transaction['node_type'] == "package_payment"}
                                                     {__("Buy Pro Package")}
                                                     {/if}
