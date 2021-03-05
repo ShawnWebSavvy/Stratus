@@ -1044,7 +1044,7 @@ $(function () {
                             // if ($("body #feeds_post_ul").length > 0)
                                 // var macyInstance = Macy({ container: ".feeds_post_ul", trueOrder: !0, columns: 2, waitForImages: !0 });
                         }
-                        posts_loader.hide(), posts_stream.removeData("loading"), posts_stream.html(response.posts), setTimeout(photo_grid(), 200)
+                        posts_loader.hide(), posts_stream.removeData("loading"), posts_stream.html(response.posts), setTimeout(photo_grid(), 200),posts_stream.data("filter", data.filter)
                         // response.callback ? eval(response.callback) : response.posts && ();
                     },
                     "json"
@@ -1122,35 +1122,42 @@ $(function () {
         $("body").on("click", ".js_lightbox-live", function () {
             var _this = $(this),
                 live_post_id = _this.parents(".post").data("id"),
-                lightbox = $(render_template("#lightbox-live", { post_id: live_post_id }));
+                lightbox = $(render_template("#lightbox-live", { post_id: live_post_id })),
+                live_video = $('#js_live-video');
+                
+            
             $("body").addClass("lightbox-open").append(lightbox.fadeIn("fast"));
+           
             var client = AgoraRTC.createClient({ mode: "live", codec: "vp8" });
             AgoraRTC.Logger.setLogLevel(AgoraRTC.Logger.NONE),
                 $.post(
                     api["live/reaction"],
                     { do: "join", post_id: live_post_id },
                     function (response) {
-                        response.callback
-                            ? ($("body").removeClass("lightbox-open"), $(".lightbox").remove(), eval(response.callback))
-                            : (lightbox.find(".lightbox-post").replaceWith(response.lightbox),
-                                response.live_ended
-                                    ? $("#js_live-status")
-                                        .html('<i class="fas fa-exclamation-circle mr5"></i>' + __["Live Ended"])
-                                        .addClass("error")
-                                    : client.init(agora_app_id, function () {
-                                        client.setClientRole("audience"),
-                                            client.join(
-                                                response.agora_audience_token,
-                                                response.agora_channel_name,
-                                                response.agora_audience_uid,
-                                                function (e) { },
-                                                function (e) {
-                                                    $("#js_live-status")
-                                                        .html('<i class="fas fa-exclamation-circle mr5"></i>' + __["Joining live stream failed"])
-                                                        .addClass("error");
-                                                }
-                                            );
-                                    }));
+                        if(response.callback) {
+                            $('body').removeClass('lightbox-open');
+                            $('.lightbox').remove();
+                            eval(response.callback);
+                        } else if (response.live_ended == "live_ended") {
+                            lightbox.find('.lightbox-preview').replaceWith(response.live_data);
+                            lightbox.find('.lightbox-post').replaceWith(response.lightbox);
+                        } else {
+                            lightbox.find('#js_live-video').show();
+                            lightbox.find('.lightbox-post').replaceWith(response.lightbox);
+                            if(response.live_ended) {
+                                /* show live status */
+                                $('#js_live-status').html('<i class="fas fa-exclamation-circle mr5"></i>' + __['Live Ended']).addClass("error");
+                            } else {
+                                /* init agora client */
+                                client.init(agora_app_id, function () {
+                                    client.setClientRole('audience');
+                                    client.join(response.agora_audience_token, response.agora_channel_name, response.agora_audience_uid, function(uid) {}, function(err) {
+                                        /* show live status */
+                                        $('#js_live-status').html('<i class="fas fa-exclamation-circle mr5"></i>' + __['Joining live stream failed']).addClass("error");
+                                    });
+                                });
+                            }
+                        }
                     },
                     "json"
                 ),

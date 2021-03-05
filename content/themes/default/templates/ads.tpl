@@ -950,6 +950,12 @@
                                                     {__("Affiliates Credit")}
                                                     {elseif $transaction['node_type'] == "withdraw_points"}
                                                     {__("Points Credit")}
+                                                    {elseif $transaction['node_type'] == "purchase_coin"}
+                                                      {$transaction['currency_detail']}
+                                                    {elseif $transaction['node_type'] == "sell_coin"}
+                                                        {$transaction['currency_detail']}
+                                                    {elseif $transaction['node_type'] == "investment_referral_bonus"}
+                                                        {__("Referral Bonus")}
                                                     {elseif $transaction['node_type'] == "package_payment"}
                                                     {__("Buy Pro Package")}
                                                     {/if}
