@@ -2207,6 +2207,10 @@ class User
             $db->query(sprintf("UPDATE users SET user_live_notifications_counter = 0 WHERE user_id = %s", secure($this->_data['user_id'], 'int'))) or _error("SQL_ERROR_THROWEN");
             $db->query(sprintf("UPDATE notifications SET seen = '1' WHERE to_user_id = %s", secure($this->_data['user_id'], 'int'))) or _error("SQL_ERROR_THROWEN");
         }
+        $redisObject = new RedisClass();
+        $redisPostKey = 'user-' . $this->_data['user_id'];
+        $redisObject->deleteValueFromKey($redisPostKey);
+        cachedUserData($db, $system, $this->_data['user_id'], $this->_data['active_session_token']);
     }
 
 
@@ -5211,6 +5215,8 @@ class User
             $redisPostProfileKey = 'profile-posts-others-' . $post['wall_id'];
             $redisObject->deleteValueFromKey($redisPostProfileKey);
         }
+        //Update profile posts others of current user;
+        $redisObject->deleteValueFromKey('profile-posts-others-'.$this->_data['user_id']);
         // $postsLists = $redisObject->getValueFromKey($redisPostProfileKey);
         // $decodePosts = json_decode($postsLists, TRUE);
         // array_unshift($decodePosts, $arrayforrepalce);
@@ -5228,11 +5234,6 @@ class User
         foreach ($idsList as $id) {
             $userKeys = 'user-' . $id . '-posts';
             $isUserExist = $redisObject->isRedisKeyExist($userKeys);
-
-            $redisProfilePostOtherKey = 'profile-posts-others-' . $id;
-            $redisObject->deleteValueFromKey($redisProfilePostOtherKey);
-            $profile['user_id'] = $id;
-            syncProfilePagePostsWithRedis($id, $this,$profile, $redisObject);
             if ($isUserExist == true) {
 
                 $getPostsFromRedis = $redisObject->getValueFromKey($userKeys);
@@ -7731,7 +7732,7 @@ class User
      * @return void
      */
     public function react_post($post_id, $reaction)
-    {
+    {   
         global $db, $date, $system;
         /* check reation */
         if (!in_array($reaction, ['like', 'love', 'haha', 'yay', 'wow', 'sad', 'angry'])) {
