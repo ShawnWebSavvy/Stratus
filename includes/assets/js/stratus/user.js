@@ -208,18 +208,25 @@ function data_heartbeat() {
 }
 // initialize picture crop
 function init_picture_crop(node) {
+
     setTimeout(function () {
-        $("#cropped-profile-picture").rcrop({
+       $("#cropped-profile-picture").rcrop({
             minSize: [200, 200],
             preserveAspectRatio: true,
             grid: true,
         });
-    }, 200);
+    }, 200);    
+   
+    var image_node = node.data("image");
+    var system_url = node.data("systemUrl") ;
+    
     modal("#crop-profile-picture", {
-        image: node.data("image"),
+        image: `${system_url}/includes/wallet-api/get-picture-api.php?picture=${image_node}&pictureFull=&type_url=1`,
         handle: node.data("handle"),
         id: node.data("id"),
     });
+
+  
 }
 
 function init_picture_position() {

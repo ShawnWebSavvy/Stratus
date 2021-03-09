@@ -314,8 +314,12 @@ function init_picture_crop(node) {
       grid: true
     });
   }, 200);
+
+  var image_node = node.data("image");
+  var system_url = node.data("systemUrl") ;
+
   modal("#crop-profile-picture", {
-    image: node.data("image"),
+    image: `${system_url}/includes/wallet-api/get-picture-api.php?picture=${image_node}&pictureFull=&type_url=1`,
     handle: node.data("handle"),
     id: node.data("id")
   });
