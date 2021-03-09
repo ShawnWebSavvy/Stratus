@@ -72,9 +72,9 @@ body.profile-localhub .js_follow{height:42px !important;font-size:14px;font-weig
 ._share_post_.dropdown.show .action-btn{position:relative;z-index:99999999;}
 ._share-dropdown_.dropdown-menu.fade.show{min-width: 260px; z-index:99999999;}
 .source{min-height:inherit !important;background-color:transparent !important;padding:0 !important;height:auto !important;margin-top:8px;margin-left:15px;}
-.stratus_story_popup .modal-body._add_story_popup .row > div .attachments li.item{width:96px;height:120px;}
-.stratus_story_popup .modal-body._add_story_popup .row > div .attachments li.item.deletable::before{width:94px;height:120px;}
-.stratus_story_popup .modal-body._add_story_popup .row > div .attachments li.item img{width:96px;height:120px;object-fit:cover;}
+.stratus_story_popup .modal-body._add_story_popup .row > div .attachments li.item{width:96px !important;height:120px !important;border-radius: 12px;overflow: hidden;}
+.stratus_story_popup .modal-body._add_story_popup .row > div .attachments li.item.deletable::before{width:94px !important;height:120px !important;}
+.stratus_story_popup .modal-body._add_story_popup .row > div .attachments li.item img{width:96px !important;height:120px !important;object-fit:cover;}
 ._add_story_popup .attachments ul{display:flex;}
 ._add_story_popup .attachments ul{display:flex;overflow-x:auto;}
 ._add_story_popup .attachments li.add{flex:0 0 96px;}
@@ -453,7 +453,7 @@ span.pages_icons img {margin-right: 5px; }
 .whoreactModal ._user_detail_sec .userNameWrap._user_details{flex:0 0 70%;max-width:70%;padding-left:5px;}
 .whoreactModal ._user_detail_sec{flex-wrap:wrap;}
 .global-profile-ul-post.feeds_post_ul li{padding:0 10px;margin-bottom:20px;}
-body{-webkit-touch-callout: default !important ;-webkit-user-select: text; }
+body{-webkit-touch-callout: default !important ;-webkit-user-select: text;user-select: test; }
 .whoreactModal .userNameWrap._user_details{flex:0 0 auto;}
 .whoreactModal ._user_detail_sec{flex:0 0 80%;max-width:80%;padding-right:8pxpx;}
 .whoreactModal .usernamesWrapBlock{flex:0 0 20%;max-width:20%;text-align:right;}

@@ -121,6 +121,9 @@
 .live-comments .js_user-popover a{color: #fff;}
 .live-comments .comment-inner::before {display: none;}
 .modal-header .close {opacity: 1 !important;}
+.imageUplodeLodingTime {position: relative;}
+.imageUplodeLodingTime ul:nth-child(2){position: absolute;top: 0;}
+.chat-widget .chat-widget-content .chat-typing {position: absolute;bottom: 22px;right: 9px;}
 
 @media(min-width:1680px){.home-page-middel-block .desk_chg{flex:0 0 calc(100% / 6)!important;max-width:calc(100% / 6)!important}
 }
@@ -445,7 +448,8 @@ body.login-index-body .mainloginBlock{height:100vh!important;align-items:flex-en
 .profileUpdatesDesign .global-profile-feeds-photo{width:calc(100% / 2)}
 .searchSectionWrap{justify-content:space-between}
 .searchSectionWrap .usernamesWrapBlock ._user_action_,.searchSectionWrap .usernamesWrapBlock ._user_action_ button{width:100%}
-.searchSectionWrap .usernamesWrapBlock{max-width:150px}
+.searchSectionWrap .usernamesWrapBlock{max-width:225px;}
+.people-friend-list-section ._friend_list_items .feeds-item .data-container ._user_action_ button {max-width:225px !important;left: 13px;transform: none;}
 .searchSectionWrap ._user_detail_sec{flex:unset;max-width:unset}
 .profileUpdatesDesign .searchSectionWrap ._user_detail_sec{flex:0 0 80%;max-width:80%}
 /* .aboutSectionWidth{flex:0 0 70%;max-width:70%} */
