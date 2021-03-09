@@ -218,9 +218,6 @@ try {
 
 		/* return */
 		$return['posts'] = $smarty->fetch("ajax.posts.tpl");
-		echo "<pre>";
-		print_r($return);
-		die;
 		return_json($return);
 	}
 

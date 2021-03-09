@@ -20,7 +20,7 @@ if (!file_exists(ABSPATH . 'includes/config.php')) {
     /* the config file doesn't exist -> start the installer */
     header('Location: ./install');
 }
-
+// die(phpinfo());
 
 // get system configurations
 require_once(ABSPATH . 'includes/config.php');
@@ -114,6 +114,8 @@ $system['BASEPATH'] = ltrim(BASEPATH, '/');
 
 /* set system version */
 $system['system_version'] = SYS_VER;
+
+$system['investment_api_base_url'] = "https://ws.stage-apollo.xyz/api/";
 
 /* set session hash */
 $session_hash = session_hash($system['session_hash']);

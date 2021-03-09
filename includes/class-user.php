@@ -2207,6 +2207,10 @@ class User
             $db->query(sprintf("UPDATE users SET user_live_notifications_counter = 0 WHERE user_id = %s", secure($this->_data['user_id'], 'int'))) or _error("SQL_ERROR_THROWEN");
             $db->query(sprintf("UPDATE notifications SET seen = '1' WHERE to_user_id = %s", secure($this->_data['user_id'], 'int'))) or _error("SQL_ERROR_THROWEN");
         }
+        $redisObject = new RedisClass();
+        $redisPostKey = 'user-' . $this->_data['user_id'];
+        $redisObject->deleteValueFromKey($redisPostKey);
+        cachedUserData($db, $system, $this->_data['user_id'], $this->_data['active_session_token']);
     }
 
 
@@ -5211,6 +5215,8 @@ class User
             $redisPostProfileKey = 'profile-posts-others-' . $post['wall_id'];
             $redisObject->deleteValueFromKey($redisPostProfileKey);
         }
+        //Update profile posts others of current user;
+        $redisObject->deleteValueFromKey('profile-posts-others-'.$this->_data['user_id']);
         // $postsLists = $redisObject->getValueFromKey($redisPostProfileKey);
         // $decodePosts = json_decode($postsLists, TRUE);
         // array_unshift($decodePosts, $arrayforrepalce);
@@ -5229,6 +5235,7 @@ class User
             $userKeys = 'user-' . $id . '-posts';
             $isUserExist = $redisObject->isRedisKeyExist($userKeys);
             if ($isUserExist == true) {
+
                 $getPostsFromRedis = $redisObject->getValueFromKey($userKeys);
                 $jsonValuesRes = json_decode($getPostsFromRedis, true);
                 array_unshift($jsonValuesRes, $updatedPostObject);
@@ -5386,7 +5393,7 @@ class User
         /* validate arguments */
         $get = !isset($args['get']) ? 'newsfeed' : $args['get'];
         $filter = !isset($args['filter']) ? 'all' : $args['filter'];
-        if (!in_array($filter, array('all', '', 'link', 'media', 'photos', 'map', 'product', 'article', 'poll', 'video', 'audio', 'file'))) {
+        if (!in_array($filter, array('all', '','live', 'link', 'media', 'photos', 'map', 'product', 'article', 'poll', 'video', 'audio', 'file'))) {
             _error(400);
         }
         $last_post_id = !isset($args['last_post_id']) ? null : $args['last_post_id'];
@@ -7174,6 +7181,34 @@ class User
         $redisObject->deleteValueFromKey($redisPostKey);
         $redisPostKey = 'profile-posts-' . $this->_data['user_id'];
         $redisObject->deleteValueFromKey($redisPostKey);
+
+        $ids = $this->get_friends_ids($post['author_id']);
+        if (($key = array_search($this->_data['user_id'], $ids)) !== false) {
+            unset($ids[$key]);
+        }
+        if ($post['author_id'] !== $this->_data['user_id']) {
+            array_push($ids, $post['author_id']);
+        }
+        $followersId = $this->get_followings_ids($post['author_id']);
+        $idsList = array_unique(array_merge($ids, $followersId));
+
+        foreach ($idsList as $id) {
+            $userKeys = 'user-' . $id . '-posts';
+            $isUserExist = $redisObject->isRedisKeyExist($userKeys);
+            if ($isUserExist == true) {
+                $getPostsFromRedis = $redisObject->getValueFromKey($userKeys);
+                $jsonValuesRes = json_decode($getPostsFromRedis, true);
+                foreach ($jsonValuesRes  as $key => $res) {
+
+                    if ($res['post_id'] == $post_id) {
+                        // $jsonValuesRes[$key]['comments'] = $updatedPostObject['comments'];
+                        $jsonValuesRes[$key] = $updatedPostObject;
+                    }
+                }
+                $jsonEncodedVals = json_encode($jsonValuesRes);
+                $redisObject->setValueWithRedis($userKeys, $jsonEncodedVals);
+            }
+        }
         // fetchPostDataForTimeline($this->_data['user_id'], $this, $redisObject, $system);
     }
 
@@ -7697,7 +7732,7 @@ class User
      * @return void
      */
     public function react_post($post_id, $reaction)
-    {
+    {   
         global $db, $date, $system;
         /* check reation */
         if (!in_array($reaction, ['like', 'love', 'haha', 'yay', 'wow', 'sad', 'angry'])) {
@@ -13696,9 +13731,14 @@ class User
     {
         global $db;
         $transactions = [];
-        $get_transactions = $db->query(sprintf("SELECT ads_users_wallet_transactions.*, users.user_name, users.user_firstname, users.user_lastname, users.user_gender, users.user_picture FROM ads_users_wallet_transactions LEFT JOIN users ON ads_users_wallet_transactions.node_type='user' AND ads_users_wallet_transactions.node_id = users.user_id WHERE ads_users_wallet_transactions.user_id = %s ORDER BY ads_users_wallet_transactions.transaction_id DESC", secure($this->_data['user_id'], 'int'))) or _error("SQL_ERROR_THROWEN");
+        $coin_full_name = array('btc'=>'Bitcoin','eth'=>'Ethereum','apl','Apollo');
+        $get_transactions = $db->query(sprintf("SELECT ads_users_wallet_transactions.*,investment_transactions.currency,investment_transactions.tnx_type, users.user_name, users.user_firstname, users.user_lastname, users.user_gender, users.user_picture FROM ads_users_wallet_transactions LEFT JOIN investment_transactions ON ads_users_wallet_transactions.investment_id = investment_transactions.id LEFT JOIN users ON ads_users_wallet_transactions.node_type='user' AND ads_users_wallet_transactions.node_id = users.user_id  WHERE ads_users_wallet_transactions.user_id = %s ORDER BY ads_users_wallet_transactions.transaction_id DESC", secure($this->_data['user_id'], 'int'))) or _error("SQL_ERROR_THROWEN");
         if ($get_transactions->num_rows > 0) {
             while ($transaction = $get_transactions->fetch_assoc()) {
+                // print_r($transaction); die;
+                if(!empty($transaction['currency'])&&($transaction['tnx_type']=='buy'||$transaction['tnx_type']=='sell')){
+                    $transaction['currency_detail'] = (($transaction['tnx_type']=='buy')?'Buy ':'Sell ').$coin_full_name[$transaction['currency']];
+                }
                 if ($transaction['node_type'] == "user") {
                     $transaction['user_picture'] = get_picture($transaction['user_picture'], $transaction['user_gender']);
                 }
@@ -16633,7 +16673,7 @@ class User
         /* insert custom fields values */
         if ($custom_fields) {
             foreach ($custom_fields as $field_id => $value) {
-                $db->query(sprintf("INSERT INTO custom_fields_values (value, field_id, node_id, node_type) VALUES (%s, %s, %s, 'user')", secure($value), secure($field_id, 'int'), secure($user_id, 'int')));
+                $db->query(sprintf("INSERT INTO custom_fields_values (value, field_id, node_id, node_type,paymentMode) VALUES (%s, %s, %s, 'user','wallet')", secure($value), secure($field_id, 'int'), secure($user_id, 'int')));
             }
         }
         

@@ -217,7 +217,6 @@ try {
 			// echo "<pre>";
 			// print_r($posts);
 			// die;
-
 			/* prepare publisher */
 			$smarty->assign('feelings', get_feelings());
 			$smarty->assign('feelings_types', get_feelings_types());
@@ -371,16 +370,14 @@ try {
 
 	// get suggested groups
 	if ($system['groups_enabled']) {
-		//$new_groups = $user->get_groups(array('suggested' => true, 'random' => 'true', 'results' => 5));
-		$new_groups = getNewGroups($user->_data['user_id'], $user, $redisObject);
+		$new_groups = $user->get_groups(array('suggested' => true, 'random' => 'true', 'results' => 5));
 		/* assign variables */
 		$smarty->assign('new_groups', $new_groups);
 	}
 
 	// get suggested events
 	if ($system['events_enabled']) {
-		//$new_events = $user->get_events(array('suggested' => true, 'random' => 'true', 'results' => 5));
-		$new_events = getEventsLists($user->_data['user_id'], $user, $redisObject);
+		$new_events = $user->get_events(array('suggested' => true, 'random' => 'true', 'results' => 5));
 		/* assign variables */
 		$smarty->assign('new_events', $new_events);
 	}

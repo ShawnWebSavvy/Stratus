@@ -1,3 +1,7 @@
+var count = parseInt($('.unread').length) ? parseInt($('.unread').length) : "";
+if (count != "") {
+    $(".js_live-notifications").find("span.counterlive").text(count).show();
+}
 function initialize_modal() {
     $(".js_scroller").each(function () {
         var e = $(this),
@@ -79,7 +83,6 @@ function data_heartbeat() {
         $(".js_live-notifications").find(".js_scroller li:first").data("id") || 0;
     /* newsfeed check */
     var posts_stream = $("body .js_posts_stream");
-
     /* "popular" && "saved" & "memories" excluded as not ordered by id */
     if (
         posts_stream.length > 0 &&
@@ -172,8 +175,10 @@ function data_heartbeat() {
                             : $(".js_live-notifications")
                                 .find(".js_scroller")
                                 .html("<ul>" + response.notifications + "</ul>");
-                    var notifications = parseInt(response.notifications_count);
-                    $(".js_live-notifications").find("span.counterlive").text(notifications).show(), notifications_sound;
+                    // var notifications = parseInt(response.notifications_count);
+                    // $(".js_live-notifications").find("span.counterlive").text(notifications).show(), notifications_sound;
+                    var notifications = (parseInt($(".js_live-notifications").find("span.counterlive").text())?parseInt($(".js_live-notifications").find("span.counterlive").text()):0)+ response.notifications_count;
+                    $(".js_live-notifications").find("span.counterlive").text(notifications).show();notifications_sound
                 }
                 if (response.posts && response.posts != null) {
                     //console.log("response.posts->>>>>>>", response.posts);

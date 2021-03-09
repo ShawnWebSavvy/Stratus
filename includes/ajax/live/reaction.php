@@ -53,18 +53,12 @@ try {
 			$return['agora_audience_token'] = $post['live']['agora_audience_token'];
 			$return['agora_channel_name'] = $post['live']['agora_channel_name'];
 			$return['live_ended'] = ($post['live']['live_ended'])? true: false;
+ 
+			if(!empty($post['live']['agora_file'])&&$return['live_ended']){
+				$return['live_ended'] = "live_ended";
+				$return['live_data'] = $smarty->fetch("ajax.live.tpl");
+			}
 
-
-			$pages = $user->get_pages(array('managed' => true, 'user_id' => $user->_data['user_id']));
-			$smarty->assign('pages', $pages);
-			/* get user pages */
-			$groups = $user->get_groups(array('get_all' => true, 'user_id' => $user->_data['user_id']));
-			/* assign variables */
-			$smarty->assign('groups', $groups);
-
-			$return['next'] = null;
-			$return['prev'] = null;
-			
 			$return['lightbox'] = $smarty->fetch("ajax.lightbox-live.tpl");
 			break;
 

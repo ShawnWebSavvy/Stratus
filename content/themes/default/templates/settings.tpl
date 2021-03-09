@@ -2274,50 +2274,49 @@
                                         {__("wallet")}
                                         {/if}
                                     </div>
+                                   
                                     <div class="mt20">
-                                        <!-- <div class="iconWrap">
-                                            <img  width="30px" height="30px" class="mr10" src="{$system['system_url']}/content/themes/default/images/svg/svgImg/at_icon.svg"/>
-                                            <strong style="font-size: 16px;">{__("Your affiliate link is")}</strong>
+                                       
+                                        <div class="copy-wrap mgb-1-5x mgt-1-5x" style="position: relative;">
+                                            <span class="copy-feedback" style="display: none;">Copied to Clipboard</span>
+                                            <em class="copy-icon fas fa-link"></em>
+                                            <input type="text" class="copy-address" value="{$system['system_url']}/signup/?ref={$user->_data['user_name']}" disabled="">
+                                            <button class="copy-trigger copy-clipboard" id="copy_button" data-clipboard-text="{$system['system_url']}/signup/?ref={$user->_data['user_name']}"><i class="fas fa-copy affilates_copy"></i></button>
                                         </div>
-                                        <div class="text-left linkMainRefrel">
-                                            <a href="{$system['system_url']}/?ref={$user->_data['user_name']}">
-                                                {$system['system_url']}/?ref={$user->_data['user_name']}
-                                            </a>
-                                        </div> -->
                                         <div class="text-left text-readable mb20">
                                             {__("Share")}<br>
-                                            <a href="http://www.facebook.com/sharer.php?u={$system['system_url']}/?ref={$user->_data['user_name']}"
+                                            <a href="http://www.facebook.com/sharer.php?u={$system['system_url']}/signup/?ref={$user->_data['user_name']}"
                                                 class="btn btn-sm btn-rounded btn-social-icon " target="_blank">
                                                 <img width="20px" height="20px"
                                                     src="{$system['system_url']}/content/themes/default/images/svg/svgImg/fbIcons.svg">
                                             </a>
-                                            <a href="https://twitter.com/intent/tweet?url={$system['system_url']}/?ref={$user->_data['user_name']}"
+                                            <a href="https://twitter.com/intent/tweet?url={$system['system_url']}/signup/?ref={$user->_data['user_name']}"
                                                 class="btn btn-sm btn-rounded btn-social-icon btn-rounded "
                                                 target="_blank">
                                                 <img width="20px" height="20px"
                                                     src="{$system['system_url']}/content/themes/default/images/svg/svgImg/twittericon.svg">
                                             </a>
-                                            <a href="https://vk.com/share.php?url={$system['system_url']}/?ref={$user->_data['user_name']}"
+                                            <a href="https://vk.com/share.php?url={$system['system_url']}/signup/?ref={$user->_data['user_name']}"
                                                 class="btn btn-sm btn-rounded btn-social-icon " target="_blank">
                                                 <img width="20px" height="20px"
                                                     src="{$system['system_url']}/content/themes/default/images/svg/svgImg/vkIcon.svg">
                                             </a>
-                                            <a href="https://www.linkedin.com/shareArticle?mini=true&url={$system['system_url']}/?ref%3D{$user->_data['user_name']}"
+                                            <a href="https://www.linkedin.com/shareArticle?mini=true&url={$system['system_url']}/signup/?ref%3D{$user->_data['user_name']}"
                                                 class="btn btn-sm btn-rounded btn-social-icon " target="_blank">
                                                 <img width="20px" height="20px"
                                                     src="{$system['system_url']}/content/themes/default/images/svg/svgImg/inIcon.svg">
                                             </a>
-                                            <a href="https://api.whatsapp.com/send?text={$system['system_url']}/?ref%3D{$user->_data['user_name']}"
+                                            <a href="https://api.whatsapp.com/send?text={$system['system_url']}/signup/?ref%3D{$user->_data['user_name']}"
                                                 class="btn btn-sm btn-rounded btn-social-icon " target="_blank">
                                                 <img width="20px" height="20px"
                                                     src="{$system['system_url']}/content/themes/default/images/svg/svgImg/watsapIcon.svg">
                                             </a>
-                                            <a href="https://reddit.com/submit?url={$system['system_url']}/?ref={$user->_data['user_name']}"
+                                            <a href="https://reddit.com/submit?url={$system['system_url']}/signup/?ref={$user->_data['user_name']}"
                                                 class="btn btn-sm btn-rounded btn-social-icon " target="_blank">
                                                 <img width="20px" height="20px"
                                                     src="{$system['system_url']}/content/themes/default/images/svg/svgImg/catIcon.svg">
                                             </a>
-                                            <a href="https://pinterest.com/pin/create/button/?url={$system['system_url']}/?ref={$user->_data['user_name']}"
+                                            <a href="https://pinterest.com/pin/create/button/?url={$system['system_url']}/signup/?ref={$user->_data['user_name']}"
                                                 class="btn btn-sm btn-rounded btn-social-icon " target="_blank">
                                                 <img width="20px" height="20px"
                                                     src="{$system['system_url']}/content/themes/default/images/svg/svgImg/pintIcon.svg">
