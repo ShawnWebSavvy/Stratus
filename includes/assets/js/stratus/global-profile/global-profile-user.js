@@ -128,8 +128,13 @@ function init_picture_crop(e) {
             preserveAspectRatio: !0,
             grid: !0
         })
-    }, 200), modal("#crop-profile-picture", {
-        image: e.data("image"),
+    }, 200);
+
+    var image_node = e.data("image");
+    var system_url = e.data("systemUrl");
+
+    modal("#crop-profile-picture", {
+        image: `${system_url}/includes/wallet-api/get-picture-api.php?picture=${image_node}&pictureFull=&type_url=1`,
         handle: e.data("handle"),
         id: e.data("id")
     })

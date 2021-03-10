@@ -6044,6 +6044,7 @@ class UserGlobal
         if ($get_stories->num_rows > 0) {
             while ($_story = $get_stories->fetch_assoc()) {
                 $story['id'] = $_story['story_id'];
+                $story['user_id'] = $_story['user_id'];
                 $story['photo'] = get_picture($_story['global_user_picture'], $_story['user_gender']);
                 $story['name'] = $_story['user_firstname'] . " " . $_story['user_lastname'];
                 $story['lastUpdated'] = strtotime($_story['time']);
@@ -8882,6 +8883,14 @@ class UserGlobal
                 $db->query(sprintf("DELETE FROM global_posts_articles WHERE post_id = %s", secure($post_id, 'int'))) or _error("SQL_ERROR_THROWEN");
                 $refresh = true;
                 break;
+
+            case 'shared':
+
+                $shares_count = $post['origin']['shares'] > 0 ? $post['origin']['shares'] - 1 : 0;
+
+                $db->query(sprintf("UPDATE `global_posts` SET shares = %s WHERE post_id = %s", secure($shares_count, 'int'), secure($post['origin']['post_id'], 'int'))) or _error("SQL_ERROR_THROWEN");
+                $refresh = true;
+                break;    
         }
         /* points balance */
         $this->points_balance("delete", $post['author_id'], "post");
@@ -9700,5 +9709,36 @@ class UserGlobal
         /* return */
         return $comment;
     }
+
+
+
+     /**
+     * who_shares
+     *
+     * @param integer $post_id
+     * @param integer $offset
+     * @return array
+     */
+    public function who_shares($post_id, $offset = 0)
+    {
+        global $db, $system;
+        $posts = [];
+        $offset *= $system['max_results'];
+        $get_posts = $db->query(sprintf('SELECT global_posts.post_id FROM global_posts INNER JOIN users ON global_posts.user_id = users.user_id WHERE global_posts.post_type = "shared" AND global_posts.origin_id = %s LIMIT %s, %s', secure($post_id, 'int'), secure($offset, 'int', false), secure($system['max_results'], 'int', false))) or _error("SQL_ERROR_THROWEN");
+        if ($get_posts->num_rows > 0) {
+            while ($post = $get_posts->fetch_assoc()) {
+                $post = $this->global_profile_get_post($post['post_id']);
+                if ($post) {
+                    $posts[] = $post;
+                }
+            }
+        }
+        return $posts;
+    }
+
+
+ 
+
+
 
 }

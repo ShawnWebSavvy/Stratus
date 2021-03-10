@@ -374,10 +374,10 @@
 <!-- Dependencies Plugins -->
 
 <!-- Sngine [JS] -->
-<script src="{$system['system_uploads_assets']}/includes/assets/js/stratus/core.js?{$cacheremovejs}" {if !$user->_logged_in}defer{/if}></script>
+<script src="{$system['system_url']}/includes/assets/js/stratus/core.js?{$cacheremovejs}" {if !$user->_logged_in}defer{/if}></script>
 <script src="{$system['system_uploads_assets']}/includes/assets/js/stratus/swipMobileCode.js?{$cacheremovejs}" {if !$user->_logged_in}defer{/if}></script>
 <!--Landing page custom js -->
-<script src="{$system['system_uploads_assets']}/includes/assets/js/stratus/custom.js?{$cacheremovejs}" {if !$user->_logged_in}defer{/if}></script>
+<script src="{$system['system_url']}/includes/assets/js/stratus/custom.js?{$cacheremovejs}" {if !$user->_logged_in}defer{/if}></script>
 
 {if $user->_logged_in}
     <script src="{$system['system_uploads_assets']}/includes/assets/js/stratus/user.js?{$cacheremovejs}" {if !$user->_logged_in}defer{/if}></script>
@@ -389,7 +389,7 @@
     {/if}
 
     {if $page == "investment/activity" || $page == "investment/buy_sell"  || $page == "investment/index" }
-        <script src="{$system['system_uploads_assets']}/includes/assets/js/stratus/investment.js?{$cacheremovejs}" defer></script>
+        <script src="{$system['system_url']}/includes/assets/js/stratus/investment.js?{$cacheremovejs}" defer></script>
         <script src="{$system['system_uploads_assets']}/includes/assets/js/stratus/swipMobileCode.js?{$cacheremovejs}" defer></script>
         <script src="{$system['system_uploads_assets']}/includes/assets/js/plugins/graph/d3.js?{$cacheremovejs}" defer></script>
         <script src="https://unpkg.com/flickity@2.2.2/dist/flickity.pkgd.min.js"></script>

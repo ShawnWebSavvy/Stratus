@@ -30,7 +30,7 @@ try {
 			$smarty->assign('_filter', $_POST['filter']);
 			$smarty->assign('_id', $_POST['id']);
 			/* return */
-			$return['posts'] = $smarty->fetch("ajax.posts.tpl");
+			$return['data'] = $smarty->fetch("ajax.posts.tpl");
 			break;
 		
 		case 'comments':

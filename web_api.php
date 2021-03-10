@@ -21,6 +21,9 @@ if(isset($_GET['endpoint'])){
          case 'updateWalletBalance':
                      updateWAlletBalanceFunction($token);
                 break;
+           case 'addCredit':
+                     replenishCreditFunction($token);
+           break;     
 
         default:
             returnResponse(false,402,"Invalid Endpoint");

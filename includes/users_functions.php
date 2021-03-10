@@ -47,11 +47,11 @@ class userClass
      *
      * @return array
      */
-    public function get_friend_requests_ids()
+    public function get_friend_requests_ids($user_id)
     {
         global $db;
         $requests = [];
-        $get_requests = $db->query(sprintf("SELECT user_one_id FROM friends WHERE status = 0 AND user_two_id = %s", secure($this->_data['user_id'], 'int'))) or _error("SQL_ERROR_THROWEN");
+        $get_requests = $db->query(sprintf("SELECT user_one_id FROM friends WHERE status = 0 AND user_two_id = %s", secure($user_id, 'int'))) or _error("SQL_ERROR_THROWEN");
         if ($get_requests->num_rows > 0) {
             while ($request = $get_requests->fetch_assoc()) {
                 $requests[] = $request['user_one_id'];
@@ -66,11 +66,11 @@ class userClass
      *
      * @return array
      */
-    public function get_friend_requests_sent_ids()
+    public function get_friend_requests_sent_ids($user_id)
     {
         global $db;
         $requests = [];
-        $get_requests = $db->query(sprintf("SELECT user_two_id FROM friends WHERE status = 0 AND user_one_id = %s", secure($this->_data['user_id'], 'int'))) or _error("SQL_ERROR_THROWEN");
+        $get_requests = $db->query(sprintf("SELECT user_two_id FROM friends WHERE status = 0 AND user_one_id = %s", secure($user_id, 'int'))) or _error("SQL_ERROR_THROWEN");
         if ($get_requests->num_rows > 0) {
             while ($request = $get_requests->fetch_assoc()) {
                 $requests[] = $request['user_two_id'];

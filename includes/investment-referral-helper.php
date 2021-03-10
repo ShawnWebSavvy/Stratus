@@ -87,7 +87,7 @@ class InvestmentReferralHelper
                 $investment_id = $db->insert_id;
                 if($investment_id){
                     // die($db->insert_id.'enter');
-                    $db->query(sprintf("INSERT INTO ads_users_wallet_transactions (user_id, investment_id, node_type, node_id, amount, type, date,paymentMode) VALUES (%s, %s, %s, %s, %s, %s, %s, %s)", secure($user_id, 'int'), secure($investment_id), secure('Investment Referral Bonus'), secure(0, 'int'), secure($amount), secure('in'), secure(date('Y-m-d h:i:m')), secure('wallet'))) or _error("SQL_ERROR_THROWEN");
+                    $db->query(sprintf("INSERT INTO ads_users_wallet_transactions (user_id, investment_id, node_type, node_id, amount, type, date,paymentMode) VALUES (%s, %s, %s, %s, %s, %s, %s, %s)", secure($user_id, 'int'), secure($investment_id), secure('investment_referral_bonus'), secure(0, 'int'), secure($amount), secure('in'), secure(date('Y-m-d h:i:m')), secure('wallet'))) or _error("SQL_ERROR_THROWEN");
                     $db->query(sprintf("UPDATE users SET user_wallet_balance = user_wallet_balance + $amount, refer_bonus = refer_bonus + $amount WHERE user_id = $user_id")) or _error("SQL_ERROR_THROWEN");
                     $transaction =  $db->query(sprintf("SELECT * from investment_transactions WHERE id = %s",secure($investment_id))) or _error("SQL_ERROR_THROWEN");
                     if ($transaction->num_rows > 0) {

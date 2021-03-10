@@ -936,7 +936,7 @@
         {/if}
         <div class="mt10 {if $_snippet}x-hidden{/if}">
             <div class="post-media">
-                <div class="post-media-meta">
+                <div class="post-media-meta circleSubpost">
                     {include file='__feeds_post.body.tpl' _post=$_post['origin'] _shared=true}
                 </div>
             </div>

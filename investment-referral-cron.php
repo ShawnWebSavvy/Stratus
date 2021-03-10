@@ -19,6 +19,9 @@ $referral_execute->addToken('refer_by');
 $cron_id = $referral->cron_id;
 if(!empty($referral_execute)){
     $db->query(sprintf("DELETE FROM crons where id=$cron_id")) or _error("SQL_ERROR_THROWEN");
+    $redisObject = new RedisClass();
+    $redisPostKey = 'user-' . $referral->user_id;
+    $redisObject->deleteValueFromKey($redisPostKey);
 }
 
 

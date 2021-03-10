@@ -156,10 +156,9 @@ function cachedUserData($db, $system, $user_id, $user_token)
     $userClassObject = new userClass();
     $isKeyExistOnRedis = $redisObject->isRedisKeyExist($redisPostKey);
 
-    //$redisObject->deleteValueFromKey($redisPostKey);
+    // $redisObject->deleteValueFromKey($redisPostKey);
     //print_r($isKeyExistOnRedis);
     //die;
-
     if ($isKeyExistOnRedis == false) {
         /* get user pages */
         $userQuery = sprintf(
@@ -194,13 +193,13 @@ function cachedUserData($db, $system, $user_id, $user_token)
             /* get all followings ids */
             $_data['followings_ids'] = $userClassObject->get_followings_ids($_data['user_id']);
             /* get all friend requests ids */
-            $_data['friend_requests_ids'] = $userClassObject->get_friend_requests_ids();
+            $_data['friend_requests_ids'] = $userClassObject->get_friend_requests_ids($_data['user_id']);
             /* get all friend requests sent ids */
-            $_data['friend_requests_sent_ids'] = $userClassObject->get_friend_requests_sent_ids();
+            $_data['friend_requests_sent_ids'] = $userClassObject->get_friend_requests_sent_ids($_data['user_id']);
             $_data['can_boost_posts'] = false;
             $_data['can_boost_pages'] = false;
 
-            if ($system['packages_enabled'] && ($_data['_is_admin'] || $_data['user_subscribed'])) {
+            if ($system['packages_enabled'] && (isset($_data['_is_admin']) || $_data['user_subscribed'])) {
                 if ($_data['_is_admin'] || ($_data['boost_posts_enabled'] && ($_data['user_boosted_posts'] < $_data['boost_posts']))) {
                     $_data['can_boost_posts'] = true;
                 }
