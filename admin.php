@@ -365,10 +365,24 @@ try {
 						// page header
 						page_header($control_panel['title'] . " &rsaquo; " ."Custom Referrals");
 
+
 						$get_referrals = $db->query(sprintf("SELECT * FROM user_custom_referrals INNER JOIN users ON users.user_id = user_custom_referrals.user_id")) or _error("SQL_ERROR_THROWEN");
-						
-						if ($get_referrals->num_rows > 0) {
-							while ($row = $get_referrals->fetch_assoc()) {
+						$insights['referrals'] = $get_referrals->fetch_assoc()['count'];
+						// get data
+						require('includes/class-pager.php');
+						// die($tnx_type);
+						$params['selected_page'] = ((int) $_GET['page'] == 0) ? 1 : $_GET['page'];
+						$total = $db->query("SELECT COUNT(*) as count FROM user_custom_referrals INNER JOIN users ON users.user_id = user_custom_referrals.user_id") or _error("SQL_ERROR");
+						$params['total_items'] = $insights['referrals'];
+						$params['items_per_page'] = $system['max_results'];
+						$params['url'] = $system['system_url'] . '/' . $control_panel['url'] . '/custom-referrals?page=%s&';
+						$pager = new Pager($params);
+						$limit_query = $pager->getLimitSql();
+						$get_rows = $db->query("SELECT * FROM user_custom_referrals INNER JOIN users ON users.user_id = user_custom_referrals.user_id ORDER BY id DESC " . $limit_query) or _error("SQL_ERROR");
+					
+						if ($get_rows->num_rows > 0) {
+							while ($row = $get_rows->fetch_assoc()) {
+								$row['referral'] = json_encode($row['referral']);
 								$rows[] = $row;
 							}
 						}
@@ -385,11 +399,42 @@ try {
 						break;
 					case 'edit':
 						// page header
+						$referral_id = $_GET['custom_referral_id'];
 						page_header($control_panel['title'] . " &rsaquo; " ."Edit Custom Referrals");
-					
+						$get_referral = $db->query(sprintf("SELECT * FROM user_custom_referrals INNER JOIN users ON users.user_id = user_custom_referrals.user_id where user_custom_referrals.id=$referral_id")) or _error("SQL_ERROR_THROWEN");
+						
+						if ($get_referral->num_rows > 0) {
+							$row = $get_referral->fetch_assoc();
+							$COINS = json_decode($row['referral'],true);
+							
+						}
+						// echo '<pre>'; print_r($COINS); die;
 						$smarty->assign('COINS', $COINS);
-						$smarty->assign('array', $array);
+						$smarty->assign('row', $row);
 
+						break;
+					case 'find':
+
+						page_header($control_panel['title'] . " &rsaquo; " ."Custom Referrals");
+						require('includes/class-pager.php');
+						$params['selected_page'] = ((int) $_GET['page'] == 0) ? 1 : $_GET['page'];
+						$total = $db->query(sprintf('SELECT COUNT(*) as count FROM user_custom_referrals INNER JOIN users ON users.user_id = user_custom_referrals.user_id WHERE (user_name LIKE %1$s  OR user_email LIKE %1$s) ORDER BY users.user_id DESC', secure($_GET['query'], 'search'))) or _error("SQL_ERROR");
+						$params['total_items'] = $total->fetch_assoc()['count'];
+						$params['items_per_page'] = $system['max_results'];
+						$params['url'] = $system['system_url'] . '/' . $control_panel['url'] . '/custom-referrals/find?query=' . $_GET['query'] . '&page=%s';
+						$pager = new Pager($params);
+						$limit_query = $pager->getLimitSql();
+						$get_rows = $db->query(sprintf('SELECT * FROM user_custom_referrals INNER JOIN users ON users.user_id = user_custom_referrals.user_id WHERE (user_name LIKE %1$s  OR user_email LIKE %1$s) ORDER BY users.user_id DESC '. $limit_query , secure($_GET['query'], 'search'))) or _error("SQL_ERROR");
+						if ($get_rows->num_rows > 0) {
+							while ($row = $get_rows->fetch_assoc()) {
+								$row['referral'] = json_encode($row['referral']);
+								$rows[] = $row;
+							}
+						}
+						$smarty->assign('rows', $rows);
+						$smarty->assign('pager', $pager->getPager());
+						break;
+					
 						break;
 				}
 

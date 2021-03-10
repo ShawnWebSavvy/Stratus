@@ -81,6 +81,37 @@ try {
                 return_json(array('success' => true, 'message' =>'User custom referral already exist.'));
             }
         break;
+        case 'edit_custom_referral':
+            global $db, $system;
+            
+                // valid inputs
+            if(!isset($_POST['user_id'])) {
+                _error(400);
+            }
+            	/* valid inputs */
+			if (is_empty($_POST['user_id']) || !is_numeric($_POST['user_id'])) {
+				throw new Exception(__("Please select an email from drop down list."));
+            }   
+            // print_r($_POST);die;
+            if (is_empty($_POST['email_id'])) {
+				throw new Exception(__("Please select an email from drop down list."));
+            }
+
+            // if (is_empty($_POST['referral']) || !is_email($_POST['name_text'])) {
+			// 	throw new Exception(__("You must enter a valid email id"));
+            // }
+            
+            $user_id = $_POST['user_id'];
+            $referral = json_encode($_POST['referral']);
+            $check_exist = $db->query(sprintf("SELECT * FROM user_custom_referrals WHERE user_id =  $user_id")) or _error("SQL_ERROR_THROWEN");
+         
+            if ($check_exist->num_rows >0) {
+                $db->query(sprintf("UPDATE user_custom_referrals  SET referral='$referral' WHERE user_id = $user_id")) or _error("SQL_ERROR_THROWEN");
+                return_json(array('success' => true, 'message' =>'Custom referral updated successfully'));
+            }else{
+                return_json(array('success' => true, 'message' =>'No custom referral found'));
+            }
+        break;
     }
 
 } catch (Exception $e) {
