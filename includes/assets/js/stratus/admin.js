@@ -12,8 +12,7 @@ api['admin/verify'] = ajax_path + "admin/verify.php";
 api['admin/bank'] = ajax_path + "admin/bank.php";
 api['admin/withdraw'] = ajax_path + "admin/withdraw.php";
 api['admin/tagify'] = ajax_path + "admin/tagify.php";
-
-
+api['admin/custom_referral'] = ajax_path+"admin/custom_referral.php";
 $(function () {
 
     // run tagify
@@ -262,4 +261,11 @@ $(function () {
         }
     });
 
+    //basic initialization
+    $('#selectPage').selectPage({
+        keyField: 'id',
+        data: api['admin/custom_referral'],
+        eAjaxSuccess: function (data) { return data },
+        pagination: true
+    });
 });

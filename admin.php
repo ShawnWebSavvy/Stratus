@@ -29,7 +29,6 @@ if ($user->_is_moderator && !$moderator_mode) {
 }
 
 try {
-
 	// get view content
 	switch ($_GET['view']) {
 		case '':
@@ -232,7 +231,6 @@ try {
 						// page header
 						page_header($control_panel['title'] . " &rsaquo; " ."Investment Exchanges");
 						// get data
-						require('includes/class-pager.php');
 						$exchanges = InvestmentHelper::getAdminExchangeDetail('investment/admin/settings/exchanges');
 						$smarty->assign('exchanges', $exchanges);
 						break;
@@ -354,6 +352,48 @@ try {
 				}
 				break;
 			
+			case 'custom-referrals':
+				$COINS = array(array("type"=>"percent","amount"=>"","coin"=>"btc_usdt"),
+							array("type"=>"percent","amount"=>"","coin"=>"eth_usdt")
+							,array("type"=>"percent","amount"=>"","coin"=>"apl_usdt"));
+				// print_r($COINS);die;
+				if ($user->_is_moderator) {
+					_error(__('System Message'), __("You don't have the right permission to access this"));
+				}
+				switch ($_GET['sub_view']) {
+					case '':
+						// page header
+						page_header($control_panel['title'] . " &rsaquo; " ."Custom Referrals");
+
+						$get_referrals = $db->query(sprintf("SELECT * FROM user_custom_referrals INNER JOIN users ON users.user_id = user_custom_referrals.user_id")) or _error("SQL_ERROR_THROWEN");
+						
+						if ($get_referrals->num_rows > 0) {
+							while ($row = $get_referrals->fetch_assoc()) {
+								$rows[] = $row;
+							}
+						}
+						// print_r($rows); die;
+						$smarty->assign('rows', $rows);
+						break;
+					case 'add':
+						// page header
+						page_header($control_panel['title'] . " &rsaquo; " ."Custom Referrals");
+						
+						$smarty->assign('COINS', $COINS);
+						$smarty->assign('array', $array);
+
+						break;
+					case 'edit':
+						// page header
+						page_header($control_panel['title'] . " &rsaquo; " ."Edit Custom Referrals");
+					
+						$smarty->assign('COINS', $COINS);
+						$smarty->assign('array', $array);
+
+						break;
+				}
+
+			break;
 			case 'themes':
 			// check admin|moderator permission
 			if ($user->_is_moderator) {

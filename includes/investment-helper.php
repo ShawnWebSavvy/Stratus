@@ -33,21 +33,24 @@ class InvestmentHelper {
     {   global $db,$system;
         $return = [];
         $tokens  =  httpGetCurl('investment/get_tickers',$system['investment_api_base_url']);
-      
-        foreach($tokens['data'] as $i=>$token){
-            $return['token'][$i]['buy_price']=$token['buy_price'];
-            $return['token'][$i]['sell_price']=$token['sell_price'];
-            $return['token'][$i]['name']=$token['name'];
-            $return['token'][$i]['short_name']=$token['short_name'];
-            $return['buy'][$token['short_name']] = round($token['buy_price'],5);
-            $return['sell'][$token['short_name']] = round($token['sell_price'],5);
-            $return['order'][$token['short_name']]['min_buy_amount'] = $token['min_buy_amount'];
-            $return['order'][$token['short_name']]['min_sell_amount'] = $token['min_sell_amount'];
-            $return['order'][$token['short_name']]['base_max_size'] = $token['base_max_size'];
-            if(!empty($user_data)){
-                $return['wallet_amount']['balance'][$token['short_name']]=$user_data[$token['short_name'].'_wallet'];
+        if(!empty($tokens)){
+            foreach($tokens['data'] as $i=>$token){
+                $return['token'][$i]['buy_price']=$token['buy_price'];
+                $return['token'][$i]['sell_price']=$token['sell_price'];
+                $return['token'][$i]['total_wallet_quote_amount'] = self::convertBaseToQuoteCurrency($token['buy_price'],$user_data[$token['short_name'].'_wallet']);
+                $return['token'][$i]['name']=$token['name'];
+                $return['token'][$i]['short_name']=$token['short_name'];
+                $return['buy'][$token['short_name']] = round($token['buy_price'],5);
+                $return['sell'][$token['short_name']] = round($token['sell_price'],5);
+                $return['order'][$token['short_name']]['min_buy_amount'] = $token['min_buy_amount'];
+                $return['order'][$token['short_name']]['min_sell_amount'] = $token['min_sell_amount'];
+                $return['order'][$token['short_name']]['base_max_size'] = $token['base_max_size'];
+                if(!empty($user_data)){
+                    $return['wallet_amount']['balance'][$token['short_name']]=$user_data[$token['short_name'].'_wallet'];
+                }
             }
         }
+       
         return $return;
     }
     public static function update_all_token_price($user_data=null)

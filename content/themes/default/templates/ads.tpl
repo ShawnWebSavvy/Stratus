@@ -902,7 +902,8 @@
                             {if $transactions}
                             <div class="tableWrapTransactions">
                                 <div class="wallet_page_tabledata">
-                                    <table class="table table-basic transactionTable js_dataTable">
+                                    <table class="table table-basic transactionTable js_dataTable" data-order="[[3, 'desc']]"
+>
                                         <thead>
                                             <tr>
                                                 <th>{__("Amount")}</th>
