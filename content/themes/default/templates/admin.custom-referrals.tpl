@@ -1,6 +1,6 @@
 
-<link rel="stylesheet" href="{$system['system_url']}/includes/assets/js/plugins/advanceSearch/selectSearch.min.css" type="text/css"> 
-<!-- <script type="text/javascript" src="{$system['system_url']}/includes/assets/js/plugins/advanceSearch/selectmenu.min.js" ></script> -->
+<link rel="stylesheet" href="{$system['system_uploads_assets']}/includes/assets/js/plugins/advanceSearch/selectSearch.min.css" type="text/css"> 
+<script type="text/javascript" src="{$system['system_uploads_assets']}/includes/assets/js/plugins/advanceSearch/selectSearch.min.js" ></script>
 
 <div class="card">
     <div class="card-header with-icon">
