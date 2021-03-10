@@ -22,7 +22,7 @@
                                 <a href="{$system['system_url']}/global-profile.php?username={$user->_data['user_name']}"
                                     class="btn viewProfileButton">
                                     <img width="30px" height="30px"
-                                        src="{$system['system_upload_assets']}/content/themes/default/images/svg/svgImg/eye-icon.svg" />
+                                        src="{$system['system_url']}/content/themes/default/images/svg/svgImg/eye-icon.svg" />
                                     <span class="ml5 d-none d-lg-inline-block">{__("View Profile")}</span>
                                 </a>
                             </div>

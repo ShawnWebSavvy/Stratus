@@ -430,6 +430,7 @@
  .ui-box .img{padding:4px;margin:0 auto;border-radius:10px;}
  body.night-mode .ui-box .img{background:#212121;}
  .ui-box img{height:92px;width:92px;border-radius:10px;}
+ .ui-box .img img{object-fit: cover;}
  .ui-box button img{height:20px;width:20px;border-radius:0px;}
  .ui-box .btn{box-shadow:none;margin:0 auto;}
  .stat-panel{border-radius:4px;margin-bottom:20px;overflow:hidden;}
@@ -761,6 +762,7 @@
  .post-avatar-picture.small{min-width:25px;min-height:25px;}
  .post-avatar-picture.rounded{border-radius:15.16px;}
  .post-meta{display:table-cell;vertical-align:top;width:100%;word-break:break-word;word-wrap:break-word;}
+ .post-meta .fa.fa-check-circle{margin-left: 0px;}
  .post-meta .dropdown .dropdown-toggle{color:#d3d3d3;padding:5px;border-radius:10px;}
  .post-meta .dropdown .dropdown-toggle:hover,.post-meta .dropdown .dropdown-toggle:active,.post-meta .dropdown .dropdown-toggle:focus,.wrapFooterDiv.wrapFootershowHide button:hover,.wrapFooterDiv.wrapFootershowHide button:active,.wrapFooterDiv.wrapFootershowHide button:focus{cursor:pointer;background:url(../images/icons/threedotsBlue.png) no-repeat !important;transition:all ease 0.4s;height:8px;width:34px;background-position:center center !important;}
  body.night-mode .post-meta .dropdown .dropdown-toggle:hover{background:#333;}

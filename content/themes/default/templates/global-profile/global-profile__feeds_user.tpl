@@ -11,8 +11,7 @@
                 <a class="h6" href="{$system['system_url']}/global-profile.php?username={$_user['user_name']}"
                     title="{$_user['user_firstname']} {$_user['user_lastname']}">
                     {$_user['user_firstname']} {$_user['user_lastname']}
-                    <br><span class="search_username"
-                        style="color:#a7b4cb;font-size:12px;letter-spacing:0;line-height:20px;">{$_user['user_name']}</span>
+                    <!-- <span class="search_username" style="color:#a7b4cb;font-size:12px;letter-spacing:0;line-height:20px;">{$_user['user_name']}</span> -->
                 </a>
             </span>
             {if $_user['user_verified']}
