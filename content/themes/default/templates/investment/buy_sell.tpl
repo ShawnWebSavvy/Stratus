@@ -49,19 +49,37 @@
                                                             <h5>{$tkn_detail['name']}</h5>
                                                             <p>{strtoupper($tkn_detail['short_name'])}</p>
                                                         </div>
+                                                          <div class="priceCount priceCountDetail">
+                                                            <p>
+                                                                <span>
+                                                                {if $order_action_type=='Buy'}
+                                                                    {$tkn_detail['buy_price']}
+                                                                {else}
+                                                                    {$tkn_detail['sell_price']}
+                                                                {/if}
+                                                                </span>
+                                                                USD
+                                                            </p>
+                                                        
+                                                        </div>
                                                     </div>
-                                                    <div class="priceCount">
-                                                        <p>
-                                                            <span>
-                                                            {if $order_action_type=='Buy'}
-                                                                {$tkn_detail['buy_price']}
-                                                            {else}
-                                                                {$tkn_detail['sell_price']}
-                                                            {/if}
-                                                            </span>
-                                                            USD
-                                                        </p>
-                                                    </div>
+                                                  
+                                                     <div class="buySellBox">
+                                                            <p class="d-flex align-items-start ">
+                                                                <img src="{$system['system_url']}/content/themes/default/images/svg/svgImg/Wallet_icon_header.svg"
+                                                                    alt="wallet">
+                                                                    <span>
+                                                                        {if $wallet_coins_amount[$tkn_detail['short_name']] && $wallet_coins_amount[$tkn_detail['short_name']]>0}
+                                                                            {$wallet_coins_amount[$tkn_detail['short_name']]}
+                                                                        {else}
+                                                                            0
+                                                                        {/if} 
+                                                                        {$tkn_detail['short_name']|upper}
+                                                                        <br/>
+                                                                        ${$tkn_detail['total_wallet_quote_amount']}
+                                                                    </span>
+                                                            </p>
+                                                        </div>
                                                 </a>
                                             </li>
                                         </div>
@@ -75,54 +93,33 @@
                                                         <div class="textSection">
                                                             <h5>Gold Secured Currency</h5>
                                                             <p>GSX</p>
-                                                            <p class="comingSoon">Coming Soon</p>
+                                                            <p class="comingSoon comingSoon1">Coming Soon</p>
+                                                        </div>
+                                                          <div class="priceCount priceCountDetail">
+                                                            <p>
+                                                                <span>
+                                                                    0.1
+                                                                </span>
+                                                                USD
+                                                            </p>
                                                         </div>
                                                     </div>
-                                                    <div class="priceCount">
-                                                        <p>
-                                                            <span>
-                                                                0.1
-                                                            </span>
-                                                            USD
-                                                        </p>
-                                                    </div>
+                                                     <div class="buySellBox">
+                                                            <p class="d-flex align-items-start ">
+                                                                <img src="{$system['system_url']}/content/themes/default/images/svg/svgImg/Wallet_icon_header.svg"
+                                                                    alt="wallet">
+                                                                    <span>
+                                                                        0 GSX
+                                                                        <br/>
+                                                                        $0
+                                                                    </span>
+                                                            </p>
+                                                        </div>
+                                                  
                                                 </a>
                                             </li>
                                         </div>
-                                        <!-- <div class="gallery-cell">
-                                            <li>
-                                                <a href="javascript:;" class="coinDetailPrice coinDetailPrice_wallet {if $set_active_coin=='eth'} active {/if}" data-coin="ETH">
-                                                    <div class="coinDetailHeader">
-                                                        <img src="{$system['system_url']}/content/themes/default/images/investment/ethCoin.svg"
-                                                            alt="bit coin">
-                                                        <div class="textSection">
-                                                            <h5>Ethereum</h5>
-                                                            <p>ETH</p>
-                                                        </div>
-                                                    </div>
-                                                    <div class="priceCount">
-                                                        <p>5.000 USD</p>
-                                                    </div>
-                                                </a>
-                                            </li>
-                                        </div>
-                                        <div class="gallery-cell">
-                                            <li>
-                                                <a href="javascript:;" class="coinDetailPrice coinDetailPrice_wallet {if $set_active_coin=='apl'} active {/if}" data-coin="APL">
-                                                    <div class="coinDetailHeader">
-                                                        <img src="{$system['system_url']}/content/themes/default/images/investment/aplCoin.svg"
-                                                            alt="bit coin">
-                                                        <div class="textSection">
-                                                            <h5>Apollo</h5>
-                                                            <p>APL</p>
-                                                        </div>
-                                                    </div>
-                                                    <div class="priceCount">
-                                                        <p>15.284 USD</p>
-                                                    </div>
-                                                </a>
-                                            </li>
-                                        </div> -->
+                                     
                                     </div>
                                 </div>
                             </ul>

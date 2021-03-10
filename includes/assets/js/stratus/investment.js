@@ -643,12 +643,13 @@ if (endUrl != "investments") {
 
 
             // Add an SVG element with the desired dimensions and margin.
-            var graph = d3.select('#' + id).append("svg:svg")
-                .attr("width", w + m[1] + m[3])
-                .attr("height", h + m[0] + m[2])
-                .append("svg:g")
+            var graph = d3.select('#' + id)
+                // .attr("width", w + m[1] + m[3])
+                // .attr("height", h + m[0] + m[2])
+                .append("svg")
+                .attr("viewBox", `0 0 320 250`)
                 .attr("stroke-width", 9)
-                .attr("stroke", "red")
+                // .attr("stroke", "red")
                 // .attr("stroke", $('#' + id).data('color'))
                 .attr("transform", "translate(" + 2 + "," + 2 + ")");
 
