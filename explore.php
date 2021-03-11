@@ -22,7 +22,7 @@ try {
         $smarty->assign('trending_hashtags', $trending_hashtags);
     }
     if ($_GET['view'] == "foryou") {
-        $trendingPosts = $userGlobal->get_posts_trending();
+        $trendingPosts = $userGlobal->get_posts_trending(false);
         $smarty->assign('trendingPosts', $trendingPosts);
     } elseif ($_GET['view'] == "trending") {
         // get trending hashtags
