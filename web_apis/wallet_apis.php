@@ -193,7 +193,7 @@ function addWalletPointsUsingStripe($id){
         // process
 			require_once(ABSPATH.'includes/libs/Stripe/init.php');
       	$secret_key = ($system['stripe_mode'] == "live")? $system['stripe_live_secret'] : $system['stripe_test_secret'];
-      //$secret_key = 'sk_test_51IEYaWD19oXaFHIsTj3rdRnMn195R5vOdBfIGTixjwfTxuUm6OjDdRTuXAgR6sTkZQ22LvZCQVj7R9JnJoWpa3xU00O1UMk81L';
+      //$secret_key = 'sk_test_51IEYaWD19oXaFHIsTj3rdRnMn195R5vOdBfIGTixjwfTxuUm6OjDdRTuXAgR6sTkZQ22LvZCQVj7R9JnJoWpa3xU00O1UMk81L'; // for testing
 			\Stripe\Stripe::setApiKey($secret_key);
 			$customer = \Stripe\Customer::create(array(
 				 'email' => $_POST['email'],
@@ -224,3 +224,96 @@ function addWalletPointsUsingStripe($id){
 }
 
 
+function updatesendmoneyWAlletBalanceFunction(){
+  try 
+    {
+    if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+       global $db, $system, $date;
+      mysqli_report (MYSQLI_REPORT_OFF);
+       
+      if(isset($_POST['user_email']) && isset($_POST['reciver_email']) && isset($_POST['price']) )
+      {
+        
+        $amount= $_POST['price'];
+          $check_user = $db->query(sprintf("SELECT user_id as id, user_wallet_balance as user_wallet_balance, COUNT(*) as count FROM users WHERE user_email = %s", secure($_POST['user_email']))) or _error("SQL_ERROR_THROWEN");
+          $check_user= $check_user->fetch_assoc();
+          $user_id =   $check_user['id'];
+        
+           $reciver_user = $db->query(sprintf("SELECT user_id as id, COUNT(*) as count FROM users WHERE user_email = %s", secure($_POST['reciver_email']))) or _error("SQL_ERROR_THROWEN");
+          $reciver_user= $reciver_user->fetch_assoc();
+          $reciver_id =   $reciver_user['id'];
+
+          if ($check_user['user_wallet_balance'] < $amount) {
+            //throw new Exception(__("Your current wallet balance is") . " <strong>" . $system['system_currency_symbol'] . $check_user['user_wallet_balance'] . "</strong>, " . __("Recharge your wallet to continue"));
+
+            returnResponse(false,400,"Your current wallet balance is ". $system['system_currency_symbol']."".$check_user['user_wallet_balance'] ." Recharge your wallet to continue");
+
+        }
+        else {
+        $db->query(sprintf('UPDATE users SET user_wallet_balance = IF(user_wallet_balance-%1$s<=0,0,user_wallet_balance-%1$s) WHERE user_id = %2$s', secure($amount), secure($user_id, 'int'))) or _error("SQL_ERROR_THROWEN");
+
+        $db->query(sprintf("UPDATE users SET user_wallet_balance = user_wallet_balance + %s WHERE user_id = %s", secure($amount), secure($reciver_id, 'int'))) or _error("SQL_ERROR_THROWEN");
+
+         $db->query(sprintf("INSERT INTO ads_users_wallet_transactions (user_id, node_type, node_id, amount, type, paymentMode, date) VALUES (%s, %s, %s, %s, %s, %s, %s)", secure($user_id, 'int'), secure('user'), secure($reciver_id, 'int'), secure($amount), secure('out'), secure('wallet'), secure($date))) or _error("SQL_ERROR_THROWEN");
+        
+
+        $db->query(sprintf("INSERT INTO ads_users_wallet_transactions (user_id, node_type, node_id, amount, type, paymentMode, date) VALUES (%s, %s, %s, %s, %s, %s, %s)", secure($reciver_id, 'int'), secure('user'), secure($user_id, 'int'), secure($amount), secure('in'), secure('wallet'), secure($date))) or _error("SQL_ERROR_THROWEN");        
+
+          returnResponse(true,200,"Success");
+       
+        }
+      }
+        else {
+           returnResponse(false,300,"parameters missing");
+         }
+      
+     }
+       
+       else {
+         returnResponse(false,300,"Something went wrong");
+         }
+       
+     }
+     catch(Exception $e){
+         returnResponse(false,400,$e->getMessage());
+      }
+}
+
+
+function getAllTransactionsFunction(){
+  try 
+    {
+    if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+       global $db, $system, $date;
+      mysqli_report (MYSQLI_REPORT_OFF);
+      if(isset($_POST['user_id']))
+      {
+          $user_id = $_POST['user_id'];
+
+        $get_transactions = $db->query(sprintf("SELECT ads_users_wallet_transactions.*, users.user_name, users.user_firstname, users.user_lastname, users.user_gender, users.user_picture FROM ads_users_wallet_transactions LEFT JOIN users ON ads_users_wallet_transactions.node_type='user' AND ads_users_wallet_transactions.node_id = users.user_id WHERE ads_users_wallet_transactions.user_id = %s ORDER BY ads_users_wallet_transactions.transaction_id DESC", secure($user_id, 'int'))) or _error("SQL_ERROR_THROWEN");
+        if ($get_transactions->num_rows > 0) {
+           $result= $get_transactions->fetch_all();
+              returnResponse(true,200,"Success",$result);
+            
+          }
+          else {
+              returnResponse(false,100,"Transactions history is empty" );
+          }
+       
+        }
+
+        else {
+           returnResponse(false,300,"parameters missing");
+         }
+      
+     }
+       
+       else {
+         returnResponse(false,300,"Something went wrong");
+         }
+
+     }
+     catch(Exception $e){
+         returnResponse(false,400,$e->getMessage());
+      }
+}
