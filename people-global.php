@@ -26,8 +26,6 @@ try {
 			// $smarty->assign('people', $people);
 
 			$new_people = $userGlobal->get_new_people(0, true, "GlobalHub");
-			echo "<pre>";
-			print_r($new_people);
 			$smarty->assign('people', $new_people);
 			break;
 

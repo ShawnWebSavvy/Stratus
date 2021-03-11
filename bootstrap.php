@@ -20,12 +20,13 @@ if (!file_exists(ABSPATH . 'includes/config.php')) {
     /* the config file doesn't exist -> start the installer */
     header('Location: ./install');
 }
-
+// die(phpinfo());
 
 // get system configurations
 require_once(ABSPATH . 'includes/config.php');
-
-
+//add redis files
+require_once('redis.php');
+require_once(ABSPATH . 'includes/redis/redis_helpers.php');
 // enviroment settings
 if (DEBUGGING) {
     ini_set("display_errors", true);
@@ -114,17 +115,14 @@ $system['BASEPATH'] = ltrim(BASEPATH, '/');
 /* set system version */
 $system['system_version'] = SYS_VER;
 
+$system['investment_api_base_url'] = "https://ws.stage-apollo.xyz/api/";
+
 /* set session hash */
 $session_hash = session_hash($system['session_hash']);
 $system['system_uploads_assets'] = $system['system_url'];
 /* set system uploads */
 if ($system['s3_enabled']) {
     $endpoint = "https://s3." . $system['s3_region'] . ".amazonaws.com/" . $system['s3_bucket'];
-    //$endpoint . "/uploads";
-
-    /*ImageKit Live */
-    //$system['system_uploads'] = "https://ik.imagekit.io/stratus";
-    //$system['system_uploads_url'] = "https://ik.imagekit.io/stratus";
 
     /*CDN Stag */
     // $system['system_uploads'] =  "https://cdn.stratus-stage.xyz/uploads";

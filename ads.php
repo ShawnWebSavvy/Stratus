@@ -152,6 +152,7 @@ try {
 			// get wallet transactions
 			$transactions = $user->wallet_get_transactions();
 			/* assign variables */
+			// echo'<pre>';print_r($transactions); die;
 			$smarty->assign('transactions', $transactions);
 
 			// get countries (for 2checkout billing address)

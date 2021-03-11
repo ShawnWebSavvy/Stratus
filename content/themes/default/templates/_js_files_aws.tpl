@@ -247,12 +247,14 @@
 <script src="{$system['system_uploads_assets']}/includes/assets/js/plugins/autosize/autosize.min.js" {if !$user->_logged_in}defer{/if}></script>
 <script src="{$system['system_uploads_assets']}/includes/assets/js/plugins/readmore/readmore.min.js" {if !$user->_logged_in}defer{/if}></script>
 <script src="{$system['system_uploads_assets']}/includes/assets/js/plugins/moment/moment-with-locales.min.js" {if !$user->_logged_in}defer{/if}></script>
+{if $user->_logged_in}
 <script src="https://cdn.fluidplayer.com/v2/current/fluidplayer.min.js" {if !$user->_logged_in}defer{/if}></script>
 <link rel="stylesheet" href="https://cdn.fluidplayer.com/v2/current/fluidplayer.min.css" type="text/css"/>
 <script src="https://unpkg.com/video.js@7.8.4/dist/video.min.js" {if !$user->_logged_in}defer{/if}></script>
 <script src="https://unpkg.com/videojs-contrib-hls@5.15.0/dist/videojs-contrib-hls.min.js" {if !$user->_logged_in}defer{/if}></script>
 <link href="https://unpkg.com/video.js@7.8.4/dist/video-js.min.css" rel="stylesheet">
-
+<script src="{$system['system_uploads_assets']}/includes/assets/js/plugins/swipeMobile/swipeMobile.js"></script>
+{/if}
 {if $user->_logged_in}
     <!-- jQuery-UI -->
     <script>var _tooltip = jQuery.fn.tooltip;</script>
@@ -281,10 +283,10 @@
 
     <!-- Crop Profile Picture & Reposition Cover Photo -->
     {if $page == "started" || $page == "profile" || $page == "page" || $page == "group" || $page == "event"}
-        <script src="{$system['system_uploads_assets']}/includes/assets/js/plugins/jquery-ui.touch-punch/jquery-ui.touch-punch.min.js"></script>
-        <script src="{$system['system_uploads_assets']}/includes/assets/js/plugins/jquery.imagedrag/jquery.imagedrag.min.js"></script>
-        <script src="{$system['system_uploads_assets']}/includes/assets/js/plugins/rcrop/rcrop.min.js"></script>
-        <link rel="stylesheet" type='text/css' href="{$system['system_uploads_assets']}/includes/assets/js/plugins/rcrop/rcrop.min.css">
+        <script src="{$system['system_uploads_assets']}/includes/assets/js/plugins/jquery-ui.touch-punch/jquery-ui.touch-punch.min.js" {if !$user->_logged_in}defer{/if}></script>
+        <script src="{$system['system_uploads_assets']}/includes/assets/js/plugins/jquery.imagedrag/jquery.imagedrag.min.js" {if !$user->_logged_in}defer{/if}></script>
+        <script src="{$system['system_uploads_assets']}/includes/assets/js/plugins/rcrop/rcrop.min.js" {if !$user->_logged_in}defer{/if}></script>
+        <link rel="stylesheet" type='text/css' href="{$system['system_uploads_assets']}/includes/assets/js/plugins/rcrop/rcrop.min.css" {if !$user->_logged_in}defer{/if}>
     {/if}
     <!-- Crop Profile Picture & Reposition Cover Photo -->
 
@@ -351,7 +353,7 @@
     <!-- Twilio -->
     <!-- Agora -->
     {if $system['live_enabled']}
-        <script src="https://cdn.agora.io/sdk/release/AgoraRTCSDK-3.2.1.js"></script>
+        <script src="https://cdn.agora.io/sdk/release/AgoraRTCSDK-3.4.0.js"></script>
     {/if}
     <!-- Agora -->
     <!-- Easytimer -->
@@ -372,21 +374,34 @@
 <!-- Dependencies Plugins -->
 
 <!-- Sngine [JS] -->
-<script src="{$system['system_url']}/includes/assets/js/stratus/core.js?{$cacheremovejs}" defer></script>
+<script src="{$system['system_url']}/includes/assets/js/stratus/core.js?{$cacheremovejs}" {if !$user->_logged_in}defer{/if}></script>
+<script src="{$system['system_uploads_assets']}/includes/assets/js/stratus/swipMobileCode.js?{$cacheremovejs}" {if !$user->_logged_in}defer{/if}></script>
 <!--Landing page custom js -->
-<script src="{$system['system_url']}/includes/assets/js/stratus/custom.js?{$cacheremovejs}" defer></script>
+<script src="{$system['system_url']}/includes/assets/js/stratus/custom.js?{$cacheremovejs}" {if !$user->_logged_in}defer{/if}></script>
 
 {if $user->_logged_in}
-    <script src="{$system['system_url']}/includes/assets/js/stratus/user.js?{$cacheremovejs}" defer></script>
-    <script src="{$system['system_url']}/includes/assets/js/stratus/post.js?{$cacheremovejs}" defer></script>
-    <script src="{$system['system_url']}/includes/assets/js/stratus/chat.js?{$cacheremovejs}" defer></script>
-    <script src="{$system['system_uploads_assets']}/includes/assets/js/stratus/showads.js?{$cacheremovejs}" defer></script>
+    <script src="{$system['system_url']}/includes/assets/js/stratus/user.js?{$cacheremovejs}" {if !$user->_logged_in}defer{/if}></script>
+    <script src="{$system['system_uploads_assets']}/includes/assets/js/stratus/post.js?{$cacheremovejs}" {if !$user->_logged_in}defer{/if}></script>
+    <script src="{$system['system_uploads_assets']}/includes/assets/js/stratus/chat.js?{$cacheremovejs}" {if !$user->_logged_in}defer{/if}></script>
+    <script src="{$system['system_uploads_assets']}/includes/assets/js/stratus/showads.js?{$cacheremovejs}" {if !$user->_logged_in}defer{/if}></script>
     {if $system['live_enabled'] && $page == "live"}
-        <script src="{$system['system_url']}/includes/assets/js/stratus/live.js"></script>
+        <script src="{$system['system_uploads_assets']}/includes/assets/js/stratus/live.js"></script>
+    {/if}
+
+    {if $page == "investment/activity" || $page == "investment/buy_sell"  || $page == "investment/index" }
+        <script src="{$system['system_url']}/includes/assets/js/stratus/investment.js?{$cacheremovejs}" defer></script>
+        <script src="{$system['system_uploads_assets']}/includes/assets/js/stratus/swipMobileCode.js?{$cacheremovejs}" defer></script>
+        <script src="{$system['system_uploads_assets']}/includes/assets/js/plugins/graph/d3.js?{$cacheremovejs}" defer></script>
+        <script src="https://unpkg.com/flickity@2.2.2/dist/flickity.pkgd.min.js"></script>
     {/if}
 {/if}
 <!-- Sngine [JS] -->
 
+    <!-- Emoji Animation Script -->
+    <script src="https://unpkg.com/@lottiefiles/lottie-player@latest/dist/lottie-player.js"></script>
+
+    <!-- Emoji Animation Script -->
+   
 {if $page == "admin"}
     <!-- Dependencies Plugins -->
     <script src="{$system['system_uploads_assets']}/includes/assets/js/plugins/bootstrap.colorpicker/bootstrap-colorpicker.min.js"></script>
@@ -406,7 +421,10 @@
     <!-- Dependencies Plugins [JS] -->
 
     <!-- Sngine [JS] -->
-    <script src="{$system['system_url']}/includes/assets/js/stratus/admin.js"></script>
+
+    <link rel="stylesheet" href="{$system['system_uploads_assets']}/includes/assets/js/plugins/advanceSearch/selectSearch.min.css" type="text/css"> 
+    <script type="text/javascript" src="{$system['system_uploads_assets']}/includes/assets/js/plugins/advanceSearch/selectSearch.min.js" ></script>
+    <script src="{$system['system_uploads_assets']}/includes/assets/js/stratus/admin.js"></script>
     <!-- Sngine [JS] -->
 
     <!-- Admin Charts -->

@@ -42,7 +42,7 @@
             Request Sent
             </button> {elseif $_connection == "remove"}
             <button type="button" class="btn  btn-success {if !$_no_action}btn-delete{/if} js_friend-remove" data-uid="{$_user['user_id']}">
-                 <img class="btn_image" src="{$system['system_url']}/content/themes/default/images/svg/svgImg/plus_icon.svg">
+                 <img class="btn_image" src="{$system['system_url']}/content/themes/default/images/svg/svgImg/newchecked1.svg">
                 <img class="btn_image_hover" src="{$system['system_url']}/content/themes/default/images/svg/svgImg/delete_icon.svg">
                 
                <span class="btn_image_"> {__("Friends")} </span>
@@ -114,20 +114,22 @@
             <div class="userNameWrap _user_details">
                 <div class="mt5">
                     <span class="name js_user-popover" data-uid="{$_user['user_id']}">
-                <a href="{$system['system_url']}/global-profile.php?username={$_user['user_name']}">{$_user['user_firstname']}
-                    {$_user['user_lastname']}
-                    {if $_user['user_verified']}
-                    <i data-toggle="tooltip" data-placement="top" title='{__("Verified User")}' class="fa fa-check-circle fa-fw verified-badge"></i> {/if} {if $_user['user_subscribed']}
-                    <i data-toggle="tooltip" data-placement="top" title='{__("Pro User")}' class="fa fa-bolt fa-fw pro-badge"></i> {/if}</a>
-                    <span class="user_name_span">@{$_user['user_name']}</span>
-            </span>
+                        <a href="{$system['system_url']}/global-profile.php?username={$_user['user_name']}">
+                            {$_user['user_firstname']}
+                            {$_user['user_lastname']}
+                            {if $_user['user_verified']}
+                            <i data-toggle="tooltip" data-placement="top" title='{__("Verified User")}' class="fa fa-check-circle fa-fw verified-badge"></i> {/if} {if $_user['user_subscribed']}
+                            <i data-toggle="tooltip" data-placement="top" title='{__("Pro User")}' class="fa fa-bolt fa-fw pro-badge"></i>
+                            {/if}
+                        </a>
+                        <span class="user_name_span">@{$_user['user_name']}</span>
+                    </span>
                 </div>
                 {* <div class="userlocation">
                     {if $_user['user_country_name']}
                     <span>{$_user['user_country_name']}</span> {/if} {if $_user['user_current_city']}
                     <span>{$_user['user_current_city']}</span> {/if}
                 </div> *}
-                
             </div>
         </div>
         <div class="data-content usernamesWrapBlock">
@@ -153,7 +155,7 @@
                 <button type="button" class="btn  btn-success {if !$_no_action}btn-delete{/if} js_friend-remove" data-uid="{$_user['user_id']}">
                     
                 {if ($page=="people") }
-              <img class="btn_image" src="{$system['system_url']}/content/themes/default/images/svg/svgImg/plus_icon.svg">
+              <img class="btn_image" src="{$system['system_url']}/content/themes/default/images/svg/svgImg/newchecked1.svg">
                 <img class="btn_image_hover" src="{$system['system_url']}/content/themes/default/images/svg/svgImg/delete_icon.svg">
               
                 {/if}

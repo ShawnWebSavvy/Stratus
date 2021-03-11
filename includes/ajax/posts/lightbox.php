@@ -36,6 +36,14 @@ try {
 	if(!$photo)  {
 		_error(400);
 	}
+	/* get user pages */
+	$pages = $user->get_pages(array('managed' => true, 'user_id' => $user->_data['user_id']));
+	$smarty->assign('pages', $pages);
+
+	/* get user pages */
+	$groups = $user->get_groups(array('get_all' => true, 'user_id' => $user->_data['user_id']));
+	/* assign variables */
+	$smarty->assign('groups', $groups);
 	/* assign variables */
 	$smarty->assign('photo', $photo);
 	/* return */

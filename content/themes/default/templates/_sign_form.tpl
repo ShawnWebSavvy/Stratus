@@ -1,6 +1,6 @@
 <span class="cloud_imgs"> </span>
 <div class="card card-register">
-     <!-- signin -->
+    <!-- signin -->
     <div class="js_panel {if $do == 'up'}x-hidden{/if}">
         <div class="card-header">
             <h2>One account, <br>
@@ -58,7 +58,8 @@
             <div class="text-center">
                 {if $system['facebook_login_enabled']}
                 <a href="{$system['system_url']}/connect/facebook" class="btn btn-sm btn-rounded btn-social-icon ">
-                    <img width="20px" height="20px" src="{$system['system_url']}/content/themes/default/images/svg/svgImg/fbIcons.svg">
+                    <img width="20px" height="20px"
+                        src="{$system['system_uploads_assets']}/content/themes/default/images/svg/svgImg/fbIcons.svg">
                 </a>
                 {/if}
                 {if $system['google_login_enabled']}
@@ -68,22 +69,26 @@
                 {/if}
                 {if $system['twitter_login_enabled']}
                 <a href="{$system['system_url']}/connect/twitter" class="btn btn-sm btn-rounded btn-social-icon ">
-                    <img width="20px" height="20px" src="{$system['system_url']}/content/themes/default/images/svg/svgImg/twittericon.svg">
+                    <img width="20px" height="20px"
+                        src="{$system['system_uploads_assets']}/content/themes/default/images/svg/svgImg/twittericon.svg">
                 </a>
                 {/if}
                 {if $system['instagram_login_enabled']}
                 <a href="{$system['system_url']}/connect/instagram" class="btn btn-sm btn-rounded btn-social-icon ">
-                    <img width="20px" height="20px" src="{$system['system_url']}/content/themes/default/images/svg/svgImg/instaIcon.svg">
+                    <img width="20px" height="20px"
+                        src="{$system['system_uploads_assets']}/content/themes/default/images/svg/svgImg/instaIcon.svg">
                 </a>
                 {/if}
                 {if $system['linkedin_login_enabled']}
                 <a href="{$system['system_url']}/connect/linkedin" class="btn btn-sm btn-rounded btn-social-icon ">
-                    <img width="20px" height="20px" src="{$system['system_url']}/content/themes/default/images/svg/svgImg/inIcon.svg">
+                    <img width="20px" height="20px"
+                        src="{$system['system_uploads_assets']}/content/themes/default/images/svg/svgImg/inIcon.svg">
                 </a>
                 {/if}
                 {if $system['vkontakte_login_enabled']}
                 <a href="{$system['system_url']}/connect/vkontakte" class="btn btn-sm btn-rounded btn-social-icon">
-                    <img width="20px" height="20px" src="{$system['system_url']}/content/themes/default/images/svg/svgImg/vkIcon.svg">
+                    <img width="20px" height="20px"
+                        src="{$system['system_uploads_assets']}/content/themes/default/images/svg/svgImg/vkIcon.svg">
                 </a>
                 {/if}
             </div>
@@ -110,49 +115,52 @@
         <div class="card-body">
             <form class="js_ajax-forms sign-up-form" data-url="core/signup.php">
 
-            <div class="chat-conversations js_scroller rightSideBarScroll">
-                <div class="row">
-                {if !$system['registration_enabled'] && $system['invitation_enabled']}
-                <div class="form-group col-12">
-                    <!-- <div class="input-group"> -->
-                         <!-- <div class="input-group-prepend">
+                <div class="chat-conversations js_scroller rightSideBarScroll">
+                    <div class="row">
+                        {if !$system['registration_enabled'] && $system['invitation_enabled']}
+                        <div class="form-group col-12">
+                            <!-- <div class="input-group"> -->
+                            <!-- <div class="input-group-prepend">
                             <span class="input-group-text"><i class="fas fa-handshake fa-fw"></i></span>
                         </div>  -->
-                        <label for="" class="label">{__("Invitation Code")}</label>
-                        <input name="invitation_code" type="text" class="form-control"
-                            placeholder='{__("Invitation Code")}' required>
-                    <!-- </div> -->
-                </div>
-                {/if}
-               
-                <div class="form-group col-sm-6 col-12">
-                    <!--<div class="input-group">
+                            <label for="" class="label">{__("Invitation Code")}</label>
+                            <input name="invitation_code" type="text" class="form-control"
+                                placeholder='{__("Invitation Code")}' required>
+                            <!-- </div> -->
+                        </div>
+                        {/if}
+
+                        <div class="form-group col-sm-6 col-12">
+                            <!--<div class="input-group">
                         <div class="input-group-prepend">
                             <span class="input-group-text"><i class="fas fa-globe fa-fw"></i></span>
                         </div>-->
-                    <label for="" class="label">{__("Username")}</label>
-                    <input name="username" maxlength="50" type="text" class="form-control" placeholder='{__("Username")}' required>
-                    <!--</div>-->
-                </div>
-                <div class="form-group  col-sm-6 col-12">
-                    <!--<div class="input-group">
+                            <label for="" class="label">{__("Username")}</label>
+                            <input name="username" maxlength="50" type="text" class="form-control"
+                                placeholder='{__("Username")}' required>
+                            <!--</div>-->
+                        </div>
+                        <div class="form-group  col-sm-6 col-12">
+                            <!--<div class="input-group">
                         <div class="input-group-prepend">
                             <span class="input-group-text"><i class="fas fa-user fa-fw"></i></span>
                         </div>-->
-                    <label for="" class="label">{__("First name")}</label>
-                    <input name="first_name" maxlength="20" type="text" class="form-control" placeholder='{__("First name")}' required>
-                    <!--</div>-->
-                </div>
-                <div class="form-group  col-sm-6 col-12">
-                    <!--<div class="input-group">
+                            <label for="" class="label">{__("First name")}</label>
+                            <input name="first_name" maxlength="20" type="text" class="form-control"
+                                placeholder='{__("First name")}' required>
+                            <!--</div>-->
+                        </div>
+                        <div class="form-group  col-sm-6 col-12">
+                            <!--<div class="input-group">
                         <div class="input-group-prepend">
                             <span class="input-group-text"><i class="fas fa-user fa-fw"></i></span>
                         </div>-->
-                    <label for="" class="label">{__("Last name")}</label>
-                    <input name="last_name" maxlength="20" type="text" class="form-control" placeholder='{__("Last name")}' required>
-                    <!--</div>-->
-                </div>
-                <!--<div class="form-group  col-sm-6 col-12">
+                            <label for="" class="label">{__("Last name")}</label>
+                            <input name="last_name" maxlength="20" type="text" class="form-control"
+                                placeholder='{__("Last name")}' required>
+                            <!--</div>-->
+                        </div>
+                        <!--<div class="form-group  col-sm-6 col-12">
                     <label for="" class="label">{__("Gender")}</label>
                     <select name="gender" id="gender" class="form-control" required>
                         <option value="none">{__("Select Sex")}:</option>
@@ -161,16 +169,17 @@
                         <option value="other">{__("Other")}</option>
                     </select>
                 </div> -->
-                <div class="form-group  col-sm-6 col-12">
-                    <!--<div class="input-group">
+                        <div class="form-group  col-sm-6 col-12">
+                            <!--<div class="input-group">
                         <div class="input-group-prepend">
                             <span class="input-group-text"><i class="fas fa-envelope fa-fw"></i></span>
                         </div>-->
-                    <label for="" class="label">{__("Email")}</label>
-                    <input name="email" maxlength="60" type="email" class="form-control" placeholder='{__("Email")}' required>
-                    <!--</div>-->
-                </div>
-                <!-- {if $system['activation_enabled'] && $system['activation_type'] == "sms"}
+                            <label for="" class="label">{__("Email")}</label>
+                            <input name="email" maxlength="60" type="email" class="form-control"
+                                placeholder='{__("Email")}' required>
+                            <!--</div>-->
+                        </div>
+                        <!-- {if $system['activation_enabled'] && $system['activation_type'] == "sms"}
                 <div class="form-group">
                     <div class="input-group">
                             <div class="input-group-prepend">
@@ -182,74 +191,74 @@
                     </div>
                 </div>
                 {/if} -->
-                <div class="form-group col-sm-6 col-12">
-                    <div class="form-group">
-                        <!--<div class="input-group">
+                        <div class="form-group col-sm-6 col-12">
+                            <div class="form-group">
+                                <!--<div class="input-group">
                             <div class="input-group-prepend">
                                 <span class="input-group-text"><i class="fas fa-key fa-fw"></i></span>
                             </div>-->
-                        <label for="" class="label">{__("Password")}</label>
-                        <input name="password" type="password" class="form-control" placeholder='{__("Password")}'
-                            required>
-                        <!--</div>-->
-                    </div>
-                </div>
-                <!-- <div class="js_hidden-section x-hidden"> -->
-                    
-                    {if $system['age_restriction']}
-                    <div class="form-group  col-sm-6 col-12">
-                        <label class="form-control-label">{__("Birthdate")}</label>
-                        <div class="form-row">
-                            <div class="col">
-                                <select class="form-control" name="birth_month">
-                                    <option value="none">{__("Month")}</option>
-                                    <option {if $user->_data['user_birthdate_parsed']['month'] == '1'}selected{/if}
-                                        value="1">{__("Jan")}</option>
-                                    <option {if $user->_data['user_birthdate_parsed']['month'] == '2'}selected{/if}
-                                        value="2">{__("Feb")}</option>
-                                    <option {if $user->_data['user_birthdate_parsed']['month'] == '3'}selected{/if}
-                                        value="3">{__("Mar")}</option>
-                                    <option {if $user->_data['user_birthdate_parsed']['month'] == '4'}selected{/if}
-                                        value="4">{__("Apr")}</option>
-                                    <option {if $user->_data['user_birthdate_parsed']['month'] == '5'}selected{/if}
-                                        value="5">{__("May")}</option>
-                                    <option {if $user->_data['user_birthdate_parsed']['month'] == '6'}selected{/if}
-                                        value="6">{__("Jun")}</option>
-                                    <option {if $user->_data['user_birthdate_parsed']['month'] == '7'}selected{/if}
-                                        value="7">{__("Jul")}</option>
-                                    <option {if $user->_data['user_birthdate_parsed']['month'] == '8'}selected{/if}
-                                        value="8">{__("Aug")}</option>
-                                    <option {if $user->_data['user_birthdate_parsed']['month'] == '9'}selected{/if}
-                                        value="9">{__("Sep")}</option>
-                                    <option {if $user->_data['user_birthdate_parsed']['month'] == '10'}selected{/if}
-                                        value="10">{__("Oct")}</option>
-                                    <option {if $user->_data['user_birthdate_parsed']['month'] == '11'}selected{/if}
-                                        value="11">{__("Nov")}</option>
-                                    <option {if $user->_data['user_birthdate_parsed']['month'] == '12'}selected{/if}
-                                        value="12">{__("Dec")}</option>
-                                </select>
+                                <label for="" class="label">{__("Password")}</label>
+                                <input name="password" type="password" class="form-control"
+                                    placeholder='{__("Password")}' required>
+                                <!--</div>-->
                             </div>
-                            <div class="col">
-                                <select class="form-control" name="birth_day">
-                                    <option value="none">{__("Day")}</option>
-                                    {for $i=1 to 31}
-                                    <option {if $user->_data['user_birthdate_parsed']['day'] == $i}selected{/if}
-                                        value="{$i}">{$i}</option>
-                                    {/for}
-                                </select>
-                            </div>
-                            <div class="col">
-                                <select class="form-control" name="birth_year">
-                                    <option value="none">{__("Year")}</option>
-                                    {for $i=1905 to 2017}
-                                    <option {if $user->_data['user_birthdate_parsed']['year'] == $i}selected{/if}
-                                        value="{$i}">{$i}</option>
-                                    {/for}
-                                </select>
+                        </div>
+                        <!-- <div class="js_hidden-section x-hidden"> -->
+
+                        {if $system['age_restriction']}
+                        <div class="form-group  col-sm-6 col-12">
+                            <label class="form-control-label">{__("Birthdate")}</label>
+                            <div class="form-row">
+                                <div class="col">
+                                    <select class="form-control" name="birth_month">
+                                        <option value="none">{__("Month")}</option>
+                                        <option {if $user->_data['user_birthdate_parsed']['month'] == '1'}selected{/if}
+                                            value="1">{__("Jan")}</option>
+                                        <option {if $user->_data['user_birthdate_parsed']['month'] == '2'}selected{/if}
+                                            value="2">{__("Feb")}</option>
+                                        <option {if $user->_data['user_birthdate_parsed']['month'] == '3'}selected{/if}
+                                            value="3">{__("Mar")}</option>
+                                        <option {if $user->_data['user_birthdate_parsed']['month'] == '4'}selected{/if}
+                                            value="4">{__("Apr")}</option>
+                                        <option {if $user->_data['user_birthdate_parsed']['month'] == '5'}selected{/if}
+                                            value="5">{__("May")}</option>
+                                        <option {if $user->_data['user_birthdate_parsed']['month'] == '6'}selected{/if}
+                                            value="6">{__("Jun")}</option>
+                                        <option {if $user->_data['user_birthdate_parsed']['month'] == '7'}selected{/if}
+                                            value="7">{__("Jul")}</option>
+                                        <option {if $user->_data['user_birthdate_parsed']['month'] == '8'}selected{/if}
+                                            value="8">{__("Aug")}</option>
+                                        <option {if $user->_data['user_birthdate_parsed']['month'] == '9'}selected{/if}
+                                            value="9">{__("Sep")}</option>
+                                        <option {if $user->_data['user_birthdate_parsed']['month'] == '10'}selected{/if}
+                                            value="10">{__("Oct")}</option>
+                                        <option {if $user->_data['user_birthdate_parsed']['month'] == '11'}selected{/if}
+                                            value="11">{__("Nov")}</option>
+                                        <option {if $user->_data['user_birthdate_parsed']['month'] == '12'}selected{/if}
+                                            value="12">{__("Dec")}</option>
+                                    </select>
+                                </div>
+                                <div class="col">
+                                    <select class="form-control" name="birth_day">
+                                        <option value="none">{__("Day")}</option>
+                                        {for $i=1 to 31}
+                                        <option {if $user->_data['user_birthdate_parsed']['day'] == $i}selected{/if}
+                                            value="{$i}">{$i}</option>
+                                        {/for}
+                                    </select>
+                                </div>
+                                <div class="col">
+                                    <select class="form-control" name="birth_year">
+                                        <option value="none">{__("Year")}</option>
+                                        {for $i=1905 to 2017}
+                                        <option {if $user->_data['user_birthdate_parsed']['year'] == $i}selected{/if}
+                                            value="{$i}">{$i}</option>
+                                        {/for}
+                                    </select>
+                                </div>
                             </div>
                         </div>
                     </div>
-                </div>
                     {/if}
                     <!-- custom fields -->
                     {if $custom_fields}
@@ -284,71 +293,70 @@
                         </label>
                     </div>
                 </div>
-            </div>
-            <!-- </div> -->
-                <div class="form-group">
-                    <button type="submit" class="btn btn-block loginbutton border-0">{__("Sign
-                        Up")}</button>
-                </div>
-                <!-- error -->
-                <div class="alert alert-danger mb0 x-hidden"></div>
-                <!-- error -->
-            </form>
-            {if $system['social_login_enabled']}
-            {if $system['facebook_login_enabled'] || $system['google_login_enabled'] || $system['twitter_login_enabled']
-            || $system['linkedin_login_enabled'] || $system['vkontakte_login_enabled'] ||
-            $system['instagram_login_enabled']}
-            <div class="hr-heading mt5 mb10">
-                <div class="hr-heading-text">
-                    {__("or")} {__("register with")}
-                </div>
-            </div>
-            <div class="text-center">
-                {if $system['facebook_login_enabled']}
-                <a href="{$system['system_url']}/connect/facebook"
-                    class="btn btn-sm btn-rounded btn-social-icon ">
-                    <img width="20px" height="20px" src="{$system['system_url']}/content/themes/default/images/svg/svgImg/fbIcons.svg">
-                </a>
-                {/if}
-                {if $system['google_login_enabled']}
-                <a href="{$system['system_url']}/connect/google"
-                    class="btn btn-sm btn-rounded btn-social-icon ">
-                    <i class="fab fa-google"></i>
-                </a>
-                {/if}
-                {if $system['twitter_login_enabled']}
-                <a href="{$system['system_url']}/connect/twitter"
-                    class="btn btn-sm btn-rounded btn-social-icon ">
-                    <img width="20px" height="20px" src="{$system['system_url']}/content/themes/default/images/svg/svgImg/twittericon.svg">
-                </a>
-                {/if}
-                {if $system['instagram_login_enabled']}
-                <a href="{$system['system_url']}/connect/instagram"
-                    class="btn btn-sm btn-rounded btn-social-icon ">
-                    <img width="20px" height="20px" src="{$system['system_url']}/content/themes/default/images/svg/svgImg/instaIcon.svg">
-                </a>
-                {/if}
-                {if $system['linkedin_login_enabled']}
-                <a href="{$system['system_url']}/connect/linkedin"
-                    class="btn btn-sm btn-rounded btn-social-icon ">
-                    <img width="20px" height="20px" src="{$system['system_url']}/content/themes/default/images/svg/svgImg/inIcon.svg">
-                </a>
-                {/if}
-                {if $system['vkontakte_login_enabled']}
-                <a href="{$system['system_url']}/connect/vkontakte"
-                    class="btn btn-sm btn-rounded btn-social-icon ">
-                    <img width="20px" height="20px" src="{$system['system_url']}/content/themes/default/images/svg/svgImg/vkIcon.svg">
-                </a>
-                {/if}
-            </div>
-            {/if}
-            {/if}
-            <div class="mt20 text-center notRegistered">
-                {__("Have an account?")} <a href="{$system['system_url']}/signin"
-                    class="js_toggle-panel text-link">{__("Login Now")}</a>
+        </div>
+        <!-- </div> -->
+        <div class="form-group">
+            <button type="submit" class="btn btn-block loginbutton border-0">{__("Sign
+                Up")}</button>
+        </div>
+        <!-- error -->
+        <div class="alert alert-danger mb0 x-hidden"></div>
+        <!-- error -->
+        </form>
+        {if $system['social_login_enabled']}
+        {if $system['facebook_login_enabled'] || $system['google_login_enabled'] || $system['twitter_login_enabled']
+        || $system['linkedin_login_enabled'] || $system['vkontakte_login_enabled'] ||
+        $system['instagram_login_enabled']}
+        <div class="hr-heading mt5 mb10">
+            <div class="hr-heading-text">
+                {__("or")} {__("register with")}
             </div>
         </div>
+        <div class="text-center">
+            {if $system['facebook_login_enabled']}
+            <a href="{$system['system_url']}/connect/facebook" class="btn btn-sm btn-rounded btn-social-icon ">
+                <img width="20px" height="20px"
+                    src="{$system['system_uploads_assets']}/content/themes/default/images/svg/svgImg/fbIcons.svg">
+            </a>
+            {/if}
+            {if $system['google_login_enabled']}
+            <a href="{$system['system_url']}/connect/google" class="btn btn-sm btn-rounded btn-social-icon ">
+                <i class="fab fa-google"></i>
+            </a>
+            {/if}
+            {if $system['twitter_login_enabled']}
+            <a href="{$system['system_url']}/connect/twitter" class="btn btn-sm btn-rounded btn-social-icon ">
+                <img width="20px" height="20px"
+                    src="{$system['system_uploads_assets']}/content/themes/default/images/svg/svgImg/twittericon.svg">
+            </a>
+            {/if}
+            {if $system['instagram_login_enabled']}
+            <a href="{$system['system_url']}/connect/instagram" class="btn btn-sm btn-rounded btn-social-icon ">
+                <img width="20px" height="20px"
+                    src="{$system['system_uploads_assets']}/content/themes/default/images/svg/svgImg/instaIcon.svg">
+            </a>
+            {/if}
+            {if $system['linkedin_login_enabled']}
+            <a href="{$system['system_url']}/connect/linkedin" class="btn btn-sm btn-rounded btn-social-icon ">
+                <img width="20px" height="20px"
+                    src="{$system['system_uploads_assets']}/content/themes/default/images/svg/svgImg/inIcon.svg">
+            </a>
+            {/if}
+            {if $system['vkontakte_login_enabled']}
+            <a href="{$system['system_url']}/connect/vkontakte" class="btn btn-sm btn-rounded btn-social-icon ">
+                <img width="20px" height="20px"
+                    src="{$system['system_uploads_assets']}/content/themes/default/images/svg/svgImg/vkIcon.svg">
+            </a>
+            {/if}
+        </div>
+        {/if}
+        {/if}
+        <div class="mt20 text-center notRegistered">
+            {__("Have an account?")} <a href="{$system['system_url']}/signin"
+                class="js_toggle-panel text-link">{__("Login Now")}</a>
+        </div>
     </div>
-    <!-- signup -->
-    
+</div>
+<!-- signup -->
+
 </div>

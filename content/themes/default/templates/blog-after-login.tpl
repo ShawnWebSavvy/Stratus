@@ -10,14 +10,14 @@
                 <div class="add-new-product-section blogaddNewProduct">
                     {if $user->_data['can_write_articles']}
                     <div class="float-right">
-                        <a href="{$system['system_url']}/blogs/new" class="btn btn-sm _cmn_btn btn-block post-tpl">
+                        <a href="{$system['system_url']}/blogs/new" class="btn btn-sm cmn_btn btn-block post-tpl">
                             <img
                                 src="{$system['system_url']}/content/themes/{$system['theme']}/images/svg/svgImg/filePlusIcon.svg">
                             {__("Add New Article")}
                         </a>
                     </div>
                     {/if}
-                    <a href="{$system['system_url']}/articles" class="btn btn-sm _cmn_btn btn-block ">
+                    <a href="{$system['system_url']}/articles" class="btn btn-sm cmn_btn btn-block ">
                         <img
                             src="{$system['system_url']}/content/themes/{$system['theme']}/images/svg/svgImg/blogNews.svg">
                         {__("My Articles")}
@@ -283,7 +283,7 @@
                             {if $article['article']['cover']}
                             <div class="mb20">
                                 <img class="img-fluid"
-                                    src="{$system['system_uploads']}/{$article['article']['parsed_cover']}">
+                                    src="{$system['system_uploads']}/{$article['article']['cover']}">
                             </div>
                             {/if}
                             <!-- article cover -->
@@ -409,14 +409,14 @@
                                                             to Timeline</span></label>
                                                 </li>
 
-                                                {if $system['groups_enabled'] && count($groups) > 0}
+                                                {if $system['groups_enabled'] && is_array($groups)&&count($groups) > 0}
                                                 <li class="stratus_local_share" id="share_group"><label
                                                         for="share_to_group"><span class="__list_icon"> <img
                                                                 src="{$system['system_url']}/content/themes/default/images/share_grp.svg"></span><span>Share
                                                             to Group</span></label>
                                                 </li>
                                                 {/if}
-                                                {if $system['pages_enabled'] && count($pages) > 0}
+                                                {if $system['pages_enabled']&& is_array($pages) &&  count($pages) > 0}
                                                 <li class="stratus_local_share" id="share_page"><label
                                                         for="share_to_page"><span class="__list_icon"> <img
                                                                 src="{$system['system_url']}/content/themes/default/images/share-page.svg"></span><span>Share

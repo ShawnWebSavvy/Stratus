@@ -557,7 +557,10 @@ $(function () {
     });
   }
   /* delete story */
-  $("body").on("click", ".js_story-deleter", function () {
+  $("body").on("focus", ".js_story-deleter", function (event) {
+    event.stopPropagation(); 
+    event.stopImmediatePropagation();
+
     var id = $(this).data("id");
     confirm(
       __["Delete"],
@@ -1322,8 +1325,9 @@ $(function () {
           button_status(_this, "reset");
           eval(response.callback);
         } else {
+         
           if (response.post) {
-            window.location.reload();
+            $(".js_posts_stream").find("ul:first").prepend(response.post);
           }
           $(".no_data_img_").css("display", "none");
           /* button reset */
@@ -1397,7 +1401,7 @@ $(function () {
           $(".divAppendTextarea").html(htmlData);
           $(".divAppendTextarea").css("display", "none");
           $(".wrapFootershowHide").css("display", "flex");
-          //$(".js_posts_stream").find("ul:first").prepend(response.post);
+
           /* release the loading status */
           posts_stream.removeData("loading");
           /* rerun photo grid */
@@ -2200,7 +2204,11 @@ $(function () {
                 current_page == "event")
             ) {
               location.reload();
-            } else if (response.callback) {
+            } else if (response.refresh = "delete_single_post") {
+              $('.child-post-ul').html("");
+              window.location.replace(document.referrer)
+            }
+            else if (response.callback) {
               eval(response.callback);
             }
           },
@@ -2950,6 +2958,8 @@ $(function () {
     var message = textarea.val();
     var attachments = comment.find(".comment-attachments");
     var attachments_voice_notes = comment.find(".comment-voice-notes");
+    var spanCheck = _this.parents(".post-comment-button-span-modal").text();
+    console.log(spanCheck);
     /* check if there is current (sending) process */
     if (comment.data("sending")) {
       return false;
@@ -2978,9 +2988,10 @@ $(function () {
         voice_note: JSON.stringify(voice_note),
       },
       function (response) {
+        //consonle.log(response)
         /* check if there is a callback */
         if (response.callback) {
-          eval(response.callback);
+          //eval(response.callback);
         } else {
           textarea.val("");
           textarea.attr("style", "");
@@ -2997,7 +3008,7 @@ $(function () {
           /* remove currenet sending process */
           comment.removeData("sending");
         }
-        window.location.reload();
+        //window.location.reload();
       },
       "json"
     ).fail(function () {
@@ -3455,12 +3466,13 @@ $(function () {
         reactions_wrapper.hasClass("js_unreact-" + handle) &&
         old_reaction == reaction
       ) {
+
         var spanValue = _parent
-          .find(".js_react-post .reaction-btn:first .reaction-counting")
+          .find(".js_react-" + handle + " .reaction-btn:first .reaction-counting")
           .text();
         var deduct = parseInt(spanValue) - 1;
         _parent
-          .find(".js_react-post .reaction-btn:first .reaction-counting")
+          .find(".js_react-" + handle + " .reaction-btn:first .reaction-counting")
           .text(deduct);
 
         /* [1] user unreact */
@@ -3489,6 +3501,7 @@ $(function () {
           api["posts/reaction"],
           { do: _undo, reaction: old_reaction, id: id },
           function (response) {
+            console.log()
             /* check the response */
             if (response.callback) {
               eval(response.callback);
@@ -3503,11 +3516,11 @@ $(function () {
         });
       } else {
         var spanValue_ = _parent
-          .find(".js_react-post .reaction-btn:first .reaction-counting")
+          .find(".js_react-" + handle + "  .reaction-btn:first .reaction-counting")
           .text();
         var adjust = parseInt(spanValue_) + parseInt(1);
         _parent
-          .find(".js_react-post .reaction-btn:first .reaction-counting")
+          .find(".js_react-" + handle + "  .reaction-btn:first .reaction-counting")
           .text(adjust);
 
         /* [2] user react */
@@ -3917,9 +3930,9 @@ $(function () {
     var originVar = window.location.host;
     var locationPage = "";
     if (originVar == "localhost") {
-      window.history.pushState({}, document.title, "/sngine/global-profile-timeline.php");
+      window.history.pushState({}, document.title, "/sngine/global-profile-timeline");
     } else {
-      window.history.pushState({}, document.title, "/global-profile-timeline.php");
+      window.history.pushState({}, document.title, "/global-profile-timeline");
     }
 
     $("body").removeClass("publisher-focus");
@@ -4053,3 +4066,41 @@ $(document).on("click", "#add_post_show", function () {
     $(this).addClass('lessMore');
   }
 });
+
+
+
+
+
+// $(document).off('mouseup','.dropdown-toggle.post_custm_option').on('mouseup','.dropdown-toggle.post_custm_option',function () {
+//   if($(this).closest('.dropdown').hasClass('show')){
+//       $('body').removeClass('body-scroll-disabled');
+//   } else {
+//       setTimeout( function () {         
+//           if(!$(this).closest('.dropdown').hasClass('show')){
+//                $('body').addClass('body-scroll-disabled');
+//              } else {
+//                $('body').removeClass('body-scroll-disabled');
+//              }
+//       }, 0 );
+//   }
+// });
+
+// $(document).off('mouseup','.js_posts-filter').on('mouseup','.js_posts-filter',function () {
+//   if($(this).hasClass('show')){
+//       $('body').removeClass('body-scroll-disabled');
+//   } else {
+//       setTimeout( function () {
+//            if(!$(this).hasClass('show')){
+//               $('body').addClass('body-scroll-disabled');
+//            } else {
+//               $('body').removeClass('body-scroll-disabled');
+//            }
+//       }, 0 );
+//   }
+// }); 
+
+$("body").click(function () {
+  $(".__overlay__").hasClass("clr_overlay_") && $(".__overlay__").removeClass("clr_overlay_");
+  $(this).removeClass('body-scroll-disabled');
+});
+

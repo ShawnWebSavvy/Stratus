@@ -37,10 +37,13 @@
 
 <script id="modal-success" type="text/template">
     <div class="modal-body text-center">
+    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+        </button>
         <!-- <div class="big-icon success">
             <i class="fa fa-thumbs-up fa-3x"></i>
         </div> -->
-        <img width="40px" height="40px" src="{$system['system_url']}/content/themes/default/images/svg/svgImg/nav_icon_localhub.svg">
+        <img width="40px" height="40px" src="{$system['system_uploads_assets']}/content/themes/default/images/svg/svgImg/nav_icon_localhub.svg">
         <h4>{literal}{{title}}{/literal}</h4>
         <p class="mt20">{literal}{{message}}{/literal}</p>
     </div>
@@ -48,6 +51,9 @@
 
 <script id="modal-error" type="text/template">
     <div class="modal-body text-center">
+    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+        </button>
         <div class="big-icon error">
             <i class="fa fa-times fa-3x"></i>
         </div>
@@ -71,6 +77,9 @@
 
 <script id="modal-loading" type="text/template">
     <div class="modal-body text-center">
+    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+        </button>
         <div class="spinner-border text-primary"></div>
     </div>
 </script>
@@ -159,7 +168,7 @@
     <div class="lightbox" data-live-post-id="{literal}{{post_id}}{/literal}">
         <div class="container lightbox-container">
             <div class="lightbox-preview with-live">
-                <div class="live-stream-video" id="js_live-video">
+                <div class="live-stream-video" id="js_live-video" style="display:none">
                     <div class="live-counter" id="js_live-counter">
                         <span class="status offline" id=js_live-counter-status>{__("Offline")}</span>
                         <span class="number">
@@ -840,6 +849,9 @@
             </h6>
         </div>
         <div class="modal-body text-center">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+        </button>
             <h3>{literal}{{name}}{/literal}</h3>
             <p class="text-lg js_chat-calling-message">{__("Connecting")}<span class="loading-dots"></span></p>
             
@@ -869,6 +881,9 @@
             </h6>
         </div>
         <div class="modal-body text-center">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+        </button>
             <div class="position-relative mb10" style="height: 106px;">
                 <div class="profile-avatar-wrapper static">
                     <img src="{literal}{{image}}{/literal}" alt="{literal}{{name}}{/literal}" style="width: 98px; height: 98px;">
@@ -1062,6 +1077,9 @@
                 </button>
             </div>
             <div class="modal-body text-center">
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+        </button>
                 <img class="img-fluid" src="{$system['system_uploads']}/{$gift['image']}">
             </div>
         </script>
@@ -1441,7 +1459,7 @@
 {if $page == "ads" || $page == "settings"}
 <script id="wallet-transfer" type="text/template">
             <div class="modal-header">
-                <h6 class="modal-title"><img width="20px" class="mr20" src="{$system['system_url']}/content/themes/{$system['theme']}/images/svg/svgImg/sendMoney.svg">{__("Send Money")}</h6>
+                <h6 class="modal-title"><img width="20px" class="mr20" src="{$system['system_uploads_assets']}/content/themes/{$system['theme']}/images/svg/svgImg/sendMoney.svg">{__("Send Money")}</h6>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
@@ -1475,7 +1493,7 @@
 
 <script id="wallet-replenish" type="text/template">
             <div class="modal-header">
-                <h6 class="modal-title"><img width="20px" class="mr20" src="{$system['system_url']}/content/themes/{$system['theme']}/images/svg/svgImg/sendMoney.svg"> {__("Replenish Credit")}</h6>
+                <h6 class="modal-title"><img width="20px" class="mr20" src="{$system['system_uploads_assets']}/content/themes/{$system['theme']}/images/svg/svgImg/sendMoney.svg"> {__("Replenish Credit")}</h6>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
@@ -1502,7 +1520,7 @@
 
 <script id="wallet-withdraw-affiliates" type="text/template">
             <div class="modal-header">
-                <h6 class="modal-title"><img width="20px" class="mr20" src="{$system['system_url']}/content/themes/{$system['theme']}/images/svg/svgImg/sendMoney.svg"> {__("Withdraw Affiliates Credit")}</h6>
+                <h6 class="modal-title"><img width="20px" class="mr20" src="{$system['system_uploads_assets']}/content/themes/{$system['theme']}/images/svg/svgImg/sendMoney.svg"> {__("Withdraw Affiliates Credit")}</h6>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
@@ -1535,7 +1553,7 @@
 
 <script id="wallet-withdraw-points" type="text/template">
             <div class="modal-header">
-                <h6 class="modal-title"><img width="20px" class="mr20" src="{$system['system_url']}/content/themes/{$system['theme']}/images/svg/svgImg/sendMoney.svg"> {__("Withdraw Points Credit")}</h6>
+                <h6 class="modal-title"><img width="20px" class="mr20" src="{$system['system_uploads_assets']}/content/themes/{$system['theme']}/images/svg/svgImg/sendMoney.svg"> {__("Withdraw Points Credit")}</h6>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
@@ -1681,6 +1699,9 @@
                 </button>
             </div>
             <div class="modal-body text-center">
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+        </button>
                 <div class="row justify-content-center" style="margin-left: -5px; margin-right: -5px;">
                     {if $system['paypal_enabled']}
                         <div class="col-12 col-sm-4 plr5">

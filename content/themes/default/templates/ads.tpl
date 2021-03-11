@@ -6,7 +6,7 @@
     <div class="row">
         <!-- side panel -->
         {if $user->_logged_in}
-        <div class="col-md-12 offcanvas-sidebar js_sticky-sidebar">
+        <div class="col-md-12 offcanvas-sidebar js_sticky-sidebar" id="sidebarHiddSwip">
             {include file='_sidebar.tpl'}
         </div>
         {/if}
@@ -902,7 +902,8 @@
                             {if $transactions}
                             <div class="tableWrapTransactions">
                                 <div class="wallet_page_tabledata">
-                                    <table class="table table-basic transactionTable js_dataTable">
+                                    <table class="table table-basic transactionTable js_dataTable" data-order="[[3, 'desc']]"
+>
                                         <thead>
                                             <tr>
                                                 <th>{__("Amount")}</th>
@@ -950,6 +951,14 @@
                                                     {__("Affiliates Credit")}
                                                     {elseif $transaction['node_type'] == "withdraw_points"}
                                                     {__("Points Credit")}
+                                                    {elseif $transaction['tnx_type'] == "buy"}
+                                                      {$transaction['currency_detail']}
+                                                    {elseif $transaction['tnx_type'] == "sell"}
+                                                        {$transaction['currency_detail']}
+                                                    {elseif $transaction['tnx_type'] == "referral"}
+                                                        {__("Referral Bonus")}
+                                                    {elseif $transaction['node_type'] == "videohub_package_payment"}
+                                                    {__("Buy Video Hub Package")}
                                                     {elseif $transaction['node_type'] == "package_payment"}
                                                     {__("Buy Pro Package")}
                                                     {/if}
@@ -986,7 +995,7 @@
     <div class="row">
         <!-- side panel -->
         {if $user->_logged_in}
-        <div class="col-md-12 offcanvas-sidebar js_sticky-sidebar">
+        <div class="col-md-12 offcanvas-sidebar js_sticky-sidebar" id="sidebarHiddSwip">
             {include file='_sidebar.tpl'}
         </div>
         {/if}

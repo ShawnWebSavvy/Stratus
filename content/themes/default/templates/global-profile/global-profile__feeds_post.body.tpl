@@ -189,10 +189,11 @@
             <div class="dropdown-item pointer js_report" data-handle="post" data-id="{$_post['post_id']}">
                <div class="action no-desc">
                   <div class="post_images__">
-                     <img src="{$system['system_url']}/content/themes/default/images/svg/svgImg/nav_icon_adHub.svg"
+                     <img
+                        src="{$system['system_uploads_assets']}/content/themes/default/images/svg/svgImg/nav_icon_adHub.svg"
                         class="blackicon">
                      <img
-                        src="{$system['system_url']}/content/themes/default/images/svg/svgImg/nav_icon_adHub_active.svg"
+                        src="{$system['system_uploads_assets']}/content/themes/default/images/svg/svgImg/nav_icon_adHub_active.svg"
                         class="whiteicon">
                   </div> {__("Report post")}
                </div>
@@ -405,7 +406,7 @@
       <div class="pg_wrapper global-profile-pg_wrapper">
          {if $_post['photos_num'] == 1}
          <div class="pg_1x {if $_post['photos'][0]['blur']}x-blured{/if}">
-            <a href="{$system['system_url']}/global-profile-posts/{$_post['post_id']}"
+            <a href="{$system['system_url']}/global-profile-photo/{$_post['photos'][0]['photo_id']}"
                class="js_lightboxs global-profile-photo" data-id="{$_post['photos'][0]['photo_id']}"
                data-image="{$system['system_uploads']}/{$_post['photos'][0]['source']}"
                data-context="{if $_post['post_type'] == 'product'}post{else}album{/if}">
@@ -415,7 +416,7 @@
          {elseif $_post['photos_num'] == 2}
          {foreach $_post['photos'] as $photo}
          <div class="pg_2x {if $photo['blur']}x-blured{/if}">
-            <a href="{$system['system_url']}/global-profile-posts/{$_post['post_id']}"
+            <a href="{$system['system_url']}/global-profile-photo/{$photo['photo_id']}"
                class="js_lightboxs global-profile-photo" data-id="{$photo['photo_id']}"
                data-image="{$system['system_uploads']}/{$photo['source']}" data-context="post"
                style="background-image:url('{$system['system_uploads']}/{$photo['source']}');"></a>
@@ -425,7 +426,7 @@
          <div class="pg_3x">
             <div class="pg_2o3">
                <div class="pg_2o3_in {if $_post['photos'][0]['blur']}x-blured{/if}">
-                  <a href="{$system['system_url']}/global-profile-posts/{$_post['post_id']}"
+                  <a href="{$system['system_url']}/global-profile-photo/{$_post['photos'][0]['photo_id']}"
                      class="js_lightboxs global-profile-photo" data-id="{$_post['photos'][0]['photo_id']}"
                      data-image="{$system['system_uploads']}/{$_post['photos'][0]['source']}" data-context="post"
                      style="background-image:url('{$system['system_uploads']}/{$_post['photos'][0]['source']}');"></a>
@@ -433,13 +434,13 @@
             </div>
             <div class="pg_1o3">
                <div class="pg_1o3_in {if $_post['photos'][1]['blur']}x-blured{/if}">
-                  <a href="{$system['system_url']}/global-profile-posts/{$_post['post_id']}"
+                  <a href="{$system['system_url']}/global-profile-photo/{$_post['photos'][1]['photo_id']}"
                      class="js_lightboxs global-profile-photo" data-id="{$_post['photos'][1]['photo_id']}"
                      data-image="{$system['system_uploads']}/{$_post['photos'][1]['source']}" data-context="post"
                      style="background-image:url('{$system['system_uploads']}/{$_post['photos'][1]['source']}');"></a>
                </div>
                <div class="pg_1o3_in {if $_post['photos'][2]['blur']}x-blured{/if}">
-                  <a href="{$system['system_url']}/global-profile-posts/{$_post['post_id']}"
+                  <a href="{$system['system_url']}/global-profile-photo/{$_post['photos'][2]['photo_id']}"
                      class="js_lightboxs global-profile-photo" data-id="{$_post['photos'][2]['photo_id']}"
                      data-image="{$system['system_uploads']}/{$_post['photos'][2]['source']}" data-context="post"
                      style="background-image:url('{$system['system_uploads']}/{$_post['photos'][2]['source']}');"></a>
@@ -450,7 +451,7 @@
          <div class="pg_4x">
             <div class="pg_2o3">
                <div class="pg_2o3_in {if $_post['photos'][0]['blur']}x-blured{/if}">
-                  <a href="{$system['system_url']}/global-profile-posts/{$_post['post_id']}"
+                  <a href="{$system['system_url']}/global-profile-photo/{$_post['photos'][0]['photo_id']}"
                      class="js_lightboxs global-profile-photo" data-id="{$_post['photos'][0]['photo_id']}"
                      data-image="{$system['system_uploads']}/{$_post['photos'][0]['source']}" data-context="post"
                      style="background-image:url('{$system['system_uploads']}/{$_post['photos'][0]['source']}');"></a>
@@ -458,19 +459,19 @@
             </div>
             <div class="pg_1o3">
                <div class="pg_1o3_in {if $_post['photos'][1]['blur']}x-blured{/if}">
-                  <a href="{$system['system_url']}/global-profile-posts/{$_post['post_id']}"
-                     class="js_lightboxs global-profile-photo" data-id="{$_post['photos'][1]['photo_id']}"
+                  <a href="{$system['system_url']}/global-profile-photo/{$_post['photos'][0]['photo_id']}"
+                     class="js_lightboxs global-profile-photo" data-id="{$_post['photos'][0]['photo_id']}"
                      data-image="{$system['system_uploads']}/{$_post['photos'][1]['source']}" data-context="post"
                      style="background-image:url('{$system['system_uploads']}/{$_post['photos'][1]['source']}');"></a>
                </div>
                <div class="pg_1o3_in {if $_post['photos'][2]['blur']}x-blured{/if}">
-                  <a href="{$system['system_url']}/global-profile-posts/{$_post['post_id']}"
+                  <a href="{$system['system_url']}/global-profile-photo/{$_post['photos'][2]['photo_id']}"
                      class="js_lightboxs global-profile-photo" data-id="{$_post['photos'][2]['photo_id']}"
                      data-image="{$system['system_uploads']}/{$_post['photos'][2]['source']}" data-context="post"
                      style="background-image:url('{$system['system_uploads']}/{$_post['photos'][2]['source']}');"></a>
                </div>
                <div class="pg_1o3_in {if $_post['photos'][3]['blur']}x-blured{/if}">
-                  <a href="{$system['system_url']}/global-profile-posts/{$_post['post_id']}"
+                  <a href="{$system['system_url']}/global-profile-photo/{$_post['photos'][3]['photo_id']}"
                      class="js_lightboxs global-profile-photo" data-id="{$_post['photos'][3]['photo_id']}"
                      data-image="{$system['system_uploads']}/{$_post['photos'][3]['source']}" data-context="post"
                      style="background-image:url('{$system['system_uploads']}/{$_post['photos'][3]['source']}');">
@@ -546,11 +547,13 @@
             <div class="source">{$_post['link']['source_host']|upper}</div>
          </a>
          {/if}
-         <div class="post-media-meta">
-            <a class="title mb5" href="{$_post['link']['source_url']}"
-               target="_blank">{$_post['link']['source_title']}</a>
-            <div class="text mb5">{$_post['link']['source_text']}</div>
-         </div>
+         {if $_post['link']['source_title']!='Error'}
+            <div class="post-media-meta">
+               <a class="title mb5" href="{$_post['link']['source_url']}"
+                  target="_blank">{$_post['link']['source_title']}</a>
+               <div class="text mb5">{$_post['link']['source_text']}</div>
+            </div>
+         {/if}
       </div>
    </div>
    {elseif $_post['post_type'] == "poll" && $_post['poll']}

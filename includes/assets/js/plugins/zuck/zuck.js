@@ -1037,6 +1037,7 @@
         try {
           zuck.data[storyId] = {
             id: storyId, //story id
+            user_id: story.getAttribute("data-user-id"),
             photo: story.getAttribute("data-photo"), //story photo (or user photo)
             name: story.firstElementChild.lastElementChild.firstChild.innerText,
             link: story.firstElementChild.getAttribute("href"),
@@ -1189,11 +1190,27 @@
       zuck.internalData["seenItems"] = getLocalData("seenItems") || {};
 
       zuck.add = zuck.update = function (data, append) {
+       
+        var login_user_id = $("#stories").attr("data-user-id");
+        var system_url = $("#stories").attr("data-system-url");
+        var story_user_id = get(data, "user_id"); 
+      
         var storyId = get(data, "id");
         var storyEl = query("#" + id + ' [data-id="' + storyId + '"]');
         var html = "";
         var items = get(data, "items");
         var story = false;
+
+        var html_close_btn = "";
+
+
+        if(login_user_id == story_user_id){
+          html_close_btn = ` <button data-toggle="tooltip" data-placement="top" title="Delete Your Story" class="btn btn-sm btn-icon btn-rounded js_story-deleter js_zuck_btn">
+                       <img src="${system_url}/content/themes/default/images/svg/svgImg/modelCross.svg" class="blackicon">
+                    </button>`;
+        }
+
+
 
         zuck.data[storyId] = {};
 
@@ -1210,6 +1227,7 @@
         }
 
         story.setAttribute("data-id", storyId);
+        story.setAttribute("data-user-id", story_user_id);
         story.setAttribute("data-photo", get(data, "photo"));
         story.setAttribute("data-last-updated", get(data, "lastUpdated"));
 
@@ -1222,16 +1240,16 @@
           if (data.items[0].type == "video") {
             /*var srcBackground =(option("avatars") || !preview || preview =="" ? get(data,"photo")
             : preview); */
-            var srcBackground = window.location + "content/themes/default/images/video_square_white.png";
+            var srcBackground = window.location.origin + "/content/themes/default/images/video_square_white.png";
           } else {
             var srcBackground = items[0].src;
           }
-          var getUrl = window.location;
+          var getUrl = window.location.origin;
           var baseUrl = getUrl.protocol + "//" + getUrl.host + "/"
           //console.log("===zusssck====srcBackgrosund", getUrl.protocol);
         }
 
-        html =
+        html = 
           '<a href="' +
           get(data, "link") +
           '"><div class="storyTopImage-ant" style="background-image:url(' +
@@ -1248,6 +1266,8 @@
           '</strong><span class="time">' +
           timeAgo(get(data, "lastUpdated")) +
           '</span></span></a><ul class="items"></ul>';
+
+          html+= html_close_btn;
         story.innerHTML = html;
         parseStory(story);
 

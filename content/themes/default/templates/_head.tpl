@@ -35,7 +35,7 @@
 
     <!-- Favicon -->
     {if $system['system_favicon_default']}
-    <link rel="shortcut icon" href="{$system['system_url']}/content/themes/default/images/clouds.ico " />
+    <link rel="shortcut icon" href="{$system['system_uploads_assets']}/content/themes/default/images/clouds.ico " />
     {elseif $system['system_favicon']}
     <link rel="shortcut icon" href="{$system['system_uploads']}/{$system['system_favicon']}" />
     {/if}
@@ -46,36 +46,44 @@
     <!-- Fonts [Roboto|Font-Awesome] -->
     <!-- CSS -->
     {if $page =='sign'}
-    <link rel="stylesheet" href="https://cdn1.stratus.co/content/themes/default/css/bootstrap.min.css">
-    <link rel="stylesheet" type='text/css' href="https://cdn1.stratus.co/content/themes/default/css/login.css">
-    <link rel="stylesheet" type='text/css' href="https://cdn1.stratus.co/content/themes/default/css/custom.css">
+    <link rel="stylesheet" href="{$system['system_uploads_assets']}/content/themes/default/css/bootstrap.min.css"  {if !$user->_logged_in}defer{/if}>
     <link rel="stylesheet" type='text/css'
-        href="https://cdn1.stratus.co/content/themes/default/css/style-custom-light.css">
+        href="{$system['system_uploads_assets']}/content/themes/default/css/login.css"  {if !$user->_logged_in}defer{/if}>
+    <link rel="stylesheet" type='text/css'
+        href="{$system['system_uploads_assets']}/content/themes/default/css/custom.css"  {if !$user->_logged_in}defer{/if}>
+    <link rel="stylesheet" type='text/css'
+        href="{$system['system_uploads_assets']}/content/themes/default/css/style-custom-light.css"  {if !$user->_logged_in}defer{/if}>
     {else}
     {if $system['language']['dir'] == "LTR"}
-    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.13.0/css/all.css">
-    <link rel="stylesheet" href="https://cdn1.stratus.co/content/themes/default/css/bootstrap.min.css">
-    <link rel="stylesheet" type='text/css' href="https://cdn1.stratus.co/content/themes/default/css/style.min.css">
-    <link rel="stylesheet" type='text/css' href="https://cdn1.stratus.co/content/themes/default/css/custom.css">
-    <link rel="stylesheet" type='text/css' href="https://cdn1.stratus.co/content/themes/default/css/setting_nav.css">
-    <link rel="stylesheet" type='text/css' href="https://cdn1.stratus.co/content/themes/default/css/custom-style.css">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.13.0/css/all.css"  {if !$user->_logged_in}defer{/if}>
+    <link rel="stylesheet" href="{$system['system_uploads_assets']}/content/themes/default/css/bootstrap.min.css"  {if !$user->_logged_in}defer{/if}>
+    <link rel="stylesheet" type='text/css'
+        href="{$system['system_url']}/content/themes/default/css/style.min.css"  {if !$user->_logged_in}defer{/if}>
+    <link rel="stylesheet" type='text/css'
+        href="{$system['system_uploads_assets']}/content/themes/default/css/custom.css"  {if !$user->_logged_in}defer{/if}>
+    <link rel="stylesheet" type='text/css'
+        href="{$system['system_uploads_assets']}/content/themes/default/css/setting_nav.css"  {if !$user->_logged_in}defer{/if}>
+    <link rel="stylesheet" type='text/css'
+        href="{$system['system_url']}/content/themes/default/css/custom-style.css"  {if !$user->_logged_in}defer{/if}>
     {else}
-    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.13.0/css/all.css">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.13.0/css/all.css"  {if !$user->_logged_in}defer{/if}>
     <link rel="stylesheet" href="https://cdn.rtlcss.com/bootstrap/v4.2.1/css/bootstrap.min.css"
-        integrity="sha384-vus3nQHTD+5mpDiZ4rkEPlnkcyTP+49BhJ4wJeJunw06ZAp+wzzeBPUXr42fi8If" crossorigin="anonymous">
-    <link rel="stylesheet" type='text/css' href="https://cdn1.stratus.co/content/themes/default/css/style.rtl.min.css">
+        integrity="sha384-vus3nQHTD+5mpDiZ4rkEPlnkcyTP+49BhJ4wJeJunw06ZAp+wzzeBPUXr42fi8If" crossorigin="anonymous"  {if !$user->_logged_in}defer{/if}>
+    <link rel="stylesheet" type='text/css'
+        href="{$system['system_uploads_assets']}/content/themes/default/css/style.rtl.min.css"  {if !$user->_logged_in}defer{/if}>
     {/if}
-
+    <script src="https://cdn1.stratus.co/includes/assets/js/stratus/lazysizes.min.js"></script>
     <link rel="stylesheet" type='text/css'
-        href="https://cdn1.stratus.co/content/themes/default/css/live_video_style.css">
+        href="{$system['system_uploads_assets']}/content/themes/default/css/live_video_style.css"  {if !$user->_logged_in}defer{/if}>
     <link rel="stylesheet" type='text/css'
-        href="https://cdn1.stratus.co/content/themes/default/css/style-responsive.css">
+        href="{$system['system_url']}/content/themes/default/css/style-responsive.css"  {if !$user->_logged_in}defer{/if}>
     <link rel="stylesheet" type='text/css'
-        href="https://cdn1.stratus.co/content/themes/default/css/style-custom-light.css">
+        href="{$system['system_uploads_assets']}/content/themes/default/css/style-custom-light.css"  {if !$user->_logged_in}defer{/if}>
     <link rel="stylesheet" type='text/css'
-        href="https://cdn1.stratus.co/content/themes/default/css/custom_responsive_style.css">
+        href="{$system['system_url']}/content/themes/default/css/custom_responsive_style.css">
     <!-- CSS -->
-
+    <link rel="stylesheet" type='text/css'
+            href="{$system['system_uploads_assets']}/content/themes/{$system['theme']}/css/investmentStyle.css">
     {/if}
 
     <!-- CSS -->
@@ -83,7 +91,7 @@
     {include file='_head.css.tpl'}
     <!-- CSS Customized -->
 
-    <script src="https://cdn1.stratus.co/includes/assets/js/stratus/lazysizes.min.js"></script>
+    <script src="{$system['system_uploads_assets']}/includes/assets/js/stratus/lazysizes.min.js"  {if !$user->_logged_in}defer{/if}></script>
     <!-- Header Custom JavaScript -->
     {if $system['custome_js_header']}
     <script>
@@ -91,10 +99,12 @@
     </script>
     {/if}
     <!-- Header Custom JavaScript -->
-    <link rel="stylesheet" type='text/css' href="{$system['system_url']}/includes/assets/css/blurry-load.min.css">
-    <script src="{$system['system_url']}/includes/assets/js/stratus/blurry-load.min.js" defer></script>
+    <link rel="stylesheet" type='text/css'
+        href="{$system['system_uploads_assets']}/includes/assets/css/blurry-load.min.css" 
+        {if !$user->_logged_in}defer{/if} >
+    <script src="{$system['system_uploads_assets']}/includes/assets/js/stratus/blurry-load.min.js"  {if !$user->_logged_in}defer{/if}></script>
 
     <!-- Load jQuery now so we can lazy load components -->
     <script src="https://code.jquery.com/jquery-3.5.1.min.js"
-        integrity="sha256-9/aliU8dGd2tb6OSsuzixeV4y/faTqgFtohetphbbj0=" crossorigin="anonymous"></script>
+        integrity="sha256-9/aliU8dGd2tb6OSsuzixeV4y/faTqgFtohetphbbj0=" crossorigin="anonymous"  {if !$user->_logged_in}defer{/if}></script>
 </head>

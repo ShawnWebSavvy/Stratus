@@ -291,6 +291,34 @@ function load_more(element) {
         eval(response.callback);
       } else {
         if (response.data) {
+          if (bricklayer != undefined) {
+            var datatta = response.data;
+            var ArrayVal = datatta.split('<div class="carsds"');
+            var loopArray = [];
+            if (ArrayVal.length > 0) {
+              for (var i = 1; i < ArrayVal.length; i++) {
+                loopArray.push('<div class="carsds"' + ArrayVal[i])
+              }
+            }
+
+            for (var ik = 0; ik < loopArray.length; ik++) {
+              var values = loopArray[ik];
+              var d = document.createElement('div');
+              d.innerHTML = values;
+              var valuesPost = d.firstChild;
+              // consol
+              // valuesPost.innerHTML = (bricklayer.elements.length + 1);
+              bricklayer.append(valuesPost)
+            }
+
+            bricklayer.on("afterAppend", function (e) {
+              var el = e.detail.item;
+              el.classList.add('is-append');
+              setTimeout(function () {
+                el.classList.remove('is-append');
+              }, 500);
+            });
+          }
           data["offset"]++;
           if (response.append) {
             stream.append(response.data);
@@ -349,7 +377,6 @@ function load_more(element) {
     },
     "json"
   ).fail(function () {
-    console.log("dddddddddddddd");
     _this.removeClass("loading");
     text.show();
     loading.addClass("x-hidden");

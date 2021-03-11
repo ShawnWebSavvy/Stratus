@@ -3,13 +3,13 @@
 <!-- page content -->
 <div class="container mt20 offcanvas">
     <div class="row">
-        <div class="offcanvas-sidebar sidebar-left-ant">
+        <div class="offcanvas-sidebar sidebar-left-ant" id="sidebarHiddSwip">
             {include file='_sidebar.tpl'}
         </div>
     </div>
     <div class="row right-side-content-ant">
         <!-- content panel -->
-        <div class="col-lg-9 offcanvas-mainbar">
+        <div class="col-lg-12 offcanvas-mainbar">
             <div class="explore_cmn_style">
                 <!-- tabs -->
                 <div class="content-tabs custom-tabs clearfix">
@@ -57,6 +57,12 @@
                             <!-- no posts -->
                         </ul>
                         {/if}
+                        <!-- see-more -->
+		                <div class="alert alert-post see-more js_see-more {if $user->_logged_in}js_see-more-infinite{/if}" data-get="explore" data-filter="{if $_filter}{$_filter}{else}all{/if}" {if $_id}data-id="{$_id}"{/if}>
+		                	<span>{__("More Stories")}</span>
+		                	<div class="loader loader_small x-hidden"></div>
+		                </div>
+		                <!-- see-more -->
                         {/if}
                         {if $people}
                         {include file='global-profile/global-explore-friends.tpl' people=$people view=""}

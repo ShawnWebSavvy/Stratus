@@ -181,7 +181,7 @@ url({$profile['user_profile_background']}) fixed !important; background-size:
                         {else} {if $page == "index" && !$user->_logged_in}
                         <a href="{$system['system_url']}" class="logo {$page}">
                            <img class="img-fluid"
-                              src="{$system['system_url']}/content/themes/default/images/logo.png" />
+                              src="{$system['system_uploads_assets']}/content/themes/default/images/logo.png" />
                         </a>
                         {elseif (($page == "index" || $page == "profile" || $page == "pages" || $page == "people") &&
                         $active_page != "MarketHub" &&
@@ -202,35 +202,41 @@ url({$profile['user_profile_background']}) fixed !important; background-size:
                         $page=="global-profile/global-profile-bookmarks" || $page=="messages_global" ||
                         $active_page=='GlobalHub') &&
                         $user->_logged_in}
-                        <a href="{$system['system_url']}/global-profile-timeline.php" class="logo {$page}">
+                        <a href="{$system['system_url']}/global-profile-timeline" class="logo {$page}">
                            <img class="img-fluid"
                               src="{$system['system_uploads_assets']}/content/themes/default/images/logo_globalHub.png" />
                         </a>
                         {elseif ($page == "ads" && $view != "wallet") && $user->_logged_in}
                         <a href="{$system['system_url']}/ads" class="logo {$page}">
                            <img class="img-fluid"
-                              src="{$system['system_url']}/content/themes/default/images/logo_addHub.png" />
+                              src="{$system['system_uploads_assets']}/content/themes/default/images/logo_addHub.png" />
                         </a>
                         {elseif ($view == "wallet") && $user->_logged_in}
                         <a href="{$system['system_url']}/ads" class="logo {$page}">
                            <img class="img-fluid"
-                              src="{$system['system_url']}/content/themes/default/images/logo_wallet.png" />
+                              src="{$system['system_uploads_assets']}/content/themes/default/images/logo_wallet.png" />
                         </a>
                         {elseif ($page == "blogs" || $view =='articles') &&
                         $user->_logged_in}
                         <a href="{$system['system_url']}/blogs" class="logo {$page}">
                            <img class="img-fluid"
-                              src="{$system['system_url']}/content/themes/default/images/logo_blog.png" />
+                              src="{$system['system_uploads_assets']}/content/themes/default/images/logo_blog.png" />
                         </a>
                         {elseif ($page == "market" || $active_page == "MarketHub") && $user->_logged_in || $actPage}
                         <a href="{$system['system_url']}/market" class="logo {$page}">
                            <img class="img-fluid"
-                              src="{$system['system_url']}/content/themes/default/images/logo_marketHub.png" />
+                              src="{$system['system_uploads_assets']}/content/themes/default/images/logo_marketHub.png" />
+                        </a>
+                        {elseif $page == "investment/activity" || $page == "investment/buy_sell" || $page ==
+                        "investment/index" && $user->_logged_in}
+                        <a href="{$system['system_url']}/investments" class="logo {$page}">
+                           <img class="img-fluid"
+                              src="{$system['system_uploads_assets']}/content/themes/default/images/investment/Investment-Hub.png" />
                         </a>
                         {else}
                         <a href="{$system['system_url']}" class="logo {$page}">
                            <img class="img-fluid"
-                              src="{$system['system_url']}/content/themes/default/images/logo.png" />
+                              src="{$system['system_uploads_assets']}/content/themes/default/images/logo.png" />
                         </a>
                         {/if}
                         <!--{$system['system_title']}-->
@@ -326,26 +332,25 @@ url({$profile['user_profile_background']}) fixed !important; background-size:
                            <div class="navbar-wrapper">
                               <ul class="clearfix">
                                  <!-- user-menu -->
-                                 <li class="profileFor_desktop sss {$active_page}">
+                                 <li class="profileFor_desktop {$active_page}">
                                     <!-- <a href="#" class="user-menu" data-toggle="dropdown" data-display="static"> -->
                                     {if $active_page=='GlobalHub'}
                                     <a href="javascript:void();" id="currentUsername"
                                        class="rightuser-menu usernameOnHoverbtn openRightBlackBar">
                                        <!-- <span class="usernameOnHover">{$userGlobal->_data['user_firstname']}</span> -->
-                                       <img class="lazyload"
-                                          data-src="{$system['system_url']}/{$userGlobal->_data['user_picture']}" />
+                                       <img class="lazyload" data-src="{$userGlobal->_data['global_user_picture']}" />
                                        <span class="">{$userGlobal->_data['user_firstname']}</span>
                                     </a>
                                     {else}
                                     <a href="javascript:void();" id="currentUsername" page='{$page}'
                                        class="rightuser-menu usernameOnHoverbtn openRightBlackBar">
                                        <!-- <span class="usernameOnHover">{$user->_data['user_firstname']}</span> -->
-                                       <img class="lazyload"
-                                          data-src="{$system['system_url']}/{$user->_data['user_picture']}" />
+                                       <img class="lazyload" data-src="{$user->_data['user_picture']}" />
                                        <span class="">{$user->_data['user_firstname']}</span>
                                     </a>
                                     {/if}
                                  </li>
+
                                  {if $system['ads_enabled']}
                                  <!-- search button start-->
                                  <li class="dropdown js_live-notifications walletButton searchBtnMobile"

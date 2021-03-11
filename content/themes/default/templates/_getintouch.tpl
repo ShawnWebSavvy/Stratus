@@ -33,7 +33,7 @@
             </div>
           </div>
           <div class="text-center">
-            <button class="learn-btn mt-50" type="submit">Submit</button>
+            <button class="learn-btn mt-50 cnt_btn" type="submit">Submit</button>
           </div>
           <!-- success -->
           <div class="err_block">

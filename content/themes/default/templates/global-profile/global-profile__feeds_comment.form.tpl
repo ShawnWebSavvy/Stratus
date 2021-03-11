@@ -1,28 +1,20 @@
-<div
-  class="comment js_comment-form {if $post['comments_disabled']}x-hidden{/if}"
-  data-handle="{$_handle}"
-  data-id="{$_id}"
->
+<div class="comment js_comment-form {if $post['comments_disabled']}x-hidden{/if}" data-handle="{$_handle}"
+  data-id="{$_id}">
   <div class="comment-avatar feed-comment">
-    <a
-      class="comment-avatar-picture global-comment-avatar-picture"
-      href="{$system['system_url']}/global-profile.php?username={$user->_data['user_name']}"
-      style="
+    <a class="comment-avatar-picture global-comment-avatar-picture"
+      href="{$system['system_url']}/global-profile.php?username={$userGlobal->_data['user_name']}" style="
         background-image: url({$userGlobal->_data['user_picture']});
-      "
-    >
+      ">
     </a>
   </div>
   <div class="comment-data">
     <div class="x-form comment-form commentFormChanges">
-      <textarea maxlength="260" dir="auto" class="js_autosize js_mention js_post-comment" rows="1" placeholder='{__("What is your Stratus? @mention #hashtag")}'></textarea>
+      <textarea maxlength="260" dir="auto" class="js_autosize js_mention js_post-comment" rows="1"
+        placeholder='{__("What is your Stratus? @mention #hashtag")}'></textarea>
       <ul class="x-form-tools clearfix">
         {if $system['comments_photos_enabled']}
         <li class="x-form-tools-attach">
-          <i
-            class="far fa-image fa-lg fa-fw js_x-uploader"
-            data-handle="comment"
-          ></i>
+          <i class="far fa-image fa-lg fa-fw js_x-uploader" data-handle="comment"></i>
         </li>
         {/if} {if $system['voice_notes_comments_enabled']}
         <li class="x-form-tools-voice js_comment-voice-notes-toggle">
@@ -89,8 +81,6 @@
     </button> -->
   </div>
 </div>
-<div
-  class="pb10 text-center js_comment-disabled-msg {if !$post['comments_disabled']}x-hidden{/if}"
->
+<div class="pb10 text-center js_comment-disabled-msg {if !$post['comments_disabled']}x-hidden{/if}">
   {__("Commenting has been turned off for this post")}.
 </div>

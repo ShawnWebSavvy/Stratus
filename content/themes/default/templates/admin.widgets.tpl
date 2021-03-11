@@ -83,7 +83,7 @@
                     <div class="col-md-9">
                         <select class="form-control selectpicker" name="place">
                             <option {if $data['place'] == "home"}selected{/if} value="home" data-content="<div class='option'><div class='icon'><span>
-                                <img width="100%" src="{$system['system_url']}/content/themes/default/images/svg/svgImg/home-icb.svg">    
+                                <img width="100%" src="{$system['system_uploads_assets']}/content/themes/default/images/svg/svgImg/home-icb.svg">    
                             </span></div><div class='text'><b>{__("Home")}</b><br>{__("Appears on the right panel of home page")}.
                             </div></div>">{__("Home")}</option>
 

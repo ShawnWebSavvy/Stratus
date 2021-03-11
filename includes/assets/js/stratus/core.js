@@ -122,24 +122,45 @@ function load_more(element) {
             _this.addClass("loading"),
             text.hide(),
             loading.removeClass("x-hidden"),
-            $.post(
-                api["data/load"],
-                data,
-                function (response) {
-                    if ((_this.removeClass("loading"), text.show(), loading.addClass("x-hidden"), response.callback)) eval(response.callback);
-                    else if (response.data) {
+            data.page = _this.data("page")
+        $.post(
+            api["data/load"],
+            data,
+            function (response) {
+                if ((_this.removeClass("loading"), text.show(), loading.addClass("x-hidden"), response.callback)) eval(response.callback);
+                else if (response.data) {
+                    data["offset"]++;
+                    var datatta = response.data;
+                    var ArrayVal = datatta.split('<div class="carsds"');
+                    var loopArray = [];
+                    if (ArrayVal.length > 0) {
+                        for (var i = 1; i < ArrayVal.length; i++) {
+                            loopArray.push('<div class="carsds"' + ArrayVal[i])
+                        }
+                    }
+
+                    for (var ik = 0; ik < loopArray.length; ik++) {
+                        var values = loopArray[ik];
+                        var d = document.createElement('div');
+                        d.innerHTML = values;
+                        var valuesPost = d.firstChild;
+                        bricklayer.append(valuesPost)
+                    }
+
+                    if(!stream.hasClass('-list_items wq')){
                         if ((data.offset++, response.append ? stream.append(response.data) : stream.prepend(response.data), $(window).width() > 1024)) {
                             if ($("body #landing_feeds_post_ul").length > 0) var macyInstance = Macy({ container: ".feeds_post_ul", trueOrder: !0, columns: 2, waitForImages: !0 });
-                            if ($("body #feeds_post_ul").length > 0) var macyInstance = Macy({ container: ".feeds_post_ul", trueOrder: !0, columns: 2, waitForImages: !0 });
+                            if ($("body #feeds_post_ul").length > 0) var macyInstance = Macy({ container: ".feeds_post_ul", trueOrder: !0, columns: 2, waitForImages: !0 }); //macyInstance.recalculate();
                         }
-                        setTimeout(photo_grid(), 200), "messages" == data.get && ((chat_widget = _this.parents(".chat-widget, .panel-messages")), color_chat_box(chat_widget, chat_widget.data("color")));
-                    } else remove ? _this.remove() : (_this.addClass("done"), text.text(__["There is no more data to show"]));
-                    _this.data("offset", data.offset);
-                },
-                "json"
-            ).fail(function () {
-                _this.removeClass("loading"), text.show(), loading.addClass("x-hidden"), modal("#modal-message", { title: __.Error, message: __["There is something that went wrong!"] });
-            });
+                    }
+                    setTimeout(photo_grid(), 200), "messages" == data.get && ((chat_widget = _this.parents(".chat-widget, .panel-messages")), color_chat_box(chat_widget, chat_widget.data("color")));
+                } else remove ? _this.remove() : (_this.addClass("done"), text.text(__["There is no more data to show"]));
+                _this.data("offset", data.offset);
+            },
+            "json"
+        ).fail(function () {
+            _this.removeClass("loading"), text.show(), loading.addClass("x-hidden"), modal("#modal-message", { title: __.Error, message: __["There is something that went wrong!"] });
+        });
     }
 }
 function photo_grid() {
@@ -227,7 +248,8 @@ function button_status(e, t) {
                                 : eval(response.callback),
                         $(".spinner-grow").hide(),
                         $("#getInTouch").get(0).reset(),
-                        $(".learn-btn").text("Submit");
+                        // $(".learn-btn").text("Submit");
+                        $(".cnt_btn").text("Submit");
                 },
                 "json"
             ).fail(function () {
@@ -549,7 +571,7 @@ function button_status(e, t) {
             $(".blacksidebarclassadd").removeClass("rightBlackSidebar"),
             $(".blacksidebarclassadd").removeClass("hiddBar"),
             $("body").on("click", ".openRightBlackBar", function () {
-                window.location.href.indexOf("landingpage.php") < 0 &&
+                window.location.href.indexOf("landingpage") < 0 &&
                     ("block" == $(".rightUserDetails").css("display") ? $(".rightUserDetails").css("display", "none") : $(".rightUserDetails").css("display", "block"),
                         $(".blacksidebarclassadd").hasClass("rightBlackSidebar") ? $(".blacksidebarclassadd").removeClass("rightBlackSidebar") : $(".blacksidebarclassadd").addClass("rightBlackSidebar"));
             }),
@@ -604,12 +626,26 @@ function button_status(e, t) {
                     $("._toggle_btn").click(function () {
                         $("body").toggleClass("_toggle_");
                     }),
-                    $("body").click(function () {
-                        $(".__overlay__").hasClass("clr_overlay_") && $(".__overlay__").removeClass("clr_overlay_");
-                    }),
-                    $(".dropdown-toggle-share").click(function () {
-                        $("#__overlay__").hasClass("clr_overlay_") ? $("#__overlay__").removeClass("clr_overlay_") : $("#__overlay__").addClass("clr_overlay_");
-                    }),
+                    // $("body").click(function () {
+                    //     $(".__overlay__").hasClass("clr_overlay_") && $(".__overlay__").removeClass("clr_overlay_");
+                    //     $(this).removeClass('body-scroll-disabled');
+                    // }),
+                    // $('.dropdown-toggle-share').on('click',function () {
+                    //     if(!$(this).closest('.dropdown').hasClass('show')){
+                    //        $('body').addClass('body-scroll-disabled');
+                    //     }
+                    //     $("#__overlay__").hasClass("clr_overlay_") ? $("#__overlay__").removeClass("clr_overlay_") : $("#__overlay__").addClass("clr_overlay_");
+                    // }),
+
+                    // $('.dropdown-toggle.post_custm_option').on('click',function () {
+                    //     if(!$(this).closest('.dropdown').hasClass('show')){
+                    //         $('body').addClass('body-scroll-disabled');
+                    //      }
+                    //  }),
+
+
+
+
                     $("input[type=radio][name=share_to]").on("change", function () {
                         switch ($(this).val()) {
                             case "timeline":
@@ -625,25 +661,98 @@ function button_status(e, t) {
                     $("._share-dropdown_").click(function () { });
             });
     }),
-    $(document).on("click", ".dropdown-toggle-share", function () {
-        $("#__overlay__").hasClass("clr_overlay_") ? $("#__overlay__").removeClass("clr_overlay_") : $("#__overlay__").addClass("clr_overlay_");
+
+
+    $(document).off("mouseup", ".dropdown-toggle-share").on("mouseup", ".dropdown-toggle-share", function () {
+
+        if ($(this).closest('.dropdown').hasClass('show')) {
+            $('body').removeClass('body-scroll-disabled');
+            $("#__overlay__").removeClass("clr_overlay_");
+        } else {
+            setTimeout(function () {
+                if (!$(this).closest('.dropdown').hasClass('show')) {
+                    // alert('start 2');
+                    $('body').addClass('body-scroll-disabled');
+                }
+
+                $("#__overlay__").hasClass("clr_overlay_") ? $("#__overlay__").removeClass("clr_overlay_") : $("#__overlay__").addClass("clr_overlay_")
+            }, 0);
+        }
     }),
-    $(document).on("click", ".stratus_local_share", function () {
-        var e = $(this).attr("id"),
-            t = e + "_enable";
+
+
+    //  $(document).off('mouseup','.dropdown-toggle.post_custm_option').on('mouseup','.dropdown-toggle.post_custm_option',function () {
+    //     if($(this).closest('.dropdown').hasClass('show')){
+    //         $('body').removeClass('body-scroll-disabled');
+    //     } else {
+    //         setTimeout( function () {         
+    //             if(!$(this).closest('.dropdown').hasClass('show')){
+    //                  $('body').addClass('body-scroll-disabled');
+    //                } else {
+    //                  $('body').removeClass('body-scroll-disabled');
+    //                }
+    //         }, 0 );
+    //     }
+    //  }),
+    //  $(document).off('mouseup','.js_posts-filter').on('mouseup','.js_posts-filter',function () {
+    //     if($(this).hasClass('show')){
+    //         $('body').removeClass('body-scroll-disabled');
+    //     } else {
+    //         setTimeout( function () {
+    //              if(!$(this).hasClass('show')){
+    //                 $('body').addClass('body-scroll-disabled');
+    //              } else {
+    //                 $('body').removeClass('body-scroll-disabled');
+    //              }
+    //         }, 0 );
+    //     }
+    //  }), 
+
+    $("body").click(function () {
+        $(".__overlay__").hasClass("clr_overlay_") && $(".__overlay__").removeClass("clr_overlay_");
+        $(this).removeClass('body-scroll-disabled');
+    }),
+
+    $(document).on('click', '.stratus_local_share', function () {
+        var this_id = $(this).attr('id');
+        var show_id = this_id + '_enable';
+
         setTimeout(function () {
-            $("#" + e).attr("checked", !0),
-                "share_timeline" == e &&
+            $("#" + this_id).attr('checked', true);
+            if (this_id == "share_timeline") {
                 setTimeout(function () {
-                    $("#modal #share_timeline_enable #share_to_timeline").attr("checked", "checked"), $("#__overlay__").removeClass("clr_overlay_");
-                }, 100),
-                "share_social_media_enable" == t ? $(".modal-footer").addClass("x-hidden") : $(".modal-footer").removeClass("x-hidden"),
-                $("#modal")
-                    .find(".sharing_stratus")
-                    .each(function () {
-                        var e = $(this).attr("id");
-                        "share_post_enable" === t && ($("#modal #share_timeline_enable #share_to_timeline").prop("required", !0), $("#modal #share_timeline_enable #share_to_timeline").attr("checked", "checked")),
-                            t == e ? ($("#modal #" + e + " .x-hidden").prop("required", !0), $(this).removeClass("x-hidden")) : $(this).hasClass("x-hidden") || $(this).addClass("x-hidden");
-                    });
-        }, 2e3);
+                    $("#modal #share_timeline_enable #share_to_timeline").attr('checked', 'checked');
+                    //$('#modal').css("display","none");
+                    $("#__overlay__").removeClass("clr_overlay_");
+                }, 100);
+            }
+            if (show_id == "share_social_media_enable") {
+                $(".modal-footer").addClass("x-hidden");
+            } else {
+                $(".modal-footer").removeClass("x-hidden");
+            }
+            $('#modal').find('.sharing_stratus').each(function () {
+                var compare_id = $(this).attr('id');
+                if (show_id === "share_post_enable") {
+                    $("#modal #share_timeline_enable #share_to_timeline").prop('required', true);
+                    $("#modal #share_timeline_enable #share_to_timeline").attr('checked', 'checked');
+                }
+                if (show_id == compare_id) {
+                    $("#modal #" + compare_id + " .x-hidden").prop('required', true);
+                    $(this).removeClass("x-hidden");
+                } else {
+                    if (!$(this).hasClass("x-hidden")) {
+                        $(this).addClass("x-hidden");
+                    }
+                }
+                jQuery("body #stratus-sharebutton").removeClass("x-hidden");
+            });
+        }, 1300);
     });
+    $(document).on("click", "#add_post_show", function () {
+        if ($(this).hasClass("lessMore")) {
+          $(this).removeClass('lessMore');
+        } else {
+          $(this).addClass('lessMore');
+        }
+      });

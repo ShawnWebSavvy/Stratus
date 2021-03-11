@@ -92,7 +92,7 @@
                         Security & Privacy
                     </a>
                 </li>
-                <li {if $page=='settings' }class="active" {/if}>
+                <!-- <li {if $page=='settings' }class="active" {/if}>
                     <a href="{$system['system_url']}/settings/information">
                         <div class="settingsIcons">
                             <img src="{$system['system_url']}/content/themes/default/images/svg/help.svg"
@@ -102,7 +102,7 @@
                         </div>
                         Help
                     </a>
-                </li>
+                </li> -->
             </ul>
         </div>
     </div>

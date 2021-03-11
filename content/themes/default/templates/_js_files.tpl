@@ -181,8 +181,6 @@
     __['Select All'] = "{__('Select All')}";
     __['Deselect All'] = "{__('Deselect All')}";
     __['Total'] = "{__('Total')}";
-    __['Stop Campaign'] = "{__('Stop Campaign')}";
-    __['Resume Campaign'] = "{__('Resume Campaign')}";
     __['Sorry, WebRTC is not available in your browser'] = "{__('Sorry, WebRTC is not available in your browser')}";
     __['You are ready to Go Live now'] = "{__('You are ready to Go Live now')}";
     __['Getting permissions failed'] = "{__('Getting permissions failed')}";
@@ -249,12 +247,14 @@
 <script src="{$system['system_url']}/includes/assets/js/plugins/autosize/autosize.min.js" {if !$user->_logged_in}defer{/if}></script>
 <script src="{$system['system_url']}/includes/assets/js/plugins/readmore/readmore.min.js" {if !$user->_logged_in}defer{/if}></script>
 <script src="{$system['system_url']}/includes/assets/js/plugins/moment/moment-with-locales.min.js" {if !$user->_logged_in}defer{/if}></script>
+{if $user->_logged_in}
 <script src="https://cdn.fluidplayer.com/v2/current/fluidplayer.min.js" {if !$user->_logged_in}defer{/if}></script>
 <link rel="stylesheet" href="https://cdn.fluidplayer.com/v2/current/fluidplayer.min.css" type="text/css"/>
 <script src="https://unpkg.com/video.js@7.8.4/dist/video.min.js" {if !$user->_logged_in}defer{/if}></script>
 <script src="https://unpkg.com/videojs-contrib-hls@5.15.0/dist/videojs-contrib-hls.min.js" {if !$user->_logged_in}defer{/if}></script>
 <link href="https://unpkg.com/video.js@7.8.4/dist/video-js.min.css" rel="stylesheet">
-
+<script src="{$system['system_url']}/includes/assets/js/plugins/swipeMobile/swipeMobile.js"></script>
+{/if}
 {if $user->_logged_in}
     <!-- jQuery-UI -->
     <script>var _tooltip = jQuery.fn.tooltip;</script>
@@ -326,7 +326,7 @@
     <!-- TinyMCE -->
 
     <!-- Bootstrap selectpicker & datetimepicker -->
-    {if $page == "admin" || $page == "groups" || $page == "group" || $page == "events" || $page == "event" || $page == "ads" || $page == "settings"}
+    {if $page == "admin" || $page == "groups" || $page == "group" || $page == "events" || $page == "event" || $page == "ads"}
         <script src="{$system['system_url']}/includes/assets/js/plugins/bootstrap.select/bootstrap-select.min.js"></script>
         <link rel="stylesheet" type='text/css' href="{$system['system_url']}/includes/assets/js/plugins/bootstrap.select/bootstrap-select.min.css">
 
@@ -336,7 +336,7 @@
     <!-- Bootstrap selectpicker & datetimepicker -->
 
     <!-- Stripe & 2Checkout -->
-    {if $page == "packages" || $page == "ads" || $page == "settings"}
+    {if $page == "packages" || $page == "ads"}
         {if $system['creditcard_enabled'] || $system['alipay_enabled']}
             <script src="https://checkout.stripe.com/checkout.js"></script>
         {/if}
@@ -351,13 +351,11 @@
         <script src="https://media.twiliocdn.com/sdk/js/video/releases/1.20.0/twilio-video.min.js"></script>
     {/if}
     <!-- Twilio -->
-
     <!-- Agora -->
     {if $system['live_enabled']}
-        <script src="https://cdn.agora.io/sdk/release/AgoraRTCSDK-3.2.1.js"></script>
+        <script src="https://cdn.agora.io/sdk/release/AgoraRTCSDK-3.4.0.js"></script>
     {/if}
     <!-- Agora -->
-
     <!-- Easytimer -->
     {if $system['audio_call_enabled'] || $system['video_call_enabled'] || $system['voice_notes_posts_enabled'] || $system['voice_notes_comments_enabled'] || $system['voice_notes_chat_enabled']}
         <script src="{$system['system_url']}/includes/assets/js/plugins/easytimer/easytimer.min.js"></script>
@@ -366,37 +364,49 @@
 
 
     <!-- Datatables -->
-    {if $page == "admin" || $page == "ads" || $page == "developers" || $page == "settings"}
+    {if $page == "admin" || $page == "ads" || $page == "developers"}
         <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/v/bs4/dt-1.10.20/datatables.min.css"/>
         <script src="https://cdn.datatables.net/v/bs4/dt-1.10.20/datatables.min.js"></script>
     {/if}
     <!-- Datatables -->
+    <script src="{$system['system_url']}/includes/assets/js/plugins/swipeMobile/swipeMobile.js"></script>
+    <script type="text/javascript" src="http://mbostock.github.com/d3/d3.js?2.5.0"></script>
 
 {/if}
 <!-- Dependencies Plugins -->
 
 <!-- Sngine [JS] -->
-<script src="{$system['system_url']}/includes/assets/js/stratus/core.js?{$cacheremovejs}" defer></script>
+<script src="{$system['system_url']}/includes/assets/js/stratus/core.js?{$cacheremovejs}" {if !$user->_logged_in}defer{/if}></script>
+<script src="{$system['system_url']}/includes/assets/js/stratus/swipMobileCode.js?{$cacheremovejs}" {if !$user->_logged_in}defer{/if}></script>
 <!--Landing page custom js -->
-<script src="{$system['system_url']}/includes/assets/js/stratus/custom.js?{$cacheremovejs}" defer></script>
+<script src="{$system['system_url']}/includes/assets/js/stratus/custom.js?{$cacheremovejs}" {if !$user->_logged_in}defer{/if}></script>
 
 {if $user->_logged_in}
-    <script src="{$system['system_url']}/includes/assets/js/stratus/user.js?{$cacheremovejs}" defer></script>
-    <script src="{$system['system_url']}/includes/assets/js/stratus/post.js?{$cacheremovejs}" defer></script>
-    <script src="{$system['system_url']}/includes/assets/js/stratus/chat.js?{$cacheremovejs}" defer></script>
-    <script src="{$system['system_uploads_assets']}/includes/assets/js/stratus/showads.js?{$cacheremovejs}" defer></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/mediaelement/4.2.16/mediaelement-and-player.min.js" integrity="sha512-MgxzaA7Bkq7g2ND/4XYgoxUbehuHr3Q/bTuGn4lJkCxfxHEkXzR1Bl0vyCoHhKlMlE2ZaFymsJrRFLiAxQOpPg==" crossorigin="anonymous"></script>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/mediaelement/4.2.16/mediaelementplayer-legacy.min.css" integrity="sha512-/mTP+VCSG9+D7An+ecpc5S3kD1uHiGl+sdeygFXygXd4NH1dPIGjJIAcfscVGz7g7umbKILDw7EL12A0LTvz5w==" crossorigin="anonymous" />
+    <script src="{$system['system_url']}/includes/assets/js/stratus/user.js?{$cacheremovejs}" {if !$user->_logged_in}defer{/if}></script>
+    <script src="{$system['system_url']}/includes/assets/js/stratus/post.js?{$cacheremovejs}" {if !$user->_logged_in}defer{/if}></script>
+    <script src="{$system['system_url']}/includes/assets/js/stratus/chat.js?{$cacheremovejs}" {if !$user->_logged_in}defer{/if}></script>
+    <script src="{$system['system_url']}/includes/assets/js/stratus/showads.js?{$cacheremovejs}" {if !$user->_logged_in}defer{/if}></script>
     {if $system['live_enabled'] && $page == "live"}
         <script src="{$system['system_url']}/includes/assets/js/stratus/live.js"></script>
+    {/if}
+    {if $page == "investment/activity" || $page == "investment/buy_sell"  || $page == "investment/index" }
+        <script src="{$system['system_url']}/includes/assets/js/stratus/investment.js?{$cacheremovejs}" defer></script>
+        <script src="{$system['system_uploads_assets']}/includes/assets/js/stratus/swipMobileCode.js?{$cacheremovejs}" defer></script>
+        <script src="{$system['system_url']}/includes/assets/js/plugins/graph/d3.js?{$cacheremovejs}" defer></script>
+        <script src="https://unpkg.com/flickity@2.2.2/dist/flickity.pkgd.min.js"></script>
     {/if}
 {/if}
 <!-- Sngine [JS] -->
 
+    <!-- Emoji Animation Script -->
+    <script src="https://unpkg.com/@lottiefiles/lottie-player@latest/dist/lottie-player.js" {if !$user->_logged_in}defer{/if}></script>
+
+    <!-- Emoji Animation Script -->
+   
 {if $page == "admin"}
     <!-- Dependencies Plugins -->
     <script src="{$system['system_url']}/includes/assets/js/plugins/bootstrap.colorpicker/bootstrap-colorpicker.min.js"></script>
-    <link rel="stylesheet" type='text/css' href="{$system['system_url']}/includes/assets/js/plugins/bootstrap.colorpicker/bootstrap-colorpicker.min.css" defer>
+    <link rel="stylesheet" type='text/css' href="{$system['system_url']}/includes/assets/js/plugins/bootstrap.colorpicker/bootstrap-colorpicker.min.css">
 
     <script src="{$system['system_url']}/includes/assets/js/plugins/jquery.treegrid/jquery.treegrid.min.js"></script>
     <script src="{$system['system_url']}/includes/assets/js/plugins/jquery.treegrid/jquery.treegrid.fontawesome.js"></script>

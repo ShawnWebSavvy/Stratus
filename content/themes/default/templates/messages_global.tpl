@@ -4,7 +4,7 @@
 <!-- page content -->
 <div class="container mt20 offcanvas">
    <div class="row">
-    <div class="offcanvas-sidebar sidebar-left-ant">
+    <div class="offcanvas-sidebar sidebar-left-ant" id="sidebarHiddSwip">
         {include file='_sidebar.tpl'}
     </div>
    </div>
@@ -40,7 +40,7 @@
                                         <ul class="forsingle">
                                         {foreach $userGlobal->_data['conversations'] as $_conversation}
                                             {if $_conversation['group_recipients'] === 'not_show'}
-                                        {include file='__feeds_conversation.tpl' conversation=$_conversation}
+                                        {include file='__feeds_conversation_global.tpl' conversation=$_conversation}
                                             {/if}
                                         {/foreach}
                                         </ul>

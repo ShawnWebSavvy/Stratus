@@ -4,7 +4,7 @@
     <div class="row">
         <!-- side panel -->
         {if $user->_logged_in}
-        <div class="col-12 offcanvas-sidebar js_sticky-sidebar">
+        <div class="col-12 offcanvas-sidebar js_sticky-sidebar" id="sidebarHiddSwip">
             {include file='_sidebar.tpl'}
         </div>
         {/if}
@@ -83,6 +83,7 @@
                                 <div class="profile-avatar-crop {if $spage['page_picture_default']}x-hidden{/if}">
                                     <i class="fa fa-crop-alt js_init-crop-picture"
                                         data-image="{$spage['page_picture_full']}" data-handle="page"
+                                        data-system-url="{$system['system_url']}"
                                         data-id="{$spage['page_id']}"></i>
                                 </div>
                                 {if !$profile['user_picture_default']}
@@ -191,7 +192,7 @@
                 </div>
                 <!-- profile-header -->
         </section>
-        <div class="col-lg-3 col-md-4 aboutSectionWidth">
+        <div class="col-md-12 col-xl-3 col-lg-4 aboutSectionWidth about_sec">
             <div class="profileUpdatesDesign">
                 <!-- panel [about] -->
                 <div class="card">
@@ -203,7 +204,7 @@
                             </div>
                         </div>
                         {/if}
-                        <ul class="about-list">
+                        <ul class="about-list pages_about_list">
                             <!-- likes -->
                             <li>
                                 <div class="about-list-item">
@@ -215,7 +216,11 @@
                             <!-- category -->
                             <li>
                                 <div class="about-list-item">
-                                    <i class="fa fa-tag fa-fw fa-lg"></i> {__($spage['page_category_name'])}
+                                <div class="about_list_img">
+                                <img class=" "
+                                src="{$system['system_url']}/content/themes/default/images/svg/svgImg/blogNewsHover.svg">
+                                </div>
+                                {__($spage['page_category_name'])}
                                 </div>
                             </li>
                             <!-- category -->
@@ -223,27 +228,41 @@
                             {if $spage['page_company']}
                             <li>
                                 <div class="about-list-item">
-                                    <i class="fa fa-briefcase fa-fw fa-lg"></i> {$spage['page_company']}
-                                </div>
+                                <div class="about_list_img">
+                                <img class=" "
+                                src="{$system['system_url']}/content/themes/default/images/svg/svgImg/univsty.svg">
+                          </div>
+                          {$spage['page_company']}
+                                </div> 
                             </li>
                             {/if} {if $spage['page_phone']}
                             <li>
                                 <div class="about-list-item">
-                                    <i class="fa fa-phone fa-fw fa-lg"></i> {$spage['page_phone']}
+                                <div class="about_list_img">
+                                    <i class="fa fa-phone fa-fw fa-lg"></i> 
+                                    </div>
+                                    {$spage['page_phone']}
                                 </div>
                             </li>
                             {/if} {if $spage['page_website']}
                             <li>
                                 <div class="about-list-item">
-                                    <i class="fa fa-link fa-fw fa-lg"></i>
-                                    <a target="_blank" href="{$spage['page_website']}">{$spage['page_website']}</a>
+                                <div class="about_list_img">
+                                <img class=" "
+                                src="{$system['system_url']}/content/themes/default/images/svg/svgImg/nav_icon_globalHub.svg">
                                 </div>
+                                    <a target="_blank" href="{$spage['page_website']}">{$spage['page_website']}</a>
+                                </div> 
                             </li>
                             {/if} {if $spage['page_location']}
                             <li>
                                 <div class="about-list-item">
-                                    <i class="fa fa-map-marker fa-fw fa-lg"></i> {$spage['page_location']}
+                                <div class="about_list_img">
+                                <img class=" "
+                                src="{$system['system_url']}/content/themes/default/images/svg/svgImg/location_icon.svg">
                                 </div>
+                                 {$spage['page_location']}
+                                </div> 
                             </li>
                             <li style="height: auto;">
                                 <div>
@@ -365,9 +384,9 @@
             </div>
         </div>
         <!-- content panel -->
-        <div class="col-lg-9 sec_cstm_w offcanvas-mainbar js_conversation-container">
+        <div class="col-md-12 col-xl-9 col-lg-8 js_conversation-container">
             <!-- profile-tabs -->
-            <div class="profile-header-tabs for-mobile">
+            <div class="profile-header-tabs custom-tabs for-mobile">
                 <ul>
                     <li>
                         <a href="{$system['system_url']}/pages/{$spage['page_name']}" {if $view=="" }class="active"
@@ -405,784 +424,786 @@
                 </ul>
             </div>
             <!-- profile-tabs -->
-            <!-- profile-content -->
-            <!-- view content -->
-            {if $view == ""}
-            <!-- center panel -->
-            <div class="col-lg-12">
-                <!-- publisher -->
-                {if $spage['i_admin']} {include file='_publisher.tpl' _handle="page" _id=$spage['page_id']} {/if}
-                <!-- publisher -->
-                <!-- pinned post -->
-                {if $pinned_post} {include file='_pinned_post.tpl' post=$pinned_post} {/if}
-                <!-- pinned post -->
-                <!-- posts -->
-                {include file='_posts.tpl' _get="posts_page" _id=$spage['page_id']}
-                <!-- posts -->
-            </div>
-            <!-- center panel -->
-            {elseif $view == "photos"}
-            <!-- photos -->
-            <div class="col-12">
-                <div class="card panel-photos">
-                    <div class="card-header with-icon with-nav custom-tabs">
-                        <!-- panel title -->
-                        <div class="mb20">{__("Photos")}</div>
-                        <!-- panel title -->
-                        <!-- panel nav -->
-                        <ul class="nav nav-tabs  ">
-                            <li class="nav-item">
-                                <a class="nav-link active"
-                                    href="{$system['system_url']}/pages/{$spage['page_name']}/photos">{__("Photos")}</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link"
-                                    href="{$system['system_url']}/pages/{$spage['page_name']}/albums">{__("Albums")}</a>
-                            </li>
-                        </ul>
-                        <!-- panel nav -->
-                    </div>
-                    <div class="card-body">
-                        {if $spage['photos']}
-                        <ul class="row no-gutters">
-                            {foreach $spage['photos'] as $photo} {include file='__feeds_photo.tpl' _context="photos"}
-                            {/foreach}
-                        </ul>
-                        <!-- see-more -->
-                        <div class="alert alert-info see-more js_see-more" data-get="photos"
-                            data-id="{$spage['page_id']}" data-type='page'>
-                            <span>{__("Load More")}</span>
-                            <div class="loader loader_small x-hidden"></div>
-                        </div>
-                        <!-- see-more -->
-                        {else}
-                        <div class="__no_data_contet__ text-center">
-                            <p class="text-center text-muted __nodata-img___">
-                                <img width="100%"
-                                    src="{$system['system_url']}/content/themes/{$system['theme']}/images/no_results4.png">
-                            <p>{$spage['page_title']} {__("doesn't have photos")}</p>
-                            </p>
-                        </div>
-                        <!--<p class="text-center text-muted mt10">
-      {$spage['page_title']} {__("doesn't have photos")}
-      </p>-->
-                        {/if}
-                    </div>
+            <div class="row">
+                <!-- profile-content -->
+                <!-- view content -->
+                {if $view == ""}
+                <!-- center panel -->
+                <div class="col-lg-12">
+                    <!-- publisher -->
+                    {if $spage['i_admin']} {include file='_publisher.tpl' _handle="page" _id=$spage['page_id']} {/if}
+                    <!-- publisher -->
+                    <!-- pinned post -->
+                    {if $pinned_post} {include file='_pinned_post.tpl' post=$pinned_post} {/if}
+                    <!-- pinned post -->
+                    <!-- posts -->
+                    {include file='_posts.tpl' _get="posts_page" _id=$spage['page_id']}
+                    <!-- posts -->
                 </div>
-            </div>
-            <!-- photos -->
-            {elseif $view == "albums"}
-            <!-- albums -->
-            <div class="col-12">
-                <div class="card">
-                    <div class="card-header with-icon with-nav custom-tabs">
-                        <!-- panel title -->
-                        <div class="mb20">
-                            {__("Photos")}
+                <!-- center panel -->
+                {elseif $view == "photos"}
+                <!-- photos -->
+                <div class="col-12">
+                    <div class="card panel-photos">
+                        <div class="card-header with-icon with-nav custom-tabs">
+                            <!-- panel title -->
+                            <div class="mb20">{__("Photos")}</div>
+                            <!-- panel title -->
+                            <!-- panel nav -->
+                            <ul class="nav nav-tabs  ">
+                                <li class="nav-item">
+                                    <a class="nav-link active"
+                                        href="{$system['system_url']}/pages/{$spage['page_name']}/photos">{__("Photos")}</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link"
+                                        href="{$system['system_url']}/pages/{$spage['page_name']}/albums">{__("Albums")}</a>
+                                </li>
+                            </ul>
+                            <!-- panel nav -->
                         </div>
-                        <!-- panel title -->
-                        <!-- panel nav -->
-                        <ul class="nav nav-tabs  ">
-                            <li class="nav-item">
-                                <a class="nav-link"
-                                    href="{$system['system_url']}/pages/{$spage['page_name']}/photos">{__("Photos")}</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link active"
-                                    href="{$system['system_url']}/pages/{$spage['page_name']}/albums">{__("Albums")}</a>
-                            </li>
-                        </ul>
-                        <!-- panel nav -->
-                    </div>
-                    <div class="card-body">
-                        {if count($spage['albums']) > 0}
-                        <ul class="row">
-                            {foreach $spage['albums'] as $album} {include file='__feeds_album.tpl'} {/foreach}
-                        </ul>
-                        {if count($spage['albums']) >= $system['max_results_even']}
-                        <!-- see-more -->
-                        <div class="alert alert-info see-more js_see-more" data-get="albums"
-                            data-id="{$spage['page_id']}" data-type='page'>
-                            <span>{__("Load More")}</span>
-                            <div class="loader loader_small x-hidden"></div>
-                        </div>
-                        <!-- see-more -->
-                        {/if} {else}
-                        <div class="__no_data_contet__ text-center">
-                            <p class="text-center text-muted __nodata-img___">
-                                <img width="100%"
-                                    src="{$system['system_url']}/content/themes/{$system['theme']}/images/no_results4.png">
-                            <p> {$spage['page_title']} {__("doesn't have albums")}</p>
-                            </p>
-                        </div>
-                        <!-- <p class="text-center text-muted mt10">
-      {$spage['page_title']} {__("doesn't have albums")}
-      </p> -->
-                        {/if}
-                    </div>
-                </div>
-            </div>
-            <!-- albums -->
-            {elseif $view == "album"}
-            <!-- albums -->
-            <div class="col-12">
-                <div class="card panel-photos">
-                    <div class="card-header with-icon with-nav custom-tabs">
-                        <!-- back to albums -->
-                        <div class="float-right">
-                            <a href="{$system['system_url']}/pages/{$spage['page_name']}/albums"
-                                class="btn btn-sm btn-light">
-                                <i class="fa fa-arrow-circle-left mr5"></i>{__("Back to Albums")}
-                            </a>
-                        </div>
-                        <!-- back to albums -->
-                        <!-- panel title -->
-                        <div class="mb20">{__("Photos")}</div>
-                        <!-- panel title -->
-                        <!-- panel nav -->
-                        <ul class="nav nav-tabs">
-                            <li class="nav-item">
-                                <a class="nav-link"
-                                    href="{$system['system_url']}/pages/{$spage['page_name']}/photos">{__("Photos")}</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link active"
-                                    href="{$system['system_url']}/pages/{$spage['page_name']}/albums">{__("Albums")}</a>
-                            </li>
-                        </ul>
-                        <!-- panel nav -->
-                    </div>
-                    <div class="card-body">
-                        {include file='_album.tpl'}
-                    </div>
-                </div>
-            </div>
-            <!-- albums -->
-            {elseif $view == "videos"}
-            <!-- videos -->
-            <div class="col-12">
-                <div class="card panel-videos">
-                    <div class="card-header with-icon">
-                        <!-- panel title -->
-                        <div class="mb20">
-                            <i class="fa fa-video mr10"></i>{__("Videos")}
-                        </div>
-                        <!-- panel title -->
-                    </div>
-                    <div class="card-body">
-                        {if $spage['videos']}
-                        <ul class="row no-gutters">
-                            {foreach $spage['videos'] as $video} {include file='__feeds_video.tpl'} {/foreach}
-                        </ul>
-                        <!-- see-more -->
-                        <div class="alert alert-info see-more js_see-more" data-get="videos"
-                            data-id="{$spage['page_id']}" data-type='page'>
-                            <span>{__("Load More")}</span>
-                            <div class="loader loader_small x-hidden"></div>
-                        </div>
-                        <!-- see-more -->
-                        {else}
-                        <div class="__no_data_contet__ text-center">
-                            <p class="text-center text-muted __nodata-img___">
-                                <img width="100%"
-                                    src="{$system['system_url']}/content/themes/{$system['theme']}/images/no_results15.png">
-                            <p> {$spage['page_title']} {__("doesn't have videos")} </p>
-                            </p>
-                        </div>
-                        <!-- <p class="text-center text-muted mt10">
-      {$spage['page_title']} {__("doesn't have videos")}
-      </p> -->
-                        {/if}
-                    </div>
-                </div>
-            </div>
-            <!-- videos -->
-            {elseif $view == "invites"}
-            <!-- invites -->
-            <div class="col-12">
-                <div class="card">
-                    <div class="card-header with-icon">
-                        <!-- panel title -->
-                        <div>
-                            <!-- <i class="fa fa-user-tag mr10"></i> -->
-                            <span class="usertgimg">
-                                <img class="btn_image_"
-                                    src="{$system['system_url']}/content/themes/default/images/svg/svgImg/add_friend_icon.svg">
-                            </span> {__("Invites")}
-                        </div>
-                        <!-- panel title -->
-                    </div>
-                    <div class="card-body">
-                        {if $spage['invites']}
-                        <ul class="row">
-                            {foreach $spage['invites'] as $_user} {include file='__feeds_user.tpl' _tpl="box"
-                            _connection=$_user["connection"]} {/foreach}
-                        </ul>
-                        {if count($spage['invites']) >= $system['max_results_even']}
-                        <!-- see-more -->
-                        <div class="alert alert-info see-more js_see-more" data-get="page_invites"
-                            data-id="{$spage['page_id']}">
-                            <span>{__("Load More")}</span>
-                            <div class="loader loader_small x-hidden"></div>
-                        </div>
-                        <!-- see-more -->
-                        {/if} {else}
-                        <p class="text-center text-muted mt10">
-                            {__("No friends to invite")}
-                        </p>
-                        {/if}
-                    </div>
-                </div>
-            </div>
-            <!-- invites -->
-            {elseif $view == "settings"}
-            <div class="col-lg-12">
-                <div class="card">
-                    <div class="card-body with-nav">
-                        <ul class="side-nav pageSettingOptions">
-                            <li {if $sub_view=="" }class="active" {/if}>
-                                <a class="d-flex" href="{$system['system_url']}/pages/{$spage['page_name']}/settings">
-                                    <i class="fa fa-cog fa-fw mr10"></i>{__("Page Settings")}
-                                </a>
-                            </li>
-                            <li {if $sub_view=="info" }class="active" {/if}>
-                                <a class="d-flex" style="align-items: center;"
-                                    href="{$system['system_url']}/pages/{$spage['page_name']}/settings/info">
-                                    <i class="fa fa-info-circle fa-fw mr10"></i>{__("Page Information")}
-                                </a>
-                            </li>
-                            <li {if $sub_view=="admins" }class="active" {/if}>
-                                <a class="d-flex"
-                                    href="{$system['system_url']}/pages/{$spage['page_name']}/settings/admins">
-                                    <img class="mr10" width="15px" height="15px" src="{$system['system_url']}/content/themes/default/images/svg/svgImg/newgroupIcon1.svg"/>
-                                    {__("Admins")}
-                                </a>
-                            </li>
-                            {if $system['verification_requests']}
-                            <li {if $sub_view=="verification" }class="active" {/if}>
-                                <a class="d-flex"
-                                    href="{$system['system_url']}/pages/{$spage['page_name']}/settings/verification">
-                                    <i class="fa fa-check-circle fa-fw mr10"></i>{__("Verification")}
-                                </a>
-                            </li>
-                            {/if} {if $user->_data['user_id'] == $spage['page_admin']}
-                            <li {if $sub_view=="delete" }class="active" {/if}>
-                                <a class="d-flex"
-                                    href="{$system['system_url']}/pages/{$spage['page_name']}/settings/delete">
-                                    <i class="fa fa-trash fa-fw mr10"></i>{__("Delete Page")}
-                                </a>
-                            </li>
-                            {/if}
-                        </ul>
-                    </div>
-                </div>
-            </div>
-            <div class="col-lg-12">
-                <div class="card">
-                    {if $sub_view == ""}
-                    <div class="card-header with-icon d-flex">
-                        <i class="fa fa-cog mr10"></i>{__("Page Settings")}
-                    </div>
-                    <form class="js_ajax-forms "
-                        data-url="pages_groups_events/create.php?type=page&do=edit&edit=settings&id={$spage['page_id']}">
                         <div class="card-body">
-                            <div class="form-group">
-                                <label class="form-control-label" for="title">{__("Name Your Page")}</label>
-                                <input type="text" class="form-control" name="title" id="title" value="{$spage['page_title']}" maxlength="30">
+                            {if $spage['photos']}
+                            <ul class="row no-gutters">
+                                {foreach $spage['photos'] as $photo} {include file='__feeds_photo.tpl' _context="photos"}
+                                {/foreach}
+                            </ul>
+                            <!-- see-more -->
+                            <div class="alert alert-info see-more js_see-more" data-get="photos"
+                                data-id="{$spage['page_id']}" data-type='page'>
+                                <span>{__("Load More")}</span>
+                                <div class="loader loader_small x-hidden"></div>
                             </div>
-                            <div class="form-group">
-                                <label class="form-control-label" for="username">{__("Web Address")}</label>
-                                <div class="input-group">
-                                    <div class="input-group-prepend">
-                                        <span
-                                            class="input-group-text d-none d-sm-block">{$system['system_url']}/pages/</span>
-                                    </div>
-                                    <input type="text" class="form-control" name="username" id="username"
-                                        value="{$spage['page_name']}">
-                                </div>
-                                <span class="form-text">
-                                    {__("Can only contain alphanumeric characters (A–Z, 0–9) and periods ('.')")}
-                                </span>
+                            <!-- see-more -->
+                            {else}
+                            <div class="__no_data_contet__ text-center">
+                                <p class="text-center text-muted __nodata-img___">
+                                    <img width="100%"
+                                        src="{$system['system_url']}/content/themes/{$system['theme']}/images/no_results4.png">
+                                <p>{$spage['page_title']} {__("doesn't have photos")}</p>
+                                </p>
                             </div>
-                            <div class="form-group">
-                                <label class="form-control-label" for="category">{__("Category")}</label>
-                                <select class="form-control" name="category" id="category">
-                                    <option>{__("Select Category")}</option>
-                                    {foreach $categories as $category}
-                                    <option {if $spage['page_category']==$category['category_id']}selected{/if}
-                                        value="{$category['category_id']}">{__($category['category_name'])}</option>
-                                    {/foreach}
-                                </select>
-                            </div>
-                            <!-- error -->
-                            <div class="alert alert-danger mb0 x-hidden"></div>
-                            <!-- error -->
+                            <!--<p class="text-center text-muted mt10">
+        {$spage['page_title']} {__("doesn't have photos")}
+        </p>-->
+                            {/if}
                         </div>
-                        <div class="card-footer text-right">
-                            <button type="submit" class="btn btn-primary">{__("Save Changes")}</button>
-                        </div>
-                    </form>
-                    {elseif $sub_view == "info"}
-                    <div class="card-header with-icon with-nav custom-tabs">
-                        <!-- panel title -->
-                        <div class="mb20">
-                            {__("Page Information")}
-                        </div>
-                        <!-- panel title -->
-                        <!-- panel nav -->
-                        <ul class="nav nav-tabs  ">
-                            <li class="nav-item">
-                                <a class="nav-link active" href="#basic" data-toggle="tab">
-                                    {__("Basic")}
-                                </a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link" href="#action" data-toggle="tab">
-                                    {__("Action Button")}
-                                </a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link" href="#social" data-toggle="tab">
-                                    {__("Social Links")}
-                                </a>
-                            </li>
-                        </ul>
-                        <!-- panel nav -->
                     </div>
-                    <!-- tab-content -->
-                    <div class="tab-content">
-                        <!-- basic tab -->
-                        <div class="tab-pane active" id="basic">
-                            <form class="js_ajax-forms "
-                                data-url="pages_groups_events/create.php?type=page&do=edit&edit=info&id={$spage['page_id']}">
-                                <div class="card-body">
-                                    <div class="row">
-                                        <div class="form-group col-md-6">
-                                            <label class="form-control-label" for="company">{__("Company")}</label>
-                                            <input type="text" class="form-control" name="company" id="company"
-                                                value="{$spage['page_company']}">
+                </div>
+                <!-- photos -->
+                {elseif $view == "albums"}
+                <!-- albums -->
+                <div class="col-12">
+                    <div class="card">
+                        <div class="card-header with-icon with-nav custom-tabs">
+                            <!-- panel title -->
+                            <div class="mb20">
+                                {__("Photos")}
+                            </div>
+                            <!-- panel title -->
+                            <!-- panel nav -->
+                            <ul class="nav nav-tabs  ">
+                                <li class="nav-item">
+                                    <a class="nav-link"
+                                        href="{$system['system_url']}/pages/{$spage['page_name']}/photos">{__("Photos")}</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link active"
+                                        href="{$system['system_url']}/pages/{$spage['page_name']}/albums">{__("Albums")}</a>
+                                </li>
+                            </ul>
+                            <!-- panel nav -->
+                        </div>
+                        <div class="card-body">
+                            {if count($spage['albums']) > 0}
+                            <ul class="row">
+                                {foreach $spage['albums'] as $album} {include file='__feeds_album.tpl'} {/foreach}
+                            </ul>
+                            {if count($spage['albums']) >= $system['max_results_even']}
+                            <!-- see-more -->
+                            <div class="alert alert-info see-more js_see-more" data-get="albums"
+                                data-id="{$spage['page_id']}" data-type='page'>
+                                <span>{__("Load More")}</span>
+                                <div class="loader loader_small x-hidden"></div>
+                            </div>
+                            <!-- see-more -->
+                            {/if} {else}
+                            <div class="__no_data_contet__ text-center">
+                                <p class="text-center text-muted __nodata-img___">
+                                    <img width="100%"
+                                        src="{$system['system_url']}/content/themes/{$system['theme']}/images/no_results4.png">
+                                <p> {$spage['page_title']} {__("doesn't have albums")}</p>
+                                </p>
+                            </div>
+                            <!-- <p class="text-center text-muted mt10">
+        {$spage['page_title']} {__("doesn't have albums")}
+        </p> -->
+                            {/if}
+                        </div>
+                    </div>
+                </div>
+                <!-- albums -->
+                {elseif $view == "album"}
+                <!-- albums -->
+                <div class="col-12">
+                    <div class="card panel-photos">
+                        <div class="card-header with-icon with-nav custom-tabs">
+                            <!-- back to albums -->
+                            <div class="float-right">
+                                <a href="{$system['system_url']}/pages/{$spage['page_name']}/albums"
+                                    class="btn btn-sm btn-light">
+                                    <i class="fa fa-arrow-circle-left mr5"></i>{__("Back to Albums")}
+                                </a>
+                            </div>
+                            <!-- back to albums -->
+                            <!-- panel title -->
+                            <div class="mb20">{__("Photos")}</div>
+                            <!-- panel title -->
+                            <!-- panel nav -->
+                            <ul class="nav nav-tabs">
+                                <li class="nav-item">
+                                    <a class="nav-link"
+                                        href="{$system['system_url']}/pages/{$spage['page_name']}/photos">{__("Photos")}</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link active"
+                                        href="{$system['system_url']}/pages/{$spage['page_name']}/albums">{__("Albums")}</a>
+                                </li>
+                            </ul>
+                            <!-- panel nav -->
+                        </div>
+                        <div class="card-body">
+                            {include file='_album.tpl'}
+                        </div>
+                    </div>
+                </div>
+                <!-- albums -->
+                {elseif $view == "videos"}
+                <!-- videos -->
+                <div class="col-12">
+                    <div class="card panel-videos">
+                        <div class="card-header with-icon">
+                            <!-- panel title -->
+                            <div class="mb20">
+                                <i class="fa fa-video mr10"></i>{__("Videos")}
+                            </div>
+                            <!-- panel title -->
+                        </div>
+                        <div class="card-body">
+                            {if $spage['videos']}
+                            <ul class="row no-gutters">
+                                {foreach $spage['videos'] as $video} {include file='__feeds_video.tpl'} {/foreach}
+                            </ul>
+                            <!-- see-more -->
+                            <div class="alert alert-info see-more js_see-more" data-get="videos"
+                                data-id="{$spage['page_id']}" data-type='page'>
+                                <span>{__("Load More")}</span>
+                                <div class="loader loader_small x-hidden"></div>
+                            </div>
+                            <!-- see-more -->
+                            {else}
+                            <div class="__no_data_contet__ text-center">
+                                <p class="text-center text-muted __nodata-img___">
+                                    <img width="100%"
+                                        src="{$system['system_url']}/content/themes/{$system['theme']}/images/no_results15.png">
+                                <p> {$spage['page_title']} {__("doesn't have videos")} </p>
+                                </p>
+                            </div>
+                            <!-- <p class="text-center text-muted mt10">
+        {$spage['page_title']} {__("doesn't have videos")}
+        </p> -->
+                            {/if}
+                        </div>
+                    </div>
+                </div>
+                <!-- videos -->
+                {elseif $view == "invites"}
+                <!-- invites -->
+                <div class="col-12">
+                    <div class="card">
+                        <div class="card-header with-icon">
+                            <!-- panel title -->
+                            <div>
+                                <!-- <i class="fa fa-user-tag mr10"></i> -->
+                                <span class="usertgimg">
+                                    <img class="btn_image_"
+                                        src="{$system['system_url']}/content/themes/default/images/svg/svgImg/add_friend_icon.svg">
+                                </span> {__("Invites")}
+                            </div>
+                            <!-- panel title -->
+                        </div>
+                        <div class="card-body">
+                            {if $spage['invites']}
+                            <ul class="row">
+                                {foreach $spage['invites'] as $_user} {include file='__feeds_user.tpl' _tpl="box"
+                                _connection=$_user["connection"]} {/foreach}
+                            </ul>
+                            {if count($spage['invites']) >= $system['max_results_even']}
+                            <!-- see-more -->
+                            <div class="alert alert-info see-more js_see-more" data-get="page_invites"
+                                data-id="{$spage['page_id']}">
+                                <span>{__("Load More")}</span>
+                                <div class="loader loader_small x-hidden"></div>
+                            </div>
+                            <!-- see-more -->
+                            {/if} {else}
+                            <p class="text-center text-muted mt10">
+                                {__("No friends to invite")}
+                            </p>
+                            {/if}
+                        </div>
+                    </div>
+                </div>
+                <!-- invites -->
+                {elseif $view == "settings"}
+                <div class="col-lg-12">
+                    <div class="card">
+                        <div class="card-body with-nav">
+                            <ul class="side-nav pageSettingOptions">
+                                <li {if $sub_view=="" }class="active" {/if}>
+                                    <a class="d-flex" href="{$system['system_url']}/pages/{$spage['page_name']}/settings">
+                                        <i class="fa fa-cog fa-fw mr10"></i>{__("Page Settings")}
+                                    </a>
+                                </li>
+                                <li {if $sub_view=="info" }class="active" {/if}>
+                                    <a class="d-flex" style="align-items: center;"
+                                        href="{$system['system_url']}/pages/{$spage['page_name']}/settings/info">
+                                        <i class="fa fa-info-circle fa-fw mr10"></i>{__("Page Information")}
+                                    </a>
+                                </li>
+                                <li {if $sub_view=="admins" }class="active" {/if}>
+                                    <a class="d-flex"
+                                        href="{$system['system_url']}/pages/{$spage['page_name']}/settings/admins">
+                                        <img class="mr10" width="15px" height="15px" src="{$system['system_url']}/content/themes/default/images/svg/svgImg/newgroupIcon1.svg"/>
+                                        {__("Admins")}
+                                    </a>
+                                </li>
+                                {if $system['verification_requests']}
+                                <li {if $sub_view=="verification" }class="active" {/if}>
+                                    <a class="d-flex"
+                                        href="{$system['system_url']}/pages/{$spage['page_name']}/settings/verification">
+                                        <i class="fa fa-check-circle fa-fw mr10"></i>{__("Verification")}
+                                    </a>
+                                </li>
+                                {/if} {if $user->_data['user_id'] == $spage['page_admin']}
+                                <li {if $sub_view=="delete" }class="active" {/if}>
+                                    <a class="d-flex"
+                                        href="{$system['system_url']}/pages/{$spage['page_name']}/settings/delete">
+                                        <i class="fa fa-trash fa-fw mr10"></i>{__("Delete Page")}
+                                    </a>
+                                </li>
+                                {/if}
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-12">
+                    <div class="card">
+                        {if $sub_view == ""}
+                        <div class="card-header with-icon d-flex">
+                            <i class="fa fa-cog mr10"></i>{__("Page Settings")}
+                        </div>
+                        <form class="js_ajax-forms "
+                            data-url="pages_groups_events/create.php?type=page&do=edit&edit=settings&id={$spage['page_id']}">
+                            <div class="card-body">
+                                <div class="form-group">
+                                    <label class="form-control-label" for="title">{__("Name Your Page")}</label>
+                                    <input type="text" class="form-control" name="title" id="title" value="{$spage['page_title']}" maxlength="30">
+                                </div>
+                                <div class="form-group">
+                                    <label class="form-control-label" for="username">{__("Web Address")}</label>
+                                    <div class="input-group">
+                                        <div class="input-group-prepend">
+                                            <span
+                                                class="input-group-text d-none d-sm-block">{$system['system_url']}/pages/</span>
                                         </div>
-                                        <div class="form-group col-md-6">
-                                            <label class="form-control-label" for="phone">{__("Phone")}</label>
-                                            <input type="text" class="form-control" name="phone" id="phone"
-                                                value="{$spage['page_phone']}">
-                                        </div>
+                                        <input type="text" class="form-control" name="username" id="username"
+                                            value="{$spage['page_name']}">
                                     </div>
-                                    <div class="row">
-                                        <div class="form-group col-md-6">
-                                            <label class="form-control-label" for="website">{__("Website")}</label>
-                                            <input type="text" class="form-control" name="website" id="website"
-                                                value="{$spage['page_website']}">
+                                    <span class="form-text">
+                                        {__("Can only contain alphanumeric characters (A–Z, 0–9) and periods ('.')")}
+                                    </span>
+                                </div>
+                                <div class="form-group">
+                                    <label class="form-control-label" for="category">{__("Category")}</label>
+                                    <select class="form-control" name="category" id="category">
+                                        <option>{__("Select Category")}</option>
+                                        {foreach $categories as $category}
+                                        <option {if $spage['page_category']==$category['category_id']}selected{/if}
+                                            value="{$category['category_id']}">{__($category['category_name'])}</option>
+                                        {/foreach}
+                                    </select>
+                                </div>
+                                <!-- error -->
+                                <div class="alert alert-danger mb0 x-hidden"></div>
+                                <!-- error -->
+                            </div>
+                            <div class="card-footer text-right">
+                                <button type="submit" class="btn btn-primary">{__("Save Changes")}</button>
+                            </div>
+                        </form>
+                        {elseif $sub_view == "info"}
+                        <div class="card-header with-icon with-nav custom-tabs">
+                            <!-- panel title -->
+                            <div class="mb20">
+                                {__("Page Information")}
+                            </div>
+                            <!-- panel title -->
+                            <!-- panel nav -->
+                            <ul class="nav nav-tabs  ">
+                                <li class="nav-item">
+                                    <a class="nav-link active" href="#basic" data-toggle="tab">
+                                        {__("Basic")}
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" href="#action" data-toggle="tab">
+                                        {__("Action Button")}
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" href="#social" data-toggle="tab">
+                                        {__("Social Links")}
+                                    </a>
+                                </li>
+                            </ul>
+                            <!-- panel nav -->
+                        </div>
+                        <!-- tab-content -->
+                        <div class="tab-content">
+                            <!-- basic tab -->
+                            <div class="tab-pane active" id="basic">
+                                <form class="js_ajax-forms "
+                                    data-url="pages_groups_events/create.php?type=page&do=edit&edit=info&id={$spage['page_id']}">
+                                    <div class="card-body">
+                                        <div class="row">
+                                            <div class="form-group col-md-6">
+                                                <label class="form-control-label" for="company">{__("Company")}</label>
+                                                <input type="text" class="form-control" name="company" id="company"
+                                                    value="{$spage['page_company']}">
+                                            </div>
+                                            <div class="form-group col-md-6">
+                                                <label class="form-control-label" for="phone">{__("Phone")}</label>
+                                                <input type="text" class="form-control" name="phone" id="phone"
+                                                    value="{$spage['page_phone']}">
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="form-group col-md-6">
+                                                <label class="form-control-label" for="website">{__("Website")}</label>
+                                                <input type="text" class="form-control" name="website" id="website"
+                                                    value="{$spage['page_website']}">
+                                                <span class="form-text">
+                                                    {__("Website link must start with http:// or https://")}
+                                                </span>
+                                            </div>
+                                            <div class="form-group col-md-6">
+                                                <label class="form-control-label" for="location">{__("Location")}</label>
+                                                <input type="text" class="form-control js_geocomplete" name="location"
+                                                    id="location" value="{$spage['page_location']}">
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="form-control-label" for="description">{__("About")}</label>
+                                            <textarea class="form-control" name="description"
+                                                id="description">{$spage['page_description']}</textarea>
+                                        </div>
+                                        <!-- custom fields -->
+                                        {if $custom_fields['basic']} {include file='__custom_fields.tpl'
+                                        _custom_fields=$custom_fields['basic'] _registration=false} {/if}
+                                        <!-- custom fields -->
+                                        <!-- error -->
+                                        <div class="alert alert-danger mb0 x-hidden"></div>
+                                        <!-- error -->
+                                    </div>
+                                    <div class="card-footer text-right">
+                                        <button type="submit" class="btn btn-primary">{__("Save Changes")}</button>
+                                    </div>
+                                </form>
+                            </div>
+                            <!-- basic tab -->
+                            <!-- action tab -->
+                            <div class="tab-pane" id="action">
+                                <form class="js_ajax-forms "
+                                    data-url="pages_groups_events/create.php?type=page&do=edit&edit=action&id={$spage['page_id']}">
+                                    <div class="card-body">
+                                        <div class="form-group">
+                                            <label class="form-control-label">{__("Action Button Text")}</label>
+                                            <input type="text" class="form-control" name="action_text" id="action_text"
+                                                value="{$spage['page_action_text']}">
                                             <span class="form-text">
-                                                {__("Website link must start with http:// or https://")}
+                                                {__("For example: Subscribe, Get tickets, Preorder now or Shop now")}
                                             </span>
                                         </div>
-                                        <div class="form-group col-md-6">
-                                            <label class="form-control-label" for="location">{__("Location")}</label>
-                                            <input type="text" class="form-control js_geocomplete" name="location"
-                                                id="location" value="{$spage['page_location']}">
+                                        <div class="form-group">
+                                            <label class="form-control-label">{__("Action Button Color")}</label>
+                                            <div class="mt10">
+                                                <div class="custom-control custom-radio custom-control-inline">
+                                                    <input type="radio" name="action_color" id="action_color_light"
+                                                        value="light" class="custom-control-input" {if
+                                                        $spage[ 'page_action_color' ]=="light" }checked{/if}>
+                                                    <label class="custom-control-label" for="action_color_light">
+                                                        <button type="button"
+                                                            class="btn btn-sm btn-light">{__("Action")}</button>
+                                                    </label>
+                                                </div>
+                                                <div class="custom-control custom-radio custom-control-inline">
+                                                    <input type="radio" name="action_color" id="action_color_primary"
+                                                        value="primary" class="custom-control-input" {if
+                                                        $spage[ 'page_action_color' ]=="primary" }checked{/if}>
+                                                    <label class="custom-control-label" for="action_color_primary">
+                                                        <button type="button"
+                                                            class="btn btn-sm btn-primary">{__("Action")}</button>
+                                                    </label>
+                                                </div>
+                                                <div class="custom-control custom-radio custom-control-inline action_color_success x-hidden">
+                                                    <input type="radio" name="action_color" id="action_color_success"
+                                                        value="success" class="custom-control-input" {if
+                                                        $spage[ 'page_action_color' ]=="success" }checked{/if}>
+                                                    <label class="custom-control-label" for="action_color_success">
+                                                        <button type="button"
+                                                            class="btn btn-sm btn-success">{__("Action")}</button>
+                                                    </label>
+                                                </div>
+                                                <div class="custom-control custom-radio custom-control-inline">
+                                                    <input type="radio" name="action_color" id="action_color_info"
+                                                        value="info" class="custom-control-input" {if
+                                                        $spage[ 'page_action_color' ]=="info" }checked{/if}>
+                                                    <label class="custom-control-label" for="action_color_info">
+                                                        <button type="button"
+                                                            class="btn btn-sm btn-info">{__("Action")}</button>
+                                                    </label>
+                                                </div>
+                                                <div class="custom-control custom-radio custom-control-inline">
+                                                    <input type="radio" name="action_color" id="action_color_warning"
+                                                        value="warning" class="custom-control-input" {if
+                                                        $spage[ 'page_action_color' ]=="warning" }checked{/if}>
+                                                    <label class="custom-control-label" for="action_color_warning">
+                                                        <button type="button"
+                                                            class="btn btn-sm btn-warning">{__("Action")}</button>
+                                                    </label>
+                                                </div>
+                                                <div class="custom-control custom-radio custom-control-inline">
+                                                    <input type="radio" name="action_color" id="action_color_danger"
+                                                        value="danger" class="custom-control-input" {if
+                                                        $spage[ 'page_action_color' ]=="danger" }checked{/if}>
+                                                    <label class="custom-control-label" for="action_color_danger">
+                                                        <button type="button"
+                                                            class="btn btn-sm btn-danger">{__("Action")}</button>
+                                                    </label>
+                                                </div>
+                                            </div>
                                         </div>
+                                        <div class="form-group">
+                                            <label class="form-control-label">{__("Action Button URL")}</label>
+                                            <input type="text" class="form-control" name="action_url" id="action_url"
+                                                value="{$spage['page_action_url']}">
+                                        </div>
+                                        <!-- error -->
+                                        <div class="alert alert-danger mb0 x-hidden"></div>
+                                        <!-- error -->
                                     </div>
-                                    <div class="form-group">
-                                        <label class="form-control-label" for="description">{__("About")}</label>
-                                        <textarea class="form-control" name="description"
-                                            id="description">{$spage['page_description']}</textarea>
+                                    <div class="card-footer text-right">
+                                        <button type="submit" class="btn btn-primary">{__("Save Changes")}</button>
                                     </div>
-                                    <!-- custom fields -->
-                                    {if $custom_fields['basic']} {include file='__custom_fields.tpl'
-                                    _custom_fields=$custom_fields['basic'] _registration=false} {/if}
-                                    <!-- custom fields -->
-                                    <!-- error -->
-                                    <div class="alert alert-danger mb0 x-hidden"></div>
-                                    <!-- error -->
-                                </div>
-                                <div class="card-footer text-right">
-                                    <button type="submit" class="btn btn-primary">{__("Save Changes")}</button>
-                                </div>
-                            </form>
+                                </form>
+                            </div>
+                            <!-- action tab -->
+                            <!-- social tab -->
+                            <div class="tab-pane" id="social">
+                                <form class="js_ajax-forms "
+                                    data-url="pages_groups_events/create.php?type=page&do=edit&edit=social&id={$spage['page_id']}">
+                                    <div class="card-body">
+                                        <div class="row">
+                                            <div class="form-group col-md-6">
+                                                <label class="form-control-label">{__("Facebook Profile URL")}</label>
+                                                <div class="input-group">
+                                                    <div class="input-group-prepend">
+                                                        <span class="input-group-text bg-transparent">
+                                                            <img class="BlueIcon" alt="image" title="Feelings/Activity"
+                                                                src="{$system['system_url']}/content/themes/default/images/svg/svgImg/fbIcons_black.svg">
+                                                        </span>
+                                                    </div>
+                                                    <input type="text" class="form-control" name="facebook"
+                                                        value="{$spage['page_social_facebook']}">
+                                                </div>
+                                            </div>
+                                            <div class="form-group col-md-6">
+                                                <label class="form-control-label">{__("Twitter Profile URL")}</label>
+                                                <div class="input-group">
+                                                    <div class="input-group-prepend">
+                                                        <span class="input-group-text bg-transparent">
+                                                            <img class="BlueIcon" alt="image" title="Feelings/Activity"
+                                                                src="{$system['system_url']}/content/themes/default/images/svg/svgImg/twittericon_black.svg">
+                                                        </span>
+                                                    </div>
+                                                    <input type="text" class="form-control" name="twitter"
+                                                        value="{$spage['page_social_twitter']}">
+                                                </div>
+                                            </div>
+                                            <div class="form-group col-md-6">
+                                                <label class="form-control-label">{__("YouTube Profile URL")}</label>
+                                                <div class="input-group">
+                                                    <div class="input-group-prepend">
+                                                        <span class="input-group-text bg-transparent">
+                                                            <img class="BlueIcon" alt="image" title="Feelings/Activity"
+                                                                src="{$system['system_url']}/content/themes/default/images/svg/svgImg/add_video_icon-black.svg">
+                                                        </span>
+                                                    </div>
+                                                    <input type="text" class="form-control" name="youtube"
+                                                        value="{$spage['page_social_youtube']}">
+                                                </div>
+                                            </div>
+                                            <div class="form-group col-md-6">
+                                                <label class="form-control-label">{__("Instagram Profile URL")}</label>
+                                                <div class="input-group">
+                                                    <div class="input-group-prepend">
+                                                        <span class="input-group-text bg-transparent">
+                                                            <img class="BlueIcon" alt="image" title="Feelings/Activity"
+                                                                src="{$system['system_url']}/content/themes/default/images/svg/svgImg/instaIcon-black.svg">
+                                                        </span>
+                                                    </div>
+                                                    <input type="text" class="form-control" name="instagram"
+                                                        value="{$spage['page_social_instagram']}">
+                                                </div>
+                                            </div>
+                                            <div class="form-group col-md-6">
+                                                <label class="form-control-label">{__("LinkedIn Profile URL")}</label>
+                                                <div class="input-group">
+                                                    <div class="input-group-prepend">
+                                                        <span class="input-group-text bg-transparent">
+                                                            <img class="BlueIcon" alt="image" title="Feelings/Activity"
+                                                                src="{$system['system_url']}/content/themes/default/images/svg/svgImg/inIcon-icon.svg">
+                                                        </span>
+                                                    </div>
+                                                    <input type="text" class="form-control" name="linkedin"
+                                                        value="{$spage['page_social_linkedin']}">
+                                                </div>
+                                            </div>
+                                            <div class="form-group col-md-6">
+                                                <label class="form-control-label">{__("Vkontakte Profile URL")}</label>
+                                                <div class="input-group">
+                                                    <div class="input-group-prepend">
+                                                        <span class="input-group-text bg-transparent">
+                                                            <img class="BlueIcon" alt="image" title="Feelings/Activity"
+                                                                src="{$system['system_url']}/content/themes/default/images/svg/svgImg/vkIcon_black.svg">
+                                                        </span>
+                                                    </div>
+                                                    <input type="text" class="form-control" name="vkontakte"
+                                                        value="{$spage['page_social_vkontakte']}">
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <!-- error -->
+                                        <div class="alert alert-danger mb0 x-hidden"></div>
+                                        <!-- error -->
+                                    </div>
+                                    <div class="card-footer text-right">
+                                        <button type="submit" class="btn btn-primary">{__("Save Changes")}</button>
+                                    </div>
+                                </form>
+                            </div>
+                            <!-- social tab -->
                         </div>
-                        <!-- basic tab -->
-                        <!-- action tab -->
-                        <div class="tab-pane" id="action">
-                            <form class="js_ajax-forms "
-                                data-url="pages_groups_events/create.php?type=page&do=edit&edit=action&id={$spage['page_id']}">
-                                <div class="card-body">
-                                    <div class="form-group">
-                                        <label class="form-control-label">{__("Action Button Text")}</label>
-                                        <input type="text" class="form-control" name="action_text" id="action_text"
-                                            value="{$spage['page_action_text']}">
+                        <!-- tab-content -->
+                        {elseif $sub_view == "admins"}
+                        <div class="card-header with-icon">
+                            <!-- <i class="fa fa-users mr10"></i> -->
+                            <img class="mr10" src="{$system['system_url']}/content/themes/default/images/svg/svgImg/newgroupIcon1.svg"/>
+                            {__("Members")}
+                        </div>
+                        <div class="card-body">
+                            <!-- admins -->
+                            <div class="heading-small mb20">
+                                {__("Admins")} <span class="text-muted">({$spage['page_admins_count']})</span>
+                            </div>
+                            <div class="pl-md-4 PageUserCount">
+                                {if $spage['page_admins']}
+                                <ul>
+                                    {foreach $spage['page_admins'] as $_user} {include file='__feeds_user.tpl' _tpl="list"
+                                    _connection=$_user["connection"]} {/foreach}
+                                </ul>
+                                {if $spage['page_admins_count'] >= $system['max_results_even']}
+                                <!-- see-more -->
+                                <div class="alert alert-info see-more js_see-more" data-get="page_admins"
+                                    data-id="{$spage['page_id']}">
+                                    <span>{__("Load More")}</span>
+                                    <div class="loader loader_small x-hidden"></div>
+                                </div>
+                                <!-- see-more -->
+                                {/if} {else}
+                                <p class="text-center text-muted mt10">
+                                    {$spage['page_title']} {__("doesn't have admins")}
+                                </p>
+                                {/if}
+                            </div>
+                            <!-- admins -->
+                            <div class="divider"></div>
+                            <!-- members -->
+                            <div class="heading-small mb20">
+                                {__("All Members")} <span class="text-muted">({$spage['page_likes']})</span>
+                            </div>
+                            <div class="pl-md-4 PageUserCount">
+                                {if $spage['page_likes'] > 0}
+                                <ul>
+                                    {foreach $spage['members'] as $_user} {include file='__feeds_user.tpl' _tpl="list"
+                                    _connection=$_user["connection"]} {/foreach}
+                                </ul>
+                                {if $spage['page_likes'] >= $system['max_results_even']}
+                                <!-- see-more -->
+                                <div class="alert alert-info see-more js_see-more" data-get="page_members"
+                                    data-id="{$spage['page_id']}">
+                                    <span>{__("Load More")}</span>
+                                    <div class="loader loader_small x-hidden"></div>
+                                </div>
+                                <!-- see-more -->
+                                {/if} {else}
+                                <p class="text-center text-muted mt10">
+                                    {$spage['page_title']} {__("doesn't have members")}
+                                </p>
+                                {/if}
+                            </div>
+                            <!-- members -->
+                        </div>
+                        {elseif $sub_view == "verification"}
+                        <div class="card-header with-icon">
+                            <i class="fa fa-check-circle mr10"></i>{__("Verification")}
+                        </div>
+                        {if $case == "verified"}
+                        <div class="card-body">
+                            <div class="text-center">
+                                <!-- <div class="big-icon success">
+        <i class="fa fa-thumbs-up fa-3x"></i>
+        </div> -->
+                                <img width="40px" height="40px"
+                                    src="{$system['system_url']}/content/themes/default/images/svg/svgImg/nav_icon_localhub.svg">
+                                <h4>{__("Congratulations")}</h4>
+                                <p class="mt20">{__("This page is verified")}</p>
+                            </div>
+                        </div>
+                        {elseif $case == "request"}
+                        <form class="js_ajax-forms " data-url="users/verify.php?node=page&node_id={$spage['page_id']}">
+                            <div class="card-body">
+                                <div class="form-group form-row">
+                                    <label class="col-md-3 form-control-label">
+                                        {__("Verification Documents")}
+                                    </label>
+                                    <div class="col-md-9">
+                                        <div class="row">
+                                            <div class="col-sm-6">
+                                                <div class="section-title mb20">
+                                                    <i class="fas fa-camera-retro mr10"></i>{__("Your Photo")}
+                                                </div>
+                                                <div class="x-image full">
+                                                    <button type="button" class="close x-hidden js_x-image-remover"
+                                                        title='{__("Remove")}'>
+                                                        <span>×</span>
+                                                    </button>
+                                                    <div class="x-image-loader">
+                                                        <div class="progress x-progress">
+                                                            <div class="progress-bar" role="progressbar" aria-valuenow="0"
+                                                                aria-valuemin="0" aria-valuemax="100"></div>
+                                                        </div>
+                                                    </div>
+                                                    <i class="fa fa-camera fa-2x js_x-uploader" data-handle="x-image"></i>
+                                                    <input type="hidden" class="js_x-image-input" name="photo" value="">
+                                                </div>
+                                            </div>
+                                            <div class="col-sm-6">
+                                                <div class="section-title mb20">
+                                                    <i class="fas fa-passport mr10"></i>{__("Passport or National ID")}
+                                                </div>
+                                                <div class="x-image full">
+                                                    <button type="button" class="close x-hidden js_x-image-remover"
+                                                        title='{__("Remove")}'>
+                                                        <span>×</span>
+                                                    </button>
+                                                    <div class="x-image-loader">
+                                                        <div class="progress x-progress">
+                                                            <div class="progress-bar" role="progressbar" aria-valuenow="0"
+                                                                aria-valuemin="0" aria-valuemax="100"></div>
+                                                        </div>
+                                                    </div>
+                                                    <i class="fa fa-camera fa-2x js_x-uploader" data-handle="x-image"></i>
+                                                    <input type="hidden" class="js_x-image-input" name="passport" value="">
+                                                </div>
+                                            </div>
+                                        </div>
                                         <span class="form-text">
-                                            {__("For example: Subscribe, Get tickets, Preorder now or Shop now")}
+                                            {__("Please attach your photo and your Passport or National ID")}
                                         </span>
                                     </div>
-                                    <div class="form-group">
-                                        <label class="form-control-label">{__("Action Button Color")}</label>
-                                        <div class="mt10">
-                                            <div class="custom-control custom-radio custom-control-inline">
-                                                <input type="radio" name="action_color" id="action_color_light"
-                                                    value="light" class="custom-control-input" {if
-                                                    $spage[ 'page_action_color' ]=="light" }checked{/if}>
-                                                <label class="custom-control-label" for="action_color_light">
-                                                    <button type="button"
-                                                        class="btn btn-sm btn-light">{__("Action")}</button>
-                                                </label>
-                                            </div>
-                                            <div class="custom-control custom-radio custom-control-inline">
-                                                <input type="radio" name="action_color" id="action_color_primary"
-                                                    value="primary" class="custom-control-input" {if
-                                                    $spage[ 'page_action_color' ]=="primary" }checked{/if}>
-                                                <label class="custom-control-label" for="action_color_primary">
-                                                    <button type="button"
-                                                        class="btn btn-sm btn-primary">{__("Action")}</button>
-                                                </label>
-                                            </div>
-                                            <div class="custom-control custom-radio custom-control-inline action_color_success x-hidden">
-                                                <input type="radio" name="action_color" id="action_color_success"
-                                                    value="success" class="custom-control-input" {if
-                                                    $spage[ 'page_action_color' ]=="success" }checked{/if}>
-                                                <label class="custom-control-label" for="action_color_success">
-                                                    <button type="button"
-                                                        class="btn btn-sm btn-success">{__("Action")}</button>
-                                                </label>
-                                            </div>
-                                            <div class="custom-control custom-radio custom-control-inline">
-                                                <input type="radio" name="action_color" id="action_color_info"
-                                                    value="info" class="custom-control-input" {if
-                                                    $spage[ 'page_action_color' ]=="info" }checked{/if}>
-                                                <label class="custom-control-label" for="action_color_info">
-                                                    <button type="button"
-                                                        class="btn btn-sm btn-info">{__("Action")}</button>
-                                                </label>
-                                            </div>
-                                            <div class="custom-control custom-radio custom-control-inline">
-                                                <input type="radio" name="action_color" id="action_color_warning"
-                                                    value="warning" class="custom-control-input" {if
-                                                    $spage[ 'page_action_color' ]=="warning" }checked{/if}>
-                                                <label class="custom-control-label" for="action_color_warning">
-                                                    <button type="button"
-                                                        class="btn btn-sm btn-warning">{__("Action")}</button>
-                                                </label>
-                                            </div>
-                                            <div class="custom-control custom-radio custom-control-inline">
-                                                <input type="radio" name="action_color" id="action_color_danger"
-                                                    value="danger" class="custom-control-input" {if
-                                                    $spage[ 'page_action_color' ]=="danger" }checked{/if}>
-                                                <label class="custom-control-label" for="action_color_danger">
-                                                    <button type="button"
-                                                        class="btn btn-sm btn-danger">{__("Action")}</button>
-                                                </label>
-                                            </div>
-                                        </div>
+                                </div>
+                                <div class="form-group form-row">
+                                    <label class="col-md-3 form-control-label">
+                                        {__("Additional Information")}
+                                    </label>
+                                    <div class="col-md-9">
+                                        <textarea class="form-control" name="message"></textarea>
+                                        <span class="form-text">
+                                            {__("Please share why your account should be verified")}
+                                        </span>
                                     </div>
-                                    <div class="form-group">
-                                        <label class="form-control-label">{__("Action Button URL")}</label>
-                                        <input type="text" class="form-control" name="action_url" id="action_url"
-                                            value="{$spage['page_action_url']}">
-                                    </div>
-                                    <!-- error -->
-                                    <div class="alert alert-danger mb0 x-hidden"></div>
-                                    <!-- error -->
                                 </div>
-                                <div class="card-footer text-right">
-                                    <button type="submit" class="btn btn-primary">{__("Save Changes")}</button>
-                                </div>
-                            </form>
-                        </div>
-                        <!-- action tab -->
-                        <!-- social tab -->
-                        <div class="tab-pane" id="social">
-                            <form class="js_ajax-forms "
-                                data-url="pages_groups_events/create.php?type=page&do=edit&edit=social&id={$spage['page_id']}">
-                                <div class="card-body">
-                                    <div class="row">
-                                        <div class="form-group col-md-6">
-                                            <label class="form-control-label">{__("Facebook Profile URL")}</label>
-                                            <div class="input-group">
-                                                <div class="input-group-prepend">
-                                                    <span class="input-group-text bg-transparent">
-                                                        <img class="BlueIcon" alt="image" title="Feelings/Activity"
-                                                            src="{$system['system_url']}/content/themes/default/images/svg/svgImg/fbIcons_black.svg">
-                                                    </span>
-                                                </div>
-                                                <input type="text" class="form-control" name="facebook"
-                                                    value="{$spage['page_social_facebook']}">
-                                            </div>
-                                        </div>
-                                        <div class="form-group col-md-6">
-                                            <label class="form-control-label">{__("Twitter Profile URL")}</label>
-                                            <div class="input-group">
-                                                <div class="input-group-prepend">
-                                                    <span class="input-group-text bg-transparent">
-                                                        <img class="BlueIcon" alt="image" title="Feelings/Activity"
-                                                            src="{$system['system_url']}/content/themes/default/images/svg/svgImg/twittericon_black.svg">
-                                                    </span>
-                                                </div>
-                                                <input type="text" class="form-control" name="twitter"
-                                                    value="{$spage['page_social_twitter']}">
-                                            </div>
-                                        </div>
-                                        <div class="form-group col-md-6">
-                                            <label class="form-control-label">{__("YouTube Profile URL")}</label>
-                                            <div class="input-group">
-                                                <div class="input-group-prepend">
-                                                    <span class="input-group-text bg-transparent">
-                                                        <img class="BlueIcon" alt="image" title="Feelings/Activity"
-                                                            src="{$system['system_url']}/content/themes/default/images/svg/svgImg/add_video_icon-black.svg">
-                                                    </span>
-                                                </div>
-                                                <input type="text" class="form-control" name="youtube"
-                                                    value="{$spage['page_social_youtube']}">
-                                            </div>
-                                        </div>
-                                        <div class="form-group col-md-6">
-                                            <label class="form-control-label">{__("Instagram Profile URL")}</label>
-                                            <div class="input-group">
-                                                <div class="input-group-prepend">
-                                                    <span class="input-group-text bg-transparent">
-                                                        <img class="BlueIcon" alt="image" title="Feelings/Activity"
-                                                            src="{$system['system_url']}/content/themes/default/images/svg/svgImg/instaIcon-black.svg">
-                                                    </span>
-                                                </div>
-                                                <input type="text" class="form-control" name="instagram"
-                                                    value="{$spage['page_social_instagram']}">
-                                            </div>
-                                        </div>
-                                        <div class="form-group col-md-6">
-                                            <label class="form-control-label">{__("LinkedIn Profile URL")}</label>
-                                            <div class="input-group">
-                                                <div class="input-group-prepend">
-                                                    <span class="input-group-text bg-transparent">
-                                                        <img class="BlueIcon" alt="image" title="Feelings/Activity"
-                                                            src="{$system['system_url']}/content/themes/default/images/svg/svgImg/inIcon-icon.svg">
-                                                    </span>
-                                                </div>
-                                                <input type="text" class="form-control" name="linkedin"
-                                                    value="{$spage['page_social_linkedin']}">
-                                            </div>
-                                        </div>
-                                        <div class="form-group col-md-6">
-                                            <label class="form-control-label">{__("Vkontakte Profile URL")}</label>
-                                            <div class="input-group">
-                                                <div class="input-group-prepend">
-                                                    <span class="input-group-text bg-transparent">
-                                                        <img class="BlueIcon" alt="image" title="Feelings/Activity"
-                                                            src="{$system['system_url']}/content/themes/default/images/svg/svgImg/vkIcon_black.svg">
-                                                    </span>
-                                                </div>
-                                                <input type="text" class="form-control" name="vkontakte"
-                                                    value="{$spage['page_social_vkontakte']}">
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <!-- error -->
-                                    <div class="alert alert-danger mb0 x-hidden"></div>
-                                    <!-- error -->
-                                </div>
-                                <div class="card-footer text-right">
-                                    <button type="submit" class="btn btn-primary">{__("Save Changes")}</button>
-                                </div>
-                            </form>
-                        </div>
-                        <!-- social tab -->
-                    </div>
-                    <!-- tab-content -->
-                    {elseif $sub_view == "admins"}
-                    <div class="card-header with-icon">
-                        <!-- <i class="fa fa-users mr10"></i> -->
-                        <img class="mr10" src="{$system['system_url']}/content/themes/default/images/svg/svgImg/newgroupIcon1.svg"/>
-                        {__("Members")}
-                    </div>
-                    <div class="card-body">
-                        <!-- admins -->
-                        <div class="heading-small mb20">
-                            {__("Admins")} <span class="text-muted">({$spage['page_admins_count']})</span>
-                        </div>
-                        <div class="pl-md-4 PageUserCount">
-                            {if $spage['page_admins']}
-                            <ul>
-                                {foreach $spage['page_admins'] as $_user} {include file='__feeds_user.tpl' _tpl="list"
-                                _connection=$_user["connection"]} {/foreach}
-                            </ul>
-                            {if $spage['page_admins_count'] >= $system['max_results_even']}
-                            <!-- see-more -->
-                            <div class="alert alert-info see-more js_see-more" data-get="page_admins"
-                                data-id="{$spage['page_id']}">
-                                <span>{__("Load More")}</span>
-                                <div class="loader loader_small x-hidden"></div>
+                                <!-- success -->
+                                <div class="alert alert-success mb0 x-hidden"></div>
+                                <!-- success -->
+                                <!-- error -->
+                                <div class="alert alert-danger mb0 x-hidden"></div>
+                                <!-- error -->
                             </div>
-                            <!-- see-more -->
-                            {/if} {else}
-                            <p class="text-center text-muted mt10">
-                                {$spage['page_title']} {__("doesn't have admins")}
-                            </p>
-                            {/if}
-                        </div>
-                        <!-- admins -->
-                        <div class="divider"></div>
-                        <!-- members -->
-                        <div class="heading-small mb20">
-                            {__("All Members")} <span class="text-muted">({$spage['page_likes']})</span>
-                        </div>
-                        <div class="pl-md-4 PageUserCount">
-                            {if $spage['page_likes'] > 0}
-                            <ul>
-                                {foreach $spage['members'] as $_user} {include file='__feeds_user.tpl' _tpl="list"
-                                _connection=$_user["connection"]} {/foreach}
-                            </ul>
-                            {if $spage['page_likes'] >= $system['max_results_even']}
-                            <!-- see-more -->
-                            <div class="alert alert-info see-more js_see-more" data-get="page_members"
-                                data-id="{$spage['page_id']}">
-                                <span>{__("Load More")}</span>
-                                <div class="loader loader_small x-hidden"></div>
+                            <div class="card-footer text-right">
+                                <button type="submit" class="btn btn-primary">
+                                    <i class="fa fa-check-circle mr10"></i>{__("Send Verification Request")}
+                                </button>
                             </div>
-                            <!-- see-more -->
-                            {/if} {else}
-                            <p class="text-center text-muted mt10">
-                                {$spage['page_title']} {__("doesn't have members")}
-                            </p>
-                            {/if}
-                        </div>
-                        <!-- members -->
-                    </div>
-                    {elseif $sub_view == "verification"}
-                    <div class="card-header with-icon">
-                        <i class="fa fa-check-circle mr10"></i>{__("Verification")}
-                    </div>
-                    {if $case == "verified"}
-                    <div class="card-body">
-                        <div class="text-center">
-                            <!-- <div class="big-icon success">
-      <i class="fa fa-thumbs-up fa-3x"></i>
-      </div> -->
-                            <img width="40px" height="40px"
-                                src="{$system['system_url']}/content/themes/default/images/svg/svgImg/nav_icon_localhub.svg">
-                            <h4>{__("Congratulations")}</h4>
-                            <p class="mt20">{__("This page is verified")}</p>
-                        </div>
-                    </div>
-                    {elseif $case == "request"}
-                    <form class="js_ajax-forms " data-url="users/verify.php?node=page&node_id={$spage['page_id']}">
+                        </form>
+                        {elseif $case == "pending"}
                         <div class="card-body">
-                            <div class="form-group form-row">
-                                <label class="col-md-3 form-control-label">
-                                    {__("Verification Documents")}
-                                </label>
-                                <div class="col-md-9">
-                                    <div class="row">
-                                        <div class="col-sm-6">
-                                            <div class="section-title mb20">
-                                                <i class="fas fa-camera-retro mr10"></i>{__("Your Photo")}
-                                            </div>
-                                            <div class="x-image full">
-                                                <button type="button" class="close x-hidden js_x-image-remover"
-                                                    title='{__("Remove")}'>
-                                                    <span>×</span>
-                                                </button>
-                                                <div class="x-image-loader">
-                                                    <div class="progress x-progress">
-                                                        <div class="progress-bar" role="progressbar" aria-valuenow="0"
-                                                            aria-valuemin="0" aria-valuemax="100"></div>
-                                                    </div>
-                                                </div>
-                                                <i class="fa fa-camera fa-2x js_x-uploader" data-handle="x-image"></i>
-                                                <input type="hidden" class="js_x-image-input" name="photo" value="">
-                                            </div>
-                                        </div>
-                                        <div class="col-sm-6">
-                                            <div class="section-title mb20">
-                                                <i class="fas fa-passport mr10"></i>{__("Passport or National ID")}
-                                            </div>
-                                            <div class="x-image full">
-                                                <button type="button" class="close x-hidden js_x-image-remover"
-                                                    title='{__("Remove")}'>
-                                                    <span>×</span>
-                                                </button>
-                                                <div class="x-image-loader">
-                                                    <div class="progress x-progress">
-                                                        <div class="progress-bar" role="progressbar" aria-valuenow="0"
-                                                            aria-valuemin="0" aria-valuemax="100"></div>
-                                                    </div>
-                                                </div>
-                                                <i class="fa fa-camera fa-2x js_x-uploader" data-handle="x-image"></i>
-                                                <input type="hidden" class="js_x-image-input" name="passport" value="">
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <span class="form-text">
-                                        {__("Please attach your photo and your Passport or National ID")}
-                                    </span>
+                            <div class="text-center">
+                                <div class="big-icon warning">
+                                    <i class="fa fa-clock fa-3x"></i>
+                                </div>
+                                <h4>{__("Pending")}</h4>
+                                <p class="mt20">{__("Your verification request is still awaiting admin approval")}</p>
+                            </div>
+                        </div>
+                        {elseif $case == "declined"}
+                        <div class="card-body">
+                            <div class="text-center">
+                                <div class="big-icon error">
+                                    <i class="fa fa-frown fa-3x"></i>
+                                </div>
+                                <h4>{__("Sorry")}</h4>
+                                <p class="mt20">{__("Your verification request has been declined by the admin")}</p>
+                            </div>
+                        </div>
+                        {/if} {elseif $sub_view == "delete"}
+                        <div class="card-header with-icon">
+                            <i class="fa fa-trash mr10"></i>{__("Delete Page")}
+                        </div>
+                        <div class="card-body">
+                            <div class="alert alert-warning">
+                                <div class="icon">
+                                    <i class="fa fa-exclamation-triangle fa-2x"></i>
+                                </div>
+                                <div class="text pt5">
+                                    {__("Once you delete your page you will no longer can access it again")}
                                 </div>
                             </div>
-                            <div class="form-group form-row">
-                                <label class="col-md-3 form-control-label">
-                                    {__("Additional Information")}
-                                </label>
-                                <div class="col-md-9">
-                                    <textarea class="form-control" name="message"></textarea>
-                                    <span class="form-text">
-                                        {__("Please share why your account should be verified")}
-                                    </span>
-                                </div>
+                            <div class="text-center">
+                                <button class="btn btn-danger js_delete-page" data-id="{$spage['page_id']}">
+                                    <i class="fa fa-trash mr5"></i>{__("Delete Page")}
+                                </button>
                             </div>
-                            <!-- success -->
-                            <div class="alert alert-success mb0 x-hidden"></div>
-                            <!-- success -->
-                            <!-- error -->
-                            <div class="alert alert-danger mb0 x-hidden"></div>
-                            <!-- error -->
                         </div>
-                        <div class="card-footer text-right">
-                            <button type="submit" class="btn btn-primary">
-                                <i class="fa fa-check-circle mr10"></i>{__("Send Verification Request")}
-                            </button>
-                        </div>
-                    </form>
-                    {elseif $case == "pending"}
-                    <div class="card-body">
-                        <div class="text-center">
-                            <div class="big-icon warning">
-                                <i class="fa fa-clock fa-3x"></i>
-                            </div>
-                            <h4>{__("Pending")}</h4>
-                            <p class="mt20">{__("Your verification request is still awaiting admin approval")}</p>
-                        </div>
+                        {/if}
                     </div>
-                    {elseif $case == "declined"}
-                    <div class="card-body">
-                        <div class="text-center">
-                            <div class="big-icon error">
-                                <i class="fa fa-frown fa-3x"></i>
-                            </div>
-                            <h4>{__("Sorry")}</h4>
-                            <p class="mt20">{__("Your verification request has been declined by the admin")}</p>
-                        </div>
-                    </div>
-                    {/if} {elseif $sub_view == "delete"}
-                    <div class="card-header with-icon">
-                        <i class="fa fa-trash mr10"></i>{__("Delete Page")}
-                    </div>
-                    <div class="card-body">
-                        <div class="alert alert-warning">
-                            <div class="icon">
-                                <i class="fa fa-exclamation-triangle fa-2x"></i>
-                            </div>
-                            <div class="text pt5">
-                                {__("Once you delete your page you will no longer can access it again")}
-                            </div>
-                        </div>
-                        <div class="text-center">
-                            <button class="btn btn-danger js_delete-page" data-id="{$spage['page_id']}">
-                                <i class="fa fa-trash mr5"></i>{__("Delete Page")}
-                            </button>
-                        </div>
-                    </div>
-                    {/if}
                 </div>
+                {/if}
+                <!-- view content -->
+                <!-- profile-content -->
             </div>
-            {/if}
-            <!-- view content -->
-            <!-- profile-content -->
         </div>
         <!-- content panel -->
     </div>

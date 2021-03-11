@@ -11,7 +11,7 @@
             <div class="addpostHeadFocussed">
                 <h2>Create Post</h2>
                 <a class="addpost-closebtn" href="javascript:void(0)"><img
-                        src="{$system['system_url']}/content/themes/default/images/svg/svgImg/modelCross.svg" /></a>
+                        src="{$system['system_uploads_assets']}/content/themes/default/images/svg/svgImg/modelCross.svg" /></a>
             </div>
 
             <!-- publisher-message -->
@@ -19,10 +19,10 @@
                 <div class="published_img_post">
                     <div class="published_avatar-block">
                         {if $_handle == "page"}
-                        <img class="publisher-avatar" src="{$spage['page_picture']}" />
+                        <img class="publisher-avatar lazyload" src="{$spage['page_picture']}" />
                         {else}
-                        <img class="publisher-avatar {$user->_data['user_id']}"
-                            src="{$system['system_url']}/{$user->_data['user_picture']}" />
+                        <img class="publisher-avatar lazyload {$user->_data['user_id']}"
+                            src="{$user->_data['user_picture']}" />
                         {/if}
                     </div>
 
@@ -39,7 +39,7 @@
                             <button type="button" class="btn btn-sm btn-info dropdown-toggle" data-toggle="dropdown"
                                 data-display="static">
                                 <span class="share_sign_img">
-                                    <img src="{$system['system_url']}/content/themes/default/images/svg/svgImg/Hide_form.svg"
+                                    <img src="{$system['system_uploads_assets']}/content/themes/default/images/svg/svgImg/Hide_form.svg"
                                         class="blackicon" /> </span><span class="btn-group-text">{__("Only Me")}</span>
                             </button>
                             {elseif $system['default_privacy'] == "friends"}
@@ -48,7 +48,7 @@
                                 <button type="button" class="btn btn-sm btn-info dropdown-toggle" data-toggle="dropdown"
                                     data-display="static">
                                     <span class="share_sign_img">
-                                        <img src="{$system['system_url']}/content/themes/default/images/svg/svgImg/friendsIcon.svg"
+                                        <img src="{$system['system_uploads_assets']}/content/themes/default/images/svg/svgImg/friendsIcon.svg"
                                             class="blackicon" /> </span><span
                                         class="btn-group-text">{__("Friends")}</span>
                                 </button>
@@ -58,7 +58,7 @@
                                     <button type="button" class="btn btn-sm btn-info dropdown-toggle"
                                         data-toggle="dropdown" data-display="static">
                                         <span class="share_sign_img">
-                                            <img src="{$system['system_url']}/content/themes/default/images/svg/svgImg/nav_icon_globalHub.svg"
+                                            <img src="{$system['system_uploads_assets']}/content/themes/default/images/svg/svgImg/nav_icon_globalHub.svg"
                                                 class="blackicon" /> </span><span
                                             class="btn-group-text">{__("Public")}</span>
                                     </button>
@@ -67,9 +67,9 @@
                                         <div class="dropdown-item pointer" data-title='{__("Shared with: Public")}'
                                             data-value="public">
                                             <div class="post_images__">
-                                                <img src="{$system['system_url']}/content/themes/default/images/svg/svgImg/nav_icon_globalHub.svg"
+                                                <img src="{$system['system_uploads_assets']}/content/themes/default/images/svg/svgImg/nav_icon_globalHub.svg"
                                                     class="blackicon" />
-                                                <img src="{$system['system_url']}/content/themes/default/images/svg/svgImg/nav_icon_globalHub-active.svg"
+                                                <img src="{$system['system_uploads_assets']}/content/themes/default/images/svg/svgImg/nav_icon_globalHub-active.svg"
                                                     class="whiteicon" />
                                             </div>
                                             <span> {__("Public")} </span>
@@ -88,9 +88,9 @@
                                         <div class="dropdown-item pointer" data-title='{__("Shared with: Only Me")}'
                                             data-value="me">
                                             <div class="post_images__">
-                                                <img src="{$system['system_url']}/content/themes/default/images/svg/svgImg/Hide_form.svg"
+                                                <img src="{$system['system_uploads_assets']}/content/themes/default/images/svg/svgImg/Hide_form.svg"
                                                     class="blackicon" />
-                                                <img src="{$system['system_url']}/content/themes/default/images/svg/svgImg/Hide_form-hover.svg"
+                                                <img src="{$system['system_uploads_assets']}/content/themes/default/images/svg/svgImg/Hide_form-hover.svg"
                                                     class="whiteicon" />
                                             </div>
                                             <span> {__("Only Me")} </span>
@@ -124,7 +124,7 @@
                                 <li class="">
                                     <div class="publisher-tools-tab attach js_publisher-tab" data-tab="photos">
                                         <img alt="image" title="Upload Image"
-                                            src="{$system['system_url']}/content/themes/{$system['theme']}/images/svg/svgImg/photo_message_icon.svg"
+                                            src="{$system['system_uploads_assets']}/content/themes/{$system['theme']}/images/svg/svgImg/photo_message_icon.svg"
                                             class="js_x-uploader" data-handle="publisher"
                                             data-multiple="true" />{__("Photos")}
                                     </div>
@@ -133,7 +133,7 @@
                                 <li class="uplodfileTags">
                                     <div class="publisher-tools-tab attach js_publisher-tab" data-tab="video">
                                         <img alt="video" title="Upload Video"
-                                            src="{$system['system_url']}/content/themes/{$system['theme']}/images/svg/svgImg/add_video_icon.svg"
+                                            src="{$system['system_uploads_assets']}/content/themes/{$system['theme']}/images/svg/svgImg/add_video_icon.svg"
                                             class="js_x-uploader" data-type="video" data-handle="publisher"
                                             data-multiple="true" />
                                     </div>
@@ -145,7 +145,7 @@
 
                                         <a style="margin-left: 0;" data-tab="live" href="{$system['system_url']}/live">
                                             <img alt="image" title="Go Live"
-                                                src="{$system['system_url']}/content/themes/{$system['theme']}/images/svg/live.svg"
+                                                src="{$system['system_uploads_assets']}/content/themes/{$system['theme']}/images/svg/live.svg"
                                                 class="" data-handle="publisher" data-multiple="true"
                                                 style="width:30px" />
                                         </a>
@@ -156,7 +156,7 @@
                                 <li class="uplodfileTags">
                                     <div class="publisher-tools-tab js_publisher-tab" data-tab="voice_notes">
                                         <img alt="voice_notes" title="Voice Notes"
-                                            src="{$system['system_url']}/content/themes/{$system['theme']}/images/svg/svgImg/add_voice_notes.svg"
+                                            src="{$system['system_uploads_assets']}/content/themes/{$system['theme']}/images/svg/svgImg/add_voice_notes.svg"
                                             class="js_x-uploaders" data-handle="publisher" data-multiple="true" />
                                     </div>
                                 </li>
@@ -164,21 +164,21 @@
                                 <li class="uplodfileTags">
                                     <div class="publisher-tools-tab js_publisher-tab" data-tab="poll">
                                         <img alt="poll" title="Poll Options"
-                                            src="{$system['system_url']}/content/themes/{$system['theme']}/images/svg/svgImg/add_poll_icon.svg"
+                                            src="{$system['system_uploads_assets']}/content/themes/{$system['theme']}/images/svg/svgImg/add_poll_icon.svg"
                                             class="js_x-uploaders" data-handle="publisher" data-multiple="true" />
                                     </div>
                                 </li>
                                 {/if}
                                 <li class="add-message">
                                     <div class="s-more-function publisher-tools-tab js_publisher-tab" data-tab="s-more">
-                                        <img src="{$system['system_url']}/content/themes/{$system['theme']}/images/svg/svgImg/add_message_icon.svg"
+                                        <img src="{$system['system_uploads_assets']}/content/themes/{$system['theme']}/images/svg/svgImg/add_message_icon.svg"
                                             data-handle="publisher" data-multiple="true" />
                                     </div>
                                 </li>
                             </ul>
                             <button type="button"
                                 class="btn btn-sm btn-success ml5 sss js_publisher btn-antier-green btn-publisher js_publisher_post_ant">
-                                <img src="{$system['system_url']}/content/themes/{$system['theme']}/images/icons/btn_startIt.png"
+                                <img src="{$system['system_uploads_assets']}/content/themes/{$system['theme']}/images/icons/btn_startIt.png"
                                     class="js_publisher_post_img" />
                             </button>
                         </div>
@@ -405,10 +405,10 @@
                                     <div class="publisher-tools-tab attach js_publisher-tab" data-tab="photos">
                                         <!-- <i class="fas fa-camera js_x-uploader" data-handle="publisher" data-multiple="true"></i> -->
                                         <img class="blackIcon" alt="image" title="Upload Image"
-                                            src="{$system['system_url']}/content/themes/default/images/svg/svgImg/photo_message_iconHover.svg"
+                                            src="{$system['system_uploads_assets']}/content/themes/default/images/svg/svgImg/photo_message_iconHover.svg"
                                             class="js_x-uploader" data-handle="publisher" data-multiple="true" />
                                         <img class="BlueIcon js_x-uploader" alt="image" title="Upload Image"
-                                            src="{$system['system_url']}/content/themes/default/images/svg/svgImg/photo_message_icon.svg"
+                                            src="{$system['system_uploads_assets']}/content/themes/default/images/svg/svgImg/photo_message_icon.svg"
                                             class="js_x-uploader" data-handle="publisher" data-multiple="true" />
                                         <span class="class-publisher-text">Add Photo</span>
                                     </div>
@@ -416,9 +416,9 @@
                                 <li class="uplodfileTags">
                                     <div class="publisher-tools-tab js_publisher-tab" data-tab="album">
                                         <img class="BlueIcon" alt="image" title="Album"
-                                            src="{$system['system_url']}/content/themes/default/images/svg/svgImg/addPostAlbumHover.svg" />
+                                            src="{$system['system_uploads_assets']}/content/themes/default/images/svg/svgImg/addPostAlbumHover.svg" />
                                         <img class="blackIcon" alt="image" title="Album"
-                                            src="{$system['system_url']}/content/themes/default/images/svg/svgImg/addPostAlbum.svg" />
+                                            src="{$system['system_uploads_assets']}/content/themes/default/images/svg/svgImg/addPostAlbum.svg" />
                                         <span class="class-publisher-text">Create Album</span>
                                     </div>
                                 </li>{/if}
@@ -429,7 +429,7 @@
 
                                         <a style="margin-left: 0;" data-tab="live" href="{$system['system_url']}/live">
                                             <img alt="image" title="Go Live"
-                                                src="{$system['system_url']}/content/themes/{$system['theme']}/images/svg/live.svg"
+                                                src="{$system['system_uploads_assets']}/content/themes/{$system['theme']}/images/svg/live.svg"
                                                 class="" data-handle="publisher" data-multiple="true"
                                                 style="width:30px" />
                                         </a>
@@ -440,9 +440,9 @@
                                 <li class="uplodfileTags">
                                     <div class="publisher-tools-tab js_publisher-feelings">
                                         <img class="BlueIcon" alt="image" title="Feelings/Activity"
-                                            src="{$system['system_url']}/content/themes/default/images/svg/svgImg/feelingsHover.svg" />
+                                            src="{$system['system_uploads_assets']}/content/themes/default/images/svg/svgImg/feelingsHover.svg" />
                                         <img class="blackIcon" alt="image" title="Feelings/Activity"
-                                            src="{$system['system_url']}/content/themes/default/images/svg/svgImg/feelings.svg" />
+                                            src="{$system['system_uploads_assets']}/content/themes/default/images/svg/svgImg/feelings.svg" />
                                         <span class="class-publisher-text">Feelings/Activity</span>
                                     </div>
                                 </li>
@@ -450,9 +450,9 @@
                                 <li class="uplodfileTags">
                                     <div class="publisher-tools-tab js_publisher-tab" data-tab="colored">
                                         <img class="BlueIcon" alt="image" title="Colored Posts"
-                                            src="{$system['system_url']}/content/themes/default/images/svg/svgImg/addPostProductsHover.svg" />
+                                            src="{$system['system_uploads_assets']}/content/themes/default/images/svg/svgImg/addPostProductsHover.svg" />
                                         <img class="blackIcon" alt="image" title="Colored Posts"
-                                            src="{$system['system_url']}/content/themes/default/images/svg/svgImg/addPostProducts.svg" />
+                                            src="{$system['system_uploads_assets']}/content/themes/default/images/svg/svgImg/addPostProducts.svg" />
                                         <span class="class-publisher-text">Colored Posts</span>
                                     </div>
                                 </li>
@@ -466,10 +466,10 @@
                                     <div class="publisher-tools-tab attach js_publisher-tab" data-tab="photos">
                                         <!-- <i class="fas fa-camera js_x-uploader" data-handle="publisher" data-multiple="true"></i> -->
                                         <img class="blackIcon" alt="image" title="Upload Image"
-                                            src="{$system['system_url']}/content/themes/default/images/svg/svgImg/photo_message_iconHover.svg"
+                                            src="{$system['system_uploads_assets']}/content/themes/default/images/svg/svgImg/photo_message_iconHover.svg"
                                             class="js_x-uploader" data-handle="publisher" data-multiple="true" />
                                         <img class="BlueIcon js_x-uploader" alt="image" title="Upload Image"
-                                            src="{$system['system_url']}/content/themes/default/images/svg/svgImg/photo_message_icon.svg"
+                                            src="{$system['system_uploads_assets']}/content/themes/default/images/svg/svgImg/photo_message_icon.svg"
                                             class="js_x-uploader" data-handle="publisher" data-multiple="true" />
                                         <span class="class-publisher-text">Add Photo</span>
                                     </div>
@@ -477,9 +477,9 @@
                                 <li class="uplodfileTags">
                                     <div class="publisher-tools-tab js_publisher-tab" data-tab="album">
                                         <img class="BlueIcon" alt="image" title="Album"
-                                            src="{$system['system_url']}/content/themes/default/images/svg/svgImg/addPostAlbumHover.svg" />
+                                            src="{$system['system_uploads_assets']}/content/themes/default/images/svg/svgImg/addPostAlbumHover.svg" />
                                         <img class="blackIcon" alt="image" title="Album"
-                                            src="{$system['system_url']}/content/themes/default/images/svg/svgImg/addPostAlbum.svg" />
+                                            src="{$system['system_uploads_assets']}/content/themes/default/images/svg/svgImg/addPostAlbum.svg" />
                                         <span class="class-publisher-text">Create Album</span>
                                     </div>
                                 </li>
@@ -487,9 +487,9 @@
                                 <li class="uplodfileTags">
                                     <div class="publisher-tools-tab js_publisher-tab" data-tab="colored">
                                         <img class="BlueIcon" alt="image" title="Colored Posts"
-                                            src="{$system['system_url']}/content/themes/default/images/svg/svgImg/addPostProductsHover.svg" />
+                                            src="{$system['system_uploads_assets']}/content/themes/default/images/svg/svgImg/addPostProductsHover.svg" />
                                         <img class="blackIcon" alt="image" title="Colored Posts"
-                                            src="{$system['system_url']}/content/themes/default/images/svg/svgImg/addPostProducts.svg" />
+                                            src="{$system['system_uploads_assets']}/content/themes/default/images/svg/svgImg/addPostProducts.svg" />
                                         <span class="class-publisher-text">Colored Posts</span>
                                     </div>
                                 </li>
@@ -497,9 +497,9 @@
                                 <li class="uplodfileTags">
                                     <div class="publisher-tools-tab js_publisher-tab" data-tab="location">
                                         <img class="BlueIcon js_x-uploader" alt="Check In" title="Check In"
-                                            src="{$system['system_url']}/content/themes/default/images/svg/svgImg/addpostLocationHover.svg" />
+                                            src="{$system['system_uploads_assets']}/content/themes/default/images/svg/svgImg/addpostLocationHover.svg" />
                                         <img class="blackIcon" alt="Check In" title="Check In"
-                                            src="{$system['system_url']}/content/themes/default/images/svg/svgImg/addpostLocation.svg" />
+                                            src="{$system['system_uploads_assets']}/content/themes/default/images/svg/svgImg/addpostLocation.svg" />
                                         <span class="class-publisher-text">Check In</span>
                                     </div>
                                 </li>
@@ -507,9 +507,9 @@
                                 <li class="uplodfileTags">
                                     <div class="publisher-tools-tab js_publisher-tab" data-tab="voice_notes">
                                         <img class="BlueIcon js_x-uploader" alt="Voice Notes" title="Voice Notes"
-                                            src="{$system['system_url']}/content/themes/default/images/svg/svgImg/voicenoteHover.svg" />
+                                            src="{$system['system_uploads_assets']}/content/themes/default/images/svg/svgImg/voicenoteHover.svg" />
                                         <img class="blackIcon" alt="Voice Notes" title="Voice Notes"
-                                            src="{$system['system_url']}/content/themes/default/images/svg/svgImg/voicenote.svg" />
+                                            src="{$system['system_uploads_assets']}/content/themes/default/images/svg/svgImg/voicenote.svg" />
                                         <span class="class-publisher-text">Voice Notes</span>
                                     </div>
                                 </li>
@@ -517,9 +517,9 @@
                                 <li class="uplodfileTags">
                                     <div class="publisher-tools-tab js_publisher-tab" data-tab="gif">
                                         <img class="BlueIcon js_x-uploader" alt="GIF" title="GIF"
-                                            src="{$system['system_url']}/content/themes/default/images/svg/svgImg/addPostGifHover.svg" />
+                                            src="{$system['system_uploads_assets']}/content/themes/default/images/svg/svgImg/addPostGifHover.svg" />
                                         <img class="blackIcon" alt="GIF" title="GIF"
-                                            src="{$system['system_url']}/content/themes/default/images/svg/svgImg/addPostGif.svg" />
+                                            src="{$system['system_uploads_assets']}/content/themes/default/images/svg/svgImg/addPostGif.svg" />
                                         <span class="class-publisher-text">GIF</span>
                                     </div>
                                 </li>
@@ -529,9 +529,9 @@
                                     <div class="publisher-tools-tab link js_publisher-tab" data-tab="product"
                                         data-toggle="modal" data-url="posts/product.php?do=create">
                                         <img class="BlueIcon" alt="Add Product" title="Add Product"
-                                            src="{$system['system_url']}/content/themes/default/images/svg/svgImg/blogNewsHover.svg" />
+                                            src="{$system['system_uploads_assets']}/content/themes/default/images/svg/svgImg/blogNewsHover.svg" />
                                         <img class="blackIcon" alt="Add Product" title="Add Product"
-                                            src="{$system['system_url']}/content/themes/default/images/svg/svgImg/blogNews.svg" />
+                                            src="{$system['system_uploads_assets']}/content/themes/default/images/svg/svgImg/blogNews.svg" />
                                         <span class="class-publisher-text">Product</span>
                                     </div>
                                 </li>
@@ -541,9 +541,9 @@
                                     <a class="publisher-tools-tab link js_publisher-tab" data-tab="article"
                                         href="{$system['system_url']}/blogs/new">
                                         <img class="BlueIcon" alt="Blogs/News" title="Blogs/News"
-                                            src="{$system['system_url']}/content/themes/default/images/svg/svgImg/coloredpostHover.svg" />
+                                            src="{$system['system_uploads_assets']}/content/themes/default/images/svg/svgImg/coloredpostHover.svg" />
                                         <img class="blackIcon" alt="Blogs/News" title="Blogs/News"
-                                            src="{$system['system_url']}/content/themes/default/images/svg/svgImg/coloredpost.svg" />
+                                            src="{$system['system_uploads_assets']}/content/themes/default/images/svg/svgImg/coloredpost.svg" />
                                         <span class="class-publisher-text">Blogs/News</span>
                                     </a>
                                 </li>
@@ -551,9 +551,9 @@
                                 <li class="uplodfileTags">
                                     <div class="publisher-tools-tab js_publisher-feelings">
                                         <img class="BlueIcon" alt="image" title="Feelings/Activity"
-                                            src="{$system['system_url']}/content/themes/default/images/svg/svgImg/feelingsHover.svg" />
+                                            src="{$system['system_uploads_assets']}/content/themes/default/images/svg/svgImg/feelingsHover.svg" />
                                         <img class="blackIcon" alt="image" title="Feelings/Activity"
-                                            src="{$system['system_url']}/content/themes/default/images/svg/svgImg/feelings.svg" />
+                                            src="{$system['system_uploads_assets']}/content/themes/default/images/svg/svgImg/feelings.svg" />
                                         <span class="class-publisher-text">Feelings/Activity</span>
                                     </div>
                                 </li>
@@ -561,9 +561,9 @@
                                 <li class="uplodfileTags">
                                     <div class="publisher-tools-tab js_publisher-tab" data-tab="poll">
                                         <img class="BlueIcon" alt="Poll" title="Poll"
-                                            src="{$system['system_url']}/content/themes/default/images/svg/svgImg/addPostPollHover.svg" />
+                                            src="{$system['system_uploads_assets']}/content/themes/default/images/svg/svgImg/addPostPollHover.svg" />
                                         <img class="blackIcon" alt="Poll" title="Poll"
-                                            src="{$system['system_url']}/content/themes/default/images/svg/svgImg/addPostPoll.svg" />
+                                            src="{$system['system_uploads_assets']}/content/themes/default/images/svg/svgImg/addPostPoll.svg" />
                                         <span class="class-publisher-text">Poll</span>
                                     </div>
                                 </li>
@@ -572,11 +572,11 @@
                                     <div class="publisher-tools-tab attach js_publisher-tab" data-tab="video">
                                         <!-- <i class="fas fa-video" class="js_x-uploader" data-handle="publisher" data-type="video"></i> -->
                                         <img class="blackIcon" alt="video" title="Upload Video"
-                                            src="{$system['system_url']}/content/themes/default/images/svg/svgImg/add_video_iconHover.svg"
+                                            src="{$system['system_uploads_assets']}/content/themes/default/images/svg/svgImg/add_video_iconHover.svg"
                                             class="js_x-uploader" data-type="video" data-handle="publisher"
                                             data-multiple="true" />
                                         <img class="BlueIcon js_x-uploader" alt="video" title="Upload Video"
-                                            src="{$system['system_url']}/content/themes/default/images/svg/svgImg/add_video_icon.svg"
+                                            src="{$system['system_uploads_assets']}/content/themes/default/images/svg/svgImg/add_video_icon.svg"
                                             class="js_x-uploader" data-type="video" data-handle="publisher"
                                             data-multiple="true" />
                                         <span class="class-publisher-text">Video</span>
@@ -589,7 +589,7 @@
 
                                         <a style="margin-left: 0;" data-tab="live" href="{$system['system_url']}/live">
                                             <img alt="image" title="Go Live"
-                                                src="{$system['system_url']}/content/themes/{$system['theme']}/images/svg/live.svg"
+                                                src="{$system['system_uploads_assets']}/content/themes/{$system['theme']}/images/svg/live.svg"
                                                 class="" data-handle="publisher" data-multiple="true"
                                                 style="width:30px" />
                                         </a>
@@ -600,10 +600,10 @@
                                 <li class="uplodfileTags">
                                     <div class="publisher-tools-tab attach js_publisher-tab" data-tab="audio">
                                         <img class="blackIcon" alt="audio" title="Audio"
-                                            src="{$system['system_url']}/content/themes/default/images/svg/svgImg/add_voice_notesHover.svg"
+                                            src="{$system['system_uploads_assets']}/content/themes/default/images/svg/svgImg/add_voice_notesHover.svg"
                                             class="js_x-uploader" data-handle="publisher" data-type="audio" />
                                         <img class="BlueIcon js_x-uploader" alt="audio" title="Audio"
-                                            src="{$system['system_url']}/content/themes/default/images/svg/svgImg/add_voice_notes.svg"
+                                            src="{$system['system_uploads_assets']}/content/themes/default/images/svg/svgImg/add_voice_notes.svg"
                                             class="js_x-uploader" data-handle="publisher" data-type="audio" />
                                         <span class="class-publisher-text">Audio</span>
                                     </div>
@@ -612,10 +612,10 @@
                                 <li class="uplodfileTags">
                                     <div class="publisher-tools-tab attach js_publisher-tab" data-tab="file">
                                         <img class="BlueIcon js_x-uploader" alt="file" title="file"
-                                            src="{$system['system_url']}/content/themes/default/images/svg/svgImg/fileUplodeHover.svg"
+                                            src="{$system['system_uploads_assets']}/content/themes/default/images/svg/svgImg/fileUplodeHover.svg"
                                             class="js_x-uploader" data-handle="publisher" data-type="file" />
                                         <img class="blackIcon" alt="file" title="file"
-                                            src="{$system['system_url']}/content/themes/default/images/svg/svgImg/fileUplode.svg"
+                                            src="{$system['system_uploads_assets']}/content/themes/default/images/svg/svgImg/fileUplode.svg"
                                             class="js_x-uploader" data-handle="publisher" data-type="file" />
                                         <span class="class-publisher-text">file</span>
                                     </div>
@@ -624,7 +624,7 @@
                             </ul>
                             <a class="s-more" href="javascript:void(0)" id="add_post_show">
                                 <img alt="audio" title="See More"
-                                    src="{$system['system_url']}/content/themes/default/images/svg/svgImg/addPostMenu.svg" />
+                                    src="{$system['system_uploads_assets']}/content/themes/default/images/svg/svgImg/addPostMenu.svg" />
                                 More Options
                             </a>
                         </div>

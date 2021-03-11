@@ -227,26 +227,26 @@
 {if $user->_logged_in}
     <!-- jQuery-UI -->
     <script>var _tooltip = jQuery.fn.tooltip;</script>
-    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js" integrity="sha256-VazP97ZCwtekAsvgPBSUwPFKdrwD3unUfSGVYrahUqU=" crossorigin="anonymous"></script>
+
     <script>jQuery.fn.tooltip = _tooltip;</script>
-    <script src="{$system['system_url']}/includes/assets/js/plugins/jquery-ui.triggeredAutocomplete/jquery-ui.triggeredAutocomplete.js"></script>
+    <script src="{$system['system_url']}/includes/assets/js/plugins/jquery-ui.triggeredAutocomplete/jquery-ui.triggeredAutocomplete.js" {if !$user->_logged_in}defer{/if}></script>
     <!-- jQuery-UI -->
 
     <!-- Sticky Sidebar -->
-    <script src="{$system['system_url']}/includes/assets/js/plugins/sticky-sidebar/theia-sticky-sidebar.min.js"></script>
+    <script src="{$system['system_url']}/includes/assets/js/plugins/sticky-sidebar/theia-sticky-sidebar.min.js" {if !$user->_logged_in}defer{/if}></script>
     <!-- Sticky Sidebar -->
 
     <!-- Google Geocomplete -->
     {if $system['geolocation_enabled']}
-        <script src="{$system['system_url']}/includes/assets/js/plugins/jquery.geocomplete/jquery.geocomplete.min.js"></script>
-        <script src="https://maps.googleapis.com/maps/api/js?libraries=places&key={$system['geolocation_key']}"></script>
+        <script src="{$system['system_url']}/includes/assets/js/plugins/jquery.geocomplete/jquery.geocomplete.min.js" {if !$user->_logged_in}defer{/if}></script>
+        <script src="https://maps.googleapis.com/maps/api/js?libraries=places&key={$system['geolocation_key']}" {if !$user->_logged_in}defer{/if}></script>
     {/if}
     <!-- Google Geocomplete -->
 
     <!-- Noty Notifications -->
     {if $system['noty_notifications_enabled']}
-        <script src="{$system['system_url']}/includes/assets/js/plugins/noty/noty.min.js"></script>
-        <link rel="stylesheet" type='text/css' href="{$system['system_url']}/includes/assets/js/plugins/noty/noty.css">
+        <script src="{$system['system_url']}/includes/assets/js/plugins/noty/noty.min.js" {if !$user->_logged_in}defer{/if}></script>
+        <link rel="stylesheet" type='text/css' href="{$system['system_url']}/includes/assets/js/plugins/noty/noty.css" {if !$user->_logged_in}defer{/if}>
     {/if}
     <!-- Noty Notifications -->
 
@@ -268,9 +268,9 @@
             <link rel="stylesheet" type='text/css' href="{$system['system_url']}/includes/assets/js/plugins/zuck/zuck.rtl.css?{$cacheremove}">
         {/if}
 
-        <script src="{$system['system_url']}/includes/assets/js/plugins/slick/slick.min.js"></script>
-        <link rel="stylesheet" type='text/css' href="{$system['system_url']}/includes/assets/js/plugins/slick/slick.css">
-        <link rel="stylesheet" type='text/css' href="{$system['system_url']}/includes/assets/js/plugins/slick/slick-theme.css">
+        <script src="{$system['system_url']}/includes/assets/js/plugins/slick/slick.min.js" {if !$user->_logged_in}defer{/if}></script>
+        <link rel="stylesheet" type='text/css' href="{$system['system_url']}/includes/assets/js/plugins/slick/slick.css" {if !$user->_logged_in}defer{/if}>
+        <link rel="stylesheet" type='text/css' href="{$system['system_url']}/includes/assets/js/plugins/slick/slick-theme.css" {if !$user->_logged_in}defer{/if}>
     {/if}
     <!-- Stories -->
 
@@ -282,15 +282,15 @@
 
     <!-- Slick Slider -->
     {if $page == "global-profile/global-profile-timeline"}
-        <script src="{$system['system_url']}/includes/assets/js/plugins/slick/slick.min.js"></script>
-        <link rel="stylesheet" type='text/css' href="{$system['system_url']}/includes/assets/js/plugins/slick/slick.css">
-        <link rel="stylesheet" type='text/css' href="{$system['system_url']}/includes/assets/js/plugins/slick/slick-theme.css">
+        <script src="{$system['system_url']}/includes/assets/js/plugins/slick/slick.min.js" {if !$user->_logged_in}defer{/if}></script>
+        <link rel="stylesheet" type='text/css' href="{$system['system_url']}/includes/assets/js/plugins/slick/slick.css" {if !$user->_logged_in}defer{/if}>
+        <link rel="stylesheet" type='text/css' href="{$system['system_url']}/includes/assets/js/plugins/slick/slick-theme.css" {if !$user->_logged_in}defer{/if}>
     {/if}
     <!-- Slick Slider -->
 
     <!-- TinyMCE -->
     {if $page == "admin" || $page == "blogs" || $page == "forums"}
-        <script src="{$system['system_url']}/includes/assets/js/plugins/tinymce/tinymce.min.js"></script>
+        <script src="{$system['system_url']}/includes/assets/js/plugins/tinymce/tinymce.min.js" {if !$user->_logged_in}defer{/if}></script>
     {/if}
     <!-- TinyMCE -->
 
@@ -344,7 +344,8 @@
     <script src="{$system['system_url']}/includes/assets/js/stratus/global-profile/global-profile-user.js?{$cacheremovejs}"></script>
     <script src="{$system['system_url']}/includes/assets/js/stratus/global-profile/global-profile-post.js?{$cacheremovejs}"></script>
     <script src="{$system['system_url']}/includes/assets/js/stratus/global-profile/global-profile-chat.js?{$cacheremovejs}"></script>
-    <script src="{$system['system_uploads_assets']}/includes/assets/js/stratus/showads.js?{$cacheremovejs}"></script>
+    <script src="{$system['system_url']}/includes/assets/js/stratus/showads.js?{$cacheremovejs}"></script>
+    <script src="{$system['system_url']}/includes/assets/js/plugins/swipeMobile/swipeMobile.js"></script>
 {/if}
 <!-- Stratus [JS] -->
 
@@ -368,6 +369,7 @@
 
     <!-- Stratus [JS] -->
     <script src="{$system['system_url']}/includes/assets/js/stratus/admin.js?{$cacheremovejs}"></script>
+    <script src="{$system['system_url']}/includes/assets/js/stratus/swipMobileCode.js?{$cacheremovejs}" defer></script>
     <!-- Stratus [JS] -->
 
     <!-- Admin Charts -->

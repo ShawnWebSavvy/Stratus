@@ -505,7 +505,7 @@ form.js_ajax-forms a,.registered_link {
 
 .login-index-body .mainloginBlock::before {
     content: "";
-    background-image: url(../images/login_logo.png);
+    background-image: url(../images/login_logo.png);    
     background-position: center;
     background-size: contain;
     background-repeat: no-repeat;
@@ -773,4 +773,4 @@ button, input, optgroup, select, textarea {
     border: 0!important;
 }
 .btn{    transition: color .15s ease-in-out,background-color .15s ease-in-out,border-color .15s ease-in-out,box-shadow .15s ease-in-out;
-}}
+}

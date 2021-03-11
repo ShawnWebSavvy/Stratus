@@ -1384,12 +1384,16 @@ header .navbar {
     }
   }
   .social-links {
-    display: none;
+    -webkit-box-pack: end;
+    -ms-flex-pack: end;
     justify-content: flex-end;
-    padding-top: 20px;
+    padding-top: 0;
+    opacity: 0;
+    visibility: hidden;
+    height: 40px;
     @media screen and (max-width: 991px) {
       justify-content: center;
-      padding-top: 50px;
+      display: none;
     }
     ul {
       padding: 0;

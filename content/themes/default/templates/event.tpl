@@ -6,7 +6,7 @@
 
         <!-- side panel -->
         {if $user->_logged_in}
-        <div class="col-12  offcanvas-sidebar js_sticky-sidebar">
+        <div class="col-12  offcanvas-sidebar js_sticky-sidebar" id="sidebarHiddSwip">
             {include file='_sidebar.tpl'}
         </div>
         {/if}
@@ -188,7 +188,7 @@
             <!-- profile-header -->
         </section>
         <!-- profile-tabs -->
-        <div class="profile-header-tabs for-mobile">
+        <div class="profile-header-tabs custom-tabs for-mobile">
             <ul>
                 {if $event['event_privacy'] == "public" || $event['i_joined'] || $event['i_admin']}
                 <li>
@@ -232,7 +232,7 @@
             </ul>
         </div>
         <!-- profile-tabs -->
-        <div class="col-lg-3 col-md-4 about_sec ">
+        <div class="col-md-12 col-xl-3 col-lg-4 about_sec ">
             <div class="profileUpdatesDesign">
                 <!-- panel [about] -->
                 <div class="card">
@@ -416,7 +416,7 @@
             </div>
         </div>
         <!-- content panel -->
-        <div class="col-md-9 col-md-8 sec_cstm_w {if $user->_logged_in} offcanvas-mainbar{/if} ">
+        <div class="col-md-12 col-xl-9 col-lg-8">
 
             <!-- profile-content -->
             <div class="row">
@@ -684,23 +684,23 @@
                         <!-- panel title -->
 
                         <!-- panel nav -->
-                        <ul class="nav nav-tabs ">
+                        <ul class="nav nav-tabs {$view} ">
                             <li class="nav-item">
-                                <a class="nav-link {if $view == " going "}active{/if}"
+                                <a class="nav-link {if $view == "going"}active{/if}"
                                     href="{$system['system_url']}/events/{$event['event_id']}/going">
                                     {__("Going")}
                                     <span class="badge badge-pill badge-info">{$event['event_going']}</span>
                                 </a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link {if $view == " interested "}active{/if}"
+                                <a class="nav-link {if $view == "interested"}active{/if}"
                                     href="{$system['system_url']}/events/{$event['event_id']}/interested">
                                     {__("Interested")}
                                     <span class="badge badge-pill badge-info">{$event['event_interested']}</span>
                                 </a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link {if $view == " invited "}active{/if}"
+                                <a class="nav-link {if $view == "invited"}active{/if}"
                                     href="{$system['system_url']}/events/{$event['event_id']}/invited">
                                     {__("Invited")}
                                     <span class="badge badge-pill badge-info">{$event['event_invited']}</span>
@@ -708,7 +708,7 @@
                             </li>
                             {if $event['i_joined']}
                             <li class="nav-item">
-                                <a class="nav-link {if $view == " invites "}active{/if}"
+                                <a class="nav-link {if $view == "invites"}active{/if}"
                                     href="{$system['system_url']}/events/{$event['event_id']}/invites">
                                     {__("Invites")}
                                 </a>

@@ -3,7 +3,7 @@
 <!-- page content -->
 <div class="container mt20 offcanvas">
     <div class="row">
-        <div class="sidebar-left-ant offcanvas-sidebar js_sticky-sidebar">
+        <div class="sidebar-left-ant offcanvas-sidebar js_sticky-sidebar" id="sidebarHiddSwip">
             {include file='_sidebar.tpl'}
         </div>
     </div>
@@ -65,14 +65,12 @@
                                 </div>
                             </div>
                         </div> *}
-                        <button class="_toggle_btn" type="button"><i class="fas fa-ellipsis-v"></i> <i
-                                class="fas fa-times"></i></button>
+                        <button class="_toggle_btn" type="button"><i class="fas fa-ellipsis-v"></i> <i class="fas fa-times"></i></button>
                     </div>
                     <div class="row{if $view == 'find'} _findfriendsdiv_{/if}">
                         <div class="col-lg-6 col-xl-4">
                             <div class="row">
                                 <div class="card bg-transparent _user__data _request_sec">
-
                                     {if $view == ""}
                                     <div class="card-header bg-transparent">
                                         <strong>{__("People You May Know")}</strong>
@@ -83,7 +81,6 @@
                                             {foreach $people as $_user} {include file='__feeds_user.tpl' _tpl="list"
                                             _connection="add"} {/foreach}
                                         </ul>
-
                                         <!-- see-more -->
                                         {if count($people) >= $system['min_results']}
                                         <div class="alert alert-info see-more js_see-more" data-get="new_people">
@@ -93,9 +90,7 @@
                                         {/if}
                                         <!-- see-more -->
                                         {else}
-                                        <p class="text-center text-muted">
-                                            {__("No people available")}
-                                        </p>
+                                        <p class="text-center text-muted">{__("No people available")}</p>
                                         {/if}
                                     </div>
 
@@ -115,12 +110,14 @@
                                         </p>
                                         {/if}
                                     </div>
-
                                     {elseif $view == "friend_requests"}
                                     <div class="card-header bg-transparent">
-                                        <h3> <strong>{__("Friend Request")}
-                                                {* <a href="#"> <span class="see_btn ">See all</span></a> *}
-                                            </strong></h3>
+                                        <h3>
+                                            <strong>
+                                            {__("Friend Request")}
+                                            {* <a href="#"> <span class="see_btn ">See all</span></a> *}
+                                            </strong>
+                                        </h3>
                                     </div>
                                     <div class="card-body">
                                         {if $user->_data['friend_requests']}
@@ -194,7 +191,7 @@
                                 <!-- see-more -->
 
                                 <div class="alert alert-info see-more js_see-more" data-uid="{$user->_data['user_id']}"
-                                    data-get="friends">
+                                    data-get="friends" data-page="people">
                                     <span>{__("Load More")}</span>
                                     <div class="loader loader_small x-hidden"></div>
                                 </div>
@@ -396,7 +393,7 @@
                                         <option value="offline">{__("Offline")}</option>
                                     </select>
                                 </div>
-                                <button type="submit" class="btn friendsSearchbtn _cmn_btn " name="submit"><span
+                                <button type="submit" class="btn friendsSearchbtn cmn_btn " name="submit"><span
                                         class="search-input-icon"> <img
                                             src="{$system['system_url']}/content/themes/default/images/Search2.svg"
                                             alt="search icon">
