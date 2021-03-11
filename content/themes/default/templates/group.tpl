@@ -88,6 +88,7 @@
                                 <div class="profile-avatar-crop {if $group['group_picture_default']}x-hidden{/if}">
                                     <i class="fa fa-crop-alt js_init-crop-picture"
                                         data-image="{$group['group_picture_full']}" data-handle="group"
+                                        data-system-url="{$system['system_url']}"
                                         data-id="{$group['group_id']}"></i>
                                 </div>
                                 {if !$profile['user_picture_default']}
