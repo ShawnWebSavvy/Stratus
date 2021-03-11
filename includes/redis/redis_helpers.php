@@ -560,39 +560,40 @@ function updateReactions($system, $user, $redisObject, $post_id, $authorId)
     $redisprofilePost = 'profile-posts-' . $authorId;
     $isKeyExistOnRedis = $redisObject->isRedisKeyExist($redisprofilePost);
     if ($isKeyExistOnRedis) {
-        $getDataFromRedis = $redisObject->getValueFromKey($redisprofilePost);
-        $jsonValues = json_decode($getDataFromRedis, true);
-        if (count($jsonValues) > 0 && count($arrayforrepalce) > 0) {
-            $ab = 0;
-            foreach ($jsonValues as $valuess) {
-                if ($jsonValues[$ab]['post_id'] === $post_id) {
-                    $jsonValues[$ab]['reactions'] = $arrayforrepalce['reactions'];
-                    $jsonValues[$ab]["reaction_like_count"] = $arrayforrepalce['reaction_like_count'];
-                    $jsonValues[$ab]["reaction_love_count"] = $arrayforrepalce['reaction_love_count'];
-                    $jsonValues[$ab]["reaction_haha_count"] = $arrayforrepalce['reaction_haha_count'];
-                    $jsonValues[$ab]["reaction_yay_count"] = $arrayforrepalce['reaction_yay_count'];
-                    $jsonValues[$ab]["reaction_wow_count"] = $arrayforrepalce['reaction_wow_count'];
-                    $jsonValues[$ab]["reaction_sad_count"] = $arrayforrepalce['reaction_sad_count'];
-                    $jsonValues[$ab]["reaction_angry_count"] = $arrayforrepalce['reaction_angry_count'];
-                    $jsonValues[$ab]["reactions_total_count"] = $arrayforrepalce['reactions_total_count'];
-                    $jsonValues[$ab]["pinned"] = $arrayforrepalce['pinned'];
-                    $jsonValues[$ab]["comments_disabled"] = $arrayforrepalce['comments_disabled'];
-                    $jsonValues[$ab]["shares"] = $arrayforrepalce['shares'];
-                    $jsonValues[$ab]["is_hidden"] = $arrayforrepalce['is_hidden'];
-                    $jsonValues[$ab]["boosted"] = $arrayforrepalce['boosted'];
-                    $jsonValues[$ab]["comments"] = $arrayforrepalce['comments'];
-                    $jsonValues[$ab]["is_hidden"] = $arrayforrepalce['is_hidden'];
-                    if ($arrayforrepalce['pinned']) {
-                        $jsonValues[$ab]["status_post"] = 'pinned_post';
-                    } else {
-                        $jsonValues[$ab]["status_post"] = 'unpinned_post';
-                    }
-                }
-                $ab++;
-            }
-            $data = json_encode($jsonValues);
-            $redisObject->setValueWithRedis($redisprofilePost, $data);
-        }
+        $isKeyExistOnRedis = $redisObject->deleteValueFromKey($redisprofilePost);
+        // $getDataFromRedis = $redisObject->getValueFromKey($redisprofilePost);
+        // $jsonValues = json_decode($getDataFromRedis, true);
+        // if (count($jsonValues) > 0 && count($arrayforrepalce) > 0) {
+        //     $ab = 0;
+        //     foreach ($jsonValues as $valuess) {
+        //         if ($jsonValues[$ab]['post_id'] === $post_id) {
+        //             $jsonValues[$ab]['reactions'] = $arrayforrepalce['reactions'];
+        //             $jsonValues[$ab]["reaction_like_count"] = $arrayforrepalce['reaction_like_count'];
+        //             $jsonValues[$ab]["reaction_love_count"] = $arrayforrepalce['reaction_love_count'];
+        //             $jsonValues[$ab]["reaction_haha_count"] = $arrayforrepalce['reaction_haha_count'];
+        //             $jsonValues[$ab]["reaction_yay_count"] = $arrayforrepalce['reaction_yay_count'];
+        //             $jsonValues[$ab]["reaction_wow_count"] = $arrayforrepalce['reaction_wow_count'];
+        //             $jsonValues[$ab]["reaction_sad_count"] = $arrayforrepalce['reaction_sad_count'];
+        //             $jsonValues[$ab]["reaction_angry_count"] = $arrayforrepalce['reaction_angry_count'];
+        //             $jsonValues[$ab]["reactions_total_count"] = $arrayforrepalce['reactions_total_count'];
+        //             $jsonValues[$ab]["pinned"] = $arrayforrepalce['pinned'];
+        //             $jsonValues[$ab]["comments_disabled"] = $arrayforrepalce['comments_disabled'];
+        //             $jsonValues[$ab]["shares"] = $arrayforrepalce['shares'];
+        //             $jsonValues[$ab]["is_hidden"] = $arrayforrepalce['is_hidden'];
+        //             $jsonValues[$ab]["boosted"] = $arrayforrepalce['boosted'];
+        //             $jsonValues[$ab]["comments"] = $arrayforrepalce['comments'];
+        //             $jsonValues[$ab]["is_hidden"] = $arrayforrepalce['is_hidden'];
+        //             if ($arrayforrepalce['pinned']) {
+        //                 $jsonValues[$ab]["status_post"] = 'pinned_post';
+        //             } else {
+        //                 $jsonValues[$ab]["status_post"] = 'unpinned_post';
+        //             }
+        //         }
+        //         $ab++;
+        //     }
+        //     $data = json_encode($jsonValues);
+        //     $redisObject->setValueWithRedis($redisprofilePost, $data);
+        // }
     }
     /* Get Friend List and Updated Redis */
     $idList = $user->get_friends_ids($authorId);
