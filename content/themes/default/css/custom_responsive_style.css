@@ -129,6 +129,10 @@
 .user-card-meta .userCardInfo:last-child{margin-bottom: 0px;}
 .user-card-meta .userCardInfo .fa{width: 15px !important;height: 15px !important;}
 .user-card-meta .userCardInfo .text-primary{margin-left: 5px;}
+.lightbox .lightbox-data .reactions-container {width: 207px;border-radius: 20px;top: -102px!important;}
+.marketpublicerButtons {width: 100%;justify-content: space-between;margin-bottom: 0px;padding-right: 0;padding-top: 15px;}
+.marketpublicerButtons .cmn_btn{margin-top: 0px;margin-right: 15px;max-width: 184px;}
+.marketpublicerButtons .cmn_btn:last-child{margin-right: 0px;}
 
 @media(min-width:1680px){.home-page-middel-block .desk_chg{flex:0 0 calc(100% / 6)!important;max-width:calc(100% / 6)!important}
 }
@@ -510,6 +514,8 @@ body.group-localhub .profile-header-tabs ul li,body.profile-localhub .profile-he
 /* .aboutSectionWidth{flex:0 0 80%;max-width:80%;width:80%!important} */
 .aboutSectionWidth .profileUpdatesDesign{padding:30px 10px!important}
 .profile_top_sec ._toggle_btn{right:10px}
+.marketpublicerButtons {padding-left: 15px;padding-right: 0;flex-direction: column;}
+.marketpublicerButtons .cmn_btn{max-width: 100%;margin-block: 10px;}
 }
 @media (max-width:475px){.lightbox-container .reactions-container,.reactions-container{width:207px;border-radius:20px;transform:scale(.8);bottom:3px!important;position:absolute;left:0!important;top:auto!important}
 ._findfriendsdiv_ .col-lg-6.col-xl-4 ul li.feeds-item{flex:0 0 calc(100%);max-width:calc(100%);margin-bottom:30px}
