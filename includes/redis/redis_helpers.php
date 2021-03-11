@@ -608,7 +608,7 @@ function updateReactions($system, $user, $redisObject, $post_id, $authorId)
         if ($isKeyExistOnRedis) {
             $getDataFromRedis = $redisObject->getValueFromKey($redisTimelinekey);
             $jsonValue = json_decode($getDataFromRedis, true);
-            if (count($jsonValue) > 0 && count($arrayforrepalce) > 0) {
+            if (!empty($jsonValue) &&  count($jsonValue) > 0 && !empty($arrayforrepalce) && count($arrayforrepalce) > 0) {
                 $i = 0;
                 foreach ($jsonValue as $values) {
                     if ($jsonValue[$i]['post_id'] === $post_id) {
