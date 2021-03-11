@@ -1,7 +1,4 @@
 
-<link rel="stylesheet" href="{$system['system_uploads_assets']}/includes/assets/js/plugins/advanceSearch/selectSearch.min.css" type="text/css"> 
-<script type="text/javascript" src="{$system['system_uploads_assets']}/includes/assets/js/plugins/advanceSearch/selectSearch.min.js" ></script>
-
 <div class="card">
     <div class="card-header with-icon">
         <i class="fa fa-user mr10"></i>Custom Referrals
@@ -67,6 +64,9 @@
                                         <a data-toggle="tooltip" data-placement="top" title='{__("Edit")}' href="{$system['system_url']}/{$control_panel['url']}/custom-referrals/edit?custom_referral_id={$row['id']}" class="btn btn-sm btn-icon btn-rounded btn-primary">
                                             <i class="fa fa-pencil-alt"></i>
                                         </a>  
+                                         <button data-toggle="tooltip" data-placement="top" title='{__("Delete")}' class="btn btn-sm btn-icon btn-rounded btn-danger js_admin-deleter" data-handle="custom_referral" data-id="{$row['id']}">
+                                            <i class="fa fa-trash-alt"></i>
+                                        </button>
                                     </td>
                                 </tr>
                             {/foreach}
@@ -97,7 +97,7 @@
                             </label>
                             <div class="col-md-6">
                                 <div class="input-group">
-                                    <input type="text" class="form-control" name="email_id" id="selectPage" placeholder="Enter email to search" readonly value="{$row['user_email']}">
+                                    <input type="text" class="form-control" name="email_id" placeholder="Enter email to search" readonly value="{$row['user_email']}">
                                     <input type="hidden" name="user_id" value="{$row['user_id']}">
                                 </div>
                             </div>
@@ -322,6 +322,9 @@
                                         <a data-toggle="tooltip" data-placement="top" title='{__("Edit")}' href="{$system['system_url']}/{$control_panel['url']}/custom-referrals/edit?custom_referral_id={$row['id']}" class="btn btn-sm btn-icon btn-rounded btn-primary">
                                             <i class="fa fa-pencil-alt"></i>
                                         </a>  
+                                        <button data-toggle="tooltip" data-placement="top" title='{__("Delete")}' class="btn btn-sm btn-icon btn-rounded btn-danger js_admin-deleter" data-handle="custom_referral" data-id="{$row['id']}">
+                                            <i class="fa fa-trash-alt"></i>
+                                        </button>
                                     </td>
                                 </tr>
                             {/foreach}

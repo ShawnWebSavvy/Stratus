@@ -9040,12 +9040,21 @@ class UserGlobal
         }
     }
 
-    function get_posts_trending()
+    function get_posts_trending($get_all=true)
     {
-        global $db;
+        global $db, $system;
+        $offset = 0;
+
         $detailed_posts = array();
-        $getusers = $db->query(sprintf("SELECT l.post_id, count(*) as countPost FROM global_posts_reactions l GROUP BY l.post_id ORDER BY countPost DESC
-        ")) or _error("SQL_ERROR_THROWEN");
+       
+        if($get_all){
+            $getusers = $db->query(sprintf("SELECT l.post_id, count(*) as countPost FROM global_posts_reactions l GROUP BY l.post_id ORDER BY countPost DESC 
+            " )) or _error("SQL_ERROR_THROWEN"); 
+         }else {
+            $getusers = $db->query(sprintf("SELECT l.post_id, count(*) as countPost FROM global_posts_reactions l GROUP BY l.post_id ORDER BY countPost DESC LIMIT %s, %s
+            ", secure($offset, 'int', false), secure($system['max_results'], 'int', false)  )) or _error("SQL_ERROR_THROWEN");
+        }
+
         if ($getusers->num_rows > 0) {
             while ($rows = $getusers->fetch_assoc()) {
                 $detailedPosts = $this->global_profile_get_post($rows['post_id']);
@@ -9734,6 +9743,43 @@ class UserGlobal
             }
         }
         return $posts;
+    }
+
+
+
+
+
+
+    /* Posts */
+    /* ------------------------------- */
+
+    /**
+     * get_posts
+     * 
+     * @param array $args
+     * @return array
+     */
+    public function global_profile_explore_posts($offset){   
+ 
+      global $db, $system; 
+   
+      $offset = !isset($offset) ? 1 : $offset;
+      $offset *= $system['max_results'];
+
+      $detailed_posts = array();
+      $getusers = $db->query(sprintf("SELECT l.post_id, count(*) as countPost FROM global_posts_reactions l GROUP BY l.post_id ORDER BY countPost DESC LIMIT %s, %s
+      " , secure($offset, 'int', false), secure($system['max_results'], 'int', false)   )) or _error("SQL_ERROR_THROWEN");
+      if ($getusers->num_rows > 0) {
+          while ($rows = $getusers->fetch_assoc()) {
+              $detailedPosts = $this->global_profile_get_post($rows['post_id']);
+              if (!empty($detailedPosts)) {
+                  $detailed_posts[] = $detailedPosts;
+              }
+          }
+      }
+      return $detailed_posts;
+    
+    
     }
 
 

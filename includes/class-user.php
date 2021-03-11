@@ -5025,7 +5025,7 @@ class User
                 //Video thumbnails
                 if ($args['video_thumbnail'] == "") {
                     $helpers = new helpers();
-                    $result_ = $helpers->makeVideosThumbnails($system['system_uploads'] . '/' . $args['video']->source, 5, 'prod');
+                    $result_ = $helpers->makeVideosThumbnails($system['system_uploads'] . '/' . $args['video']->source, 4, 'prod');
                     if (sizeof($result_) > 0) :
                         //$db->query(sprintf("UPDATE posts_videos SET thumbnail = $result_['thumb'] WHERE video_id = %s ", secure($post['video']['video_id'], 'int'))) or _error("SQL_ERROR_THROWEN");
                         $db->query(sprintf("UPDATE posts_videos SET thumbnail = 'thumbnails/" . $result_['thumb'] . "' WHERE video_id = %s", secure($post['video']['video_id']))) or _error("SQL_ERROR_THROWEN");
@@ -6656,11 +6656,13 @@ class User
         }
         $redisPostKey = 'user-' . $this->_data['user_id'] . '-posts';
         $redisObject = new RedisClass();
-        fetchAndSetDataOnPostReaction($system, $this, $redisObject, $redisPostKey);
+        $redisObject->deleteValueFromKey($redisPostKey);
+        //fetchAndSetDataOnPostReaction($system, $this, $redisObject, $redisPostKey);
 
         //profile post
         $redisTimelinekey = 'profile-posts-' . $this->_data['user_id'];
-        fetchAndSetDataOnPostReaction($system, $this, $redisObject, $redisTimelinekey);
+        $redisObject->deleteValueFromKey($redisTimelinekey);
+        //fetchAndSetDataOnPostReaction($system, $this, $redisObject, $redisTimelinekey);
         return $totalCounts;
     }
 

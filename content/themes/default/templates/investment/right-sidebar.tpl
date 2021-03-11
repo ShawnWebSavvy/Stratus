@@ -82,7 +82,13 @@
                     <div class="GraphTextSection">
                         <h4>Total Balance</h4>
                         <p class="btcBackground">BTC</p>
-                        <h5>{$get_balance['total_token_btc']|number_format:8}</h5>
+                        <h5>
+                            {if $get_balance['total_token_btc']==0}
+                                0
+                            {else}
+                                {$get_balance['total_token_btc']|number_format:8}
+                            {/if}
+                        </h5>
                         <h6><span id="total_amount">{$get_balance['amount']}</span> USD</h6>
                         <!-- <button class="btn withdrawSidebar">Withdraw</button> -->
                     </div>

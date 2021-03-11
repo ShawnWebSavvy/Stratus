@@ -421,6 +421,9 @@
     <!-- Dependencies Plugins [JS] -->
 
     <!-- Sngine [JS] -->
+
+    <link rel="stylesheet" href="{$system['system_uploads_assets']}/includes/assets/js/plugins/advanceSearch/selectSearch.min.css" type="text/css"> 
+    <script type="text/javascript" src="{$system['system_uploads_assets']}/includes/assets/js/plugins/advanceSearch/selectSearch.min.js" ></script>
     <script src="{$system['system_uploads_assets']}/includes/assets/js/stratus/admin.js"></script>
     <!-- Sngine [JS] -->
 
