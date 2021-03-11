@@ -53,7 +53,7 @@ button.js_unlike-page img{transform:rotateX(180deg);padding:0!important;height:3
 #search-history button.btn.js_friend-cancel,#search-results button.btn.js_friend-cancel{border:0!important;color:#1e1f20;font-size:0}
 #search-history .data-container .data-content div.float-right,#search-results .data-container .data-content div.float-right{width:50px;display:flex;align-items:center;justify-content:center;height:50px}
 #search-history.dropdown-search button,#search-results.dropdown-search button{padding:.375rem .75rem!important;width:inherit!important;height:inherit!important;margin:0!important;background-color:#e5f0ff}
-#search-history.dropdown-search button.js_friend-remove,#search-results.dropdown-search button.js_friend-remove{background-color:transparent!important}
+/* #search-history.dropdown-search button.js_friend-remove,#search-results.dropdown-search button.js_friend-remove{background-color:transparent!important} */
 #search-history.dropdown-search button img,#search-results.dropdown-search button img{margin:0!important}
 #search-history .dropdown-widget-body.custom-scrollbar,#search-results .dropdown-widget-body.custom-scrollbar{max-height:390px;overflow-y:auto}
 .whoreactModal .feeds-item .usernamesWrapBlock ._user_action_ .js_friend-add img{margin-right:0}
