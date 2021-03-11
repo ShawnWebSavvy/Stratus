@@ -23,7 +23,7 @@
             <span class=" dropdown-toggle post_custm_option" data-toggle="dropdown" data-display="static"><i
                     class="fas fa-ellipsis-h"></i></span>
             <div class="dropdown-menu dropdown-menu-right post-dropdown-menu cmn_drpdwn_style">
-                {if $_post['manage_post'] && $_post['post_type'] == "product"}
+                {if $_post['manage_post'] && $_post['post_type'] == "product"&& $_post['author_id']==$user->_data['user_id']}
                 {if $_post['product']['available']}
                 <div class="dropdown-item pointer js_sold-post">
                     <div class="action no-desc">
@@ -85,7 +85,7 @@
                 </div>
                 {/if}
                 <!-- <div class="dropdown-divider"></div> -->
-                {if $_post['manage_post']}
+                {if $_post['manage_post'] && $_post['author_id']==$user->_data['user_id']}
                 <!-- Boost -->
                 {if $system['packages_enabled'] && !$_post['in_group'] && !$_post['in_event']}
                 {if $_post['boosted']}

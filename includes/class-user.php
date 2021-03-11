@@ -6656,11 +6656,13 @@ class User
         }
         $redisPostKey = 'user-' . $this->_data['user_id'] . '-posts';
         $redisObject = new RedisClass();
-        fetchAndSetDataOnPostReaction($system, $this, $redisObject, $redisPostKey);
+        $redisObject->deleteValueFromKey($redisPostKey);
+        //fetchAndSetDataOnPostReaction($system, $this, $redisObject, $redisPostKey);
 
         //profile post
         $redisTimelinekey = 'profile-posts-' . $this->_data['user_id'];
-        fetchAndSetDataOnPostReaction($system, $this, $redisObject, $redisTimelinekey);
+        $redisObject->deleteValueFromKey($redisTimelinekey);
+        //fetchAndSetDataOnPostReaction($system, $this, $redisObject, $redisTimelinekey);
         return $totalCounts;
     }
 
