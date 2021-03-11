@@ -1,4 +1,8 @@
 @import "https://cdn1.stratus.co/content/themes/default/css/buttonCustom.css";
+.userVerifiedBadge {display: flex;align-items: center;justify-content: flex-start;margin-bottom: 5px;}
+.js_audio:focus {outline: none !important;}
+._share-dropdown_.dropdown-menu.fade.show{right: 0px !important;top: 44px !important;left: auto !important;transform: none !important;}
+.dropdown-menu-right {right: -2px;}
 .user-popover-wrapper{z-index:999999999;}
 .addproductWrap .colored-text-wrapper .js_publisher-scraper {height: 25px !important;}
 .comment-data{align-items:flex-start;justify-content:space-between;flex-direction:column}
@@ -118,9 +122,18 @@
 .live-comments .js_user-popover a{color: #fff;}
 .live-comments .comment-inner::before {display: none;}
 .modal-header .close {opacity: 1 !important;}
+.imageUplodeLodingTime {position: relative;}
+.imageUplodeLodingTime ul:nth-child(2){position: absolute;top: 0;}
+.chat-widget .chat-widget-content .chat-typing {position: absolute;bottom: 22px;right: 9px;}
+.user-card-meta .userCardInfo{display: flex;align-items: center;justify-content:flex-start;margin-bottom: 5px;}
+.user-card-meta .userCardInfo:last-child{margin-bottom: 0px;}
+.user-card-meta .userCardInfo .fa{width: 15px !important;height: 15px !important;}
+.user-card-meta .userCardInfo .text-primary{margin-left: 5px;}
+
 @media(min-width:1680px){.home-page-middel-block .desk_chg{flex:0 0 calc(100% / 6)!important;max-width:calc(100% / 6)!important}
 }
 @media (max-width:1645px){.panel-photos .feedPhotosWrap .global-profile-feeds-photo .pg_photo{width:100px;height:100px}
+.profileGroupWrap .explore_page_lists {-ms-flex: 0 0 33.333333%;flex: 0 0 33.333333%;max-width: 33.333333%;}
 }
 @media (max-width:1680px){.boosted-icon,.post .boosted-icon{right:44px;top:14px}
 body.group-localhub .profile-mobile-layout .profileUpdatesDesign .row.no-gutters .col-3{flex:0 0 calc(100% / 3);max-width:calc(100% / 3)}
@@ -137,6 +150,7 @@ body.group-localhub .profile-mobile-layout .profileUpdatesDesign .row.no-gutters
 @media (max-width:1300px){.panel-photos .feedPhotosWrap .global-profile-feeds-photo .pg_photo{width:70px;height:70px;border-radius:20px}
 .feedPhotosWrap .global-profile-feeds-photo{padding:3px}
 .profileUpdatesDesign .global-profile-feeds-photo a{height:100px;width:100px}
+.people-friend-list-section ul.requstSectionwrap .feeds-item .data-container{padding-left: 0;padding-right: 0;}
 }
 @media (max-width:1280px){.market-categories-section-right-side .card .side-nav li a{font-size:14px}
 .profile-name-wrapper{padding-top:15px}
@@ -150,6 +164,7 @@ body.group-localhub .button-profile-option .btn-light i{font-size:14px}
 .__user_action_panel h3{font-size:1.2rem}
 .group-localhub .js_posts_stream .feeds_post_ul .feeds_post,.profile-localhub .js_posts_stream .feeds_post_ul .feeds_post{width:100%}
 .profileUpdatesDesign{padding:15px}
+.profileGroupWrap .explore_page_lists {-ms-flex: 0 0 50%;flex: 0 0 50%;max-width: 50%;}
 }
 @media (max-width:1199px) and (min-width:991px){.sec_cstm_w{max-width:70%!important;flex:0 0 70%!important}
 .profile_top_sec+.col-lg-3{-ms-flex:0 0 30%;flex:0 0 30%;max-width:30%}
@@ -181,7 +196,7 @@ body.group-localhub .profile-mobile-layout .profileUpdatesDesign .row.no-gutters
 .profileUpdatesDesign .card-body{padding:0!important}
 }
 @media (max-width:991px){
-    /* .aboutSectionWidth{flex:0 0 50%;max-width:50%} */
+.people-friend-list-section ul.requstSectionwrap .feeds-item .data-container{padding-left: 10px;padding-right: 10px;}
 .people-friend-list-section ._frnd_rqst_sec {padding-bottom: 95px;}
 .people-friend-list-section ul .feeds-item{width:50%}
 .__mob-icons_,._mob-icons{display:flex!important}
@@ -234,7 +249,7 @@ body .add-story{position:relative;display:inline-block;width:100%;max-width:120p
 body .addStroryPlusIcon{position:absolute;bottom:35px;left:50%;height:35px;width:35px;transform:translateX(-50%);display:flex;align-items:center;justify-content:center}
 body .addStroryText{display:block}
 div.stories.carousel .story{display:inline-block!important;width:150px!important;max-width:120px!important;max-height:170px;height:170px;position:relative;margin:0 0 0 15px!important;background:0 0}
-div.storyTopImage-ant{width:100%;height:168px;left:0;top:1px;border-color:#fff;box-shadow:0 0 0 1px #00aafe;background-size:cover}
+/* div.storyTopImage-ant{width:100%;height:168px;left:0;top:1px;border-color:#fff;box-shadow:0 0 0 1px #00aafe;background-size:cover} */
 body .add-story{flex-shrink:0}
 ._request_sec ._user__data .feeds-item{flex:0 0 50%;max-width:50%;padding:0 15px!important;margin-bottom:30px!important}
 ._search_sec{flex:0 0 290px;max-width:290px}
@@ -318,7 +333,7 @@ body .btn._toggle_btn{position:relative!important;top:0;left:0}
 .explore_cmn_style .content-tabs{padding-right:60px}
 .profile-localhub .js_posts_stream .feeds_post_ul{padding:0 15px}
 .profile-localhub .mobileLogo{display:flex!important}
-._share-dropdown_.dropdown-menu.fade.show{left:-48px!important}
+
 .global-profile-localhub .no_data_img_{transform:none;width:100%}
 .global-profile-localhub .no_data_img_ img{max-width:50%}
 .global-profile-localhub .__no_data_contet__ img{max-width:50%}
@@ -439,7 +454,8 @@ body.login-index-body .mainloginBlock{height:100vh!important;align-items:flex-en
 .profileUpdatesDesign .global-profile-feeds-photo{width:calc(100% / 2)}
 .searchSectionWrap{justify-content:space-between}
 .searchSectionWrap .usernamesWrapBlock ._user_action_,.searchSectionWrap .usernamesWrapBlock ._user_action_ button{width:100%}
-.searchSectionWrap .usernamesWrapBlock{max-width:150px}
+.searchSectionWrap .usernamesWrapBlock{max-width:225px;}
+.people-friend-list-section ._friend_list_items .feeds-item .data-container ._user_action_ button {max-width:225px !important;left: 13px;transform: none;}
 .searchSectionWrap ._user_detail_sec{flex:unset;max-width:unset}
 .profileUpdatesDesign .searchSectionWrap ._user_detail_sec{flex:0 0 80%;max-width:80%}
 /* .aboutSectionWidth{flex:0 0 70%;max-width:70%} */
@@ -455,7 +471,7 @@ body.login-index-body .mainloginBlock{height:100vh!important;align-items:flex-en
 .login-index-body .rightSideBarScroll{min-height:200px!important}
 body .container.offcanvas{padding-bottom:20px}
 .post-product-wrapper{padding:0;font-size:12px}
-.people-friends-page ._user__data ._user_detail_sec .user__imgs{max-width:40px;padding:0 0;flex:unset}
+.people-friends-page ._user__data ._user_detail_sec .user__imgs{padding:0 0;flex:unset}
 .people-friends-page ._user__data ._user_detail_sec .user__imgs .data-avatar{border-radius:10px}
 .chatBoxBlock .card{background-color:transparent}
 .x-form-tools>li{padding:4px 0}

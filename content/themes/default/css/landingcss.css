@@ -453,8 +453,8 @@ header .navbar:after{background:url("../images/landingPage/images/SeparateLine.s
 }
 @media screen and (min-width:1920px){.footer .footer-copy-right.footer-copy-right{font-size:16px;}
 }
-.footer .social-links{display:none;-webkit-box-pack:end;-ms-flex-pack:end;justify-content:flex-end;padding-top:20px;}
-@media screen and (max-width:991px){.footer .social-links{-webkit-box-pack:center;-ms-flex-pack:center;justify-content:center;padding-top:50px;}
+.footer .social-links{-webkit-box-pack: end;-ms-flex-pack: end;justify-content: flex-end;padding-top: 0;opacity: 0;visibility: hidden;height: 40px;}
+@media screen and (max-width:991px){.footer .social-links{-webkit-box-pack:center;-ms-flex-pack:center;justify-content:center;display: none;}
 }
 .footer .social-links ul{padding:0;margin:0;}
 @media screen and (max-width:767px){.footer .social-links ul{padding:0;margin:0;display:-webkit-box;display:-ms-flexbox;display:flex;-ms-flex-wrap:wrap;flex-wrap:wrap;}
