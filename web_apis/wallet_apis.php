@@ -286,9 +286,12 @@ function getAllTransactionsFunction(){
     if ($_SERVER['REQUEST_METHOD'] === 'POST') {
        global $db, $system, $date;
       mysqli_report (MYSQLI_REPORT_OFF);
-      if(isset($_POST['user_id']))
+      if(isset($_POST['email']))
       {
-          $user_id = $_POST['user_id'];
+         $check_user = $db->query(sprintf("SELECT user_id as id, COUNT(*) as count FROM users WHERE user_email = %s", secure($_POST['email']))) or _error("SQL_ERROR_THROWEN");
+              $check_user= $check_user->fetch_assoc();
+
+          $user_id = $check_user['id'];
 
         $get_transactions = $db->query(sprintf("SELECT ads_users_wallet_transactions.*, users.user_name, users.user_firstname, users.user_lastname, users.user_gender, users.user_picture FROM ads_users_wallet_transactions LEFT JOIN users ON ads_users_wallet_transactions.node_type='user' AND ads_users_wallet_transactions.node_id = users.user_id WHERE ads_users_wallet_transactions.user_id = %s ORDER BY ads_users_wallet_transactions.transaction_id DESC", secure($user_id, 'int'))) or _error("SQL_ERROR_THROWEN");
         if ($get_transactions->num_rows > 0) {
@@ -297,7 +300,7 @@ function getAllTransactionsFunction(){
             
           }
           else {
-              returnResponse(false,100,"Transactions history is empty" );
+              returnResponse(false,402,"Transactions history is empty" );
           }
        
         }
