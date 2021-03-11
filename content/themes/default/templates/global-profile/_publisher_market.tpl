@@ -7,7 +7,7 @@
 
   <a href="{$system['system_url']}/products" class="btn btn-sm cmn_btn ">
     <img src="{$system['system_url']}/content/themes/default/images/svg/svgImg/blogNews.svg">
-    My Articles
+    My Product
   </a>
 </div>
 <!-- <div class="custom_modal_style">
