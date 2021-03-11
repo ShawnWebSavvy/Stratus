@@ -562,7 +562,7 @@ function updateReactions($system, $user, $redisObject, $post_id, $authorId)
     if ($isKeyExistOnRedis) {
         $getDataFromRedis = $redisObject->getValueFromKey($redisprofilePost);
         $jsonValues = json_decode($getDataFromRedis, true);
-        if ($jsonValues && count($jsonValues) > 0 && count($arrayforrepalce) > 0) {
+        if (count($jsonValues) > 0 && count($arrayforrepalce) > 0) {
             $ab = 0;
             foreach ($jsonValues as $valuess) {
                 if ($jsonValues[$ab]['post_id'] === $post_id) {
@@ -608,7 +608,7 @@ function updateReactions($system, $user, $redisObject, $post_id, $authorId)
         if ($isKeyExistOnRedis) {
             $getDataFromRedis = $redisObject->getValueFromKey($redisTimelinekey);
             $jsonValue = json_decode($getDataFromRedis, true);
-            if ($jsonValue && count($jsonValue) > 0 && count($arrayforrepalce) > 0) {
+            if (count($jsonValue) > 0 && count($arrayforrepalce) > 0) {
                 $i = 0;
                 foreach ($jsonValue as $values) {
                     if ($jsonValue[$i]['post_id'] === $post_id) {
