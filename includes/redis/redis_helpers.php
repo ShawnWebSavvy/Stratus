@@ -552,11 +552,12 @@ function updateReactions($system, $user, $redisObject, $post_id, $authorId)
     $redisTimelinekey = 'user-' . $user->_data['user_id'] . '-posts';
     $getDataFromRedis = $redisObject->getValueFromKey($redisTimelinekey);
     $jsonValue = json_decode($getDataFromRedis, true);
-    $arrayforrepalce = array();
+    $arrayforrepalce = [];
     if (count($jsonValue) > 0) {
         $arrayforrepalce  = searchSubArray($jsonValue, 'post_id', $post_id);
     }
 
+    echo "<pre>";print_r($arrayforrepalce);echo"</pre>";
     $redisprofilePost = 'profile-posts-' . $authorId;
     $isKeyExistOnRedis = $redisObject->isRedisKeyExist($redisprofilePost);
     if ($isKeyExistOnRedis) {
@@ -608,7 +609,6 @@ function updateReactions($system, $user, $redisObject, $post_id, $authorId)
         if ($isKeyExistOnRedis) {
             $getDataFromRedis = $redisObject->getValueFromKey($redisTimelinekey);
             $jsonValue = json_decode($getDataFromRedis, true);
-            echo "<pre>";print_r($arrayforrepalce);echo"</pre>";
             if (count($jsonValue) > 0 && count($arrayforrepalce) > 0) {
                 $i = 0;
                 foreach ($jsonValue as $values) {
