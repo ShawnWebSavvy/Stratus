@@ -42,22 +42,20 @@ body.settings-localhub .leftSettingHiddClose{display:block}
 body.publisher-focus .publisher{position:absolute;top:9px;left:0;font-size:14px;text-align:left;z-index:999999}
 body.night-mode .user-popover-content{background:#212121;border-color:#000}
 .user-card{position:relative;background-color:#fff;overflow:hidden}
-.user-card-cover{width:100%;background-color:red}
+.user-card-cover{display: none;}
 body.night-mode .user-card-cover{border-color:#000}
 .user-card-avatar{padding:3px;border-radius:10px;background:#fff}
 body.night-mode .user-card-avatar{background:#212121}
 .user-card-avatar img{width:60px;height:60px;border-radius:10px;display:inline-block}
-.user-card-info{position:absolute;left:96px;top:10px;color:#1e1f20;overflow:hidden}
+.user-card-info{color: #1e1f20;overflow: hidden;padding-left: 20px;}
 .user-card-info a{color:#1e1f20}
 .user-card-info a:hover{text-decoration:underline}
 .user-card-info a.name{font-size:1.3em;font-weight:600;word-break:break-word;overflow:hidden}
 .user-card-info .info{font-size:12px;line-height:15px}
-.buttonWrapPopOver{display:flex;flex-wrap:wrap;padding-top:6px;justify-content:center}
-.buttonWrapPopOver button{margin-bottom:10px}
+.buttonWrapPopOver{display:flex;flex-wrap:wrap;padding-top:6px;justify-content:flex-start;}
+.buttonWrapPopOver button{margin-bottom:5px}
 .buttonWrapPopOver a,.buttonWrapPopOver button{padding:8px 20px;margin-left:6px;margin-right: 0px; max-width:100%!important;width:auto!important;height:auto!important;display:flex;align-items:center}
 .buttonWrapPopOver a.js_chat_start.hoverClass,.buttonWrapPopOver button{background-color:#000}
-.user-card-meta{padding-left:96px;padding-top:10px;font-size:12px}
-.user-card-meta .fa{color:#b2b2b2}
 .user-popover-content .footer{text-align:right;padding:6px 7px;margin-bottom:0;margin-top:0;background:#f6f9fc;border-top:1px solid #e5e5e5;border-radius:0 0 3px 3px}
 body.night-mode .user-popover-content .footer{background:#1b1b1b;border-color:#424242}
 .user-popover-content .footer .btn{padding:6px 12px}
@@ -401,8 +399,8 @@ body.night-mode .user-popover-wrapper:before{border-bottom-color:#000}
 .user-popover-wrapper.tr:after{left:12px}
 .user-popover-wrapper.tl:after{right:12px}
 .user-popover-content{width:450px;font-size:14px;text-align:left;border:1px solid #e6ecf5;border-radius:3px;background-color:#fff;box-shadow:0 6px 12px rgba(0,0,0,.175);z-index:999999}
-.user-card{position:relative}
-.user-card-meta{padding-left:96px;padding-top:10px;font-size:12px}
+.user-popover-content .user-card{display: flex;align-items: stretch;justify-content: flex-start;}
+.user-card-meta{padding-top:5px;font-size:12px}
 .user-card-meta .fa{color:#b2b2b2}
 .user-popover-content .footer{text-align:right;padding:6px 7px;margin-bottom:0;margin-top:0;background:#f6f9fc;border-top:1px solid #e5e5e5;border-radius:0 0 3px 3px}
 body.night-mode .user-popover-content .footer{background:#1b1b1b;border-color:#424242}
@@ -526,7 +524,7 @@ body.login-index-body .index-intro h1{font-size:35px}
 ul.x-form-tools.clearfix li i{font-size:20px}
 .chatBoxBlock .card-body{padding:0 3px}
 .chatBoxBlock .card-header{padding:10px 3px 0 3px}
-.data-avatar img{height:31px;width:31px;min-height:31px}
+.data-avatar img{height:36px;width:36px;min-height:36px}
 .multiple-recipients-image.data-avatar{margin-right:20px}
 .data-avatar .right-avatar{left:13px}
 body.login-index-body .index-intro h1{font-size:27px}

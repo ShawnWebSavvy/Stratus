@@ -129,6 +129,7 @@ function load_more(element) {
             function (response) {
                 if ((_this.removeClass("loading"), text.show(), loading.addClass("x-hidden"), response.callback)) eval(response.callback);
                 else if (response.data) {
+                    data["offset"]++;
                     var datatta = response.data;
                     var ArrayVal = datatta.split('<div class="carsds"');
                     var loopArray = [];
