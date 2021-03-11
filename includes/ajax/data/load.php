@@ -522,7 +522,7 @@ try {
 	// handle data
 	if ($data) {
 		/* assign variables */
-		$smarty->assign('offset', $_POST['offset']);
+		$smarty->assign('offset', $_POST['offset']+1);
 		$smarty->assign('get', $_POST['get']);
 		$smarty->assign('data', $data);
 		$smarty->assign('pageview', $_POST['page']);
