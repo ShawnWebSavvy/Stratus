@@ -412,7 +412,14 @@ try {
 			/* clear comments reactions */
 			$db->query("UPDATE posts_comments_reactions SET points_earned = '0'") or _error("SQL_ERROR_THROWEN");
 			break;
-
+		
+		case 'custom_referral':
+			// check admin|moderator permission
+			if(!$user->_is_admin) {
+				modal("MESSAGE", __("System Message"), __("You don't have the right permission to access this"));
+			}
+			$db->query(sprintf("DELETE FROM user_custom_referrals WHERE id = %s", secure($_POST['id'], 'int') )) or _error("SQL_ERROR_THROWEN");
+			break;
 		default:
 			_error(400);
 			break;
