@@ -15,7 +15,7 @@
             <!-- <li><a href="#">Our features</a></li> -->
           </ul>
           <p class="footer-copy-right desktop-view">
-            © {date('Y')} Apollo Fintech CDE. Apollo Fintech All Right Reserved.
+            © {date('Y')} Apollo Fintech. Apollo Fintech All Right Reserved.
           </p>
         </div>
       </div>
@@ -49,7 +49,7 @@
           </ul>
         </div>
         <p class="footer-copy-right mobile-view">
-          © {date('Y')} Apollo Fintech CDE. Apollo Fintech All Right Reserved.
+          © {date('Y')} Apollo Fintech. Apollo Fintech All Right Reserved.
         </p>
 
         <ul class="other-links">

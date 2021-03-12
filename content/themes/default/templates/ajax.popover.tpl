@@ -120,7 +120,7 @@
     <!-- message -->
     {else}
     <!-- edit -->
-    <a href="{$system['system_url']}/settings/profile" class="btn btn-sm cmn_btn">
+    <a href="{$system['system_url']}/settings/profile" class="btn btn-sm cmn_btn" style="margin: 0 auto;">
       <i class="fa fa-pencil-alt mr5"></i>{__("Update Info")}
     </a>
     <!-- edit -->
