@@ -186,7 +186,7 @@
                                         <h3><span class="coin_price">0.1</span> USD</h3>
                                     </div>
                                      <div class="comming_soon_text">
-                                         <p>Comming Soon</p>
+                                         <p>Coming Soon</p>
                                      </div>
                                     </div>
                                     <div class="coinBaseButtonSection btn-group" role="group">

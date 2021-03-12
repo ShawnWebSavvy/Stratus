@@ -147,6 +147,12 @@ if (endUrl != "investments") {
                     $('#token_balance').hide();
                     return false;
                 }
+                if (parseFloat(total_amount) < parseFloat(order_detail[token_name.toLowerCase()]['min_sell_amount']) && action == 'sell') {
+                    $('#usd_balance').show();
+                    $('#usd_balance').html(min_tnx_error+'$'+order_detail[token_name.toLowerCase()]['min_sell_amount']);
+                    $('#token_balance').hide();
+                    return false;
+                }
                 if (parseFloat(response.data.tokens) > parseFloat(wallet.balance[token_name.toLowerCase()]) && action == 'sell') {
                     $('#usd_balance').hide();
                     $('#token_balance').html(token_name.toUpperCase() + balance_error)
@@ -346,6 +352,12 @@ if (endUrl != "investments") {
                         $('#token_balance').show();
                         return false;
                     }
+                    if (parseFloat(total_amount) < parseFloat(order_detail[token_name.toLowerCase()]['min_sell_amount']) && action == 'sell') {
+                        $('#usd_balance').show();
+                        $('#usd_balance').html(min_tnx_error+'$'+order_detail[token_name.toLowerCase()]['min_sell_amount']);
+                        $('#token_balance').hide();
+                        return false;
+                    }
                     if (parseFloat(response.data.tokens) > parseFloat(order_detail[token_name.toLowerCase()]['base_max_size']) && action == 'sell') {
                         $('#usd_balance').hide();
                         $('#token_balance').html(max_balance_error+order_detail[token_name.toLowerCase()]['base_max_size']+token_name.toUpperCase())
@@ -400,6 +412,12 @@ if (endUrl != "investments") {
                         $('#usd_balance').hide();
                         $('#token_balance').html(token_name.toUpperCase() + balance_error)
                         $('#token_balance').show();
+                        return false;
+                    }
+                    if (parseFloat(total_amount) < parseFloat(order_detail[token_name.toLowerCase()]['min_sell_amount']) && action == 'sell') {
+                        $('#usd_balance').show();
+                        $('#usd_balance').html(min_tnx_error+'$'+order_detail[token_name.toLowerCase()]['min_sell_amount']);
+                        $('#token_balance').hide();
                         return false;
                     }
                     if (parseFloat(total_tokens) > parseFloat(order_detail[token_name.toLowerCase()]['base_max_size']) && action == 'sell') {
@@ -467,6 +485,13 @@ if (endUrl != "investments") {
             if (parseFloat(total_amount) < parseFloat(order_detail[token_name.toLowerCase()]['min_buy_amount']) && action == 'buy') {
                 $('#usd_balance').show();
                 $('#usd_balance').html(min_tnx_error+'$'+order_detail[token_name.toLowerCase()]['min_buy_amount']);
+                $('#token_balance').hide();
+                return false;
+            }
+
+            if (parseFloat(total_amount) < parseFloat(order_detail[token_name.toLowerCase()]['min_sell_amount']) && action == 'sell') {
+                $('#usd_balance').show();
+                $('#usd_balance').html(min_tnx_error+'$'+order_detail[token_name.toLowerCase()]['min_sell_amount']);
                 $('#token_balance').hide();
                 return false;
             }
@@ -602,13 +627,14 @@ if (endUrl != "investments") {
             let current = $(this);
             let order_action_type = current.html();
             let coin = $(this).closest('.coinDetailSection').find('.token_name').data('coin');
+            // button_status(current, "loading");
             $.post(api['investment/thread'], { 'order_action_type': order_action_type, 'coin': coin }, function (response) {
                 window.location.href = current.attr('href');
             }, 'json')
-                .fail(function () {
-                    modal('#modal-message', { title: __['Error'], message: __['There is something that went wrong!'] });
-                });
-        })
+                // .fail(function () {
+                //     modal('#modal-message', { title: __['Error'], message: __['There is something that went wrong!'] });
+                // });
+            })
 
         function createLine(el, id,color=false) {
 
