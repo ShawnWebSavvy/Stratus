@@ -1,3 +1,7 @@
+var count = parseInt($('.unread').length) ? parseInt($('.unread').length) : "";
+if (count != "") {
+    $(".js_live-notifications").find("span.counterlive").text(count).show();
+}
 function initialize_modal() {
     $(".js_scroller").each(function () {
         var e = $(this),
@@ -79,7 +83,6 @@ function data_heartbeat() {
         $(".js_live-notifications").find(".js_scroller li:first").data("id") || 0;
     /* newsfeed check */
     var posts_stream = $("body .js_posts_stream");
-
     /* "popular" && "saved" & "memories" excluded as not ordered by id */
     if (
         posts_stream.length > 0 &&
@@ -172,8 +175,10 @@ function data_heartbeat() {
                             : $(".js_live-notifications")
                                 .find(".js_scroller")
                                 .html("<ul>" + response.notifications + "</ul>");
-                    var notifications = parseInt(response.notifications_count);
-                    $(".js_live-notifications").find("span.counterlive").text(notifications).show(), notifications_sound;
+                    // var notifications = parseInt(response.notifications_count);
+                    // $(".js_live-notifications").find("span.counterlive").text(notifications).show(), notifications_sound;
+                    var notifications = (parseInt($(".js_live-notifications").find("span.counterlive").text())?parseInt($(".js_live-notifications").find("span.counterlive").text()):0)+ response.notifications_count;
+                    $(".js_live-notifications").find("span.counterlive").text(notifications).show();notifications_sound
                 }
                 if (response.posts && response.posts != null) {
                     //console.log("response.posts->>>>>>>", response.posts);
@@ -203,18 +208,25 @@ function data_heartbeat() {
 }
 // initialize picture crop
 function init_picture_crop(node) {
+
     setTimeout(function () {
-        $("#cropped-profile-picture").rcrop({
+       $("#cropped-profile-picture").rcrop({
             minSize: [200, 200],
             preserveAspectRatio: true,
             grid: true,
         });
-    }, 200);
+    }, 200);    
+   
+    var image_node = node.data("image");
+    var system_url = node.data("systemUrl") ;
+    
     modal("#crop-profile-picture", {
-        image: node.data("image"),
+        image: `${system_url}/includes/wallet-api/get-picture-api.php?picture=${image_node}&pictureFull=&type_url=1`,
         handle: node.data("handle"),
         id: node.data("id"),
     });
+
+  
 }
 
 function init_picture_position() {
@@ -896,6 +908,7 @@ function init_picture_position() {
                             modal("#modal-message", { title: __.Error, message: __["There is something that went wrong!"] });
                         });
                 }),
+                
                 $("body").on("click", ".js_friend-accept, .js_friend-decline", function () {
 
                     var id = $(this).data("uid"),
@@ -911,6 +924,9 @@ function init_picture_position() {
                             api["users/connect"],
                             { do: _do, id: id },
                             function (response) {
+                                var originVar = window.location.host,
+                                locationPage = "";
+                                (locationPage = "localhost" == originVar ? window.location.origin + "/stratus" : window.location.origin);
                                 if (response.callback) {
                                     parent.find(".loader").remove();
                                     accept.show();
@@ -919,17 +935,25 @@ function init_picture_position() {
                                 } else {
                                     if (_do == "friend-accept") {
                                         _this.after(
-                                            '<button type="button" class="btn btn-success btn-delete js_friend-remove" data-uid="' +
-                                            id +
-                                            '"><i class="fa fa-check mr5"></i>' +
-                                            __["Friends"] +
-                                            "</button>"
+                                            // '<button type="button" class="btn btn-success btn-delete js_friend-remove" data-uid="' + id + '"><i class="fa fa-check mr5"></i>' + __["Friends"] + "</button>"
+
+                                            '<button type="button" class="btn btn-success btn-delete js_friend-remove" data-id="' + id + '"><img class="btn_image" src="' + locationPage + '/content/themes/default/images/svg/svgImg/newchecked1.svg"><img class="btn_image_hover" src="' + locationPage + '/content/themes/default/images/svg/svgImg/delete_icon.svg">' + '<span class="btn_image_">' + __.Friends + '</span><span class="btn_image_hover">' + __.Delete + '</span>' + "</button>"
                                         );
                                         !isNaN(parseInt($('.friendsCount').text())) ? $('.friendsCount').html(parseInt($('.friendsCount').text()) + 1) : 0;
                                     }
 
                                     if (_do == "friend-decline") {
-                                        _this.closest('.feeds-item').remove();
+                                        // _this.closest('.feeds-item').remove();
+                                        _this.after(
+                                            '<button type"button" class="btn btn-success js_friend-add" data-uid="' +
+                                            id +
+                                            '"><img class="btn_image_" src="' +
+                                            locationPage +
+                                            '/content/themes/default/images/svg/svgImg/add_friend_icon.svg"><img class="btn_image_hover" src="' +
+                                            locationPage +
+                                            '/content/themes/default/images/svg/svgImg/add_friend-hover.svg">' +
+                                            __["Add Friend"] +
+                                            "</button>");
                                     }
 
 
@@ -958,7 +982,7 @@ function init_picture_position() {
                             function (response) {
                                 var originVar = window.location.host,
                                     locationPage = "";
-                                (locationPage = "localhost" == originVar ? window.location.origin + "/sngine" : window.location.origin),
+                                (locationPage = "localhost" == originVar ? window.location.origin + "/stratus" : window.location.origin),
                                     response.callback
                                         ? (button_status(_this, "reset"), eval(response.callback))
                                         : (button_status(_this, "reset"),
@@ -1087,7 +1111,7 @@ function init_picture_position() {
                             function (response) {
                                 var originVar = window.location.host,
                                     locationPage = "";
-                                (locationPage = "localhost" == originVar ? window.location.origin + "/sngine" : window.location.origin),
+                                (locationPage = "localhost" == originVar ? window.location.origin + "/stratus" : window.location.origin),
                                     response.callback
                                         ? (button_status(_this, "reset"), eval(response.callback))
                                         : "page-like" == _do
@@ -1172,7 +1196,7 @@ function init_picture_position() {
                             function (response) {
                                 var originVar = window.location.host,
                                     locationPage = "";
-                                (locationPage = "localhost" == originVar ? window.location.origin + "/sngine" : window.location.origin),
+                                (locationPage = "localhost" == originVar ? window.location.origin + "/stratus" : window.location.origin),
                                     response.callback
                                         ? (button_status(_this, "reset"), eval(response.callback))
                                         : _this.hasClass("js_join-group")
@@ -1267,7 +1291,7 @@ function init_picture_position() {
                             function (response) {
                                 var originVar = window.location.host,
                                     locationPage = "";
-                                (locationPage = "localhost" == originVar ? window.location.origin + "/sngine" : window.location.origin),
+                                (locationPage = "localhost" == originVar ? window.location.origin + "/stratus" : window.location.origin),
                                     response.callback
                                         ? (button_status(_this, "reset"), eval(response.callback))
                                         : "event-go" == _do
@@ -1294,7 +1318,7 @@ function init_picture_position() {
                             function (response) {
                                 var originVar = window.location.host,
                                     locationPage = "";
-                                (locationPage = "localhost" == originVar ? window.location.origin + "/sngine" : window.location.origin),
+                                (locationPage = "localhost" == originVar ? window.location.origin + "/stratus" : window.location.origin),
                                     response.callback
                                         ? (button_status(_this, "reset"), eval(response.callback))
                                         : "event-interest" == _do

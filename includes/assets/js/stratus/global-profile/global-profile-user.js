@@ -128,8 +128,13 @@ function init_picture_crop(e) {
             preserveAspectRatio: !0,
             grid: !0
         })
-    }, 200), modal("#crop-profile-picture", {
-        image: e.data("image"),
+    }, 200);
+
+    var image_node = e.data("image");
+    var system_url = e.data("systemUrl");
+
+    modal("#crop-profile-picture", {
+        image: `${system_url}/includes/wallet-api/get-picture-api.php?picture=${image_node}&pictureFull=&type_url=1`,
         handle: e.data("handle"),
         id: e.data("id")
     })
@@ -459,6 +464,7 @@ api["data/live"] = ajax_path + "data/global-profile/global-profile-live.php", ap
                         var c;
                         d.hide(), p && p.remove(), $('.publisher-meta[data-meta="' + a + '"]').show(), (c = f.data(a)).source = e.file, f.data(a, c), f.find('.js_publisher-tab[data-tab="' + a + '"]').addClass("activated"), button_status(r, "reset"), $("body .js_publisher").prop("disabled", !1), "" != $("body #album_meta").val() && ($("body .publisher-slider #album-publisher").removeAttr("style"), $("body .publisher-slider #album-publisher").css("display", "block"))
                     }
+                    $(".no_data_img_").css("display", "none");
                 },
                 error: function() {
                     s.prop("disabled", !1), p && p.hide(), "publisher" == i ? (("photos" == a && jQuery.isEmptyObject(f.data("photos")) || "photos" != a) && (d.hide(), f.removeData(a), publisher_tab(f, a)), p && p.remove(), button_status(r, "reset")) : "publisher-mini" == i && button_status(r, "reset"), modal("#modal-message", {

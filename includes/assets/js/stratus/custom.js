@@ -31,4 +31,15 @@ $(document).ready(function () {
     $(".navbar-toggler").click(function () {
         $('body').toggleClass('toggler_show');
     });
+
+    $('#copy_button').click(function () {
+        var _this = $(this);
+        navigator.clipboard.writeText(_this.data('clipboard-text')).then(function () {
+            $('.copy-feedback').show();
+            setTimeout(function () {
+                $('.copy-feedback').hide();
+            }, 1000);
+            
+          });
+    })
 })

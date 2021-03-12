@@ -129,6 +129,7 @@ function load_more(element) {
             function (response) {
                 if ((_this.removeClass("loading"), text.show(), loading.addClass("x-hidden"), response.callback)) eval(response.callback);
                 else if (response.data) {
+                    data["offset"]++;
                     var datatta = response.data;
                     var ArrayVal = datatta.split('<div class="carsds"');
                     var loopArray = [];
@@ -146,9 +147,11 @@ function load_more(element) {
                         bricklayer.append(valuesPost)
                     }
 
-                    if ((data.offset++, response.append ? stream.append(response.data) : stream.prepend(response.data), $(window).width() > 1024)) {
-                        if ($("body #landing_feeds_post_ul").length > 0) var macyInstance = Macy({ container: ".feeds_post_ul", trueOrder: !0, columns: 2, waitForImages: !0 });
-                        if ($("body #feeds_post_ul").length > 0) var macyInstance = Macy({ container: ".feeds_post_ul", trueOrder: !0, columns: 2, waitForImages: !0 }); //macyInstance.recalculate();
+                    if(!stream.hasClass('-list_items wq')){
+                        if ((data.offset++, response.append ? stream.append(response.data) : stream.prepend(response.data), $(window).width() > 1024)) {
+                            if ($("body #landing_feeds_post_ul").length > 0) var macyInstance = Macy({ container: ".feeds_post_ul", trueOrder: !0, columns: 2, waitForImages: !0 });
+                            if ($("body #feeds_post_ul").length > 0) var macyInstance = Macy({ container: ".feeds_post_ul", trueOrder: !0, columns: 2, waitForImages: !0 }); //macyInstance.recalculate();
+                        }
                     }
                     setTimeout(photo_grid(), 200), "messages" == data.get && ((chat_widget = _this.parents(".chat-widget, .panel-messages")), color_chat_box(chat_widget, chat_widget.data("color")));
                 } else remove ? _this.remove() : (_this.addClass("done"), text.text(__["There is no more data to show"]));
@@ -746,3 +749,10 @@ function button_status(e, t) {
             });
         }, 1300);
     });
+    $(document).on("click", "#add_post_show", function () {
+        if ($(this).hasClass("lessMore")) {
+          $(this).removeClass('lessMore');
+        } else {
+          $(this).addClass('lessMore');
+        }
+      });

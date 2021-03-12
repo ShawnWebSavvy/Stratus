@@ -22,7 +22,7 @@
                                 <a href="{$system['system_url']}/global-profile.php?username={$user->_data['user_name']}"
                                     class="btn viewProfileButton">
                                     <img width="30px" height="30px"
-                                        src="{$system['system_upload_assets']}/content/themes/default/images/svg/svgImg/eye-icon.svg" />
+                                        src="{$system['system_url']}/content/themes/default/images/svg/svgImg/eye-icon.svg" />
                                     <span class="ml5 d-none d-lg-inline-block">{__("View Profile")}</span>
                                 </a>
                             </div>
@@ -2274,19 +2274,15 @@
                                         {__("wallet")}
                                         {/if}
                                     </div>
+                                   
                                     <div class="mt20">
-                                        <div class="iconWrap">
-                                            <img  width="30px" height="30px" class="mr10" src="{$system['system_url']}/content/themes/default/images/svg/svgImg/at_icon.svg"/>
-                                            <strong style="font-size: 16px;">{__("Your affiliate link is")}</strong>
+                                       
+                                        <div class="copy-wrap mgb-1-5x mgt-1-5x" style="position: relative;">
+                                            <span class="copy-feedback" style="display: none;">Copied to Clipboard</span>
+                                            <em class="copy-icon fas fa-link"></em>
+                                            <input type="text" class="copy-address" value="{$system['system_url']}/signup/?ref={$user->_data['user_name']}" disabled="">
+                                            <button class="copy-trigger copy-clipboard" id="copy_button" data-clipboard-text="{$system['system_url']}/signup/?ref={$user->_data['user_name']}"><i class="fas fa-copy affilates_copy"></i></button>
                                         </div>
-                                        <div class="text-left linkMainRefrel">
-                                            <a href="{$system['system_url']}/signup/?ref={$user->_data['user_name']}" aria-readonly="true">
-                                                {$system['system_url']}/signup/?ref={$user->_data['user_name']}
-                                            </a>
-                                        </div>
-
-                                        
-
                                         <div class="text-left text-readable mb20">
                                             {__("Share")}<br>
                                             <a href="http://www.facebook.com/sharer.php?u={$system['system_url']}/signup/?ref={$user->_data['user_name']}"

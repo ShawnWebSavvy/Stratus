@@ -22,7 +22,7 @@ class InvestmentHelper {
     public static function get_ticker_price($token)
     {   
         global $system;
-        // echo'<pre>'; print_r($token); die;
+        
         $token_price  =  httpGetCurl('investment/get_ticker/'.$token.'_USDT',$system['investment_api_base_url']);
         if (!isset($token_price['data'])) {
             throw new Exception(__("Something Went Wrong!! Please try again"));
@@ -33,21 +33,24 @@ class InvestmentHelper {
     {   global $db,$system;
         $return = [];
         $tokens  =  httpGetCurl('investment/get_tickers',$system['investment_api_base_url']);
-        // echo '<pre>'; print_r($tokens); die;
-        foreach($tokens['data'] as $i=>$token){
-            $return['token'][$i]['buy_price']=$token['buy_price'];
-            $return['token'][$i]['sell_price']=$token['sell_price'];
-            $return['token'][$i]['name']=$token['name'];
-            $return['token'][$i]['short_name']=$token['short_name'];
-            $return['buy'][$token['short_name']] = round($token['buy_price'],5);
-            $return['sell'][$token['short_name']] = round($token['sell_price'],5);
-            $return['order'][$token['short_name']]['min_buy_amount'] = $token['min_buy_amount'];
-            $return['order'][$token['short_name']]['min_sell_amount'] = $token['min_sell_amount'];
-            $return['order'][$token['short_name']]['base_max_size'] = $token['base_max_size'];
-            if(!empty($user_data)){
-                $return['wallet_amount']['balance'][$token['short_name']]=$user_data[$token['short_name'].'_wallet'];
+        if(!empty($tokens)){
+            foreach($tokens['data'] as $i=>$token){
+                $return['token'][$i]['buy_price']=$token['buy_price'];
+                $return['token'][$i]['sell_price']=$token['sell_price'];
+                $return['token'][$i]['total_wallet_quote_amount'] = self::convertBaseToQuoteCurrency($token['buy_price'],$user_data[$token['short_name'].'_wallet']);
+                $return['token'][$i]['name']=$token['name'];
+                $return['token'][$i]['short_name']=$token['short_name'];
+                $return['buy'][$token['short_name']] = round($token['buy_price'],5);
+                $return['sell'][$token['short_name']] = round($token['sell_price'],5);
+                $return['order'][$token['short_name']]['min_buy_amount'] = $token['min_buy_amount'];
+                $return['order'][$token['short_name']]['min_sell_amount'] = $token['min_sell_amount'];
+                $return['order'][$token['short_name']]['base_max_size'] = $token['base_max_size'];
+                if(!empty($user_data)){
+                    $return['wallet_amount']['balance'][$token['short_name']]=$user_data[$token['short_name'].'_wallet'];
+                }
             }
         }
+       
         return $return;
     }
     public static function update_all_token_price($user_data=null)
@@ -87,25 +90,28 @@ class InvestmentHelper {
             $receive_token = round($token_value-$fees_token,5);
             $params['size'] = $receive_token;
             $result = InvestmentHelper::buySellOrder($params);
-            
             if(isset($result['data']['data']['order_id'])){
                 $order_id = $result['data']['data']['order_id'];
-            // if(isset($order_id)){
+
                 $db->query(sprintf("INSERT INTO investment_transactions (user_id, order_id, base_currency, tokens, currency, tnx_type ,amount, receive_amount, recieve_token, fees, status) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)", secure($user_data['user_id'], 'int'),secure($order_id),secure('usd'), secure($token_value), secure($token_name), secure($action),secure($amount),secure($amount), secure($receive_token), secure($fees), secure('completed') )) or _error("SQL_ERROR_THROWEN");
                 $investment_id = $db->insert_id;
-                // die($db->insert_id.'enter');
+          
                 if($investment_id){
                    
-                    $db->query(sprintf("INSERT INTO ads_users_wallet_transactions (user_id, investment_id, node_type, node_id, amount, type, date,paymentMode) VALUES (%s, %s, %s, %s, %s, %s, %s, %s)", secure($user_data['user_id'], 'int'), secure($investment_id), secure('purchase_coin'), secure(0, 'int'), secure($amount), secure('out'), secure(date('Y-m-d h:i:m')), secure('wallet'))) or _error("SQL_ERROR_THROWEN");
+                    $db->query(sprintf("INSERT INTO ads_users_wallet_transactions (user_id, investment_id, node_type, node_id, amount, type, date,paymentMode) VALUES (%s, %s, %s, %s, %s, %s, %s, %s)", secure($user_data['user_id'], 'int'), secure($investment_id), secure('purchase_coin'), secure(0, 'int'), secure($amount), secure('out'), secure(date('Y-m-d h:i:m')), secure('usd_wallet_balance'))) or _error("SQL_ERROR_THROWEN");
                     $db->query(sprintf('UPDATE users SET user_wallet_balance = IF(user_wallet_balance-%1$s<=0,0,user_wallet_balance-%1$s) WHERE user_id = %2$s', secure($amount), secure($user_data['user_id'], 'int'))) or _error("SQL_ERROR_THROWEN");
                     $wallet_name =$token_name.'_wallet';
-                    // die($receive_token);
+             
                     $db->query(sprintf("UPDATE users SET $wallet_name = $wallet_name + %s WHERE user_id = %s", secure($receive_token), secure($user_data['user_id'], 'int'))) or _error("SQL_ERROR_THROWEN");
                     $db->query(sprintf("INSERT INTO crons (user_id, item_id) VALUES (%s, %s)", secure($user_data['user_id'], 'int'), secure($investment_id))) or _error("SQL_ERROR_THROWEN");
+
+                    // $redisObject = new RedisClass();
+                    // $redisPostKey = 'user-' . $user_data['user_id'];
+                    // $redisObject->deleteValueFromKey($redisPostKey);
+                    // cachedUserData($db, $system, $user_data['user_id'],$user_data['active_session_token']);
                 
                 }
                 return true;
-                // echo '<pre>'; print_r($save); die;
             }else{
                 return false;
             }
@@ -127,30 +133,32 @@ class InvestmentHelper {
             $fees        = $token_price['data']['sell_fees'];
             $fees_amount = round($amount*$fees/100,5);
             $receive_amount = round($amount-$fees_amount,2);
-            // die($token_value);
+  
             $result = InvestmentHelper::buySellOrder($params);
-            // $order_id = rand(999,99999);
             if(isset($result['data']['data']['order_id'])){
-            // if(isset($order_id)){
+           
                 $order_id = $result['data']['data']['order_id'];
-                $db->query(sprintf("INSERT INTO investment_transactions (user_id, order_id, tokens, currency, tnx_type ,amount, receive_amount, recieve_token, fees, status) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s)", secure($user_data['user_id'], 'int'), secure($order_id), secure($token_value), secure($token_name), secure($action),secure($amount),secure($receive_amount), secure($token_value), secure($fees), secure('completed') )) or _error("SQL_ERROR_THROWEN");
+                $db->query(sprintf("INSERT INTO investment_transactions (user_id, order_id, base_currency, tokens, currency, tnx_type ,amount, receive_amount, recieve_token, fees, status) VALUES (%s, %s, %s,%s, %s, %s, %s, %s, %s, %s, %s)", secure($user_data['user_id'], 'int'), secure($order_id), secure($token_name) ,secure($token_value), secure($token_name), secure($action),secure($amount),secure($receive_amount), secure($token_value), secure($fees), secure('completed') )) or _error("SQL_ERROR_THROWEN");
                 $investment_id = $db->insert_id;
                 if($investment_id){
-                    // die($db->insert_id.'enter');
-                    $db->query(sprintf("INSERT INTO ads_users_wallet_transactions (user_id, investment_id, node_type, node_id, amount, type, date,paymentMode) VALUES (%s, %s, %s, %s, %s, %s, %s, %s)", secure($user_data['user_id'], 'int'), secure($investment_id), secure('purchase_coin'), secure(0, 'int'), secure($receive_amount), secure('in'), secure(date('Y-m-d h:i:m')), secure('wallet'))) or _error("SQL_ERROR_THROWEN");
+
+                    $db->query(sprintf("INSERT INTO ads_users_wallet_transactions (user_id, investment_id, node_type, node_id, amount, type, date,paymentMode) VALUES (%s, %s, %s, %s, %s, %s, %s, %s)", secure($user_data['user_id'], 'int'), secure($investment_id), secure('sell_coin'), secure(0, 'int'), secure($receive_amount), secure('in'), secure(date('Y-m-d h:i:m')), secure($token_name.'_wallet'))) or _error("SQL_ERROR_THROWEN");
                     $db->query(sprintf("UPDATE users SET user_wallet_balance = user_wallet_balance + %s WHERE user_id = %s", secure($receive_amount), secure($user_data['user_id'], 'int'))) or _error("SQL_ERROR_THROWEN");
                     $wallet_name =$token_name.'_wallet';
-                    // die($wallet_name);
+                   
                     $db->query(sprintf("UPDATE users SET $wallet_name = $wallet_name - %s WHERE user_id = %s", secure($token_value), secure($user_data['user_id'], 'int'))) or _error("SQL_ERROR_THROWEN");
+
+                    // $redisObject = new RedisClass();
+                    // $redisPostKey = 'user-' . $user_data['user_id'];
+                    // $redisObject->deleteValueFromKey($redisPostKey);
+                    // cachedUserData($db, $system, $user_data['user_id'],$user_data['active_session_token']);
                 }
                 return true;
-                // echo '<pre>'; print_r($save); die;
             }else{
                 return false;
             }
             
         }catch(Exception $e){
-            // echo '<pre>'; print_r($e); die;
             return $false;
         }
         
@@ -215,12 +223,10 @@ class InvestmentHelper {
                     $return['series'][$key1] = round($item*100/$return['total_coin'],2);
                 }
             }else{
-                $return['series'] = array(0.00000000,0.00000000,0.00000000);
+                $return['series'] = array(0.0,0.0,0.0);
             }
             $return['total_balance'] = self::getBtcBlance($user_data,$currency_price);
         }
-        
-       
         // echo '<pre>'; print_r($return); die;
         return $return;
    
@@ -247,7 +253,7 @@ class InvestmentHelper {
 
 
         $total['amount']  = round($apl_total_amount+$eth_total_amount+$btc_total_amount,2);
-        $total['total_token_btc'] =  $total['amount']>0?round($total['amount']/$btc_price, 5):0;
+        $total['total_token_btc'] =  $total['amount']>0?number_format(($total['amount']/$btc_price), 8):0;
         // $eth_price =  $total_eth>0?self::get_ticker_price('ETH_USDT'):0;   
         // echo '<pre>'; print_r($total); die;
         return $total;
