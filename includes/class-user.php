@@ -1352,6 +1352,10 @@ class User
                 $redisObject = new RedisClass();
                 $redisPostKey = 'user-' . $this->_data['user_id'];
                 $redisObject->deleteValueFromKey($redisPostKey);
+                $rediskeyname = 'user-' . $this->_data['user_id'] . '-friends-list';
+                $redisObject->deleteValueFromKey($rediskeyname);
+                /* Remove receiver cache of friends*/
+                $redisObject->deleteValueFromKey('user-' . $id . '-friends-list');
                 cachedUserData($db, $system, $this->_data['user_id'], $this->_data['active_session_token']);
                 break;
 
@@ -1386,6 +1390,8 @@ class User
                 $redisObject->deleteValueFromKey($redisPostKey);
                 $rediskeyname = 'user-' . $this->_data['user_id'] . '-friends-list';
                 $redisObject->deleteValueFromKey($rediskeyname);
+                /* Remove receiver cache of friends*/
+                $redisObject->deleteValueFromKey('user-' . $id . '-friends-list');
                 cachedUserData($db, $system, $this->_data['user_id'], $this->_data['active_session_token']);
                 break;
 
