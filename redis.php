@@ -20,7 +20,10 @@ class RedisClass
         try {
             $redisObj = $this->redis;
             // getting the value from redis
-            return $redisObj->get($key);
+            $data  = $redisObj->get($key);
+            $emptyJson = json_encode(array());
+            $return = (!empty($data)) ? $data : $emptyJson;
+            return $return;
         } catch (Exception $e) {
             echo $e->getMessage();
         }

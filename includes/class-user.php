@@ -1352,6 +1352,10 @@ class User
                 $redisObject = new RedisClass();
                 $redisPostKey = 'user-' . $this->_data['user_id'];
                 $redisObject->deleteValueFromKey($redisPostKey);
+                $rediskeyname = 'user-' . $this->_data['user_id'] . '-friends-list';
+                $redisObject->deleteValueFromKey($rediskeyname);
+                /* Remove receiver cache of friends*/
+                $redisObject->deleteValueFromKey('user-' . $id . '-friends-list');
                 cachedUserData($db, $system, $this->_data['user_id'], $this->_data['active_session_token']);
                 break;
 
@@ -1386,6 +1390,8 @@ class User
                 $redisObject->deleteValueFromKey($redisPostKey);
                 $rediskeyname = 'user-' . $this->_data['user_id'] . '-friends-list';
                 $redisObject->deleteValueFromKey($rediskeyname);
+                /* Remove receiver cache of friends*/
+                $redisObject->deleteValueFromKey('user-' . $id . '-friends-list');
                 cachedUserData($db, $system, $this->_data['user_id'], $this->_data['active_session_token']);
                 break;
 
@@ -5025,7 +5031,7 @@ class User
                 //Video thumbnails
                 if ($args['video_thumbnail'] == "") {
                     $helpers = new helpers();
-                    $result_ = $helpers->makeVideosThumbnails($system['system_uploads'] . '/' . $args['video']->source, 5, 'prod');
+                    $result_ = $helpers->makeVideosThumbnails($system['system_uploads'] . '/' . $args['video']->source, 4, 'prod');
                     if (sizeof($result_) > 0) :
                         //$db->query(sprintf("UPDATE posts_videos SET thumbnail = $result_['thumb'] WHERE video_id = %s ", secure($post['video']['video_id'], 'int'))) or _error("SQL_ERROR_THROWEN");
                         $db->query(sprintf("UPDATE posts_videos SET thumbnail = 'thumbnails/" . $result_['thumb'] . "' WHERE video_id = %s", secure($post['video']['video_id']))) or _error("SQL_ERROR_THROWEN");
@@ -6656,11 +6662,13 @@ class User
         }
         $redisPostKey = 'user-' . $this->_data['user_id'] . '-posts';
         $redisObject = new RedisClass();
-        fetchAndSetDataOnPostReaction($system, $this, $redisObject, $redisPostKey);
+        $redisObject->deleteValueFromKey($redisPostKey);
+        //fetchAndSetDataOnPostReaction($system, $this, $redisObject, $redisPostKey);
 
         //profile post
         $redisTimelinekey = 'profile-posts-' . $this->_data['user_id'];
-        fetchAndSetDataOnPostReaction($system, $this, $redisObject, $redisTimelinekey);
+        $redisObject->deleteValueFromKey($redisTimelinekey);
+        //fetchAndSetDataOnPostReaction($system, $this, $redisObject, $redisTimelinekey);
         return $totalCounts;
     }
 
@@ -7870,27 +7878,28 @@ class User
                 $redisTimelinekey = 'user-' . $ids . '-posts'; //'profile-posts-' . $ids;
                 $isKeyExistOnRedis = $redisObject->isRedisKeyExist($redisTimelinekey);
                 if ($isKeyExistOnRedis) {
-                    $getDataFromRedis = $redisObject->getValueFromKey($redisTimelinekey);
-                    $jsonValue = json_decode($getDataFromRedis, true);
-                    if (count($jsonValue) > 0 && count($arrayforrepalce) > 0) {
-                        $i = 0;
-                        foreach ($jsonValue as $values) {
-                            if ($jsonValue[$i]['post_id'] === $post_id) {
-                                $jsonValue[$i]['reactions'] = $arrayforrepalce['reactions'];
-                                $jsonValue[$i]["reaction_like_count"] = $arrayforrepalce['reaction_like_count'];
-                                $jsonValue[$i]["reaction_love_count"] = $arrayforrepalce['reaction_love_count'];
-                                $jsonValue[$i]["reaction_haha_count"] = $arrayforrepalce['reaction_haha_count'];
-                                $jsonValue[$i]["reaction_yay_count"] = $arrayforrepalce['reaction_yay_count'];
-                                $jsonValue[$i]["reaction_wow_count"] = $arrayforrepalce['reaction_wow_count'];
-                                $jsonValue[$i]["reaction_sad_count"] = $arrayforrepalce['reaction_sad_count'];
-                                $jsonValue[$i]["reaction_angry_count"] = $arrayforrepalce['reaction_angry_count'];
-                                $jsonValue[$i]["reactions_total_count"] = $arrayforrepalce['reactions_total_count'];
-                            }
-                            $i++;
-                        }
-                        $data = json_encode($jsonValue);
-                        $redisObject->setValueWithRedis($redisTimelinekey, $data);
-                    }
+                    $redisObject->deleteValueFromKey($redisTimelinekey);
+                    // $getDataFromRedis = $redisObject->getValueFromKey($redisTimelinekey);
+                    // $jsonValue = json_decode($getDataFromRedis, true);
+                    // if (count($jsonValue) > 0 && count($arrayforrepalce) > 0) {
+                    //     $i = 0;
+                    //     foreach ($jsonValue as $values) {
+                    //         if ($jsonValue[$i]['post_id'] === $post_id) {
+                    //             $jsonValue[$i]['reactions'] = $arrayforrepalce['reactions'];
+                    //             $jsonValue[$i]["reaction_like_count"] = $arrayforrepalce['reaction_like_count'];
+                    //             $jsonValue[$i]["reaction_love_count"] = $arrayforrepalce['reaction_love_count'];
+                    //             $jsonValue[$i]["reaction_haha_count"] = $arrayforrepalce['reaction_haha_count'];
+                    //             $jsonValue[$i]["reaction_yay_count"] = $arrayforrepalce['reaction_yay_count'];
+                    //             $jsonValue[$i]["reaction_wow_count"] = $arrayforrepalce['reaction_wow_count'];
+                    //             $jsonValue[$i]["reaction_sad_count"] = $arrayforrepalce['reaction_sad_count'];
+                    //             $jsonValue[$i]["reaction_angry_count"] = $arrayforrepalce['reaction_angry_count'];
+                    //             $jsonValue[$i]["reactions_total_count"] = $arrayforrepalce['reactions_total_count'];
+                    //         }
+                    //         $i++;
+                    //     }
+                    //     $data = json_encode($jsonValue);
+                    //     $redisObject->setValueWithRedis($redisTimelinekey, $data);
+                    // }
                 }
             }
         }

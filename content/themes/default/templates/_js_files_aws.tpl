@@ -380,7 +380,7 @@
 <script src="{$system['system_url']}/includes/assets/js/stratus/custom.js?{$cacheremovejs}" {if !$user->_logged_in}defer{/if}></script>
 
 {if $user->_logged_in}
-    <script src="{$system['system_uploads_assets']}/includes/assets/js/stratus/user.js?{$cacheremovejs}" {if !$user->_logged_in}defer{/if}></script>
+    <script src="{$system['system_url']}/includes/assets/js/stratus/user.js?{$cacheremovejs}" {if !$user->_logged_in}defer{/if}></script>
     <script src="{$system['system_uploads_assets']}/includes/assets/js/stratus/post.js?{$cacheremovejs}" {if !$user->_logged_in}defer{/if}></script>
     <script src="{$system['system_uploads_assets']}/includes/assets/js/stratus/chat.js?{$cacheremovejs}" {if !$user->_logged_in}defer{/if}></script>
     <script src="{$system['system_uploads_assets']}/includes/assets/js/stratus/showads.js?{$cacheremovejs}" {if !$user->_logged_in}defer{/if}></script>
@@ -421,6 +421,9 @@
     <!-- Dependencies Plugins [JS] -->
 
     <!-- Sngine [JS] -->
+
+    <link rel="stylesheet" href="{$system['system_uploads_assets']}/includes/assets/js/plugins/advanceSearch/selectSearch.min.css" type="text/css"> 
+    <script type="text/javascript" src="{$system['system_uploads_assets']}/includes/assets/js/plugins/advanceSearch/selectSearch.min.js" ></script>
     <script src="{$system['system_uploads_assets']}/includes/assets/js/stratus/admin.js"></script>
     <!-- Sngine [JS] -->
 

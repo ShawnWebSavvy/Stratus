@@ -2,7 +2,17 @@
   padding: 30px;
   border-radius: 15px;
 }
-
+.row.right-side-content-ant div.coinSectionWrap > .coinDetailSection:nth-child(4) {
+	display: flex !important;
+	flex-direction: column;
+	justify-content: space-between;
+}
+@media (max-width: 1199px) {
+  .investmentWrapSection .delistingsUpdate {
+    background-size: cover;
+    border-radius: 30px;
+  }
+}
 @media (max-width: 991px) {
   .investmentWrapSection {
     padding: 0px;
@@ -21,12 +31,7 @@
   padding: 30px;
 }
 
-@media (max-width: 1199px) {
-  .investmentWrapSection .delistingsUpdate {
-    background-size: cover;
-    border-radius: 30px;
-  }
-}
+
 
 @media (max-width: 991px) {
   .investmentWrapSection .delistingsUpdate {
@@ -144,8 +149,17 @@
 }
 
 @media (max-width: 991px) {
-  .coinSectionWrap .coinDetailSection {
-    display: none;
+  .row.right-side-content-ant div.coinSectionWrap > .coinDetailSection:nth-child(4){
+    display: none !important;
+  }
+  .row.right-side-content-ant div.coinSectionWrap > .coinDetailSection:nth-child(3){
+    display: none !important;
+  }
+  .row.right-side-content-ant div.coinSectionWrap > .coinDetailSection:nth-child(2){
+    display: none !important;
+  }
+  .row.right-side-content-ant div.coinSectionWrap > .coinDetailSection:nth-child(1){
+    display: none !important;
   }
 }
 
@@ -782,6 +796,7 @@
   padding: 24px;
   padding-bottom: 40px;
   border-bottom: 2px solid #e5e8ef;
+  flex-wrap: wrap ;
 }
 
 .coinDetailPrice .textSection {
@@ -1425,4 +1440,22 @@ select.flat-select:hover {
     font-size: 25px;
     font-weight: 600;
     color: #a7b4cb;
+}
+.buySellBox span {
+	font-size: 14px;
+	font-weight: 500;
+	color: #808191;
+}
+
+.buySellBox p {
+	justify-content: center;
+	padding-top: 10px;
+}
+
+.comingSoon1 {
+	position: absolute;
+	top: 220%;
+	left: 50%;
+	transform: translate(-50% , -50% );
+	width: 100%;
 }

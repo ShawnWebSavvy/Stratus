@@ -908,6 +908,7 @@ function init_picture_position() {
                             modal("#modal-message", { title: __.Error, message: __["There is something that went wrong!"] });
                         });
                 }),
+                
                 $("body").on("click", ".js_friend-accept, .js_friend-decline", function () {
 
                     var id = $(this).data("uid"),
@@ -923,6 +924,9 @@ function init_picture_position() {
                             api["users/connect"],
                             { do: _do, id: id },
                             function (response) {
+                                var originVar = window.location.host,
+                                locationPage = "";
+                                (locationPage = "localhost" == originVar ? window.location.origin + "/stratus" : window.location.origin);
                                 if (response.callback) {
                                     parent.find(".loader").remove();
                                     accept.show();
@@ -931,17 +935,25 @@ function init_picture_position() {
                                 } else {
                                     if (_do == "friend-accept") {
                                         _this.after(
-                                            '<button type="button" class="btn btn-success btn-delete js_friend-remove" data-uid="' +
-                                            id +
-                                            '"><i class="fa fa-check mr5"></i>' +
-                                            __["Friends"] +
-                                            "</button>"
+                                            // '<button type="button" class="btn btn-success btn-delete js_friend-remove" data-uid="' + id + '"><i class="fa fa-check mr5"></i>' + __["Friends"] + "</button>"
+
+                                            '<button type="button" class="btn btn-success btn-delete js_friend-remove" data-id="' + id + '"><img class="btn_image" src="' + locationPage + '/content/themes/default/images/svg/svgImg/newchecked1.svg"><img class="btn_image_hover" src="' + locationPage + '/content/themes/default/images/svg/svgImg/delete_icon.svg">' + '<span class="btn_image_">' + __.Friends + '</span><span class="btn_image_hover">' + __.Delete + '</span>' + "</button>"
                                         );
                                         !isNaN(parseInt($('.friendsCount').text())) ? $('.friendsCount').html(parseInt($('.friendsCount').text()) + 1) : 0;
                                     }
 
                                     if (_do == "friend-decline") {
-                                        _this.closest('.feeds-item').remove();
+                                        // _this.closest('.feeds-item').remove();
+                                        _this.after(
+                                            '<button type"button" class="btn btn-success js_friend-add" data-uid="' +
+                                            id +
+                                            '"><img class="btn_image_" src="' +
+                                            locationPage +
+                                            '/content/themes/default/images/svg/svgImg/add_friend_icon.svg"><img class="btn_image_hover" src="' +
+                                            locationPage +
+                                            '/content/themes/default/images/svg/svgImg/add_friend-hover.svg">' +
+                                            __["Add Friend"] +
+                                            "</button>");
                                     }
 
 
@@ -970,7 +982,7 @@ function init_picture_position() {
                             function (response) {
                                 var originVar = window.location.host,
                                     locationPage = "";
-                                (locationPage = "localhost" == originVar ? window.location.origin + "/sngine" : window.location.origin),
+                                (locationPage = "localhost" == originVar ? window.location.origin + "/stratus" : window.location.origin),
                                     response.callback
                                         ? (button_status(_this, "reset"), eval(response.callback))
                                         : (button_status(_this, "reset"),
@@ -1099,7 +1111,7 @@ function init_picture_position() {
                             function (response) {
                                 var originVar = window.location.host,
                                     locationPage = "";
-                                (locationPage = "localhost" == originVar ? window.location.origin + "/sngine" : window.location.origin),
+                                (locationPage = "localhost" == originVar ? window.location.origin + "/stratus" : window.location.origin),
                                     response.callback
                                         ? (button_status(_this, "reset"), eval(response.callback))
                                         : "page-like" == _do
@@ -1184,7 +1196,7 @@ function init_picture_position() {
                             function (response) {
                                 var originVar = window.location.host,
                                     locationPage = "";
-                                (locationPage = "localhost" == originVar ? window.location.origin + "/sngine" : window.location.origin),
+                                (locationPage = "localhost" == originVar ? window.location.origin + "/stratus" : window.location.origin),
                                     response.callback
                                         ? (button_status(_this, "reset"), eval(response.callback))
                                         : _this.hasClass("js_join-group")
@@ -1279,7 +1291,7 @@ function init_picture_position() {
                             function (response) {
                                 var originVar = window.location.host,
                                     locationPage = "";
-                                (locationPage = "localhost" == originVar ? window.location.origin + "/sngine" : window.location.origin),
+                                (locationPage = "localhost" == originVar ? window.location.origin + "/stratus" : window.location.origin),
                                     response.callback
                                         ? (button_status(_this, "reset"), eval(response.callback))
                                         : "event-go" == _do
@@ -1306,7 +1318,7 @@ function init_picture_position() {
                             function (response) {
                                 var originVar = window.location.host,
                                     locationPage = "";
-                                (locationPage = "localhost" == originVar ? window.location.origin + "/sngine" : window.location.origin),
+                                (locationPage = "localhost" == originVar ? window.location.origin + "/stratus" : window.location.origin),
                                     response.callback
                                         ? (button_status(_this, "reset"), eval(response.callback))
                                         : "event-interest" == _do

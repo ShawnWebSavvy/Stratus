@@ -131,6 +131,11 @@
                                                 List Transactions
                                             </a>
                                         </li>
+                                        <li> 
+                                            <a href="{$system['system_url']}/{$control_panel['url']}/custom-referrals">
+                                                Custom Referrals
+                                            </a>
+                                        </li>
                                     </ul>
                                 </div> 
                             </li>

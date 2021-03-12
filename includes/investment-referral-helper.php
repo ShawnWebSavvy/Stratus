@@ -36,8 +36,8 @@ class InvestmentReferralHelper
             return ($amount > 0) ? $amount : 0;
         }
 		return 0;
-	}
-
+    }
+    
     // public static function getLists($user_id, $level=10, $out='full') {
     //     $full = $only = [];
     //     $user = $user_id;
@@ -58,18 +58,66 @@ class InvestmentReferralHelper
     //     $return[$user] = ($out=='only'||$out=='id') ? $only : $full;
     //     return $return;
     // }
+    
+    public function calculateCustomBonusAmount($detail) {
+
+        if (!empty($detail)) {
+            if($detail['type']=='percent') {
+                $token_amount = $this->transaction->amount;
+                $amount = $detail['amount'];
+                return ($token_amount * $amount / 100);
+            } else {
+                return $amount;
+            }
+            return ($amount > 0) ? $amount : 0;
+        }
+		return 0;
+    }
 
     /* @function createTransaction()  @version v1.1  @since 1.0.3 */
 	protected function createTransaction($level, $user_id, $prev_user=null) {
         global $db, $system;
-   
+     
         $amount = $this->calculate($level);
-        // echo '<pre>'; print_r($amousnt); die;
+     
+        if($amount < 0 || $amount == 0){
+            return false;
+        }
 
-        if($amount < 0&&$amount == 0) return false;
-        // if($token > $unsold) return false;
+        $custom_bonus = $db->query(sprintf("SELECT * FROM user_custom_referrals where user_id=$user_id")) or _error("SQL_ERROR_THROWEN"); 
+        if ($custom_bonus->num_rows > 0 && $amount>0) {
+            
+            $custom_bonus = $custom_bonus->fetch_assoc();
+            $COINS = json_decode($custom_bonus['referral'],true);
+            $key = array_search($this->transaction->token_name.'_usdt', array_column($COINS,'coin'));
+            $COINS = $COINS[$key];
+            
+            if(!empty($COINS)&&$COINS['coin']==$this->transaction->token_name.'_usdt'){
+                
+                $customAmount = $this->calculateCustomBonusAmount($COINS);
+              
+                if($customAmount>$amount){
+                    
+                    $amount = $customAmount;
+                    
+                    $extra = $this->getCustomBonusMeta($COINS, $user_id, $prev_user);
+                   
+                }else{
+                    $extra = $this->getBonusMeta($level, $user_id, $prev_user);
+                }
+            
+            }else{
+                $extra = $this->getBonusMeta($level, $user_id, $prev_user);
+            }
+           
 
-        try{
+        }else{
+            $extra = $this->getBonusMeta($level, $user_id, $prev_user);
+        }
+
+        
+
+        try{    
             $transaction = null;
             $zero_level = ($level=='lv0'||$level=='level0') ? true : false;
             $order_id = rand(100, 9999);
@@ -77,9 +125,9 @@ class InvestmentReferralHelper
             $base_currency = 'usd';
             $currency = NULL;
             $tnx_type = ($zero_level==true) ? 'bonus' : 'referral';
-    
+            $extra = json_encode($extra);
             $details = ($zero_level==true) ? 'Bonus Token for Referral Join' : 'Referral Bonus on Token Purchase';
-            $extra = json_encode($this->getBonusMeta($level, $user_id, $prev_user));
+           
             $check_exist = $db->query(sprintf("SELECT * FROM investment_transactions WHERE user_id = $user_id and tnx_type='referral' and json_contains(extra,'$extra')")) or _error("SQL_ERROR_THROWEN");
          
             if ($check_exist->num_rows == 0) {
@@ -228,6 +276,30 @@ class InvestmentReferralHelper
                 'type'  => ($joined) ? 'join' : 'invite',
                 // 'allow' => $this->isAllow($level),
                 // 'count' => $this->countTnx($user_id, $level),
+                'amount' => $this->transaction->amount,
+                'tnx_by' => $this->transaction->user_id,
+                'order_id' => $this->transaction->order_id,
+            ];
+        }
+
+        return $return;
+    }
+
+    public function getCustomBonusMeta($detail, $user_id=null, $prev_user=null) {
+      
+        $bonus  = $detail['amount'];
+        $calc   = $detail['type'];
+        $refer  = $this->getWhoRefer($user_id)->id ?? 0;
+        $whois  = $prev_user ?? $refer;
+
+        $return = [];
+        if($bonus > 0) {
+            $return = [
+                'level' => 'custom bonus',
+                'bonus' => $bonus,
+                'calc'  => $calc,
+                'who'   => $whois,
+                'type'  => 'invite',
                 'amount' => $this->transaction->amount,
                 'tnx_by' => $this->transaction->user_id,
                 'order_id' => $this->transaction->order_id,

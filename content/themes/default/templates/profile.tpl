@@ -126,7 +126,7 @@
                               <button type="button" class="btn btn-success btn-delete js_friend-remove"
                                  data-uid="{$profile['user_id']}">
                                  <img class="btn_image"
-                                    src="{$system['system_url']}/content/themes/default/images/svg/svgImg/plus_icon.svg">
+                                    src="{$system['system_url']}/content/themes/default/images/svg/svgImg/newchecked1.svg">
                                  <img class="btn_image_hover"
                                     src="{$system['system_url']}/content/themes/default/images/svg/svgImg/delete_icon.svg">
                                  <span class="btn_image_"> {__("Friends")} </span>
