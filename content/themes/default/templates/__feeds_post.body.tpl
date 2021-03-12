@@ -528,8 +528,8 @@
             -
             {if !$_post['is_anonymous'] && !$_shared && $_post['manage_post'] && $_post['user_type'] == 'user' &&
             !$_post['in_group'] && !$_post['in_event'] && $_post['post_type'] != "product" && $_post['post_type'] !=
-            "article"}
-            <!-- privacy -->
+            "article" && $_post['author_id']==$user->_data['user_id']}
+            <!-- privacy --> 
             {if $_post['privacy'] == "me"}
             <div class="btn-group" data-toggle="tooltip" data-placement="top" data-value="me"
                 title='{__("Shared with: Only Me")}'>
