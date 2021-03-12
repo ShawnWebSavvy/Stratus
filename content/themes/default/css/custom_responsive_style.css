@@ -1,6 +1,6 @@
 @import "https://cdn1.stratus.co/content/themes/default/css/buttonCustom.css";
 .js_audio:focus {outline: none !important;}
-._share-dropdown_.dropdown-menu.fade.show{right: 0px !important;top: 44px !important;left: auto !important;transform: none !important;}
+/* ._share-dropdown_.dropdown-menu.fade.show{right: 0px !important;top: 44px !important;left: auto !important;transform: none !important;} */
 .dropdown-menu-right {right: -2px;}
 .user-popover-wrapper{z-index:999999999;}
 .addproductWrap .colored-text-wrapper .js_publisher-scraper {height: 25px !important;}
