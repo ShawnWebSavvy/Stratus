@@ -18,7 +18,7 @@ class helpers
   function makeVideosThumbnails($s3VideoLink, $timeInterval, $env)
   {
 
-    //$cdnLink = ($env == 'stage') ? 'https://cdn.stratus-stage.xyz/uploads/' : 'https://cdn1.stratus.co/uploads/';
+    //$cdnLink = ($env == 'stage') ? 'https://cdn.stratus-stage.xyz/uploads/' : 'https://cdn.stratus-stage.xyz/uploads/';
 
     $videoLink = $s3VideoLink;
 
