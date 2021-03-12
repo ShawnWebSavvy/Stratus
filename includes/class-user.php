@@ -16893,6 +16893,8 @@ class User
         unset($_COOKIE[$this->_cookie_user_token]);
         setcookie($this->_cookie_user_id, NULL, -1, '/');
         setcookie($this->_cookie_user_token, NULL, -1, '/');
+        header("Location: ".PLAYTUBE_LINK);
+        exit();
     }
 
 
