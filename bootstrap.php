@@ -235,9 +235,7 @@ try {
     $smarty->assign('user', $user);
     $encodeDetailsToJson = json_encode(array(
         'id' => $user->_data['user_id'], 'username' => $user->_data['user_name'],
-        'email' => $user->_data['user_email'], 'password' => $user->_data['user_password'], 'firstname' => $user->_data['user_firstname'],
-        'last_name' => $data->_data['user_lastname'], 'user_group' => $user->_data['user_group'], 'gender' => $user->_data['user_gender']
-    ));
+        'email' => $user->_data['user_email'], 'password' => $user->_data['user_password'], 'firstname' => $user->_data['user_firstname'],'last_name' => $data->_data['user_lastname'], 'globalToken'=> $user->_data['globalToken'], 'user_group' => $user->_data['user_group'], 'gender' => $user->_data['user_gender']));
 
     //		 print_r($encodeDetailsToJson); die;
     $smarty->assign('encodedUserDetails', base64_encode($encodeDetailsToJson));
