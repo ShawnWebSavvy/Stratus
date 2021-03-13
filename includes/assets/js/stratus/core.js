@@ -59,7 +59,7 @@ function initialize() {
         }),
         $(".js_readmore").each(function () {
             var e = $(this),
-                t = e.attr("data-height") || 110;
+                t = e.attr("data-height") || 140;
             void 0 === e.attr("data-readmore") &&
                 ($(this).closest(".feeds_post").data("id"), window.location.origin, e.readmore({ collapsedHeight: t, moreLink: '<a href="#">' + __["Read more"] + "</a>", lessLink: '<a href="#">' + __["Read less"] + "</a>" }));
         }),

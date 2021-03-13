@@ -892,7 +892,9 @@
                         <div class="card-body">
                            {if $profile['photos']}
                            <ul class="row no-gutters">
-
+                              {foreach $profile['photos'] as $photo}
+                                  {include file='__feeds_photo.tpl' _context="photos"}
+                              {/foreach}
                            </ul>
                            <!-- see-more -->
                            <div class="alert alert-info see-more mt20 js_see-more" data-get="photos"
