@@ -4502,7 +4502,7 @@ class User
                 }
                 // echo'<pre>'; print_r($profile);die;
             }
-        } else {
+        } elseif ($type == "user") {
             /* get page info */
             $get_profile = $db->query(sprintf("SELECT * FROM pages WHERE page_id = %s", secure($id, 'int'))) or _error("SQL_ERROR_THROWEN");
             if ($get_profile->num_rows > 0) {
@@ -4510,6 +4510,39 @@ class User
                 $profile['page_picture'] = get_picture($profile['page_picture'], "page");
                 /* check if the viewer liked the page */
                 $profile['i_like'] = $this->check_page_membership($this->_data['user_id'], $id);
+            }
+        }elseif ($type == "groups") {
+            /* get page info */
+            $query = "SELECT * FROM `groups` WHERE `group_id` = ".$id." ORDER BY `group_id` DESC";
+            $get_profile = $db->query(sprintf($query)) or _error("SQL_ERROR_THROWEN");
+            if ($get_profile->num_rows > 0) {
+                $profile = $get_profile->fetch_assoc();
+                $profile['group_picture'] = get_picture($profile['group_picture'], "group");
+                if($profile['group_picture']){
+                    $checkImage = image_exist($profile['group_picture']);
+                    if ($checkImage != 200) {
+                        $profile['group_picture'] = get_picture('', "group");
+                    }
+                }
+                /* check if the viewer liked the page */
+                $profile['i_like'] = $this->check_group_membership($this->_data['user_id'], $id);
+            }
+        }elseif ($type == "events") {
+            /* get page info */
+            $get_profile = $db->query(sprintf("SELECT * FROM events WHERE event_id = %s", secure($id, 'int'))) or _error("SQL_ERROR_THROWEN");
+            $query = "SELECT * FROM `events` WHERE `event_id` = ".$id." ORDER BY `group_id` DESC";
+            $get_profile = $db->query(sprintf($query)) or _error("SQL_ERROR_THROWEN");
+            if ($get_profile->num_rows > 0) {
+                $profile = $get_profile->fetch_assoc();
+                $profile['group_picture'] = get_picture($profile['group_picture'], "group");
+                if($profile['group_picture']){
+                    $checkImage = image_exist($profile['group_picture']);
+                    if ($checkImage != 200) {
+                        $profile['group_picture'] = get_picture('', "group");
+                    }
+                }
+                /* check if the viewer liked the page */
+                $profile['i_like'] = $this->check_group_membership($this->_data['user_id'], $id);
             }
         }
         return $profile;

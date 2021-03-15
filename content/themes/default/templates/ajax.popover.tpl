@@ -120,7 +120,7 @@
     <!-- message -->
     {else}
     <!-- edit -->
-    <a href="{$system['system_url']}/settings/profile" class="btn btn-sm cmn_btn">
+    <a href="{$system['system_url']}/settings/profile" class="btn btn-sm cmn_btn" style="margin: 0 auto;">
       <i class="fa fa-pencil-alt mr5"></i>{__("Update Info")}
     </a>
     <!-- edit -->
@@ -128,8 +128,38 @@
   </div>
 </div>
 <!-- user popover -->
-{else}
+{elseif $type == 'groups'}
 <!-- page popover -->
+<div class="user-popover-content">
+  <div class="user-card">
+    <div class="user-card-cover"></div>
+    <div class="user-card-avatar">
+      <img class="img-fluid" src="{$profile['group_picture']}" alt="{$profile['group_title']}" />
+    </div>
+    <div class="user-card-info">
+      <a class="name" href="{$system['system_url']}/groups/{$profile['group_name']}">{$profile['group_title']}</a>
+      <div class="info">{$profile['group_members']} {__("Members")}</div>
+    </div>
+  </div>
+  <div class="buttonWrapPopOver">
+    <!-- like -->
+    {if $profile['i_like']}
+    <button type="button" class="btn btn-success btn-delete js_leave-group" data-id="{$profile['group_id']}" data-privacy="{$profile['group_privacy']}">
+      <i class="fa fa-check mr5"></i>Joined
+    </button>
+    {else}
+    <button type="button" class="btn btn-success js_join-group" data-id="{$profile['group_id']}" data-privacy="{$profile['group_privacy']}">
+      <img class="btn_image_" src="{$system['system_url']}/content/themes/default/images/svg/svgImg/add_friend_icon.svg" />
+      <img class="btn_image_hover" src="{$system['system_url']}/content/themes/default/images/svg/svgImg/add_friend-hover.svg" />
+    Join
+    </button>
+    
+    {/if}
+    <!-- like -->
+  </div>
+</div>
+<!-- page popover -->
+{else}
 <div class="user-popover-content">
   <div class="user-card">
     <div class="user-card-cover"></div>
@@ -161,5 +191,4 @@
     <!-- like -->
   </div>
 </div>
-<!-- page popover -->
 {/if}
