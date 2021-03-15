@@ -433,6 +433,7 @@ button:focus{outline:none !important;box-shadow:none;}
 .about-list .about-list-item.d-flex{align-items:center;}
 .about_content_sec > .addBioGlobal {margin-bottom: 15px; }
 .post-edit .js_autosize.js_mention {max-height: 88px;overflow: auto;}
+.post-localhub .post .post-edit .comment-form .emoji-menu{bottom: auto;top: 30px;}
 .chat-to.clearfix.js_autocomplete-tags .tags {position: relative;z-index: 1;}
 ._mob-icons ,.__mob-icons_ {display: none;}
 .blog-content .post-avatar {z-index: 0;}

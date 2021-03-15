@@ -44,7 +44,7 @@
         href="{$system['system_uploads_assets']}/content/themes/default/css/live_video_style.css">
     <link rel="stylesheet" href="{$system['system_uploads_assets']}/content/themes/default/css/bootstrap.min.css">
     <link rel="stylesheet" type='text/css'
-        href="{$system['system_uploads_assets']}/content/themes/default/css/landingcss.css">
+        href="{$system['system_url']}/content/themes/default/css/landingcss.css">
     <link rel="stylesheet" type='text/css'
         href="{$system['system_uploads_assets']}/content/themes/default/css/landingCustom.css">
     <script src="{$system['system_url']}/includes/assets/js/stratus/lazysizes.min.js"></script>
