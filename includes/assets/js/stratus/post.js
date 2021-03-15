@@ -1127,10 +1127,6 @@ $(function () {
                 live_post_id = _this.parents(".post").data("id"),
                 lightbox = $(render_template("#lightbox-live", { post_id: live_post_id })),
                 live_video = $('#js_live-video');
-                
-            
-            $("body").addClass("lightbox-open").append(lightbox.fadeIn("fast"));
-           
             var client = AgoraRTC.createClient({ mode: "live", codec: "vp8" });
             AgoraRTC.Logger.setLogLevel(AgoraRTC.Logger.NONE),
                 $.post(
@@ -1142,9 +1138,9 @@ $(function () {
                             $('.lightbox').remove();
                             eval(response.callback);
                         } else if (response.live_ended == "live_ended") {
-                            lightbox.find('.lightbox-preview').replaceWith(response.live_data);
-                            lightbox.find('.lightbox-post').replaceWith(response.lightbox);
+                            liveVideoRunningUpdate();
                         } else {
+                            $("body").addClass("lightbox-open").append(lightbox.fadeIn("fast"));
                             lightbox.find('#js_live-video').show();
                             lightbox.find('.lightbox-post').replaceWith(response.lightbox);
                             if(response.live_ended) {
@@ -2029,4 +2025,24 @@ $(function () {
                             }, 500));
                 }
         });
+    
+        liveVideoRunningUpdate();
+        setInterval(liveVideoRunningUpdate, 500);
+        function liveVideoRunningUpdate(){
+            $('.js_lightbox-live').each(function(index, val)
+        {
+            var _this = $(this),
+            live_post_id = _this.parents(".post").data("id");
+            $.post(
+                api["live/reaction"],
+                { do: "update_live_post", post_id: live_post_id },
+                function (response) { 
+                    if (response.live_data) {
+                        _this.html(response.live_data);
+                        _this.attr('Class','');
+                    }
+                }
+            )    
+        });     
+        }
 });
