@@ -59,6 +59,9 @@ try {
 				if(!in_array($_POST['product']->status, array('new', 'old'))) {
 					return_json( array('error' => true, 'message' => __("Please select valid product status")) );
 				}
+				if(!in_array($_POST['photos']->status, array())) {
+					return_json( array('error' => true, 'message' => __("Please upload image for product")) );
+				}
 			}
 			/* filter photos */
 			$photos = array();
