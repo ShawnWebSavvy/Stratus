@@ -235,10 +235,17 @@ function button_status(e, t) {
             if (element.find(".js_hidden-section").length > 0 && !element.find(".js_hidden-section").is(":visible")) return element.find(".js_hidden-section").slideDown(), !1;
             button_status(submit, "loading"), "undefined" != typeof tinyMCE && tinyMCE.triggerSave();
             var data = element.hasClass("js_ajax-forms") ? element.serialize() : element.find("select, textarea, input").serialize();
+            var systemUrl = element.data('systemUrl');
+            if(systemUrl){
+              var username = element.find("input[name='username']").val();
+             }
             $.post(
                 ajax_path + url,
                 data,
                 function (response) {
+                    if(response.success&&systemUrl&&username){
+                        $("#sidebarHiddSwip .profile-link").attr("href", `${systemUrl}/${username}`);
+                     } 
                     button_status(submit, "reset"),
                         response.error
                             ? (success.is(":visible") && success.hide(), error.html(response.message).slideDown())
@@ -249,6 +256,7 @@ function button_status(e, t) {
                         $("#getInTouch").get(0).reset(),
                         // $(".learn-btn").text("Submit");
                         $(".cnt_btn").text("Submit");
+                        
                 },
                 "json"
             ).fail(function () {
