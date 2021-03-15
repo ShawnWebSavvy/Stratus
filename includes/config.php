@@ -1,5 +1,5 @@
 <?php
-define("DB_NAME", "notecloud");
+define("DB_NAME", "notecloud"); 
 define("DB_USER", "notecloud");
 define("DB_PASSWORD", "LesinyyMVD4uqxKM");
 define("DB_HOST", "notecloud-rds.cc5yzmpks9xy.us-west-1.rds.amazonaws.com");
