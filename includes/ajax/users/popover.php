@@ -16,7 +16,7 @@ is_ajax();
 user_access(true);
 
 // valid inputs
-if(!in_array($_GET['type'], array('user', 'page'))) {
+if(!in_array($_GET['type'], array('user', 'page', 'groups', 'events'))) {
 	_error(400);
 }
 /* check uid */

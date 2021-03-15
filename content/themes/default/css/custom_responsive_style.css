@@ -137,6 +137,7 @@
 .lightbox .lightbox-data .post-body .post-stats{margin-top: 25px;}
 .lightbox .lightbox-data .lightbox-post .post-body .post-actions .reactions-container{top: -90px!important;}
 .blogCoverImage {display: flex;justify-content: center;}.emojiChangeGlobal .emoji-menu .custom-tabs .nav-item{padding: 0px;margin-bottom: 0px;}
+.people-friend-list-section .requstSectionwrap .feeds-item .searchSectionWrap .usernamesWrapBlock ._user_action_{flex-wrap: wrap;}
 
 @media(min-width:1680px){.home-page-middel-block .desk_chg{flex:0 0 calc(100% / 6)!important;max-width:calc(100% / 6)!important}
 }

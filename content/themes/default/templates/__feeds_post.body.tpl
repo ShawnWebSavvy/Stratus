@@ -633,7 +633,8 @@
             {/if}>
             <div class="post-colored-text-wrapper js_scroller" data-slimScroll-height="240">
                 <div class="post-text" dir="auto" style="color: {$_post['colored_pattern']['text_color']};">
-                    {$_post['text']}
+                    {$_post['text']|count_characters:true}
+
                 </div>
             </div>
         </div>
