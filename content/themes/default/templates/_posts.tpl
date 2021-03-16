@@ -52,8 +52,12 @@
 				</div>
 				{if $system['live_enabled'] && $_get != "posts_page" && $_get != "posts_group" && $_get !=
 				"posts_event"}
-				<div class="dropdown-item pointer" data-title='{__("Live")}' data-value="live"><i
-						class="fa fa-signal fa-fw mr10"></i>{__("Live")}</div>
+					<div class="dropdown-item pointer" data-title='{__("Live")}' data-value="Live">
+						<div class="imgHover">
+							<i class="fa fa-signal fa-fw mr10"></i>
+						</div>
+						{__("Live")}
+					</div>
 				{/if}
 				<div class="dropdown-item pointer" data-title='{__("Photos")}' data-value="photos">
 					<div class="imgHover">
