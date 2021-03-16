@@ -46,7 +46,7 @@ body.night-mode .user-popover-content{background:#212121;border-color:#000}
 body.night-mode .user-card-cover{border-color:#000}
 .user-card-avatar{padding:3px;border-radius:10px;background:#fff}
 body.night-mode .user-card-avatar{background:#212121}
-.user-card-avatar img{width:60px;height:60px;border-radius:10px;display:inline-block}
+.user-card-avatar img{width:60px;min-width: 60px;height:60px;border-radius:10px;display:inline-block}
 .user-card-info{color: #1e1f20;overflow: hidden;padding-left: 20px;}
 .user-card-info a{color:#1e1f20}
 .user-card-info a:hover{text-decoration:underline}
@@ -391,14 +391,14 @@ body.night-mode .dropdown-widget.with-arrow:before{border-bottom-color:var(--hea
 .blog-container.primary{background:var(--header-bg-color)}
 .blog-container.primary .text-link{color:#eee}
 .user-popover{position:relative}
-.user-popover-wrapper{width:400px;height:174px;z-index:99999}
+.user-popover-wrapper{max-width: 450px;min-width: 300px;z-index:99999}
 .user-popover-wrapper:before{content:"";position:absolute;border-left:10px solid transparent;border-right:10px solid transparent;border-bottom:10px solid #e6ecf5;top:0}
 body.night-mode .user-popover-wrapper:before{border-bottom-color:#000}
 .user-popover-wrapper.tr:before{left:10px}
 .user-popover-wrapper.tl:before{right:10px}
 .user-popover-wrapper.tr:after{left:12px}
 .user-popover-wrapper.tl:after{right:12px}
-.user-popover-content{width:450px;font-size:14px;text-align:left;border:1px solid #e6ecf5;border-radius:3px;background-color:#fff;box-shadow:0 6px 12px rgba(0,0,0,.175);z-index:999999}
+.user-popover-content{max-width:450px;font-size:14px;text-align:left;border:1px solid #e6ecf5;border-radius:3px;background-color:#fff;box-shadow:0 6px 12px rgba(0,0,0,.175);z-index:999999}
 .user-popover-content .user-card{display: flex;align-items: stretch;justify-content: flex-start;}
 .user-card-meta{padding-top:5px;font-size:12px}
 .user-card-meta .fa{color:#b2b2b2}
