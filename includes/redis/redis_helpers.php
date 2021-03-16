@@ -188,6 +188,8 @@ function cachedUserData($db, $system, $user_id, $user_token)
 
             $_data['user_picture'] = $system['system_url'] . '/includes/wallet-api/image-exist-api.php?userPicture=' . $_data['user_picture'] . '&userPictureFull=' . $_data['user_picture_full'] . '&type=1';
 
+            $_data['user_profile_background'] = $system['system_uploads'] . '/'.$_data['user_profile_background'];
+
             /* get all friends ids */
             $_data['friends_ids'] = $userClassObject->get_friends_ids($_data['user_id']);
             /* get all followings ids */
