@@ -59,7 +59,7 @@ try {
 				if(!in_array($_POST['product']->status, array('new', 'old'))) {
 					return_json( array('error' => true, 'message' => __("Please select valid product status")) );
 				}
-				if(!in_array($_POST['photos']->status, array())) {
+				if(empty($_POST['photos'])) {
 					return_json( array('error' => true, 'message' => __("Please upload image for product")) );
 				}
 			}
@@ -89,6 +89,7 @@ try {
 			$post = $user->publisher($inputs);
 
 			// return
+			// return_json( array('error' => true, 'message' => __("Prouct addedd Successfully")) );
 			$return['callback'] = "window.location = '".$system['system_url']."/posts/".$post['post_id']."';";
 			break;
 

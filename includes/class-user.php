@@ -4761,6 +4761,23 @@ class User
     public function delete_my_story()
     {
         global $db, $system;
+        // $get_story = $db->query(sprintf("SELECT story_id FROM stories WHERE time>=DATE_SUB(NOW(), INTERVAL 1 DAY) AND user_id = %s", secure($this->_data['user_id'], 'int'))) or _error("SQL_ERROR_THROWEN");
+        // $stories = array();
+        // $story_array = $get_story->fetch_assoc();
+        // $story_id = $story_array['story_id'];
+        // $get_media = $db->query(sprintf("SELECT media_id FROM stories_media WHERE story_id = %s", secure($story_id, 'int'))) or _error("SQL_ERROR_THROWEN");
+        // $medias = array();
+        // while ($get_medias = $get_media->fetch_assoc()) {
+        //     $medias[] = $get_medias['media_id'];
+        // }
+        // print_r($medias);
+        // for($m=0;$m<count($medias);$m++)
+        // {
+            
+        //     echo sprintf("DELETE FROM stories_media WHERE time>=DATE_SUB(NOW(), INTERVAL '30' MINUTE) AND media_id = %s", secure($medias[$m], 'int'));
+        //     $delete_media = $db->query(sprintf("DELETE FROM stories_media WHERE time>=DATE_SUB(NOW(),interval '30' MINUTE ) AND media_id = %s", secure($medias[$m], 'int'))) or _error("SQL_ERROR_THROWEN");
+        // }
+
         $check_story = $db->query(sprintf("DELETE FROM stories WHERE time>=DATE_SUB(NOW(), INTERVAL 1 DAY) AND user_id = %s", secure($this->_data['user_id'], 'int'))) or _error("SQL_ERROR_THROWEN");
         $redisObject = new RedisClass();
         $rediskeyname = 'user-' . $this->_data['user_id'] . '-getotherstory';
@@ -6869,11 +6886,14 @@ class User
             case 'event_cover':
             case 'product':
                 /* delete uploads from uploads folder */
+                if(!empty($post['photos']))
+                {
                 foreach ($post['photos'] as $photo) {
                     delete_uploads_file($photo['source']);
                 }
                 /* delete post photos from database */
                 $db->query(sprintf("DELETE FROM posts_photos WHERE post_id = %s", secure($post_id, 'int'))) or _error("SQL_ERROR_THROWEN");
+                 }
                 switch ($post['post_type']) {
                     case 'profile_cover':
                         /* update user cover if it's current cover */

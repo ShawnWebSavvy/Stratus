@@ -99,7 +99,8 @@ try {
 			$chat_boxes_opened = [];
 			foreach($chat_boxes_pre_opened as $opened_conversation_id) {
 				/* get conversation */
-				$conversation = $user->get_conversation($opened_conversation_id);
+				//Commented by Pankaj. this code repating the chat in opend chat window 
+				// $conversation = $user->get_conversation($opened_conversation_id);
 				if($conversation) {
 					$chat_boxes_opened[] = $conversation;
 				}

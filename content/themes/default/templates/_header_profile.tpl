@@ -98,7 +98,7 @@
                   </button>
                   {if $active_page =="GlobalHub"}
 
-                  <a href="javascript:initialize_scraper()" id="openPost"></a>
+                  <a href="javascript:initialize_scraper()" id="openPost">
                   <div class="svg-container">
                     <img
                       data-src="{$system['system_uploads_assets']}/content/themes/default/images/svg/footer-icon/Icon.svg"
