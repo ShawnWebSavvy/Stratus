@@ -15,13 +15,6 @@ class helpers
   *@env(local(for localhost)/prod(for stage or live))
   */
 
-  function getVideoDuration($tmpFile, $env){
-    //FFmpeg package path
-    $time = exec("ffprobe -i ".$tmpFile." -show_entries format=duration -v quiet -of csv='p=0'");
-    $time = round($time);
-    return $time;
-  }
-
   function makeVideosThumbnails($s3VideoLink, $timeInterval, $env)
   {
 
@@ -31,7 +24,7 @@ class helpers
 
 
     $folder = SYS_URL . '/photos/';
-
+    // $output_dir = $folder . '/' . date('Y') . '/' . date('m') . '/';
     //FFmpeg package path
     $ffmpeg = '/usr/bin/ffmpeg';
     //Video link from s3
@@ -39,8 +32,10 @@ class helpers
 
     $name_info = pathinfo($video);
     //where to save the image
-
+    //  $image = $folder.$name_info['filename'].'.jpg';
     $file_name = $name_info['filename'] . '.jpg';
+
+
     $path = ABSPATH . 'content/uploads/photos/' . $file_name;
 
     //print_r($path); die;

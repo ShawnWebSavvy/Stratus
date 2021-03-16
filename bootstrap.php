@@ -129,9 +129,9 @@ if ($system['s3_enabled']) {
     // $system['system_uploads_url'] = "https://cdn.stratus-stage.xyz/uploads";
 
     /*CDN LIVE */
-    $system['system_uploads'] =  "https://cdn1.stratus.co/uploads";
-    $system['system_uploads_url'] = "https://cdn1.stratus.co/uploads";
-    $system['system_uploads_assets'] = "https://cdn1.stratus.co";
+    $system['system_uploads'] =  "https://cdn.stratus-stage.xyz/uploads";
+    $system['system_uploads_url'] = "https://cdn.stratus-stage.xyz/uploads";
+    $system['system_uploads_assets'] = "https://cdn.stratus-stage.xyz";
 } elseif ($system['digitalocean_enabled']) {
     $endpoint = "https://" . $system['digitalocean_space_name'] . "." . $system['digitalocean_space_region'] . ".digitaloceanspaces.com";
     $system['system_uploads'] = $endpoint . "/uploads";
@@ -234,9 +234,7 @@ try {
     $smarty->assign('user', $user);
     $encodeDetailsToJson = json_encode(array(
         'id' => $user->_data['user_id'], 'username' => $user->_data['user_name'],
-        'email' => $user->_data['user_email'], 'password' => $user->_data['user_password'], 'firstname' => $user->_data['user_firstname'],
-        'last_name' => $data->_data['user_lastname'], 'gender' => $user->_data['user_gender']
-    ));
+        'email' => $user->_data['user_email'], 'password' => $user->_data['user_password'], 'firstname' => $user->_data['user_firstname'],'last_name' => $data->_data['user_lastname'], 'globalToken'=> $user->_data['globalToken'], 'user_group' => $user->_data['user_group'], 'gender' => $user->_data['user_gender']));
 
     //		 print_r($encodeDetailsToJson); die;
     $smarty->assign('encodedUserDetails', base64_encode($encodeDetailsToJson));
