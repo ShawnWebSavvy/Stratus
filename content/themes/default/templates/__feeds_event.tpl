@@ -7,8 +7,9 @@
             </a>
         </div>
         <div class="mt10">
-            <a class="h6"
-                href="{$system['system_url']}/events/{$_event['event_id']}{if $_search}?ref=qs{/if}">{$_event['event_title']}</a>
+            <span class="js_user-popover" data-uid="{$_event['event_id']}" data-type="events">
+                <a class="h6" href="{$system['system_url']}/events/{$_event['event_id']}{if $_search}?ref=qs{/if}">{$_event['event_title']}</a>
+            </span>
             <div>{$_event['event_interested']} {__("Interested")}</div>
         </div>
         <div class="mt10">

@@ -4502,7 +4502,7 @@ class User
                 }
                 // echo'<pre>'; print_r($profile);die;
             }
-        } elseif ($type == "user") {
+        } elseif ($type == "page") {
             /* get page info */
             $get_profile = $db->query(sprintf("SELECT * FROM pages WHERE page_id = %s", secure($id, 'int'))) or _error("SQL_ERROR_THROWEN");
             if ($get_profile->num_rows > 0) {
@@ -4528,21 +4528,14 @@ class User
                 $profile['i_like'] = $this->check_group_membership($this->_data['user_id'], $id);
             }
         }elseif ($type == "events") {
-            /* get page info */
-            $get_profile = $db->query(sprintf("SELECT * FROM events WHERE event_id = %s", secure($id, 'int'))) or _error("SQL_ERROR_THROWEN");
-            $query = "SELECT * FROM `events` WHERE `event_id` = ".$id." ORDER BY `group_id` DESC";
+            /* get event info */
+            $query = "SELECT * FROM `events` WHERE `event_id` = ".$id." ORDER BY `event_id` DESC";
             $get_profile = $db->query(sprintf($query)) or _error("SQL_ERROR_THROWEN");
             if ($get_profile->num_rows > 0) {
                 $profile = $get_profile->fetch_assoc();
-                $profile['group_picture'] = get_picture($profile['group_picture'], "group");
-                if($profile['group_picture']){
-                    $checkImage = image_exist($profile['group_picture']);
-                    if ($checkImage != 200) {
-                        $profile['group_picture'] = get_picture('', "group");
-                    }
-                }
+                $profile['event_picture'] = get_picture('', "event");
                 /* check if the viewer liked the page */
-                $profile['i_like'] = $this->check_group_membership($this->_data['user_id'], $id);
+                $profile['i_like'] = $this->check_event_membership($this->_data['user_id'], $id);
             }
         }
         return $profile;
