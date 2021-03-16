@@ -1010,6 +1010,9 @@ $(function () {
             $(this).parents(".chat-widget, .panel-messages").find(".chat-voice-notes").slideToggle();
         }),
         $("body").on("click", ".js_posts-filter .dropdown-item", function () {
+            if ($('.js_posts_stream').hasClass('no_data_img_')) {
+                $('.no_data_img_').remove();
+            }
             var posts_stream = $(".js_posts_stream"),
                 posts_loader = $(".js_posts_loader"),
                 data = {};
