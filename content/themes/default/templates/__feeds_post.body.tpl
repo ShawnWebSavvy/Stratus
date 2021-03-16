@@ -909,7 +909,7 @@
                     $_post['live']['video_thumbnail']}poster="{$system['system_uploads']}/{$_post['live']['video_thumbnail']}"
                     {/if} controls preload="auto" controls preload="auto" style="width:100%;height:100%;" width="100%"
                     height="100%">
-                    <source src="{$system['system_uploads_assets']}/{$_post['live']['agora_file']}"
+                    <source src="{$system['system_agora_uploads']}/{$_post['live']['agora_file']}"
                         type="application/x-mpegURL">
                 </video>
             </div>
