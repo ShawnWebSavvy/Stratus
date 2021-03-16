@@ -453,6 +453,9 @@
                 <input name="file" type="file" title="{literal}{{title}}{/literal}" accept="{literal}{{accept}}{/literal}">
             {literal}{{/multiple}}{/literal}
             <input type="hidden" name="secret" value="{literal}{{secret}}{/literal}">
+            {if $page == 'profile' }
+                <input type="hidden" name="notSave" value="true">
+            {/if}
         </form>
     </script>
 {strip}

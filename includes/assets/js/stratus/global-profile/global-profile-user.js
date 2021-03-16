@@ -134,7 +134,7 @@ function init_picture_crop(e) {
     var system_url = e.data("systemUrl");
 
     modal("#crop-profile-picture", {
-        image: `${system_url}/includes/wallet-api/get-picture-api.php?picture=${image_node}&pictureFull=&type_url=1`,
+        image: `${system_url}/includes/wallet-api/get-picture-api.php?picture=${image_node}&picture_full=&type_url=1`,
         handle: e.data("handle"),
         id: e.data("id")
     })
