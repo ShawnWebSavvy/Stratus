@@ -390,7 +390,6 @@
 
     {if $page == "investment/activity" || $page == "investment/buy_sell"  || $page == "investment/index" }
         <script src="{$system['system_url']}/includes/assets/js/stratus/investment.js?{$cacheremovejs}" defer></script>
-        <script src="{$system['system_uploads_assets']}/includes/assets/js/stratus/swipMobileCode.js?{$cacheremovejs}" defer></script>
         <script src="{$system['system_uploads_assets']}/includes/assets/js/plugins/graph/d3.js?{$cacheremovejs}" defer></script>
         <script src="https://unpkg.com/flickity@2.2.2/dist/flickity.pkgd.min.js"></script>
     {/if}

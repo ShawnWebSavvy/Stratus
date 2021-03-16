@@ -943,7 +943,17 @@ function init_picture_position() {
                                     }
 
                                     if (_do == "friend-decline") {
-                                        _this.closest('.feeds-item').remove();
+                                        // _this.closest('.feeds-item').remove();
+                                        _this.after(
+                                            '<button type"button" class="btn btn-success js_friend-add" data-uid="' +
+                                            id +
+                                            '"><img class="btn_image_" src="' +
+                                            locationPage +
+                                            '/content/themes/default/images/svg/svgImg/add_friend_icon.svg"><img class="btn_image_hover" src="' +
+                                            locationPage +
+                                            '/content/themes/default/images/svg/svgImg/add_friend-hover.svg">' +
+                                            __["Add Friend"] +
+                                            "</button>");
                                     }
 
 

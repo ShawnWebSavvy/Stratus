@@ -1,4 +1,4 @@
-@import "https://cdn1.stratus.co/content/themes/default/css/buttonCustom.css";
+@import "https://cdn.stratus-stage.xyz/content/themes/default/css/buttonCustom.css";
 .userVerifiedBadge {display: flex;align-items: center;justify-content: flex-start;margin-bottom: 5px;}
 .js_audio:focus {outline: none !important;}
 ._share-dropdown_.dropdown-menu.fade.show{right: 0px !important;top: 44px !important;left: auto !important;transform: none !important;}
@@ -136,6 +136,11 @@
 .marketpublicerButtons {width: 100%;justify-content: space-between;margin-bottom: 0px;padding-right: 0;padding-top: 15px;}
 .marketpublicerButtons .cmn_btn{margin-top: 0px;margin-right: 15px;max-width: 184px;}
 .marketpublicerButtons .cmn_btn:last-child{margin-right: 0px;}
+.lightbox .lightbox-data .post-body {margin-top: 10px;}
+.lightbox .lightbox-data .post-body .post-stats{margin-top: 25px;}
+.lightbox .lightbox-data .lightbox-post .post-body .post-actions .reactions-container{top: -90px!important;}
+.blogCoverImage {display: flex;justify-content: center;}.emojiChangeGlobal .emoji-menu .custom-tabs .nav-item{padding: 0px;margin-bottom: 0px;}
+.people-friend-list-section .requstSectionwrap .feeds-item .searchSectionWrap .usernamesWrapBlock ._user_action_{flex-wrap: wrap;}
 
 @media(min-width:1680px){.home-page-middel-block .desk_chg{flex:0 0 calc(100% / 6)!important;max-width:calc(100% / 6)!important}
 }
@@ -148,7 +153,10 @@ body.group-localhub .profile-mobile-layout .profileUpdatesDesign .row.no-gutters
 @media (max-width:1600px){.right-sidebar{width:350px}
 .right-sidebar.headerTopBarSetting{right:65px}
 }
-@media (max-width:1444px){.__user_action_panel h3{font-size:1.2rem}
+@media (max-width:1444px){
+.__user_action_panel h3{font-size:1.2rem}
+.searchPageButtons .tab-content .tab-pane .feeds-item .searchSectionWrap .usernamesWrapBlock{min-width: 200px;}
+.searchPageButtons .tab-content .tab-pane .feeds-item .searchSectionWrap ._user_detail_sec{flex: 0 0 calc(100% - 200px);max-width: calc(100% - 200px);}
 }
 @media (max-width:1380px){.right-sidebar .right-sidebar-inner-ant .rightSideBarScroll{padding-bottom:78px}
 .right-sidebar{width:300px}
@@ -160,18 +168,15 @@ body.group-localhub .profile-mobile-layout .profileUpdatesDesign .row.no-gutters
 .people-friend-list-section ul.requstSectionwrap .feeds-item .data-container{padding-left: 0;padding-right: 0;}
 }
 @media (max-width:1280px){.market-categories-section-right-side .card .side-nav li a{font-size:14px}
-.profile-name-wrapper{padding-top:15px}
-.profile-name-wrapper a{font-size:20px}
+.profile-name-wrapper{padding-top:15px}.profile-name-wrapper a{font-size:20px}
 .add-new-product-section .wrapFooterDiv.wrapFootershowHide.wrapFooterDiv-old{display:none}
 body.group-localhub .button-profile-option .btn-light,body.profile-localhub .button-profile-option .btn-light{height:38px;width:38px;display:flex;align-items:center;justify-content:center}
 body.group-localhub .button-profile-option .btn-light i{font-size:14px}
-.publisher-message{flex-wrap:wrap}
-.add-new-product-section .publisher-message{flex-wrap:nowrap}
+.publisher-message{flex-wrap:wrap}.add-new-product-section .publisher-message{flex-wrap:nowrap}
 .wrapFooterDiv.wrapFootershowHide.wrapFooterDiv-old{flex:0 0 100%;max-width:100%;padding:0 15px}
 .__user_action_panel h3{font-size:1.2rem}
 .group-localhub .js_posts_stream .feeds_post_ul .feeds_post,.profile-localhub .js_posts_stream .feeds_post_ul .feeds_post{width:100%}
-.profileUpdatesDesign{padding:15px}
-.profileGroupWrap .explore_page_lists {-ms-flex: 0 0 50%;flex: 0 0 50%;max-width: 50%;}
+.profileUpdatesDesign{padding:15px}.profileGroupWrap .explore_page_lists {-ms-flex: 0 0 50%;flex: 0 0 50%;max-width: 50%;}
 }
 @media (max-width:1199px) and (min-width:991px){.sec_cstm_w{max-width:70%!important;flex:0 0 70%!important}
 .profile_top_sec+.col-lg-3{-ms-flex:0 0 30%;flex:0 0 30%;max-width:30%}
@@ -465,7 +470,12 @@ body.login-index-body .mainloginBlock{height:100vh!important;align-items:flex-en
 .people-friend-list-section ._friend_list_items .feeds-item .data-container ._user_action_ button {max-width:225px !important;left: 13px;transform: none;}
 .searchSectionWrap ._user_detail_sec{flex:unset;max-width:unset}
 .profileUpdatesDesign .searchSectionWrap ._user_detail_sec{flex:0 0 80%;max-width:80%}
-/* .aboutSectionWidth{flex:0 0 70%;max-width:70%} */
+.searchPageButtons .tab-content .tab-pane .feeds-item .searchSectionWrap ._user_detail_sec{flex: 0 0 calc(100% - 100px);max-width: calc(100% - 100px);}
+.searchPageButtons .tab-content .tab-pane .feeds-item .searchSectionWrap .usernamesWrapBlock{min-width: 100px;}
+.searchPageButtons .tab-content .tab-pane .feeds-item .searchSectionWrap .usernamesWrapBlock ._user_action_ .js_friend-accept{font-size: 0px;width: auto;margin: 0px;}
+.searchPageButtons .tab-content .tab-pane .feeds-item .searchSectionWrap .usernamesWrapBlock ._user_action_ .js_friend-decline{font-size: 0px;width: auto;margin: 0px;}
+.searchPageButtons .tab-content .tab-pane .feeds-item .searchSectionWrap .usernamesWrapBlock ._user_action_ .js_friend-accept .request_aspct img{display: inline-block;margin: 0px;}
+.searchPageButtons .tab-content .tab-pane .feeds-item .searchSectionWrap .usernamesWrapBlock ._user_action_ .js_friend-decline .request_dlt img{display: inline-block;margin: 0px;}
 }
 @media (max-width:575px){.chat-message-add-new .chat-form .chat-form-message{padding-right:5px;padding-left:5px}
 .people-friends-page ._frnd_rqst_sec .page_topbar{flex-wrap:wrap}

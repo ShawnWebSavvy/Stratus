@@ -1010,6 +1010,9 @@ $(function () {
             $(this).parents(".chat-widget, .panel-messages").find(".chat-voice-notes").slideToggle();
         }),
         $("body").on("click", ".js_posts-filter .dropdown-item", function () {
+            if ($('.js_posts_stream').hasClass('no_data_img_')) {
+                $('.no_data_img_').remove();
+            }
             var posts_stream = $(".js_posts_stream"),
                 posts_loader = $(".js_posts_loader"),
                 data = {};
@@ -1268,9 +1271,9 @@ $(function () {
                 api["posts/edit"],
                 { handle: "privacy", id: id, privacy: privacy },
                 function (response) {
-                    "friends" == privacy && $("#" + id + ">img").attr("src", "https://cdn1.stratus.co/content/themes/default/images/svg/svgImg/friendsIcon.svg"),
-                        "public" == privacy && $("#" + id + ">img").attr("src", "https://cdn1.stratus.co/content/themes/default/images/svg/svgImg/nav_icon_globalHub.svg"),
-                        "me" == privacy && $("#" + id + ">img").attr("src", "https://cdn1.stratus.co/content/themes/default/images/svg/svgImg/Hide_form.svg"),
+                    "friends" == privacy && $("#" + id + ">img").attr("src", "https://cdn.stratus-stage.xyz/content/themes/default/images/svg/svgImg/friendsIcon.svg"),
+                        "public" == privacy && $("#" + id + ">img").attr("src", "https://cdn.stratus-stage.xyz/content/themes/default/images/svg/svgImg/nav_icon_globalHub.svg"),
+                        "me" == privacy && $("#" + id + ">img").attr("src", "https://cdn.stratus-stage.xyz/content/themes/default/images/svg/svgImg/Hide_form.svg"),
                         response.callback && eval(response.callback);
                 },
                 "json"
