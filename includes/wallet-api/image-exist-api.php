@@ -1,5 +1,5 @@
 <?php
-ini_set("zlib.output_compression", 1);
+//ini_set("zlib.output_compression", 1);
 ob_start("ob_gzhandler");
 require('../../bootstrap.php');
 

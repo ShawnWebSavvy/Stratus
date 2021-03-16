@@ -106,8 +106,11 @@ try {
 				$db->query($chargeQuery) or _error("SQL_ERROR_THROWEN");
 				/* wallet transaction */
         		$user->wallet_set_transaction($user->_data['user_id'], 'recharge', 0, $_SESSION['wallet_replenish_amount'], 'in');
-		    }
-
+				$redisObject = new RedisClass();
+                $redisPostKey = 'user-' . $user->_data['user_id'];
+                $redisObject->deleteValueFromKey($redisPostKey);
+                cachedUserData($db, $system, $user->_data['user_id'], $user->_data['active_session_token']);
+			}
 			// return
 			return_json( array('callback' => 'window.location.href = "'.$system['system_url'].'/wallet?replenish_succeed";') );
 			break;

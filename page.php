@@ -77,6 +77,24 @@ try {
 				$smarty->assign('colored_patterns', $user->get_posts_colored_patterns());
 			}
 
+			/* get pages */
+			if ($system['pages_enabled']) {
+				$pages = $user->get_pages(array('user_id' => $profile['user_id'], 'results' => $system['min_results_even']));
+				$smarty->assign('pages', $pages);
+			}
+
+			/* get groups */
+			if ($system['groups_enabled']) {
+				$groups = $user->get_groups(array('user_id' => $profile['user_id'], 'results' => $system['min_results_even']));
+				$smarty->assign('groups', $groups);
+			}
+
+			/* get events */
+			if ($system['events_enabled']) {
+				$events = $user->get_events(array('user_id' => $profile['user_id'], 'results' => $system['min_results_even']));
+				$smarty->assign('events', $events);
+			}
+
 			/* get posts */
 			$posts = $user->get_posts(array('get' => 'posts_page', 'id' => $spage['page_id']));
 			/* assign variables */

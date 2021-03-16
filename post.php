@@ -27,6 +27,15 @@ try {
 	//	echo "<pre>"; print_r($post);die();
 	if($post['post_type'] == 'product'){
 		$smarty->assign('actPage', 'product');
+		$pages = $user->get_pages(array('managed' => true, 'user_id' => $user->_data['user_id']));
+		$smarty->assign('pages', $pages);
+
+		$groups = $user->get_groups(array('get_all' => true, 'user_id' => $user->_data['user_id']));
+
+		/* assign variables */
+		$smarty->assign('groups', $groups);
+		/* assign variables */
+		$smarty->assign('posts', $posts);
 		$smarty->assign('active_page', 'MarketHub');
 
 	}

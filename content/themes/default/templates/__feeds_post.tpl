@@ -89,7 +89,7 @@
 
                     <!-- audio views -->
                     {if $post['post_type'] == "audio"}
-                    <span>
+                    <span style="display: flex;align-items: center;">
                         <i class="fa fa-eye"></i> {$post['audio']['views']}
                     </span>
                     {/if}
@@ -188,14 +188,14 @@
                                                 to Timeline</span></label>
                                     </li>
 
-                                    {if $system['groups_enabled'] && count($groups) > 0}
+                                    {if $system['groups_enabled'] && !empty($groups) && count($groups) > 0}
                                     <li class="stratus_local_share" id="share_group"><label for="share_to_group"><span
                                                 class="__list_icon"> <img
                                                     src="{$system['system_uploads_assets']}/content/themes/default/images/share_grp.svg"></span><span>Share
                                                 to Group</span></label>
                                     </li>
                                     {/if}
-                                    {if $system['pages_enabled'] && count($pages) > 0}
+                                    {if $system['pages_enabled'] && !empty($pages) && count($pages) > 0}
                                     <li class="stratus_local_share" id="share_page"><label for="share_to_page"><span
                                                 class="__list_icon"> <img
                                                     src="{$system['system_uploads_assets']}/content/themes/default/images/share-page.svg"></span><span>Share

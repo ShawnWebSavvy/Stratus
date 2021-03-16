@@ -168,7 +168,7 @@
     <div class="lightbox" data-live-post-id="{literal}{{post_id}}{/literal}">
         <div class="container lightbox-container">
             <div class="lightbox-preview with-live">
-                <div class="live-stream-video" id="js_live-video">
+                <div class="live-stream-video" id="js_live-video" style="display:none">
                     <div class="live-counter" id="js_live-counter">
                         <span class="status offline" id=js_live-counter-status>{__("Offline")}</span>
                         <span class="number">

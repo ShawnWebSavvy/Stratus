@@ -498,6 +498,10 @@ try {
 
 
 		/* bad request */
+	} elseif ($_POST['get'] == "explore") {
+		$data = $userGlobal->global_profile_explore_posts($_POST['offset']);
+   
+		/* bad request */
 	} else {
 		_error(400);
 	}
@@ -513,6 +517,7 @@ try {
 		/* return */
 		$return['append'] = $append;
 		$return['data'] = $smarty->fetch("global-profile/global-profile_ajax.load_more.tpl");
+	
 	}
 
 	// return & exit
