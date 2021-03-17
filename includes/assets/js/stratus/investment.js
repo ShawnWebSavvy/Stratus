@@ -479,6 +479,7 @@ if (endUrl != "investments") {
             let token_name = (token.attr('placeholder')).toLowerCase();
             let token_value = token.val();
             let total_amount = $('#order_total').html();
+            let amount = ($('#amount').val()) ? $('#amount').val() : 0;
             let per_coin_price = $('.per_coin_price').html();
             let fees = $('#total_fees').text();
             let _this = $(this);
@@ -489,7 +490,7 @@ if (endUrl != "investments") {
                 return false;
             }
 
-            if (parseFloat(total_amount) < parseFloat(order_detail[token_name.toLowerCase()]['min_sell_amount']) && action == 'sell') {
+            if (parseFloat(amount) < parseFloat(order_detail[token_name.toLowerCase()]['min_sell_amount']) && action == 'sell') {
                 $('#usd_balance').show();
                 $('#usd_balance').html(min_tnx_error+'$'+order_detail[token_name.toLowerCase()]['min_sell_amount']);
                 $('#token_balance').hide();

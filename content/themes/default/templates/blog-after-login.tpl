@@ -409,14 +409,14 @@
                                                             to Timeline</span></label>
                                                 </li>
 
-                                                {if $system['groups_enabled'] && count($groups) > 0}
+                                                {if $system['groups_enabled'] && is_array($groups)&&count($groups) > 0}
                                                 <li class="stratus_local_share" id="share_group"><label
                                                         for="share_to_group"><span class="__list_icon"> <img
                                                                 src="{$system['system_url']}/content/themes/default/images/share_grp.svg"></span><span>Share
                                                             to Group</span></label>
                                                 </li>
                                                 {/if}
-                                                {if $system['pages_enabled'] && count($pages) > 0}
+                                                {if $system['pages_enabled']&& is_array($pages) &&  count($pages) > 0}
                                                 <li class="stratus_local_share" id="share_page"><label
                                                         for="share_to_page"><span class="__list_icon"> <img
                                                                 src="{$system['system_url']}/content/themes/default/images/share-page.svg"></span><span>Share

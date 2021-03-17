@@ -23,7 +23,7 @@
             <span class=" dropdown-toggle post_custm_option" data-toggle="dropdown" data-display="static"><i
                     class="fas fa-ellipsis-h"></i></span>
             <div class="dropdown-menu dropdown-menu-right post-dropdown-menu cmn_drpdwn_style">
-                {if $_post['manage_post'] && $_post['post_type'] == "product"}
+                {if $_post['manage_post'] && $_post['post_type'] == "product"&& $_post['author_id']==$user->_data['user_id']}
                 {if $_post['product']['available']}
                 <div class="dropdown-item pointer js_sold-post">
                     <div class="action no-desc">
@@ -85,7 +85,7 @@
                 </div>
                 {/if}
                 <!-- <div class="dropdown-divider"></div> -->
-                {if $_post['manage_post']}
+                {if $_post['manage_post'] && $_post['author_id']==$user->_data['user_id']}
                 <!-- Boost -->
                 {if $system['packages_enabled'] && !$_post['in_group'] && !$_post['in_event']}
                 {if $_post['boosted']}
@@ -528,8 +528,8 @@
             -
             {if !$_post['is_anonymous'] && !$_shared && $_post['manage_post'] && $_post['user_type'] == 'user' &&
             !$_post['in_group'] && !$_post['in_event'] && $_post['post_type'] != "product" && $_post['post_type'] !=
-            "article"}
-            <!-- privacy -->
+            "article" && $_post['author_id']==$user->_data['user_id']}
+            <!-- privacy --> 
             {if $_post['privacy'] == "me"}
             <div class="btn-group" data-toggle="tooltip" data-placement="top" data-value="me"
                 title='{__("Shared with: Only Me")}'>
@@ -909,7 +909,7 @@
                     $_post['live']['video_thumbnail']}poster="{$system['system_uploads']}/{$_post['live']['video_thumbnail']}"
                     {/if} controls preload="auto" controls preload="auto" style="width:100%;height:100%;" width="100%"
                     height="100%">
-                    <source src="{$system['system_uploads_assets']}/{$_post['live']['agora_file']}"
+                    <source src="{$system['system_agora_uploads']}/{$_post['live']['agora_file']}"
                         type="application/x-mpegURL">
                 </video>
             </div>
@@ -936,7 +936,7 @@
         {/if}
         <div class="mt10 {if $_snippet}x-hidden{/if}">
             <div class="post-media">
-                <div class="post-media-meta">
+                <div class="post-media-meta circleSubpost">
                     {include file='__feeds_post.body.tpl' _post=$_post['origin'] _shared=true}
                 </div>
             </div>
