@@ -68,7 +68,7 @@
                            <img {if $profile['user_picture_id']} {if $user->_logged_in &&
                            $profile['user_picture_lightbox']}class="js_lightbox"{/if}
                            data-id="{$profile['user_picture_id']}"
-                           data-context="album" data-image="{$profile['user_picture']}" {elseif
+                           data-context="album" data-image="{$profile['user_picture_full']}" {elseif
                            !$profile['user_picture_default']} class="js_lightbox-nodata"
                            data-image="{$profile['user_picture']}" {/if} {if
                            $profile['user_picture_default']} src="{$profile['user_picture']}" {else}
@@ -81,7 +81,7 @@
                            </div>
                            <div
                               class="profile-avatar-crop {if $profile['user_picture_default'] || !$profile['user_picture_id']}x-hidden{/if}">
-                              <i class="fa fa-crop-alt js_init-crop-picture" data-image="{$profile['user_picture']}"  data-system-url="{$system['system_url']}"
+                              <i class="fa fa-crop-alt js_init-crop-picture" data-image="{$profile['user_picture_full']}"  data-system-url="{$system['system_url']}"
                                  data-handle="user" data-id="{$profile['user_id']}"></i>
                            </div>
                            {if !$profile['user_picture_default']}
