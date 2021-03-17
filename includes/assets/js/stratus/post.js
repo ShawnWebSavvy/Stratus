@@ -790,7 +790,12 @@ $(function () {
                                 publisher.find(".publisher-slider").slideUp();
                                 publisher.find(".publisher-emojis").fadeOut();
                                 /* attache the new post */
-                                $(".js_posts_stream").find("ul:first").prepend();
+                                // $(".js_posts_stream").find("ul:first").prepend();
+                             
+                                if($(".js_posts_stream").data('get')=="posts_profile"){
+                                    $(".js_posts_stream").find(".bricklayer-column").prepend(response.post);
+                                }
+
                                 /* release the loading status */
                                 posts_stream.removeData("loading");
                                 /* rerun photo grid */
@@ -1010,6 +1015,9 @@ $(function () {
             $(this).parents(".chat-widget, .panel-messages").find(".chat-voice-notes").slideToggle();
         }),
         $("body").on("click", ".js_posts-filter .dropdown-item", function () {
+            if ($('.js_posts_stream').hasClass('no_data_img_')) {
+                $('.no_data_img_').remove();
+            }
             var posts_stream = $(".js_posts_stream"),
                 posts_loader = $(".js_posts_loader"),
                 data = {};

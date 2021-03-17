@@ -4502,7 +4502,7 @@ class User
                 }
                 // echo'<pre>'; print_r($profile);die;
             }
-        } elseif ($type == "user") {
+        } elseif ($type == "page") {
             /* get page info */
             $get_profile = $db->query(sprintf("SELECT * FROM pages WHERE page_id = %s", secure($id, 'int'))) or _error("SQL_ERROR_THROWEN");
             if ($get_profile->num_rows > 0) {
@@ -4528,21 +4528,14 @@ class User
                 $profile['i_like'] = $this->check_group_membership($this->_data['user_id'], $id);
             }
         }elseif ($type == "events") {
-            /* get page info */
-            $get_profile = $db->query(sprintf("SELECT * FROM events WHERE event_id = %s", secure($id, 'int'))) or _error("SQL_ERROR_THROWEN");
-            $query = "SELECT * FROM `events` WHERE `event_id` = ".$id." ORDER BY `group_id` DESC";
+            /* get event info */
+            $query = "SELECT * FROM `events` WHERE `event_id` = ".$id." ORDER BY `event_id` DESC";
             $get_profile = $db->query(sprintf($query)) or _error("SQL_ERROR_THROWEN");
             if ($get_profile->num_rows > 0) {
                 $profile = $get_profile->fetch_assoc();
-                $profile['group_picture'] = get_picture($profile['group_picture'], "group");
-                if($profile['group_picture']){
-                    $checkImage = image_exist($profile['group_picture']);
-                    if ($checkImage != 200) {
-                        $profile['group_picture'] = get_picture('', "group");
-                    }
-                }
+                $profile['event_picture'] = get_picture('', "event");
                 /* check if the viewer liked the page */
-                $profile['i_like'] = $this->check_group_membership($this->_data['user_id'], $id);
+                $profile['i_like'] = $this->check_event_membership($this->_data['user_id'], $id);
             }
         }
         return $profile;
@@ -4691,7 +4684,7 @@ class User
      * @return array
      */
     public function get_stories()
-    {
+    { 
         global $db, $system;
         $stories = [];
         /* get stories */
@@ -4699,12 +4692,15 @@ class User
         /* add viewer to this list */
         $authors[] = $this->_data['user_id'];
         $friends_list = implode(',', $authors);
-        $get_stories = $db->query("SELECT stories.*, users.user_id, users.user_name, users.user_firstname, users.user_lastname, users.user_gender, users.user_picture FROM stories INNER JOIN users ON stories.user_id = users.user_id WHERE time>=DATE_SUB(NOW(), INTERVAL 1 DAY) AND stories.user_id IN ($friends_list) ORDER BY stories.story_id DESC") or _error("SQL_ERROR_THROWEN");
+        $get_stories = $db->query("SELECT stories.*, users.user_id, users.user_name, users.user_firstname, users.user_lastname, users.user_gender, users.user_picture, picture_photo.source as user_picture_full FROM stories INNER JOIN users ON stories.user_id = users.user_id LEFT JOIN posts_photos as picture_photo ON users.user_picture_id = picture_photo.photo_id WHERE time>=DATE_SUB(NOW(), INTERVAL 1 DAY) AND stories.user_id IN ($friends_list) ORDER BY stories.story_id DESC") or _error("SQL_ERROR_THROWEN");
         if ($get_stories->num_rows > 0) {
             while ($_story = $get_stories->fetch_assoc()) {
                 $story['id'] = $_story['story_id'];
                 $story['user_id'] = $_story['user_id'];
-                $story['photo'] = get_picture($_story['user_picture'], $_story['user_gender']);
+                $_story['user_picture'] = get_picture($_story['user_picture'], $_story['user_gender']);
+                $story['photo'] = $system['system_url'] . '/includes/wallet-api/image-exist-api.php?userPicture=' . $_story['user_picture'] . '&userPictureFull=' . $system['system_uploads'] . '/' . $_story['user_picture_full'];
+
+
                 $story['name'] = $_story['user_firstname'] . " " . $_story['user_lastname'];
                 $story['lastUpdated'] = strtotime($_story['time']);
                 $story['items'] = [];
@@ -4772,7 +4768,7 @@ class User
         }
         for($m=0;$m<count($medias);$m++)
         {
-             $delete_media = $db->query(sprintf("DELETE FROM stories_media WHERE time<=DATE_SUB(NOW(),interval '5' MINUTE ) AND media_id = %s", secure($medias[$m], 'int'))) or _error("SQL_ERROR_THROWEN");
+             $delete_media = $db->query(sprintf("DELETE FROM stories_media WHERE time<=DATE_SUB(NOW(),interval 1 DAY ) AND media_id = %s", secure($medias[$m], 'int'))) or _error("SQL_ERROR_THROWEN");
         }
         if(empty($medias))
         {

@@ -41,7 +41,7 @@
 
                 {if ($active_page=='LocalHub')}
                 <li {if $subactive_page=="profile" }class="active" {/if}>
-                    <a page="{$page}" href="{$system['system_url']}/{$user->_data['user_name']}">
+                    <a page="{$page}" class="profile-link" href="{$system['system_url']}/{$user->_data['user_name']}">
                         <div class="svg-container">
                             <img src="{$system['system_uploads_assets']}/content/themes/default/images/svg/svgImg/profile_iconN.svg"
                                 class="">

@@ -53,8 +53,7 @@ try {
 
 	// initialize the return array
 	$return = array();
-	$user->delete_my_story_time();
-	
+
 	// check if chat enabled & not from mobile
 	require_once(ABSPATH.'includes/libs/MobileDetect/Mobile_Detect.php');
     $detect = new Mobile_Detect;
@@ -100,7 +99,6 @@ try {
 			$chat_boxes_opened = [];
 			foreach($chat_boxes_pre_opened as $opened_conversation_id) {
 				/* get conversation */
-				
 				$conversation = $user->get_conversation($opened_conversation_id);
 				if($conversation) {
 					$chat_boxes_opened[] = $conversation;
