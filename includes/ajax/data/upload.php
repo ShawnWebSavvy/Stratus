@@ -287,36 +287,40 @@ try {
                         break;
 
                     case 'picture-user':
-                        /* check for profile pictures album */
-                        if (!$user->_data['user_album_pictures']) {
-                            /* create new profile pictures album */
-                            $db->query(sprintf("INSERT INTO posts_photos_albums (user_id, user_type, title, privacy) VALUES (%s, 'user', 'Profile Pictures', 'public')", secure($user->_data['user_id'], 'int'))) or _error("SQL_ERROR_THROWEN");
-                            $user->_data['user_album_pictures'] = $db->insert_id;
-                            /* update user profile picture album id */
-                            $db->query(sprintf("UPDATE users SET user_album_pictures = %s WHERE user_id = %s", secure($user->_data['user_album_pictures'], 'int'), secure($user->_data['user_id'], 'int'))) or _error("SQL_ERROR_THROWEN");
+                        if(!$_POST['notSave']){
+                            /* check for profile pictures album */
+                            if (!$user->_data['user_album_pictures']) {
+                                /* create new profile pictures album */
+                                $db->query(sprintf("INSERT INTO posts_photos_albums (user_id, user_type, title, privacy) VALUES (%s, 'user', 'Profile Pictures', 'public')", secure($user->_data['user_id'], 'int'))) or _error("SQL_ERROR_THROWEN");
+                                $user->_data['user_album_pictures'] = $db->insert_id;
+                                /* update user profile picture album id */
+                                $db->query(sprintf("UPDATE users SET user_album_pictures = %s WHERE user_id = %s", secure($user->_data['user_album_pictures'], 'int'), secure($user->_data['user_id'], 'int'))) or _error("SQL_ERROR_THROWEN");
+                            }
+                            /* insert updated profile picture post */
+                            $db->query(sprintf("INSERT INTO posts (user_id, user_type, post_type, time, privacy) VALUES (%s, 'user', 'profile_picture', %s, 'public')", secure($user->_data['user_id'], 'int'), secure($date))) or _error("SQL_ERROR_THROWEN");
+                            $post_id = $db->insert_id;
+                            /* insert new profile picture to album */
+                            $db->query(sprintf("INSERT INTO posts_photos (post_id, album_id, source, blur) VALUES (%s, %s, %s, %s)", secure($post_id, 'int'), secure($user->_data['user_album_pictures'], 'int'), secure($file_name), secure($image_blured))) or _error("SQL_ERROR_THROWEN");
+                            $photo_id = $db->insert_id;
+                            /* delete old cropped picture from uploads folder */
+                            delete_uploads_file($user->_data['user_picture_raw']);
+                            /* update user profile picture */
+                            $db->query(sprintf("UPDATE users SET user_picture = %s, user_picture_id = %s WHERE user_id = %s", secure($file_name), secure($photo_id, 'int'), secure($user->_data['user_id'], 'int'))) or _error("SQL_ERROR_THROWEN");
+    
+                            /*Update Users Profile in RDM */
+                            $redisObject = new RedisClass();
+                            $redisPostKey = 'user-' . $user->_data['user_id'];
+                            $redisObject->deleteValueFromKey($redisPostKey);
+                            cachedUserData($db, $system, $user->_data['user_id'], $user->_data['active_session_token']);
+                            $redisPostProfileKey = 'profile-posts-' . $user->_data['user_id'];
+                            $redisObject->deleteValueFromKey($redisPostProfileKey);
+    
+                            $redisPostKey = 'user-' . $user->_data['user_id'] . '-posts';
+                            $redisObject->deleteValueFromKey($redisPostKey);
+                            fetchAndSetDataOnPostReaction($system, $user, $redisObject, $redisPostKey);
+
+
                         }
-                        /* insert updated profile picture post */
-                        $db->query(sprintf("INSERT INTO posts (user_id, user_type, post_type, time, privacy) VALUES (%s, 'user', 'profile_picture', %s, 'public')", secure($user->_data['user_id'], 'int'), secure($date))) or _error("SQL_ERROR_THROWEN");
-                        $post_id = $db->insert_id;
-                        /* insert new profile picture to album */
-                        $db->query(sprintf("INSERT INTO posts_photos (post_id, album_id, source, blur) VALUES (%s, %s, %s, %s)", secure($post_id, 'int'), secure($user->_data['user_album_pictures'], 'int'), secure($file_name), secure($image_blured))) or _error("SQL_ERROR_THROWEN");
-                        $photo_id = $db->insert_id;
-                        /* delete old cropped picture from uploads folder */
-                        delete_uploads_file($user->_data['user_picture_raw']);
-                        /* update user profile picture */
-                        $db->query(sprintf("UPDATE users SET user_picture = %s, user_picture_id = %s WHERE user_id = %s", secure($file_name), secure($photo_id, 'int'), secure($user->_data['user_id'], 'int'))) or _error("SQL_ERROR_THROWEN");
-
-                        /*Update Users Profile in RDM */
-                        $redisObject = new RedisClass();
-                        $redisPostKey = 'user-' . $user->_data['user_id'];
-                        $redisObject->deleteValueFromKey($redisPostKey);
-                        cachedUserData($db, $system, $user->_data['user_id'], $user->_data['active_session_token']);
-                        $redisPostProfileKey = 'profile-posts-' . $user->_data['user_id'];
-                        $redisObject->deleteValueFromKey($redisPostProfileKey);
-
-                        $redisPostKey = 'user-' . $user->_data['user_id'] . '-posts';
-                        $redisObject->deleteValueFromKey($redisPostKey);
-                        fetchAndSetDataOnPostReaction($system, $user, $redisObject, $redisPostKey);
                         break;
 
                     case 'cover-page':
@@ -810,7 +814,7 @@ try {
             }
 
             // return the file new name & exit
-            return_json(array("file" => $file_name));
+            return_json(array("file" => $file_name,"image_blured" => $image_blured));
             break;
 
         default:
