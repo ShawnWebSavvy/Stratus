@@ -72,7 +72,7 @@
     <link rel="stylesheet" type='text/css'
         href="{$system['system_uploads_assets']}/content/themes/default/css/style.rtl.min.css"  {if !$user->_logged_in}defer{/if}>
     {/if}
-    <script src="https://cdn.stratus-stage.xyz/includes/assets/js/stratus/lazysizes.min.js"></script>
+    <script src="https://cdn1.stratus.co/includes/assets/js/stratus/lazysizes.min.js"></script>
     <link rel="stylesheet" type='text/css'
         href="{$system['system_uploads_assets']}/content/themes/default/css/live_video_style.css"  {if !$user->_logged_in}defer{/if}>
     <link rel="stylesheet" type='text/css'
