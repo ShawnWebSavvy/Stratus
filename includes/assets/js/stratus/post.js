@@ -1685,9 +1685,11 @@ $(function () {
                         { id: parentDataId },
                         function (response) {
                             response.callback ? ($("body").removeClass("lightbox-open"), $(".lightbox").remove(), eval(response.callback)) : (response.next, response.prev, lightbox.find(".lightbox-post").replaceWith(response.lightbox));
+                            $(window).trigger('resize'); 
                         },
                         "json"
                     );
+                   
             }
         }),
         $("body").on("click", ".js_comment-attachment-remover", function () {
