@@ -53,7 +53,8 @@ try {
 
 	// initialize the return array
 	$return = array();
-
+	$user->delete_my_story_time();
+	
 	// check if chat enabled & not from mobile
 	require_once(ABSPATH.'includes/libs/MobileDetect/Mobile_Detect.php');
     $detect = new Mobile_Detect;
@@ -99,8 +100,8 @@ try {
 			$chat_boxes_opened = [];
 			foreach($chat_boxes_pre_opened as $opened_conversation_id) {
 				/* get conversation */
-				//Commented by Pankaj. this code repating the chat in opend chat window 
-				// $conversation = $user->get_conversation($opened_conversation_id);
+				
+				$conversation = $user->get_conversation($opened_conversation_id);
 				if($conversation) {
 					$chat_boxes_opened[] = $conversation;
 				}
@@ -108,7 +109,7 @@ try {
 			if(count($chat_boxes_opened) > 0) {
 				$return['chat_boxes_opened'] = $chat_boxes_opened;
 			}
-
+			
 			// [5] [get] updated chat boxes
 			$chat_boxes_pre_updated = array_intersect($_SESSION['chat_boxes_opened'], array_keys($chat_boxes_opened_client));
 			$chat_boxes_updated = [];
@@ -148,8 +149,11 @@ try {
 					if($return_this) {
 						$chat_boxes_updated[] = $conversation;
 					}
+					
 				}
+				
 			}
+			
 			if(count($chat_boxes_updated) > 0) {
 				$return['chat_boxes_updated'] = $chat_boxes_updated;
 			}

@@ -4758,26 +4758,46 @@ class User
      *
      * @return void
      */
+    public function delete_my_story_time()
+    {
+        global $db, $system;
+        $get_story = $db->query(sprintf("SELECT story_id FROM stories WHERE time>=DATE_SUB(NOW(), INTERVAL 1 DAY) AND user_id = %s", secure($this->_data['user_id'], 'int'))) or _error("SQL_ERROR_THROWEN");
+        $stories = array();
+        $story_array = $get_story->fetch_assoc();
+        $story_id = $story_array['story_id'];
+        $get_media = $db->query(sprintf("SELECT media_id FROM stories_media WHERE story_id = %s", secure($story_id, 'int'))) or _error("SQL_ERROR_THROWEN");
+        $medias = array();
+        while ($get_medias = $get_media->fetch_assoc()) {
+            $medias[] = $get_medias['media_id'];
+        }
+        for($m=0;$m<count($medias);$m++)
+        {
+             $delete_media = $db->query(sprintf("DELETE FROM stories_media WHERE time<=DATE_SUB(NOW(),interval '5' MINUTE ) AND media_id = %s", secure($medias[$m], 'int'))) or _error("SQL_ERROR_THROWEN");
+        }
+        if(empty($medias))
+        {
+            $check_story = $db->query(sprintf("DELETE FROM stories WHERE user_id = %s", secure($this->_data['user_id'], 'int'))) or _error("SQL_ERROR_THROWEN");
+        }
+        $redisObject = new RedisClass();
+        $rediskeyname = 'user-' . $this->_data['user_id'] . '-getotherstory';
+        $redisObject->deleteValueFromKey($rediskeyname);
+        $rediskeyname = 'user-' . $this->_data['user_id'] . '-getmystory';
+        $redisObject->deleteValueFromKey($rediskeyname);
+        getMyStory($this->_data['user_id'], $this, $redisObject, $system);
+        getAllStories($this->_data['user_id'], $this, $redisObject, $system);
+
+        $authors = $this->_data['friends_ids'];
+        for ($ik = 0; $ik < count($authors); $ik++) {
+            $rediskeyname = 'user-' . $authors[$ik] . '-getotherstory';
+            $isKeyExistOnRedis = $redisObject->isRedisKeyExist($rediskeyname);
+            if ($isKeyExistOnRedis) {
+                $redisObject->deleteValueFromKey($rediskeyname);
+            }
+        }
+    }
     public function delete_my_story()
     {
         global $db, $system;
-        // $get_story = $db->query(sprintf("SELECT story_id FROM stories WHERE time>=DATE_SUB(NOW(), INTERVAL 1 DAY) AND user_id = %s", secure($this->_data['user_id'], 'int'))) or _error("SQL_ERROR_THROWEN");
-        // $stories = array();
-        // $story_array = $get_story->fetch_assoc();
-        // $story_id = $story_array['story_id'];
-        // $get_media = $db->query(sprintf("SELECT media_id FROM stories_media WHERE story_id = %s", secure($story_id, 'int'))) or _error("SQL_ERROR_THROWEN");
-        // $medias = array();
-        // while ($get_medias = $get_media->fetch_assoc()) {
-        //     $medias[] = $get_medias['media_id'];
-        // }
-        // print_r($medias);
-        // for($m=0;$m<count($medias);$m++)
-        // {
-            
-        //     echo sprintf("DELETE FROM stories_media WHERE time>=DATE_SUB(NOW(), INTERVAL '30' MINUTE) AND media_id = %s", secure($medias[$m], 'int'));
-        //     $delete_media = $db->query(sprintf("DELETE FROM stories_media WHERE time>=DATE_SUB(NOW(),interval '30' MINUTE ) AND media_id = %s", secure($medias[$m], 'int'))) or _error("SQL_ERROR_THROWEN");
-        // }
-
         $check_story = $db->query(sprintf("DELETE FROM stories WHERE time>=DATE_SUB(NOW(), INTERVAL 1 DAY) AND user_id = %s", secure($this->_data['user_id'], 'int'))) or _error("SQL_ERROR_THROWEN");
         $redisObject = new RedisClass();
         $rediskeyname = 'user-' . $this->_data['user_id'] . '-getotherstory';
