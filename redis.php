@@ -117,9 +117,7 @@ class RedisClass
         }
     }
 
-
-
-      function scanValues($cursor, $pattern)
+    function scanValues($cursor, $pattern)
     {
         try {
             $redisObj = $this->redis;

@@ -319,7 +319,7 @@ function init_picture_crop(node) {
   var system_url = node.data("systemUrl") ;
 
   modal("#crop-profile-picture", {
-    image: `${system_url}/includes/wallet-api/get-picture-api.php?picture=${image_node}&pictureFull=&type_url=1`,
+    image: `${system_url}/includes/wallet-api/get-picture-api.php?picture=${image_node}&picture_full=&type_url=1`,
     handle: node.data("handle"),
     id: node.data("id")
   });
