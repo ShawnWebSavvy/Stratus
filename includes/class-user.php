@@ -4805,7 +4805,7 @@ class User
         }
         for($m=0;$m<count($medias);$m++)
         {
-             $delete_media = $db->query(sprintf("DELETE FROM stories_media WHERE time<=DATE_SUB(NOW(),interval 1 DAY ) AND media_id = %s", secure($medias[$m], 'int'))) or _error("SQL_ERROR_THROWEN");
+            $delete_media = $db->query(sprintf("DELETE FROM stories_media WHERE time<=DATE_SUB(NOW(),interval 2 MINUTE ) AND media_id = %s", secure($medias[$m], 'int'))) or _error("SQL_ERROR_THROWEN");
         }
         if(empty($medias))
         {

@@ -17,7 +17,13 @@
             {/if} -->
       
             <div class="nameTimeWrap">
-                <span class="name">{$conversation['name']}</span>
+            {if empty( {$conversation['name']} )}  
+                <span class="name">{$conversation['user_firstname']}</span>
+
+            {else}
+                <span class="name">{$conversation['name']}</span>                
+            {/if}
+               
                 <div class="time js_moment" data-time="{$conversation['time']}">{$conversation['time']}</div>
             </div>
             <div class="text">

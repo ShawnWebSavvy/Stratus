@@ -48,9 +48,12 @@ try {
 
 				// page edit
 				$page_name = $user->edit_page($_GET['id'], $_GET['edit'], $_POST);
-
-				// return
-				$return['path'] = $system['system_url'].'/pages/'.$page_name;
+				//$return['path'] = $system['system_url'].'/pages/'.$page_name;
+				if($_GET['edit']=='info')
+				{
+					$return['path'] = $system['system_url'].'/pages/'.$page_name.'/settings/'.$_GET['edit'];
+				}
+				else {	$return['path'] = $system['system_url'].'/pages/'.$page_name.'/settings/';}
 			}
 			break;
 

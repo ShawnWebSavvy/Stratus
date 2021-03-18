@@ -53,7 +53,7 @@ try {
 
 	// initialize the return array
 	$return = array();
-
+	$user->delete_my_story_time();
 	// check if chat enabled & not from mobile
 	require_once(ABSPATH.'includes/libs/MobileDetect/Mobile_Detect.php');
     $detect = new Mobile_Detect;

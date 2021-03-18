@@ -7,12 +7,19 @@
         {if $message['user_id'] == $user->_data['user_id']}
         <div class="chat-message-user-section">
           <img src="{$message['user_picture']}" />
-          <p>{$message['user_firstname']}</p>
+
+           {if $message['user_firstname']==""}
+          <p>
+          {$message['user_name']} </P>
+          {else}
+          <P>{$message['user_firstname']}</P>
+          {/if}
           <!-- message time -->
           <div class="time js_moment" data-time="{$message['time']}">{$message['time']}</div>
           <!-- message time -->
         </div>
         {/if}
+       
         {if $message['user_id'] != $user->_data['user_id']}
     <div class="conversation-user feed-message-userName line-4">
     
@@ -24,7 +31,12 @@
         <span class="chat-message-user-section">
           <img src="{$message['user_picture']}" title="{$message['user_firstname']} {$message['user_lastname']}"
           alt="{$message['user_firstname']} {$message['user_lastname']}" />
-          <p>{$message['user_firstname']}</p>
+           {if $message['user_firstname']==''}
+          <p>
+          {$message['user_name']} </P>
+          {else}
+          <P>{$message['user_firstname']}</P>
+          {/if}
           <!-- message time -->
           <div class="time js_moment" data-time="{$message['time']}">{$message['time']}</div>
           <!-- message time -->

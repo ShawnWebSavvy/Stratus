@@ -7992,7 +7992,7 @@ class UserGlobal
         $conversation = $get_conversation->fetch_assoc();
         // echo "<pre>";print_r($conversation); die;
         /* get recipients */
-        $chat_get = sprintf("SELECT conversations_global_users.seen, conversations_global_users.typing, users.user_id, users.user_name, global_profile.user_firstname as user_firstname, global_profile.user_lastname as user_lastname, users.user_gender, users.global_user_picture, users.user_subscribed, users.user_verified FROM conversations_global_users INNER JOIN users ON conversations_global_users.user_id = users.user_id LEFT JOIN global_profile ON users.user_id = global_profile.user_id WHERE conversations_global_users.conversation_id = %s AND conversations_global_users.user_id != %s", secure($conversation['conversation_id'], 'int'), secure($this->_data['user_id'], 'int'));
+        $chat_get = sprintf("SELECT conversations_global_users.seen, conversations_global_users.typing, users.user_name as username, users.user_id, users.user_name, global_profile.user_firstname as user_firstname, global_profile.user_lastname as user_lastname, users.user_gender, users.global_user_picture, users.user_subscribed, users.user_verified FROM conversations_global_users INNER JOIN users ON conversations_global_users.user_id = users.user_id LEFT JOIN global_profile ON users.user_id = global_profile.user_id WHERE conversations_global_users.conversation_id = %s AND conversations_global_users.user_id != %s", secure($conversation['conversation_id'], 'int'), secure($this->_data['user_id'], 'int'));
         $get_recipients = $db->query($chat_get) or _error("SQL_ERROR_THROWEN");
         $recipients_num = $get_recipients->num_rows;
         if ($recipients_num == 0) {
@@ -8065,6 +8065,7 @@ class UserGlobal
 
             if ($recipients_num > 2) {
                 $conversation['name'] = html_entity_decode($conversation['recipients'][0]['user_firstname'], ENT_QUOTES) . ", " . html_entity_decode($conversation['recipients'][1]['user_firstname'], ENT_QUOTES) . " & " . ($recipients_num - 2) . " " . __("more");
+                
                 $name_new = "<div class='multiple-recipients-section'> <div class='multiple-recipients-image data-avatar'><div class='left-avatar'><img src='" . $conversation['picture_left'] . "'> </div><div class='right-avatar'><img src='" . $conversation['recipients'][1]['user_picture'] . "'> </div></div>";
                 $name_new .= "<div class='multiple-recipients-text'>" . $conversation['name'] . " </div></div>";
                 $conversation['name_new'] = $name_new;
@@ -8087,7 +8088,10 @@ class UserGlobal
                 }
             } else {
                 $conversation['name'] = html_entity_decode($conversation['recipients'][0]['user_firstname'], ENT_QUOTES) . " & " . html_entity_decode($conversation['recipients'][1]['user_firstname'], ENT_QUOTES);
-
+                if($conversation['name']=='')
+                {
+                    $conversation['name'] = html_entity_decode($conversation['recipients'][0]['username'], ENT_QUOTES) . " & " . ($recipients_num - 2) . " " . __("more");
+                }
                 $name_new = "<div class='multiple-recipients-section'> <div class='multiple-recipients-image data-avatar'><div class=' left-avatar'><img src='" . $conversation['recipients'][0]['user_picture'] . "'> </div><div class='right-avatar'><img src='" . $conversation['recipients'][1]['user_picture'] . "'> </div></div>";
                 $name_new .= "<div class='multiple-recipients-text'>" . $conversation['name'] . " </div></div>";
                 $conversation['name_new'] = $name_new;
@@ -8111,8 +8115,13 @@ class UserGlobal
             $conversation['user_id'] = $conversation['recipients'][0]['user_id'];
             $conversation['link'] = $conversation['recipients'][0]['user_name'];
             $conversation['picture'] = $conversation['recipients'][0]['user_picture'];
+            
             $conversation['name'] = html_entity_decode($conversation['recipients'][0]['user_firstname'], ENT_QUOTES) . " " . html_entity_decode($conversation['recipients'][0]['user_lastname'], ENT_QUOTES);
-
+            
+            if(empty($conversation['recipients'][0]['user_firstname']))
+            {
+                $conversation['name'] = html_entity_decode($conversation['recipients'][0]['username'], ENT_QUOTES);
+            }
             $onlineStatus = $this->user_online($conversation['recipients'][0]['user_id']);
             $conversation['user_is_online'] = $onlineStatus;
 

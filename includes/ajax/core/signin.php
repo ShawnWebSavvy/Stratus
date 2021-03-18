@@ -35,5 +35,7 @@ try {
 	//return_json( array('callback' => 'location.href(landingpage);') );
 
 } catch (Exception $e) {
+	sleep(1);
 	return_json(array('error' => true, 'message' => $e->getMessage()));
+	exit();
 }

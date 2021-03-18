@@ -254,7 +254,7 @@ function button_status(e, t) {
                                 ? (error.is(":visible") && error.hide(), success.html(response.message).slideDown())
                                 : eval(response.callback),
                         $(".spinner-grow").hide(),
-                        $("#getInTouch").get(0).reset(),
+                        //$("#getInTouch").get(0).reset(),
                         // $(".learn-btn").text("Submit");
                         $(".cnt_btn").text("Submit");
                         

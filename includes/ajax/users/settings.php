@@ -24,7 +24,8 @@ try {
 			$user->settings($_GET['edit'], $_POST);
 
 			// return
-			return_json(array('success' => true, 'message' => __("Your account settings has been updated")));
+			//return_json(array('success' => true, 'message' => __("Your account settings has been updated")));
+			return_json(array('callback' => 'window.location.reload();'));
 			break;
 
 		case 'basic':
