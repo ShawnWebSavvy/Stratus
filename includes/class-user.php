@@ -56,6 +56,43 @@ class User
                 // $redisPostKey = 'user-' . $this->_data['user_id'];
                 // $redisObject->deleteValueFromKey($redisPostKey);
                 // cachedUserData($db, $system, $this->_data['user_id'], $this->_data['active_session_token']);
+
+                /* check pages permission */
+                 if($system['pages_enabled']) {
+                    $this->_data['can_create_pages'] = $this->check_module_permission($system['pages_permission']);
+                }
+                /* check groups permission */
+                if($system['groups_enabled']) {
+                    $this->_data['can_create_groups'] = $this->check_module_permission($system['groups_permission']);
+                }
+                /* check events permission */
+                if($system['events_enabled']) {
+                    $this->_data['can_create_events'] = $this->check_module_permission($system['events_permission']);
+                }
+                /* check blogs permission */
+                if($system['blogs_enabled']) {
+                    $this->_data['can_write_articles'] = $this->check_module_permission($system['blogs_permission']);
+                }
+                /* check market permission */
+                if($system['market_enabled']) {
+                    $this->_data['can_sell_products'] = $this->check_module_permission($system['market_permission']);
+                }
+                /* check forums permission */
+                if($system['forums_enabled']) {
+                    $this->_data['can_use_forums'] = $this->check_module_permission($system['forums_permission']);
+                }
+                /* check movies permission */
+                if($system['movies_enabled']) {
+                    $this->_data['can_watch_movies'] = $this->check_module_permission($system['movies_permission']);
+                }
+                /* check games permission */
+                if($system['games_enabled']) {
+                    $this->_data['can_play_games'] = $this->check_module_permission($system['games_permission']);
+                }
+                /* check games permission */
+                if($system['live_enabled']) {
+                    $this->_data['can_go_live'] = $this->check_module_permission($system['live_permission']);
+                }
             }
         }
     }
