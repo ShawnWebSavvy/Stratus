@@ -125,9 +125,8 @@ if ($system['s3_enabled']) {
     $endpoint = "https://s3." . $system['s3_region'] . ".amazonaws.com/" . $system['s3_bucket'];
 
     /*CDN Stag */
-    // $system['system_uploads'] =  "https://cdn1.stratus.co/uploads";
-    // $system['system_uploads_url'] = "https://cdn1.stratus.co/uploads";
     //https://cdn1.stratus.co
+    //https://cdn.stratus-stage.xyz
     
     /*CDN LIVE */
     $system['system_uploads'] =  "https://cdn1.stratus.co/uploads";

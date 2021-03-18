@@ -17,7 +17,7 @@
     <div class="conversation-user feed-message-userName line-4">
     
     {if ($page == 'messages_global')}
-      <a href="{$system['system_url']}/global-profile.php?username={$message['user_name']}">
+      <a href="{$system['system_url']}/.php?username={$message['user_name']}">
     {else}
  <a href="{$system['system_url']}/{$message['user_name']}">
     {/if}
