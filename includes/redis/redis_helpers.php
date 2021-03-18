@@ -209,43 +209,6 @@ function cachedUserData($db, $system, $user_id, $user_token)
                     $_data['can_boost_pages'] = true;
                 }
             }
-
-            /* check pages permission */
-            if ($system['pages_enabled']) {
-                $_data['can_create_pages'] = $userClassObject->check_module_permission($system['pages_permission']);
-            }
-            /* check groups permission */
-            if ($system['groups_enabled']) {
-                $_data['can_create_groups'] = $userClassObject->check_module_permission($system['groups_permission']);
-            }
-            /* check events permission */
-            if ($system['events_enabled']) {
-                $_data['can_create_events'] = $userClassObject->check_module_permission($system['events_permission']);
-            }
-            /* check blogs permission */
-            if ($system['blogs_enabled']) {
-                $_data['can_write_articles'] = $userClassObject->check_module_permission($system['blogs_permission']);
-            }
-            /* check market permission */
-            if ($system['market_enabled']) {
-                $_data['can_sell_products'] = $userClassObject->check_module_permission($system['market_permission']);
-            }
-            /* check forums permission */
-            if ($system['forums_enabled']) {
-                $_data['can_use_forums'] = $userClassObject->check_module_permission($system['forums_permission']);
-            }
-            /* check movies permission */
-            if ($system['movies_enabled']) {
-                $_data['can_watch_movies'] = $userClassObject->check_module_permission($system['movies_permission']);
-            }
-            /* check games permission */
-            if ($system['games_enabled']) {
-                $_data['can_play_games'] = $userClassObject->check_module_permission($system['games_permission']);
-            }
-            /* check games permission */
-            if ($system['live_enabled']) {
-                $_data['can_go_live'] = $userClassObject->check_module_permission($system['live_permission']);
-            }
             $jsonValue = json_encode($_data);
             $redisObject->setValueWithRedis($redisPostKey, $jsonValue);
             $getPostsFromRedis = $redisObject->getValueFromKey($redisPostKey);
