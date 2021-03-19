@@ -1047,7 +1047,7 @@ $(function () {
                             d.innerHTML = values;
                             var valuesPost = d.firstChild;
                             bricklayer.append(valuesPost);
-                            // bricklayer.redraw();
+                            bricklayer.redraw();
                         }
 
                         if ((data.offset++, response.append ? posts_stream.append(response.data) : posts_stream.prepend(response.data), $(window).width() > 1024)) {
