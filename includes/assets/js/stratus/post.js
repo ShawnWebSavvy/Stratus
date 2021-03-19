@@ -1276,9 +1276,9 @@ $(function () {
                 api["posts/edit"],
                 { handle: "privacy", id: id, privacy: privacy },
                 function (response) {
-                    "friends" == privacy && $("#" + id + ">img").attr("src", "https://cdn.stratus-stage.xyz/content/themes/default/images/svg/svgImg/friendsIcon.svg"),
-                        "public" == privacy && $("#" + id + ">img").attr("src", "https://cdn.stratus-stage.xyz/content/themes/default/images/svg/svgImg/nav_icon_globalHub.svg"),
-                        "me" == privacy && $("#" + id + ">img").attr("src", "https://cdn.stratus-stage.xyz/content/themes/default/images/svg/svgImg/Hide_form.svg"),
+                    "friends" == privacy && $("#" + id + ">img").attr("src", "https://cdn1.stratus.co/content/themes/default/images/svg/svgImg/friendsIcon.svg"),
+                        "public" == privacy && $("#" + id + ">img").attr("src", "https://cdn1.stratus.co/content/themes/default/images/svg/svgImg/nav_icon_globalHub.svg"),
+                        "me" == privacy && $("#" + id + ">img").attr("src", "https://cdn1.stratus.co/content/themes/default/images/svg/svgImg/Hide_form.svg"),
                         response.callback && eval(response.callback);
                 },
                 "json"
@@ -1685,9 +1685,11 @@ $(function () {
                         { id: parentDataId },
                         function (response) {
                             response.callback ? ($("body").removeClass("lightbox-open"), $(".lightbox").remove(), eval(response.callback)) : (response.next, response.prev, lightbox.find(".lightbox-post").replaceWith(response.lightbox));
+                            $(window).trigger('resize'); 
                         },
                         "json"
                     );
+                   
             }
         }),
         $("body").on("click", ".js_comment-attachment-remover", function () {

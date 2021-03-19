@@ -129,9 +129,9 @@ if ($system['s3_enabled']) {
     //https://cdn.stratus-stage.xyz
     
     /*CDN LIVE */
-    $system['system_uploads'] =  "https://cdn.stratus-stage.xyz/uploads";
-    $system['system_uploads_url'] = "https://cdn.stratus-stage.xyz/uploads";
-    $system['system_uploads_assets'] = "https://cdn.stratus-stage.xyz";
+    $system['system_uploads'] =  "https://cdn1.stratus.co/uploads";
+    $system['system_uploads_url'] = "https://cdn1.stratus.co/uploads";
+    $system['system_uploads_assets'] = "https://cdn1.stratus.co";
 } elseif ($system['digitalocean_enabled']) {
     $endpoint = "https://" . $system['digitalocean_space_name'] . "." . $system['digitalocean_space_region'] . ".digitaloceanspaces.com";
     $system['system_uploads'] = $endpoint . "/uploads";

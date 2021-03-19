@@ -43,6 +43,7 @@
                                         {include file='__feeds_conversation_global.tpl' conversation=$_conversation}
                                             {/if}
                                         {/foreach}
+                                        {include file='__feeds_conversation_global.tpl' conversation=$_conversation}
                                         </ul>
                                     {if count($userGlobal->_data['conversations']) >= $system['max_results']}
                                     <!-- see-more -->

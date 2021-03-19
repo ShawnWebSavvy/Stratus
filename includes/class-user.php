@@ -56,6 +56,43 @@ class User
                 // $redisPostKey = 'user-' . $this->_data['user_id'];
                 // $redisObject->deleteValueFromKey($redisPostKey);
                 // cachedUserData($db, $system, $this->_data['user_id'], $this->_data['active_session_token']);
+
+                /* check pages permission */
+                 if($system['pages_enabled']) {
+                    $this->_data['can_create_pages'] = $this->check_module_permission($system['pages_permission']);
+                }
+                /* check groups permission */
+                if($system['groups_enabled']) {
+                    $this->_data['can_create_groups'] = $this->check_module_permission($system['groups_permission']);
+                }
+                /* check events permission */
+                if($system['events_enabled']) {
+                    $this->_data['can_create_events'] = $this->check_module_permission($system['events_permission']);
+                }
+                /* check blogs permission */
+                if($system['blogs_enabled']) {
+                    $this->_data['can_write_articles'] = $this->check_module_permission($system['blogs_permission']);
+                }
+                /* check market permission */
+                if($system['market_enabled']) {
+                    $this->_data['can_sell_products'] = $this->check_module_permission($system['market_permission']);
+                }
+                /* check forums permission */
+                if($system['forums_enabled']) {
+                    $this->_data['can_use_forums'] = $this->check_module_permission($system['forums_permission']);
+                }
+                /* check movies permission */
+                if($system['movies_enabled']) {
+                    $this->_data['can_watch_movies'] = $this->check_module_permission($system['movies_permission']);
+                }
+                /* check games permission */
+                if($system['games_enabled']) {
+                    $this->_data['can_play_games'] = $this->check_module_permission($system['games_permission']);
+                }
+                /* check games permission */
+                if($system['live_enabled']) {
+                    $this->_data['can_go_live'] = $this->check_module_permission($system['live_permission']);
+                }
             }
         }
     }
@@ -4754,6 +4791,43 @@ class User
      *
      * @return void
      */
+    public function delete_my_story_time()
+    {
+        global $db, $system;
+        $get_story = $db->query(sprintf("SELECT story_id FROM stories WHERE time>=DATE_SUB(NOW(), INTERVAL 1 DAY) AND user_id = %s", secure($this->_data['user_id'], 'int'))) or _error("SQL_ERROR_THROWEN");
+        $stories = array();
+        $story_array = $get_story->fetch_assoc();
+        $story_id = $story_array['story_id'];
+        $get_media = $db->query(sprintf("SELECT media_id FROM stories_media WHERE story_id = %s", secure($story_id, 'int'))) or _error("SQL_ERROR_THROWEN");
+        $medias = array();
+        while ($get_medias = $get_media->fetch_assoc()) {
+            $medias[] = $get_medias['media_id'];
+        }
+        for($m=0;$m<count($medias);$m++)
+        {
+             $delete_media = $db->query(sprintf("DELETE FROM stories_media WHERE time<=DATE_SUB(NOW(),interval 1 DAY ) AND media_id = %s", secure($medias[$m], 'int'))) or _error("SQL_ERROR_THROWEN");
+        }
+        if(empty($medias))
+        {
+            $check_story = $db->query(sprintf("DELETE FROM stories WHERE user_id = %s", secure($this->_data['user_id'], 'int'))) or _error("SQL_ERROR_THROWEN");
+        }
+        $redisObject = new RedisClass();
+        $rediskeyname = 'user-' . $this->_data['user_id'] . '-getotherstory';
+        $redisObject->deleteValueFromKey($rediskeyname);
+        $rediskeyname = 'user-' . $this->_data['user_id'] . '-getmystory';
+        $redisObject->deleteValueFromKey($rediskeyname);
+        getMyStory($this->_data['user_id'], $this, $redisObject, $system);
+        getAllStories($this->_data['user_id'], $this, $redisObject, $system);
+
+        $authors = $this->_data['friends_ids'];
+        for ($ik = 0; $ik < count($authors); $ik++) {
+            $rediskeyname = 'user-' . $authors[$ik] . '-getotherstory';
+            $isKeyExistOnRedis = $redisObject->isRedisKeyExist($rediskeyname);
+            if ($isKeyExistOnRedis) {
+                $redisObject->deleteValueFromKey($rediskeyname);
+            }
+        }
+    }
     public function delete_my_story()
     {
         global $db, $system;
@@ -6865,11 +6939,14 @@ class User
             case 'event_cover':
             case 'product':
                 /* delete uploads from uploads folder */
+                if(!empty($post['photos']))
+                {
                 foreach ($post['photos'] as $photo) {
                     delete_uploads_file($photo['source']);
                 }
                 /* delete post photos from database */
                 $db->query(sprintf("DELETE FROM posts_photos WHERE post_id = %s", secure($post_id, 'int'))) or _error("SQL_ERROR_THROWEN");
+                 }
                 switch ($post['post_type']) {
                     case 'profile_cover':
                         /* update user cover if it's current cover */
