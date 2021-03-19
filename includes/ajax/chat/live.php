@@ -50,7 +50,7 @@ if(isset($_POST['opened_thread'])) {
 }
 
 try {
-
+	$user->delete_my_story_time();
 	// initialize the return array
 	$return = array();
 
@@ -107,7 +107,7 @@ try {
 			if(count($chat_boxes_opened) > 0) {
 				$return['chat_boxes_opened'] = $chat_boxes_opened;
 			}
-
+			
 			// [5] [get] updated chat boxes
 			$chat_boxes_pre_updated = array_intersect($_SESSION['chat_boxes_opened'], array_keys($chat_boxes_opened_client));
 			$chat_boxes_updated = [];
@@ -147,8 +147,11 @@ try {
 					if($return_this) {
 						$chat_boxes_updated[] = $conversation;
 					}
+					
 				}
+				
 			}
+			
 			if(count($chat_boxes_updated) > 0) {
 				$return['chat_boxes_updated'] = $chat_boxes_updated;
 			}
