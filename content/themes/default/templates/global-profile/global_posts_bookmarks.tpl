@@ -175,3 +175,6 @@
 		</div>
 	{/if}
 </div>
+ <!-- publisher -->
+                    {include file='global-profile/_publisher.tpl' _handle="me" _privacy=true}
+                    <!-- publisher -->

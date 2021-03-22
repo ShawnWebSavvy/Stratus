@@ -45,11 +45,29 @@ background-attachment: fixed;" {/if} {if $page=="share" && $url}onload="initiali
       {assign var="sec_url" value=$last_url[$last_key_url-2]}
       {assign var="third_url" value=$last_url[$last_key_url-3]}
       <!-- main wrapper -->
-
+   {if $active_page =="GlobalHub"} 
+   <div class="mobile-view hidden-md hidden-lg hidden-sm visible-xs d-md-none d-sm-none">
+      <!-- publisher -->
+                     {if $user->_logged_in}
+                     {include file='global-profile/_publisher.tpl' _handle="me" _privacy=true}
+                     {/if}
+      <!-- publisher -->
+      </div>
+      {else}
+      <!-- publisher -->
+      <div class="mobile-view hidden-md hidden-lg hidden-sm visible-xs d-md-none d-sm-none">
+             {if $user->_logged_in}
+            {include file='_publisher.tpl' _handle="me" _privacy=true}
+            {/if}
+            </div>
+      <!-- publisher -->
+   {/if}
+    
       <div class="main-wrapper">
          {if $user->_logged_in && $system['activation_enabled'] &&
          !$user->_data['user_activated']}
          <!-- top-bar -->
+        
          <div class="top-bar">
             <div class="container">
                <div class="row">
@@ -132,9 +150,6 @@ background-attachment: fixed;" {/if} {if $page=="share" && $url}onload="initiali
                         <ul {$page} {$active_page}>
                            <li class="addPost mob_show_">
                               {if $active_page =="GlobalHub"} 
-                              <!-- publisher -->
-                              {include file='_publisher.tpl' _handle="me" _privacy=true}
-                              <!-- publisher -->
                               <a href="javascript:initialize_scraper()" id="openPost" >
                                  <div class="svg-container">
                                     <img

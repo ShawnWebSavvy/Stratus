@@ -19,8 +19,28 @@
     background-attachment: fixed;" {/if} {if
     $page=="share" && $url}onload="initialize_scraper()" {/if}>
     {/if}
-
     <!-- main wrapper -->
+    {if $active_page =="GlobalHub"} 
+   <div class="mobile-view hidden-md hidden-lg hidden-sm visible-xs d-md-none d-sm-none">
+      <!-- publisher -->
+                     {if $user->_logged_in}
+                     {include file='global-profile/_publisher.tpl' _handle="me" _privacy=true}
+                     {/if}
+      <!-- publisher -->
+      </div>
+      {else}
+      <!-- publisher -->
+      <div class="mobile-view hidden-md hidden-lg hidden-sm visible-xs d-md-none d-sm-none">
+             {if $user->_logged_in}
+            {include file='_publisher.tpl' _handle="me" _privacy=true}
+            {/if}
+      <!-- publisher -->
+      </div>
+   {/if}
+    
+
+
+
     <div class="main-wrapper {$user->_logged_in}">
       {if $user->_logged_in && $system['activation_enabled'] && !$user->_data['user_activated']}
       <!-- top-bar -->
@@ -77,6 +97,7 @@
       <div class="main-header">
         <div class="container">
           <div class="row">
+
             {if $user->_logged_in}
             <div class=" col-6 col-lg-2 mobileLogo">
               <!-- logo-wrapper -->
@@ -100,7 +121,7 @@
                     </svg>
                   </button>
                   {if $active_page =="GlobalHub"}
-
+                
                   <a href="javascript:initialize_scraper()" id="openPost">
                   <div class="svg-container">
                     <img
@@ -565,6 +586,7 @@
           </div>
         </div>
       </div>
+        
       <!-- main-header -->
 
       <!-- ads -->
@@ -574,3 +596,5 @@
         {include file='right-sidebarblack.tpl'}
       </div>
     </div>
+    
+
