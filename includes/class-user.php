@@ -2297,7 +2297,7 @@ class User
                 // } else {
                 //     $notification['user_picture_full'] = $system['system_uploads'] . '/' . $notification['user_picture_full'];
                 // }
-                $notification['user_picture'] = $system['system_url'] . '/includes/wallet-api/image-exist-api.php?userPicture=' . $notification['user_picture'] . '&userPictureFull=' . $notification['user_picture_full'];
+                $notification['user_picture'] = $notification['system_url'] . '/includes/wallet-api/image-exist-api.php?userPicture=' . $notification['user_picture'] . '&userPictureFull=' . $system['system_uploads'] . '/' . $notification['user_picture_full'];
                 /* prepare notification notify_id */
                 $notification['notify_id'] = ($notification['notify_id']) ? "?notify_id=" . $notification['notify_id'] : "";
                 /* prepare notification node_url */
