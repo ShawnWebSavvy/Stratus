@@ -8,7 +8,7 @@
        
         {* <a href="{$system['system_url']}/{$conversation['link']}"> *}
         <div class="data-avatar">
-            <img class="lazyload" data-src="{$conversation['picture']}" alt="{$conversation['name']}">
+            <img class="lazyloaded" src="{$conversation['picture']}" alt="{$conversation['name']}">
         <i class="fa fa-circle {if $conversation['user_is_online'] }online{else}offline{/if}"></i>
         </div>
         {* </a> *}
