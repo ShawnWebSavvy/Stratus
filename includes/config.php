@@ -11,7 +11,6 @@ define("API_BASE_URL", "https://ws.stage-apollo.xyz/api");
 define("DEBUGGING", true);
 define("DEFAULT_LOCALE", "en_us");
 define("LICENCE_KEY", "2dZZzu6jS-3DMmA-2iBui-2OlV7-4zfJK-b6c299384b5a");
-
 //FOR STAGE REPLACE https://cdn1.stratus.co with https://cdn.stratus-stage.xyz
 define("SYSTEM_UPLOADS", "https://cdn.stratus-stage.xyz/uploads");
 define("SYSTEM_UPLOADS_URL", "https://cdn.stratus-stage.xyz/uploads");
