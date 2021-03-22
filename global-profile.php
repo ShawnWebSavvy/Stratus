@@ -82,11 +82,11 @@ try {
 
 	$profile['user_picture_lightbox'] = $userGlobal->check_privacy($profile['user_picture_privacy'], $profile['user_id']);
 
-	if ($profile['global_user_picture'] == "https://cdn.stratus-stage.xyz/uploads/") {
+	if ($profile['global_user_picture'] == SYSTEM_UPLOADS) {
 		$profile['global_user_picture'] = $system['system_url'] . '/content/themes/' . $system['theme'] . '/images/user_defoult_img.jpg';
 	}
 
-	if ($profile['user_picture'] == "https://cdn.stratus-stage.xyz/uploads/") {
+	if ($profile['user_picture'] == SYSTEM_UPLOADS) {
 		$profile['user_picture'] = $system['system_url'] . '/content/themes/' . $system['theme'] . '/images/user_defoult_img.jpg';
 	}
 

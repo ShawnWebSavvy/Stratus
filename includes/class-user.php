@@ -953,7 +953,7 @@ class User
         global $db, $system;
         $results = [];
         /* search users */
-        $searchUsers = sprintf('SELECT user_id, user_name, user_firstname, user_lastname, user_gender, user_picture, picture_photo.source as user_picture_full, user_subscribed, user_verified FROM users LEFT JOIN posts_photos as picture_photo ON users.user_picture_id = picture_photo.photo_id WHERE user_firstname != "" AND user_name LIKE %1$s OR user_firstname LIKE %1$s OR user_lastname LIKE %1$s OR CONCAT(user_firstname,  " ", user_lastname) LIKE %1$s LIMIT %2$s', secure($query, 'search'), secure($system['min_results'], 'int', false));
+        $searchUsers = sprintf('SELECT user_id, user_name, user_firstname, user_lastname, user_gender, user_picture, picture_photo.source as user_picture_full, user_subscribed, user_verified FROM users LEFT JOIN posts_photos as picture_photo ON users.user_picture_id = picture_photo.photo_id WHERE user_firstname != "" AND user_name LIKE %1$s OR user_firstname LIKE %1$s OR user_current_city LIKE  %1$s OR user_hometown LIKE  %1$s OR user_lastname LIKE %1$s OR CONCAT(user_firstname,  " ", user_lastname) LIKE %1$s LIMIT %2$s', secure($query, 'search'), secure($system['min_results'], 'int', false));
         $get_users = $db->query($searchUsers) or _error("SQL_ERROR_THROWEN");
         if ($get_users->num_rows > 0) {
             while ($user = $get_users->fetch_assoc()) {
@@ -999,7 +999,7 @@ class User
         }
         /* search events */
         if ($system['events_enabled']) {
-            $get_events = $db->query(sprintf('SELECT * FROM `events` WHERE event_privacy != "secret" AND event_title LIKE %1$s LIMIT %2$s', secure($query, 'search'), secure($system['min_results'], 'int', false))) or _error("SQL_ERROR_THROWEN");
+            $get_events = $db->query(sprintf('SELECT * FROM `events` WHERE event_privacy != "secret" AND event_title LIKE %1$s OR event_location LIKE %1$s LIMIT %2$s', secure($query, 'search'), secure($system['min_results'], 'int', false))) or _error("SQL_ERROR_THROWEN");
             if ($get_events->num_rows > 0) {
                 while ($event = $get_events->fetch_assoc()) {
                     $event['event_picture'] = get_picture($event['event_cover'], 'event');
@@ -4720,8 +4720,175 @@ class User
      *
      * @return array
      */
+    public function stringToEmoji($str) {
+        $data= explode(' ',$str);
+        $emojis = [
+            'o/'         => '👋',
+            '</3'        => '💔',
+            '<3'         => '💗',
+            '8-D'        => '😁',
+            '8D'         => '😁',
+            ':-D'        => '😁',
+            '=-3'        => '😁',
+            '=-D'        => '😁',
+            '=3'         => '😁',
+            '=D'         => '😁',
+            'B^D'        => '😁',
+            'X-D'        => '😁',
+            'XD'         => '😁',
+            'x-D'        => '😁',
+            'xD'         => '😁',
+            ':\')'       => '😂',
+            ':\'-)'      => '😂',
+            ':-))'       => '😃',
+            '8)'         => '😄',
+            ':)'         => '😄',
+            ':-)'        => '😄',
+            ':3'         => '😄',
+            ':D'         => '😄',
+            ':]'         => '😄',
+            ':^)'        => '😄',
+            ':c)'        => '😄',
+            ':o)'        => '😄',
+            ':}'         => '😄',
+            ':っ)'        => '😄',
+            '=)'         => '😄',
+            '=]'         => '😄',
+            '0:)'        => '😇',
+            '0:-)'       => '😇',
+            '0:-3'       => '😇',
+            '0:3'        => '😇',
+            '0;^)'       => '😇',
+            'O:-)'       => '😇',
+            '3:)'        => '😈',
+            '3:-)'       => '😈',
+            '}:)'        => '😈',
+            '}:-)'       => '😈',
+            '*)'         => '😉',
+            '*-)'        => '😉',
+            ':-,'        => '😉',
+            ';)'         => '😉',
+            ';-)'        => '😉',
+            ';-]'        => '😉',
+            ';D'         => '😉',
+            ';]'         => '😉',
+            ';^)'        => '😉',
+            ':-|'        => '😐',
+            ':|'         => '😐',
+            ':('         => '😒',
+            ':-('        => '😒',
+            ':-<'        => '😒',
+            ':-['        => '😒',
+            ':-c'        => '😒',
+            ':<'         => '😒',
+            ':['         => '😒',
+            ':c'         => '😒',
+            ':{'         => '😒',
+            ':っC'        => '😒',
+            '%)'         => '😖',
+            '%-)'        => '😖',
+            ':-P'        => '😜',
+            ':-b'        => '😜',
+            ':-p'        => '😜',
+            ':-Þ'        => '😜',
+            ':-þ'        => '😜',
+            ':P'         => '😜',
+            ':b'         => '😜',
+            ':p'         => '😜',
+            ':Þ'         => '😜',
+            ':þ'         => '😜',
+            ';('         => '😜',
+            '=p'         => '😜',
+            'X-P'        => '😜',
+            'XP'         => '😜',
+            'd:'         => '😜',
+            'x-p'        => '😜',
+            'xp'         => '😜',
+            ':-||'       => '😠',
+            ':@'         => '😠',
+            ':-.'        => '😡',
+            ':-/'        => '😡',
+            ':/'         => '😡',
+            ':L'         => '😡',
+            ':S'         => '😡',
+            ':\\'        => '😡',
+            '=/'         => '😡',
+            '=L'         => '😡',
+            '=\\'        => '😡',
+            ':\'('       => '😢',
+            ':\'-('      => '😢',
+            '^5'         => '😤',
+            '^<_<'       => '😤',
+            'o/\\o'      => '😤',
+            '|-O'        => '😫',
+            '|;-)'       => '😫',
+            ':###..'     => '😰',
+            ':-###..'    => '😰',
+            'D-\':'      => '😱',
+            'D8'         => '😱',
+            'D:'         => '😱',
+            'D:<'        => '😱',
+            'D;'         => '😱',
+            'D='         => '😱',
+            'DX'         => '😱',
+            'v.v'        => '😱',
+            '8-0'        => '😲',
+            ':-O'        => '😲',
+            ':-o'        => '😲',
+            ':O'         => '😲',
+            ':o'         => '😲',
+            'O-O'        => '😲',
+            'O_O'        => '😲',
+            'O_o'        => '😲',
+            'o-o'        => '😲',
+            'o_O'        => '😲',
+            'o_o'        => '😲',
+            ':$'         => '😳',
+            '#-)'        => '😵',
+            ':#'         => '😶',
+            ':&'         => '😶',
+            ':-#'        => '😶',
+            ':-&'        => '😶',
+            ':-X'        => '😶',
+            ':X'         => '😶',
+            ':-J'        => '😼',
+            ':*'         => '😽',
+            ':^*'        => '😽',
+            'ಠ_ಠ'        => '🙅',
+            '*\\0/*'     => '🙆',
+            '\\o/'       => '🙆',
+            ':>'         => '😄',
+            '>.<'        => '😡',
+            '>:('        => '😠',
+            '>:)'        => '😈',
+            '>:-)'       => '😈',
+            '>:/'        => '😡',
+            '>:O'        => '😲',
+            '>:P'        => '😜',
+            '>:['        => '😒',
+            '>:\\'       => '😡',
+            '>;)'        => '😈',
+            '>_>^'       => '😤',
+            ];
+            $newstr= $str;
+            
+            for($d=0;$d<count($data);$d++)
+            {
+                
+                if(isset($emojis[$data[$d]])) {
+                        $data[$d] = $emojis[$data[$d]];
+                        //unset($data[$d]);
+                }
+                
+             
+            }
+            $laststrting = implode(' ',$data);
+                return $laststrting;
+        
+    }
+    
     public function get_stories()
-    { 
+    {     
         global $db, $system;
         $stories = [];
         /* get stories */
@@ -4748,7 +4915,10 @@ class User
                     $story_item['type'] = ($media_item['is_photo']) ? 'photo' : 'video';
                     $story_item['src'] = $system['system_uploads'] . '/' . $media_item['source'];
                     $story_item['link'] = '#';
-                    $story_item['linkText'] = $media_item['text'];
+                    $story_item['linkText'] = $this->stringToEmoji($media_item['text']);
+                    //$story_item['linkText'] = $media_item['text'];
+                    
+
                     $story_item['time'] = strtotime($media_item['time']);
                     $story['items'][] = $story_item;
                 }
@@ -4805,7 +4975,7 @@ class User
         }
         for($m=0;$m<count($medias);$m++)
         {
-            $delete_media = $db->query(sprintf("DELETE FROM stories_media WHERE time<=DATE_SUB(NOW(),interval 2 MINUTE ) AND media_id = %s", secure($medias[$m], 'int'))) or _error("SQL_ERROR_THROWEN");
+            $delete_media = $db->query(sprintf("DELETE FROM stories_media WHERE time<=DATE_SUB(NOW(),interval 1 DAY ) AND media_id = %s", secure($medias[$m], 'int'))) or _error("SQL_ERROR_THROWEN");
         }
         if(empty($medias))
         {

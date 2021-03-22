@@ -5,6 +5,46 @@ if (count != "") {
     $(".js_live-notifications").find("span.counterlive").text(count).show();
 }
 function initialize_modal() {
+    setTimeout(function () {
+        var startDate;
+        
+        $(".strdate").on("click", function () {
+             $(this).datetimepicker('show');
+        });
+        $("#start_date").on("change.datetimepicker", ({date, oldDate}) => {              
+            
+            if(oldDate>date)
+            {
+                    alert('Select date of future');
+                    return false;
+            }
+            else {
+                    startDate = $("#start_date").val();
+                    $('#start_date').datetimepicker('hide');
+                }
+            });
+            $("#end_date").on("click", function () {
+                $("#end_date").datetimepicker('show');
+            });
+            $("#end_date").on("change.datetimepicker", ({date, oldDate}) => {              
+                    var endDate = $("#end_date").val();
+                    console.log(endDate);
+                    if(endDate!=''){
+                    if(startDate>endDate){
+                           alert('End date should be grater then Start date');
+                           return false;
+                    }
+                    else {$('#end_date').datetimepicker('hide');return true;}
+                }
+             });
+         
+                }, 1000);
+    
+
+
+
+
+
     $(".js_scroller").each(function () {
         var e = $(this),
             t = e.attr("data-slimScroll-height") || "280px",
@@ -13,10 +53,12 @@ function initialize_modal() {
     }),
         geolocation_enabled && $(".js_geocomplete").geocomplete(),
         $(".selectpicker").length > 0 && $(".selectpicker").selectpicker({ style: "btn-outline-light" }),
-        $(".js_datetimepicker").length > 0 && $(".js_datetimepicker").datetimepicker({ format: system_datetime_format, locale: $("html").attr("lang").split("_", 1).toString() || "en" }),
+        $(".js_datetimepicker").length > 0 && $(".js_datetimepicker").datetimepicker({ format: system_datetime_format, locale: $("html").attr("lang").split("_", 1).toString() || "en" }),        
         initialize_uploader();
 }
 function initialize_uploader() {
+   
+                
     $(".js_x-uploader").each(function (e) {
         if (!($(this).parents("form.x-uploader").length > 0)) {
             var t = "Image",
@@ -192,14 +234,33 @@ function data_heartbeat() {
                             loopArray.push('<div class="carsds"' + ArrayVal[i])
                         }
                     }
-
                     for (var ik = 0; ik < loopArray.length; ik++) {
                         var values = loopArray[ik];
                         var d = document.createElement('div');
                         d.innerHTML = values;
                         var valuesPost = d.firstChild;
-                        bricklayer.prepend(valuesPost)
-                        bricklayer.redraw();
+                        if(bricklayer){
+                           bricklayer.prepend(valuesPost);
+                           bricklayer.redraw();
+                        } else {
+                            $('.js_posts_stream').prepend('<div class="bricklayer"></div>');
+
+                            var isClassExist = document.getElementsByClassName('bricklayer');
+                             if (isClassExist.length > 0) {
+                               var bricklayer = new Bricklayer(document.querySelector('.bricklayer'));
+                               bricklayer.on("afterAppend", function (e) {
+                                 var el = e.detail.item;
+                                 el.classList.add('is-append');
+                                 setTimeout(function () {
+                                   el.classList.remove('is-append');
+                                 }, 500);
+                               });
+                               bricklayer.prepend(valuesPost);
+                               bricklayer.redraw();
+                             }
+
+                           
+                        }
                     }
                 }
                 response.posts && (posts_stream.find("ul:first").prepend(), setTimeout(photo_grid(), 200)), setTimeout("data_heartbeat();", min_data_heartbeat);

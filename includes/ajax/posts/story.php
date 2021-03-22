@@ -20,6 +20,7 @@ if(!$system['stories_enabled']) {
 	modal("MESSAGE", __("Error"), __("This feature has been disabled by the admin"));
 }
 
+
 try {
 
 	// initialize the return array

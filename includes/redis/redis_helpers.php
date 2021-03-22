@@ -184,7 +184,7 @@ function cachedUserData($db, $system, $user_id, $user_token)
             $_data['user_picture_default'] = ($_data['user_picture']) ? false : true;
             $_data['user_picture_raw'] = $_data['user_picture'];
             $_data['user_picture'] = get_picture($_data['user_picture'], $_data['user_gender']);
-            $_data['user_picture_full'] = ($_data['user_picture_full']) ? $_data['user_picture_full'] : $_data['user_picture_full'];
+            $_data['user_picture_full'] = ($_data['user_picture_full']) ? $system['system_uploads'] . '/' . $_data['user_picture_full'] : $_data['user_picture_full'];
 
             $_data['user_picture'] = $system['system_url'] . '/includes/wallet-api/image-exist-api.php?userPicture=' . $_data['user_picture'] . '&userPictureFull=' . $_data['user_picture_full'] . '&type=1';
 

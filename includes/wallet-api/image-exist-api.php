@@ -12,12 +12,12 @@ if ($userPicture) {
     $checkImage = image_exist($userPicture);
 }
 
-if ($userPictureFull == "https://cdn.stratus-stage.xyz/uploads/") {
+if ($userPictureFull == SYSTEM_UPLOADS."/") {
     $userPictureFull = $system['system_uploads_assets'] . '/content/themes/' . $system['theme'] . '/images/user_defoult_img.jpg';
 }
 
 if ($checkImage != '200') {
-    if ($userPictureFull != "" || $userPictureFull != "https://cdn.stratus-stage.xyz/uploads/") {
+    if ($userPictureFull != "" || $userPictureFull != SYSTEM_UPLOADS."/") {
         if (isset($_GET['type'])) {
             $userPicture = $userPictureFull;
         } else {

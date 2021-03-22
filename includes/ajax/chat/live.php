@@ -50,7 +50,7 @@ if(isset($_POST['opened_thread'])) {
 }
 
 try {
-
+	$user->delete_my_story_time();
 	// initialize the return array
 	$return = array();
 	$user->delete_my_story_time();

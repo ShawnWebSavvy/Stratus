@@ -4,8 +4,53 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "06b5af5e1dbf8722398e4bf20187de72",
+    "content-hash": "45da05accbbca2bc2204e3a804e9f806",
     "packages": [
+        {
+            "name": "chefkoch/morphoji",
+            "version": "1.1.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/chefkoch-dev/morphoji.git",
+                "reference": "a7ee46f09d8850dae3a581e3d9e8c9f25d0f79c2"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/chefkoch-dev/morphoji/zipball/a7ee46f09d8850dae3a581e3d9e8c9f25d0f79c2",
+                "reference": "a7ee46f09d8850dae3a581e3d9e8c9f25d0f79c2",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.5.0"
+            },
+            "require-dev": {
+                "phpunit/phpunit": "4.1.*"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Chefkoch\\Morphoji\\": "src"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Jens Bremmekamp",
+                    "email": "jens.bremmekamp@chefkoch.de"
+                }
+            ],
+            "description": "A library to convert UTF-8 emoji characters to latin1 placeholders and vice versa.",
+            "homepage": "https://github.com/chefkoch-dev/morphoji",
+            "keywords": [
+                "emoji",
+                "unicode",
+                "utf8"
+            ],
+            "time": "2017-03-22T11:40:21+00:00"
+        },
         {
             "name": "tinify/tinify",
             "version": "1.5.2",

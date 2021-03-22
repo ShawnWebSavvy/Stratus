@@ -8333,6 +8333,8 @@ class UserGlobal
         $db->query(sprintf("UPDATE conversations_global_users SET typing = %s WHERE conversation_id = %s AND user_id = %s", secure($is_typing), secure($conversation_id, 'int'), secure($this->_data['user_id'], 'int'))) or _error("SQL_ERROR_THROWEN");
         /* update conversation as deleted */
         $db->query(sprintf("UPDATE conversations_global_users SET deleted = '1' WHERE conversation_id = %s AND user_id = %s", secure($conversation_id, 'int'), secure($this->_data['user_id'], 'int'))) or _error("SQL_ERROR_THROWEN");
+        $db->query(sprintf("DELETE FROM conversations_global_users WHERE deleted = '1' AND user_id = %s",secure($this->_data['user_id'], 'int'))) or _error("SQL_ERROR_THROWEN");
+        
     }
 
 
