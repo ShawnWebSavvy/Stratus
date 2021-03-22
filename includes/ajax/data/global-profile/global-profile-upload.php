@@ -288,6 +288,8 @@ try {
                         break;
 
                     case 'picture-user':
+                        if(!$_POST['notSave']){
+
                         /* check for profile pictures album */
                         if (!$user->_data['user_album_pictures']) {
                             /* create new profile pictures album */
@@ -307,6 +309,8 @@ try {
                         delete_uploads_file($user->_data['user_picture_raw']);
                         /* update user profile picture */
                         $db->query(sprintf("UPDATE users SET global_user_picture = %s, global_user_picture_id = %s WHERE user_id = %s", secure($file_name), secure($photo_id, 'int'), secure($user->_data['user_id'], 'int'))) or _error("SQL_ERROR_THROWEN");
+
+                       }
                         break;
 
                     case 'cover-page':
@@ -794,7 +798,7 @@ try {
             }
 
             // return the file new name & exit
-            return_json(array("file" => $file_name));
+            return_json(array("file" => $file_name, "image_blured" => $image_blured));
             break;
 
         default:

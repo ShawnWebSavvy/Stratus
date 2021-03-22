@@ -726,9 +726,9 @@ function init_picture_position() {
                                 image_blured = response.image_blured;
                                 /* update (user|page|group) picture */
                                 var image_path = uploads_path + "/" + response.file;
-                                if("picture-user" !== handle){
-                                   $(".profile-avatar-wrapper img").attr("src", image_path);
-                                }
+                               
+                                //    $(".profile-avatar-wrapper img").attr("src", image_path);
+                                
                                 /* update crop image source */
                                 $(".js_init-crop-picture").data("image", image_path);
                                 init_picture_crop($(".js_init-crop-picture"));
@@ -854,7 +854,7 @@ function init_picture_position() {
                         api["users/image_crop"],
                         { handle: handle, id: id, x: values.x, y: values.y, height: values.height, width: values.width, save_file_name:save_file_name, image_blured: image_blured },
                         function (response) {
-                            response.callback ? eval(response.callback) : ($("#modal").modal("hide"), window.location.reload());
+                            response.callback ? eval(response.callback) : ($("#modal").modal("hide"), window.location.reload()); 
                         },
                         "json"
                     ).fail(function () {
