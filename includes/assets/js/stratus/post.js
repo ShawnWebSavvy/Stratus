@@ -1259,9 +1259,7 @@ $(function () {
             }
         });
     $("body").on("click", "li.js_update-post", function () {
-        if ($(window).width() < 970) {
-            _update_post(this);
-        }
+        _update_post(this);
     });
 
     $("body").on("click", ".js_publisher_updatebtn", function () {
