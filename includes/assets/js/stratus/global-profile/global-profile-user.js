@@ -1,5 +1,6 @@
-var save_file_name ='';
+var save_file_name = '';
 var image_blured = 0;
+var image_full_original = '';
 function initialize_modal() {
     $(".js_scroller").each(function() {
         var e = $(this),
@@ -410,6 +411,9 @@ api["data/live"] = ajax_path + "data/global-profile/global-profile-live.php", ap
                             save_file_name = e.file;
                             image_blured = e.image_blured;
                             // $(".profile-avatar-wrapper img").attr("src", t), 
+                            if(!image_full_original){
+                                image_full_original =  $(".js_init-crop-picture").data("image");
+                             }
                             $(".js_init-crop-picture").data("image", t), init_picture_crop($(".js_init-crop-picture"))
                         } else if ("publisher" == i) {
                             p && p.remove();
@@ -568,6 +572,9 @@ api["data/live"] = ajax_path + "data/global-profile/global-profile-live.php", ap
             t.attr("style", ""), t.find(".js_x-image-input").val("").change(), e.hide(), t.find(".x-image-success").attr("style", ""), $("#modal").modal("hide")
         })
     }), $("body").on("click", ".js_init-crop-picture", function() {
+        if(image_full_original){
+            $(".js_init-crop-picture").data("image", image_full_original);
+        }
         init_picture_crop($(this))
     }), $("body").on("click", ".js_crop-picture", function() {
         var id = $(this).data("id"),

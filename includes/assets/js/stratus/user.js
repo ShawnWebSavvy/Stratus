@@ -1,5 +1,6 @@
 var save_file_name ='';
 var image_blured = 0;
+var image_full_original='';
 var count = parseInt($('.unread').length) ? parseInt($('.unread').length) : "";
 if (count != "") {
     $(".js_live-notifications").find("span.counterlive").text(count).show();
@@ -728,7 +729,9 @@ function init_picture_position() {
                                 var image_path = uploads_path + "/" + response.file;
                                
                                 //    $(".profile-avatar-wrapper img").attr("src", image_path);
-                                
+                                if(!image_full_original){
+                                   image_full_original =  $(".js_init-crop-picture").data("image");
+                                }
                                 /* update crop image source */
                                 $(".js_init-crop-picture").data("image", image_path);
                                 init_picture_crop($(".js_init-crop-picture"));
@@ -844,6 +847,9 @@ function init_picture_position() {
                     });
                 }),
                 $("body").on("click", ".js_init-crop-picture", function () {
+                    if(image_full_original){
+                      $(".js_init-crop-picture").data("image", image_full_original);
+                    }
                     init_picture_crop($(this));
                 }),
                 $("body").on("click", ".js_crop-picture", function () {
