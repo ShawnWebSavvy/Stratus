@@ -1898,6 +1898,7 @@ class User
                 break;
 
             case 'event-interest':
+                
                 /* check if the viewer member to this event */
                 $check = $db->query(sprintf("SELECT * FROM events_members WHERE user_id = %s AND event_id = %s", secure($this->_data['user_id'], 'int'), secure($id, 'int'))) or _error("SQL_ERROR_THROWEN");
                 $invited = false;
@@ -1915,7 +1916,7 @@ class User
                 } else {
                     /* get event */
                     $get_event = $db->query(sprintf("SELECT * FROM `events` WHERE event_id = %s", secure($id, 'int'))) or _error("SQL_ERROR_THROWEN");
-                    $event = $get_event->fetch_assoc();
+                    $event = $get_event->fetch_assoc();                    
                     if ($event['event_privacy'] == 'public') {
                         /* the event is public */
                         $approved = true;
@@ -1924,20 +1925,35 @@ class User
                         $approved = true;
                     }
                 }
+                
                 if ($approved) {
                     if ($invited || $going) {
                         $db->query(sprintf("UPDATE events_members SET is_interested = '1' WHERE user_id = %s AND event_id = %s", secure($this->_data['user_id'], 'int'), secure($id, 'int'))) or _error("SQL_ERROR_THROWEN");
+                        
                     } else {
                         $db->query(sprintf("INSERT INTO events_members (user_id, event_id, is_interested) VALUES (%s, %s, '1')", secure($this->_data['user_id'], 'int'), secure($id, 'int'))) or _error("SQL_ERROR_THROWEN");
                     }
                     /* update interested counter +1 */
                     $db->query(sprintf("UPDATE `events` SET event_interested = event_interested + 1  WHERE event_id = %s", secure($id, 'int'))) or _error("SQL_ERROR_THROWEN");
+                    
                 }
+                
+                $get_event = $db->query(sprintf("SELECT * FROM `events` WHERE event_id = %s", secure($id, 'int'))) or _error("SQL_ERROR_THROWEN");
+                $event = $get_event->fetch_assoc(); 
+                $get_eventadmin = $db->query(sprintf("SELECT event_admin FROM events WHERE event_id = %s", secure($id, 'int'))) or _error("SQL_ERROR_THROWEN");
+                $eventadmin = $get_eventadmin->fetch_assoc();
+                $admin_id= $eventadmin['event_admin'];       
+                $this->post_notification(array('to_user_id' =>$admin_id, 'action' => 'event_interest', 'hub' => "LocalHub", 'node_type' => $event['event_title'], 'node_url' => $event['event_id']));                                
+                
+                
                 break;
 
             case 'event-uninterest':
                 /* check if the viewer member to this event */
                 $check = $db->query(sprintf("SELECT * FROM events_members WHERE user_id = %s AND event_id = %s", secure($this->_data['user_id'], 'int'), secure($id, 'int'))) or _error("SQL_ERROR_THROWEN");
+                $get_eventadmin = $db->query(sprintf("SELECT event_admin FROM events WHERE event_id = %s", secure($id, 'int'))) or _error("SQL_ERROR_THROWEN");
+                $eventadmin = $get_eventadmin->fetch_assoc();
+                $admin_id= $eventadmin['event_admin'];
                 /* if no -> return */
                 if ($check->num_rows == 0) return;
                 $invited = false;
@@ -1954,6 +1970,9 @@ class User
                 }
                 /* update interested counter -1 */
                 $db->query(sprintf("UPDATE `events` SET event_interested = IF(event_interested=0,0,event_interested-1)  WHERE event_id = %s", secure($id, 'int'))) or _error("SQL_ERROR_THROWEN");
+                $get_event = $db->query(sprintf("SELECT * FROM `events` WHERE event_id = %s", secure($id, 'int'))) or _error("SQL_ERROR_THROWEN");
+                $event = $get_event->fetch_assoc();                    
+                $this->post_notification(array('to_user_id' =>$admin_id, 'action' => 'event_uninterest', 'hub' => "LocalHub", 'node_type' => $event['event_title'], 'node_url' => $event['event_id']));                    
                 break;
 
             case 'event-invite':
@@ -2534,7 +2553,15 @@ class User
                         $notification['url'] = $system['system_url'] . '/events/' . $notification['node_url'];
                         $notification['message'] = __("invite you to join an event") . " '" . html_entity_decode($notification['node_type'], ENT_QUOTES) . "'";
                         break;
-
+                    case 'event_interest':
+                        $notification['url'] = $system['system_url'] . '/events/' . $node_url;
+                        $notification['message'] = __("Accepted your link to join an event") . " '" . html_entity_decode($node_type, ENT_QUOTES) . "'";
+                        break;
+                    case 'event_uninterest':
+                        $notification['url'] = $system['system_url'] . '/events/' . $node_url;
+                        $notification['message'] = __("Decline your link to join an event") . " '" . html_entity_decode($node_type, ENT_QUOTES) . "'";
+                        break;
+                            
                     case 'event_post_pending':
                         $notification['icon'] = "fa fa-calendar";
                         $notification['url'] = $system['system_url'] . '/events/' . $notification['node_url'] . '?pending';
@@ -3006,9 +3033,18 @@ class User
 
                 case 'event_invitation':
                     $notification['url'] = $system['system_url'] . '/events/' . $node_url;
-                    $notification['message'] = __("invite you to join an event") . " '" . html_entity_decode($node_type, ENT_QUOTES) . "'";
+                    $notification['message'] = __("invitess you to join an event") . " '" . html_entity_decode($node_type, ENT_QUOTES) . "'";
                     break;
 
+                case 'event_interest':
+                    $notification['url'] = $system['system_url'] . '/events/' . $node_url;
+                    $notification['message'] = __("Accepted your link to join an event") . " '" . html_entity_decode($node_type, ENT_QUOTES) . "'";
+                    break;
+                    
+                case 'event_uninterest':
+                    $notification['url'] = $system['system_url'] . '/events/' . $node_url;
+                    $notification['message'] = __("Decline your link to join an event") . " '" . html_entity_decode($node_type, ENT_QUOTES) . "'";
+                    break;
                 case 'event_post_pending':
                     $notification['url'] = $system['system_url'] . '/events/' . $node_url . '?pending';
                     $notification['message'] = __("added pending post in your event") . " '" . html_entity_decode($node_type, ENT_QUOTES) . "'";
@@ -4714,6 +4750,28 @@ class User
             }
         }
     }
+    public function storyviewcount($story_id,$userID)
+    {
+        global $db, $system, $date;
+        $viewcount =0;        
+        //echo sprintf("SELECT total_views FROM stories_media WHERE story_id = %s", secure($story_id, 'int'));
+        $get_count = $db->query(sprintf("SELECT total_views FROM stories_media WHERE story_id = %s", secure($story_id, 'int'))) or _error("SQL_ERROR_THROWEN");
+        if ($get_last_story->num_rows > 0) {
+            /* get story_id */
+            $total_views = $get_last_story->fetch_assoc()['total_views'];   
+        }
+        else {
+            $total_views=$total_views;
+        }
+        if($userID!=$this->_data['user_id'])
+        {
+            $total_views = $total_views+1;
+        } 
+             
+        //$db->query(sprintf("UPDATE stories_media SET total_views = $total_views WHERE story_id = %s", secure($story_id, 'int'))) or _error("SQL_ERROR_THROWEN");
+        exit;
+
+    }
 
     /**
      * get_stories
@@ -4916,6 +4974,7 @@ class User
                     $story_item['src'] = $system['system_uploads'] . '/' . $media_item['source'];
                     $story_item['link'] = '#';
                     $story_item['linkText'] = $this->stringToEmoji($media_item['text']);
+                    $story_item['total_views'] = $media_item['total_views'];                    
                     //$story_item['linkText'] = $media_item['text'];
                     
 
@@ -11732,12 +11791,25 @@ class User
         if (strlen($args['title']) < 3) {
             throw new Exception(__("Event name must be at least 3 characters long. Please try another"));
         }
+        if (is_empty($args['location'])) {
+            throw new Exception(__("You must enter a location for your event"));
+        }
+        if (strlen($args['location']) < 3) {
+            throw new Exception(__("Location name must be at least 3 characters long. Please try another"));
+        }
         /* validate start & end dates */
         if (is_empty($args['start_date'])) {
             throw new Exception(__("You have to enter the event start date"));
         }
+        
         if (is_empty($args['end_date'])) {
             throw new Exception(__("You have to enter the event end date"));
+        }
+        $td= Date('Y/m/d H:i');
+        $today = get_datetime($td);
+        $args['start_date'];
+        if (strtotime(set_datetime($args['start_date'])) < strtotime(set_datetime($today))) {
+            throw new Exception(__("Event start date must be after now"));
         }
         if (strtotime(set_datetime($args['start_date'])) > strtotime(set_datetime($args['end_date']))) {
             throw new Exception(__("Event end date must be after the start date"));
@@ -11818,6 +11890,9 @@ class User
         /* validate title */
         if (is_empty($args['title'])) {
             throw new Exception(__("You must enter a name for your event"));
+        }
+        if (is_empty($args['location'])) {
+            throw new Exception(__("You must enter a location for your event"));
         }
         if (strlen($args['title']) < 3) {
             throw new Exception(__("Event name must be at least 3 characters long. Please try another"));

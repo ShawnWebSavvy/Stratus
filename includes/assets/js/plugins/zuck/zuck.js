@@ -479,6 +479,7 @@
 
             var length = get(item, "length");
             var linkText = get(item, "linkText");
+            var totalview = get(item, "total_views");
             var seenClass = get(item, "seen") === true ? "seen" : "";
             var commonAttrs =
               'data-index="' + i + '" data-item-id="' + get(item, "id") + '"';
@@ -1019,15 +1020,52 @@
 
         zuck.data[storyId].items = items;
       };
+      var saveLocalData = function saveLocalData(key, data) {
+        try {
+          
+          var keyName = "zuck-" + id + "-" + key;
 
-      var parseStory = function parseStory(story) {
+            w.localStorage[keyName] = JSON.stringify(data);
+          if (option("localStorage")) {
+            var keyName = "zuck-" + id + "-" + key;
+            w.localStorage[keyName] = JSON.stringify(data);
+          }
+        } catch (e) { }
+      };
+
+      var getLocalData = function getLocalData(key) {
+        if (option("localStorage")) {
+          var keyName = "zuck-" + id + "-" + key;
+
+          return w.localStorage[keyName]
+            ? JSON.parse(w.localStorage[keyName])
+            : false;
+        } else {
+          var keyName = "zuck-" + id + "-" + key;
+
+          return w.localStorage[keyName]
+            ? JSON.parse(w.localStorage[keyName])
+            : false;
+        }
+      };
+      
+        var parseStory = function parseStory(story) {
         var storyId = story.getAttribute("data-id");
+        var userID = story.getAttribute("data-user-id");
+        $.post(
+          api["posts/story"],
+          { do: "storyviewcount", storyId: storyId,userID:userID},
+          function (response) {
+              response.callback ? eval(response.callback) : (window.location = site_path);
+          },
+          "json"
+      );
         var seen = false;
-
         if (zuck.internalData["seenItems"][storyId]) {
           seen = true;
+         
+         
         }
-
         if (seen) {
           story.classList.add("seen");
         } else {
@@ -1035,7 +1073,10 @@
         }
 
         try {
+          
+          
           zuck.data[storyId] = {
+            
             id: storyId, //story id
             user_id: story.getAttribute("data-user-id"),
             photo: story.getAttribute("data-photo"), //story photo (or user photo)
@@ -1043,6 +1084,7 @@
             link: story.firstElementChild.getAttribute("href"),
             lastUpdated: story.getAttribute("data-last-updated"),
             seen: seen,
+            seen_total: '',
             items: []
           };
         } catch (e) {
@@ -1162,27 +1204,7 @@
       };
 
       /* data functions */
-      var saveLocalData = function saveLocalData(key, data) {
-        try {
-          if (option("localStorage")) {
-            var keyName = "zuck-" + id + "-" + key;
-
-            w.localStorage[keyName] = JSON.stringify(data);
-          }
-        } catch (e) { }
-      };
-
-      var getLocalData = function getLocalData(key) {
-        if (option("localStorage")) {
-          var keyName = "zuck-" + id + "-" + key;
-
-          return w.localStorage[keyName]
-            ? JSON.parse(w.localStorage[keyName])
-            : false;
-        } else {
-          return false;
-        }
-      };
+     
 
       /* api */
       zuck.data = {};
@@ -1230,6 +1252,8 @@
         story.setAttribute("data-user-id", story_user_id);
         story.setAttribute("data-photo", get(data, "photo"));
         story.setAttribute("data-last-updated", get(data, "lastUpdated"));
+        //story.setAttribute("seen-total-view", get(data, "seen_total"));
+        story.setAttribute("seen-total-view",getLocalData("seenItemsCount"));
 
         var preview = false;
         if (items[0]) {
@@ -1265,6 +1289,8 @@
           get(data, "name") +
           '</strong><span class="time">' +
           timeAgo(get(data, "lastUpdated")) +
+          '</span><span class="total_view">' +
+          get(data, "seen_total") +
           '</span></span></a><ul class="items"></ul>';
 
           html+= html_close_btn;
@@ -1308,6 +1334,8 @@
           get(data, "link") +
           '" data-linkText="' +
           get(data, "linkText") +
+          '" data-totalview="' +
+          get(data, "totalview") +
           '" data-time="' +
           get(data, "time") +
           '" data-type="' +
@@ -1459,6 +1487,7 @@
       preview,
       link,
       linkText,
+      totalview,
       seen,
       time
     ) {
@@ -1470,6 +1499,7 @@
         preview: preview,
         link: link,
         linkText: linkText,
+        totalview: totalview,
         seen: seen,
         time: time
       };

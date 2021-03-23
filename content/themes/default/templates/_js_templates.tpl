@@ -1398,21 +1398,20 @@
                         <label class="form-control-label" for="location">{__("Location")}</label>
                         <input type="text" class="form-control js_geocomplete" name="location" id="location">
                     </div>
-                    <div class="form-group">
+                  <div class="form-group">
                         <label class="form-control-label">{__("Start Date")}</label>
-                        <div class="input-group date event_js_datetimepicker" data-target-input="nearest">
-                            <input type='text' class="form-control datetimepicker-input strdate"  id="start_date" name="start_date" />
-                            <div class="input-group-append" >
+                        <div class="input-group date js_datetimepicker" id="start_date" data-target-input="nearest">
+                            <input type='text' class="form-control datetimepicker-input" data-target="#start_date" name="start_date" autocomplete="off"/>
+                            <div class="input-group-append" data-target="#start_date" data-toggle="datetimepicker">
                                 <span class="input-group-text"><i class="fa fa-calendar"></i></span>
                             </div>
                         </div>
                     </div>
-                    <!--data-toggle="datetimepicker"-->
                     <div class="form-group">
                         <label class="form-control-label">{__("End Date")}</label>
-                        <div class="input-group date event_js_datetimepicker" data-target-input="nearest">
-                            <input type='text' class="form-control datetimepicker-input"  id="end_date" name="end_date" />
-                            <div class="input-group-append" data-target="#end_date" >
+                        <div class="input-group date js_datetimepicker" id="end_date" data-target-input="nearest">
+                            <input type='text' class="form-control datetimepicker-input" data-target="#end_date" name="end_date" autocomplete="off"/>
+                            <div class="input-group-append" data-target="#end_date" data-toggle="datetimepicker">
                                 <span class="input-group-text"><i class="fa fa-calendar"></i></span>
                             </div>
                         </div>

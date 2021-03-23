@@ -14,4 +14,4 @@ define("LICENCE_KEY", "2dZZzu6jS-3DMmA-2iBui-2OlV7-4zfJK-b6c299384b5a");
 define("SYSTEM_UPLOADS", "https://cdn.stratus-stage.xyz/uploads");
 define("SYSTEM_UPLOADS_URL", "https://cdn.stratus-stage.xyz/uploads");
 //define("SYSTEM_UPLOADS_ASSETS", "https://cdn.stratus-stage.xyz");
-define("SYSTEM_UPLOADS_ASSETS", "https://cdn.stratus-stage.xyz");
+define("SYSTEM_UPLOADS_ASSETS", "http://10.1.2.10/stratus");

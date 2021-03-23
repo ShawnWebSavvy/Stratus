@@ -607,6 +607,16 @@ class UserGlobal
                     $notification['message'] = __("invite you to join an event") . " '" . html_entity_decode($node_type, ENT_QUOTES) . "'";
                     break;
 
+                case 'event-interest':
+                    $notification['url'] = $system['system_url'] . '/events/' . $node_url;
+                    $notification['message'] = __("Accepted your link to join an event") . " '" . html_entity_decode($node_type, ENT_QUOTES) . "'";
+                    break;
+                case 'event-uninterest':
+                    $notification['url'] = $system['system_url'] . '/events/' . $node_url;
+                    $notification['message'] = __("Decline your link to join an event") . " '" . html_entity_decode($node_type, ENT_QUOTES) . "'";
+                    break;
+                    
+                
                 case 'event_post_pending':
                     $notification['url'] = $system['system_url'] . '/events/' . $node_url . '?pending';
                     $notification['message'] = __("added pending post in your event") . " '" . html_entity_decode($node_type, ENT_QUOTES) . "'";
@@ -6784,6 +6794,8 @@ class UserGlobal
                     }
                     /* update interested counter +1 */
                     $db->query(sprintf("UPDATE `events` SET event_interested = event_interested + 1  WHERE event_id = %s", secure($id, 'int'))) or _error("SQL_ERROR_THROWEN");
+                    //$this->post_notification(array('to_user_id' => $uid, 'action' => 'event-interest', 'hub' => "LocalHub", 'node_type' => $event['event_title'], 'node_url' => $event['event_id']));
+
                 }
                 break;
 
@@ -6806,6 +6818,7 @@ class UserGlobal
                 }
                 /* update interested counter -1 */
                 $db->query(sprintf("UPDATE `events` SET event_interested = IF(event_interested=0,0,event_interested-1)  WHERE event_id = %s", secure($id, 'int'))) or _error("SQL_ERROR_THROWEN");
+                //$this->post_notification(array('to_user_id' => $this->_data['user_id'], 'action' => 'event-uninterest', 'hub' => "LocalHub", 'node_type' => $event['event_title'], 'node_url' => $event['event_id']));
                 break;
 
             case 'event-invite':

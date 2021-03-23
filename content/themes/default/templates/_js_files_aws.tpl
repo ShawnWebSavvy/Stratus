@@ -327,10 +327,9 @@
 
     <!-- Bootstrap selectpicker & datetimepicker -->
     {if $page == "admin" || $page == "groups" || $page == "group" || $page == "events" || $page == "event" || $page == "ads"}
-        <script src="{$system['system_uploads_assets']}/includes/assets/js/plugins/bootstrap.select/bootstrap-select.min.js"></script>
         <link rel="stylesheet" type='text/css' href="{$system['system_uploads_assets']}/includes/assets/js/plugins/bootstrap.select/bootstrap-select.min.css">
-
         <script src="{$system['system_uploads_assets']}/includes/assets/js/plugins/bootstrap.datetimepicker/bootstrap-datetimepicker.min.js"></script>
+        <script src="{$system['system_uploads_assets']}/includes/assets/js/plugins/bootstrap.select/bootstrap-select.min.js"></script>
         <link rel="stylesheet" type='text/css' href="{$system['system_uploads_assets']}/includes/assets/js/plugins/bootstrap.datetimepicker/bootstrap-datetimepicker.min.css">
     {/if}
     <!-- Bootstrap selectpicker & datetimepicker -->

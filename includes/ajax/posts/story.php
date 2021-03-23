@@ -75,6 +75,11 @@ try {
 			// delete story
 			$user->delete_my_story();
 			break;
+		case 'storyviewcount':
+			$storyid= $_POST['storyId'];
+			$userID= $_POST['userID'];
+			$user->storyviewcount($storyid,$userID);
+			break;
 
 		default:
 			_error(400);

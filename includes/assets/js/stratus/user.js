@@ -5,46 +5,6 @@ if (count != "") {
     $(".js_live-notifications").find("span.counterlive").text(count).show();
 }
 function initialize_modal() {
-    setTimeout(function () {
-        var startDate;
-        
-        $(".strdate").on("click", function () {
-             $(this).datetimepicker('show');
-        });
-        $("#start_date").on("change.datetimepicker", ({date, oldDate}) => {              
-            
-            if(oldDate>date)
-            {
-                    alert('Select date of future');
-                    return false;
-            }
-            else {
-                    startDate = $("#start_date").val();
-                    $('#start_date').datetimepicker('hide');
-                }
-            });
-            $("#end_date").on("click", function () {
-                $("#end_date").datetimepicker('show');
-            });
-            $("#end_date").on("change.datetimepicker", ({date, oldDate}) => {              
-                    var endDate = $("#end_date").val();
-                    console.log(endDate);
-                    if(endDate!=''){
-                    if(startDate>endDate){
-                           alert('End date should be grater then Start date');
-                           return false;
-                    }
-                    else {$('#end_date').datetimepicker('hide');return true;}
-                }
-             });
-         
-                }, 1000);
-    
-
-
-
-
-
     $(".js_scroller").each(function () {
         var e = $(this),
             t = e.attr("data-slimScroll-height") || "280px",
@@ -57,8 +17,6 @@ function initialize_modal() {
         initialize_uploader();
 }
 function initialize_uploader() {
-   
-                
     $(".js_x-uploader").each(function (e) {
         if (!($(this).parents("form.x-uploader").length > 0)) {
             var t = "Image",
