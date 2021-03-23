@@ -88,7 +88,7 @@
                            </div>
                            <div
                               class="profile-avatar-crop {if $profile['user_picture_default'] || !$profile['user_picture_id']}x-hidden{/if}">
-                              <i class="fa fa-crop-alt js_init-crop-picture" data-image="{$profile['user_picture']}"
+                              <i class="fa fa-crop-alt js_init-crop-picture" data-image="{$profile['user_picture_full']}"
                                  data-handle="user" data-system-url="{$system['system_url']}" data-id="{$profile['user_id']}"></i>
                            </div>
                            {if !$profile['user_picture_default']}

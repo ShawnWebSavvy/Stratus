@@ -1,3 +1,5 @@
+var save_file_name ='';
+var image_blured = 0;
 var count = parseInt($('.unread').length) ? parseInt($('.unread').length) : "";
 if (count != "") {
     $(".js_live-notifications").find("span.counterlive").text(count).show();
@@ -190,14 +192,33 @@ function data_heartbeat() {
                             loopArray.push('<div class="carsds"' + ArrayVal[i])
                         }
                     }
-
                     for (var ik = 0; ik < loopArray.length; ik++) {
                         var values = loopArray[ik];
                         var d = document.createElement('div');
                         d.innerHTML = values;
                         var valuesPost = d.firstChild;
-                        bricklayer.prepend(valuesPost)
-                        bricklayer.redraw();
+                        if(bricklayer){
+                           bricklayer.prepend(valuesPost);
+                           bricklayer.redraw();
+                        } else {
+                            $('.js_posts_stream').prepend('<div class="bricklayer"></div>');
+
+                            var isClassExist = document.getElementsByClassName('bricklayer');
+                             if (isClassExist.length > 0) {
+                               var bricklayer = new Bricklayer(document.querySelector('.bricklayer'));
+                               bricklayer.on("afterAppend", function (e) {
+                                 var el = e.detail.item;
+                                 el.classList.add('is-append');
+                                 setTimeout(function () {
+                                   el.classList.remove('is-append');
+                                 }, 500);
+                               });
+                               bricklayer.prepend(valuesPost);
+                               bricklayer.redraw();
+                             }
+
+                           
+                        }
                     }
                 }
                 response.posts && (posts_stream.find("ul:first").prepend(), setTimeout(photo_grid(), 200)), setTimeout("data_heartbeat();", min_data_heartbeat);
@@ -218,10 +239,10 @@ function init_picture_crop(node) {
     }, 200);    
    
     var image_node = node.data("image");
-    var system_url = node.data("systemUrl") ;
+    var system_url = node.data("systemUrl");
     
     modal("#crop-profile-picture", {
-        image: `${system_url}/includes/wallet-api/get-picture-api.php?picture=${image_node}&pictureFull=&type_url=1`,
+        image: `${system_url}/includes/wallet-api/get-picture-api.php?picture=&picture_full=${image_node}&type_url=1`,
         handle: node.data("handle"),
         id: node.data("id"),
     });
@@ -501,6 +522,7 @@ function init_picture_position() {
                         !1
                     );
                 }),
+              
                 $("body").on("focus", ".js_mention", function () {
                     $(this).triggeredAutocomplete({ hidden: "#hidden_inputbox", source: api["users/mention"], trigger: "@", maxLength: 20 });
                 }),
@@ -576,6 +598,7 @@ function init_picture_position() {
                 }),
                 $("body").on("submit", ".x-uploader", function (e) {
                     e.preventDefault, $("body .js_publisher").prop("disabled", !0);
+                    save_file_name = '';
                     var options = { dataType: "json", uploadProgress: _handle_progress, success: _handle_success, error: _handle_error, resetForm: !0, data: {} },
                         uploader = $(this).find('input[type="file"]'),
                         type = $(this).find(".js_x-uploader").data("type") || "photos";
@@ -699,9 +722,13 @@ function init_picture_position() {
                                         init_picture_position();
                                     }, 1e3);
                             } else if ("picture-user" == handle || "picture-page" == handle || "picture-group" == handle) {
+                                save_file_name = response.file;
+                                image_blured = response.image_blured;
                                 /* update (user|page|group) picture */
                                 var image_path = uploads_path + "/" + response.file;
-                                $(".profile-avatar-wrapper img").attr("src", image_path);
+                                if("picture-user" !== handle){
+                                   $(".profile-avatar-wrapper img").attr("src", image_path);
+                                }
                                 /* update crop image source */
                                 $(".js_init-crop-picture").data("image", image_path);
                                 init_picture_crop($(".js_init-crop-picture"));
@@ -825,7 +852,7 @@ function init_picture_position() {
                         values = $("#cropped-profile-picture").rcrop("getValues");
                     $.post(
                         api["users/image_crop"],
-                        { handle: handle, id: id, x: values.x, y: values.y, height: values.height, width: values.width },
+                        { handle: handle, id: id, x: values.x, y: values.y, height: values.height, width: values.width, save_file_name:save_file_name, image_blured: image_blured },
                         function (response) {
                             response.callback ? eval(response.callback) : ($("#modal").modal("hide"), window.location.reload());
                         },

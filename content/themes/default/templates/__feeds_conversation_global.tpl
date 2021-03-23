@@ -6,7 +6,7 @@
         data-name-list="{$conversation['name_list']}" data-link="{$conversation['link']}"
         href="{$system['system_url']}/globalMessages/{$conversation['conversation_id']}">
         <div class="data-avatar">
-            <img class="lazyload" data-src="{$conversation['picture']}" alt="{$conversation['name']}">
+            <img class="lazyloaded" src="{$conversation['picture']}" alt="{$conversation['name']}">
         <i class="fa fa-circle {if $conversation['user_is_online'] }online{else}offline{/if}"></i>
         </div>
         <div class="data-content">
