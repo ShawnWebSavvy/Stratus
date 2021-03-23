@@ -1488,7 +1488,8 @@ function init_picture_position() {
                 $("body").on("click", ".js_ads-stop-campaign, .js_ads-resume-campaign", function () {
                     var id = $(this).data("id"),
                         _do = $(this).hasClass("js_ads-stop-campaign") ? "stop" : "resume";
-                    confirm(__.Delete, __["Are you sure you want to do this?"], function () {
+                    var ads_modal_name = _do == "stop" ? "Stop" : "Resume"  
+                    confirm( ads_modal_name, __["Are you sure you want to do this?"], function () {
                         $.post(
                             api["ads/campaign"],
                             { do: _do, id: id },
