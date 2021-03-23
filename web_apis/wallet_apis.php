@@ -268,12 +268,13 @@ function getAllTransactionsFunction()
 
         $user_id = $check_user['id'];
         if(!isset($_POST['offset']) || $_POST['offset'] == ""){
-          $_POST['offset'] = 1;
+          $_POST['offset'] = 0;
         }
+        $limit = 10;
         //Add Pagiantion
         $transactions = [];
         $coin_full_name = array('btc'=>'Bitcoin','eth'=>'Ethereum','apl','Apollo');
-        $query = sprintf("SELECT ads_users_wallet_transactions.*, users.user_name, users.user_firstname, users.user_lastname, users.user_gender, users.user_picture FROM ads_users_wallet_transactions LEFT JOIN users ON ads_users_wallet_transactions.node_type='user' AND ads_users_wallet_transactions.node_id = users.user_id WHERE ads_users_wallet_transactions.user_id = %s ORDER BY ads_users_wallet_transactions.transaction_id DESC Limit ".$_POST['offset'].",10", secure($user_id, 'int'));
+        $query = sprintf("SELECT ads_users_wallet_transactions.*, users.user_name, users.user_firstname, users.user_lastname, users.user_gender, users.user_picture FROM ads_users_wallet_transactions LEFT JOIN users ON ads_users_wallet_transactions.node_type='user' AND ads_users_wallet_transactions.node_id = users.user_id WHERE ads_users_wallet_transactions.user_id = %s ORDER BY ads_users_wallet_transactions.transaction_id DESC Limit ".$_POST['offset'].",".$limit."", secure($user_id, 'int'));
         $get_transactions = $db->query($query) or _error("SQL_ERROR_THROWEN");
         if ($get_transactions->num_rows > 0) {
           while ($transaction = $get_transactions->fetch_assoc()) {
