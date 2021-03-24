@@ -1859,49 +1859,49 @@ $(function () {
             posts_stream.removeData("loading");
             posts_stream.html(response.posts);
             setTimeout(photo_grid(), 200);
-            console.log("Af")
-            if ($(window).width() > 1024) {
-              if ($('body #landing_feeds_post_ul').length > 0) {
-                var msnry = new Masonry(".feeds_post_ul", {
-                  horizontalOrder: true, // new!
-                  //percentPosition: true,
-                });
-              }
-              if ($('body .global-profile-ul-post').length > 0) {
-                var macyInstance = Macy({
-                  // See below for all available options.
-                  container: '.feeds_post_ul',
-                  trueOrder: true,
-                  columns: 2,
-                  waitForImages: true
-                });
-                //macyInstance.recalculate(false);
-              }
-              if ($('body #timeline_profile').length > 0) {
-                var macyInstance = Macy({
-                  // See below for all available options.
-                  container: '.feeds_post_ul',
-                  trueOrder: true,
-                  columns: 2,
-                  waitForImages: true
-                });
-                //macyInstance.recalculate(false);
-              }
-              if ($('body #feeds_post_ul').length > 0) {
-                var macyInstance = Macy({
-                  // See below for all available options.
-                  container: '.feeds_post_ul',
-                  trueOrder: true,
-                  columns: 2,
-                  waitForImages: true
-                });
-                //macyInstance.recalculate(false);
-              }
-              // var msnry = new Masonry(".feeds_post_ul", {
-              //   //horizontalOrder: false, // new!
-              //   //percentPosition: true,
-              // });
-            }
+            // console.log("Af")
+            // if ($(window).width() > 1024) {
+            //   if ($('body #landing_feeds_post_ul').length > 0) {
+            //     var msnry = new Masonry(".feeds_post_ul", {
+            //       horizontalOrder: true, // new!
+            //       //percentPosition: true,
+            //     });
+            //   }
+            //   if ($('body .global-profile-ul-post').length > 0) {
+            //     var macyInstance = Macy({
+            //       // See below for all available options.
+            //       container: '.feeds_post_ul',
+            //       trueOrder: true,
+            //       columns: 2,
+            //       waitForImages: true
+            //     });
+            //     //macyInstance.recalculate(false);
+            //   }
+            //   if ($('body #timeline_profile').length > 0) {
+            //     var macyInstance = Macy({
+            //       // See below for all available options.
+            //       container: '.feeds_post_ul',
+            //       trueOrder: true,
+            //       columns: 2,
+            //       waitForImages: true
+            //     });
+            //     //macyInstance.recalculate(false);
+            //   }
+            //   if ($('body #feeds_post_ul').length > 0) {
+            //     var macyInstance = Macy({
+            //       // See below for all available options.
+            //       container: '.feeds_post_ul',
+            //       trueOrder: true,
+            //       columns: 2,
+            //       waitForImages: true
+            //     });
+            //     //macyInstance.recalculate(false);
+            //   }
+            //   // var msnry = new Masonry(".feeds_post_ul", {
+            //   //   //horizontalOrder: false, // new!
+            //   //   //percentPosition: true,
+            //   // });
+            // }
           }
         }
       },
@@ -2184,7 +2184,6 @@ $(function () {
     e.preventDefault();
     var post = $(this).parents(".post");
     var id = post.data("id");
-
     confirm(
       __["Delete Post"],
       __["Are you sure you want to delete this post?"],
@@ -2196,37 +2195,22 @@ $(function () {
           function (response) {
             /* check the response */
             $("#modal").modal("hide");
-           
-            if(post.closest('.feeds_post').length){
-               post.closest('.feeds_post').remove();
-            } else {
-               post.remove();
+            if (
+              response.refresh &&
+              (current_page == "profile" ||
+                current_page == "page" ||
+                current_page == "global-profile/global-profile-timeline" ||
+                current_page == "group" ||
+                current_page == "event")
+            ) {
+              location.reload();
+            } else if (response.refresh = "delete_single_post") {
+              $('.child-post-ul').html("");
+              window.location.replace(document.referrer)
             }
-           
-            if($(".feeds_post_ul").length){
-              var msnry = new Masonry(".feeds_post_ul");
-             } 
-
-            if(response.callback) {
+            else if (response.callback) {
               eval(response.callback);
             }
-          
-            // if (
-            //   response.refresh &&
-            //   (current_page == "profile" ||
-            //     current_page == "page" ||
-            //     current_page == "global-profile/global-profile-timeline" ||
-            //     current_page == "group" ||
-            //     current_page == "event")
-            // ) {
-            //   // location.reload();
-            // } else if (response.refresh = "delete_single_post") {
-            //   $('.child-post-ul').html("");
-            //   // window.location.replace(document.referrer)
-            // }
-            // else if (response.callback) {
-            //   eval(response.callback);
-            // }
           },
           "json"
         ).fail(function () {

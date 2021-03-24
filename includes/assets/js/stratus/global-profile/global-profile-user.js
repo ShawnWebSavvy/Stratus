@@ -1,3 +1,6 @@
+var save_file_name = '';
+var image_blured = 0;
+var image_full_original = '';
 function initialize_modal() {
     $(".js_scroller").each(function() {
         var e = $(this),
@@ -99,8 +102,14 @@ function data_heartbeat() {
     var posts_stream = $(".js_posts_stream");
     posts_stream.length > 0 && "popular" != posts_stream.data("get") && "saved" != posts_stream.data("get") && "memories" != posts_stream.data("get") && void 0 === posts_stream.data("loading") && (data.last_post = posts_stream.find("li:first .post").data("id") || 0,
         data.get = posts_stream.data("get"),
-         data.filter = posts_stream.data("filter"),
-        data.id = posts_stream.data("id")),
+        data.filter = posts_stream.data("filter"),
+        data.id = posts_stream.data("id"));
+        let last_id_column = document.getElementsByClassName('bricklayer-column')[0];
+        if (last_id_column) {
+            data["last_post"] = last_id_column.getElementsByClassName('carsds')[0].dataset.id || 0;
+        } else {
+            data["last_post"] = 0;
+        }
         $.post(api["data/live"], data, function (response) {
         if (response.callback) eval(response.callback);
         else {
@@ -116,7 +125,26 @@ function data_heartbeat() {
                 var notifications = parseInt($(".js_live-notifications").find("span.counter").text()) + response.notifications_count;
                 $(".js_live-notifications").find("span.counter").text(notifications).show(), notifications_sound
             }
-            response.posts && (posts_stream.find("ul:first").prepend(response.posts), setTimeout(photo_grid(), 200)), setTimeout("data_heartbeat();", 500)
+            if (response.posts && response.posts != null) {
+                //console.log("response.posts->>>>>>>", response.posts);
+                var datatta = response.posts;
+                var ArrayVal = datatta.split('<div class="carsds"');
+                var loopArray = [];
+                if (ArrayVal.length > 0) {
+                    for (var i = 1; i < ArrayVal.length; i++) {
+                        loopArray.push('<div class="carsds"' + ArrayVal[i])
+                    }
+                }
+                for (var ik = 0; ik < loopArray.length; ik++) {
+                    var values = loopArray[ik];
+                    var d = document.createElement('div');
+                    d.innerHTML = values;
+                    var valuesPost = d.firstChild;
+                    bricklayer.prepend(valuesPost);
+                    // bricklayer.redraw();
+                }
+            }
+            response.posts && (setTimeout(photo_grid(), 200)), setTimeout("data_heartbeat();", 500)
         }
     }, "json")
 }
@@ -385,6 +413,7 @@ api["data/live"] = ajax_path + "data/global-profile/global-profile-live.php", ap
     }), $("body").on("change", '.x-uploader input[type="file"]', function() {
         $(this).parent(".x-uploader").submit()
     }), $("body").on("submit", ".x-uploader", function(e) {
+        save_file_name = '';
         $("body .js_publisher").prop("disabled", !0), e.preventDefault;
         var t = {
                 dataType: "json",
@@ -404,7 +433,13 @@ api["data/live"] = ajax_path + "data/global-profile/global-profile-live.php", ap
                             }, 1e3)
                         } else if ("picture-user" == i || "picture-page" == i || "picture-group" == i) {
                             t = uploads_path + "/" + e.file;
-                            $(".profile-avatar-wrapper img").attr("src", t), $(".js_init-crop-picture").data("image", t), init_picture_crop($(".js_init-crop-picture"))
+                            save_file_name = e.file;
+                            image_blured = e.image_blured;
+                            // $(".profile-avatar-wrapper img").attr("src", t), 
+                            if(!image_full_original){
+                                image_full_original =  $(".js_init-crop-picture").data("image");
+                             }
+                            $(".js_init-crop-picture").data("image", t), init_picture_crop($(".js_init-crop-picture"))
                         } else if ("publisher" == i) {
                             p && p.remove();
                             var n = f.data("photos");
@@ -562,6 +597,9 @@ api["data/live"] = ajax_path + "data/global-profile/global-profile-live.php", ap
             t.attr("style", ""), t.find(".js_x-image-input").val("").change(), e.hide(), t.find(".x-image-success").attr("style", ""), $("#modal").modal("hide")
         })
     }), $("body").on("click", ".js_init-crop-picture", function() {
+        if(image_full_original){
+            $(".js_init-crop-picture").data("image", image_full_original);
+        }
         init_picture_crop($(this))
     }), $("body").on("click", ".js_crop-picture", function() {
         var id = $(this).data("id"),
@@ -573,7 +611,9 @@ api["data/live"] = ajax_path + "data/global-profile/global-profile-live.php", ap
             x: values.x,
             y: values.y,
             height: values.height,
-            width: values.width
+            width: values.width,
+            save_file_name:save_file_name,
+            image_blured: image_blured
         }, function(response) {
             response.callback ? eval(response.callback) : ($("#modal").modal("hide"), window.location.reload())
         }, "json").fail(function() {
