@@ -247,11 +247,15 @@
           onOpen: function onOpen(storyId, callback) {
             callback();
           },
-          onView: function onView(storyId) { },
+          onView: function onView(storyId) { 
+          },
           onEnd: function onEnd(storyId, callback) {
+            
+            
             callback();
           },
           onClose: function onClose(storyId, callback) {
+           
             callback();
           },
           onNextItem: function onNextItem(storyId, nextStoryId, callback) {
@@ -420,6 +424,7 @@
 
               var storyId = zuck.internalData["currentStory"];
               var items = query('#zuck-modal [data-story-id="' + storyId + '"]');
+              
 
               if (items) {
                 items = items.querySelectorAll("[data-index].active");
@@ -479,7 +484,7 @@
 
             var length = get(item, "length");
             var linkText = get(item, "linkText");
-            var totalview = get(item, "total_views");
+            var total_view = get(item, "total_view");
             var seenClass = get(item, "seen") === true ? "seen" : "";
             var commonAttrs =
               'data-index="' + i + '" data-item-id="' + get(item, "id") + '"';
@@ -524,7 +529,7 @@
                   '" ' +
                   get(item, "type") +
                   ">") +
-                "</div>";
+                "<br/><span class='total_view' style='font-size:10px'> Views "+get(item, "total_view")+"</span></div>";
             } else {
               pointerItems +=
                 "<span " +
@@ -536,6 +541,14 @@
                 '"><b style="animation-duration:' +
                 (length === "" ? "3" : length) +
                 's"></b></span>';
+                
+                var story_user_id = $('.story').attr("data-user-id");
+                var login_user_id = $("#stories").attr("data-user-id");
+                if(login_user_id == story_user_id)
+                {
+                 var viewhtml="<br/><span class='total_view' style='font-size:10px;color:#fff;'> Views "+get(item, "total_view")+"</span>";
+                }
+                else {var viewhtml="";}
               htmlItems +=
                 '<div data-time="' +
                 get(item, "time") +
@@ -567,7 +580,7 @@
                   '" rel="noopener" target="_blank">' +
                   (linkText == "" || !linkText
                     ? option("language", "visitLink")
-                    : linkText) +
+                    : linkText) +viewhtml+
                   "</a>"
                   : "") +
 
@@ -1009,6 +1022,8 @@
 
           items.push({
             src: a.getAttribute("href"),
+            id: a.getAttribute("data-id"),
+            total_view: a.getAttribute("data-view"),
             length: a.getAttribute("data-length"),
             type: a.getAttribute("data-type"),
             time: a.getAttribute("data-time"),
@@ -1052,14 +1067,6 @@
         var parseStory = function parseStory(story) {
         var storyId = story.getAttribute("data-id");
         var userID = story.getAttribute("data-user-id");
-        $.post(
-          api["posts/story"],
-          { do: "storyviewcount", storyId: storyId,userID:userID},
-          function (response) {
-              response.callback ? eval(response.callback) : (window.location = site_path);
-          },
-          "json"
-      );
         var seen = false;
         if (zuck.internalData["seenItems"][storyId]) {
           seen = true;
@@ -1068,6 +1075,7 @@
         }
         if (seen) {
           story.classList.add("seen");
+          
         } else {
           story.classList.remove("seen");
         }
@@ -1084,7 +1092,6 @@
             link: story.firstElementChild.getAttribute("href"),
             lastUpdated: story.getAttribute("data-last-updated"),
             seen: seen,
-            seen_total: '',
             items: []
           };
         } catch (e) {
@@ -1097,6 +1104,7 @@
           e.preventDefault();
 
           modal.show(storyId);
+         
         };
       };
 
@@ -1252,9 +1260,7 @@
         story.setAttribute("data-user-id", story_user_id);
         story.setAttribute("data-photo", get(data, "photo"));
         story.setAttribute("data-last-updated", get(data, "lastUpdated"));
-        //story.setAttribute("seen-total-view", get(data, "seen_total"));
-        story.setAttribute("seen-total-view",getLocalData("seenItemsCount"));
-
+        
         var preview = false;
         if (items[0]) {
           preview = items[0]["preview"] || "";
@@ -1272,7 +1278,7 @@
           var baseUrl = getUrl.protocol + "//" + getUrl.host + "/"
           //console.log("===zusssck====srcBackgrosund", getUrl.protocol);
         }
-
+        
         html = 
           '<a href="' +
           get(data, "link") +
@@ -1289,8 +1295,6 @@
           get(data, "name") +
           '</strong><span class="time">' +
           timeAgo(get(data, "lastUpdated")) +
-          '</span><span class="total_view">' +
-          get(data, "seen_total") +
           '</span></span></a><ul class="items"></ul>';
 
           html+= html_close_btn;
@@ -1320,13 +1324,24 @@
         var story = query("#" + id + ' > [data-id="' + storyId + '"]');
         story.parentNode.removeChild(story);
       };
+      function getitemid(storyId,key)
+      {
+        var mydata = $("#stories").attr("data-json");
+        var result = JSON.parse(mydata);
+        var items = result[0]['items'];
+        var itemids =[];
+        each(items, function (i, item) {
+          itemids.push(item.id);
+        });
+        return itemids[key];
+      }
+      
       zuck.addItem = function (storyId, data, append) {
         var story = query("#" + id + ' > [data-id="' + storyId + '"]');
         var li = d.createElement("li");
-
+      
         li.className = get(data, "seen") ? "seen" : "";
-        li.setAttribute("data-id", get(data, "id"));
-
+        li.setAttribute("data-id",get(data, "id") );
         li.innerHTML =
           '<a href="' +
           get(data, "src") +
@@ -1334,8 +1349,10 @@
           get(data, "link") +
           '" data-linkText="' +
           get(data, "linkText") +
-          '" data-totalview="' +
-          get(data, "totalview") +
+          '" data-id="' +
+          get(data, "id")  +
+          '" data-view="' +
+          get(data, "total_view")+
           '" data-time="' +
           get(data, "time") +
           '" data-type="' +
@@ -1359,7 +1376,6 @@
         var item = query(
           "#" + id + ' > [data-id="' + storyId + '"] [data-id="' + itemId + '"]'
         );
-
         timeline.parentNode.removeChild(item);
       };
       zuck.navigateItem = zuck.nextItem = function (direction, event) {
@@ -1368,6 +1384,21 @@
         var storyViewer = query(
           '#zuck-modal .story-viewer[data-story-id="' + currentStory + '"]'
         );
+        
+         var itemid= getitemid(currentStory,currentItem);
+         
+        var userID = $('#stories').attr("data-user-id");
+        var storyId = $('.story').attr("data-id");
+        $.post(
+          api["posts/story"],
+          { do: "storyviewcount", storyId: storyId,userID:userID,itemid:itemid},
+          function (response) {
+             // response.callback ? eval(response.callback) : (window.location = site_path);
+             
+          },
+          "json"
+        );
+      
         var directionNumber = direction == "previous" ? -1 : 1;
 
         if (!storyViewer || storyViewer.touchMove == 1) {
@@ -1487,7 +1518,7 @@
       preview,
       link,
       linkText,
-      totalview,
+      total_view,
       seen,
       time
     ) {
@@ -1499,7 +1530,7 @@
         preview: preview,
         link: link,
         linkText: linkText,
-        totalview: totalview,
+        total_view:total_view,
         seen: seen,
         time: time
       };

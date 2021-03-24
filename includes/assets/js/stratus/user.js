@@ -1380,6 +1380,7 @@ function init_picture_position() {
                         id = _this.data("id"),
                         uid = _this.data("uid") || 0,
                         _do = "event-invite";
+                        
                     if (_this.hasClass("js_page-invite")) var _do = "page-invite";
                     else if (_this.hasClass("js_group-invite")) var _do = "group-invite";
                     else var _do = "event-invite";
@@ -1388,7 +1389,10 @@ function init_picture_position() {
                             api["users/connect"],
                             { do: _do, id: id, uid: uid },
                             function (response) {
+                                _this.parent().parent().parent().remove();
                                 response.callback ? (button_status(_this, "reset"), eval(response.callback)) : _this.remove();
+                                
+                                
                             },
                             "json"
                         ).fail(function () {

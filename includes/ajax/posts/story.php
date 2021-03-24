@@ -78,9 +78,11 @@ try {
 		case 'storyviewcount':
 			$storyid= $_POST['storyId'];
 			$userID= $_POST['userID'];
-			$user->storyviewcount($storyid,$userID);
+			$itemid = $_POST['itemid'];
+			$user->storyviewcount($storyid,$userID,$itemid);	
 			break;
 
+		
 		default:
 			_error(400);
 			break;
