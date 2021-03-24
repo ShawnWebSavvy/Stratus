@@ -8,7 +8,7 @@
     {/if}
     <div class="comment-text-plain x-hidden">{$_comment['text_plain']}</div>
     {if $_comment['image'] != ""}
-        <span class="text-link js_lightbox-nodata" data-image="{$system['system_uploads']}/{$_comment['image']}">
+        <span class="d-flex text-link js_lightbox-nodata" data-image="{$system['system_uploads']}/{$_comment['image']}">
             <img alt="" class="img-fluid lazyload" data-src="{$system['system_uploads']}/{$_comment['image']}">
         </span>
     {/if}

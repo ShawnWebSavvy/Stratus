@@ -363,6 +363,9 @@ try {
                         break;
 
                     case 'picture-page':
+
+                        if(!$_POST['notSave']){
+
                         /* check if page id is set */
                         if (!isset($_POST['id']) || !is_numeric($_POST['id'])) {
                             /* delete the uploaded image & return error 403 */
@@ -401,6 +404,10 @@ try {
                         delete_uploads_file($page['page_picture']);
                         /* update page picture */
                         $db->query(sprintf("UPDATE pages SET page_picture = %s, page_picture_id = %s WHERE page_id = %s", secure($file_name), secure($photo_id, 'int'), secure($page['page_id'], 'int'))) or _error("SQL_ERROR_THROWEN");
+                      
+                        
+                        }
+                      
                         break;
 
                     case 'cover-group':
@@ -443,6 +450,8 @@ try {
                         break;
 
                     case 'picture-group':
+                        if(!$_POST['notSave']){
+
                         /* check if group id is set */
                         if (!isset($_POST['id']) || !is_numeric($_POST['id'])) {
                             /* delete the uploaded image & return error 403 */
@@ -481,6 +490,10 @@ try {
                         delete_uploads_file($group['group_picture']);
                         /* update group picture */
                         $db->query(sprintf("UPDATE `groups` SET group_picture = %s, group_picture_id = %s WHERE group_id = %s", secure($file_name), secure($photo_id, 'int'), secure($group['group_id'], 'int'))) or _error("SQL_ERROR_THROWEN");
+                        
+                        }
+
+                        
                         break;
 
                     case 'cover-event':
