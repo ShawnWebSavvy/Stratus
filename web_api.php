@@ -42,6 +42,10 @@ switch ($endpoint) {
         listUsersFunction();
     break;
 
+    case 'withdrawAffiliates':
+        withdrawAffiliatesFunction();
+    break;
+
     default:
         returnResponse(false,402,"Invalid Endpoint");
 }

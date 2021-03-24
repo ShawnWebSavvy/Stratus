@@ -414,3 +414,48 @@ function walletTransferFunction()
     returnResponse(false, 400, $e->getMessage());
   }
 }
+
+function withdrawAffiliatesFunction()
+{
+  try {
+    if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+      global $db, $system, $date;
+      mysqli_report(MYSQLI_REPORT_OFF);
+      if(!isset($_POST['amount'])) {
+        returnResponse(false, 401, "Insufficient Amount");
+        die;
+      }
+      if($_POST['amount'] < 1) {
+        returnResponse(false, 401, "Insufficient Amount");
+        die;
+      }
+      if(!isset($_POST['email'])) {
+        returnResponse(false, 401, "User Details are Missing");
+        die;
+      }else{
+        $check_user = $db->query(sprintf("SELECT COUNT(*) as count FROM users WHERE user_email = %s", secure($_POST['email']))) or _error("SQL_ERROR_THROWEN");
+        $check_user = $check_user->fetch_assoc();
+      if ($check_user['count'] < 1) {
+        returnResponse(false, 402, "Invalid user");
+      } else {
+        $user = new User();
+        $amount = $_POST['amount'];
+        $check_query = $db->query(sprintf("SELECT * FROM users WHERE user_email = %s", secure($_POST['email']))) or _error("SQL_ERROR_THROWEN");
+        $result = $check_query->fetch_assoc();
+        $user_id = $result['user_id'];
+        /* increase target user wallet balance */
+        $queryS = sprintf("UPDATE users SET user_wallet_balance = user_wallet_balance + %s WHERE user_id = %s", secure($amount), secure($user_id, 'int'));
+        $db->query($queryS) or _error("SQL_ERROR_THROWEN");
+        /* wallet transaction */
+        $user->wallet_set_transaction($user_id, 'user', $user_id, $amount, 'in' ,'TubeNow');
+        returnResponse(true, 200, "Success", true);
+      }
+      }
+      
+    } else {
+      returnResponse(false, 300, "Something went wrong");
+    }
+  } catch (Exception $e) {
+    returnResponse(false, 400, $e->getMessage());
+  }
+}
