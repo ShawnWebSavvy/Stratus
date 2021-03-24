@@ -39,9 +39,7 @@
             <!-- tabs -->
 
             <!-- content -->
-            <div class="row">
-
-
+            <div class="">
                 <!-- right panel -->
                 <div class="col-12 people-friend-list-section __user_action_panel _frnd_rqst_sec">
                     <div class="page_topbar d-flex align-item-center justify-content-between position-relative">
@@ -85,7 +83,7 @@
 
                                     <!-- see-more -->
                                     {if count($people) >= $system['min_results']}
-                                    <div class="alert alert-info see-more js_see-more" data-get="new_people">
+                                    <div class="alert alert-info see-more js_see-more loadmoreSmall" data-get="new_people">
                                         <span>{__("Load More")}</span>
                                         <div class="loader loader_small x-hidden"></div>
                                     </div>

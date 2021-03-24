@@ -122,7 +122,7 @@
 	@media screen and (min-width: 700px) {
 		.bricklayer-column-sizer {
 			/* If page is greater than 700px, columns will be 5% wide. That means there will be lots of columns */
-			width: 50%;
+			width: 50% !important;
 		}
 	}
 </style>
@@ -131,7 +131,7 @@
 	@media screen and (min-width: 700px) {
 		.bricklayer-column-sizer {
 			/* If page is greater than 700px, columns will be 5% wide. That means there will be lots of columns */
-			width: 100%;
+			width: 100% !important;
 		}
 	}
 </style>
