@@ -520,3 +520,6 @@ video.stratus-customvideo {height: 350px !important;width: 1000px !important;}
 .body-scroll-disabled{overflow-y: hidden !important;}
 .chat-widget-head .js_chat-box-status + a {-webkit-line-clamp: 4;overflow: hidden;text-overflow: ellipsis;-webkit-box-orient: vertical;width: 110px;white-space: nowrap;max-height: 7.75rem;height: 16px;}
 .image {text-align: center;}
+.child-post-ul.secoundPostHidd > .bricklayer {
+	display: none !important;
+}

@@ -225,6 +225,9 @@ body.group-localhub .profile-mobile-layout .profileUpdatesDesign .row.no-gutters
 .mini-footer{display:none}
 .chat-typing{padding-bottom:0}
 body.publisher-focus .custom_modal_style{background-color:#fff}
+body.publisher-focus .custom_modal_style.customModalAddPhoto {background-color: transparent;}
+body.publisher-focus .custom_modal_style.customModalAddPhoto .x-form.publisher{position: relative;max-width: 450px;height: auto;}
+body.publisher-focus .custom_modal_style.customModalAddPhoto .x-form.publisher .addpostHeadFocussed{position: relative;}
 body.publisher-focus .publisher.globalpublishrmodalwidth,body.publisher-focus .publisher.loclpublishrmodalwidth{max-width:100%;display:inline-block}
 #feelings-menu.dropdown-menu{max-width:100%;min-width:100%;max-height:unset;overflow:auto}
 .profile-button-style .btn{width:100%!important}
