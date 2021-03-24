@@ -1,4 +1,7 @@
 @import "https://cdn.stratus-stage.xyz/content/themes/default/css/buttonCustom.css";
+body.publisher-focus .custom_modal_style.customModalAddPhoto {top: 50%;transform: translateY(-50%);}
+.albumEditDltButton button{max-width: 170px;}
+.albumEditDltButton{display: flex;align-items: center;justify-content: center;flex-wrap: wrap;}
 .userVerifiedBadge {display: flex;align-items: center;justify-content: flex-start;margin-bottom: 5px;}
 .js_audio:focus {outline: none !important;}
 /* ._share-dropdown_.dropdown-menu.fade.show{right: 0px !important;top: 44px !important;left: auto !important;transform: none !important;} */

@@ -396,7 +396,7 @@
                                         <i class="icon-post icon_share"></i>
                                         <span>{__("Share")}</span>
                                     </div>
-                                    <div class="_share-dropdown_ dropdown-menu fade"
+                                    <div class="_share-dropdown_ dropdown-menu dropdown-menu-right fade"
                                         aria-labelledby="stratus_post_{$article['post_id']}" data-toggle="modal"
                                         data-url="posts/share.php?do=create&post_id={$article['post_id']}">
                                         <div class="share_icon_list">

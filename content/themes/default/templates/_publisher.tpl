@@ -10,8 +10,9 @@
             <!-- publisher loader -->
             <div class="addpostHeadFocussed">
                 <h2>Create Post</h2>
-                <a class="addpost-closebtn" href="javascript:void(0)"><img
-                        src="{$system['system_uploads_assets']}/content/themes/default/images/svg/svgImg/modelCross.svg" /></a>
+                <a class="addpost-closebtn" href="javascript:void(0)">
+                    <img src="{$system['system_uploads_assets']}/content/themes/default/images/svg/svgImg/modelCross.svg"/>
+                </a>
             </div>
 
             <!-- publisher-message -->
@@ -199,7 +200,6 @@
                         <!-- post attachments -->
                         <div class="publisher-attachments attachments clearfix x-hidden"></div>
                         <!-- post attachments -->
-
                         <!-- post album -->
                         <div class="publisher-meta" data-meta="album">
                             {include file='__svg_icons.tpl' icon="album" width="16px"
@@ -207,7 +207,6 @@
                             <input type="text" placeholder='{__("Album title")}' />
                         </div>
                         <!-- post album -->
-
                         <!-- post feelings -->
                         <div class="publisher-meta" data-meta="feelings">
                             <div id="feelings-menu-toggle" data-init-text='{__("What are you doing?")}'>
@@ -253,7 +252,6 @@
                             </div>
                         </div>
                         <!-- post feelings -->
-
                         <!-- post location -->
                         <div class="publisher-meta" data-meta="location">
                             {include file='__svg_icons.tpl' icon="map" width="16px"
@@ -261,7 +259,6 @@
                             <input class="js_geocomplete" type="text" placeholder='{__("Where are you?")}' />
                         </div>
                         <!-- post location -->
-
                         <!-- post colored -->
                         <div class="publisher-meta" data-meta="colored">
                             {foreach $colored_patterns as $pattern} <div
@@ -277,7 +274,6 @@
                             {/foreach}
                         </div>
                         <!-- post colored -->
-
                         <!-- post voice notes -->
                         <div class="publisher-meta" data-meta="voice_notes">
                             <div class="voice-recording-wrapper" data-handle="publisher">
@@ -316,14 +312,12 @@
                             </div>
                         </div>
                         <!-- post voice notes -->
-
                         <!-- post gif -->
                         <div class="publisher-meta" data-meta="gif">
                             {include file='__svg_icons.tpl' icon="gif" width="16px" height="16px"}
                             <input class="js_publisher-gif-search" type="text" placeholder='{__("Search GIFs")}' />
                         </div>
                         <!-- post gif -->
-
                         <!-- post poll -->
                         <div class="publisher-meta" data-meta="poll">
                             {include file='__svg_icons.tpl' icon="plus" width="16px"
@@ -336,7 +330,6 @@
                             <input type="text" placeholder='{__("Add an option")}...' />
                         </div>
                         <!-- post poll -->
-
                         <!-- post video -->
                         <div class="publisher-meta" data-meta="video">
                             {include file='__svg_icons.tpl' icon="checkmark" class="static mr5"
@@ -365,7 +358,6 @@
                             </div>
                         </div>
                         <!-- post video -->
-
                         <!-- post audio -->
                         <div class="publisher-meta" data-meta="audio">
                             {include file='__svg_icons.tpl' icon="checkmark" class="static mr5"
@@ -378,7 +370,6 @@
                             </div>
                         </div>
                         <!-- post audio -->
-
                         <!-- post file -->
                         <div class="publisher-meta" data-meta="file">
                             {include file='__svg_icons.tpl' icon="checkmark" class="static mr5"
@@ -391,7 +382,6 @@
                             </div>
                         </div>
                         <!-- post file -->
-
                         <!-- publisher scraper -->
                         <div class="publisher-scraper"></div>
                         <!-- publisher scraper -->
