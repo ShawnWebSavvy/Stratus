@@ -271,6 +271,9 @@ function load_more(element) {
   if (_this.data("id") !== undefined) {
     data["id"] = _this.data("id");
   }
+  if (_this.data("tag") !== undefined) {
+    data["tag"] = _this.data("tag");
+  }
   data["offset"] =
     _this.data("offset") ||
     1; /* we start from iteration 1 because 0 already loaded */

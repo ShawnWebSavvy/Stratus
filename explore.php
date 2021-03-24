@@ -27,9 +27,10 @@ try {
     } elseif ($_GET['view'] == "trending") {
         // get trending hashtags
         if ($system['trending_hashtags_enabled']) {
-            $trending_hashtags_posts = $userGlobal->get_trending_hashtags_posts("GlobalHub");
+            $trending_hashtags_posts = $userGlobal->get_trending_hashtags_posts("GlobalHub", false);
             /* assign variables */
             $smarty->assign('trendingPosts', $trending_hashtags_posts);
+            $smarty->assign('trending', true);
         }
     } elseif ($_GET['view'] == "users") {
         if ($_GET['search']) {
@@ -56,8 +57,9 @@ try {
             }
         }
     } else {
-        $results = $userGlobal->global_search($_GET['view']);
+        $results = $userGlobal->global_search($_GET['view'],0);
         $smarty->assign('trendingPosts', $results['posts']);
+        $smarty->assign('explore_tag', $_GET['view']);
     }
 
 

@@ -58,7 +58,7 @@
                         </ul>
                         {/if}
                         <!-- see-more -->
-		                <div class="alert alert-post see-more js_see-more {if $user->_logged_in}js_see-more-infinite{/if}" data-get="explore" data-filter="{if $_filter}{$_filter}{else}all{/if}" {if $_id}data-id="{$_id}"{/if}>
+		                <div class="alert alert-post see-more js_see-more {if $user->_logged_in}js_see-more-infinite{/if}" data-get="{if $trending}explore_trending{elseif $explore_tag}explore_tag{else}explore{/if}" {if $explore_tag}data-tag="{$explore_tag}" {/if}  data-filter="{if $_filter}{$_filter}{else}all{/if}" {if $_id}data-id="{$_id}"{/if}>
 		                	<span>{__("More Stories")}</span>
 		                	<div class="loader loader_small x-hidden"></div>
 		                </div>
