@@ -6,7 +6,7 @@ define("DB_HOST", "notecloud-rds.cc5yzmpks9xy.us-west-1.rds.amazonaws.com");
 define("DB_PORT", "3306");
 define("SYS_URL", "https://www.stratus-stage.xyz");
 //https://ws.stage-apollo.xyz/api
-//https://ws.knoxglobal.com/api
+//https://ws.knoxglobal.com/api 
 define("API_BASE_URL", "https://ws.stage-apollo.xyz/api");
 define("DEBUGGING", true);
 define("DEFAULT_LOCALE", "en_us"); 
