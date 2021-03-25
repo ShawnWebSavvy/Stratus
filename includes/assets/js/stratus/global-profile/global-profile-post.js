@@ -2213,20 +2213,9 @@ $(function () {
           function (response) {
             /* check the response */
             $("#modal").modal("hide");
-            if (
-              response.refresh &&
-              (current_page == "profile" ||
-                current_page == "page" ||
-                current_page == "global-profile/global-profile-timeline" ||
-                current_page == "group" ||
-                current_page == "event")
-            ) {
-              location.reload();
-            } else if (response.refresh = "delete_single_post") {
-              $('.child-post-ul').html("");
-              window.location.replace(document.referrer)
-            }
-            else if (response.callback) {
+            bricklayer.redraw();
+           
+            if (response.callback) {
               eval(response.callback);
             }
           },

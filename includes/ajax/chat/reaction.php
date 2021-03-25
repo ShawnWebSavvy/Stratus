@@ -9,6 +9,7 @@
 
 // fetch bootstrap
 require('../../../bootstrap.php');
+require_once('../../../includes/class-user-global.php');
 
 // check AJAX Request
 is_ajax();
@@ -18,6 +19,7 @@ user_access(true);
 
 try {
 
+	$userGlobal = new UserGlobal();
 	// initialize the return array
 	$return = array();
 
