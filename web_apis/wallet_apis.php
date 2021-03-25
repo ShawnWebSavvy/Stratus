@@ -223,7 +223,14 @@ function updatesendmoneyWAlletBalanceFunction()
         $check_user = $db->query(sprintf("SELECT user_id as id, user_wallet_balance as user_wallet_balance, COUNT(*) as count FROM users WHERE user_email = %s", secure($_POST['user_email']))) or _error("SQL_ERROR_THROWEN");
         $check_user = $check_user->fetch_assoc();
         $user_id =   $check_user['id'];
-
+        if (!is_numeric($amount) ) {
+          returnResponse(false, 400, "Invalid Amount.");
+          die;
+        }
+        if ($amount < 1) {
+          returnResponse(false, 400, "Invalid Amount.");
+          die;
+        }
         $reciver_user = $db->query(sprintf("SELECT user_id as id, COUNT(*) as count FROM users WHERE user_email = %s", secure($_POST['reciver_email']))) or _error("SQL_ERROR_THROWEN");
         $reciver_user = $reciver_user->fetch_assoc();
         $reciver_id =   $reciver_user['id'];
@@ -268,7 +275,7 @@ function getAllTransactionsFunction()
 
         $user_id = $check_user['id'];
         if(!isset($_POST['offset']) || $_POST['offset'] == ""){
-          $_POST['offset'] = 1;
+          $_POST['offset'] = 0;
         }
         //Add Pagiantion
         $transactions = [];
