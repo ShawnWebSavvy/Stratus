@@ -103,9 +103,10 @@ function data_heartbeat() {
         data.id = posts_stream.data("id"));
         let last_id_column = document.getElementsByClassName('bricklayer-column')[0];
         if (last_id_column) {
-            data["last_post"] = last_id_column.getElementsByClassName('carsds')[0].dataset.id || 0;
+            data["last_post"] = posts_stream.find('.carsds').first().data("id");
+            // data["last_post"] = last_id_column.getElementsByClassName('carsds')[0].dataset.id || 0;
         } else {
-            data["last_post"] = 0;
+            return false;
         }
         $.post(api["data/live"], data, function (response) {
         if (response.callback) eval(response.callback);
@@ -123,7 +124,7 @@ function data_heartbeat() {
                 $(".js_live-notifications").find("span.counter").text(notifications).show(), notifications_sound
             }
             if (response.posts && response.posts != null) {
-                //console.log("response.posts->>>>>>>", response.posts);
+                console.log("response.posts->>>>>>>", response.posts);
                 var datatta = response.posts;
                 var ArrayVal = datatta.split('<div class="carsds"');
                 var loopArray = [];
@@ -138,7 +139,7 @@ function data_heartbeat() {
                     d.innerHTML = values;
                     var valuesPost = d.firstChild;
                     bricklayer.prepend(valuesPost);
-                    // bricklayer.redraw();
+                    bricklayer.redraw();
                 }
             }
             response.posts && (setTimeout(photo_grid(), 200)), setTimeout("data_heartbeat();", 500)
