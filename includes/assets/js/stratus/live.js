@@ -131,6 +131,7 @@ function agora_change_stream_source(deviceIndex, deviceType) {
             localStreams.camera.micId = deviceId;
         } else if (deviceType === "video") {
             localStreams.camera.camId = deviceId;
+            localStream.switchDevice("video", deviceId);
         } else {
             /* update live status */
             show_live_status();
@@ -144,6 +145,7 @@ function agora_change_stream_source(deviceIndex, deviceType) {
         hide_live_status();
     });
 }
+
 
 
 // [agora] get camera devices
@@ -424,11 +426,6 @@ $(function () {
     });
 
 
-    // change camera
-    $('body').on('click', '.js_live-change-camera', function () {
-        var camera_id = $(this).attr("id").split('_')[1];
-        agora_change_stream_source(camera_id, "video");
-    });
 
 
     // change mic
@@ -437,4 +434,9 @@ $(function () {
         agora_change_stream_source(mic_id, "audio");
     });
 
+    // change camera
+    $(document).on('click', '.js_live-change-camera', function () {
+        var camera_id = $(this).attr("id").split('_')[1];
+        agora_change_stream_source(camera_id, "video");
+    });
 }); 

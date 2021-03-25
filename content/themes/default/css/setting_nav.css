@@ -10,71 +10,71 @@
 }
 
 .settingleftWrap .side-nav li a i.icon.icon-accountSetting {
-  background-image: url(https://cdn.stratus-stage.xyz/content/themes/default/images/svg/svgImg/settings_icon.svg);
+  background-image: url(../images/svg/svgImg/settings_icon.svg);
 }
 
 .settingleftWrap .side-nav li a i.icon.icon-editProfile {
-  background-image: url(https://cdn.stratus-stage.xyz/content/themes/default/images/svg/svgImg/edit_icon.svg);
+  background-image: url(../images/svg/svgImg/edit_icon.svg);
 }
 
 .settingleftWrap .side-nav li a i.icon.icon-securitySetting {
-  background-image: url(https://cdn.stratus-stage.xyz/content/themes/default/images/svg/svgImg/security_icon.svg);
+  background-image: url(../images/svg/svgImg/security_icon.svg);
 }
 
 .settingleftWrap .side-nav li a i.icon.icon-privacy {
-  background-image: url(https://cdn.stratus-stage.xyz/content/themes/default/images/svg/svgImg/lock_icon.svg);
+  background-image: url(../images/svg/svgImg/lock_icon.svg);
 }
 
 .settingleftWrap .side-nav li a i.icon.icon-notifications {
-  background-image: url(https://cdn.stratus-stage.xyz/content/themes/default/images/svg/svgImg/notifications-icon.svg);
+  background-image: url(../images/svg/svgImg/notifications-icon.svg);
 }
 
 .settingleftWrap .side-nav li a i.icon.icon-linkedAccounts {
-  background-image: url(https://cdn.stratus-stage.xyz/content/themes/default/images/svg/svgImg/settings_icon.svg);
+  background-image: url(../images/svg/svgImg/settings_icon.svg);
 }
 
 .settingleftWrap .side-nav li a i.icon.icon-membership {
-  background-image: url(https://cdn.stratus-stage.xyz/content/themes/default/images/svg/svgImg/settings_icon.svg);
+  background-image: url(../images/svg/svgImg/settings_icon.svg);
 }
 
 .settingleftWrap .side-nav li a i.icon.icon-affiliates {
-  background-image: url(https://cdn.stratus-stage.xyz/content/themes/default/images/svg/svgImg/settings_icon.svg);
+  background-image: url(../images/svg/svgImg/settings_icon.svg);
 }
 
 .settingleftWrap .side-nav li a i.icon.icon-points {
-  background-image: url(https://cdn.stratus-stage.xyz/content/themes/default/images/svg/svgImg/giftbox_icon.svg);
+  background-image: url(../images/svg/svgImg/giftbox_icon.svg);
 }
 
 .settingleftWrap .side-nav li a i.icon.icon-coinPayments {
-  background-image: url(https://cdn.stratus-stage.xyz/content/themes/default/images/svg/svgImg/settings_icon.svg);
+  background-image: url(../images/svg/svgImg/settings_icon.svg);
 }
 
 .settingleftWrap .side-nav li a i.icon.icon-BankTransfers {
-  background-image: url(https://cdn.stratus-stage.xyz/content/themes/default/images/svg/svgImg/settings_icon.svg);
+  background-image: url(../images/svg/svgImg/settings_icon.svg);
 }
 
 .settingleftWrap .side-nav li a i.icon.icon-Verification {
-  background-image: url(https://cdn.stratus-stage.xyz/content/themes/default/images/svg/svgImg/ok_icon.svg);
+  background-image: url(../images/svg/svgImg/ok_icon.svg);
 }
 
 .settingleftWrap .side-nav li a i.icon.icon-Blocking {
-  background-image: url(https://cdn.stratus-stage.xyz/content/themes/default/images/svg/svgImg/block_icon.svg);
+  background-image: url(../images/svg/svgImg/block_icon.svg);
 }
 
 .settingleftWrap .side-nav li a i.icon.icon-YourInformation {
-  background-image: url(https://cdn.stratus-stage.xyz/content/themes/default/images/svg/svgImg/at_icon.svg);
+  background-image: url(../images/svg/svgImg/at_icon.svg);
 }
 
 .settingleftWrap .side-nav li a i.icon.icon-Apps {
-  background-image: url(https://cdn.stratus-stage.xyz/content/themes/default/images/svg/svgImg/apps_icon.svg);
+  background-image: url(../images/svg/svgImg/apps_icon.svg);
 }
 
 .settingleftWrap .side-nav li a i.icon.icon-deleteAccount {
-  background-image: url(https://cdn.stratus-stage.xyz/content/themes/default/images/svg/svgImg/delete_icon.svg);
+  background-image: url(../images/svg/svgImg/delete_icon.svg);
 }
 
 .settingleftWrap .side-nav li a i.icon.icon-YourInformation {
-  background-image: url(https://cdn.stratus-stage.xyz/content/themes/default/images/svg/svgImg/settings_icon.svg);
+  background-image: url(../images/svg/svgImg/settings_icon.svg);
 }
 
 .settingleftWrap .side-nav li.active a, .settingleftWrap .side-nav li:hover a {
@@ -82,71 +82,71 @@
 }
 
 .settingleftWrap .side-nav li.active a i.icon.icon-accountSetting, .settingleftWrap .side-nav li:hover a i.icon.icon-accountSetting {
-  background-image: url(https://cdn.stratus-stage.xyz/content/themes/default/images/svg/svgImg/settings_icon_hover.svg);
+  background-image: url(../images/svg/svgImg/settings_icon_hover.svg);
 }
 
 .settingleftWrap .side-nav li.active a i.icon.icon-editProfile, .settingleftWrap .side-nav li:hover a i.icon.icon-editProfile {
-  background-image: url(https://cdn.stratus-stage.xyz/content/themes/default/images/svg/svgImg/edit_icon_hover.svg);
+  background-image: url(../images/svg/svgImg/edit_icon_hover.svg);
 }
 
 .settingleftWrap .side-nav li.active a i.icon.icon-securitySetting, .settingleftWrap .side-nav li:hover a i.icon.icon-securitySetting {
-  background-image: url(https://cdn.stratus-stage.xyz/content/themes/default/images/svg/svgImg/security_icon_hover.svg);
+  background-image: url(../images/svg/svgImg/security_icon_hover.svg);
 }
 
 .settingleftWrap .side-nav li.active a i.icon.icon-privacy, .settingleftWrap .side-nav li:hover a i.icon.icon-privacy {
-  background-image: url(https://cdn.stratus-stage.xyz/content/themes/default/images/svg/svgImg/lock_icon_hover.svg);
+  background-image: url(../images/svg/svgImg/lock_icon_hover.svg);
 }
 
 .settingleftWrap .side-nav li.active a i.icon.icon-notifications, .settingleftWrap .side-nav li:hover a i.icon.icon-notifications {
-  background-image: url(https://cdn.stratus-stage.xyz/content/themes/default/images/svg/svgImg/notifications_icon_hover.svg);
+  background-image: url(../images/svg/svgImg/notifications_icon_hover.svg);
 }
 
 .settingleftWrap .side-nav li.active a i.icon.icon-linkedAccounts, .settingleftWrap .side-nav li:hover a i.icon.icon-linkedAccounts {
-  background-image: url(https://cdn.stratus-stage.xyz/content/themes/default/images/svg/svgImg/settings_icon_hover.svg);
+  background-image: url(../images/svg/svgImg/settings_icon_hover.svg);
 }
 
 .settingleftWrap .side-nav li.active a i.icon.icon-membership, .settingleftWrap .side-nav li:hover a i.icon.icon-membership {
-  background-image: url(https://cdn.stratus-stage.xyz/content/themes/default/images/svg/svgImg/settings_icon_hover.svg);
+  background-image: url(../images/svg/svgImg/settings_icon_hover.svg);
 }
 
 .settingleftWrap .side-nav li.active a i.icon.icon-affiliates, .settingleftWrap .side-nav li:hover a i.icon.icon-affiliates {
-  background-image: url(https://cdn.stratus-stage.xyz/content/themes/default/images/svg/svgImg/settings_icon_hover.svg);
+  background-image: url(../images/svg/svgImg/settings_icon_hover.svg);
 }
 
 .settingleftWrap .side-nav li.active a i.icon.icon-points, .settingleftWrap .side-nav li:hover a i.icon.icon-points {
-  background-image: url(https://cdn.stratus-stage.xyz/content/themes/default/images/svg/svgImg/giftbox_icon_hover.svg);
+  background-image: url(../images/svg/svgImg/giftbox_icon_hover.svg);
 }
 
 .settingleftWrap .side-nav li.active a i.icon.icon-coinPayments, .settingleftWrap .side-nav li:hover a i.icon.icon-coinPayments {
-  background-image: url(https://cdn.stratus-stage.xyz/content/themes/default/images/svg/svgImg/settings_icon_hover.svg);
+  background-image: url(../images/svg/svgImg/settings_icon_hover.svg);
 }
 
 .settingleftWrap .side-nav li.active a i.icon.icon-BankTransfers, .settingleftWrap .side-nav li:hover a i.icon.icon-BankTransfers {
-  background-image: url(https://cdn.stratus-stage.xyz/content/themes/default/images/svg/svgImg/settings_icon_hover.svg);
+  background-image: url(../images/svg/svgImg/settings_icon_hover.svg);
 }
 
 .settingleftWrap .side-nav li.active a i.icon.icon-Verification, .settingleftWrap .side-nav li:hover a i.icon.icon-Verification {
-  background-image: url(https://cdn.stratus-stage.xyz/content/themes/default/images/svg/svgImg/ok_icon_hover.svg);
+  background-image: url(../images/svg/svgImg/ok_icon_hover.svg);
 }
 
 .settingleftWrap .side-nav li.active a i.icon.icon-Blocking, .settingleftWrap .side-nav li:hover a i.icon.icon-Blocking {
-  background-image: url(https://cdn.stratus-stage.xyz/content/themes/default/images/svg/svgImg/block_icon_hover.svg);
+  background-image: url(../images/svg/svgImg/block_icon_hover.svg);
 }
 
 .settingleftWrap .side-nav li.active a i.icon.icon-YourInformation, .settingleftWrap .side-nav li:hover a i.icon.icon-YourInformation {
-  background-image: url(https://cdn.stratus-stage.xyz/content/themes/default/images/svg/svgImg/at_icon_hover.svg);
+  background-image: url(../images/svg/svgImg/at_icon_hover.svg);
 }
 
 .settingleftWrap .side-nav li.active a i.icon.icon-Apps, .settingleftWrap .side-nav li:hover a i.icon.icon-Apps {
-  background-image: url(https://cdn.stratus-stage.xyz/content/themes/default/images/svg/svgImg/apps_icon_hover.svg);
+  background-image: url(../images/svg/svgImg/apps_icon_hover.svg);
 }
 
 .settingleftWrap .side-nav li.active a i.icon.icon-deleteAccount, .settingleftWrap .side-nav li:hover a i.icon.icon-deleteAccount {
-  background-image: url(https://cdn.stratus-stage.xyz/content/themes/default/images/svg/svgImg/delete_icon_hover.svg);
+  background-image: url(../images/svg/svgImg/delete_icon_hover.svg);
 }
 
 .settingleftWrap .side-nav li.active a i.icon.icon-YourInformation, .settingleftWrap .side-nav li:hover a i.icon.icon-YourInformation {
-  background-image: url(https://cdn.stratus-stage.xyz/content/themes/default/images/svg/svgImg/settings_icon_hover.svg);
+  background-image: url(../images/svg/svgImg/settings_icon_hover.svg);
 }
 
 .settingleftWrap .side-nav li.active ul, .settingleftWrap .side-nav li:hover ul {
@@ -177,15 +177,15 @@ body.index-localhub .post-actions .action-btn i.icon-post, body.profile-localhub
 }
 
 body.index-localhub .post-actions .action-btn i.icon-post.icon_like, body.profile-localhub .post-actions .action-btn i.icon-post.icon_like {
-  background: url(https://cdn.stratus-stage.xyz/content/themes/default/images/svg/svgImg/nav_icon_localhub-active.svg) no-repeat center;
+  background: url(../images/svg/svgImg/nav_icon_localhub-active.svg) no-repeat center;
 }
 
 body.index-localhub .post-actions .action-btn i.icon-post.icon_comment, body.profile-localhub .post-actions .action-btn i.icon-post.icon_comment {
-  background: url(https://cdn.stratus-stage.xyz/content/themes/default/images/svg/svgImg/nav_icon_nav_icon_messages_hover.svg) no-repeat center;
+  background: url(../images/svg/svgImg/nav_icon_nav_icon_messages_hover.svg) no-repeat center;
 }
 
 body.index-localhub .post-actions .action-btn i.icon-post.icon_share, body.profile-localhub .post-actions .action-btn i.icon-post.icon_share {
-  background: url(https://cdn.stratus-stage.xyz/content/themes/default/images/Shareglobal.svg) no-repeat center;
+  background: url(../images/Shareglobal.svg) no-repeat center;
 }
 
 .publisher-tools-tabs {

@@ -1,5 +1,4 @@
 <?php
-require_once '../../../includes/helper_functions.php';
 
 /**
  * ajax -> data -> upload
@@ -305,18 +304,6 @@ try {
                         delete_uploads_file($user->_data['user_picture_raw']);
                         /* update user profile picture */
                         $db->query(sprintf("UPDATE users SET user_picture = %s, user_picture_id = %s WHERE user_id = %s", secure($file_name), secure($photo_id, 'int'), secure($user->_data['user_id'], 'int'))) or _error("SQL_ERROR_THROWEN");
-
-                        /*Update Users Profile in RDM */
-                        $redisObject = new RedisClass();
-                        $redisPostKey = 'user-' . $user->_data['user_id'];
-                        $redisObject->deleteValueFromKey($redisPostKey);
-                        cachedUserData($db, $system, $user->_data['user_id'], $user->_data['active_session_token']);
-                        $redisPostProfileKey = 'profile-posts-' . $user->_data['user_id'];
-                        $redisObject->deleteValueFromKey($redisPostProfileKey);
-
-                        $redisPostKey = 'user-' . $user->_data['user_id'] . '-posts';
-                        $redisObject->deleteValueFromKey($redisPostKey);
-                        fetchAndSetDataOnPostReaction($system, $user, $redisObject, $redisPostKey);
                         break;
 
                     case 'cover-page':
@@ -588,13 +575,7 @@ try {
                     // upload to
                     if ($system['s3_enabled']) {
                         /* Amazon S3 */
-                        $helpers = new helpers();
-                        $result_ = $helpers->getVideoDuration($file['tmp_name'], 'prod');
-                        if($result_ > 4){
-                            aws_s3_upload($file['tmp_name'], $file_name);
-                        }else{
-                            modal("MESSAGE", __("Upload Error"), __("Please upload minimum 5 seconds Video"));
-                        }
+                        aws_s3_upload($file['tmp_name'], $file_name);
                     } elseif ($system['digitalocean_enabled']) {
                         /* DigitalOcean */
                         digitalocean_space_upload($file['tmp_name'], $file_name);

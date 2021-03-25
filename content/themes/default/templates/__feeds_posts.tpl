@@ -88,7 +88,7 @@
 
                     <!-- audio views -->
                     {if $post['post_type'] == "audio"}
-                    <span style="display: flex;align-items: center;">
+                    <span>
                         <i class="fa fa-eye"></i> {$post['audio']['views']}
                     </span>
                     {/if}

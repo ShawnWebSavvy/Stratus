@@ -27,7 +27,6 @@ try {
 	}
 	/* assign variables */
 	$smarty->assign('post', $post);
-	$smarty->assign('userGlobal', $userGlobal);
 
 	// get ads campaigns
 	//$ads_campaigns = $user->ads_campaigns();

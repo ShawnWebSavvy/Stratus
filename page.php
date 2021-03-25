@@ -37,14 +37,7 @@ try {
 	/* get page picture */
 	$spage['page_picture_default'] = ($spage['page_picture']) ? false : true;
 	$spage['page_picture'] = get_picture($spage['page_picture'], 'page');
-
-
 	$spage['page_picture_full'] = ($spage['page_picture_full']) ? $system['system_uploads'] . '/' . $spage['page_picture_full'] : $spage['page_picture_full'];
-
-
-	$spage['page_picture'] = $system['system_url'] . '/includes/wallet-api/get-picture-api.php?picture=' . $spage['page_picture'] .'&picture_full='.$spage['page_picture_full']. '&type=page&type_url=1';
-
-
 	/* get page cover */
 	$spage['page_cover'] = ($spage['page_cover']) ? $system['system_uploads'] . '/' . $spage['page_cover'] : $spage['page_cover'];
 	$spage['page_cover_full'] = ($spage['page_cover_full']) ? $system['system_uploads'] . '/' . $spage['page_cover_full'] : $spage['page_cover_full'];
@@ -75,24 +68,6 @@ try {
 			$smarty->assign('feelings_types', get_feelings_types());
 			if ($system['colored_posts_enabled']) {
 				$smarty->assign('colored_patterns', $user->get_posts_colored_patterns());
-			}
-
-			/* get pages */
-			if ($system['pages_enabled']) {
-				$pages = $user->get_pages(array('user_id' => $profile['user_id'], 'results' => $system['min_results_even']));
-				$smarty->assign('pages', $pages);
-			}
-
-			/* get groups */
-			if ($system['groups_enabled']) {
-				$groups = $user->get_groups(array('user_id' => $profile['user_id'], 'results' => $system['min_results_even']));
-				$smarty->assign('groups', $groups);
-			}
-
-			/* get events */
-			if ($system['events_enabled']) {
-				$events = $user->get_events(array('user_id' => $profile['user_id'], 'results' => $system['min_results_even']));
-				$smarty->assign('events', $events);
 			}
 
 			/* get posts */

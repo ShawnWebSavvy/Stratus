@@ -256,7 +256,7 @@
                                                         <div class="post-media">
                                                             {if $postsItem['article']['cover']}
                                                             <a class="post-media-image"
-                                                                href="{$system['system_url']}/blogs/{$postsItem['post_id']}/{$postsItem['article']['title_url']}">
+                                                                href="{$system['system_url']}/blogs/{$postsItem['post_id']}/{$_post['article']['title_url']}">
                                                                 <div
                                                                     style="padding-top:50%; background-image:url('{$system['system_uploads']}/{$postsItem['article']['cover']}');">
                                                                 </div>

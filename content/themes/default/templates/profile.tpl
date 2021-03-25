@@ -81,7 +81,7 @@
                            </div>
                            <div
                               class="profile-avatar-crop {if $profile['user_picture_default'] || !$profile['user_picture_id']}x-hidden{/if}">
-                              <i class="fa fa-crop-alt js_init-crop-picture" data-image="{$profile['user_picture']}"  data-system-url="{$system['system_url']}"
+                              <i class="fa fa-crop-alt js_init-crop-picture" data-image="{$profile['user_picture']}"
                                  data-handle="user" data-id="{$profile['user_id']}"></i>
                            </div>
                            {if !$profile['user_picture_default']}
@@ -126,7 +126,7 @@
                               <button type="button" class="btn btn-success btn-delete js_friend-remove"
                                  data-uid="{$profile['user_id']}">
                                  <img class="btn_image"
-                                    src="{$system['system_url']}/content/themes/default/images/svg/svgImg/newchecked1.svg">
+                                    src="{$system['system_url']}/content/themes/default/images/svg/svgImg/plus_icon.svg">
                                  <img class="btn_image_hover"
                                     src="{$system['system_url']}/content/themes/default/images/svg/svgImg/delete_icon.svg">
                                  <span class="btn_image_"> {__("Friends")} </span>
@@ -1105,7 +1105,7 @@
                            {if $profile['user_id'] == $user->_data['user_id'] || $profile['user_privacy_groups'] ==
                            "public" || ($profile['user_privacy_groups'] == "friends" && $profile['we_friends'])}
                            {if count($profile['groups']) > 0}
-                           <ul class="row profileGroupWrap">
+                           <ul class="row">
                               {foreach $profile['groups'] as $_group}
                               {include file='__feeds_group.tpl' _tpl="box"}
                               {/foreach}
