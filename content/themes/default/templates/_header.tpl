@@ -131,12 +131,15 @@ background-attachment: fixed;" {/if} {if $page=="share" && $url}onload="initiali
                         <!--  -->
                         <ul {$page} {$active_page}>
                            <li class="addPost mob_show_">
-                              {if $active_page =="GlobalHub"}
-                              <a href="javascript:initialize_scraper()" id="openPost">
+                              {if $active_page =="GlobalHub"} 
+                              <!-- publisher -->
+                              {include file='_publisher.tpl' _handle="me" _privacy=true}
+                              <!-- publisher -->
+                              <a href="javascript:initialize_scraper()" id="openPost" >
                                  <div class="svg-container">
                                     <img
                                        src="{$system['system_uploads_assets']}/content/themes/default/images/svg/footer-icon/Icon.svg"
-                                       class="blackicon">
+                                       class="blackicon lazyload">
                                  </div>
                               </a>
                               {/if}

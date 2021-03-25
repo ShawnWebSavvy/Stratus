@@ -149,13 +149,14 @@
 <!-- posts-loader -->
 <div class="js_posts_stream" data-get="{$_get}" data-filter="{if $_filter}{$_filter}{else}all{/if}" {if $_id}data-id="{$_id}"{/if}>
 	{if $posts}
-		<ul class="global-profile-ul-post feeds_post_ul">
+		<div class="bricklayer">
+		<!-- <ul class="global-profile-ul-post feeds_post_ul"> -->
 			<!-- posts -->
 			{foreach $posts as $post}
 				{include file='global-profile/global-profile__feeds_post_bookamark.tpl' }
 			{/foreach}
 			<!-- posts -->
-		</ul>
+		<!-- </ul> -->
 		<!-- see-more -->
 		{* <div class="alert alert-post see-more mb20 js_see-more {if $user->_logged_in}js_see-more-infinite{/if}" data-get="{$_get}" data-filter="{if $_filter}{$_filter}{else}all{/if}" {if $_id}data-id="{$_id}"{/if}>
 			<span>{__("More Stories")}</span>

@@ -294,7 +294,6 @@ function load_more(element) {
         eval(response.callback);
       } else {
         if (response.data) {
-          if (bricklayer != undefined) {
             var datatta = response.data;
             var ArrayVal = datatta.split('<div class="carsds"');
             var loopArray = [];
@@ -313,15 +312,7 @@ function load_more(element) {
               // valuesPost.innerHTML = (bricklayer.elements.length + 1);
               bricklayer.append(valuesPost)
             }
-
-            bricklayer.on("afterAppend", function (e) {
-              var el = e.detail.item;
-              el.classList.add('is-append');
-              setTimeout(function () {
-                el.classList.remove('is-append');
-              }, 500);
-            });
-          }
+          
           data["offset"]++;
           if (response.append) {
             stream.append(response.data);
@@ -329,38 +320,38 @@ function load_more(element) {
             stream.prepend(response.data);
           }
           //console.log("vv===", $(window).width());
-          if ($(window).width() > 1024) {
-            if ($('body #landing_feeds_post_ul').length > 0) {
-              var msnry = new Masonry(".feeds_post_ul", {
-                horizontalOrder: true, // new!
-                //percentPosition: true,
-              });
-            }
-            if ($('body #global_profile_posts').length > 0) {
-              var macyInstance = Macy({
-                // See below for all available options.
-                container: '.feeds_post_ul',
-                trueOrder: true,
-                columns: 1,
-                waitForImages: true
-              });
-              //macyInstance.recalculate(false);
-            }
-            if ($('body #timeline_profile').length > 0) {
-              var macyInstance = Macy({
-                // See below for all available options.
-                container: '.feeds_post_ul',
-                trueOrder: true,
-                columns: 2,
-                waitForImages: true
-              });
-              //macyInstance.recalculate(false);
-            }
-            // var msnry = new Masonry(".feeds_post_ul", {
-            //   //horizontalOrder: false, // new!
-            //   //percentPosition: true,
-            // });
-          }
+          // if ($(window).width() > 1024) {
+          //   if ($('body #landing_feeds_post_ul').length > 0) {
+          //     var msnry = new Masonry(".feeds_post_ul", {
+          //       horizontalOrder: true, // new!
+          //       //percentPosition: true,
+          //     });
+          //   }
+          //   if ($('body #global_profile_posts').length > 0) {
+          //     var macyInstance = Macy({
+          //       // See below for all available options.
+          //       container: '.feeds_post_ul',
+          //       trueOrder: true,
+          //       columns: 1,
+          //       waitForImages: true
+          //     });
+          //     //macyInstance.recalculate(false);
+          //   }
+          //   if ($('body #timeline_profile').length > 0) {
+          //     var macyInstance = Macy({
+          //       // See below for all available options.
+          //       container: '.feeds_post_ul',
+          //       trueOrder: true,
+          //       columns: 2,
+          //       waitForImages: true
+          //     });
+          //     //macyInstance.recalculate(false);
+          //   }
+          //   // var msnry = new Masonry(".feeds_post_ul", {
+          //   //   //horizontalOrder: false, // new!
+          //   //   //percentPosition: true,
+          //   // });
+          // }
           setTimeout(photo_grid(), 200);
           /* color chat box */
           if (data["get"] == "messages") {
@@ -416,49 +407,44 @@ function photo_grid() {
     $(this).width(width);
     $(this).height(height);
   });
-  console.log("vv===", $(window).width());
-  if ($(window).width() > 1024) {
-    if ($('body #landing_feeds_post_ul').length > 0) {
-      var msnry = new Masonry(".feeds_post_ul", {
-        horizontalOrder: true, // new!
-        //percentPosition: true,
-      });
-    }
-    if ($('body .global-profile-ul-post').length > 0) {
-      var macyInstance = Macy({
-        // See below for all available options.
-        container: '.feeds_post_ul',
-        trueOrder: true,
-        columns: 1,
-        waitForImages: true
-      });
-      //macyInstance.recalculate(false);
-    }
-    if ($('body #timeline_profile').length > 0) {
-      var macyInstance = Macy({
-        // See below for all available options.
-        container: '.feeds_post_ul',
-        trueOrder: true,
-        columns: 2,
-        waitForImages: true
-      });
-      //macyInstance.recalculate(false);
-    }
-    if ($('body #feeds_post_ul').length > 0) {
-      var macyInstance = Macy({
-        // See below for all available options.
-        container: '.feeds_post_ul',
-        trueOrder: true,
-        columns: 2,
-        waitForImages: true
-      });
-      //macyInstance.recalculate(false);
-    }
-    // var msnry = new Masonry(".feeds_post_ul", {
-    //   //horizontalOrder: false, // new!
-    //   //percentPosition: true,
-    // });
-  }
+  // if ($(window).width() > 1024) {
+  //   if ($('body #landing_feeds_post_ul').length > 0) {
+  //     var msnry = new Masonry(".feeds_post_ul", {
+  //       horizontalOrder: true, // new!
+  //       //percentPosition: true,
+  //     });
+  //   }
+  //   if ($('body .global-profile-ul-post').length > 0) {
+  //     var macyInstance = Macy({
+  //       // See below for all available options.
+  //       container: '.feeds_post_ul',
+  //       trueOrder: true,
+  //       columns: 1,
+  //       waitForImages: true
+  //     });
+  //     //macyInstance.recalculate(false);
+  //   }
+  //   if ($('body #timeline_profile').length > 0) {
+  //     var macyInstance = Macy({
+  //       // See below for all available options.
+  //       container: '.feeds_post_ul',
+  //       trueOrder: true,
+  //       columns: 2,
+  //       waitForImages: true
+  //     });
+  //     //macyInstance.recalculate(false);
+  //   }
+  //   if ($('body #feeds_post_ul').length > 0) {
+  //     var macyInstance = Macy({
+  //       // See below for all available options.
+  //       container: '.feeds_post_ul',
+  //       trueOrder: true,
+  //       columns: 2,
+  //       waitForImages: true
+  //     });
+  //     //macyInstance.recalculate(false);
+  //   }
+  // }
 
 }
 

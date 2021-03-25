@@ -193,36 +193,17 @@ function data_heartbeat() {
                             loopArray.push('<div class="carsds"' + ArrayVal[i])
                         }
                     }
+
                     for (var ik = 0; ik < loopArray.length; ik++) {
                         var values = loopArray[ik];
                         var d = document.createElement('div');
                         d.innerHTML = values;
                         var valuesPost = d.firstChild;
-                      
-                        if(bricklayer){
-                           bricklayer.prepend(valuesPost);
-                           bricklayer.redraw();
-                        } else {
-                            var isClassExist = document.getElementsByClassName('bricklayer');
-                             if (!isClassExist.length) {
-                               $('.js_posts_stream').prepend('<div class="bricklayer"></div>');
-                                isClassExist = document.getElementsByClassName('bricklayer');
-                             }
-                               bricklayer = new Bricklayer(document.querySelector('.bricklayer'));
-                               bricklayer.on("afterAppend", function (e) {
-                                 var el = e.detail.item;
-                                 el.classList.add('is-append');
-                                 setTimeout(function () {
-                                   el.classList.remove('is-append');
-                                 }, 500);
-                               });
-                               bricklayer.prepend(valuesPost);
-                               bricklayer.redraw();
-                           
-                        }
+                        bricklayer.prepend(valuesPost)
+                        bricklayer.redraw();
                     }
                 }
-                response.posts && (posts_stream.find("ul:first").prepend(), setTimeout(photo_grid(), 200)), setTimeout("data_heartbeat();", min_data_heartbeat);
+                response.posts && (posts_stream.find("aul:first").prepend(), setTimeout(photo_grid(), 200)), setTimeout("data_heartbeat();", min_data_heartbeat);
             }
         },
         "json"

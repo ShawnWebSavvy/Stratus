@@ -718,3 +718,4 @@
    </div>
    {/if}
    <!-- product -->
+   </div>

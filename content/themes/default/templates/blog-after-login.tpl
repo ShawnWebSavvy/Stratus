@@ -661,7 +661,7 @@
                                         <label class="form-control-label">
                                             {__("Cover")}
                                         </label>
-                                        <div class="x-image">
+                                        <div class="x-image imageUploder">
                                             <button type="button" class="close x-hidden js_x-image-remover"
                                                 title='{__("Remove")}'>
                                                 <span>×</span>

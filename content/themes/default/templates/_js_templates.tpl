@@ -807,7 +807,8 @@
 
 
 <script id="chat-message" type="text/template">
-        <li>
+    <!--Commented by Pankaj. this code repating the chat in opend chat window -->
+        <!--li class="feed-message_new">
             <div class="conversation clearfix right">
                 <div class="conversation-body chat-message-user-section1">
                     <div class="text js_chat-color-me" {literal}{{#color}}{/literal}style="background-color: {literal}{{color}}{/literal}"{literal}{{/color}}{/literal}>
@@ -840,7 +841,7 @@
                     
                 </div>
             </div>
-        </li>
+        </li-->
     </script>
 
 <script id="chat-calling" type="text/template">

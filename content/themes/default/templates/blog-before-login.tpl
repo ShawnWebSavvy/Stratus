@@ -542,7 +542,7 @@
                                     <input type="hidden" class="js_x-image-input" name="cover" value="">
                                 </div>
                                 {else}
-                                <div class="x-image"
+                                <div class="x-image "
                                     style="background-image: url('{$system['system_uploads']}/{$article['article']['cover']}')">
                                     <button type="button" class="close js_x-image-remover" title='{__("Remove")}'>
                                         <span>×</span>
@@ -642,7 +642,7 @@
                                 {__("Cover")}
                             </label>
                             <div class="col-md-10">
-                                <div class="x-image">
+                                <div class="x-image ">
                                     <button type="button" class="close x-hidden js_x-image-remover"
                                         title='{__("Remove")}'>
                                         <span>×</span>
@@ -653,7 +653,7 @@
                                                 aria-valuemin="0" aria-valuemax="100"></div>
                                         </div>
                                     </div>
-                                    <i class="fa fa-camera fa-lg js_x-uploader" data-handle="x-image"></i>
+                                    <i class="fa fa-camera fa-lg js_x-uploader " data-handle="x-image"></i>
                                     <input type="hidden" class="js_x-image-input" name="cover">
                                 </div>
                             </div>

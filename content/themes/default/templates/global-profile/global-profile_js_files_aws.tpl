@@ -338,11 +338,9 @@
     <!-- Datatables -->
 
 {/if}
-    <script src="{$system['system_uploads_assets']}/content/themes/default/js/bricklayer.min.js?{$cacheremovejs}"></script>
-    <script src="{$system['system_uploads_assets']}/content/themes/default/js/bricklayer-custom.js?{$cacheremovejs}"></script>
-<!-- Dependencies Plugins -->
+<script src="{$system['system_uploads_assets']}/content/themes/default/js/bricklayer.min.js?{$cacheremovejs}"></script>
+<script src="{$system['system_uploads_assets']}/content/themes/default/js/bricklayer-custom.js?{$cacheremovejs}"></script>
 {assign var="cacheremovejs" value=$smarty.now|date_format:'%Y-%m-%d_%H:%M:%S'}
-<!-- Stratus [JS] -->
 <script src="{$system['system_uploads_assets']}/includes/assets/js/stratus/global-profile/global-profile-core.js?{$cacheremovejs}" {if !$user->_logged_in}defer{/if}></script>
 {if $user->_logged_in}
     <script src="{$system['system_uploads_assets']}/includes/assets/js/stratus/global-profile/global-profile-user.js?{$cacheremovejs}"></script>
@@ -350,12 +348,11 @@
     <script src="{$system['system_uploads_assets']}/includes/assets/js/stratus/global-profile/global-profile-chat.js?{$cacheremovejs}"></script>
     <script src="{$system['system_uploads_assets']}/includes/assets/js/stratus/showads.js?{$cacheremovejs}"></script>
     <script src="{$system['system_uploads_assets']}/includes/assets/js/plugins/swipeMobile/swipeMobile.js"></script>
-    <script src="{$system['system_uploads_assets']}/content/themes/default/js/bricklayer.min.js?{$cacheremovejs}"></script>
-    <script src="{$system['system_uploads_assets']}/content/themes/default/js/bricklayer-custom.js?{$cacheremovejs}"></script>
     <link rel="stylesheet" href="{$system['system_uploads_assets']}/content/themes/default/css/bricklayer.css?{$cacheremovejs}">
     <link rel="stylesheet" href="{$system['system_uploads_assets']}/content/themes/default/css/bricklayer-custom.css?{$cacheremovejs}">
 {/if}
 <!-- Stratus [JS] -->
+<script src="https://unpkg.com/@lottiefiles/lottie-player@latest/dist/lottie-player.js"></script>
 
 {if $page == "admin"}
     <!-- Dependencies Plugins -->
