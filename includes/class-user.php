@@ -13740,20 +13740,23 @@ class User
     {
         global $db;
         $transactions = [];
-        // $coin_full_name = array('btc'=>'Bitcoin','eth'=>'Ethereum','apl','Apollo');
-        // $get_transactions = $db->query(sprintf("SELECT ads_users_wallet_transactions.*,investment_transactions.currency,investment_transactions.tnx_type, users.user_name, users.user_firstname, users.user_lastname, users.user_gender, users.user_picture FROM ads_users_wallet_transactions LEFT JOIN investment_transactions ON ads_users_wallet_transactions.investment_id = investment_transactions.id LEFT JOIN users ON ads_users_wallet_transactions.node_type='user' AND ads_users_wallet_transactions.node_id = users.user_id  WHERE ads_users_wallet_transactions.user_id = %s ORDER BY ads_users_wallet_transactions.transaction_id DESC", secure($this->_data['user_id'], 'int'))) or _error("SQL_ERROR_THROWEN");
-        // if ($get_transactions->num_rows > 0) {
-        //     while ($transaction = $get_transactions->fetch_assoc()) {
-        //         // print_r($transaction); die;
-        //         if(!empty($transaction['currency'])&&($transaction['tnx_type']=='buy'||$transaction['tnx_type']=='sell')){
-        //             $transaction['currency_detail'] = (($transaction['tnx_type']=='buy')?'Buy ':'Sell ').$coin_full_name[$transaction['currency']];
-        //         }
-        //         if ($transaction['node_type'] == "user") {
-        //             $transaction['user_picture'] = get_picture($transaction['user_picture'], $transaction['user_gender']);
-        //         }
-        //         $transactions[] = $transaction;
-        //     }
-        // }
+        $coin_full_name = array('btc'=>'Bitcoin','eth'=>'Ethereum','apl','Apollo');
+        // echo sprintf("SELECT ads_users_wallet_transactions.*,investment_transactions.currency,investment_transactions.tnx_type, users.user_name, users.user_firstname, users.user_lastname, users.user_gender, users.user_picture FROM ads_users_wallet_transactions LEFT JOIN investment_transactions ON ads_users_wallet_transactions.investment_id = investment_transactions.id LEFT JOIN users ON ads_users_wallet_transactions.node_type='user' AND ads_users_wallet_transactions.node_id = users.user_id  WHERE ads_users_wallet_transactions.user_id = %s ORDER BY ads_users_wallet_transactions.transaction_id DESC", secure($this->_data['user_id'], 'int'));
+        // die;
+        
+        $get_transactions = $db->query(sprintf("SELECT ads_users_wallet_transactions.*,investment_transactions.currency,investment_transactions.tnx_type, users.user_name, users.user_firstname, users.user_lastname, users.user_gender, users.user_picture FROM ads_users_wallet_transactions LEFT JOIN investment_transactions ON ads_users_wallet_transactions.investment_id = investment_transactions.id LEFT JOIN users ON ads_users_wallet_transactions.node_type='user' AND ads_users_wallet_transactions.node_id = users.user_id  WHERE ads_users_wallet_transactions.user_id = %s ORDER BY ads_users_wallet_transactions.transaction_id DESC", secure($this->_data['user_id'], 'int'))) or _error("SQL_ERROR_THROWEN");
+        if ($get_transactions->num_rows > 0) {
+            while ($transaction = $get_transactions->fetch_assoc()) {
+                // print_r($transaction); die;
+                if(!empty($transaction['currency'])&&($transaction['tnx_type']=='buy'||$transaction['tnx_type']=='sell')){
+                    $transaction['currency_detail'] = (($transaction['tnx_type']=='buy')?'Buy ':'Sell ').$coin_full_name[$transaction['currency']];
+                }
+                if ($transaction['node_type'] == "user") {
+                    $transaction['user_picture'] = get_picture($transaction['user_picture'], $transaction['user_gender']);
+                }
+                $transactions[] = $transaction;
+            }
+        }
         return $transactions;
     }
 
