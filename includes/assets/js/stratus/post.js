@@ -822,7 +822,7 @@ $(function () {
                 textarea = publisher.find("textarea"),
                 photos = publisher.data("photos"),
                 videos = publisher.data("video");
-            (void 0 === photos && void 0 === videos) ||
+            (void 0 != photos && void 0 != videos) ||
                 (button_status(_this, "loading"),
                     $.post(
                         api["posts/story"],

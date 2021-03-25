@@ -75,7 +75,24 @@ try {
 			// delete story
 			$userGlobal->delete_my_story();
 			break;
-
+			case 'getstory':
+				// delete story
+			$storyid= $_POST['storyId'];
+			$itemid= $_POST['itemid'];
+			$story_user_id= $_POST['story_user_id'];
+			$hubtype = $_POST['hubtype'];
+			
+			$viewcount = $user->getstory($storyid,$itemid,$story_user_id,$hubtype);
+			$return['total_view'] = $viewcount;
+			break;
+		case 'storyviewcount':
+			$storyid= $_POST['storyId'];
+			$userID= $_POST['userID'];
+			$itemid = $_POST['itemid'];
+			$hubtype = $_POST['hubtype'];
+			$user->storyviewcount($storyid,$userID,$itemid,$hubtype);	
+			break;
+		
 		default:
 			_error(400);
 			break;

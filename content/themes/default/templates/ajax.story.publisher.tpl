@@ -42,7 +42,7 @@
             <div class="col-md-12">
                 <div class="form-group">
                     <label class="form-control-label">{__("Message")}</label>
-                    <textarea name="message" maxlength="500" rows="5" dir="auto" class="form-control"></textarea>
+                    <textarea name="message" maxlength="150" rows="5" dir="auto" class="form-control"></textarea>
                 </div>
             </div>
         </div>

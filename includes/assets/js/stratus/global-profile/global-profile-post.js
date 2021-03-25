@@ -1460,11 +1460,13 @@ $(function () {
     /* get videos */
     var videos = publisher.data("video");
     /* return if no data to post */
-    if (photos === undefined && videos === undefined) {
-      return;
-    }
+    // if (photos === undefined && videos === undefined) {
+    //   return;
+    // }
     /* button loading */
-    button_status(_this, "loading");
+    (void 0 != photos && void 0 != videos) ||
+    (button_status(_this, "loading"),
+    
     $.post(
       api["posts/story"],
       {

@@ -4724,13 +4724,25 @@ class User
             /* get story_id */
             $story_id = $db->insert_id;
         }
+        if(empty($videos) && empty($photos))
+        {            
+            $db->query(sprintf("INSERT INTO stories_media (story_id, source, is_photo, text, time) VALUES (%s, '', '2' ,%s, %s)", secure($story_id, 'int'), secure($message), secure($date))) or _error("SQL_ERROR_THROWEN");
+        }
         /* insert story media items */
-        foreach ($photos as $photo) {
-            $db->query(sprintf("INSERT INTO stories_media (story_id, source, text, time) VALUES (%s, %s, %s, %s)", secure($story_id, 'int'), secure($photo['source']), secure($message), secure($date))) or _error("SQL_ERROR_THROWEN");
+        if(!empty($photos))
+        {
+            foreach ($photos as $photo) {
+                $db->query(sprintf("INSERT INTO stories_media (story_id, source, is_photo, text, time) VALUES (%s, %s, '1' ,%s, %s)", secure($story_id, 'int'), secure($photo['source']), secure($message), secure($date))) or _error("SQL_ERROR_THROWEN");
+            }
         }
-        foreach ($videos as $video) { //print_r($videos);
-            $db->query(sprintf("INSERT INTO stories_media (story_id, source, is_photo, text, time) VALUES (%s, %s, '0', %s, %s)", secure($story_id, 'int'), secure($video), secure($message), secure($date))) or _error("SQL_ERROR_THROWEN");
+        
+        if(!empty($videos))
+        {
+            foreach ($videos as $video) { //print_r($videos);
+                $db->query(sprintf("INSERT INTO stories_media (story_id, source, is_photo, text, time) VALUES (%s, %s, '0', %s, %s)", secure($story_id, 'int'), secure($video), secure($message), secure($date))) or _error("SQL_ERROR_THROWEN");
+            }
         }
+        
 
         $authors = $this->_data['friends_ids'];
 
@@ -4751,12 +4763,19 @@ class User
         }
     }
    
-    public function storyviewcount($story_id,$userID,$itemid)
+    public function storyviewcount($story_id,$userID,$itemid,$hubtype)
     {
         global $db, $system, $date;
-        $get_count = $db->query(sprintf("SELECT count(*) as count FROM stories_view WHERE media_id = %s AND user_id = %s", secure($itemid, 'int'),secure($this->_data['user_id'], 'int'))) or _error("SQL_ERROR_THROWEN");
+        if($hubtype=='global')
+        {
+            $table_name='global_stories_view';
+        }
+        else {
+            $table_name= 'stories_view';
+        }
+        $get_count = $db->query(sprintf("SELECT count(*) as count FROM $table_name WHERE media_id = %s AND user_id = %s", secure($itemid, 'int'),secure($this->_data['user_id'], 'int'))) or _error("SQL_ERROR_THROWEN");
         if ($get_count->fetch_assoc()['count'] == 0) {
-            $db->query(sprintf("INSERT INTO stories_view (story_id, media_id, user_id ) VALUES (%s, %s, %s)", secure($story_id, 'int'), secure($itemid,'int'), secure($this->_data['user_id'],'int'))) or _error("SQL_ERROR_THROWEN");        
+            $db->query(sprintf("INSERT INTO $table_name (story_id, media_id, user_id ) VALUES (%s, %s, %s)", secure($story_id, 'int'), secure($itemid,'int'), secure($this->_data['user_id'],'int'))) or _error("SQL_ERROR_THROWEN");        
         }
         exit;
 
@@ -4827,7 +4846,17 @@ class User
                     $get_media_views = $db->query(sprintf("SELECT count(*) as view FROM stories_view WHERE media_id = %s AND user_id != %s", secure($media_item['media_id'], 'int'), secure($_story['user_id'],'int'))) or _error("SQL_ERROR_THROWEN");
                     $views = $get_media_views->fetch_assoc()['view'];
                     $story_item['total_view']= $views;
-                    $story_item['type'] = ($media_item['is_photo']) ? 'photo' : 'video';
+                    if($media_item['is_photo']==2)
+                    {
+                        $story_item['type'] = 'text';    
+                    }
+                    else if($media_item['is_photo']==1)
+                    {
+                        $story_item['type'] = 'photo';    
+                    }
+                    else {
+                        $story_item['type'] = 'video';
+                    }
                     $story_item['src'] = $system['system_uploads'] . '/' . $media_item['source'];
                     $story_item['link'] = '#';
                     //$story_item['linkText'] = $media_item['text'];
@@ -4867,6 +4896,22 @@ class User
             return true;
         }
     }
+    public function getstory($story_id,$itemid,$story_user_id,$hubtype)
+    {
+        global $db, $system;
+        if($hubtype=='global')
+        {
+            $table_name='global_stories_view';
+        }
+        else {
+            $table_name= 'stories_view';
+        }
+        
+        $get_media_views = $db->query(sprintf("SELECT count(*) as view FROM $table_name WHERE media_id = %s AND user_id != %s", secure($itemid, 'int'), secure($story_user_id,'int'))) or _error("SQL_ERROR_THROWEN");
+        //$get_media_views = $db->query(sprintf("SELECT count(*) as view FROM stories_view WHERE media_id = %s AND story_id = %s", secure($itemid, 'int'), secure($story_id,'int'))) or _error("SQL_ERROR_THROWEN");
+        $views = $get_media_views->fetch_assoc()['view'];
+        return $views;
+    }
 
 
     /**
@@ -4889,6 +4934,7 @@ class User
         for($m=0;$m<count($medias);$m++)
         {
             $delete_media = $db->query(sprintf("DELETE FROM stories_media WHERE time<=DATE_SUB(NOW(),interval 1 DAY ) AND media_id = %s", secure($medias[$m], 'int'))) or _error("SQL_ERROR_THROWEN");
+            //$db->query(sprintf("DELETE FROM stories_view  media_id = %s", secure($medias[$m], 'int'))) or _error("SQL_ERROR_THROWEN");            
         }
         if(empty($medias))
         {
@@ -11665,6 +11711,9 @@ class User
         if (strtotime(set_datetime($args['start_date'])) < strtotime(set_datetime($today))) {
             throw new Exception(__("Event start date should not be less then current date "));
         }
+        if (strtotime(set_datetime($args['start_date'])) > strtotime(set_datetime($args['end_date']))) {
+            throw new Exception(__("Event end date must be after the start date"));
+        }
         $diff = abs(strtotime(set_datetime($args['end_date'])) - strtotime(set_datetime($args['start_date']))); 
         $years   = floor($diff / (365*60*60*24)); 
         $months  = floor(($diff - $years * 365*60*60*24) / (30*60*60*24)); 
@@ -11674,9 +11723,7 @@ class User
         if ($minuts<=15) {
             throw new Exception(__("Start time and end time should have diffrence of 15 minutes"));
         }
-        if (strtotime(set_datetime($args['start_date'])) > strtotime(set_datetime($args['end_date']))) {
-            throw new Exception(__("Event end date must be after the start date"));
-        }
+        
         /* validate privacy */
         if (!in_array($args['privacy'], array('secret', 'closed', 'public'))) {
             throw new Exception(__("You must select a valid privacy for your event"));

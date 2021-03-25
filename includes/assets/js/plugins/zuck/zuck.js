@@ -230,7 +230,7 @@
 
       /* options */
       var id = timeline.id;
-
+      
       var optionsDefault = {
         skin: "snapgram",
         avatars: true,
@@ -245,9 +245,12 @@
         localStorage: true,
         callbacks: {
           onOpen: function onOpen(storyId, callback) {
+                    
             callback();
           },
           onView: function onView(storyId) { 
+            
+            
           },
           onEnd: function onEnd(storyId, callback) {
             
@@ -259,6 +262,7 @@
             callback();
           },
           onNextItem: function onNextItem(storyId, nextStoryId, callback) {
+            
             callback();
           },
           onNavigateItem: function onNavigateItem(
@@ -452,12 +456,15 @@
             }
           }, transitionTime + 50);
         };
-
+       
         var createStoryViewer = function createStoryViewer(
           storyData,
           className,
           forcePlay
         ) {
+
+
+          
           var modalContainer = query("#zuck-modal");
           var modalSlider = query("#zuck-modal-slider-" + id);
 
@@ -484,7 +491,23 @@
 
             var length = get(item, "length");
             var linkText = get(item, "linkText");
-            var total_view = get(item, "total_view");
+            var itemid =get(item, "id");
+            var story_user_id = $('.story').attr("data-user-id");
+            var login_user_id = $("#stories").attr("data-user-id"); 
+            var storyId = get(storyData, "id");
+            if($('body').hasClass('global-profile-timeline-localhub'))
+            {
+              var hubtype = 'global';
+            }
+            else {var hubtype = 'localhub';}
+            var viewcount=get(storyData, "total_view");
+              $.post(
+                api["posts/story"],
+                { do: "getstory", storyId: storyId,itemid:itemid,story_user_id:story_user_id,hubtype:hubtype},
+                function (response) {
+                  viewcount= response.total_view;
+                      $('.slides .item[data-item-id="'+itemid+'"] .total_view').html("<i class='fa fa-eye pull-left' aria-hidden='true'></i>"+viewcount);
+                });
             var seenClass = get(item, "seen") === true ? "seen" : "";
             var commonAttrs =
               'data-index="' + i + '" data-item-id="' + get(item, "id") + '"';
@@ -492,7 +515,15 @@
             if (currentItem === i) {
               currentItemTime = timeAgo(get(item, "time"));
             }
+           
+           
+            if(login_user_id == story_user_id)
+            {
+              var viewhtml="<br/><span class='total_view' style='font-size:10px;color:#fff;'> <i class='fa fa-eye pull-left' aria-hidden='true'></i>"+viewcount+"</span>";
+            }
+            else {var viewhtml="";}
 
+            //get(item, "total_view")
             if (linkText == "") {
               pointerItems +=
                 "<span " +
@@ -529,7 +560,10 @@
                   '" ' +
                   get(item, "type") +
                   ">") +
-                "<br/><span class='total_view' style='font-size:10px'> Views "+get(item, "total_view")+"</span></div>";
+                '"<br/><a class="tip link" href="' +
+                get(item, "link") +
+                '" rel="noopener" target="_blank">' +viewhtml+
+                "</a></div>";
             } else {
               pointerItems +=
                 "<span " +
@@ -542,13 +576,7 @@
                 (length === "" ? "3" : length) +
                 's"></b></span>';
                 
-                var story_user_id = $('.story').attr("data-user-id");
-                var login_user_id = $("#stories").attr("data-user-id");
-                if(login_user_id == story_user_id)
-                {
-                 var viewhtml="<br/><span class='total_view' style='font-size:10px;color:#fff;'> Views "+get(item, "total_view")+"</span>";
-                }
-                else {var viewhtml="";}
+               
               htmlItems +=
                 '<div data-time="' +
                 get(item, "time") +
@@ -561,6 +589,15 @@
                 " " +
                 (currentItem === i ? "active" : "") +
                 '">' +
+                (get(item, "link")
+                  ? '<a class="tip link" href="' +
+                  get(item, "link") +
+                  '" rel="noopener" target="_blank">' +
+                  (linkText == "" || !linkText
+                    ? option("language", "visitLink")
+                    : linkText) +viewhtml+
+                  "</a>"
+                  : "")+
                 (get(item, "type") === "video"
                   ? '<video class="media" muted webkit-playsinline playsinline preload="auto" src="' +
                   get(item, "src") +
@@ -574,15 +611,6 @@
                   '" ' +
                   get(item, "type") +
                   ">") +
-                (get(item, "link")
-                  ? '<a class="tip link" href="' +
-                  get(item, "link") +
-                  '" rel="noopener" target="_blank">' +
-                  (linkText == "" || !linkText
-                    ? option("language", "visitLink")
-                    : linkText) +viewhtml+
-                  "</a>"
-                  : "") +
 
                 "</div>";
             }
@@ -1324,6 +1352,29 @@
         var story = query("#" + id + ' > [data-id="' + storyId + '"]');
         story.parentNode.removeChild(story);
       };
+      
+      
+      // function getcount(storyId,itemid)
+      // {
+        
+      //   var total_views=[];
+      //   setInterval(function () {
+      //   var viewcount=0;
+      //   $.post(
+      //     api["posts/story"],
+      //     { do: "getstory", storyId: storyId,itemid:itemid},
+      //     function (response) {
+      //       console.log('ajex response'+response);
+      //       viewcount= response.total_view;
+            
+      //           console.log(viewcount);
+      //           $('.slides .item [data-item-id="'+itemid+'"]').find('.total_view').html('views '+viewcount);
+      //     });
+      //   }, 1000);
+        
+      //     return total_views;  
+        
+      // }
       function getitemid(storyId,key)
       {
         var mydata = $("#stories").attr("data-json");
@@ -1377,6 +1428,7 @@
           "#" + id + ' > [data-id="' + storyId + '"] [data-id="' + itemId + '"]'
         );
         timeline.parentNode.removeChild(item);
+        
       };
       zuck.navigateItem = zuck.nextItem = function (direction, event) {
         var currentStory = zuck.internalData["currentStory"];
@@ -1386,12 +1438,16 @@
         );
         
          var itemid= getitemid(currentStory,currentItem);
-         
         var userID = $('#stories').attr("data-user-id");
         var storyId = $('.story').attr("data-id");
+        if($('body').hasClass('global-profile-timeline-localhub'))
+        {
+          var hubtype = 'global';
+        }
+        else {var hubtype = 'localhub';}
         $.post(
           api["posts/story"],
-          { do: "storyviewcount", storyId: storyId,userID:userID,itemid:itemid},
+          { do: "storyviewcount", storyId: storyId,userID:userID,itemid:itemid,hubtype:hubtype},
           function (response) {
              // response.callback ? eval(response.callback) : (window.location = site_path);
              

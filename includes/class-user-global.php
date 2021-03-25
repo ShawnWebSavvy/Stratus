@@ -6025,9 +6025,13 @@ class UserGlobal
             /* get story_id */
             $story_id = $db->insert_id;
         }
+        if(empty($videos) && empty($photos))
+        {            
+            $db->query(sprintf("INSERT INTO global_stories_media (story_id, source, is_photo, text, time) VALUES (%s, '', '2' ,%s, %s)", secure($story_id, 'int'), secure($message), secure($date))) or _error("SQL_ERROR_THROWEN");
+        }
         /* insert story media items */
         foreach ($photos as $photo) {
-            $db->query(sprintf("INSERT INTO global_stories_media (story_id, source, text, time) VALUES (%s, %s, %s, %s)", secure($story_id, 'int'), secure($photo['source']), secure($message), secure($date))) or _error("SQL_ERROR_THROWEN");
+            $db->query(sprintf("INSERT INTO global_stories_media (story_id, source, is_photo, text, time) VALUES (%s, %s, '1', %s, %s)", secure($story_id, 'int'), secure($photo['source']), secure($message), secure($date))) or _error("SQL_ERROR_THROWEN");
         }
         foreach ($videos as $video) { //print_r($videos); 
             $db->query(sprintf("INSERT INTO global_stories_media (story_id, source, is_photo, text, time) VALUES (%s, %s, '0', %s, %s)", secure($story_id, 'int'), secure($video), secure($message), secure($date))) or _error("SQL_ERROR_THROWEN");

@@ -8,7 +8,8 @@
 
 // fetch bootstrap
 require('../../../bootstrap.php');
-
+require_once('../../../includes/class-user.php');
+$user = new User();
 // check AJAX Request
 is_ajax();
 
@@ -29,9 +30,9 @@ try {
 	switch ($_REQUEST['do']) {
 		case 'publish':
 			// valid inputs
-			if(!isset($_POST['photos']) && !isset($_POST['videos'])) {
-				_error(400);
-			}
+			// if(!isset($_POST['photos']) && !isset($_POST['videos'])) {
+			// 	_error(400);
+			// }
 			/* filter photos */
 			$photos = array();
 			if(isset($_POST['photos'])) {
@@ -54,9 +55,9 @@ try {
 					}
 				}
 			}
-			if(count($photos) == 0 && count($videos) == 0) {
-				_error(400);
-			}
+			// if(count($photos) == 0 && count($videos) == 0) {
+			// 	_error(400);
+			// }
 
 			// post story
 			$user->post_story($_POST['message'], $photos, $videos);
@@ -75,13 +76,23 @@ try {
 			// delete story
 			$user->delete_my_story();
 			break;
+		case 'getstory':
+				// delete story
+			$storyid= $_POST['storyId'];
+			$itemid= $_POST['itemid'];
+			$story_user_id= $_POST['story_user_id'];
+			$hubtype = $_POST['hubtype'];
+			
+			$viewcount = $user->getstory($storyid,$itemid,$story_user_id,$hubtype);
+			$return['total_view'] = $viewcount;
+			break;
 		case 'storyviewcount':
 			$storyid= $_POST['storyId'];
 			$userID= $_POST['userID'];
 			$itemid = $_POST['itemid'];
-			$user->storyviewcount($storyid,$userID,$itemid);	
+			$hubtype = $_POST['hubtype'];
+			$user->storyviewcount($storyid,$userID,$itemid,$hubtype);	
 			break;
-
 		
 		default:
 			_error(400);
