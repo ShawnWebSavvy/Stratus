@@ -68,20 +68,16 @@
                                         <div class="dropdown-item pointer" data-title='{__("Shared with: Public")}'
                                             data-value="public">
                                             <div class="post_images__">
-                                                <img src="{$system['system_uploads_assets']}/content/themes/default/images/svg/svgImg/nav_icon_globalHub.svg"
-                                                    class="blackicon" />
-                                                <img src="{$system['system_uploads_assets']}/content/themes/default/images/svg/svgImg/nav_icon_globalHub-active.svg"
-                                                    class="whiteicon" />
+                                                <img src="{$system['system_uploads_assets']}/content/themes/default/images/svg/svgImg/nav_icon_globalHub.svg" class="blackicon" />
+                                                <img src="{$system['system_uploads_assets']}/content/themes/default/images/svg/svgImg/nav_icon_globalHub-active.svg" class="whiteicon" />
                                             </div>
                                             <span> {__("Public")} </span>
                                         </div>
                                         <div class="dropdown-item pointer" data-title='{__("Shared with: Friends")}'
                                             data-value="friends">
                                             <div class="post_images__">
-                                                <img src="{$system['system_uploads_assets']}/content/themes/default/images/svg/friendsIcon.svg"
-                                                    class="blackicon" />
-                                                <img src="{$system['system_uploads_assets']}/content/themes/default/images/svg/friendsIconHover.svg"
-                                                    class="whiteicon" />
+                                                <img src="{$system['system_uploads_assets']}/content/themes/default/images/svg/friendsIcon.svg" class="blackicon" />
+                                                <img src="{$system['system_uploads_assets']}/content/themes/default/images/svg/friendsIconHover.svg" class="whiteicon" />
                                             </div>
                                             <span> {__("Friends")} </span>
                                         </div>
@@ -89,10 +85,8 @@
                                         <div class="dropdown-item pointer" data-title='{__("Shared with: Only Me")}'
                                             data-value="me">
                                             <div class="post_images__">
-                                                <img src="{$system['system_uploads_assets']}/content/themes/default/images/svg/svgImg/Hide_form.svg"
-                                                    class="blackicon" />
-                                                <img src="{$system['system_uploads_assets']}/content/themes/default/images/svg/svgImg/Hide_form-hover.svg"
-                                                    class="whiteicon" />
+                                                <img src="{$system['system_uploads_assets']}/content/themes/default/images/svg/svgImg/Hide_form.svg" class="blackicon" />
+                                                <img src="{$system['system_uploads_assets']}/content/themes/default/images/svg/svgImg/Hide_form-hover.svg" class="whiteicon" />
                                             </div>
                                             <span> {__("Only Me")} </span>
                                         </div>
@@ -450,20 +444,20 @@
                                 </li>
                                 {/if}
                             </ul>
-                            <ul
-                                class="row publisher-tools-tabs-ul publisher-tools-tabs-ul-newDesign-stratus publisher-tools-tabs-ulDropDown">
-
+                            <ul class="row publisher-tools-tabs-ul publisher-tools-tabs-ul-newDesign-stratus publisher-tools-tabs-ulDropDown">
                                 {if $system['photos_enabled']}
                                 <li class="uplodfileTags">
-                                    <div class="publisher-tools-tab attach js_publisher-tab" data-tab="photos">
-                                        <!-- <i class="fas fa-camera js_x-uploader" data-handle="publisher" data-multiple="true"></i> -->
-                                        <img class="blackIcon" alt="image" title="Upload Image"
+                                    <div class="publisher-tools-tab  js_publisher-tab" data-tab="photos">
+                                        <!-- attach -->
+                                        <div class="addPhotoButton js_x-uploader">
+                                            <img class="blackIcon" alt="image" title="Upload Image"
                                             src="{$system['system_uploads_assets']}/content/themes/default/images/svg/svgImg/photo_message_iconHover.svg"
-                                            class="js_x-uploader" data-handle="publisher" data-multiple="true" />
-                                        <img class="BlueIcon js_x-uploader" alt="image" title="Upload Image"
+                                            data-handle="publisher" data-multiple="true" />
+                                            <img class="BlueIcon" alt="image" title="Upload Image"
                                             src="{$system['system_uploads_assets']}/content/themes/default/images/svg/svgImg/photo_message_icon.svg"
-                                            class="js_x-uploader" data-handle="publisher" data-multiple="true" />
-                                        <span class="class-publisher-text">Add Photo</span>
+                                            data-handle="publisher" data-multiple="true" />
+                                            <span class="class-publisher-text">Add Photo</span>
+                                        </div>
                                     </div>
                                 </li>
                                 <li class="uplodfileTags">

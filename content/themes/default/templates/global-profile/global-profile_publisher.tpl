@@ -435,20 +435,16 @@
                             <div class="dropdown-item pointer" data-title='{__("Shared with: Publicf")}'
                                 data-value="public">
                                 <div class="post_images__">
-                                    <img src="{$system['system_uploads_assets']}/content/themes/default/images/svg/svgImg/nav_icon_globalHub.svg"
-                                        class="blackicon">
-                                    <img src="{$system['system_uploads_assets']}/content/themes/default/images/svg/svgImg/nav_icon_globalHub-active.svg"
-                                        class="whiteicon">
+                                    <img src="{$system['system_uploads_assets']}/content/themes/default/images/svg/svgImg/nav_icon_globalHub.svg" class="blackicon">
+                                    <img src="{$system['system_uploads_assets']}/content/themes/default/images/svg/svgImg/nav_icon_globalHub-active.svg" class="whiteicon">
                                 </div>
                                 <span> {__("Public")} </span>
                             </div>
                             <div class="dropdown-item pointer" data-title='{__("Shared with: Friends")}'
                                 data-value="friends">
                                 <div class="post_images__">
-                                    <img src="{$system['system_uploads_assets']}/content/themes/default/images/svg/friendsIcon.svg"
-                                        class="blackicon">
-                                    <img src="{$system['system_uploads_assets']}/content/themes/default/images/svg/friendsIconHover.svg"
-                                        class="whiteicon">
+                                    <img src="{$system['system_uploads_assets']}/content/themes/default/images/svg/friendsIcon.svg" class="blackicon">
+                                    <img src="{$system['system_uploads_assets']}/content/themes/default/images/svg/friendsIconHover.svg" class="whiteicon">
                                 </div>
                                 <span> {__("Friends")} </span>
                             </div>
@@ -456,10 +452,8 @@
                             <div class="dropdown-item pointer" data-title='{__("Shared with: Only Me")}'
                                 data-value="me">
                                 <div class="post_images__">
-                                    <img src="{$system['system_url']}/content/themes/default/images/svg/svgImg/Hide_form.svg"
-                                        class="blackicon">
-                                    <img src="{$system['system_url']}/content/themes/default/images/svg/svgImg/Hide_form-hover.svg"
-                                        class="whiteicon">
+                                    <img src="{$system['system_url']}/content/themes/default/images/svg/svgImg/Hide_form.svg" class="blackicon">
+                                    <img src="{$system['system_url']}/content/themes/default/images/svg/svgImg/Hide_form-hover.svg" class="whiteicon">
                                 </div>
                                 <span> {__("Only Me")} </span>
                             </div>

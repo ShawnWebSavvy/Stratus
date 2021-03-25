@@ -28,12 +28,8 @@
                 <div class="dropdown-item pointer js_sold-post">
                     <div class="action no-desc">
                         <div class="post_images__">
-                            <img style="height:20px;width:20px;"
-                                src="{$system['system_uploads_assets']}/content/themes/default/images/svg/svgImg/blogNewsWhite.svg"
-                                class="blackicon">
-                            <img style="height:20px;width:20px;"
-                                src="{$system['system_uploads_assets']}/content/themes/default/images/svg/svgImg/blogNewsHover.svg"
-                                class="whiteicon">
+                            <img style="height:20px;width:20px;" src="{$system['system_uploads_assets']}/content/themes/default/images/svg/svgImg/blogNewsWhite.svg" class="blackicon">
+                            <img style="height:20px;width:20px;" src="{$system['system_uploads_assets']}/content/themes/default/images/svg/svgImg/blogNewsHover.svg" class="whiteicon">
                         </div>
                         <span>{__("Mark as Sold")}</span>
                     </div>
@@ -42,12 +38,8 @@
                 <div class="dropdown-item pointer js_unsold-post">
                     <div class="action no-desc">
                         <div class="post_images__">
-                            <img style="height:20px;width:20px;"
-                                src="{$system['system_uploads_assets']}/content/themes/default/images/svg/svgImg/blogNewsWhite.svg"
-                                class="blackicon">
-                            <img style="height:20px;width:20px;"
-                                src="{$system['system_uploads_assets']}/content/themes/default/images/svg/svgImg/blogNewsHover.svg"
-                                class="whiteicon">
+                            <img style="height:20px;width:20px;" src="{$system['system_uploads_assets']}/content/themes/default/images/svg/svgImg/blogNewsWhite.svg" class="blackicon">
+                            <img style="height:20px;width:20px;" src="{$system['system_uploads_assets']}/content/themes/default/images/svg/svgImg/blogNewsHover.svg" class="whiteicon">
                         </div>
                         <span>{__("Mark as Available")}</span>
                     </div>
@@ -59,12 +51,8 @@
                 <div href="#" class="dropdown-item pointer js_unsave-post">
                     <div class="action no-desc">
                         <div class="post_images__">
-                            <img style="height:20px;width:20px;"
-                                src="{$system['system_uploads_assets']}/content/themes/default/images/svg/svgImg/bookMark.svg"
-                                class="blackicon">
-                            <img style="height:20px;width:20px;"
-                                src="{$system['system_uploads_assets']}/content/themes/default/images/svg/svgImg/bookMarkHover.svg"
-                                class="whiteicon">
+                            <img style="height:20px;width:20px;" src="{$system['system_uploads_assets']}/content/themes/default/images/svg/svgImg/bookMark.svg" class="blackicon">
+                            <img style="height:20px;width:20px;" src="{$system['system_uploads_assets']}/content/themes/default/images/svg/svgImg/bookMarkHover.svg" class="whiteicon">
                         </div>
                         <span>{__("Unsave Post")}</span>
                     </div>
@@ -559,8 +547,7 @@
                         </button>
                         {/if}
                         <div class="dropdown-menu dropdown-menu-right _postshare__">
-                            <div class="dropdown-item pointer js_edit-privacy" data-title='{__("Shared with: Public")}'
-                                data-value="public">
+                            <div class="dropdown-item pointer js_edit-privacy" data-title='{__("Shared with: Public")}' data-value="public">
                                 <div class="post_images__">
                                     <img src="{$system['system_uploads_assets']}/content/themes/default/images/svg/svgImg/nav_icon_globalHub.svg"
                                         class="blackicon">
@@ -569,8 +556,7 @@
                                 </div>
                                 <span> {__("Public")}</span>
                             </div>
-                            <div class="dropdown-item pointer js_edit-privacy" data-title='{__("Shared with: Friends")}'
-                                data-value="friends">
+                            <div class="dropdown-item pointer js_edit-privacy" data-title='{__("Shared with: Friends")}' data-value="friends">
                                 <div class="post_images__">
                                     <img src="{$system['system_uploads_assets']}/content/themes/default/images/svg/friendsIcon.svg"
                                         class="blackicon">
@@ -579,8 +565,7 @@
                                 </div>
                                 <span>{__("Friends")}</span>
                             </div>
-                            <div class="dropdown-item pointer js_edit-privacy" data-title='{__("Shared with: Only Me")}'
-                                data-value="me">
+                            <div class="dropdown-item pointer js_edit-privacy" data-title='{__("Shared with: Only Me")}' data-value="me">
                                 <div class="post_images__">
                                     <img src="{$system['system_uploads_assets']}/content/themes/default/images/svg/svgImg/Hide_form.svg"
                                         class="blackicon">

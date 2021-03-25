@@ -440,7 +440,7 @@ button:focus{outline:none !important;box-shadow:none;}
 ._mob-icons ,.__mob-icons_ {display: none;}
 .blog-content .post-avatar {z-index: 0;}
 a,span{display: inline-block;}
-button.btn span.share_sign_img img { width: auto;height: auto;}
+/* button.btn span.share_sign_img img { width: auto;height: auto;} */
 span.pages_icons img {margin-right: 5px; }
 .card.main-side-nav-card .svg-container {flex: 0 0 70px;max-width: 70px;}
 .typeahead.addSrcollUser .dropdown-menu.auto-complete {overflow-y: auto;height: 250px; }

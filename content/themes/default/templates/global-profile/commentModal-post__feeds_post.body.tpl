@@ -27,12 +27,8 @@
                             <div class="dropdown-item pointer js_sold-post">
                                 <div class="action no-desc">
                                     <div class="post_images__">
-                                        <img style="height:20px;width:20px;"
-                                            src="{$system['system_url']}/content/themes/default/images/svg/svgImg/blogNewsWhite.svg"
-                                            class="blackicon">
-                                        <img style="height:20px;width:20px;"
-                                            src="{$system['system_url']}/content/themes/default/images/svg/svgImg/blogNewsHover.svg"
-                                            class="whiteicon">
+                                        <img style="height:20px;width:20px;" src="{$system['system_url']}/content/themes/default/images/svg/svgImg/blogNewsWhite.svg" class="blackicon">
+                                        <img style="height:20px;width:20px;" src="{$system['system_url']}/content/themes/default/images/svg/svgImg/blogNewsHover.svg" class="whiteicon">
                                     </div>
                                     <span>{__("Mark as Sold")}</span>
                                 </div>
@@ -41,12 +37,8 @@
                             <div class="dropdown-item pointer js_unsold-post">
                                 <div class="action no-desc">
                                     <div class="post_images__">
-                                        <img style="height:20px;width:20px;"
-                                            src="{$system['system_url']}/content/themes/default/images/svg/svgImg/blogNewsWhite.svg"
-                                            class="blackicon">
-                                        <img style="height:20px;width:20px;"
-                                            src="{$system['system_url']}/content/themes/default/images/svg/svgImg/blogNewsHover.svg"
-                                            class="whiteicon">
+                                        <img style="height:20px;width:20px;" src="{$system['system_url']}/content/themes/default/images/svg/svgImg/blogNewsWhite.svg" class="blackicon">
+                                        <img style="height:20px;width:20px;" src="{$system['system_url']}/content/themes/default/images/svg/svgImg/blogNewsHover.svg" class="whiteicon">
                                     </div>
                                     <span>{__("Mark as Available")}</span>
                                 </div>
@@ -182,10 +174,8 @@
                                 data-author-name="{$_post['post_author_name']}">
                                 <div class="action">
                                     <div class="post_images__">
-                                        <img src="{$system['system_url']}/content/themes/default/images/svg/svgImg/timelineOff.svg"
-                                            class="blackicon">
-                                        <img src="{$system['system_url']}/content/themes/default/images/svg/svgImg/timelineOff-hover.svg"
-                                            class="whiteicon">
+                                        <img src="{$system['system_url']}/content/themes/default/images/svg/svgImg/timelineOff.svg" class="blackicon">
+                                        <img src="{$system['system_url']}/content/themes/default/images/svg/svgImg/timelineOff-hover.svg" class="whiteicon">
                                     </div>
                                     {__("Unfollow")} {$_post['user_firstname']}
                                 </div>
