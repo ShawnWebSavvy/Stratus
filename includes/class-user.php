@@ -154,6 +154,10 @@ class User
                 if ($system['games_enabled']) {
                     $this->_data['can_play_games'] = $this->check_module_permission($system['games_permission']);
                 }
+                if($system['live_enabled']) {
+                    $this->_data['can_go_live'] = $this->check_module_permission($system['live_permission']);
+                }
+
             }
         }
     }

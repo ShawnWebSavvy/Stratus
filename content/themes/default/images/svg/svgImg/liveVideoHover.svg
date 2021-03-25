@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="25px" height="17px" viewBox="0 0 25 17" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <title>Icon/Plus Square</title>
+    <g id="Local-HUB-(FB)" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="Home/Local-Hub/Active-Menus" transform="translate(-383.000000, -1119.000000)" fill="#1269FF">
+            <g id="pop-up-Sort-by" transform="translate(345.000000, 882.000000)">
+                <g id="menu-copy-11" transform="translate(25.000000, 222.000000)">
+                    <g id="Icon/Plus-Square" transform="translate(9.000000, 9.000000)">
+                        <path d="M22.1818182,6 L5.81818182,6 C4.81363636,6 4,7.01433333 4,8.26666667 L4,20.7333333 C4,21.9856667 4.81363636,23 5.81818182,23 L22.1818182,23 C23.1863636,23 24,21.9856667 24,20.7333333 L24,8.26666667 C24,7.01433333 23.1863636,6 22.1818182,6 Z" id="Path" opacity="0.3"></path>
+                        <path d="M20.2961032,16.8249819 L24.2961032,11.007296 C24.6961032,10.4247637 25.4961032,10.4247637 25.8961032,11.007296 L29.8961032,16.8249819 C30.3901032,17.5438747 30.5868532,18.2371468 29.7628532,18.2371468 L20.7628532,18.2371468 C19.9388532,18.2371468 19.8021032,17.5438747 20.2961032,16.8249819 Z" id="Path" transform="translate(25.166625, 14.403772) scale(-1, 1) rotate(90.000000) translate(-25.166625, -14.403772) "></path>
+                    </g>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>

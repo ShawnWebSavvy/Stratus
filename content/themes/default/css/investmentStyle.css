@@ -351,29 +351,32 @@
 }
 
 .MoreAssetsSection .MoreAssetsbutton {
-  background-color: #355dff;
-  border: 1px solid #355dff;
-  font-size: 16px;
-  font-weight: 600;
-  color: #fff;
-  border-radius: 12px;
-  width: 291px;
-  height: 48px;
-  display: -webkit-box;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-box-align: center;
-  -ms-flex-align: center;
-  align-items: center;
-  -webkit-box-pack: center;
-  -ms-flex-pack: center;
-  justify-content: center;
+	background-color: #355dff;
+	border: 2px solid #355dff;
+	font-size: 16px;
+	font-weight: 600;
+	color: #fff;
+	border-radius: 12px;
+	width: 291px;
+	height: 48px;
+	/* display: -webkit-box; */
+	/* display: -ms-flexbox; */
+	display: flex;
+	-webkit-box-align: center;
+	-ms-flex-align: center;
+	align-items: center;
+	-webkit-box-pack: center;
+	-ms-flex-pack: center;
+	justify-content: center;
+  transition: all .3s linear;
+  -webkit-transition: all .3s linear;
+  -moz-transition: all .3s linear;
+  -ms-transition: all .3s linear;
 }
 
 .MoreAssetsSection .MoreAssetsbutton:hover {
-  background-color: #bdc7d8;
-  border: 1px solid #bdc7d8;
-  color: #fff;
+	background-color: transparent;
+	color: #355dff;
 }
 
 .investSidebar {
@@ -963,7 +966,7 @@
 }
 
 .investmentModal {
-  padding: 65px;
+  padding: 50px;
   padding-right: 0px;
 }
 
@@ -1117,7 +1120,7 @@
   font-size: 21px;
   font-weight: 600;
   color: #8f92a1;
-  margin-bottom: 31px;
+  margin-bottom: 20px;
 }
 
 @media (max-width: 767px) {
@@ -1130,7 +1133,7 @@
   font-size: 14px;
   font-weight: 400;
   color: #8f92a1;
-  padding-bottom: 31px;
+  /* padding-bottom: 31px; */
 }
 
 @media (max-width: 767px) {
@@ -1145,7 +1148,7 @@
 }
 
 .confirmTransaction .confirmBuyLink {
-  padding-top: 60px;
+  padding-top: 30px;
   font-size: 14px;
   font-weight: 400;
   color: #1269ff;
@@ -1459,3 +1462,69 @@ select.flat-select:hover {
 	transform: translate(-50% , -50% );
 	width: 100%;
 }
+
+
+
+
+
+/* Count Down time CSS */
+
+.timer_counter_app {
+  display: grid;
+  place-items: center;
+}
+
+.base-timer {
+	position: relative;
+	width: 120px;
+	height: 120px;
+	margin-bottom: 30px;
+}
+
+.base-timer__svg {
+  transform: scaleX(-1);
+}
+
+.base-timer__circle {
+  fill: none;
+  stroke: none;
+}
+
+.base-timer__path-elapsed {
+  stroke-width: 7px;
+  stroke: grey;
+}
+
+.base-timer__path-remaining {
+  stroke-width: 7px;
+  stroke-linecap: round;
+  transform: rotate(90deg);
+  transform-origin: center;
+  transition: 1s linear all;
+  fill-rule: nonzero;
+  stroke: currentColor;
+}
+
+.base-timer__path-remaining.green {
+  color: rgb(65, 184, 131);
+}
+
+.base-timer__path-remaining.orange {
+  color: orange;
+}
+
+.base-timer__path-remaining.red {
+  color: red;
+}
+
+.base-timer__label {
+  position: absolute;
+  width: 120px;
+  height: 120px;
+  top: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 28px;
+}
+/* End */

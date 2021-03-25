@@ -54,7 +54,10 @@
 				"posts_event"}
 					<div class="dropdown-item pointer" data-title='{__("Live")}' data-value="Live">
 						<div class="imgHover">
-							<i class="fa fa-signal fa-fw mr10"></i>
+							<img alt="Live" title="Live"
+								src="{$system['system_url']}/content/themes/default/images/svg/svgImg/liveVideo.svg">
+							<img alt="Live" class="hoverIcon" title="Live"
+								src="{$system['system_url']}/content/themes/default/images/svg/svgImg/liveVideoHover.svg">
 						</div>
 						{__("Live")}
 					</div>
