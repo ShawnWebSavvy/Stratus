@@ -16,9 +16,6 @@ function getWalletBalance($token){
         returnResponse(false,402,"Invalid access token provided");
       }else{
 
-
-      //  print_r($_POST); die;
-
         if(isset($_POST['email'])){
 
           $check_user = $db->query(sprintf("SELECT user_id as id, COUNT(*) as count FROM users WHERE user_email = %s", secure($_POST['email']))) or _error("SQL_ERROR_THROWEN");
@@ -68,7 +65,7 @@ function getWalletBalance($token){
             }
           }
         }else{
-          returnResponse(true,300,"parameters missing");
+          returnResponse(false,300,"parameters missing");
         }
 
       }

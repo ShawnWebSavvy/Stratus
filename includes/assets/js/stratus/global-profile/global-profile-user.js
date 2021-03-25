@@ -99,8 +99,15 @@ function data_heartbeat() {
     var posts_stream = $(".js_posts_stream");
     posts_stream.length > 0 && "popular" != posts_stream.data("get") && "saved" != posts_stream.data("get") && "memories" != posts_stream.data("get") && void 0 === posts_stream.data("loading") && (data.last_post = posts_stream.find("li:first .post").data("id") || 0,
         data.get = posts_stream.data("get"),
-         data.filter = posts_stream.data("filter"),
-        data.id = posts_stream.data("id")),
+        data.filter = posts_stream.data("filter"),
+        data.id = posts_stream.data("id"));
+        let last_id_column = document.getElementsByClassName('bricklayer-column')[0];
+        if (last_id_column) {
+            data["last_post"] = posts_stream.find('.carsds').first().data("id");
+            // data["last_post"] = last_id_column.getElementsByClassName('carsds')[0].dataset.id || 0;
+        } else {
+            data["last_post"] = 0;
+        }
         $.post(api["data/live"], data, function (response) {
         if (response.callback) eval(response.callback);
         else {
@@ -116,7 +123,26 @@ function data_heartbeat() {
                 var notifications = parseInt($(".js_live-notifications").find("span.counter").text()) + response.notifications_count;
                 $(".js_live-notifications").find("span.counter").text(notifications).show(), notifications_sound
             }
-            response.posts && (posts_stream.find("ul:first").prepend(response.posts), setTimeout(photo_grid(), 200)), setTimeout("data_heartbeat();", 500)
+            if (response.posts && response.posts != null) {
+                console.log("response.posts->>>>>>>", response.posts);
+                var datatta = response.posts;
+                var ArrayVal = datatta.split('<div class="carsds"');
+                var loopArray = [];
+                if (ArrayVal.length > 0) {
+                    for (var i = 1; i < ArrayVal.length; i++) {
+                        loopArray.push('<div class="carsds"' + ArrayVal[i])
+                    }
+                }
+                for (var ik = 0; ik < loopArray.length; ik++) {
+                    var values = loopArray[ik];
+                    var d = document.createElement('div');
+                    d.innerHTML = values;
+                    var valuesPost = d.firstChild;
+                    bricklayer.prepend(valuesPost);
+                    bricklayer.redraw();
+                }
+            }
+            response.posts && (setTimeout(photo_grid(), 200)), setTimeout("data_heartbeat();", 500)
         }
     }, "json")
 }
@@ -134,7 +160,7 @@ function init_picture_crop(e) {
     var system_url = e.data("systemUrl");
 
     modal("#crop-profile-picture", {
-        image: `${system_url}/includes/wallet-api/get-picture-api.php?picture=${image_node}&pictureFull=&type_url=1`,
+        image: `${system_url}/includes/wallet-api/get-picture-api.php?picture=${image_node}&picture_full=&type_url=1`,
         handle: e.data("handle"),
         id: e.data("id")
     })

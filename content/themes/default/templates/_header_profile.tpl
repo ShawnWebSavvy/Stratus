@@ -5,7 +5,8 @@
   {if ($page=='index' || $page=='sign' ) && !$system['system_wallpaper_default'] && $system['system_wallpaper']}
   style="background-image:url('{$system['system_uploads']}/{$system['system_wallpaper']}');background-size:cover;" {/if}
   {if $page=='profile' && $system['system_profile_background_enabled'] &&
-  $profile['user_profile_background']}style="background:url({$profile['user_profile_background']}) fixed !important; background-size:100% auto;"
+  $profile['user_profile_background']}style="background-image:url({$profile['user_profile_background']}) !important;background-size: cover;background-repeat: no-repeat;
+  background-attachment: fixed;"
   {/if}>
   {else}
 
@@ -13,7 +14,9 @@
     data-chat-enabled="{$user->_data['user_chat_enabled']}"
     class="{if $page=='global-profile/landingpage'}landingpage-localhub {elseif $page=='global-profile/global-profile-timeline'}global-profile-timeline-localhub index-localhub {elseif $page=='global-profile/global-profile-post'}global-profile-post-localhub{elseif $page=='global-profile/global-profile-photo'}global-profile-photo-localhub{elseif $page=='global-profile/global-profile'} global-profile-localhub{elseif $view=='wallet' && $page=='ads'}{$view}-localhub {elseif $page=='ads'} {$page}-localhub{elseif $page=='blogs'} index-localhub {$page}-localhub {elseif $page=='notifications'} index-localhub {$page}-localhub {elseif $page=='market'} index-localhub {$page}-localhub {elseif $page=='global-profile/search'} search-localhub global-search-localhub {elseif $page == 'events' || $page == 'developers' || $page == 'forums' || $page == 'pages' || $page == 'groups' } explore_page_cmn {else} {$page}-localhub group-localhub {/if} {if $system['theme_mode_night']}night-mode{/if} {if !$system['chat_enabled']}n_chat{/if}{if $system['activation_enabled'] && !$user->_data['user_activated']} n_activated{/if}{if !$system['system_live']} n_live{/if} {if $page == 'index' || $page == 'pages' || $page == 'global-profile' || $page == 'messages' || $page == 'events' || $page == 'groups' || $page == 'people' || $page == 'settings'|| $page == 'admin' } lgtBg {$page}{/if} {if $page=='started'}body-started{/if} "
     {if $page=='profile' && $system['system_profile_background_enabled'] && $profile['user_profile_background']}
-    style="background:url({$profile['user_profile_background']}) fixed !important; background-size:100% auto;" {/if} {if
+    style="background-image:url({$profile['user_profile_background']}) !important;background-size: cover;
+    background-repeat: no-repeat;
+    background-attachment: fixed;" {/if} {if
     $page=="share" && $url}onload="initialize_scraper()" {/if}>
     {/if}
 
@@ -98,7 +101,7 @@
                   </button>
                   {if $active_page =="GlobalHub"}
 
-                  <a href="javascript:initialize_scraper()" id="openPost"></a>
+                  <a href="javascript:initialize_scraper()" id="openPost">
                   <div class="svg-container">
                     <img
                       data-src="{$system['system_uploads_assets']}/content/themes/default/images/svg/footer-icon/Icon.svg"

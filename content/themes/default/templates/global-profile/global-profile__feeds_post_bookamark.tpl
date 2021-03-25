@@ -1,4 +1,5 @@
-{if !$standalone}<li class="feeds_post {if $post['childPostExists']==true} parent-post-li{/if}"
+<div class="carsds">
+{if !$standalone}<div class="feeds_post {if $post['childPostExists']==true} parent-post-li{/if}"
     data-id="{$post['post_id']}" post-type="{$post['post_type']}">{/if}
     <!-- post -->
     {if $post['childPostExists']==false}
@@ -451,4 +452,4 @@
     {/if}
     <!-- post -->
     {if !$standalone}
-</li>{/if}
+</div>{/if}</div>

@@ -46,6 +46,7 @@ button.js_unlike-page img{transform:rotateX(180deg);padding:0!important;height:3
 .friendsSearchbtn{display:flex;align-items:center;justify-content:center;height:50px!important;width:100%!important;font-size:14px;font-weight:500}
 ._request_sec ._findfriendsdiv_ .feeds-item .data-container,.people-friend-list-section ._friend_list_items .feeds-item .data-container,.people-friend-list-section .globle_frnd_sgg ul .feeds-item .data-container,.people-friend-list-section ul .feeds-item .data-container{position:relative;padding-bottom:80px}
 ._findfriendsdiv_ .col-lg-6.col-xl-4 ul li.feeds-item .data-container button,._findfriendsdiv_ .feeds-item .data-container ._user_action_ button,._request_sec .globle_frnd_sgg .feeds-item .data-container ._user_action_ button,.people-friend-list-section ._friend_list_items .feeds-item .data-container ._user_action_ button,.people-friend-list-section .globle_frnd_sgg .feeds-item .data-container ._user_action_ button{position:absolute;width:90%!important;max-width:90%;left:50%;bottom:10px;transform:translateX(-50%)}
+.people-friend-list-section .globle_frnd_sgg .feeds-item .data-container ._user_action_ button.js_follow{left: auto;max-width: 260px;transform: unset;}
 .profileUpdatesDesign button,.rightSideBarScroll button{font-size:0!important;line-height:normal!important;height:auto!important;min-height:37px}
 .profileUpdatesDesign button img{margin-right:0}
 .alert-post.see-more{margin-bottom:50px!important;margin-top:50px}

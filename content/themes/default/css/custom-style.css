@@ -77,7 +77,8 @@ body.profile-localhub .js_follow{height:42px !important;font-size:14px;font-weig
 .stratus_story_popup .modal-body._add_story_popup .row > div .attachments li.item img{width:96px !important;height:120px !important;object-fit:cover;}
 ._add_story_popup .attachments ul{display:flex;}
 ._add_story_popup .attachments ul{display:flex;overflow-x:auto;}
-._add_story_popup .attachments li.add{flex:0 0 96px;}
+._add_story_popup .attachments li{flex:0 0 96px;}
+._add_story_popup .attachments ul{flex:0 0 100%;width: 100%;}
 ._add_story_popup .attachments li{height:120px;}
 ._add_story_popup .attachments li img{object-fit:cover;}
 body.publisher-focus .publisher{z-index:9999999 !important;}
@@ -433,6 +434,7 @@ button:focus{outline:none !important;box-shadow:none;}
 .about-list .about-list-item.d-flex{align-items:center;}
 .about_content_sec > .addBioGlobal {margin-bottom: 15px; }
 .post-edit .js_autosize.js_mention {max-height: 88px;overflow: auto;}
+.post-localhub .post .post-edit .comment-form .emoji-menu{bottom: auto;top: 30px;}
 .chat-to.clearfix.js_autocomplete-tags .tags {position: relative;z-index: 1;}
 ._mob-icons ,.__mob-icons_ {display: none;}
 .blog-content .post-avatar {z-index: 0;}
@@ -515,3 +517,6 @@ video.stratus-customvideo {height: 350px !important;width: 1000px !important;}
 .body-scroll-disabled{overflow-y: hidden !important;}
 .chat-widget-head .js_chat-box-status + a {-webkit-line-clamp: 4;overflow: hidden;text-overflow: ellipsis;-webkit-box-orient: vertical;width: 110px;white-space: nowrap;max-height: 7.75rem;height: 16px;}
 .image {text-align: center;}
+.child-post-ul.secoundPostHidd > .bricklayer {
+	display: none !important;
+}

@@ -1,11 +1,10 @@
 {if $_get}
 	{if $posts}
-		<ul class="global-profile-ul-post feeds_post_ul">
+		<div class="bricklayer">
 			{foreach $posts as $post}
 			{include file='global-profile/global-profile__feeds_post.tpl'}
 			{/foreach}
-		</ul>
-
+		</div>
 		<!-- see-more -->
 		<div class="alert alert-post see-more js_see-more {if $user->_logged_in}js_see-more-infinite{/if}" data-get="{$_get}" data-filter="{$_filter}" {if $_id}data-id="{$_id}"{/if}>
 			<span>{__("More Stories")}</span>
@@ -21,7 +20,13 @@
 		</div>
 	{/if}
 {else}
+<div class="bricklayer">
 	{foreach $posts as $post}
 	{include file='global-profile/global-profile__feeds_post.tpl'}
 	{/foreach}
+</div>
 {/if}
+<script src="{$system['system_uploads_assets']}/content/themes/default/js/bricklayer.min.js?{$cacheremovejs}"></script>
+<script src="{$system['system_uploads_assets']}/content/themes/default/js/bricklayer-custom.js?{$cacheremovejs}"></script>
+
+

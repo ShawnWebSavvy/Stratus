@@ -281,9 +281,8 @@
 
                             <!-- article cover -->
                             {if $article['article']['cover']}
-                            <div class="mb20">
-                                <img class="img-fluid"
-                                    src="{$system['system_uploads']}/{$article['article']['cover']}">
+                            <div class="mb20 blogCoverImage">
+                                <img class="img-fluid" src="{$system['system_uploads']}/{$article['article']['cover']}">
                             </div>
                             {/if}
                             <!-- article cover -->
@@ -300,8 +299,7 @@
                                 <ul>
                                     {foreach $article['article']['parsed_tags'] as $tag}
                                     <li>
-                                        <a href="{$system['system_url']}/search/hashtag/{$tag}"
-                                            class="blog-after-login">{$tag}</a>
+                                        <a href="{$system['system_url']}/search/hashtag/{$tag}" class="blog-after-login">{$tag}</a>
                                     </li>
                                     {/foreach}
                                 </ul>
@@ -663,7 +661,7 @@
                                         <label class="form-control-label">
                                             {__("Cover")}
                                         </label>
-                                        <div class="x-image">
+                                        <div class="x-image imageUploder">
                                             <button type="button" class="close x-hidden js_x-image-remover"
                                                 title='{__("Remove")}'>
                                                 <span>×</span>
