@@ -1047,7 +1047,7 @@ $(function () {
                             d.innerHTML = values;
                             var valuesPost = d.firstChild;
                             bricklayer.append(valuesPost);
-                            // bricklayer.redraw();
+                            bricklayer.redraw();
                         }
 
                         if ((data.offset++, response.append ? posts_stream.append(response.data) : posts_stream.prepend(response.data), $(window).width() > 1024)) {
@@ -1274,9 +1274,9 @@ $(function () {
                 api["posts/edit"],
                 { handle: "privacy", id: id, privacy: privacy },
                 function (response) {
-                    "friends" == privacy && $("#" + id + ">img").attr("src", "https://cdn1.stratus.co/content/themes/default/images/svg/svgImg/friendsIcon.svg"),
-                        "public" == privacy && $("#" + id + ">img").attr("src", "https://cdn1.stratus.co/content/themes/default/images/svg/svgImg/nav_icon_globalHub.svg"),
-                        "me" == privacy && $("#" + id + ">img").attr("src", "https://cdn1.stratus.co/content/themes/default/images/svg/svgImg/Hide_form.svg"),
+                    "friends" == privacy && $("#" + id + ">img").attr("src", "https://cdn.stratus-stage.xyz/content/themes/default/images/svg/svgImg/friendsIcon.svg"),
+                        "public" == privacy && $("#" + id + ">img").attr("src", "https://cdn.stratus-stage.xyz/content/themes/default/images/svg/svgImg/nav_icon_globalHub.svg"),
+                        "me" == privacy && $("#" + id + ">img").attr("src", "https://cdn.stratus-stage.xyz/content/themes/default/images/svg/svgImg/Hide_form.svg"),
                         response.callback && eval(response.callback);
                 },
                 "json"

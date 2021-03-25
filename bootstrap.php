@@ -124,14 +124,10 @@ $system['system_uploads_assets'] = $system['system_url'];
 if ($system['s3_enabled']) {
     $endpoint = "https://s3." . $system['s3_region'] . ".amazonaws.com/" . $system['s3_bucket'];
 
-    /*CDN Stag */
-    //https://cdn1.stratus.co
-    //https://cdn.stratus-stage.xyz
-    
     /*CDN LIVE */
-    $system['system_uploads'] =  "https://cdn1.stratus.co/uploads";
-    $system['system_uploads_url'] = "https://cdn1.stratus.co/uploads";
-    $system['system_uploads_assets'] = "https://cdn1.stratus.co";
+    $system['system_uploads'] =  SYSTEM_UPLOADS;
+    $system['system_uploads_url'] = SYSTEM_UPLOADS_URL;
+    $system['system_uploads_assets'] = SYSTEM_UPLOADS_ASSETS;
 } elseif ($system['digitalocean_enabled']) {
     $endpoint = "https://" . $system['digitalocean_space_name'] . "." . $system['digitalocean_space_region'] . ".digitaloceanspaces.com";
     $system['system_uploads'] = $endpoint . "/uploads";

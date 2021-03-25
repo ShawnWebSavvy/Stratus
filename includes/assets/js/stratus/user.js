@@ -1,5 +1,6 @@
 var save_file_name ='';
 var image_blured = 0;
+var image_full_original='';
 var count = parseInt($('.unread').length) ? parseInt($('.unread').length) : "";
 if (count != "") {
     $(".js_live-notifications").find("span.counterlive").text(count).show();
@@ -192,36 +193,17 @@ function data_heartbeat() {
                             loopArray.push('<div class="carsds"' + ArrayVal[i])
                         }
                     }
+
                     for (var ik = 0; ik < loopArray.length; ik++) {
                         var values = loopArray[ik];
                         var d = document.createElement('div');
                         d.innerHTML = values;
                         var valuesPost = d.firstChild;
-                        if(bricklayer){
-                           bricklayer.prepend(valuesPost);
-                           bricklayer.redraw();
-                        } else {
-                            $('.js_posts_stream').prepend('<div class="bricklayer"></div>');
-
-                            var isClassExist = document.getElementsByClassName('bricklayer');
-                             if (isClassExist.length > 0) {
-                               var bricklayer = new Bricklayer(document.querySelector('.bricklayer'));
-                               bricklayer.on("afterAppend", function (e) {
-                                 var el = e.detail.item;
-                                 el.classList.add('is-append');
-                                 setTimeout(function () {
-                                   el.classList.remove('is-append');
-                                 }, 500);
-                               });
-                               bricklayer.prepend(valuesPost);
-                               bricklayer.redraw();
-                             }
-
-                           
-                        }
+                        bricklayer.prepend(valuesPost)
+                        bricklayer.redraw();
                     }
                 }
-                response.posts && (posts_stream.find("ul:first").prepend(), setTimeout(photo_grid(), 200)), setTimeout("data_heartbeat();", min_data_heartbeat);
+                response.posts && (posts_stream.find("aul:first").prepend(), setTimeout(photo_grid(), 200)), setTimeout("data_heartbeat();", min_data_heartbeat);
             }
         },
         "json"
@@ -726,8 +708,10 @@ function init_picture_position() {
                                 image_blured = response.image_blured;
                                 /* update (user|page|group) picture */
                                 var image_path = uploads_path + "/" + response.file;
-                                if("picture-user" !== handle){
-                                   $(".profile-avatar-wrapper img").attr("src", image_path);
+                               
+                                //    $(".profile-avatar-wrapper img").attr("src", image_path);
+                                if(!image_full_original){
+                                   image_full_original =  $(".js_init-crop-picture").data("image");
                                 }
                                 /* update crop image source */
                                 $(".js_init-crop-picture").data("image", image_path);
@@ -844,6 +828,9 @@ function init_picture_position() {
                     });
                 }),
                 $("body").on("click", ".js_init-crop-picture", function () {
+                    if(image_full_original){
+                      $(".js_init-crop-picture").data("image", image_full_original);
+                    }
                     init_picture_crop($(this));
                 }),
                 $("body").on("click", ".js_crop-picture", function () {
@@ -854,7 +841,7 @@ function init_picture_position() {
                         api["users/image_crop"],
                         { handle: handle, id: id, x: values.x, y: values.y, height: values.height, width: values.width, save_file_name:save_file_name, image_blured: image_blured },
                         function (response) {
-                            response.callback ? eval(response.callback) : ($("#modal").modal("hide"), window.location.reload());
+                            response.callback ? eval(response.callback) : ($("#modal").modal("hide"), window.location.reload()); 
                         },
                         "json"
                     ).fail(function () {
@@ -1482,7 +1469,8 @@ function init_picture_position() {
                 $("body").on("click", ".js_ads-stop-campaign, .js_ads-resume-campaign", function () {
                     var id = $(this).data("id"),
                         _do = $(this).hasClass("js_ads-stop-campaign") ? "stop" : "resume";
-                    confirm(__.Delete, __["Are you sure you want to do this?"], function () {
+                    var ads_modal_name = _do == "stop" ? "Stop" : "Resume"  
+                    confirm( ads_modal_name, __["Are you sure you want to do this?"], function () {
                         $.post(
                             api["ads/campaign"],
                             { do: _do, id: id },
