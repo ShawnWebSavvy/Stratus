@@ -211,7 +211,6 @@
                         <!-- post approval -->
 
                     </div>
-                    </div>
                 </div>
                 <!-- </li> -->
                 {else}
