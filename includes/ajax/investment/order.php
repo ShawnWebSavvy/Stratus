@@ -26,11 +26,11 @@ try {
             // echo'<pre>'; print_r($_POST['token_name']); die;
             $token_price = InvestmentHelper::get_ticker_price(strtoupper($_POST['token_name']));
             
+            $_POST['token_value'] = sprintf('%.5f',round($_POST['amount']/$token_price['data']['buy_price'], 5));
             $token_price['data']['buy_price'] = round($token_price['data']['buy_price'],5);
-            $token_price['data']['sell_price'] = round($token_price['data']['sell_price'],5);
-            $fees = round($_POST['token_value']*$token_price['data']['buy_fees']/100, 5);
+            $fees = sprintf('%.5f',round(($_POST['token_value']*$token_price['data']['buy_fees'])/100, 5));
 
-            $receive_amount = $_POST['token_value']-$fees;
+            $receive_amount = sprintf('%.5f',$_POST['token_value']-$fees);
             $smarty->assign('fees',$fees);
             $smarty->assign('receive_amount',$receive_amount);
             $smarty->assign('action', $_POST['do']);
@@ -47,11 +47,13 @@ try {
             break;
         case 'sell':
             $token_price = InvestmentHelper::get_ticker_price(strtoupper($_POST['token_name']));
-            $token_price['data']['buy_price'] = round($token_price['data']['buy_price'],5);
             $token_price['data']['sell_price'] = round($token_price['data']['sell_price'],5);
-            // die($_POST['amount']);
-            $fees= $_POST['fees'];
-            $receive_amount = $_POST['amount'];
+            // die($_POST['amount'])
+            $_POST['amount'] = round($_POST['token_value']*$token_price['data']['sell_price'], 2);
+            $fees= round(($_POST['amount']*$token_price['data']['sell_fees'])/100, 2);
+            $token_price['data']['amount'] = round($token_price['data']['sub_total']-$token_price['data']['total_fees'],2);
+
+            $receive_amount = $_POST['amount']-$fees;
             $smarty->assign('fees',$fees);
             $smarty->assign('receive_amount',$receive_amount);
             $smarty->assign('action', $_POST['do']);

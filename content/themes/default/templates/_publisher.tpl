@@ -145,9 +145,9 @@
 
                                         <a style="margin-left: 0;" data-tab="live" href="{$system['system_url']}/live">
                                             <img alt="image" title="Go Live"
-                                                src="{$system['system_uploads_assets']}/content/themes/{$system['theme']}/images/svg/live.svg"
+                                                src="{$system['system_uploads_assets']}/content/themes/default/images/svg/svgImg/liveVideoHover.svg"
                                                 class="" data-handle="publisher" data-multiple="true"
-                                                style="width:30px" />
+                                                style="width:30px" />{__("Live")}
                                         </a>
                                     </div>
                                 </li>
@@ -424,16 +424,20 @@
                                 </li>{/if}
                                 {if $user->_data['can_go_live'] && $_handle != "page" && $_handle != "group" && $_handle
                                 != "event"}
-                                <li class="">
-                                    <div class="publisher-tools-tab attach js_publisher-tab" data-tab="photos">
-
-                                        <a style="margin-left: 0;" data-tab="live" href="{$system['system_url']}/live">
-                                            <img alt="image" title="Go Live"
-                                                src="{$system['system_uploads_assets']}/content/themes/{$system['theme']}/images/svg/live.svg"
-                                                class="" data-handle="publisher" data-multiple="true"
+                                <li class="uplodfileTags">
+                                  <a style="margin-left: 0;" data-tab="Live" href="{$system['system_url']}/live">
+                                        <div class="publisher-tools-tab js_publisher-tab" data-tab="Live">
+                                            <img alt="image" class="BlueIcon" title="Go Live"
+                                                src="{$system['system_uploads_assets']}/content/themes/default/images/svg/svgImg/liveVideoHover.svg"
                                                 style="width:30px" />
-                                        </a>
-                                    </div>
+                                            <img alt="image" title="Go Live"
+                                                src="{$system['system_uploads_assets']}/content/themes/default/images/svg/svgImg/liveVideo.svg"
+                                                class="blackIcon" 
+                                                style="width:30px" />
+                                             <span class="class-publisher-text">Live</span>
+                                        
+                                        </div>
+                                    </a>
                                 </li>
                                 {/if}
                                 {if $system['activity_posts_enabled']}
@@ -441,7 +445,7 @@
                                     <div class="publisher-tools-tab js_publisher-feelings">
                                         <img class="BlueIcon" alt="image" title="Feelings/Activity"
                                             src="{$system['system_uploads_assets']}/content/themes/default/images/svg/svgImg/feelingsHover.svg" />
-                                        <img class="blackIcon" alt="image" title="Feelings/Activity"
+                                        <img class="blackIcon" class="BlueIcon" alt="image" title="Feelings/Activity"
                                             src="{$system['system_uploads_assets']}/content/themes/default/images/svg/svgImg/feelings.svg" />
                                         <span class="class-publisher-text">Feelings/Activity</span>
                                     </div>
@@ -585,15 +589,18 @@
                                 {if $user->_data['can_go_live'] && $_handle != "page" && $_handle != "group" && $_handle
                                 != "event"}
                                 <li class="">
-                                    <div class="publisher-tools-tab attach js_publisher-tab" data-tab="photos">
-
-                                        <a style="margin-left: 0;" data-tab="live" href="{$system['system_url']}/live">
-                                            <img alt="image" title="Go Live"
-                                                src="{$system['system_uploads_assets']}/content/themes/{$system['theme']}/images/svg/live.svg"
-                                                class="" data-handle="publisher" data-multiple="true"
-                                                style="width:30px" />
-                                        </a>
-                                    </div>
+                                    
+                                    <a style="margin-left: 0;" data-tab="live" href="{$system['system_url']}/live">
+                                        <div class="publisher-tools-tab attach js_publisher-tab" data-tab="GO Live">
+                                                <img class="blackIcon" alt="Go Live" title="Go Live"
+                                                    src="{$system['system_uploads_assets']}/content/themes/default/images/svg/svgImg/liveVideo.svg"
+                                                    style="width:30px" />
+                                                <img  class="BlueIcon" alt="Go Live" title="Go Live"
+                                                    src="{$system['system_uploads_assets']}/content/themes/default/images/svg/svgImg/liveVideoHover.svg"
+                                                    style="width:30px" />
+                                            
+                                        </div>
+                                    </a>
                                 </li>
                                 {/if}
                                 {/if} {if $system['audio_enabled']}

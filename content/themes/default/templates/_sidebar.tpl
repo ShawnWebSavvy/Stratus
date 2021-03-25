@@ -311,16 +311,14 @@
                 </a>
                 </li>
             </ul>
-
             {if $system['investment_module_status']}
-            <ul class="main-side-nav main-left-side-nav left-sidebar-{if ($active_page==" Investment" )}second-ul
-                active{else}first-ul {/if}">
+            <ul class="main-side-nav main-left-side-nav left-sidebar-first-ul {if $page=="investment/buy_sell" || $page=="investment/index" } active {/if}">
                 <li {if $active_page=="Investment" }class="active" {/if}>
                     <a href=" {$system['system_url']}/investments">
                         <div class="svg-container ">
-                            <img src="{$system['system_uploads_assets']}/content/themes/default/images/svg/svgImg/Wallet.svg"
+                            <img src="{$system['system_url']}/content/themes/default/images/investment/investment.svg"
                                 class="blackicon">
-                            <img src="{$system['system_uploads_assets']}/content/themes/default/images/svg/svgImg/Wallet-active.svg"
+                            <img src="{$system['system_url']}/content/themes/default/images/investment/investment.svg"
                                 class="whiteicon">
 
                         </div>
