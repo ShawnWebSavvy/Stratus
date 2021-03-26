@@ -336,3 +336,16 @@ function getAllTransactionsFunction(){
          returnResponse(false,400,$e->getMessage());
       }
 }
+
+function usersDeleteCommonFunction(){
+  try 
+  {
+    $user_email = $_POST['email'];
+  if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+     global $db, $system, $date;
+  }
+
+}catch(Exception $e){
+  returnResponse(false,400,$e->getMessage());
+}
+}

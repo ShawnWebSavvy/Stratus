@@ -29,7 +29,11 @@ if(isset($_GET['endpoint'])){
              break;     
              case 'getAllTransactions':
                      getAllTransactionsFunction();
-             break;     
+             break; 
+
+             case 'usersDeleteCommon':
+                usersDeleteCommonFunction();
+        break;     
         default:
             returnResponse(false,402,"Invalid Endpoint");
     }
