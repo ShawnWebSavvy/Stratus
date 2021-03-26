@@ -8250,7 +8250,7 @@ class UserGlobal
         /* check if posting the message to (new || existed) conversation */
         if ($conversation_id == null) {
             /* [first] check previous conversation between (viewer & recipients) */
-            $mutual_conversation = $this->get_mutual_conversation($recipients);
+            $mutual_conversation = $this->get_mutual_conversation($recipients,true);
             if (!$mutual_conversation) {
                 /* [1] there is no conversation between viewer and the recipients -> start new one */
                 /* insert conversation */
