@@ -1,10 +1,10 @@
 <?php
-define("DB_NAME", "stratus_stage");
-define("DB_USER", "root");
-define("DB_PASSWORD", "Passw0rd#123#!");
-define("DB_HOST", "127.0.0.1");
+define("DB_NAME", "notecloud"); 
+define("DB_USER", "notecloud");
+define("DB_PASSWORD", "LesinyyMVD4uqxKM");
+define("DB_HOST", "notecloud-rds.cc5yzmpks9xy.us-west-1.rds.amazonaws.com");
 define("DB_PORT", "3306");
-define("SYS_URL", "https://staging.stratus.co");
+define("SYS_URL", "https://www.stratus-stage.xyz");
 //https://ws.stage-apollo.xyz/api
 //https://ws.knoxglobal.com/api
 define("API_BASE_URL", "https://ws.stage-apollo.xyz/api");
