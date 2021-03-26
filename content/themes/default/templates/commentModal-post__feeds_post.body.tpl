@@ -380,27 +380,36 @@
             {/if}
             -
             {if !$_post['is_anonymous'] && !$_shared && $_post['manage_post'] && $_post['user_type'] == 'user' && !$_post['in_group'] && !$_post['in_event'] && $_post['post_type'] != "product" && $_post['post_type'] != "article"}
-                <!-- privacy -->
-                {if $_post['privacy'] == "me"}
-                    <div class="btn-group" data-toggle="tooltip" data-placement="top" data-value="me"
-                        title='{__("Shared with: Only Me")}'>
+            <!-- privacy --> 
+            {if $_post['privacy'] == "me"}
+            <div class="btn-group" data-toggle="tooltip" data-placement="top" data-value="me"
+                title='{__("Shared with: Only Me")}'>
+                <button type="button" class="btn dropdown-toggle" data-toggle="dropdown" data-display="static">
+                    <span class="share_sign_img privacy-{$_post['post_id']}">
+                        <img src="{$system['system_uploads_assets']}/content/themes/default/images/svg/svgImg/Hide_form.svg"
+                            class="blackicon">
+                    </span>
+                </button>
+                {elseif $_post['privacy'] == "friends"}
+                <div class="btn-group" data-toggle="tooltip" data-placement="top" data-value="friends"
+                    title='{__("Shared with: Friends")}'>
+                    <button type="button" class="btn dropdown-toggle" data-toggle="dropdown" data-display="static">
+                        <span class="share_sign_img privacy-{$_post['post_id']}">
+                            <img src="{$system['system_uploads_assets']}/content/themes/default/images/svg/svgImg/friendsIcon.svg"
+                                class="blackicon">
+                        </span>
+                    </button>
+                    {elseif $_post['privacy'] == "public"}
+                    <div class="btn-group" data-toggle="tooltip" data-placement="top" data-value="public"
+                        title='{__("Shared with: Public")}'>
                         <button type="button" class="btn dropdown-toggle" data-toggle="dropdown" data-display="static">
-                            <i class="btn-group-icon fa fa-lock"></i>
+                            <span class="share_sign_img privacy-{$_post['post_id']}">
+                                <img src="{$system['system_uploads_assets']}/content/themes/default/images/svg/svgImg/nav_icon_globalHub.svg"
+                                    class="blackicon">
+                            </span>
                         </button>
-                    {elseif $_post['privacy'] == "friends"}
-                        <div class="btn-group" data-toggle="tooltip" data-placement="top" data-value="friends"
-                            title='{__("Shared with: Friends")}'>
-                            <button type="button" class="btn dropdown-toggle" data-toggle="dropdown" data-display="static">
-                                <i class="btn-group-icon fa fa-users"></i>
-                            </button>
-                        {elseif $_post['privacy'] == "public"}
-                            <div class="btn-group" data-toggle="tooltip" data-placement="top" data-value="public"
-                                title='{__("Shared with: Public")}'>
-                                <button type="button" class="btn dropdown-toggle" data-toggle="dropdown" data-display="static">
-                                    <i class="btn-group-icon fa fa-globe"></i>
-                                </button>
-                            {/if}
-                            <div class="dropdown-menu dropdown-menu-right">
+                        {/if}
+                       <div class="dropdown-menu dropdown-menu-right">
                                 <div class="dropdown-item pointer js_edit-privacy" data-title='{__("Shared with: Public")}'
                                     data-value="public">
                                     <!-- <i class="fa fa-globe"></i>  -->
@@ -408,8 +417,8 @@
                                             src="{$system['system_url']}/content/themes/default/images/svg/svgImg/nav_icon_globalHub.svg"
                                             class="blackicon"> </span>
                                     {__("Public")}
-                                </div>
-                                <div class="dropdown-item pointer js_edit-privacy" data-title='{__("Shared with: Friends")}'
+                            </div>
+                        <div class="dropdown-item pointer js_edit-privacy" data-title='{__("Shared with: Friends")}'
                                     data-value="friends">
                                     <!-- <i class="fa fa-users"></i>  -->
                                     <span class="share_sign_img"> <img
@@ -417,7 +426,7 @@
                                             class="blackicon"> </span>
                                     {__("Friends")}
                                 </div>
-                                <div class="dropdown-item pointer js_edit-privacy" data-title='{__("Shared with: Only Me")}'
+                        <div class="dropdown-item pointer js_edit-privacy" data-title='{__("Shared with: Only Me")}'
                                     data-value="me">
                                     <!-- <i class="fa fa-lock"></i> -->
                                     <span class="share_sign_img"> <img
@@ -427,27 +436,27 @@
                                 </div>
                             </div>
                         </div>
-                        <!-- privacy -->
+                    <!-- privacy -->
                     {else}
-                        {if $_post['privacy'] == "me"}
-                            <i class="fa fa-lock" data-toggle="tooltip" data-placement="top"
-                                title='{__("Shared with")} {__("Only Me")}'></i>
-                        {elseif $_post['privacy'] == "friends"}
-                            <!-- <i class="fa fa-users" data-toggle="tooltip" data-placement="top" title='{__("Shared with")} {__("Friends")}'></i> -->
-                            <span class="share_sign_img" data-toggle="tooltip" data-placement="top"
-                                title='{__("Shared with")} {__("Friends")}'> <img
-                                    src="{$system['system_url']}/content/themes/default/images/svg/svgImg/friendsIcon.svg"
-                                    class="blackicon"> </span>
-                        {elseif $_post['privacy'] == "public"}
-                            <!-- <i class="fa fa-globe" data-toggle="tooltip" data-placement="top" title='{__("Shared with")} {__("Public")}'></i> -->
-                            <span class="share_sign_img" data-toggle="tooltip" data-placement="top"
-                                title='{__("Shared with")}: {__("Public")}'> <img
-                                    src="{$system['system_url']}/content/themes/default/images/svg/svgImg/nav_icon_globalHub.svg"
-                                    class="blackicon"> </span>
-                        {elseif $_post['privacy'] == "custom"}
-                            <i class="fa fa-cog" data-toggle="tooltip" data-placement="top"
-                                title='{__("Shared with")} {__("Custom People")}'></i>
-                        {/if}
+                         {if $_post['privacy'] == "me"}
+                    <i class="fa fa-lock" data-toggle="tooltip" data-placement="top"
+                        title='{__("Shared with")} {__("Only Me")}'></i>
+                    {elseif $_post['privacy'] == "friends"}
+                    <!-- <i class="fa fa-users" data-toggle="tooltip" data-placement="top" title='{__("Shared with")} {__("Friends")}'></i> -->
+                    <span class="share_sign_img" data-toggle="tooltip" data-placement="top"
+                        title='{__("Shared with")} {__("Friends")}'> <img
+                            src="{$system['system_uploads_assets']}/content/themes/default/images/svg/svgImg/friendsIcon.svg"
+                            class="blackicon"> </span>
+                    {elseif $_post['privacy'] == "public"}
+                    <!-- <i class="fa fa-globe" data-toggle="tooltip" data-placement="top" title='{__("Shared with")} {__("Public")}'></i> -->
+                    <span class="share_sign_img" data-toggle="tooltip" data-placement="top"
+                        title='{__("Shared with")}: {__("Public")}'> <img
+                            src="{$system['system_uploads_assets']}/content/themes/default/images/svg/svgImg/nav_icon_globalHub.svg"
+                            class="blackicon"> </span>
+                    {elseif $_post['privacy'] == "custom"}
+                    <i class="fa fa-cog" data-toggle="tooltip" data-placement="top"
+                        title='{__("Shared with")} {__("Custom People")}'></i>
+                    {/if}
                     {/if}
                 </div>
                 <!-- post time & location & privacy -->
