@@ -448,7 +448,14 @@
                                         <td>{$row['currency']|strtoupper}/USDT</td>
                                         <td><a href="{$system['system_url']}/{$row['user_name']}" target="_blank">{$row['user_name']}</a></td>
                                         <td>{$row['tokens']}</td>
-                                        <td>{$row['fees']}</td>
+                                        <td>
+                                            {if $row['recieve_token']!=$row['tokens']}
+                                                {$row['fees']}
+                                            {else}
+                                                -
+                                            {/if}
+
+                                        </td>
                                         <td>{$row['recieve_token']}</td>
                                         <td>{$row['amount']}</td>
                                     {else if $tnx_type == 'sell'}
@@ -456,7 +463,13 @@
                                         <td><a href="{$system['system_url']}/{$row['user_name']}" target="_blank">{$row['user_name']}</a></td>
                                         <td>{$row['tokens']}</td>
                                         <td>{$row['amount']}</td>
-                                        <td>{$row['fees']}</td>
+                                        <td>
+                                            {if $row['amount']!=$row['receive_amount']}
+                                                {$row['fees']}
+                                            {else}
+                                                -
+                                            {/if}
+                                        </td>
                                         <td>{$row['receive_amount']}</td>
                                     {else}
                                         <td><a href="{$system['system_url']}/{$row['user_name']}" target="_blank">{$row['user_name']}</a></td>

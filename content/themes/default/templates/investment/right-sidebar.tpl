@@ -61,13 +61,17 @@
                                 <li class="smallList">
                                     <div class="feeTotalInfo">
                                         <h5>Subtotal</h5>
-                                        <h5>$<span id="sub_total">0</span></h5>
+                                        <h5                                                       <span id="sub_total">0
+                                            </span>
+                                        </h5>
                                     </div>
                                 </li>
                                 <li class="smallList">
                                     <div class="feeTotalInfo">
                                         <h5>Total</h5>
-                                        <h5>$<span id="order_total">0</span></h5>
+                                        <h5>
+                                            <span id="order_total">0</span>
+                                        </h5>
                                     </div>
                                 </li>
                             </ul>

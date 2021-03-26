@@ -117,7 +117,6 @@ if (endUrl != "investments") {
             buy_btn.prop('disabled', true);
             $('#investment_swap').hide();
             $('#investment_spiner').show();
-            order_total.html(total_amount);
             clearTimeout(timeout);
             $.post(api['investment/ticker'], { 'token': token_name, 'amount': total_amount, 'action': action }, function (response) {
                 if (response) {
@@ -126,12 +125,11 @@ if (endUrl != "investments") {
                     sub_total.text(response.data.sub_total);
                     $('.total_fees_amount').text(response.data.total_fees);
                     $('#fees_amount_buy')
-                    if (response.data.amount) {
-                        order_total.html(response.data.amount);
-                    }
+                    
+                    order_total.html(response.data.order_total);
                     if (action == 'buy') {
                         // $('.amount_received_model').text((parseFloat(response.data.tokens)-parseFloat(response.data.total_fees)).toFixed(5));
-                        $('.amount_received_model').text(response.data.total_coin);
+                        $('.amount_received_model').text(response.data.order_total);
                     }
                 }
                 $('#investment_swap').show();
@@ -174,7 +172,7 @@ if (endUrl != "investments") {
                     // console.log(err);
                     $('#investment_swap').show();
                     $('#investment_spiner').hide();
-                    modal('#modal-message', { title: __['Error'], message: __['There is something that went wrong!'] });
+                    
                 });
         }
         
@@ -324,10 +322,7 @@ if (endUrl != "investments") {
                         $('.overall_coin').html(response.data.tokens);
                         sub_total.text(response.data.sub_total);
                         $('#total_fees').text(response.data.total_fees);
-                        order_total.html(total_amount);
-                        if (response.data.amount) {
-                            order_total.html(response.data.amount);
-                        }
+                        $('#order_total').html(response.data.order_total);
                         
                     }
                     $('#investment_swap').show();
@@ -377,8 +372,7 @@ if (endUrl != "investments") {
                     });
             },2000);
         });
-
-
+    
         $(document).on('input', '#total_coin', function () {
             this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*?)\..*/g, '$1');
             let total_amount = amount.val();
@@ -479,7 +473,7 @@ if (endUrl != "investments") {
             let action = $('.btnSectionBuySell').find('a.active').data('actiontype');
             let token_name = (token.attr('placeholder')).toLowerCase();
             let token_value = token.val();
-            let total_amount = $('#order_total').html();
+            let total_amount = $('#amount').val();
             let amount = ($('#amount').val()) ? $('#amount').val() : 0;
             let per_coin_price = $('.per_coin_price').html();
             let fees = $('#total_fees').text();
@@ -631,10 +625,10 @@ if (endUrl != "investments") {
         
                     if (timeLeft === 0) {
                         reset_sidebar_calculation();
-                        $('#total_coin').val("");
                         modal('#modal-message', { title:"Timeout", message: 'Please enter the amount(USD) again and buy within 10 sec' }); 
                         onTimesUp();
                         $('#confrimModal').modal('hide');
+                        setTimeout(function () { $('#total_coin').val("");}, 2000);
                     }
                 }, 1000);
             }
@@ -686,6 +680,10 @@ if (endUrl != "investments") {
             $('#confirm_cancel').click(function () {
                 clearInterval(timerInterval);
                 clearTimeout(timeou_id);
+            })
+
+            $(document).on('click', '#complete_order', function () { 
+                clearInterval(timerInterval);
             })
             
         }

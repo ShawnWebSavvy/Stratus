@@ -1433,7 +1433,7 @@ select.flat-select:hover {
   left: 10px;
 }
 .comming_soon_text{
-  min-height: 267px;
+  min-height: 248px;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -1528,3 +1528,5 @@ select.flat-select:hover {
   font-size: 28px;
 }
 /* End */
+
+

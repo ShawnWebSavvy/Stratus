@@ -14,11 +14,12 @@
                                 <p><span class="per_coin_price">{$per_coin_price}</span> per USD</p>
                                 {if $action=='buy'}
                                     <p>Fees=<span class="total_fees_amount" id="fees_amount_buy">{$fees} {strtoupper($token_name)}</span></p>
-                                    <p>Total=<span class="amount_received_model">{$receive_amount}</span> {strtoupper($token_name)}</p>
+                                    <p>Total=<span class="amount_received_model">{$receive_amount} {strtoupper($token_name)}</span></p>
                                 {else}
                                     <p>Fees=<span class="total_fees_amount" id="fees_amount_buy">${$fees}</span></p>
                                     <p>Total=<span class="amount_received_model">${$receive_amount}</span></p>
                                 {/if}
+                                <p>* 1% +/- Arbitrage applies</p>
                             </div>
                         </div>
                         <div class="coinDetails dashedLines">
@@ -61,13 +62,12 @@
                         <h5>Confirm your Transaction</h5>
                         <p>Review all the details and confirm your <br />
                             transaction below</p>
-                            <h5>Disclaimer </h5>
-                            <p>The price are fluctuating at the rate of 5 sec .So , there will be the difference in current price .</p>
                         <div class="MoreAssetsSection">
                             <button type="button" class="btn MoreAssetsbutton" id="complete_order" style="max-width:242px;min-height: 56px;">Confirm
                                 {ucfirst($action)}</button>
                         </div>
                         <a href="javascript:;" class="confirmBuyLink" id="confirm_cancel" data-dismiss="modal" aria-label="Close">Cancel Transaction</a>
+                        <p>* Total coins received is subject to a +/- 1% Arbitrage rate due to market conditions.</p>
                     </div>
                 </div>
             </div>

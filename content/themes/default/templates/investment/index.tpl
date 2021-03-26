@@ -276,7 +276,7 @@
                                                     <p><span class="coin_price">0.1</span> USD</p>
                                                 
                                                     <div class="comming_soon_text">
-                                                        <p>Comming Soon</p>
+                                                        <p>Coming Soon</p>
                                                     </div>
                                                 
                                                 </div>
