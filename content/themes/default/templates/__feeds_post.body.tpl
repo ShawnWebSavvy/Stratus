@@ -625,7 +625,7 @@
         {if !$_shared}
         {include file='__feeds_post.text.tpl'}
         {else}
-        {if $_post['colored_pattern'] && isset($post['colored_pattern']['type']}
+        {if $_post['colored_pattern'] && isset($post['colored_pattern']['type'])}
         <div class="post-colored" {if $_post['colored_pattern']['type']=="color" }
             style="background-image: linear-gradient(45deg, {$_post['colored_pattern']['background_color_1']}, {$_post['colored_pattern']['background_color_2']});"
             {else}
