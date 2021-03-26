@@ -59,7 +59,6 @@ try {
 
 				// get posts (newsfeed)
 				$posts = $userGlobal->global_profile_get_posts();
-				// echo "<pre>";print_r($posts); exit;
 				/* assign variables */
 				$smarty->assign('posts', $posts);
 				break;

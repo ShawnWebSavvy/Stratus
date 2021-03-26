@@ -21,12 +21,9 @@ user_access(true);
 if (!in_array($_POST['handle'], array('me', 'user', 'page', 'group', 'event'))) {
 	_error(400);
 }
-
-
 /* filter link */
 if (isset($_POST['link'])) {
 	$_POST['link'] = json_decode($_POST['link']);
-	$_POST['link']->source_title = ($_POST['link']->source_title=='Error')?"":$_POST['link']->source_title;
 	if (!is_object($_POST['link'])) {
 		_error(400);
 	}
@@ -200,26 +197,24 @@ try {
 	}
 	$postHtml = '';
 	$newLength = count($postDataArray);
-	// print_r($postDataArra); exit;
-	// echo '<pre>'; print_r($postDataArray);die;
-	for ($i = 0; $i < $newLength; $i++) {
-		$smarty->assign('post', $postDataArray[$i]);
-		$smarty->assign('_get', $_get);
-		$postHtml .= $smarty->fetch("global-profile/global-profile__feeds_post.tpl");
-	}
-		// echo '<pre>'; print_r($postHtml);die;
-	/* return */
-	if ($newLength == 1) {
-		$finalpostHtml = $postHtml;
-	} else if ($newLength > 1) {
-		$finalpostHtml = "<li class='feeds_post parent-post-li' data-id='" . $postDataArray[0]['post_id'] . "'>";
-		//$finalpostHtml.="<ul class='child-post-ul'>";
-		$finalpostHtml .= $postHtml;
-		$finalpostHtml .= "</li>";
-	}
-	//  echo($finalpostHtml);die;
-	$return['post'] = $finalpostHtml;
-	// $return['post'] = true;
+	//print_r($postDataArra); exit;
+	// for ($i = 0; $i < $newLength; $i++) {
+	// 	$smarty->assign('post', $postDataArray[$i]);
+	// 	$smarty->assign('_get', $_get);
+	// 	$postHtml .= $smarty->fetch("global-profile/global-profile__feeds_post.tpl");
+	// }
+	// /* return */
+	// if ($newLength == 1) {
+	// 	$finalpostHtml = $postHtml;
+	// } else if ($newLength > 1) {
+	// 	$finalpostHtml = "<li class='feeds_post parent-post-li' data-id='" . $postDataArray[0]['post_id'] . "'>";
+	// 	//$finalpostHtml.="<ul class='child-post-ul'>";
+	// 	$finalpostHtml .= $postHtml;
+	// 	$finalpostHtml .= "</li>";
+	// }
+
+	// $return['post'] = $finalpostHtml;
+	$return['post'] = true;
 	return_json($return);
 } catch (Exception $e) {
 	modal("ERROR", __("Error"), $e->getMessage());

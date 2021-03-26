@@ -50,7 +50,7 @@ try {
 		$smarty->assign('conversations', $conversations);
 		/* return */
 		$return['conversations_count'] = $userGlobal->_data['user_live_messages_counter'];
-		$return['conversations'] = $smarty->fetch("ajax.live.conversations_global.tpl");
+		$return['conversations'] = $smarty->fetch("ajax.live.conversations.tpl");
 	}
 
 	// [3] check for new notifications

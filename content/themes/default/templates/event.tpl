@@ -684,23 +684,23 @@
                         <!-- panel title -->
 
                         <!-- panel nav -->
-                        <ul class="nav nav-tabs {$view} ">
+                        <ul class="nav nav-tabs ">
                             <li class="nav-item">
-                                <a class="nav-link {if $view == "going"}active{/if}"
+                                <a class="nav-link {if $view == " going "}active{/if}"
                                     href="{$system['system_url']}/events/{$event['event_id']}/going">
                                     {__("Going")}
                                     <span class="badge badge-pill badge-info">{$event['event_going']}</span>
                                 </a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link {if $view == "interested"}active{/if}"
+                                <a class="nav-link {if $view == " interested "}active{/if}"
                                     href="{$system['system_url']}/events/{$event['event_id']}/interested">
                                     {__("Interested")}
                                     <span class="badge badge-pill badge-info">{$event['event_interested']}</span>
                                 </a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link {if $view == "invited"}active{/if}"
+                                <a class="nav-link {if $view == " invited "}active{/if}"
                                     href="{$system['system_url']}/events/{$event['event_id']}/invited">
                                     {__("Invited")}
                                     <span class="badge badge-pill badge-info">{$event['event_invited']}</span>
@@ -708,7 +708,7 @@
                             </li>
                             {if $event['i_joined']}
                             <li class="nav-item">
-                                <a class="nav-link {if $view == "invites"}active{/if}"
+                                <a class="nav-link {if $view == " invites "}active{/if}"
                                     href="{$system['system_url']}/events/{$event['event_id']}/invites">
                                     {__("Invites")}
                                 </a>
