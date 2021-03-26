@@ -624,11 +624,10 @@ if (endUrl != "investments") {
                     setRemainingPathColor(timeLeft);
         
                     if (timeLeft === 0) {
-                        reset_sidebar_calculation();
                         modal('#modal-message', { title:"Timeout", message: 'Please enter the amount(USD) again and buy within 10 sec' }); 
                         onTimesUp();
                         $('#confrimModal').modal('hide');
-                        setTimeout(function () { $('#total_coin').val("");}, 2000);
+                        change_amount();
                     }
                 }, 1000);
             }
@@ -679,7 +678,6 @@ if (endUrl != "investments") {
                  
             $('#confirm_cancel').click(function () {
                 clearInterval(timerInterval);
-                clearTimeout(timeou_id);
             })
 
             $(document).on('click', '#complete_order', function () { 
