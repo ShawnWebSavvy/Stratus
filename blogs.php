@@ -79,7 +79,9 @@ try {
 			$smarty->assign('latest_articles', $latest_articles);
 
 			// update views counter
+			
 			$user->update_article_views($article['article']['article_id']);
+			
 
 			// get ads
 			$ads = $user->ads('article');
@@ -106,6 +108,7 @@ try {
 
 			// get article
 			$article = $user->get_post($_GET['post_id']);
+			$user->update_article_views_edit($article['article']['article_id']);
 			if (!$article) {
 				_error(404);
 			}

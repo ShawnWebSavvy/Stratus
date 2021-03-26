@@ -246,7 +246,12 @@
                                                             data-slimScroll-height="240">
                                                             <div class="post-text" dir="auto"
                                                                 style="color:{$postsItem['colored_pattern']['text_color']};">
-                                                                {$postsItem['text']}
+                                                                {if $postsItem['text']|count_characters:true < 101}
+                                                                    {$postsItem['text']}
+                                                                {else}
+                                                                    {$postsItem['text']|truncate:100}<a class="readMoreCustom" href="{$system['system_url']}/posts/{$postsItem['post_id']}"> Read More</a>
+                                                                {/if}			
+                                                                
                                                             </div>
                                                         </div>
                                                     </div>

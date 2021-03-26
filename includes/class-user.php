@@ -8583,7 +8583,7 @@ class User
         global $db;
         switch ($media_type) {
             case 'video':
-                $db->query(sprintf("UPDATE posts_videos SET views = views + 1 WHERE video_id = %s", secure($media_id, 'int'))) or _error("SQL_ERROR_THROWEN");
+                $db->query(sprintf("UPDATE posts_videos SET views = views + 1 WHERE post_id = %s", secure($media_id, 'int'))) or _error("SQL_ERROR_THROWEN");
                 break;
 
             case 'audio':

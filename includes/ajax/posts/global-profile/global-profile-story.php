@@ -29,9 +29,9 @@ try {
 	switch ($_REQUEST['do']) {
 		case 'publish':
 			// valid inputs
-			if (!isset($_POST['photos']) && !isset($_POST['videos'])) {
-				_error(400);
-			}
+			// if (!isset($_POST['photos']) && !isset($_POST['videos'])) {
+			// 	_error(400);
+			// }
 			/* filter photos */
 			$photos = array();
 			if (isset($_POST['photos'])) {
@@ -54,9 +54,9 @@ try {
 					}
 				}
 			}
-			if (count($photos) == 0 && count($videos) == 0) {
-				_error(400);
-			}
+			// if (count($photos) == 0 && count($videos) == 0) {
+			// 	_error(400);
+			// }
 
 			// post story
 			$userGlobal->post_story($_POST['message'], $photos, $videos);

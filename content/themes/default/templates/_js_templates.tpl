@@ -1192,7 +1192,7 @@
 <script id="edit-post" type="text/template">
             <div class="post-edit">
                 <div class="x-form comment-form">
-                    <textarea rows="2" class="js_autosize js_mention js_update-post">{literal}{{text}}{/literal}</textarea>
+                    <textarea rows="6" class="js_autosize js_mention js_update-post">{literal}{{text}}{/literal}</textarea>
                     <ul class="x-form-tools clearfix">
                         <li class="x-form-tools-post js_update-post">
                             <i class="far fa-paper-plane fa-lg fa-fw"></i>

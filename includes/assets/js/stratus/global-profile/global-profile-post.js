@@ -1496,7 +1496,7 @@ $(function () {
         title: __["Error"],
         message: __["There is something that went wrong!"],
       });
-    });
+    }));
   });
   /* publish new product */
   $("body").on("click", ".js_publisher-product", function () {
