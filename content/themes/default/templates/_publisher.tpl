@@ -404,7 +404,7 @@
                                 <li class="uplodfileTags">
                                     <div class="publisher-tools-tab  js_publisher-tab" data-tab="photos">
                                         <!-- attach -->
-                                        <div class="addPhotoButton js_x-uploader">
+                                        <div class="addPhotoButton js_x-uploader" data-handle="publisher" data-multiple="true">
                                             <img class="blackIcon" alt="image" title="Upload Image"
                                             src="{$system['system_uploads_assets']}/content/themes/default/images/svg/svgImg/photo_message_iconHover.svg"
                                             data-handle="publisher" data-multiple="true" />
@@ -467,13 +467,15 @@
                                 <li class="uplodfileTags">
                                     <div class="publisher-tools-tab attach js_publisher-tab" data-tab="photos">
                                         <!-- <i class="fas fa-camera js_x-uploader" data-handle="publisher" data-multiple="true"></i> -->
-                                        <img class="blackIcon" alt="image" title="Upload Image"
-                                            src="{$system['system_uploads_assets']}/content/themes/default/images/svg/svgImg/photo_message_iconHover.svg"
-                                            class="js_x-uploader" data-handle="publisher" data-multiple="true" />
-                                        <img class="BlueIcon js_x-uploader" alt="image" title="Upload Image"
-                                            src="{$system['system_uploads_assets']}/content/themes/default/images/svg/svgImg/photo_message_icon.svg"
-                                            class="js_x-uploader" data-handle="publisher" data-multiple="true" />
-                                        <span class="class-publisher-text">Add Photo</span>
+                                        <div class="addPhotoButton js_x-uploader" data-handle="publisher" data-multiple="true">
+                                            <img class="blackIcon" alt="image" title="Upload Image"
+                                                src="{$system['system_uploads_assets']}/content/themes/default/images/svg/svgImg/photo_message_iconHover.svg"
+                                                class="js_x-uploader" data-handle="publisher" data-multiple="true" />
+                                            <img class="BlueIcon js_x-uploader" alt="image" title="Upload Image"
+                                                src="{$system['system_uploads_assets']}/content/themes/default/images/svg/svgImg/photo_message_icon.svg"
+                                                class="js_x-uploader" data-handle="publisher" data-multiple="true" />
+                                            <span class="class-publisher-text">Add Photo</span>
+                                        </div>
                                     </div>
                                 </li>
                                 <li class="uplodfileTags">
