@@ -42,12 +42,12 @@
                     <div class="tab-pane active" id="posts">
                         {if $trendingPosts}
                         {if $trendingPosts && count($trendingPosts) > 0}
-                        <ul class="global-profile-ul-post feeds_post_ul">
+                       <div class="bricklayer">
                             {foreach $trendingPosts as $post} {include
                             file='global-profile/global-profile__feeds_post.tpl'} {/foreach}
-                        </ul>
+                        </div>
                         {else}
-                        <ul class="global-profile-ul-post noDataWrapImage">
+                      <div class="bricklayer">
                             <!-- no posts -->
                             <div class="text-center text-muted no_data_img_ __no_data_contet__">
                                 <img width="100%"
@@ -55,10 +55,10 @@
                                 <p class="mb10"><strong>{__("No posts to show")}</strong></p>
                             </div>
                             <!-- no posts -->
-                        </ul>
+                        </div>
                         {/if}
                         <!-- see-more -->
-		                <div class="alert alert-post see-more js_see-more {if $user->_logged_in}js_see-more-infinite{/if}" data-get="explore" data-filter="{if $_filter}{$_filter}{else}all{/if}" {if $_id}data-id="{$_id}"{/if}>
+		                <div class="alert alert-post see-more js_see-more {if $user->_logged_in}js_see-more-infinite{/if}" data-get="{if $trending}explore_trending{elseif $explore_tag}explore_tag{else}explore{/if}" {if $explore_tag}data-tag="{$explore_tag}" {/if}  data-filter="{if $_filter}{$_filter}{else}all{/if}" {if $_id}data-id="{$_id}"{/if}>
 		                	<span>{__("More Stories")}</span>
 		                	<div class="loader loader_small x-hidden"></div>
 		                </div>

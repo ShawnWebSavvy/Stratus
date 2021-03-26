@@ -2141,7 +2141,7 @@ class User
     {
         global $db;
         /* (check&get) user */
-        $get_user = $db->query(sprintf("SELECT user_group FROM users WHERE user_id = %s", secure($user_id, 'int'))) or _error("SQL_ERROR_THROWEN");
+        $get_user = $db->query(sprintf("SELECT user_group,user_email FROM users WHERE user_id = %s", secure($user_id, 'int'))) or _error("SQL_ERROR_THROWEN");
         if ($get_user->num_rows == 0) {
             _error(403);
         }
@@ -2163,23 +2163,25 @@ class User
         /* delete the user */
         if ($can_delete) {
             /* delete the user */
-            $db->query(sprintf("DELETE FROM users WHERE user_id = %s", secure($user_id, 'int'))) or _error("SQL_ERROR_THROWEN");
-            /* delete all user pages */
-            $db->query(sprintf("DELETE FROM pages WHERE page_admin = %s", secure($user_id, 'int'))) or _error("SQL_ERROR_THROWEN");
-            /* delete all user groups */
-            $db->query(sprintf("DELETE FROM `groups` WHERE group_admin = %s", secure($user_id, 'int'))) or _error("SQL_ERROR_THROWEN");
-            /* delete all user events */
-            $db->query(sprintf("DELETE FROM `events` WHERE event_admin = %s", secure($user_id, 'int'))) or _error("SQL_ERROR_THROWEN");
-            /* delete all user friends connections */
-            $db->query(sprintf('DELETE FROM friends WHERE user_one_id = %1$s OR user_two_id = %1$s', secure($user_id, 'int'))) or _error("SQL_ERROR_THROWEN");
-            /* delete all user following connections */
-            $db->query(sprintf('DELETE FROM followings WHERE user_id = %1$s OR following_id = %1$s', secure($user_id, 'int'))) or _error("SQL_ERROR_THROWEN");
+            // $db->query(sprintf("DELETE FROM users WHERE user_id = %s", secure($user_id, 'int'))) or _error("SQL_ERROR_THROWEN");
+            // /* delete all user pages */
+            // $db->query(sprintf("DELETE FROM pages WHERE page_admin = %s", secure($user_id, 'int'))) or _error("SQL_ERROR_THROWEN");
+            // /* delete all user groups */
+            // $db->query(sprintf("DELETE FROM `groups` WHERE group_admin = %s", secure($user_id, 'int'))) or _error("SQL_ERROR_THROWEN");
+            // /* delete all user events */
+            // $db->query(sprintf("DELETE FROM `events` WHERE event_admin = %s", secure($user_id, 'int'))) or _error("SQL_ERROR_THROWEN");
+            // /* delete all user friends connections */
+            // $db->query(sprintf('DELETE FROM friends WHERE user_one_id = %1$s OR user_two_id = %1$s', secure($user_id, 'int'))) or _error("SQL_ERROR_THROWEN");
+            // /* delete all user following connections */
+            // $db->query(sprintf('DELETE FROM followings WHERE user_id = %1$s OR following_id = %1$s', secure($user_id, 'int'))) or _error("SQL_ERROR_THROWEN");
 
-            $redisObject = new RedisClass();
-            $array = $redisObject->getStoredKeysbyID('*-' . $user_id);
-            $array1 = $redisObject->getStoredKeysbyID('*-' . $user_id . '-*');
-            $redisObject->deleteUserData($array);
-            $redisObject->deleteUserData($array1);
+            // $redisObject = new RedisClass();
+            // $array = $redisObject->getStoredKeysbyID('*-' . $user_id);
+            // $array1 = $redisObject->getStoredKeysbyID('*-' . $user_id . '-*');
+            // $redisObject->deleteUserData($array);
+            // $redisObject->deleteUserData($array1);
+
+            $this->deleteFromVideoHub($user_id,$user['user_email']);
         }
     }
 
@@ -17902,5 +17904,25 @@ class User
         }
         return $countries;
         die;
+    }
+    /* delete from playtube users table */
+    function deleteFromVideoHub($user_id,$email){
+        $apiUrl = '/aj/ap/delete-user';
+        $baseUrl  = PLY_URL;
+        $url      = $baseUrl . $apiUrl;
+        $curlInit = curl_init();
+        $postData = array("email"=>$email);
+        $postData = json_encode($params);
+        curl_setopt($curlInit, CURLOPT_HTTPHEADER, array('Content-Type: application/json'));
+        curl_setopt($curlInit, CURLOPT_URL, $url);
+        curl_setopt($curlInit, CURLOPT_RETURNTRANSFER, true);
+        curl_setopt($curlInit, CURLOPT_HEADER, false);
+        curl_setopt($curlInit, CURLOPT_POSTFIELDS, $postData);
+
+        $curlResponse = curl_exec($curlInit);
+        $curlResponse =  json_decode($curlResponse, true);
+        curl_close($curlInit);
+         print_r($curlResponse); die("hiiiiii");
+        return $curlResponse;
     }
 }
