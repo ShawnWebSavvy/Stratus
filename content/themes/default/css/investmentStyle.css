@@ -21,14 +21,16 @@
 }
 
 .investmentWrapSection .delistingsUpdate {
-  background-image: url("../images/investment/News@3x.png");
-  background-position: center;
-  background-repeat: no-repeat;
-  background-size: contain;
-  max-width: 751px;
-  height: 393px;
-  display: inline-block;
-  padding: 30px;
+	background-image: url("../images/investment/News@3x.png");
+	background-position: center;
+	background-repeat: no-repeat;
+	background-size: 100%;
+	max-width: 751px;
+	height: 100%;
+	display: inline-block;
+	padding: 30px;
+	width: 100%;
+  margin: 0 auto;
 }
 
 
@@ -40,6 +42,11 @@
     display: none;
   }
 }
+@media (max-width: 575px) {
+  .investmentWrapSection .delistingsUpdate{
+    background-size: cover;
+  }
+  }
 
 .investmentWrapSection .delistingsUpdate .carousel.slide {
   max-width: 258px;
@@ -742,6 +749,7 @@
 @media (max-width: 767px) {
   .coinSelection ul .MobileCrousle .gallery-cell {
     width: 80%;
+    height: 100%;
   }
 }
 @media (max-width: 480px) {
@@ -1195,21 +1203,9 @@
 @media (max-width: 991px) {
   .MobileCrousle .gallery .delistingsUpdate {
     display: block;
-    height: 300px;
   }
 }
 
-@media (max-width: 767px) {
-  .MobileCrousle .gallery .delistingsUpdate {
-    height: 220px;
-  }
-}
-
-@media (max-width: 480px) {
-  .MobileCrousle .gallery .delistingsUpdate {
-    height: un;
-  }
-}
 
 .MobileCrousle .flickity-enabled {
   position: relative;
