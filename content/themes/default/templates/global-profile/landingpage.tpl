@@ -242,7 +242,7 @@
                                                         {else}
                                                         style="background-image:url({$system['system_uploads']}/{$postsItem['colored_pattern']['background_image']})"
                                                         {/if}>
-                                                        <div class="post-colored-text-wrapper js_scroller"
+                                                        <div class="post-colored-text-wrapper"
                                                             data-slimScroll-height="240">
                                                             <div class="post-text" dir="auto"
                                                                 style="color:{$postsItem['colored_pattern']['text_color']};">
