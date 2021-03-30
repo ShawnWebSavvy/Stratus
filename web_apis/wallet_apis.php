@@ -196,20 +196,20 @@ function addWalletPointsUsingStripe($id){
 				 'email' => $_POST['email'],
 		        'source' => $_POST['card_token']
 		    ));
-            
+
 		    $charge   = \Stripe\Charge::create(array(
 		        'customer' => $customer->id,
 		        'receipt_email' => $_POST['email'],
 		        'amount' => $_POST['price']*100,
 		        'currency' => $system['system_currency']
 		    ));
-		    
+
 		    if($charge) {
 		    	// update user wallet balance
 				$chargeQuery = sprintf("UPDATE users SET user_wallet_balance = user_wallet_balance + %s WHERE user_id = %s", secure($_POST['price']), secure($id, 'int'));
 				$db->query($chargeQuery) or _error("SQL_ERROR_THROWEN");
 				/* wallet transaction */
-         
+
           $db->query(sprintf("INSERT INTO ads_users_wallet_transactions (user_id, node_type, node_id, amount, type, date, platformType) VALUES (%s, %s, %s, %s, %s, %s, %s)", secure($id, 'int'), secure('recharge'), secure(0, 'int'), secure($_POST['price'] ), secure('in'), secure($date),secure($_POST['paymentMethod']))) or _error("SQL_ERROR_THROWEN");
 			}
 			    // return
@@ -222,20 +222,20 @@ function addWalletPointsUsingStripe($id){
 
 
 function updatesendmoneyWAlletBalanceFunction(){
-  try 
+  try
     {
     if ($_SERVER['REQUEST_METHOD'] === 'POST') {
        global $db, $system, $date;
       mysqli_report (MYSQLI_REPORT_OFF);
-       
+
       if(isset($_POST['user_email']) && isset($_POST['reciver_email']) && isset($_POST['price']) )
       {
-        
+
         $amount= $_POST['price'];
           $check_user = $db->query(sprintf("SELECT user_id as id, user_wallet_balance as user_wallet_balance, COUNT(*) as count FROM users WHERE user_email = %s", secure($_POST['user_email']))) or _error("SQL_ERROR_THROWEN");
           $check_user= $check_user->fetch_assoc();
           $user_id =   $check_user['id'];
-        
+
            $reciver_user = $db->query(sprintf("SELECT user_id as id, COUNT(*) as count FROM users WHERE user_email = %s", secure($_POST['reciver_email']))) or _error("SQL_ERROR_THROWEN");
           $reciver_user= $reciver_user->fetch_assoc();
           $reciver_id =   $reciver_user['id'];
@@ -252,24 +252,24 @@ function updatesendmoneyWAlletBalanceFunction(){
         $db->query(sprintf("UPDATE users SET user_wallet_balance = user_wallet_balance + %s WHERE user_id = %s", secure($amount), secure($reciver_id, 'int'))) or _error("SQL_ERROR_THROWEN");
 
          $db->query(sprintf("INSERT INTO ads_users_wallet_transactions (user_id, node_type, node_id, amount, type, paymentMode, date) VALUES (%s, %s, %s, %s, %s, %s, %s)", secure($user_id, 'int'), secure('user'), secure($reciver_id, 'int'), secure($amount), secure('out'), secure('wallet'), secure($date))) or _error("SQL_ERROR_THROWEN");
-        
 
-        $db->query(sprintf("INSERT INTO ads_users_wallet_transactions (user_id, node_type, node_id, amount, type, paymentMode, date) VALUES (%s, %s, %s, %s, %s, %s, %s)", secure($reciver_id, 'int'), secure('user'), secure($user_id, 'int'), secure($amount), secure('in'), secure('wallet'), secure($date))) or _error("SQL_ERROR_THROWEN");        
+
+        $db->query(sprintf("INSERT INTO ads_users_wallet_transactions (user_id, node_type, node_id, amount, type, paymentMode, date) VALUES (%s, %s, %s, %s, %s, %s, %s)", secure($reciver_id, 'int'), secure('user'), secure($user_id, 'int'), secure($amount), secure('in'), secure('wallet'), secure($date))) or _error("SQL_ERROR_THROWEN");
 
           returnResponse(true,200,"Success");
-       
+
         }
       }
         else {
            returnResponse(false,300,"parameters missing");
          }
-      
+
      }
-       
+
        else {
          returnResponse(false,300,"Something went wrong");
          }
-       
+
      }
      catch(Exception $e){
          returnResponse(false,400,$e->getMessage());
@@ -278,7 +278,7 @@ function updatesendmoneyWAlletBalanceFunction(){
 
 
 function getAllTransactionsFunction(){
-  try 
+  try
     {
     if ($_SERVER['REQUEST_METHOD'] === 'POST') {
        global $db, $system, $date;
@@ -294,20 +294,20 @@ function getAllTransactionsFunction(){
         if ($get_transactions->num_rows > 0) {
            $result= $get_transactions->fetch_all();
               returnResponse(true,200,"Success",$result);
-            
+
           }
           else {
               returnResponse(false,402,"Transactions history is empty" );
           }
-       
+
         }
 
         else {
            returnResponse(false,300,"parameters missing");
          }
-      
+
      }
-       
+
        else {
          returnResponse(false,300,"Something went wrong");
          }
@@ -316,4 +316,74 @@ function getAllTransactionsFunction(){
      catch(Exception $e){
          returnResponse(false,400,$e->getMessage());
       }
+}
+
+
+/**
+ * Function for common forgot password
+ * @ type: (stratus, videohub)
+ * @ email:
+ */
+
+function commonForgetPasswordFunction($token){
+
+   try{
+    if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+      global $db, $system;
+
+      $checkToken = checkHeaders($token);
+
+      if($checkToken == 402){
+        returnResponse(false,402,"Access token missing");
+      }elseif($checkToken == 400){
+        returnResponse(false,402,"Invalid access token provided");
+      }else{
+
+        if(isset($_POST['email'])){
+            $check_user = $db->query(sprintf("SELECT COUNT(*) as count FROM users WHERE user_email = %s", secure($_POST['email']))) or _error("SQL_ERROR_THROWEN");
+          $check_user= $check_user->fetch_assoc();
+          if($check_user['count'] < 1){
+            returnResponse(false,402,"Invalid user");
+
+          }else{
+               $knox_user_id = 0;
+                if (is_array($check_user) == 1 && array_key_exists('knox_user_id', $check_user) && isset($getUserData['knox_user_id'])) {
+                    //echo  $getUserData['knox_user_id'];
+                    $knox_user_id = $check_user['knox_user_id'];
+                } else if (!is_array($check_user) == 1) {
+                     $email = $_POST['email'];
+                     $userInfoApiResponse = $this->httpGetCurl('/users/whitelabel/get-user-info/' . $email);
+                      if (is_array($userInfoApiResponse) == 1 && array_key_exists('data', $userInfoApiResponse) && (is_empty($userInfoApiResponse['data']) || $userInfoApiResponse['data'] == 0)) {
+                      returnResponse(false,402,"Sorry it looks like email doesn't belong to any account");
+                  } else {
+
+                        $hash = $userInfoApiResponse['hash'];
+                        $knox_user_id = $userInfoApiResponse['userId']; // || 'sss';
+                        $user_email_verified = 1;
+                        $user_activated = 1;
+                        //print_r($userInfoApiResponse);
+                        $db->query(sprintf("INSERT INTO users (user_name,user_email,user_password, user_firstname,user_lastname,user_gender,user_registered,knox_user_id,user_email_verified,user_activated) VALUES (%s,%s,%s,%s, %s,%s,%s,%s,%s,%s)", secure($email), secure($email), secure($hash), secure(''), secure(''), secure('other'), secure($date), secure($knox_user_id), $user_email_verified, $user_activated)) or _error("SQL_ERROR_THROWEN");
+                        // $getUserData = $this->checkUserAndGetData($email);
+                        // $emailArray = explode("@", $email);
+                        // $userName = $emailArray[0] . $getUserData['user_id'];
+                        // $db->query(sprintf("UPDATE users SET user_name =%s WHERE user_email = %s", secure($userName), secure($email))) or _error("SQL_ERROR_THROWEN");
+                  }
+                }
+          }
+        }else{
+          returnResponse(false,300,"parameters missing");
+        }
+
+      }
+
+    }
+    else{
+      returnResponse(false,402,"Invalid request");
+    }
+
+  }catch (Exception $e) {
+
+    returnResponse(false,300,$e->getMessage());
+  }
+
 }
