@@ -2241,7 +2241,7 @@ class User
      */
     public function live_counters_reset($counter)
     {
-        global $db;
+        global $db, $system;
         if ($counter == "friend_requests") {
             $db->query(sprintf("UPDATE users SET user_live_requests_counter = 0 WHERE user_id = %s", secure($this->_data['user_id'], 'int'))) or _error("SQL_ERROR_THROWEN");
         } elseif ($counter == "messages") {
