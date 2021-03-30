@@ -6053,7 +6053,7 @@ class UserGlobal
                 $story['lastUpdated'] = strtotime($_story['time']);
                 $story['items'] = [];
                 /* get story media items */
-                $get_media_items = $db->query(sprintf("SELECT * FROM global_stories_media  as stories_media WHERE story_id = %s", secure($_story['story_id'], 'int'))) or _error("SQL_ERROR_THROWEN");
+                $get_media_items = $db->query(sprintf("SELECT * FROM global_stories_media  as stories_media WHERE story_id = %s ORDER BY stories_media.time DESC", secure($_story['story_id'], 'int'))) or _error("SQL_ERROR_THROWEN");
                 while ($media_item = $get_media_items->fetch_assoc()) {
                     $story_item['id'] = $media_item['media_id'];
                     $story_item['type'] = ($media_item['is_photo']) ? 'photo' : 'video';
