@@ -41,6 +41,7 @@ try {
 					_error(400);
 				}
 				/* check product name */
+				
 				if(is_empty($_POST['product']->name)) {
 					return_json( array('error' => true, 'message' => __("Please add your product name")) );
 				}

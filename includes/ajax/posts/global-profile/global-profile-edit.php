@@ -77,6 +77,7 @@ try {
 				_error(400);
 			}
 			/* check product name */
+			
 			if (is_empty($_POST['name'])) {
 				return_json(array('error' => true, 'message' => __("Please add your product name")));
 			}
@@ -95,7 +96,9 @@ try {
 			if (!in_array($_POST['status'], array('new', 'old'))) {
 				return_json(array('error' => true, 'message' => __("Please select valid product status")));
 			}
-
+			if(empty($_POST['photos'])) {
+				return_json( array('error' => true, 'message' => __("Please upload image for product")) );
+			}
 			// edit product
 			$userGlobal->edit_product($_POST['id'], $_POST['message'], $_POST['name'], $_POST['price'], $_POST['category'], $_POST['status'], $_POST['location']);
 

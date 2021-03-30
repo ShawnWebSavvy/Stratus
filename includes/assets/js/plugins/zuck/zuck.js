@@ -481,7 +481,15 @@
           if (exists) {
             return false;
           }
+          /* var html = "<video class='js_fluidplayer stratus-customvideo thumb_crsp_video_tag' id='video-" +a+ "-" + video_index+"onplay='update_media_views('video'," +
+          a +")'controls  preload='auto' style='width:100%;height:100%;' width='100%' height='100%'><source src='"+
+          s +" type='video/mp4'><source src='" +
+          s +" type='video/webm'></video>"; */
+          var currentItemTime = "";
 
+          if (exists) {
+            return false;
+          }
           slides.className = "slides";
           each(get(storyData, "items"), function (i, item) {
             if (currentItem > i) {

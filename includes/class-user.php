@@ -1429,6 +1429,9 @@ class User
                 $redisObject->deleteValueFromKey($rediskeyname);
                 /* Remove receiver cache of friends*/
                 $redisObject->deleteValueFromKey('user-' . $id . '-friends-list');
+
+                $redisPostKeys = 'user-' . $this->_data['user_id'] . '-posts';
+                $redisObject->deleteValueFromKey($redisPostKeys);
                 cachedUserData($db, $system, $this->_data['user_id'], $this->_data['active_session_token']);
                 break;
 
@@ -1447,6 +1450,8 @@ class User
                 $redisObject = new RedisClass();
                 $redisPostKey = 'user-' . $this->_data['user_id'];
                 $redisObject->deleteValueFromKey($redisPostKey);
+                $redisPostKeys = 'user-' . $this->_data['user_id'] . '-posts';
+                $redisObject->deleteValueFromKey($redisPostKeys);
                 cachedUserData($db, $system, $this->_data['user_id'], $this->_data['active_session_token']);
                 break;
 
@@ -4788,30 +4793,71 @@ class User
      * @return array
      */
     
-    public function stringToEmoji($str) {
-        $data= explode(' ',$str);
-        $emojis = array();
-        global $db;
-        $get_emojis = $db->query("SELECT * FROM emojis") or _error("SQL_ERROR_THROWEN");
-        if ($get_emojis->num_rows > 0) {
-            while ($emoji = $get_emojis->fetch_assoc()) {
-                $replacement = "<i class='twa twa-" . $emoji['class'] . "'></i>";
-                $pattern = $emoji['pattern'];
-                $emojis[$pattern]= $replacement;
+    public function stringToEmoji($html) {
+
+            #put all opened tags into an array
+          
+            preg_match_all('#<([a-z]+)(?: .*)?(?<![/|/ ])>#iU', $html, $result);
+          
+            $openedtags = $result[1];   #put all closed tags into an array
+          
+          
+            preg_match_all('#</([a-z]+)>#iU', $html, $result);
+          
+            $closedtags = $result[1];
+          
+            $len_opened = count($openedtags);
+          
+            # all tags are closed
+          
+            if (count($closedtags) == $len_opened) {
+          
+              return $html;
+          
             }
+            else {
+          
+            $openedtags = array_reverse($openedtags);
+          
+            # close tags
+          
+            for ($i=0; $i < $len_opened; $i++) {
+          
+              if (in_array($openedtags[$i], $closedtags)){
+          
+                $html .= '</'.$openedtags[$i].'>';
+          
+              } else {
+          
+            //    unset($closedtags[array_search($openedtags[$i], $closedtags)]);   
+             }
+          
+
+            }  return $html;
         }
-        $newstr= $str;
-        for($d=0;$d<count($data);$d++)
-        {
+        // $data= explode(' ',$str);
+        // $emojis = array();
+        // global $db;
+        // $get_emojis = $db->query("SELECT * FROM emojis") or _error("SQL_ERROR_THROWEN");
+        // if ($get_emojis->num_rows > 0) {
+        //     while ($emoji = $get_emojis->fetch_assoc()) {
+        //         $replacement = "<i class='twa twa-" . $emoji['class'] . "'></i>";
+        //         $pattern = $emoji['pattern'];
+        //         $emojis[$pattern]= $replacement;
+        //     }
+        // }
+        // $newstr= $str;
+        // for($d=0;$d<count($data);$d++)
+        // {
             
-            if(isset($emojis[$data[$d]])) {
-                    $data[$d] = $emojis[$data[$d]];
-            }
+        //     if(isset($emojis[$data[$d]])) {
+        //             $data[$d] = $emojis[$data[$d]];
+        //     }
             
          
-        }
-        $laststrting = implode(' ',$data);
-        return $laststrting;
+        // }
+        // $laststrting = implode(' ',$data);
+        // return $laststrting;
         
     }
     
@@ -5477,7 +5523,6 @@ class User
                 $getPostsFromRedis = $redisObject->getValueFromKey($userKeys);
                 $jsonValuesRes = json_decode($getPostsFromRedis, true);
                 array_unshift($jsonValuesRes, $updatedPostObject);
-
                 $jsonEncodedVals = json_encode($jsonValuesRes);
                 // print_r($jsonEncodedVals); die;
                 $redisObject->setValueWithRedis($userKeys, $jsonEncodedVals);
@@ -8581,9 +8626,14 @@ class User
     public function update_media_views($media_type, $media_id)
     {
         global $db;
+        global $system;
         switch ($media_type) {
             case 'video':
                 $db->query(sprintf("UPDATE posts_videos SET views = views + 1 WHERE post_id = %s", secure($media_id, 'int'))) or _error("SQL_ERROR_THROWEN");
+                $redisPostKey = 'user-' . $this->_data['user_id'] . '-posts';
+                $redisObject = new RedisClass();
+                $redisObject->deleteValueFromKey($redisPostKey);
+                //fetchAndSetDataOnPostReaction($system, $this, $redisObject, $redisPostKey);
                 break;
 
             case 'audio':
@@ -12078,6 +12128,9 @@ class User
             throw new Exception(__("You don't have the permission to do this"));
         }
         /* validate title */
+        if (is_empty($cover)) {
+            throw new Exception(__("You must upload a cover image for your article"));
+        }
         if (is_empty($title)) {
             throw new Exception(__("You must enter a title for your article"));
         }
@@ -12154,7 +12207,7 @@ class User
         }
         /* validate text */
         if (is_empty($text)) {
-            throw new Exception(__("You must enter some text for your article"));
+            throw new Exception(__("You must enter some content for your article"));
         }
         /* validate category */
         if (is_empty($category_id)) {
@@ -12187,6 +12240,12 @@ class User
         global $db;
         /* update */
         $db->query(sprintf("UPDATE posts_articles SET views = views + 1 WHERE article_id = %s", secure($article_id, 'int'))) or _error("SQL_ERROR_THROWEN");
+    }
+    public function update_article_views_edit($article_id)
+    {
+        global $db;
+        /* update */
+        $db->query(sprintf("UPDATE posts_articles SET views = views - 1 WHERE article_id = %s", secure($article_id, 'int'))) or _error("SQL_ERROR_THROWEN");
     }
 
 
