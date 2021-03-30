@@ -323,7 +323,7 @@
                                                     <div class="plr10">
                                                         <audio class="js_audio"
                                                             id="audio-{$postsItem['audio']['audio_id']}" {if
-                                                            $user->_logged_in}onplay="update_media_views('audio',
+                                                            $user->_logged_in}onplay="update_media_views(event, 'audio',
                                                             {$postsItem['audio']['audio_id']})" {/if} controls
                                                             preload="auto" style="width: 100%;">
                                                             <source
@@ -343,7 +343,7 @@
                                                     <div class="plr10">
                                                         <audio class="js_audio"
                                                             id="audio-{$postsItem['origin']['audio']['audio_id']}" {if
-                                                            $user->_logged_in}onplay="update_media_views('audio',
+                                                            $user->_logged_in}onplay="update_media_views(event, 'audio',
                                                             {$postsItem['origin']['audio']['audio_id']})" {/if} controls
                                                             preload="auto" style="width: 100%;">
                                                             <source

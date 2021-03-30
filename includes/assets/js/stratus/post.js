@@ -174,14 +174,15 @@ function publisher_tab(e, t) {
             e.find('.js_publisher-tab[data-tab="album"]').toggleClass("disabled"), e.find('.js_publisher-tab[data-tab="product"]').toggleClass("disabled"), e.find('.js_publisher-tab[data-tab="article"]').toggleClass("disabled");
     }
 }
-function update_media_views(media_type, media_id) {
+function update_media_views(event, media_type, media_id) {
+    var video_tag = event.target ;
     var _do = "video" == media_type ? "update_video_views" : "update_audio_views";
     setTimeout(function () {
         $.post(
             api["posts/reaction"],
             { do: _do, id: media_id },
             function (response) {
-                response.callback ? eval(response.callback) : $("#" + media_type + "-" + media_id).removeAttr("onplay");
+                response.callback ? eval(response.callback) : $(video_tag).removeAttr("onplay");
             },
             "json"
         );
