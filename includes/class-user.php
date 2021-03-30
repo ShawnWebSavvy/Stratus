@@ -4693,7 +4693,7 @@ class User
             $db->query(sprintf("INSERT INTO stories_media (story_id, source, text, time) VALUES (%s, %s, %s, %s)", secure($story_id, 'int'), secure($photo['source']), secure($message), secure($date))) or _error("SQL_ERROR_THROWEN");
         }
         foreach ($videos as $video) { //print_r($videos);
-            $db->query(sprintf("INSERT INTO stories_media (story_id, source, is_photo, text, time) VALUES (%s, %s, '0', %s, %s)", secure($story_id, 'int'), secure($video), secure($message), secure($date))) or _error("SQL_ERROR_THROWEN");
+            $db->query(sprintf("INSERT INTO stories_media (story_id, source, is_photo, text, time, thumbnail ) VALUES (%s, %s, '0', %s, %s, %s)", secure($story_id, 'int'), secure($video['video']), secure($message), secure($date), secure($video['thumbnail']))) or _error("SQL_ERROR_THROWEN");
         }
 
         $authors = $this->_data['friends_ids'];
@@ -4750,6 +4750,7 @@ class User
                     $story_item['link'] = '#';
                     $story_item['linkText'] = $media_item['text'];
                     $story_item['time'] = strtotime($media_item['time']);
+                    $story_item['thumbnail'] =  $media_item['thumbnail'] ? $system['system_uploads'] . '/' . $media_item['thumbnail'] : null;
                     $story['items'][] = $story_item;
                 }
                 $stories[] = $story;
@@ -17898,4 +17899,27 @@ class User
         return $countries;
         die;
     }
+
+
+     /**
+     * Get video thumbnail
+     *
+     */
+    public function get_video_thumbnail($video)
+    {
+        global $system;
+         if($video){
+          //Video thumbnails
+           $helpers = new helpers();
+           $result_ = $helpers->makeVideosThumbnails($system['system_uploads'] . '/' . $video, 4, 'prod');
+           if (sizeof($result_) > 0) {
+               $helpers->local_aws_s3_upload($result_['img_path'], $result_['filename']);
+            }
+
+
+           return  'thumbnails/'.$result_['thumb'] ;
+
+         }
+    }
+
 }
