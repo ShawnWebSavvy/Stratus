@@ -475,7 +475,7 @@ class User
                 $following['user_picture_full'] = ($following['user_picture_full']) ? $system['system_uploads'] . '/' . $following['user_picture_full'] : $following['user_picture_full'];
                 if ($following['user_picture'] != "") {
 
-                    $following['user_picture'] =  $system['system_url'] . '/includes/wallet-api/image-exist-api.php?userPicture=' . $following['user_picture'] . '&userPictureFull=' . $following['user_picture_full'] . '&type=1';
+                    $following['user_picture'] =  $system['system_url'] . '/includes/wallet-api/image-exist-api.php?userPicture=' . $following['user_picture'] . '&userPictureFull=' . $system['system_uploads'] . '/'. $following['user_picture_full'] . '&type=1';
                 }
                 if ($following['user_picture'] == "") {
                     $following['user_picture'] =  $system['system_url'] . '/content/themes/' . $system['theme'] . '/images/user_defoult_img.jpg';
@@ -513,7 +513,7 @@ class User
                 $follower['user_picture_full'] = ($follower['user_picture_full']) ? $system['system_uploads'] . '/' . $follower['user_picture_full'] : $follower['user_picture_full'];
                 if ($follower['user_picture'] != "") {
 
-                    $follower['user_picture'] =  $system['system_url'] . '/includes/wallet-api/image-exist-api.php?userPicture=' . $follower['user_picture'] . '&userPictureFull=' . $follower['user_picture_full'] . '&type=1';
+                    $follower['user_picture'] =  $system['system_url'] . '/includes/wallet-api/image-exist-api.php?userPicture=' . $follower['user_picture'] . '&userPictureFull=' . $system['system_uploads'] . '/'. $follower['user_picture_full'] . '&type=1';
                 }
                 if ($follower['user_picture'] == "") {
                     $follower['user_picture'] =  $system['system_url'] . '/content/themes/' . $system['theme'] . '/images/user_defoult_img.jpg';
@@ -1195,7 +1195,7 @@ class User
                 switch ($result['node_type']) {
                     case 'user':
                         $result['user_picture'] = get_picture($result['user_picture'], $result['user_gender']);
-                        $result['user_picture'] = $system['system_url'] . '/includes/wallet-api/image-exist-api.php?userPicture=' . $result['user_picture'] . '&userPictureFull=' . $result['user_picture_full'];
+                        $result['user_picture'] = $system['system_url'] . '/includes/wallet-api/image-exist-api.php?userPicture=' . $result['user_picture'] . '&userPictureFull=' . $system['system_uploads'] . '/'. $result['user_picture_full'];
                         /* get the connection between the viewer & the target */
                         $result['connection'] = $this->connection($result['user_id']);
                         break;
@@ -4513,7 +4513,7 @@ class User
                 $profile['user_picture_full'] = ($profile['user_picture_full']) ? $system['system_uploads'] . '/' . $profile['user_picture_full'] : $profile['user_picture_full'];
                 if ($profile['user_picture'] != "") {
 
-                    $profile['user_picture'] =  $system['system_url'] . '/includes/wallet-api/image-exist-api.php?userPicture=' . $profile['user_picture'] . '&userPictureFull=' . $profile['user_picture_full'] . '&type=1';
+                    $profile['user_picture'] =  $system['system_url'] . '/includes/wallet-api/image-exist-api.php?userPicture=' . $profile['user_picture'] . '&userPictureFull=' . $system['system_uploads'] . '/'. $profile['user_picture_full'] . '&type=1';
                 }
                 if ($profile['user_picture'] == "") {
                     $profile['user_picture'] =  $system['system_url'] . '/content/themes/' . $system['theme'] . '/images/user_defoult_img.jpg';
