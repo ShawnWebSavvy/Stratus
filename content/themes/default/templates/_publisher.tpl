@@ -145,9 +145,9 @@
 
                                         <a style="margin-left: 0;" data-tab="live" href="{$system['system_url']}/live">
                                             <img alt="image" title="Go Live"
-                                                src="{$system['system_uploads_assets']}/content/themes/{$system['theme']}/images/svg/live.svg"
+                                                src="{$system['system_uploads_assets']}/content/themes/{$system['theme']}/images/svg/svgImg/liveVideoHover.svg"
                                                 class="" data-handle="publisher" data-multiple="true"
-                                                style="width:30px" />
+                                                style="width:22px;height: 18px;" />
                                         </a>
                                     </div>
                                 </li>
@@ -424,14 +424,19 @@
                                 </li>{/if}
                                 {if $user->_data['can_go_live'] && $_handle != "page" && $_handle != "group" && $_handle
                                 != "event"}
-                                <li class="">
+                                <li class="uplodfileTags">
                                     <div class="publisher-tools-tab attach js_publisher-tab" data-tab="photos">
 
                                         <a style="margin-left: 0;" data-tab="live" href="{$system['system_url']}/live">
-                                            <img alt="image" title="Go Live"
-                                                src="{$system['system_uploads_assets']}/content/themes/{$system['theme']}/images/svg/live.svg"
-                                                class="" data-handle="publisher" data-multiple="true"
-                                                style="width:30px" />
+                                            <img class="BlueIcon" alt="image" title="Go Live"
+                                                src="{$system['system_uploads_assets']}/content/themes/{$system['theme']}/images/svg/svgImg/liveVideoHover.svg"
+                                                data-handle="publisher" data-multiple="true"
+                                                style="width:25px" />
+                                            <img class="blackIcon" alt="image" title="Go Live"
+                                                src="{$system['system_uploads_assets']}/content/themes/{$system['theme']}/images/svg/svgImg/liveVideo.svg"
+                                                data-handle="publisher" data-multiple="true"
+                                                style="width:25px" />
+                                            <span class="class-publisher-text">Live </span>
                                         </a>
                                     </div>
                                 </li>
@@ -584,14 +589,19 @@
                                 </li>
                                 {if $user->_data['can_go_live'] && $_handle != "page" && $_handle != "group" && $_handle
                                 != "event"}
-                                <li class="">
+                                <li class="uplodfileTags">
                                     <div class="publisher-tools-tab attach js_publisher-tab" data-tab="photos">
 
-                                        <a style="margin-left: 0;" data-tab="live" href="{$system['system_url']}/live">
-                                            <img alt="image" title="Go Live"
-                                                src="{$system['system_uploads_assets']}/content/themes/{$system['theme']}/images/svg/live.svg"
-                                                class="" data-handle="publisher" data-multiple="true"
-                                                style="width:30px" />
+                                        <a style="margin-left: 0;display: flex;" data-tab="live" href="{$system['system_url']}/live">
+                                            <img class="BlueIcon" alt="image" title="Go Live"
+                                            src="{$system['system_uploads_assets']}/content/themes/{$system['theme']}/images/svg/svgImg/liveVideoHover.svg"
+                                            data-handle="publisher" data-multiple="true"
+                                            style="width:25px"/>
+                                        <img class="blackIcon" alt="image" title="Go Live"
+                                            src="{$system['system_uploads_assets']}/content/themes/{$system['theme']}/images/svg/svgImg/liveVideo.svg"
+                                            data-handle="publisher" data-multiple="true"
+                                            style="width:25px" />
+                                        <span class="class-publisher-text">Live </span>
                                         </a>
                                     </div>
                                 </li>

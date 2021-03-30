@@ -31,7 +31,14 @@
   padding: 30px;
 }
 
-
+@media (max-width: 1200px) {
+  .investmentWrapSection .delistingsUpdate {
+    max-width: 500px;
+    height: 264px;
+    padding: 20px;
+    background-size: cover;
+  }
+}
 
 @media (max-width: 991px) {
   .investmentWrapSection .delistingsUpdate {
@@ -45,6 +52,13 @@
   max-width: 258px;
   height: 335px;
   position: relative;
+}
+
+@media (max-width: 1200px) {
+  .investmentWrapSection .delistingsUpdate .carousel.slide {
+    max-width: 360px;
+    height: 221px;
+  }
 }
 
 .investmentWrapSection .delistingsUpdate .carousel.slide .carousel-indicators {
@@ -70,6 +84,11 @@
   font-weight: 600;
   margin-bottom: 30px;
 }
+@media (max-width: 1200px) {
+  .investmentWrapSection .delistingsUpdate .delistingsTextWrap h4 {
+    margin-bottom: 15px;
+  }
+}
 
 @media (max-width: 480px) {
   .investmentWrapSection .delistingsUpdate .delistingsTextWrap h4 {
@@ -81,6 +100,11 @@
   font-size: 12px;
   font-weight: 400;
   margin-bottom: 60px;
+}
+@media (max-width: 1200px) {
+  .investmentWrapSection .delistingsUpdate .delistingsTextWrap p {
+    margin-bottom: 45px;
+  }
 }
 
 @media (max-width: 767px) {
@@ -137,6 +161,11 @@
 .coinSectionWrap .MobileCrousle {
   width: 100%;
 }
+/* @media (max-width:991px){
+  .coinSectionWrap .MobileCrousle {
+    padding-bottom: 60px;
+  }
+} */
 
 .coinSectionWrap .coinDetailSection {
   -webkit-box-shadow: 0px 3px 15px 0px rgba(50, 50, 50, 0.1);
@@ -180,11 +209,16 @@
   padding-left: 24px;
 }
 
-@media (max-width: 767px) {
+@media (max-width: 1200px) {
   .coinSectionWrap .coinDetailSection .coinSectionHeader {
     padding-bottom: 15px;
+    margin-bottom: 15px;
     padding-right: 15px;
     padding-left: 15px;
+  }
+  .coinSectionWrap .coinDetailSection .coinSectionHeader img{
+    width: 35px;
+    height: 35px;
   }
 }
 
@@ -220,7 +254,7 @@
   padding: 0 12px;
 }
 
-@media (max-width: 767px) {
+@media (max-width: 1200px) {
   .coinSectionWrap .coinDetailSection .coinSectionHeader .coinNameValue {
     padding: 0 6px;
   }
@@ -232,6 +266,11 @@
   font-weight: 600;
   color: #16161f;
 }
+@media (max-width: 1200px) {
+  .coinSectionWrap .coinDetailSection .coinSectionHeader .coinNameValue h5 {
+    font-size: 14px;
+  }
+}
 
 .coinSectionWrap .coinDetailSection .coinSectionHeader .coinNameValue p {
   margin-bottom: 0;
@@ -242,18 +281,44 @@
   align-items: flex-start;
   padding-top: 5px;
 }
+@media (max-width: 1200px) {
+  .coinSectionWrap .coinDetailSection .coinSectionHeader .coinNameValue p {
+    font-size: 12px;
+  }
+  .coinSectionWrap .coinDetailSection .coinSectionHeader .coinNameValue p img {
+    width: 25px;
+    height: 25px;
+  }
+}
 
 .coinSectionWrap .coinDetailSection .GraphSection {
   padding-right: 24px;
   padding-left: 24px;
   margin-bottom: 40px;
 }
+@media (max-width: 1200px) {
+  .coinSectionWrap .coinDetailSection .GraphSection {
+    margin-bottom: 20px;
+  }
+}
 
 @media (max-width: 767px) {
   .coinSectionWrap .coinDetailSection .GraphSection {
     padding-right: 15px;
     padding-left: 15px;
-    margin-bottom: 30px;
+  }
+}
+
+@media (max-width: 991px) {
+  .coinSectionWrap .coinDetailSection .GraphSection .graph0,.coinSectionWrap .coinDetailSection .GraphSection .graph1,.coinSectionWrap .coinDetailSection .GraphSection .graph2{
+    max-width: 320px;
+    margin: 0 auto;
+  }
+}
+@media (max-width: 480px) {
+  .coinSectionWrap .coinDetailSection .GraphSection .graph0,.coinSectionWrap .coinDetailSection .GraphSection .graph1,.coinSectionWrap .coinDetailSection .GraphSection .graph2{
+    max-width: 210px;
+    margin: 0 auto;
   }
 }
 
@@ -798,6 +863,17 @@
   border-bottom: 2px solid #e5e8ef;
   flex-wrap: wrap ;
 }
+@media(max-width:991px){
+  .coinDetailPrice .coinDetailHeader {
+    padding-bottom: 24px;
+  }
+}
+@media(max-width:1085px){
+  .coinDetailPrice .coinDetailHeader.static {
+    padding-bottom: 24px;
+  }
+}
+
 
 .coinDetailPrice .textSection {
   margin-left: 12px;
@@ -815,15 +891,44 @@
   font-weight: 600;
   color: #a7b4cb;
 }
+@media (max-width:480px){
+  .coinDetailPrice .textSection p.gsxText {
+    margin-bottom: 0;
+  }
+}
 
-.coinDetailPrice .textSection p.comingSoon {
+.coinDetailPrice .priceCount.priceCountDetail {
+  display: inline-block;
+    height: 90px;
+    position: relative;
+    width: 100%;
+}
+.coinDetailPrice .priceCount.priceCountDetail p{
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+.coinDetailPrice .priceCount p.comingSoon {
   font-size: 14px;
   font-weight: 600;
   color: #a7b4cb;
   position: absolute;
-  bottom: -46px;
+  bottom: -16px;
+  top: auto;
+  padding: 0;
+  margin-bottom: 0;
+  width: 100%;
+  text-align: center;
 }
 
+
+/* .comingSoon1 {
+	position: absolute;
+	top: 220%;
+	left: 50%;
+	transform: translate(-50% , -50% );
+	width: 100%;
+} */
 .coinDetailPrice .priceCount p {
   padding: 23px;
   font-size: 21px;
@@ -1250,7 +1355,6 @@
   margin-right: 10px;
   counter-increment: gallery-cell;
 }
-
 @media (max-width: 767px) {
   .MobileCrousle .gallery-cell {
     width: 80%;
@@ -1393,6 +1497,12 @@ select.flat-select:hover {
   font-size: 21px;
   font-weight: 600;
 }
+@media (max-width:1200px){
+  .graphSectionHeader h3 {
+    font-size: 16px;
+    margin-bottom: 0;
+  }
+}
 .graphSectionHeader p {
   color: #16161f;
   font-size: 12px;
@@ -1430,16 +1540,41 @@ select.flat-select:hover {
   left: 10px;
 }
 .comming_soon_text{
-  min-height: 267px;
+  min-height: 225px;
   display: flex;
   align-items: center;
   justify-content: center;
   text-align: center;
 }
+@media (max-width:1200px){
+  .comming_soon_text{
+    min-height: 190px;
+  }
+}
+@media (max-width:1100px){
+  .comming_soon_text{
+    min-height: 150px;
+  }
+}
+@media (max-width:991px){
+  .comming_soon_text{
+    min-height: 270px;
+  }
+}
+@media (max-width:480px){
+  .comming_soon_text{
+    min-height: 187px;
+  }
+}
 .comming_soon_text p {
     font-size: 25px;
     font-weight: 600;
     color: #a7b4cb;
+}
+@media (max-width:1100px){
+  .comming_soon_text p {
+    font-size: 20px;
+  }
 }
 .buySellBox span {
 	font-size: 14px;
@@ -1450,12 +1585,4 @@ select.flat-select:hover {
 .buySellBox p {
 	justify-content: center;
 	padding-top: 10px;
-}
-
-.comingSoon1 {
-	position: absolute;
-	top: 220%;
-	left: 50%;
-	transform: translate(-50% , -50% );
-	width: 100%;
 }

@@ -36,7 +36,7 @@
                         </div>
                         <div class="coinSelection">
                             <ul>
-                                <div class="MobileCrousle">
+                                <div class="MobileCrousle mobile">
                                     <div class="gallery js-flickity" data-flickity-options='{ "cellAlign": "left", "wrapAround": false, "contain": true, "prevNextButtons": false, "pageDots": false }'>
                                         {foreach $token_details as $tkn_detail}
                                         <div class="gallery-cell">
@@ -87,32 +87,24 @@
                                         <div class="gallery-cell" disabled>
                                             <li>
                                                 <a href="javascript:;" class="coinDetailPrice"  data-coin="gsx">
-                                                    <div class="coinDetailHeader">
+                                                    <div class="coinDetailHeader static">
                                                         <img src="{$system['system_url']}/content/themes/default/images/investment/gsx.svg"
                                                             alt="bit coin">
-                                                        <div class="textSection">
+                                                        <div class="textSection" style="width: calc(100% - 60px);">
                                                             <h5>Gold Secured Currency</h5>
-                                                            <p>GSX</p>
-                                                            <p class="comingSoon comingSoon1">Coming Soon</p>
+                                                            <p class="gsxText">GSX</p>
                                                         </div>
-                                                          <div class="priceCount priceCountDetail">
+                                                          <div class="priceCount priceCountDetail" style="width: 100%;position: relative;">
                                                             <p>
-                                                                <span>
-                                                                    0.1
-                                                                </span>
-                                                                USD
+                                                                <span>0.1</span>USD
                                                             </p>
+                                                            <p class="comingSoon comingSoon1">Coming Soon</p>
                                                         </div>
                                                     </div>
                                                      <div class="buySellBox">
                                                             <p class="d-flex align-items-start ">
-                                                                <img src="{$system['system_url']}/content/themes/default/images/svg/svgImg/Wallet_icon_header.svg"
-                                                                    alt="wallet">
-                                                                    <span>
-                                                                        0 GSX
-                                                                        <br/>
-                                                                        $0
-                                                                    </span>
+                                                                <img src="{$system['system_url']}/content/themes/default/images/svg/svgImg/Wallet_icon_header.svg" alt="wallet">
+                                                                <span>0 GSX<br/>$0</span>
                                                             </p>
                                                         </div>
                                                   
