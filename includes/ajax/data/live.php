@@ -27,13 +27,20 @@ if (!isset($_POST['last_request']) || !isset($_POST['last_message']) || !isset($
 if (!is_numeric($_POST['last_request']) || !is_numeric($_POST['last_message']) || !is_numeric($_POST['last_notification'])) {
 	_error(400);
 }
-
+global $db;
 try {
+	
 
 	// initialize the return array
 	$return = array();
 	// [1] check for new requests
 	$requests = $user->get_friend_requests(0, $_POST['last_request']);
+	$get_referrer = $db->query(sprintf("SELECT chat_sound FROM users WHERE user_id = %s", secure($user->_data['user_id']))) or _error("SQL_ERROR_THROWEN");
+        if ($get_referrer->num_rows == 0) {
+            return;
+        }
+    $chatsound = $get_referrer->fetch_assoc()['chat_sound'];	
+	$return['chat_sound'] =  $chatsound;
 	if (count($requests) > 0) {
 		/* assign variables */
 		$smarty->assign('requests', $requests);

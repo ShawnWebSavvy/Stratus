@@ -471,7 +471,7 @@
                                     <!-- <div class="heading-small mb20">
                                     {__("Email Address")}
                                 </div> -->
-                                    {if !$user->_data['user_email_verified']}
+                                    {if $user->_data['user_email_verified']==0}
                                     <div class="alert alert-danger">
                                         <div class="icon">
                                             <i class="fa fa-exclamation-circle fa-2x"></i>

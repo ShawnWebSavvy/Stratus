@@ -593,6 +593,7 @@ function button_status(e, t) {
                         s = window.location.href;
                     "localhost" == t ? s == a + "/sngine/?parm=addpost" && window.history.pushState({}, document.title, "/sngine") : s == a + "/?parm=addpost" && window.history.pushState({}, document.title, "/");
                 }
+                else {}
                 $("#ajax-sell-new-product").trigger("reset"),
                     $("#js_hide_div").show(),
                     e.stopPropagation(),

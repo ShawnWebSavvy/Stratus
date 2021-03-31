@@ -135,7 +135,7 @@
                         <div class="input-group-prepend">
                             <span class="input-group-text"><i class="fas fa-globe fa-fw"></i></span>
                         </div>-->
-                            <label for="" class="label">{__("Username")}</label>
+                            <label for="" class="label">{__("Username")} <span>*</span></label>
                             <input name="username" maxlength="50" type="text" class="form-control"
                                 placeholder='{__("Username")}' required>
                             <!--</div>-->
@@ -145,7 +145,7 @@
                         <div class="input-group-prepend">
                             <span class="input-group-text"><i class="fas fa-user fa-fw"></i></span>
                         </div>-->
-                            <label for="" class="label">{__("First name")}</label>
+                            <label for="" class="label">{__("First name")} <span>*</span></label>
                             <input name="first_name" maxlength="20" type="text" class="form-control"
                                 placeholder='{__("First name")}' required>
                             <!--</div>-->
@@ -155,7 +155,7 @@
                         <div class="input-group-prepend">
                             <span class="input-group-text"><i class="fas fa-user fa-fw"></i></span>
                         </div>-->
-                            <label for="" class="label">{__("Last name")}</label>
+                            <label for="" class="label">{__("Last name")} <span>*</span></label>
                             <input name="last_name" maxlength="20" type="text" class="form-control"
                                 placeholder='{__("Last name")}' required>
                             <!--</div>-->
@@ -174,7 +174,7 @@
                         <div class="input-group-prepend">
                             <span class="input-group-text"><i class="fas fa-envelope fa-fw"></i></span>
                         </div>-->
-                            <label for="" class="label">{__("Email")}</label>
+                            <label for="" class="label">{__("Email")} <span>*</span></label>
                             <input name="email" maxlength="60" type="email" class="form-control"
                                 placeholder='{__("Email")}' required>
                             <!--</div>-->
@@ -197,7 +197,7 @@
                             <div class="input-group-prepend">
                                 <span class="input-group-text"><i class="fas fa-key fa-fw"></i></span>
                             </div>-->
-                                <label for="" class="label">{__("Password")}</label>
+                                <label for="" class="label">{__("Password")} <span>*</span></label>
                                 <input name="password" type="password" class="form-control"
                                     placeholder='{__("Password")}' required>
                                 <!--</div>-->

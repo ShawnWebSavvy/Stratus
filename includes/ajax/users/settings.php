@@ -15,7 +15,8 @@ is_ajax();
 
 // user access
 user_access(true);
-
+require('../../../includes/class-user-global.php');
+$userGlobal = new UserGlobal();
 try {
 
 	switch ($_GET['edit']) {
@@ -160,7 +161,6 @@ try {
 		case 'notifications':
 			// change settings
 			$user->settings($_GET['edit'], $_POST);
-
 			// return
 			return_json(array('success' => true, 'message' => __("Your notifications settings have been updated")));
 			break;

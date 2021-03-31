@@ -2501,6 +2501,11 @@ class UserGlobal
                     } else if (array_key_exists('hash', $changePasswordApiResponse) && $changePasswordApiResponse['message'] == 'Password has been reset.') {
                         $passwordhash = $changePasswordApiResponse['hash'];
                         $db->query(sprintf("UPDATE users SET user_password = %s WHERE user_id = %s", secure($passwordhash), secure($this->_data['user_id'], 'int'))) or _error("SQL_ERROR_THROWEN");
+
+                         $redisObject = new RedisClass();
+                        $redisPostKey = 'user-' . $this->_data['user_id'];
+                        $redisObject->deleteValueFromKey($redisPostKey);
+                        cachedUserData($db, $system, $this->_data['user_id'], $this->_data['active_session_token']);
                     } else {
                         throw new Exception(__("Your current password is incorrect"));
                     }
@@ -3824,6 +3829,7 @@ class UserGlobal
                     return false;
                 }
                 $post['file'] = $get_file->fetch_assoc();
+                $post['colored_pattern'] = $this->get_posts_colored_pattern($post['colored_pattern']);
                 break;
 
             case 'shared':
@@ -5853,6 +5859,32 @@ class UserGlobal
         }
     }
 
+    public function session_sign_out($active_session_id,$user_id)
+    {
+        global $db, $system;
+        $db->query(sprintf("DELETE FROM users_sessions WHERE session_id = %s AND user_id = %s", secure($active_session_id, 'int'), secure($user_id, 'int') )) or _error("SQL_ERROR_THROWEN");
+			session_destroy();
+			unset($_COOKIE[$this->_cookie_user_id]);
+        	unset($_COOKIE[$this->_cookie_user_token]);
+        	setcookie($this->_cookie_user_id, NULL, -1, '/');
+        	setcookie($this->_cookie_user_token, NULL, -1, '/');
+			$redisObject = new RedisClass();
+            $redisPostKey = 'user-' . $user_id;
+            $redisObject->deleteValueFromKey($redisPostKey);
+    }
+    public function sessions_sign_out($active_session_id,$user_id)
+    {
+        global $db, $system;
+        $db->query(sprintf("DELETE FROM users_sessions WHERE session_id != %s AND user_id = %s", secure($active_session_id), secure($user_id, 'int') )) or _error("SQL_ERROR_THROWEN");
+			session_destroy();
+			unset($_COOKIE[$this->_cookie_user_id]);
+        	unset($_COOKIE[$this->_cookie_user_token]);
+        	setcookie($this->_cookie_user_id, NULL, -1, '/');
+        	setcookie($this->_cookie_user_token, NULL, -1, '/');
+			$redisObject = new RedisClass();
+            $redisPostKey = 'user-' . $user_id;
+            $redisObject->deleteValueFromKey($redisPostKey);
+    }
     public function global_sign_out($paramsData = [])
     {
         global $db, $date;

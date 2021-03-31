@@ -15,6 +15,9 @@ is_ajax();
 // user access
 user_access(true);
 
+require('../../../includes/class-user-global.php');
+$userGlobal = new UserGlobal();
+
 try {
 
 	switch ($_POST['handle']) {
@@ -23,14 +26,15 @@ try {
 			if(!isset($_POST['id']) || !is_numeric($_POST['id'])) {
 				_error(400);
 			}
-
+			$userGlobal->session_sign_out($_POST['id'],$user->_data['user_id']);
 			// delete session
-			$db->query(sprintf("DELETE FROM users_sessions WHERE session_id = %s AND user_id = %s", secure($_POST['id'], 'int'), secure($user->_data['user_id'], 'int') )) or _error("SQL_ERROR_THROWEN");
+			//$db->query(sprintf("DELETE FROM users_sessions WHERE session_id = %s AND user_id = %s", secure($_POST['id'], 'int'), secure($user->_data['user_id'], 'int') )) or _error("SQL_ERROR_THROWEN");
 			break;
 
 		case 'sessions':
 			// delete sessions
-			$db->query(sprintf("DELETE FROM users_sessions WHERE session_id != %s AND user_id = %s", secure($user->_data['active_session_id']), secure($user->_data['user_id'], 'int') )) or _error("SQL_ERROR_THROWEN");
+				$userGlobal->sessions_sign_out($user->_data['active_session_id'],$user->_data['user_id']);
+			//$db->query(sprintf("D=ELETE FROM users_sessions WHERE session_id != %s AND user_id = %s", secure($user->_data['active_session_id']), secure($user->_data['user_id'], 'int') )) or _error("SQL_ERROR_THROWEN");
 			break;
 
 		default:

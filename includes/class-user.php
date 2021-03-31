@@ -4835,29 +4835,7 @@ class User
 
             }  return $html;
         }
-        // $data= explode(' ',$str);
-        // $emojis = array();
-        // global $db;
-        // $get_emojis = $db->query("SELECT * FROM emojis") or _error("SQL_ERROR_THROWEN");
-        // if ($get_emojis->num_rows > 0) {
-        //     while ($emoji = $get_emojis->fetch_assoc()) {
-        //         $replacement = "<i class='twa twa-" . $emoji['class'] . "'></i>";
-        //         $pattern = $emoji['pattern'];
-        //         $emojis[$pattern]= $replacement;
-        //     }
-        // }
-        // $newstr= $str;
-        // for($d=0;$d<count($data);$d++)
-        // {
-            
-        //     if(isset($emojis[$data[$d]])) {
-        //             $data[$d] = $emojis[$data[$d]];
-        //     }
-            
-         
-        // }
-        // $laststrting = implode(' ',$data);
-        // return $laststrting;
+       
         
     }
     
@@ -5468,6 +5446,7 @@ class User
         $post['text'] = $this->_parse(["text" => $post['text_plain'], "trending_hashtags" => true, "post_id" => $post['post_id']]);
 
         /* get post colored pattern */
+        
         $post['colored_pattern'] = $this->get_posts_colored_pattern($post['colored_pattern']);
 
         /* user can manage the post */
@@ -6166,6 +6145,7 @@ class User
                     return false;
                 }
                 $post['file'] = $get_file->fetch_assoc();
+                $post['colored_pattern'] = $this->get_posts_colored_pattern($post['colored_pattern']);
                 break;
 
             case 'shared':
@@ -16592,8 +16572,6 @@ class User
         }
     }
 
-
-
     /* ------------------------------- */
     /* Download User Information */
     /* ------------------------------- */
@@ -17012,6 +16990,7 @@ class User
         /* send activation */
         if ($system['activation_enabled']) {
             if ($system['activation_type'] == "email") {
+                
                 /* prepare activation email */
                 $subject = __("Just one more step to get started on") . " " . $system['system_title'];
                 $body = get_email_template("activation_email", $subject, ["first_name" => $args['first_name'], "last_name" => $args['last_name'], "email_verification_code" => $email_verification_code]);

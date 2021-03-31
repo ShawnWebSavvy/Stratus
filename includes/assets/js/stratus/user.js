@@ -155,6 +155,7 @@ function data_heartbeat() {
                                 : $(".js_live-messages-alt")
                                     .find(".js_scroller")
                                     .html("<ul>" + response.conversations + "</ul>")),
+                                    
                             $(".js_live-messages")
                                 .find(".js_scrollerGroup")
                                 .html("<ul>" + response.conversations_group + "</ul>"),
@@ -164,8 +165,8 @@ function data_heartbeat() {
                                 : $(".js_live-messages-alt")
                                     .find(".js_scrollerGroup")
                                     .html("<ul>" + response.conversations_group + "</ul>")),
-                            response.conversations_count > 0
-                                ? ($(".js_live-messages").find("span.counter").text(response.conversations_count).show(), chat_sound)
+                            response.chat_sound == '1'
+                                ?($(".js_live-messages").find("span.counter").text(response.conversations_count).show(), chat_sound)
                                 : $(".js_live-messages").find("span.counter").text(response.conversations_count)),
                         response.notifications)
                 ) {
