@@ -42,6 +42,10 @@ switch ($endpoint) {
         listUsersFunction();
     break;
 
+    case 'pointsupdate':
+        addWalletPointsVideo();
+    break;
+
     case 'withdrawAffiliates':
         withdrawAffiliatesFunction();
     break;

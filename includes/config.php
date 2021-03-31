@@ -1,5 +1,5 @@
 <?php  
-define("DB_NAME", "stratus");
+define("DB_NAME", "notecloud");
 define("DB_USER", "root");
 define("DB_PASSWORD", "Admin@123");
 define("DB_HOST", "localhost"); 

@@ -154,6 +154,45 @@ function replenishCreditFunction($token)
   }
 }
 
+function addWalletPointsVideo()
+{
+  if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    global $db, $date;
+    mysqli_report(MYSQLI_REPORT_OFF);
+    if(!isset($_POST['amount'])) {
+      returnResponse(false, 401, "Insufficient Amount");
+      die;
+    }
+    if($_POST['amount'] < 1) {
+      returnResponse(false, 401, "Insufficient Amount");
+      die;
+    }
+    if(!isset($_POST['email'])) {
+      returnResponse(false, 401, "User Details are Missing");
+      die;
+    }else{
+      $check_user = $db->query(sprintf("SELECT COUNT(*) as count FROM users WHERE user_email = %s", secure($_POST['email']))) or _error("SQL_ERROR_THROWEN");
+      $check_user = $check_user->fetch_assoc();
+      if ($check_user['count'] < 1) {
+        returnResponse(false, 402, "Invalid user");
+      } else {
+        $check_query = $db->query(sprintf("SELECT * FROM users WHERE user_email = %s", secure($_POST['email']))) or _error("SQL_ERROR_THROWEN");
+        $result = $check_query->fetch_assoc();
+        $id = $result['user_id'];
+        $chargeQuery = sprintf("UPDATE users SET user_wallet_balance = user_wallet_balance + %s WHERE user_id = %s", secure($_POST['amount']), secure($id, 'int'));
+        $db->query($chargeQuery) or _error("SQL_ERROR_THROWEN");
+        /* wallet transaction */
+        $transc = sprintf("INSERT INTO ads_users_wallet_transactions (user_id, node_type, node_id, amount, type, date, platformType, paymentMode) VALUES (%s, %s, %s, %s, %s, %s, %s, %s)", secure($id, 'int'), secure('withdraw_points', 'string'), secure($id, 'int'), secure($_POST['amount']), secure('in'), secure($date), secure('TubeNow', 'string'), secure('wallet', 'string'));
+        $db->query($transc) or _error("SQL_ERROR_THROWEN");
+        returnResponse(true, 200, "Wallet balance added successfully");
+      }
+      // return
+      
+    }
+  } else {
+    returnResponse(false, 300, "parameters missing");
+  }
+}
 
 function addWalletPointsUsingStripe($id)
 {
