@@ -268,8 +268,8 @@
                             <div class="dropdown-item pointer js_hide-author" data-author-id="{$_post['user_id']}" data-author-name="{$_post['post_author_name']}">
                                 <div class="action">
                                    <div class="post_images__">
-                                    <img src="{$system['system_url']}/content/themes/default/images/svg/svgImg/timelineOff.svg" class="blackicon">
-                                    <img src="{$system['system_url']}/content/themes/default/images/svg/svgImg/timelineOff-hover.svg" class="whiteicon"> 
+                                    <img src="{$system['system_uploads_assets']}/content/themes/default/images/svg/svgImg/timelineOff.svg" class="blackicon">
+                                    <img src="{$system['system_uploads_assets']}/content/themes/default/images/svg/svgImg/timelineOff-hover.svg" class="whiteicon"> 
                                     </div>
                                    {__("Unfollow")} {$_post['user_firstname']}
                                 </div>
@@ -279,8 +279,8 @@
                         <div class="dropdown-item pointer js_hide-post">
                             <div class="action">
                                 <div class="post_images__">
-                                    <img src="{$system['system_url']}/content/themes/default/images/svg/svgImg/timelineOff.svg" class="blackicon">
-                                    <img src="{$system['system_url']}/content/themes/default/images/svg/svgImg/timelineOff-hover.svg" class="whiteicon"> 
+                                    <img src="{$system['system_uploads_assets']}/content/themes/default/images/svg/svgImg/timelineOff.svg" class="blackicon">
+                                    <img src="{$system['system_uploads_assets']}/content/themes/default/images/svg/svgImg/timelineOff-hover.svg" class="whiteicon"> 
                                     </div>
                                      {__("Hide this post")}
                             </div>
@@ -289,8 +289,8 @@
                         <div class="dropdown-item pointer js_report" data-handle="post" data-id="{$_post['post_id']}">
                             <div class="action no-desc">
                                  <div class="post_images__">
-                                    <img src="{$system['system_url']}/content/themes/default/images/svg/svgImg/timelineOff.svg" class="blackicon">
-                                    <img src="{$system['system_url']}/content/themes/default/images/svg/svgImg/timelineOff-hover.svg" class="whiteicon"> 
+                                    <img src="{$system['system_uploads_assets']}/content/themes/default/images/svg/svgImg/timelineOff.svg" class="blackicon">
+                                    <img src="{$system['system_uploads_assets']}/content/themes/default/images/svg/svgImg/timelineOff-hover.svg" class="whiteicon"> 
                                     </div>
                                      {__("Report post")}
                             </div>
@@ -300,8 +300,8 @@
                     <a href="{$system['system_url']}/posts/{$_post['post_id']}" target="_blank" class="dropdown-item openInNewTab">
                         <div class="action no-desc">
                             <div class="post_images__">
-                                <img src="{$system['system_url']}/content/themes/default/images/svg/svgImg/timelineOff.svg" class="blackicon">
-                                <img src="{$system['system_url']}/content/themes/default/images/svg/svgImg/timelineOff-hover.svg" class="whiteicon"> 
+                                <img src="{$system['system_uploads_assets']}/content/themes/default/images/svg/svgImg/timelineOff.svg" class="blackicon">
+                                <img src="{$system['system_uploads_assets']}/content/themes/default/images/svg/svgImg/timelineOff-hover.svg" class="whiteicon"> 
                             </div>
                             <span> {__("Open post in new tab")}</span>
                         </div>
@@ -311,8 +311,8 @@
                         <a href="{$_post['post_author_url']}" target="_blank" class="dropdown-item">
                             <div class="action no-desc">
                                  <div class="post_images__">
-                                    <img src="{$system['system_url']}/content/themes/default/images/svg/svgImg/timelineOff.svg" class="blackicon">
-                                    <img src="{$system['system_url']}/content/themes/default/images/svg/svgImg/timelineOff-hover.svg" class="whiteicon"> 
+                                    <img src="{$system['system_uploads_assets']}/content/themes/default/images/svg/svgImg/timelineOff.svg" class="blackicon">
+                                    <img src="{$system['system_uploads_assets']}/content/themes/default/images/svg/svgImg/timelineOff-hover.svg" class="whiteicon"> 
                                     </div>
                                     {__("Open Author Profile")}
                             </div>
@@ -436,7 +436,7 @@
             {if $_get != 'posts_group' && $_post['in_group']}
                 <i class="fa fa-caret-right ml5 mr5"></i>
                 <!-- <i class="fa fa-users ml5 mr5"></i> -->
-                <img src="{$system['system_url']}/content/themes/default/images/svg/svgImg/newgroupIcon1.svg" class="ml5 mr5">
+                <img src="{$system['system_uploads_assets']}/content/themes/default/images/svg/svgImg/newgroupIcon1.svg" class="ml5 mr5">
                 <a href="{$system['system_url']}/groups/{$_post['group_name']}">{$_post['group_title']}</a>
 
             {elseif $_get != 'posts_event' && $_post['in_event']}

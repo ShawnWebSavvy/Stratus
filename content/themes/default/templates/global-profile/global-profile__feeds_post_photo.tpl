@@ -58,14 +58,14 @@
                 {elseif $post['privacy'] == "friends"}
                 <!-- <i class="fa fa-users" data-toggle="tooltip" data-placement="top" title='{__("Shared with")} {__("Friends")}'></i> -->
                 <span class="share_sign_img" data-toggle="tooltip" data-placement="top"
-                    title='{__("Shared with")} {__("Friends")}'> <img
-                        src="{$system['system_url']}/content/themes/default/images/svg/svgImg/friendsIcon.svg"
+                    title='{__("Shared with")} {__("Friends")}'> 
+                    <img src="{$system['system_uploads_assets']}/content/themes/default/images/svg/svgImg/friendsIcon.svg"
                         class="blackicon"> </span>
                 {elseif $post['privacy'] == "public"}
                 <!-- <i class="fa fa-globe" data-toggle="tooltip" data-placement="top" title='{__("Shared with")} {__("Public")}'></i> -->
                 <span class="share_sign_img" data-toggle="tooltip" data-placement="top"
                     title='{__("Shared with")}: {__("Public")}'> <img
-                        src="{$system['system_url']}/content/themes/default/images/svg/svgImg/nav_icon_globalHub.svg"
+                        src="{$system['system_uploads_assets']}/content/themes/default/images/svg/svgImg/nav_icon_globalHub.svg"
                         class="blackicon"> </span>
                 {elseif $post['privacy'] == "custom"}
                 <i class="fa fa-cog" data-toggle="tooltip" data-placement="top"
@@ -147,7 +147,7 @@
                         </div>
                         <span id="retweetCount_{$post['post_id']}" class="reaction-counting">{$post['retweet']}</span>
                     </button>
-                    <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                    <div class="dropdown-menu dropdown-menu-left post-dropdown-menu" aria-labelledby="dropdownMenuButton">
                         <a class="dropdown-item" href="#">Repost</a>
                         <a class="dropdown-item" href="#">Quote Post</a>
                     </div>
@@ -198,7 +198,7 @@
                     </div>
                     <span>{$post['shares']} </span>
                 </button>
-                <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                <div class="dropdown-menu dropdown-menu-right post-dropdown-menu" aria-labelledby="dropdownMenuButton">
                     <a class="dropdown-item" id="js_send_direct_message" href="javascript:void(0);"
                         data-id="{$post['post_id']}" data-userid="{$user->_data['user_id']}"
                         data-clipboard-text="{$system['system_url']}/global-profile-posts/{$post['post_id']}">Send via

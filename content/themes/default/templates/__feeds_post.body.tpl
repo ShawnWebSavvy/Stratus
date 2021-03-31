@@ -311,8 +311,8 @@
                 <a href="{$_post['post_author_url']}" class="dropdown-item">
                     <div class="action no-desc">
                         <div class="post_images__">
-                            <img src="{$system['system_url']}/content/themes/default/images/svg/svgImg/timelineOff.svg" class="blackicon">
-                            <img src="{$system['system_url']}/content/themes/default/images/svg/svgImg/timelineOff-hover.svg" class="whiteicon"> 
+                            <img src="{$system['system_uploads_assets']}/content/themes/default/images/svg/svgImg/timelineOff.svg" class="blackicon">
+                            <img src="{$system['system_uploads_assets']}/content/themes/default/images/svg/svgImg/timelineOff-hover.svg" class="whiteicon"> 
                         </div>
                         <span>{__("Open Author Profile")}</span>
                     </div>

@@ -118,31 +118,24 @@
                                 {if $system['photos_enabled']}
                                 <li class="">
                                     <div class="publisher-tools-tab attach js_publisher-tab" data-tab="photos">
-                                        <img alt="image" title="Upload Image"
-                                            src="{$system['system_uploads_assets']}/content/themes/{$system['theme']}/images/svg/svgImg/photo_message_icon.svg"
-                                            class="js_x-uploader" data-handle="publisher"
-                                            data-multiple="true" />{__("Photos")}
+                                        <img alt="image" title="Upload Image" src="{$system['system_uploads_assets']}/content/themes/{$system['theme']}/images/svg/svgImg/photo_message_icon.svg"
+                                            class="js_x-uploader" data-handle="publisher" data-multiple="true" />{__("Photos")}
                                     </div>
                                 </li>
                                 {/if} {if $system['videos_enabled']}
                                 <li class="uplodfileTags">
                                     <div class="publisher-tools-tab attach js_publisher-tab" data-tab="video">
-                                        <img alt="video" title="Upload Video"
-                                            src="{$system['system_uploads_assets']}/content/themes/{$system['theme']}/images/svg/svgImg/add_video_icon.svg"
-                                            class="js_x-uploader" data-type="video" data-handle="publisher"
-                                            data-multiple="true" />
+                                        <img alt="video" title="Upload Video" src="{$system['system_uploads_assets']}/content/themes/{$system['theme']}/images/svg/svgImg/add_video_icon.svg"
+                                            class="js_x-uploader" data-type="video" data-handle="publisher" data-multiple="true"/>
                                     </div>
                                 </li>
                                 {if $user->_data['can_go_live'] && $_handle != "page" && $_handle != "group" && $_handle
                                 != "event"}
                                 <li class="">
                                     <div class="publisher-tools-tab attach js_publisher-tab" data-tab="photos">
-
                                         <a style="margin-left: 0;" data-tab="live" href="{$system['system_url']}/live">
-                                            <img alt="image" title="Go Live"
-                                                src="{$system['system_uploads_assets']}/content/themes/{$system['theme']}/images/svg/live.svg"
-                                                class="" data-handle="publisher" data-multiple="true"
-                                                style="width:30px" />
+                                            <img alt="image" title="Go Live" src="{$system['system_uploads_assets']}/content/themes/{$system['theme']}/images/svg/live.svg"
+                                                class="" data-handle="publisher" data-multiple="true" style="width:30px"/>
                                         </a>
                                     </div>
                                 </li>

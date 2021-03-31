@@ -29,8 +29,8 @@
                             <div class="dropdown-item pointer js_sold-post">
                                 <div class="action no-desc">
                                     <div class="post_images__">
-                                        <img style="height:20px;width:20px;" src="{$system['system_url']}/content/themes/default/images/svg/svgImg/blogNewsWhite.svg" class="blackicon">
-                                        <img style="height:20px;width:20px;" src="{$system['system_url']}/content/themes/default/images/svg/svgImg/blogNewsHover.svg" class="whiteicon">
+                                        <img style="height:20px;width:20px;" src="{$system['system_uploads_assets']}/content/themes/default/images/svg/svgImg/blogNewsWhite.svg" class="blackicon">
+                                        <img style="height:20px;width:20px;" src="{$system['system_uploads_assets']}/content/themes/default/images/svg/svgImg/blogNewsHover.svg" class="whiteicon">
                                     </div>
                                     <span>{__("Mark as Sold")}</span>
                                 </div>
@@ -39,8 +39,8 @@
                             <div class="dropdown-item pointer js_unsold-post">
                                 <div class="action no-desc">
                                     <div class="post_images__">
-                                        <img style="height:20px;width:20px;" src="{$system['system_url']}/content/themes/default/images/svg/svgImg/blogNewsWhite.svg" class="blackicon">
-                                        <img style="height:20px;width:20px;" src="{$system['system_url']}/content/themes/default/images/svg/svgImg/blogNewsHover.svg" class="whiteicon">
+                                        <img style="height:20px;width:20px;" src="{$system['system_uploads_assets']}/content/themes/default/images/svg/svgImg/blogNewsWhite.svg" class="blackicon">
+                                        <img style="height:20px;width:20px;" src="{$system['system_uploads_assets']}/content/themes/default/images/svg/svgImg/blogNewsHover.svg" class="whiteicon">
                                     </div>
                                     <span>{__("Mark as Available")}</span>
                                 </div>
@@ -272,8 +272,8 @@
                                 data-author-name="{$_post['post_author_name']}">
                                 <div class="action">
                                     <div class="post_images__">
-                                        <img src="{$system['system_url']}/content/themes/default/images/svg/svgImg/timelineOff.svg" class="blackicon">
-                                        <img src="{$system['system_url']}/content/themes/default/images/svg/svgImg/timelineOff-hover.svg" class="whiteicon">
+                                        <img src="{$system['system_uploads_assets']}/content/themes/default/images/svg/svgImg/timelineOff.svg" class="blackicon">
+                                        <img src="{$system['system_uploads_assets']}/content/themes/default/images/svg/svgImg/timelineOff-hover.svg" class="whiteicon">
                                     </div>
                                     {__("Unfollow")} {$_post['user_firstname']}
                                 </div>
@@ -322,8 +322,8 @@
                         <a href="{$_post['post_author_url']}" target="_blank" class="dropdown-item">
                             <div class="action no-desc">
                                 <div class="post_images__">
-                                    <img src="{$system['system_url']}/content/themes/default/images/svg/svgImg/timelineOff.svg" class="blackicon">
-                                    <img src="{$system['system_url']}/content/themes/default/images/svg/svgImg/timelineOff-hover.svg" class="whiteicon"> 
+                                    <img src="{$system['system_uploads_assets']}/content/themes/default/images/svg/svgImg/timelineOff.svg" class="blackicon">
+                                    <img src="{$system['system_uploads_assets']}/content/themes/default/images/svg/svgImg/timelineOff-hover.svg" class="whiteicon"> 
                                 </div>
                                 {__("Open Author Profile")}
                             </div>
@@ -451,7 +451,7 @@
             {if $_get != 'posts_group' && $_post['in_group']}
                 <i class="fa fa-caret-right ml5 mr5"></i>
                 <!-- <i class="fa fa-users ml5 mr5"></i> -->
-                <img src="{$system['system_url']}/content/themes/default/images/svg/svgImg/newgroupIcon1.svg"
+                <img src="{$system['system_uploads_assets']}/content/themes/default/images/svg/svgImg/newgroupIcon1.svg"
                     class="ml5 mr5">
                 <a href="{$system['system_url']}/groups/{$_post['group_name']}">{$_post['group_title']}</a>
 
@@ -515,7 +515,7 @@
                                     data-value="public">
                                     <!-- <i class="fa fa-globe"></i>  -->
                                     <span class="share_sign_img"> <img
-                                            src="{$system['system_url']}/content/themes/default/images/svg/svgImg/nav_icon_globalHub.svg"
+                                            src="{$system['system_uploads_assets']}/content/themes/default/images/svg/svgImg/nav_icon_globalHub.svg"
                                             class="blackicon"> </span>
                                     {__("Public")}
                                 </div>
@@ -523,7 +523,7 @@
                                     data-value="friends">
                                     <!-- <i class="fa fa-users"></i>  -->
                                     <span class="share_sign_img"> <img
-                                            src="{$system['system_url']}/content/themes/default/images/svg/svgImg/friendsIcon.svg"
+                                            src="{$system['system_uploads_assets']}/content/themes/default/images/svg/svgImg/friendsIcon.svg"
                                             class="blackicon"> </span>
                                     {__("Friends")}
                                 </div>
@@ -531,7 +531,7 @@
                                     data-value="me">
                                     <!-- <i class="fa fa-lock"></i> -->
                                     <span class="share_sign_img"> <img
-                                            src="{$system['system_url']}/content/themes/default/images/svg/svgImg/Hide_form.svg"
+                                            src="{$system['system_uploads_assets']}/content/themes/default/images/svg/svgImg/Hide_form.svg"
                                             class="blackicon"> </span>
                                     {__("Only Me")}
                                 </div>
@@ -546,13 +546,13 @@
                             <!-- <i class="fa fa-users" data-toggle="tooltip" data-placement="top" title='{__("Shared with")} {__("Friends")}'></i> -->
                             <span class="share_sign_img" data-toggle="tooltip" data-placement="top"
                                 title='{__("Shared with")} {__("Friends")}'> <img
-                                    src="{$system['system_url']}/content/themes/default/images/svg/svgImg/friendsIcon.svg"
+                                    src="{$system['system_uploads_assets']}/content/themes/default/images/svg/svgImg/friendsIcon.svg"
                                     class="blackicon"> </span>
                         {elseif $_post['privacy'] == "public"}
                             <!-- <i class="fa fa-globe" data-toggle="tooltip" data-placement="top" title='{__("Shared with")} {__("Public")}'></i> -->
                             <span class="share_sign_img" data-toggle="tooltip" data-placement="top"
                                 title='{__("Shared with")}: {__("Public")}'> <img
-                                    src="{$system['system_url']}/content/themes/default/images/svg/svgImg/nav_icon_globalHub.svg"
+                                    src="{$system['system_uploads_assets']}/content/themes/default/images/svg/svgImg/nav_icon_globalHub.svg"
                                     class="blackicon"> </span>
                         {elseif $_post['privacy'] == "custom"}
                             <i class="fa fa-cog" data-toggle="tooltip" data-placement="top"
