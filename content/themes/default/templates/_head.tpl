@@ -79,6 +79,8 @@
         href="{$system['system_uploads_assets']}/content/themes/default/css/style-responsive.css"  {if !$user->_logged_in}defer{/if}>
     <link rel="stylesheet" type='text/css'
         href="{$system['system_uploads_assets']}/content/themes/default/css/style-custom-light.css"  {if !$user->_logged_in}defer{/if}>
+        <link rel="stylesheet" type='text/css'
+        href="{$system['system_uploads_assets']}/content/themes/default/css/buttonCustom.css">
     <link rel="stylesheet" type='text/css'
         href="{$system['system_uploads_assets']}/content/themes/default/css/custom_responsive_style.css">
     <!-- CSS -->

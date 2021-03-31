@@ -336,7 +336,7 @@ video{max-width:100% !important;max-height:100% !important;height:100%; outline:
  to{background-position:0 0;}
 }
 body.publisher-focus .custom_modal_style .card.daytime_message{display:none !important;}
-.globalDropdown .dropdown-menu.show{left:100% !important;}
+/* .globalDropdown .dropdown-menu.show{left:100% !important;} */
 .global-profile-share .globalDropdown .dropdown-menu.show{left:auto !important;min-width:181px;}
  .chat-conversations.js_scroller{-ms-overflow-style:none;scrollbar-width:none;}
  .userNameWrap._user_details .mt5{display:flex;align-items:center;}
