@@ -20,8 +20,10 @@
         <!-- post menu -->
         {if !$_shared && $user->_logged_in && $_get != "posts_information"}
             <div class="float-right dropdown">
-                <i class="fa fa-chevron-down dropdown-toggle" data-toggle="dropdown" data-display="static"></i>
-                <div class="dropdown-menu dropdown-menu-right post-dropdown-menu">
+                <!-- <i class="fa fa-chevron-down dropdown-toggle" data-toggle="dropdown" data-display="static"></i> -->
+                <span class=" dropdown-toggle post_custm_option" data-toggle="dropdown" data-display="static"><i
+                    class="fas fa-ellipsis-h"></i></span>
+                <div class="dropdown-menu dropdown-menu-right post-dropdown-menu cmn_drpdwn_style">
                     {if $_post['manage_post'] && $_post['post_type'] == "product"}
                         {if $_post['product']['available']}
                             <div class="dropdown-item pointer js_sold-post">
@@ -49,13 +51,25 @@
                     {if $_post['i_save']}
                         <div href="#" class="dropdown-item pointer js_unsave-post">
                             <div class="action no-desc">
-                                <i class="fa fa-bookmark fa-fw"></i> <span>{__("Unsave Post")}</span>
+                                <div class="post_images__">
+                                    <img style="height:20px;width:20px;" src="{$system['system_uploads_assets']}/content/themes/default/images/svg/svgImg/bookMark.svg" class="blackicon">
+                                    <img style="height:20px;width:20px;" src="{$system['system_uploads_assets']}/content/themes/default/images/svg/svgImg/bookMarkHover.svg" class="whiteicon">
+                                </div>
+                                <span>{__("Unsave Post")}</span>
                             </div>
                         </div>
                     {else}
                         <div class="dropdown-item pointer js_save-post">
                             <div class="action no-desc">
-                                <i class="fa fa-bookmark fa-fw"></i> <span>{__("Save Post")}</span>
+                                <div class="post_images__">
+                                    <img style="height:20px;width:20px;"
+                                        src="{$system['system_uploads_assets']}/content/themes/default/images/svg/svgImg/bookMark.svg"
+                                        class="blackicon">
+                                    <img style="height:20px;width:20px;"
+                                        src="{$system['system_uploads_assets']}/content/themes/default/images/svg/svgImg/bookMarkHover.svg"
+                                        class="whiteicon">
+                                </div>
+                                <span>{__("Save Post")}</span>
                             </div>
                         </div>
                     {/if}
@@ -66,20 +80,44 @@
                             {if $_post['boosted']}
                                 <div class="dropdown-item pointer js_unboost-post">
                                     <div class="action no-desc">
-                                        <i class="fa fa-bolt fa-fw"></i> <span>{__("Unboost Post")}</span>
+                                        <div class="post_images__">
+                                            <img style="height:20px;width:20px;"
+                                                src="{$system['system_uploads_assets']}/content/themes/default/images/svg/svgImg/Boost_Post.svg"
+                                                class="blackicon">
+                                            <img style="height:20px;width:20px;"
+                                                src="{$system['system_uploads_assets']}/content/themes/default/images/svg/svgImg/Boost_Post-hover.svg"
+                                                class="whiteicon">
+                                        </div>
+                                        <span>{__("Unboost Post")}</span>
                                     </div>
                                 </div>
                             {else}
                                 {if $user->_data['can_boost_posts']}
                                     <div class="dropdown-item pointer js_boost-post">
                                         <div class="action no-desc">
-                                            <i class="fa fa-bolt fa-fw"></i> <span>{__("Boost Post")}</span>
+                                            <div class="post_images__">
+                                                <img style="height:20px;width:20px;"
+                                                    src="{$system['system_uploads_assets']}/content/themes/default/images/svg/svgImg/Boost_Post.svg"
+                                                    class="blackicon">
+                                                <img style="height:20px;width:20px;"
+                                                    src="{$system['system_uploads_assets']}/content/themes/default/images/svg/svgImg/Boost_Post-hover.svg"
+                                                    class="whiteicon">
+                                            </div>
+                                            <span>{__("Boost Post")}</span>
                                         </div>
                                     </div>
                                 {else}
                                     <a href="{$system['system_url']}/packages" class="dropdown-item">
                                         <div class="action no-desc">
-                                            <i class="fa fa-bolt fa-fw"></i> <span>{__("Boost Post")}</span>
+                                            <div class="post_images__">
+                                                <img style="height: 20px;width: 20px;"
+                                                    src="{$system['system_uploads_assets']}/content/themes/default/images/svg/svgImg/Boost_Post.svg"
+                                                    class="blackicon">
+                                                <img style="height: 20px;width: 20px;"
+                                                    src="{$system['system_uploads_assets']}/content/themes/default/images/svg/svgImg/Boost_Post-hover.svg"
+                                                    class="whiteicon">
+                                            </div>
+                                            <span>{__("Boost Post")}</span>
                                         </div>
                                     </a>
                                 {/if}
@@ -92,13 +130,25 @@
                                 {if $_post['pinned']}
                                     <div class="dropdown-item pointer js_unpin-post">
                                         <div class="action no-desc">
-                                            <i class="fa fa-thumbtack fa-fw"></i> <span>{__("Unpin Post")}</span>
+                                            <div class="post_images__">
+                                                <img src="{$system['system_uploads_assets']}/content/themes/default/images/svg/svgImg/pin_Post.svg"
+                                                    class="blackicon">
+                                                <img src="{$system['system_uploads_assets']}/content/themes/default/images/svg/svgImg/pin_Post-hover.svg"
+                                                    class="whiteicon">
+                                            </div>
+                                            <span>{__("Unpin Post")}</span>
                                         </div>
                                     </div>
                                 {else}
                                     <div class="dropdown-item pointer js_pin-post">
                                         <div class="action no-desc">
-                                            <i class="fa fa-thumbtack fa-fw"></i> <span>{__("Pin Post")}</span>
+                                            <div class="post_images__">
+                                                <img src="{$system['system_uploads_assets']}/content/themes/default/images/svg/svgImg/pin_Post.svg"
+                                                    class="blackicon">
+                                                <img src="{$system['system_uploads_assets']}/content/themes/default/images/svg/svgImg/pin_Post-hover.svg"
+                                                    class="whiteicon">
+                                            </div>
+                                            <span>{__("Pin Post")}</span>
                                         </div>
                                     </div>
                                 {/if}
@@ -110,19 +160,37 @@
                             <div class="dropdown-item pointer" data-toggle="modal"
                                 data-url="posts/product.php?do=edit&post_id={$_post['post_id']}">
                                 <div class="action no-desc">
-                                    <i class="fa fa-pencil-alt fa-fw"></i> {__("Edit Product")}
+                                    <div class="post_images__">
+                                        <img src="{$system['system_uploads_assets']}/content/themes/default/images/svg/svgImg/edit_icon.svg"
+                                            class="blackicon">
+                                        <img src="{$system['system_uploads_assets']}/content/themes/default/images/svg/svgImg/edit_icon_hover.svg"
+                                            class="whiteicon">
+                                    </div>
+                                    <span>{__("Edit Product")}</span>
                                 </div>
                             </div>
                         {elseif $_post['post_type'] == "article"}
                             <a href="{$system['system_url']}/blogs/edit/{$_post['post_id']}" class="dropdown-item pointer">
                                 <div class="action no-desc">
-                                    <i class="fa fa-pencil-alt fa-fw"></i> {__("Edit Article")}
+                                    <div class="post_images__">
+                                        <img src="{$system['system_uploads_assets']}/content/themes/default/images/svg/svgImg/edit_icon.svg"
+                                            class="blackicon">
+                                        <img src="{$system['system_uploads_assets']}/content/themes/default/images/svg/svgImg/edit_icon_hover.svg"
+                                            class="whiteicon">
+                                    </div>
+                                    <span> {__("Edit Article")}</span>
                                 </div>
                             </a>
                         {else}
                             <div class="dropdown-item pointer js_edit-post">
                                 <div class="action no-desc">
-                                    <i class="fa fa-pencil-alt fa-fw"></i> {__("Edit Post")}
+                                    <div class="post_images__">
+                                        <img src="{$system['system_uploads_assets']}/content/themes/default/images/svg/svgImg/edit_icon.svg"
+                                            class="blackicon">
+                                        <img src="{$system['system_uploads_assets']}/content/themes/default/images/svg/svgImg/edit_icon_hover.svg"
+                                            class="whiteicon">
+                                    </div>
+                                    <span> {__("Edit Post")}</span>
                                 </div>
                             </div>
                         {/if}
@@ -131,7 +199,13 @@
                         {if ($_post['user_id'] == $user->_data['user_id']) }
                             <div class="dropdown-item pointer js_delete-post">
                                 <div class="action no-desc">
-                                    <i class="fa fa-trash-alt fa-fw"></i> {__("Delete Post")}
+                                    <div class="post_images__">
+                                        <img src="{$system['system_uploads_assets']}/content/themes/default/images/svg/svgImg/delete_icon.svg"
+                                            class="blackicon">
+                                        <img src="{$system['system_uploads_assets']}/content/themes/default/images/svg/svgImg/delete_icon_hover.svg"
+                                            class="whiteicon">
+                                    </div>
+                                    <span>{__("Delete Post")}</span>
                                 </div>
                             </div>
                         {/if}
@@ -141,13 +215,25 @@
                             {if $_post['is_hidden']}
                                 <div class="dropdown-item pointer js_allow-post">
                                     <div class="action no-desc">
-                                        <i class="fa fa-eye fa-fw"></i> <span>{__("Allow on Timeline")}</span>
+                                        <div class="post_images__">
+                                            <img src="{$system['system_uploads_assets']}/content/themes/default/images/svg/svgImg/Hide_form.svg"
+                                                class="blackicon">
+                                            <img src="{$system['system_uploads_assets']}/content/themes/default/images/svg/svgImg/Hide_form-hover.svg"
+                                                class="whiteicon">
+                                        </div>
+                                        <span>{__("Allow on Timeline")}</span>
                                     </div>
                                 </div>
                             {else}
                                 <div class="dropdown-item pointer js_disallow-post">
                                     <div class="action no-desc">
-                                        <i class="fa fa-eye-slash fa-fw"></i> <span>{__("Hide from Timeline")}</span>
+                                        <div class="post_images__">
+                                            <img src="{$system['system_uploads_assets']}/content/themes/default/images/svg/svgImg/Hide_form.svg"
+                                                class="blackicon">
+                                            <img src="{$system['system_uploads_assets']}/content/themes/default/images/svg/svgImg/Hide_form-hover.svg"
+                                                class="whiteicon">
+                                        </div>
+                                        <span>{__("Hide from Timeline")}</span>
                                     </div>
                                 </div>
                             {/if}
@@ -157,13 +243,25 @@
                         {if $_post['comments_disabled']}
                             <div class="dropdown-item pointer js_enable-post-comments">
                                 <div class="action no-desc">
-                                    <i class="fa fa-comment fa-fw"></i> <span>{__("Turn on Commenting")}</span>
+                                    <div class="post_images__">
+                                        <img src="{$system['system_uploads_assets']}/content/themes/default/images/svg/svgImg/timelineOff.svg"
+                                            class="blackicon">
+                                        <img src="{$system['system_uploads_assets']}/content/themes/default/images/svg/svgImg/timelineOff-hover.svg"
+                                            class="whiteicon">
+                                    </div>
+                                    <span>{__("Turn on Commenting")}</span>
                                 </div>
                             </div>
                         {else}
                             <div class="dropdown-item pointer js_disable-post-comments">
                                 <div class="action no-desc">
-                                    <i class="fa fa-comment-slash fa-fw"></i> <span>{__("Turn off Commenting")}</span>
+                                    <div class="post_images__">
+                                        <img src="{$system['system_uploads_assets']}/content/themes/default/images/svg/svgImg/modelCross.svg"
+                                            class="blackicon">
+                                        <img src="{$system['system_uploads_assets']}/content/themes/default/images/svg/svgImg/modelCross_hover.svg"
+                                            class="whiteicon">
+                                    </div>
+                                    <span>{__("Turn off Commenting")}</span>
                                 </div>
                             </div>
                         {/if}
@@ -184,13 +282,25 @@
                         {/if}
                         <div class="dropdown-item pointer js_hide-post">
                             <div class="action">
-                                <i class="fa fa-eye-slash fa-fw"></i> {__("Hide this post")}
+                                <div class="post_images__">
+                                    <img src="{$system['system_uploads_assets']}/content/themes/default/images/svg/svgImg/Hide_form.svg"
+                                        class="blackicon">
+                                    <img src="{$system['system_uploads_assets']}/content/themes/default/images/svg/svgImg/Hide_form-hover.svg"
+                                        class="whiteicon">
+                                </div>
+                                {__("Hide this post")}
                             </div>
                             <div class="action-desc">{__("See fewer posts like this")}</div>
                         </div>
                         <div class="dropdown-item pointer js_report" data-handle="post" data-id="{$_post['post_id']}">
                             <div class="action no-desc">
-                                <i class="fa fa-flag fa-fw"></i> {__("Report post")}
+                                <div class="post_images__">
+                                    <img src="{$system['system_uploads_assets']}/content/themes/default/images/svg/svgImg/nav_icon_adHub.svg"
+                                        class="blackicon">
+                                    <img src="{$system['system_uploads_assets']}/content/themes/default/images/svg/svgImg/nav_icon_adHub_active.svg"
+                                        class="whiteicon">
+                                </div>
+                                {__("Report post")}
                             </div>
                         </div>
                     {/if}
@@ -198,14 +308,24 @@
                     <a href="{$system['system_url']}/posts/{$_post['post_id']}" target="_blank"
                         class="dropdown-item openInNewTab">
                         <div class="action no-desc">
-                            <i class="fa fa-link fa-fw"></i> {__("Open post in new tab")}
+                            <div class="post_images__">
+                                <img src="{$system['system_uploads_assets']}/content/themes/default/images/svg/svgImg/linking-img.svg"
+                                    class="blackicon">
+                                <img src="{$system['system_uploads_assets']}/content/themes/default/images/svg/svgImg/linking-img-hover.svg"
+                                    class="whiteicon">
+                            </div>
+                            <span> {__("Open post in new tab")}</span>
                         </div>
                     </a>
                     {if $_post['is_anonymous'] && ($user->_is_admin || $user->_is_moderator)}
                         <!-- <div class="dropdown-divider"></div> -->
                         <a href="{$_post['post_author_url']}" target="_blank" class="dropdown-item">
                             <div class="action no-desc">
-                                <i class="fa fa-user-secret fa-fw"></i> {__("Open Author Profile")}
+                                <div class="post_images__">
+                                    <img src="{$system['system_url']}/content/themes/default/images/svg/svgImg/timelineOff.svg" class="blackicon">
+                                    <img src="{$system['system_url']}/content/themes/default/images/svg/svgImg/timelineOff-hover.svg" class="whiteicon"> 
+                                </div>
+                                {__("Open Author Profile")}
                             </div>
                         </a>
                     {/if}

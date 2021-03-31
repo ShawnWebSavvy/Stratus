@@ -189,11 +189,9 @@
             <div class="dropdown-item pointer js_report" data-handle="post" data-id="{$_post['post_id']}">
                <div class="action no-desc">
                   <div class="post_images__">
-                     <img
-                        src="{$system['system_uploads_assets']}/content/themes/default/images/svg/svgImg/nav_icon_adHub.svg"
+                     <img src="{$system['system_uploads_assets']}/content/themes/default/images/svg/svgImg/nav_icon_adHub.svg"
                         class="blackicon">
-                     <img
-                        src="{$system['system_uploads_assets']}/content/themes/default/images/svg/svgImg/nav_icon_adHub_active.svg"
+                     <img src="{$system['system_uploads_assets']}/content/themes/default/images/svg/svgImg/nav_icon_adHub_active.svg"
                         class="whiteicon">
                   </div> {__("Report post")}
                </div>
@@ -718,3 +716,4 @@
    </div>
    {/if}
    <!-- product -->
+   </div>

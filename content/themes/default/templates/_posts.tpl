@@ -217,15 +217,17 @@
 {/if}
 <div class="js_posts_stream" id="posts_all" data-get="{$_get}" data-filter="{if $_filter}{$_filter}{else}all{/if}" {if
 	$_id}data-id="{$_id}" {/if}>
-	{if $posts}
+	
 	<div class="bricklayer">
+	{if $posts}
 		<!-- posts -->
 		{foreach $posts as $post}
 		{include file='__feeds_posts.tpl'}
 		{/foreach}
 		<!-- posts -->
+    {/if}		
 	</div>
-
+    {if $posts}
 	<!-- see-more -->
 	<div class="alert alert-post see-more js_see-more {if $user->_logged_in}js_see-more-infinite{/if}"
 		data-get="{$_get}" data-filter="{if $_filter}{$_filter}{else}all{/if}" {if $_id}data-id="{$_id}" {/if}>
