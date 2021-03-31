@@ -8455,7 +8455,15 @@ class User
         global $db;
         switch ($media_type) {
             case 'video':
-                $db->query(sprintf("UPDATE posts_videos SET views = views + 1 WHERE video_id = %s", secure($media_id, 'int'))) or _error("SQL_ERROR_THROWEN");
+                $get_users_watch_videos = $db->query(sprintf("SELECT COUNT(*) as count FROM users_medias WHERE user_id = %s AND media_id = %s AND media_type = 'video'", secure($this->_data['user_id'], 'int'), secure($media_id, 'int') )) or _error("SQL_ERROR_THROWEN");
+
+                if ($get_users_watch_videos->fetch_assoc()['count'] == 0){
+                    $insertVideo = sprintf("INSERT INTO users_medias (user_id, media_id, media_type) VALUES (%s, %s, 'video')",  secure($this->_data['user_id'], 'int'), secure($media_id, 'int') );
+                    $db->query($insertVideo) or _error("SQL_ERROR_THROWEN");
+
+                    $db->query(sprintf("UPDATE posts_videos SET views = views + 1 WHERE video_id = %s", secure($media_id, 'int'))) or _error("SQL_ERROR_THROWEN");
+                }
+                
                 break;
 
             case 'audio':
