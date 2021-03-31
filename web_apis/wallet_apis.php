@@ -320,70 +320,156 @@ function getAllTransactionsFunction(){
 
 
 /**
- * Function for common forgot password
- * @ type: (stratus, videohub)
+ * Function to update password on knox & stratus
  * @ email:
  */
+function sendResetPasswordKeyFunction($token)
+{
+    try{
+      if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+          global $db, $system, $date;
 
-function commonForgetPasswordFunction($token){
+          $checkToken = checkHeaders($token);
 
-   try{
-    if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-      global $db, $system;
+          if ($checkToken == 402) {
+            returnResponse(false, 402, "Access token missing");
+          } elseif ($checkToken == 400) {
+            returnResponse(false, 402, "Invalid access token provided");
+          } else {
+                    if(isset($_POST['email'])){
+                        $check_user = $db->query(sprintf("SELECT COUNT(*) as count FROM users WHERE user_email = %s", secure($_POST['email']))) or _error("SQL_ERROR_THROWEN");
+                        $check_user= $check_user->fetch_assoc();
+                        if($check_user['count'] < 1){
 
-      $checkToken = checkHeaders($token);
+                          returnResponse(false,402,"Invalid user");
 
-      if($checkToken == 402){
-        returnResponse(false,402,"Access token missing");
-      }elseif($checkToken == 400){
-        returnResponse(false,402,"Invalid access token provided");
-      }else{
+                        }
+                        else{
+                                $email = $_POST['email'];
+                                $getUserData = getUserDataByEmail($email);
+                                $knox_user_id = 0;
+                                if (is_array($getUserData) == 1 && array_key_exists('knox_user_id', $getUserData) && isset($getUserData['knox_user_id'])) {
+                                  $knox_user_id = $getUserData['knox_user_id'];
 
-        if(isset($_POST['email'])){
-            $check_user = $db->query(sprintf("SELECT COUNT(*) as count FROM users WHERE user_email = %s", secure($_POST['email']))) or _error("SQL_ERROR_THROWEN");
-          $check_user= $check_user->fetch_assoc();
-          if($check_user['count'] < 1){
-            returnResponse(false,402,"Invalid user");
+                                    if ($knox_user_id == "" || $knox_user_id == "0") {
+                                        $apiResponseNew  =  httpGetCurlMethod('/users/whitelabel/get-user-info/' . $email);
+                                        if (array_key_exists('userId', $apiResponseNew)) {
+                                          $knox_user_id = $apiResponseNew['userId'];
+                                        } else {
+                                          returnResponse(false, 402, "Please Contact Administrator. Something went wrong with your Email");
+                                        }
+                                      }
+                                      /* generate reset key */
+                                      $reset_key = get_hash_key(6);
+                                      /* update user */
+                                      $db->query(sprintf("UPDATE users SET user_reset_key = %s, user_reseted = '1', knox_user_id = %s WHERE user_email = %s", secure($reset_key), secure($knox_user_id), secure($email))) or _error("SQL_ERROR_THROWEN");
+                                      /* prepare reset email */
+                                      $subject = __("Forget password activation key!");
+                                      $body = get_email_template("forget_password_platforms", $subject, ["email" => $email, "reset_key" => $reset_key]);
 
-          }else{
-               $knox_user_id = 0;
-                if (is_array($check_user) == 1 && array_key_exists('knox_user_id', $check_user) && isset($getUserData['knox_user_id'])) {
-                    //echo  $getUserData['knox_user_id'];
-                    $knox_user_id = $check_user['knox_user_id'];
-                } else if (!is_array($check_user) == 1) {
-                     $email = $_POST['email'];
-                     $userInfoApiResponse = $this->httpGetCurl('/users/whitelabel/get-user-info/' . $email);
-                      if (is_array($userInfoApiResponse) == 1 && array_key_exists('data', $userInfoApiResponse) && (is_empty($userInfoApiResponse['data']) || $userInfoApiResponse['data'] == 0)) {
-                      returnResponse(false,402,"Sorry it looks like email doesn't belong to any account");
-                  } else {
+                                      /* send email */
+                                      if (!_email($email, $subject, $body['html'], $body['plain'])) {
+                                        returnResponse(false, 402, "Activation key email could not be sent!");
+                                      }
+                                       //$details = getUserDataByEmail($email);
+                                       $details = ["email" => $email , "reset_token" => $reset_key];
+                                      returnResponse(true, 200, "Success", $details);
 
-                        $hash = $userInfoApiResponse['hash'];
-                        $knox_user_id = $userInfoApiResponse['userId']; // || 'sss';
-                        $user_email_verified = 1;
-                        $user_activated = 1;
-                        //print_r($userInfoApiResponse);
-                        $db->query(sprintf("INSERT INTO users (user_name,user_email,user_password, user_firstname,user_lastname,user_gender,user_registered,knox_user_id,user_email_verified,user_activated) VALUES (%s,%s,%s,%s, %s,%s,%s,%s,%s,%s)", secure($email), secure($email), secure($hash), secure(''), secure(''), secure('other'), secure($date), secure($knox_user_id), $user_email_verified, $user_activated)) or _error("SQL_ERROR_THROWEN");
-                        // $getUserData = $this->checkUserAndGetData($email);
-                        // $emailArray = explode("@", $email);
-                        // $userName = $emailArray[0] . $getUserData['user_id'];
-                        // $db->query(sprintf("UPDATE users SET user_name =%s WHERE user_email = %s", secure($userName), secure($email))) or _error("SQL_ERROR_THROWEN");
-                  }
-                }
+                                } else if (!is_array($getUserData) == 1) {
+                                  $userInfoApiResponse = httpGetCurlMethod('/users/whitelabel/get-user-info/' . $email);
+                                  // print_r($userInfoApiResponse);
+                                  // die;
+                                  if (is_array($userInfoApiResponse) == 1 && array_key_exists('data', $userInfoApiResponse) && (is_empty($userInfoApiResponse['data']) || $userInfoApiResponse['data'] == 0)) {
+                                    returnResponse(false, 402, "Sorry it looks like email doesn't belong to any account");
+                                  }
+                                }else{
+                                      returnResponse(false,300,"someting went wrong.");
+                                }
+                        }
+                    }
+                    else{
+                        returnResponse(false,300,"parameters missing");
+                    }
           }
-        }else{
-          returnResponse(false,300,"parameters missing");
-        }
-
       }
-
+      else{
+           returnResponse(false,402,"Invalid request");
+      }
     }
-    else{
-      returnResponse(false,402,"Invalid request");
+    catch(Exception $e){
+        returnResponse(false,300,$e->getMessage());
     }
+} //End of function
 
-  }catch (Exception $e) {
 
-    returnResponse(false,300,$e->getMessage());
+/**
+ * Function to reset Password
+ * @Params : email, token , new_password
+ */
+
+function updatePasswordByKeyFunction($token){
+  try{
+      if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+               global $db, $system, $date;
+
+          $checkToken = checkHeaders($token);
+
+          if ($checkToken == 402) {
+            returnResponse(false, 402, "Access token missing");
+          } elseif ($checkToken == 400) {
+            returnResponse(false, 402, "Invalid access token provided");
+          } else {
+               if(isset($_POST['email']) && isset($_POST['token']) &&  isset($_POST['new_password'])){
+                        $email = $_POST['email'];
+                        $reset_key = $_POST['token'];
+                        $password = $_POST['new_password'];
+                        $check_user = $db->query(sprintf("SELECT COUNT(*) as count FROM users WHERE user_email = %s", secure($_POST['email']))) or _error("SQL_ERROR_THROWEN");
+                        $check_user= $check_user->fetch_assoc();
+                        if($check_user['count'] < 1){
+
+                          returnResponse(false,402,"Invalid user");
+
+                        }
+                        else{
+                              /* check reset key */
+                              $check_key = $db->query(sprintf("SELECT * FROM users WHERE user_email = %s AND user_reset_key = %s AND user_reseted = '1'", secure($email), secure($reset_key))) or _error("SQL_ERROR_THROWEN");
+                              $check_key =  $check_key->fetch_assoc();
+                             // print_r($check_key); die;
+                             // if (!is_array($check_key) == 1 && count($check_key) == 0) {
+                              if (empty($check_key)) {
+                                  returnResponse(false,402,"Invalid code, please try again");
+                                  exit();
+                              }
+                              /* check password length */
+                              if (strlen($password) < 6) {
+                                   returnResponse(false,402,"Your password must be at least 6 characters long. Please try another");
+                                    exit();
+                              }
+                              $knox_user_id = $check_key["knox_user_id"];
+                              $apiResponse  =  httpPostCurlMethod("/users/whitelabel/update-password", array("password" => $password, "userId" => $knox_user_id));
+
+                              if (is_array($apiResponse) && array_key_exists('hash', $apiResponse)) {
+                                $hash = $apiResponse['hash'];
+                                $db->query(sprintf("UPDATE users SET user_password = %s, user_reseted = '0' WHERE user_email = %s", secure($hash), secure($email))) or _error("SQL_ERROR_THROWEN");
+                                    $details = ["email" => $email , "password" => $hash];
+                                    returnResponse(true,200,"Success", $details);
+                              } else {
+                                returnResponse(false,402,"Something went wrong");
+                              }
+
+                        }
+                    }
+                    else{
+                        returnResponse(false,300,"parameters missing");
+                    }
+
+          }
+      }
+      else{
+          returnResponse(false,402,"Invalid request");
+      }
   }
-
+  catch(Exception $e){
+        returnResponse(false,300,$e->getMessage());
+  }
 }
