@@ -813,6 +813,102 @@ $(function () {
                         button_status(_this, "reset"), modal("#modal-message", { title: __.Error, message: __["There is something that went wrong!"] });
                     }));
         }),
+
+
+        $(document).off("click",".custom_modal_style").on("click",".custom_modal_style", function(){  
+            if(!$('body').hasClass('publisher-focus')){
+                clean_create_post_modal();
+            }   
+        });
+        $(".addpost-closebtn").click(function (e) {
+            clean_create_post_modal();
+        })
+
+          function clean_create_post_modal(){
+             
+            var _this = $('.custom_modal_style').find('.js_publisher'),  
+            publisher = _this.parents(".publisher"),
+            textarea = publisher.find("textarea"),
+            attachments = publisher.find(".attachments"),
+            album_meta = publisher.find('.publisher-meta[data-meta="album"]'),
+            album = album_meta.find("input"),
+            feeling_meta = publisher.find('.publisher-meta[data-meta="feelings"]'),
+            location_meta = publisher.find('.publisher-meta[data-meta="location"]'),
+            location = location_meta.find("input"),
+            colored_pattern_meta = publisher.find('.publisher-meta[data-meta="colored"]'),
+            attachments_voice_notes = publisher.find('.publisher-meta[data-meta="voice_notes"]'),
+            gif_meta = publisher.find('.publisher-meta[data-meta="gif"]'),
+            gif = gif_meta.find("input"),
+            attachments_video = publisher.find('.publisher-meta[data-meta="video"]'),
+            attachments_audio = publisher.find('.publisher-meta[data-meta="audio"]'),
+            attachments_video_thumbnail = publisher.find(".publisher-custom-thumbnail"),
+            attachments_file = publisher.find('.publisher-meta[data-meta="file"]');
+
+            button_status(_this, "reset");
+            /* prepare publisher */
+            /* remove (active|activated|disabled) from all tabs */
+            publisher
+                .find(".js_publisher-tab")
+                .removeClass("active activated disabled");
+            // textarea.val("").removeAttr("style");
+            // textarea.attr("placeholder", textarea.data("init-placeholder"));
+            /* hide & empty album */
+            album.val("");
+            album_meta.hide();
+            /* hide & empty feelings */
+            feeling_meta.hide();
+            $("#feelings-menu-toggle")
+                .removeClass("active")
+                .text($("#feelings-menu-toggle").data("init-text"));
+            $("#feelings-data").hide();
+            $("#feelings-data input")
+                .show()
+                .attr("placeholder", $("#feelings-menu-toggle").data("init-text"))
+                .removeData("action")
+                .val("");
+            $("#feelings-data span").html("");
+            $(".js_publisher-feelings").removeClass("activated active");
+            /* hide & empty location */
+            location.val("");
+            location_meta.hide();
+            /* hide & empty colored patterns */
+            publisher.removeData("colored_pattern");
+            publisher
+                .find(".colored-text-wrapper")
+                .removeAttr("style")
+                .removeClass("colored");
+            colored_pattern_meta.hide();
+            /* hide & empty voice notes */
+            attachments_voice_notes.hide();
+            attachments_voice_notes.find(".js_voice-success-message").hide();
+            attachments_voice_notes.find(".js_voice-start").show();
+            publisher.removeData("voice_notes");
+            /* hide & empty gif */
+            gif.val("");
+            gif_meta.hide();
+            /* hide & remove poll meta */
+            $('.publisher-meta[data-meta="poll"]').hide().find("input").val("");
+            /* hide & empty attachments */
+            attachments.hide();
+            attachments.find("li.item").remove();
+            publisher.removeData("photos");
+            attachments_video.hide();
+            publisher.removeData("video");
+            attachments_audio.hide();
+            publisher.removeData("audio");
+            attachments_file.hide();
+            publisher.removeData("file");
+            /* hide & empty video custom thumbnail */
+            attachments_video_thumbnail.find(".x-image").removeAttr("style");
+            attachments_video_thumbnail.find("input.js_x-image-input").val("");
+            attachments_video_thumbnail.hide();
+            /* hide & empty scraper */
+            $(".publisher-scraper").hide().html("");
+            publisher.removeData("scraping");
+
+          } 
+
+
         $("body").on("click", ".js_publisher-anonymous-toggle", function () {
             var e = $(this).parents(".publisher");
             publisher_tab(e, "anonymous"), e.find(".btn-group").toggle(), e.find(".js_publisher-privacy-public").toggle();
