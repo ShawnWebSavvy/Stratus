@@ -2,58 +2,106 @@
 error_reporting(E_ALL);
 ini_set('display_errors', 'On');
 mysqli_report(MYSQLI_REPORT_ALL);
-function getWalletBalance($token)
-{
-  try {
+function getWalletBalance($token){
+  try{
     if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-      global $db, $system;
+      global $db, $system,$date;
 
 
       $checkToken = checkHeaders($token);
 
-      if ($checkToken == 402) {
-        returnResponse(false, 402, "Access token missing");
-      } elseif ($checkToken == 400) {
-        returnResponse(false, 402, "Invalid access token provided");
-      } else {
+      if($checkToken == 402){
+        returnResponse(false,402,"Access token missing");
+      }elseif($checkToken == 400){
+        returnResponse(false,402,"Invalid access token provided");
+      }else{
+      //  print_r($_POST); die;
+        if(isset($_POST['email'])){
+            //  $apiResponseNew  =  (new User())->httpGetCurl('/users/whitelabel/get-user-info/' . $_POST['email']);
+            //      $apiResponse = $apiResponseNew;
+            // print_r($apiResponse); die;
+          // $check_user = $db->query(sprintf("SELECT COUNT(*) as count FROM users WHERE user_id = %s", secure($_POST['id'], 'int'))) or _error("SQL_ERROR_THROWEN");
+          // $check_user = $db->query(sprintf("SELECT COUNT(*) as count FROM users WHERE user_id = %s", secure($_POST['id'], 'int'))) or _error("SQL_ERROR_THROWEN");
+            $check_user = $db->query(sprintf("SELECT COUNT(*) as count FROM users WHERE user_email = %s", secure($_POST['email']))) or _error("SQL_ERROR_THROWEN");
+          $check_user= $check_user->fetch_assoc();
+          if($check_user['count'] < 1){
 
-        if (isset($_POST['email'])) {
-          // $check_user = $db->query(sprintf("SELECT COUNT(*) as count FROM users WHERE user_id = %s", secure($_POST['id'], 'int'))) or _error("SQL_ERROR_THROWEN");
-          // $check_user = $db->query(sprintf("SELECT COUNT(*) as count FROM users WHERE user_id = %s", secure($_POST['id'], 'int'))) or _error("SQL_ERROR_THROWEN");
-          $check_user = $db->query(sprintf("SELECT COUNT(*) as count FROM users WHERE user_email = %s", secure($_POST['email']))) or _error("SQL_ERROR_THROWEN");
-          $check_user = $check_user->fetch_assoc();
-          if ($check_user['count'] < 1) {
-            returnResponse(false, 402, "Invalid user");
-          } else {
+            //returnResponse(false,402,"Invalid user");
+
+            // check if user exist on knox
+                 $apiResponseNew  =  (new User())->httpGetCurl('/users/whitelabel/get-user-info/' . $_POST['email']);
+                 $apiResponse = $apiResponseNew;
+
+                 if (array_key_exists('userId', $apiResponse)) {
+                      $knox_user_id = $apiResponse['userId'];
+                      $email = $apiResponse['email'];
+                      $hash = $apiResponse['hash'];
+                      $user_email_verified = 1;
+                      $user_activated = 1;
+                       $db->query(sprintf("INSERT INTO users (user_name,user_email,user_password, user_firstname,user_lastname,user_gender,user_registered,knox_user_id,user_email_verified,user_activated) VALUES (%s,%s,%s,%s, %s,%s,%s,%s,%s,%s)", secure($email), secure($email), secure($hash), secure(''), secure(''), secure('other'), secure($date), secure($knox_user_id), $user_email_verified, $user_activated)) or _error("SQL_ERROR_THROWEN");
+                        $getUserData = (new User())->checkUserAndGetData($email);
+                      $emailArray = explode("@", $email);
+                      $userName = $emailArray[0] . $getUserData['user_id'];
+                      $db->query(sprintf("UPDATE users SET user_name =%s WHERE user_email = %s", secure($userName), secure($email))) or _error("SQL_ERROR_THROWEN");
+
+                      $wallet_query = $db->query(sprintf("SELECT  * FROM users WHERE user_email = %s", secure(  $_POST['email']))) or _error("SQL_ERROR_THROWEN");
+                        $result= $wallet_query->fetch_assoc();
+                        if(!empty($result)){
+                          $user_details = array(
+                            "user_id"=> $result['user_id'],
+                            "user_name"=> $result['user_name'],
+                          "user_email"=> $result['user_email'],
+                            "user_affiliate_balance"=> $result['user_affiliate_balance'],
+                            "user_wallet_balance"=> $result['user_wallet_balance'],
+                            "user_points"=> $result['user_points'],
+
+                          );
+                          returnResponse(true,200,"Success",$user_details);
+                        }else{
+                          returnResponse(false,300,"Something went wrong");
+
+                        }
+                  } else {
+                     returnResponse(false,402,"Invalid user, doesn't belong to any account");
+                  }
+
+            //check if user exist on knox END
+
+          }else{
             // $wallet_query = $db->query(sprintf("SELECT  * FROM users WHERE user_id = %s", secure($_POST['id'], 'int'))) or _error("SQL_ERROR_THROWEN");
-            $wallet_query = $db->query(sprintf("SELECT  * FROM users WHERE user_email = %s", secure($_POST['email']))) or _error("SQL_ERROR_THROWEN");
+            $wallet_query = $db->query(sprintf("SELECT  * FROM users WHERE user_email = %s", secure(  $_POST['email']))) or _error("SQL_ERROR_THROWEN");
 
-            $result = $wallet_query->fetch_assoc();
-            if (!empty($result)) {
+            $result= $wallet_query->fetch_assoc();
+            if(!empty($result)){
               $user_details = array(
-                "user_id" => $result['user_id'],
-                "user_name" => $result['user_name'],
-                "user_email" => $result['user_email'],
-                "user_affiliate_balance" => $result['user_affiliate_balance'],
-                "user_wallet_balance" => $result['user_wallet_balance'],
-                "user_points" => $result['user_points'],
+                "user_id"=> $result['user_id'],
+                "user_name"=> $result['user_name'],
+               "user_email"=> $result['user_email'],
+                "user_affiliate_balance"=> $result['user_affiliate_balance'],
+                "user_wallet_balance"=> $result['user_wallet_balance'],
+                "user_points"=> $result['user_points'],
 
               );
-              returnResponse(true, 200, "Success", $user_details);
-            } else {
-              returnResponse(false, 300, "Something went wrong");
+              returnResponse(true,200,"Success",$user_details);
+            }else{
+              returnResponse(false,300,"Something went wrong");
+
             }
           }
-        } else {
-          returnResponse(false, 300, "parameters missing");
+        }else{
+          returnResponse(true,300,"parameters missing");
         }
-      }
-    } else {
-      returnResponse(false, 402, "Invalid request");
-    }
-  } catch (Exception $e) {
 
-    returnResponse(false, 300, $e->getMessage());
+      }
+
+    }
+    else{
+      returnResponse(false,402,"Invalid request");
+    }
+
+  }catch (Exception $e) {
+
+    returnResponse(false,300,$e->getMessage());
   }
 }
 
