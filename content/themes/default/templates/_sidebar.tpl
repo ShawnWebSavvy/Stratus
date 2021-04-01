@@ -83,6 +83,21 @@
                         <span class="nav-text">{__("Messages")}</span>
                     </a>
                 </li>
+                 <li {if $subactive_page=="newmessages" }class="active" {/if}>
+                    <a href="{$system['system_url']}/newmessages" class="{$page}">
+                        <div class="svg-container">
+                            <img src="{$system['system_uploads_assets']}/content/themes/default/images/svg/svgImg/messages_iconN.svg"
+                                class="">
+                            <!-- <img src="{$system['system_url']}/content/themes/default/images/svg/svgImg/nav_icon_messages.svg"
+                                class="blackicon">
+                            <img src="{$system['system_url']}/content/themes/default/images/svg/svgImg/nav_icon_nav_icon_messages_hover.svg"
+                                class="whiteicon"> -->
+                        </div>
+                        <!--  con="chat"  -->
+                        <span class="nav-text">{__("New Messages")}</span>
+                    </a>
+                </li>
+
 
                 <li {if $subactive_page=="settings" }class="active" {/if}>
                     <a href="{$system['system_url']}/settings">

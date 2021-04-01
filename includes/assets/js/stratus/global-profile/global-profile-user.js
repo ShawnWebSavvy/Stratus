@@ -1,3 +1,5 @@
+var save_file_name ='';
+var image_blured = 0;
 function initialize_modal() {
     $(".js_scroller").each(function() {
         var e = $(this),
@@ -394,6 +396,8 @@ api["data/live"] = ajax_path + "data/global-profile/global-profile-live.php", ap
                     p && p.find(".progress-bar").css("width", t + "%").attr("aria-valuenow", t)
                 },
                 success: function(e) {
+                    save_file_name = e.file;
+                    image_blured = e.image_blured;
                     if (s.prop("disabled", !1), p && p.hide(), e.callback) "publisher" == i ? (("photos" == a && jQuery.isEmptyObject(f.data("photos")) || "photos" != a) && (d.hide(), f.removeData(a), publisher_tab(f, a)), p && p.remove(), button_status(r, "reset")) : "publisher-mini" == i && button_status(r, "reset");
                     else if ("photos" == a) {
                         if ("cover-user" == i || "cover-page" == i || "cover-group" == i || "cover-event" == i) {
@@ -567,7 +571,20 @@ api["data/live"] = ajax_path + "data/global-profile/global-profile-live.php", ap
         var id = $(this).data("id"),
             handle = $(this).data("handle"),
             values = $("#cropped-profile-picture").rcrop("getValues");
-        $.post(api["users/image_crop"], {
+
+            $.post(
+                api["users/image_crop"],
+                { handle: handle, id: id, x: values.x, y: values.y, height: values.height, width: values.width, save_file_name:save_file_name, image_blured: image_blured },
+                function (response) {
+                    response.callback ? eval(response.callback) : ($("#modal").modal("hide"), window.location.reload());
+                },
+                "json"
+            ).fail(function () {
+                modal("#modal-message", { title: __.Error, message: __["There is something that went wrong!"] });
+            })
+
+
+       /*  $.post(api["users/image_crop"], {
             handle: handle,
             id: id,
             x: values.x,
@@ -581,7 +598,7 @@ api["data/live"] = ajax_path + "data/global-profile/global-profile-live.php", ap
                 title: __.Error,
                 message: __["There is something that went wrong!"]
             })
-        })
+        }) */
     }), $("body").on("click", ".js_init-position-picture", function() {
         init_picture_position()
     }), $("body").on("click", ".js_save-position-picture", function() {

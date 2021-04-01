@@ -1,5 +1,5 @@
 <?php
-define("DB_NAME", "stratus_local");
+define("DB_NAME", "stratus_stage");
 define("DB_USER", "root");
 define("DB_PASSWORD", "Admin@123");
 define("DB_HOST", "127.0.0.1");

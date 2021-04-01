@@ -178,6 +178,12 @@ function data_heartbeat() {
                             : $(".js_live-notifications")
                                 .find(".js_scroller")
                                 .html("<ul>" + response.notifications + "</ul>");
+
+
+                                if( response.notifications_sound == '1')
+                                {
+                                    $("#notification-sound")[0].play()
+                                }
                     // var notifications = parseInt(response.notifications_count);
                     // $(".js_live-notifications").find("span.counterlive").text(notifications).show(), notifications_sound;
                     var notifications = (parseInt($(".js_live-notifications").find("span.counterlive").text())?parseInt($(".js_live-notifications").find("span.counterlive").text()):0)+ response.notifications_count;

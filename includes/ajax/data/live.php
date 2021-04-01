@@ -41,6 +41,12 @@ try {
         }
     $chatsound = $get_referrer->fetch_assoc()['chat_sound'];	
 	$return['chat_sound'] =  $chatsound;
+	$get_notifi = $db->query(sprintf("SELECT notifications_sound FROM users WHERE user_id = %s", secure($user->_data['user_id']))) or _error("SQL_ERROR_THROWEN");
+        if ($get_notifi->num_rows == 0) {
+            return;
+        }
+    $notifications_sound = $get_notifi->fetch_assoc()['notifications_sound'];	
+	$return['notifications_sound'] =  $notifications_sound;
 	if (count($requests) > 0) {
 		/* assign variables */
 		$smarty->assign('requests', $requests);
@@ -63,6 +69,7 @@ try {
 
 	// [3] check for new notifications
 	$notifications = $user->get_notifications(0, $_POST['last_notification']);
+	
 	if (count($notifications) > 0) {
 		/* assign variables */
 		$smarty->assign('notifications', $notifications);

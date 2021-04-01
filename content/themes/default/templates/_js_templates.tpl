@@ -690,6 +690,9 @@
                         <li class="x-form-tools-emoji js_emoji-menu-toggle">
                             <i class="far fa-smile-wink fa-lg fa-fw"></i>
                         </li>
+                         <li class="x-form-tools-post js_post-message">
+                            <i class="far fa-paper-plane fa-lg fa-fw"></i>
+                        </li>
                     </ul>
                 </div>
             </div>

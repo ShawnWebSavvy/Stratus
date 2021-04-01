@@ -43,9 +43,9 @@
 <!-- Sounds -->
 {if $user->_logged_in}
 <!-- Notification -->
-{* <audio id="notification-sound" preload="auto">
+<audio id="notification-sound" preload="auto">
 	<source src="{$system['system_uploads_assets']}/includes/assets/sounds/notification.mp3" type="audio/mpeg">
-</audio> *}
+</audio> 
 <!-- Notification -->
 <!-- Chat -->
 <audio id="chat-sound" preload="auto">
@@ -358,7 +358,11 @@
 	</ul>
 </div>
 {/if}
-
+<script>
+if ( window.history.replaceState ) {
+  window.history.replaceState( null, null, window.location.href );
+}
+</script>
 </body>
 
 </html>

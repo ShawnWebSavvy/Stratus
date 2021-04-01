@@ -32,6 +32,8 @@ if (!isset($_POST['height']) || !is_numeric($_POST['height'])) {
 if (!isset($_POST['width']) || !is_numeric($_POST['width'])) {
     _error(403);
 }
+$save_file_name = !empty($_POST['save_file_name']) ? $_POST['save_file_name'] : null;
+$image_blured = !empty($_POST['image_blured']) ? $_POST['image_blured'] : 0;
 
 try {
     $userGlobal = new UserGlobal();
@@ -39,6 +41,43 @@ try {
         case 'user':
             // crop user profile picture
             /* get full picture */
+
+        
+        if (!$user->_data['user_album_pictures']) {
+                /* create new profile pictures album */
+                $db->query(sprintf("INSERT INTO global_posts_photos_albums (user_id, user_type, title, privacy) VALUES (%s, 'user', 'Profile Pictures', 'public')", secure($user->_data['user_id'], 'int'))) or _error("SQL_ERROR_THROWEN");
+                $user->_data['user_album_pictures'] = $db->insert_id;
+                /* update user profile picture album id */
+
+                $db->query(sprintf("UPDATE users SET global_user_album_pictures = %s WHERE user_id = %s", secure($user->_data['user_album_pictures'], 'int'), secure($user->_data['user_id'], 'int'))) or _error("SQL_ERROR_THROWEN");
+            }
+            /* insert updated profile picture post */
+            $db->query(sprintf("INSERT INTO global_posts (user_id, user_type, post_type, time, privacy) VALUES (%s, 'user', 'profile_picture', %s, 'public')", secure($user->_data['user_id'], 'int'), secure($date))) or _error("SQL_ERROR_THROWEN");
+            $post_id = $db->insert_id;
+            /* insert new profile picture to album */
+            $db->query(sprintf("INSERT INTO global_posts_photos (post_id, album_id, source, blur) VALUES (%s, %s, %s, %s)", secure($post_id, 'int'), secure($user->_data['user_album_pictures'], 'int'), secure($save_file_name), secure($image_blured))) or _error("SQL_ERROR_THROWEN");
+            $photo_id = $db->insert_id;
+            /* delete old cropped picture from uploads folder */
+            delete_uploads_file($user->_data['user_picture_raw']);
+            /* update user profile picture */
+            $db->query(sprintf("UPDATE users SET global_user_picture = %s, global_user_picture_id = %s WHERE user_id = %s", secure($save_file_name), secure($photo_id, 'int'), secure($user->_data['user_id'], 'int'))) or _error("SQL_ERROR_THROWEN");
+            $redisObject = new RedisClass();
+            $redisPostKey = 'user-' . $user->_data['user_id'];
+            $redisObject->deleteValueFromKey($redisPostKey);
+            cachedUserData($db, $system, $user->_data['user_id'], $user->_data['active_session_token']);
+            $redisPostProfileKey = 'profile-posts-' . $user->_data['user_id'];
+            $redisObject->deleteValueFromKey($redisPostProfileKey);
+          
+            $redisPostKey = 'user-' . $user->_data['user_id'] . '-posts';
+            $redisStorykey = 'user-' . $user->_data['user_id'] . '-getotherstory';
+
+            $redisObject->deleteValueFromKey($redisPostKey);
+            $redisObject->deleteValueFromKey($redisStorykey);
+            
+            fetchAndSetDataOnPostReaction($system, $user, $redisObject, $redisPostKey);
+
+
+
             $selectCrop = sprintf("SELECT posts_photos.source FROM users INNER JOIN global_posts_photos as posts_photos ON users.global_user_picture_id = posts_photos.photo_id WHERE users.user_id = %s", secure($user->_data['user_id'], 'int'));
             $get_picture = $db->query($selectCrop) or _error("SQL_ERROR_THROWEN");
             if ($get_picture->num_rows == 0) {
@@ -51,7 +90,15 @@ try {
             $table_name = "users";
             $table_picture_field = "global_user_picture";
             $table_id_field = "user_id";
-            break;
+
+
+
+
+
+
+        
+        break;
+
 
         case 'page':
             // crop page profile picture

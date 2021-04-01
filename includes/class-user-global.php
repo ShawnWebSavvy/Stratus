@@ -2472,6 +2472,9 @@ class UserGlobal
                 if ($args['new'] != $args['confirm']) {
                     throw new Exception(__("Your passwords do not match"));
                 }
+                if (md5($args['new']) == $this->_data['user_password']) {
+                    throw new Exception(__("Your new and current passwords is same"));
+                }
                 if (strlen($args['new']) < 6) {
                     throw new Exception(__("Password must be at least 6 characters long. Please try another"));
                 }
@@ -2676,8 +2679,8 @@ class UserGlobal
             }
             if (!$userExists) {
                 $knox_user_id = $args['userId'];
-                $user_email_verified = 1;
-                $user_activated = 1;
+                $user_email_verified = 0;
+                $user_activated = 0;
                 $newsletter_agree = 0;
 
 

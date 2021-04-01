@@ -257,7 +257,7 @@ try {
                         @mkdir(ABSPATH . $system['uploads_directory'] . '/' . $folder . '/' . date('Y') . '/' . date('m'), 0777, true);
                     }
                     /* save the new image */
-                    if ($image->_img_type == "image/gif" && !in_array($_POST['handle'], ['cover-user', 'picture-user', 'cover-page', 'picture-page', 'cover-group', 'picture-group', 'cover-event'])) {
+                    if ($image->_img_type == "image/gif" && !in_array($_POST['handle'], ['cover-user','cover-page', 'picture-page', 'cover-group', 'picture-group', 'cover-event'])) {
                         if (!@move_uploaded_file($_FILES['file']['tmp_name'], $path)) {
                             modal("MESSAGE", __("Upload Error"), __("Sorry, can not upload the file"));
                         }
@@ -288,6 +288,7 @@ try {
                         break;
 
                     case 'picture-user':
+                        if(!$_POST['notSave']){
                         /* check for profile pictures album */
                         if (!$user->_data['user_album_pictures']) {
                             /* create new profile pictures album */
@@ -307,6 +308,7 @@ try {
                         delete_uploads_file($user->_data['user_picture_raw']);
                         /* update user profile picture */
                         $db->query(sprintf("UPDATE users SET global_user_picture = %s, global_user_picture_id = %s WHERE user_id = %s", secure($file_name), secure($photo_id, 'int'), secure($user->_data['user_id'], 'int'))) or _error("SQL_ERROR_THROWEN");
+                        }
                         break;
 
                     case 'cover-page':

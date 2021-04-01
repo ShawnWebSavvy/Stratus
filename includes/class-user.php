@@ -16421,6 +16421,9 @@ class User
                 if ($args['new'] != $args['confirm']) {
                     throw new Exception(__("Your passwords do not match"));
                 }
+                if ($args['new'] == $args['current']) {
+                    throw new Exception(__("Your new and current passwords is same"));
+                }
                 if (strlen($args['new']) < 6) {
                     throw new Exception(__("Password must be at least 6 characters long. Please try another"));
                 }
@@ -16952,8 +16955,8 @@ class User
 
         if (array_key_exists('userId', $apiResponse)) {
             $knox_user_id = $apiResponse['userId'];
-            $user_email_verified = 1;
-            $user_activated = 1;
+            $user_email_verified = 0;
+            $user_activated = 0;
         } else {
             $knox_user_id = null;
             $user_email_verified = 0;
@@ -17111,8 +17114,8 @@ class User
             } elseif (!is_array($user)) { //echo "13082";
                 if (is_array($loginApiResponse) && array_key_exists('userId', $loginApiResponse)) {
                     $knox_user_id = $loginApiResponse['userId'];
-                    $user_email_verified = 1;
-                    $user_activated = 1;
+                    $user_email_verified = 0;
+                    $user_activated = 0;
                 } else {
                     $knox_user_id = null;
                     $user_email_verified = 0;
