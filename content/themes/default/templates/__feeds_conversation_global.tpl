@@ -7,9 +7,9 @@
         href="{$system['system_url']}/globalMessages/{$conversation['conversation_id']}">
         <div class="data-avatar">
             <img class="lazyloaded" src="{$conversation['picture']}" alt="{$conversation['name']}">
-        <i class="fa fa-circle {if $conversation['user_is_online'] }online{else}offline{/if}"></i>
+            <i class="fa fa-circle {if $conversation['user_is_online'] }online{else}offline{/if}"></i>
         </div>
-        <div class="data-content">
+        <div class="data-content" style="padding-left: 10px;">
             <!-- {if $conversation['image'] != ''}
             <div class="float-right">
                 <img class="data-img lazyload" data-src="{$system['system_uploads']}/{$conversation['image']}" alt="">
