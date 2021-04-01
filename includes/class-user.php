@@ -4693,7 +4693,7 @@ class User
             $db->query(sprintf("INSERT INTO stories_media (story_id, source, text, time) VALUES (%s, %s, %s, %s)", secure($story_id, 'int'), secure($photo['source']), secure($message), secure($date))) or _error("SQL_ERROR_THROWEN");
         }
         foreach ($videos as $video) { //print_r($videos);
-            $db->query(sprintf("INSERT INTO stories_media (story_id, source, is_photo, text, time) VALUES (%s, %s, '0', %s, %s)", secure($story_id, 'int'), secure($video), secure($message), secure($date))) or _error("SQL_ERROR_THROWEN");
+            $db->query(sprintf("INSERT INTO stories_media (story_id, source, is_photo, text, time, thumbnail ) VALUES (%s, %s, '0', %s, %s, %s)", secure($story_id, 'int'), secure($video['video']), secure($message), secure($date), secure($video['thumbnail']))) or _error("SQL_ERROR_THROWEN");
         }
 
         $authors = $this->_data['friends_ids'];
@@ -4742,7 +4742,7 @@ class User
                 $story['lastUpdated'] = strtotime($_story['time']);
                 $story['items'] = [];
                 /* get story media items */
-                $get_media_items = $db->query(sprintf("SELECT * FROM stories_media WHERE story_id = %s", secure($_story['story_id'], 'int'))) or _error("SQL_ERROR_THROWEN");
+                $get_media_items = $db->query(sprintf("SELECT * FROM stories_media WHERE story_id = %s ORDER BY stories_media.time DESC", secure($_story['story_id'], 'int'))) or _error("SQL_ERROR_THROWEN");
                 while ($media_item = $get_media_items->fetch_assoc()) {
                     $story_item['id'] = $media_item['media_id'];
                     $story_item['type'] = ($media_item['is_photo']) ? 'photo' : 'video';
@@ -4750,6 +4750,7 @@ class User
                     $story_item['link'] = '#';
                     $story_item['linkText'] = $media_item['text'];
                     $story_item['time'] = strtotime($media_item['time']);
+                    $story_item['thumbnail'] =  $media_item['thumbnail'] ? $system['system_uploads'] . '/' . $media_item['thumbnail'] : null;
                     $story['items'][] = $story_item;
                 }
                 $stories[] = $story;
@@ -8454,7 +8455,15 @@ class User
         global $db;
         switch ($media_type) {
             case 'video':
-                $db->query(sprintf("UPDATE posts_videos SET views = views + 1 WHERE video_id = %s", secure($media_id, 'int'))) or _error("SQL_ERROR_THROWEN");
+                $get_users_watch_videos = $db->query(sprintf("SELECT COUNT(*) as count FROM users_medias WHERE user_id = %s AND media_id = %s AND media_type = 'video'", secure($this->_data['user_id'], 'int'), secure($media_id, 'int') )) or _error("SQL_ERROR_THROWEN");
+
+                if ($get_users_watch_videos->fetch_assoc()['count'] == 0){
+                    $insertVideo = sprintf("INSERT INTO users_medias (user_id, media_id, media_type) VALUES (%s, %s, 'video')",  secure($this->_data['user_id'], 'int'), secure($media_id, 'int') );
+                    $db->query($insertVideo) or _error("SQL_ERROR_THROWEN");
+
+                    $db->query(sprintf("UPDATE posts_videos SET views = views + 1 WHERE video_id = %s", secure($media_id, 'int'))) or _error("SQL_ERROR_THROWEN");
+                }
+                
                 break;
 
             case 'audio':
@@ -17898,4 +17907,27 @@ class User
         return $countries;
         die;
     }
+
+
+     /**
+     * Get video thumbnail
+     *
+     */
+    public function get_video_thumbnail($video)
+    {
+        global $system;
+         if($video){
+          //Video thumbnails
+           $helpers = new helpers();
+           $result_ = $helpers->makeVideosThumbnails($system['system_uploads'] . '/' . $video, 4, 'prod');
+           if (sizeof($result_) > 0) {
+               $helpers->local_aws_s3_upload($result_['img_path'], $result_['filename']);
+            }
+
+
+           return  'thumbnails/'.$result_['thumb'] ;
+
+         }
+    }
+
 }

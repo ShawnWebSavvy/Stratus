@@ -526,7 +526,7 @@
             <div class="btn-group" data-toggle="tooltip" data-placement="top" data-value="me"
                 title='{__("Shared with: Only Me")}'>
                 <button type="button" class="btn dropdown-toggle" data-toggle="dropdown" data-display="static">
-                    <span class="share_sign_img" id="{$_post['post_id']}">
+                    <span class="share_sign_img privacy-{$_post['post_id']}" id="{$_post['post_id']}">
                         <img src="{$system['system_uploads_assets']}/content/themes/default/images/svg/svgImg/Hide_form.svg"
                             class="blackicon">
                     </span>
@@ -535,7 +535,7 @@
                 <div class="btn-group" data-toggle="tooltip" data-placement="top" data-value="friends"
                     title='{__("Shared with: Friends")}'>
                     <button type="button" class="btn dropdown-toggle" data-toggle="dropdown" data-display="static">
-                        <span class="share_sign_img" id="{$_post['post_id']}">
+                        <span class="share_sign_img privacy-{$_post['post_id']}" id="{$_post['post_id']}">
                             <img src="{$system['system_uploads_assets']}/content/themes/default/images/svg/svgImg/friendsIcon.svg"
                                 class="blackicon">
                         </span>
@@ -544,7 +544,7 @@
                     <div class="btn-group" data-toggle="tooltip" data-placement="top" data-value="public"
                         title='{__("Shared with: Public")}'>
                         <button type="button" class="btn dropdown-toggle" data-toggle="dropdown" data-display="static">
-                            <span class="share_sign_img" id="{$_post['post_id']}">
+                            <span class="share_sign_img privacy-{$_post['post_id']}" id="{$_post['post_id']}">
                                 <img src="{$system['system_uploads_assets']}/content/themes/default/images/svg/svgImg/nav_icon_globalHub.svg"
                                     class="blackicon">
                             </span>
@@ -846,12 +846,12 @@
             <!-- show thumbnail -->
             {if $_post['video']['thumbnail']}
             <img class="stratus-thumbsrc" onclick="onimgTagclick(this)" id="thumb_src_tag_{$_post['post_id']}"
-                data-vid="{$_post['post_id']}" data-video="{$system['system_uploads']}/{$_post['video']['source']}"
+                data-vid="{$_post['video']['video_id']}" data-video="{$system['system_uploads']}/{$_post['video']['source']}"
                 src="{$system['system_uploads']}/{$_post['video']['thumbnail']}" alt="" style="width:100%">
             <img id="hide_play_img{$_post['post_id']}" class="play_video_icon"
                 src="https://www.myaccelerate.io/images/play-btn.png" alt="play_btn"
                 style="width: 17%; position: absolute; right: 0px; left: 39%; top: 42%; pointer-events: none;">
-            <!-- <video style="display:none;" class="js_fluidplayer thumb_crsp_video_tag" id="video-{$_post['video']['video_id']}{if $pinned || $boosted}-{$_post['post_id']}{/if}" {if $user->_logged_in}onplay="update_media_views('video', {$_post['video']['video_id']})"{/if} {if $_post['video']['thumbnail']}poster="{$system['system_uploads']}/{$_post['video']['thumbnail']}"{/if} controls preload="auto" style="width:100%;height:100%;" width="100%" height="100%">
+            <!-- <video style="display:none;" class="js_fluidplayer thumb_crsp_video_tag" id="video-{$_post['video']['video_id']}{if $pinned || $boosted}-{$_post['post_id']}{/if}" {if $user->_logged_in}onplay="update_media_views(event,'video', {$_post['video']['video_id']})"{/if} {if $_post['video']['thumbnail']}poster="{$system['system_uploads']}/{$_post['video']['thumbnail']}"{/if} controls preload="auto" style="width:100%;height:100%;" width="100%" height="100%">
           <source src="{$system['system_uploads']}/{$_post['video']['source']}" type="video/mp4">
           <source src="{$system['system_uploads']}/{$_post['video']['source']}" type="video/webm">
       </video> -->
@@ -859,7 +859,7 @@
             {else}
             <video class="js_fluidplayer"
                 id="video-{$_post['video']['video_id']}{if $pinned || $boosted}-{$_post['post_id']}{/if}" {if
-                $user->_logged_in}onplay="update_media_views('video', {$_post['video']['video_id']})" {/if} {if
+                $user->_logged_in}onplay="update_media_views(event, 'video', {$_post['video']['video_id']})" {/if} {if
                 $_post['video']['thumbnail']}poster="{$system['system_uploads']}/{$_post['video']['thumbnail']}" {/if}
                 controls preload="auto" style="width:100%;height:100%;" width="100%" height="100%">
                 <source src="{$system['system_uploads']}/{$_post['video']['source']}" type="video/mp4">
@@ -870,7 +870,7 @@
         {elseif $_post['post_type'] == "audio" && $_post['audio']}
         <div class="plr10">
             <audio class="js_audio" id="audio-{$_post['audio']['audio_id']}" {if
-                $user->_logged_in}onplay="update_media_views('audio', {$_post['audio']['audio_id']})" {/if} controls
+                $user->_logged_in}onplay="update_media_views(event, 'audio', {$_post['audio']['audio_id']})" {/if} controls
                 preload="auto" style="width: 100%;">
                 <source src="{$system['system_uploads']}/{$_post['audio']['source']}" type="audio/mpeg">
                 <source src="{$system['system_uploads']}/{$_post['audio']['source']}" type="audio/mp3">

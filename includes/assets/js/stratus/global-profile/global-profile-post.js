@@ -515,7 +515,8 @@ function publisher_tab(publisher, tab) {
 }
 
 // update media views
-function update_media_views(media_type, media_id) {
+function update_media_views(event, media_type, media_id) {
+  var video_tag = event.target ;
   var _do = media_type == "video" ? "update_video_views" : "update_audio_views";
   setTimeout(function () {
     $.post(
@@ -526,7 +527,7 @@ function update_media_views(media_type, media_id) {
           eval(response.callback);
         } else {
           /* remove onplay */
-          $("#" + media_type + "-" + media_id).removeAttr("onplay");
+          $(video_tag).removeAttr("onplay");;
         }
       },
       "json"

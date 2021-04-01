@@ -243,7 +243,7 @@
                                                         {else}
                                                         style="background-image:url({$system['system_uploads']}/{$postsItem['colored_pattern']['background_image']})"
                                                         {/if}>
-                                                        <div class="post-colored-text-wrapper js_scroller"
+                                                        <div class="post-colored-text-wrapper"
                                                             data-slimScroll-height="240">
                                                             <div class="post-text" dir="auto"
                                                                 style="color:{$postsItem['colored_pattern']['text_color']};">
@@ -324,7 +324,7 @@
                                                     <div class="plr10">
                                                         <audio class="js_audio"
                                                             id="audio-{$postsItem['audio']['audio_id']}" {if
-                                                            $user->_logged_in}onplay="update_media_views('audio',
+                                                            $user->_logged_in}onplay="update_media_views(event, 'audio',
                                                             {$postsItem['audio']['audio_id']})" {/if} controls
                                                             preload="auto" style="width: 100%;">
                                                             <source
@@ -344,7 +344,7 @@
                                                     <div class="plr10">
                                                         <audio class="js_audio"
                                                             id="audio-{$postsItem['origin']['audio']['audio_id']}" {if
-                                                            $user->_logged_in}onplay="update_media_views('audio',
+                                                            $user->_logged_in}onplay="update_media_views(event, 'audio',
                                                             {$postsItem['origin']['audio']['audio_id']})" {/if} controls
                                                             preload="auto" style="width: 100%;">
                                                             <source

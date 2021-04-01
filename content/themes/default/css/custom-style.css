@@ -91,6 +91,10 @@ body.publisher-focus .publisher{z-index:9999999 !important;}
 .stratus_story_popup .modal-body._add_story_popup .row > div{max-width:100% !important;flex:0 0 100%;overflow-x:auto;}
 .x-form-tools.clearfix{position:absolute !important;}
 .x-uploader input[type="file"]{width:20px;height:30px;}
+.js_x-image-uploader form.x-uploader{width: 100%;height: 100%;bottom: 0px; right: 0px;}
+.js_x-image-uploader .js_x-uploader{position: absolute;bottom: 5px;right: 5px;}
+.js_x-image-uploader .js_x-image-remover{ z-index: 1000;}
+
 .table-responsive table{display:block;width:100%;overflow-x:auto;-webkit-overflow-scrolling:touch;position:relative;z-index:9;}
 .lightbox-data .post-media-image div{padding-top:56%;}
 .comment-data{display:flex;align-items:center;}
