@@ -50,6 +50,14 @@ switch ($endpoint) {
         withdrawAffiliatesFunction();
     break;
 
+    case 'sendResetPasswordKey':
+        sendResetPasswordKeyFunction($token);
+    break;
+
+    case 'updatePasswordByKey':
+        updatePasswordByKeyFunction($token);
+    break;
+
     default:
         returnResponse(false,402,"Invalid Endpoint");
 }
