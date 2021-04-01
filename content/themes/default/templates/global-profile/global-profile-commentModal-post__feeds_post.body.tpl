@@ -44,7 +44,7 @@
                                 </div>
                             </div>
                         {/if}
-                        <div class="dropdown-divider"></div>
+                        <!-- <div class="dropdown-divider"></div> -->
                     {/if}
                     {if $_post['i_save']}
                         <div href="#" class="dropdown-item pointer js_unsave-post">
@@ -71,7 +71,7 @@
                             </div>
                         </div>
                     {/if}
-                    <div class="dropdown-divider"></div>
+                    <!-- <div class="dropdown-divider"></div> -->
                     {if $_post['manage_post']}
                         <!-- Boost -->
                         {if $system['packages_enabled'] && !$_post['in_group'] && !$_post['in_event']}
@@ -296,7 +296,7 @@
                             </div>
                         </div>
                     {/if}
-                    <div class="dropdown-divider"></div>
+                    <!-- <div class="dropdown-divider"></div> -->
                     <a href="{$system['system_url']}/posts/{$_post['post_id']}" target="_blank" class="dropdown-item openInNewTab">
                         <div class="action no-desc">
                             <div class="post_images__">
@@ -307,7 +307,7 @@
                         </div>
                     </a>
                     {if $_post['is_anonymous'] && ($user->_is_admin || $user->_is_moderator)}
-                    <div class="dropdown-divider"></div>
+                    <!-- <div class="dropdown-divider"></div> -->
                         <a href="{$_post['post_author_url']}" target="_blank" class="dropdown-item">
                             <div class="action no-desc">
                                  <div class="post_images__">

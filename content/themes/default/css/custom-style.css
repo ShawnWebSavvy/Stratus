@@ -208,7 +208,7 @@ body.publisher-focus .publisher{border-radius:15px;}
 .post-dropdown-menu .action{display:flex;align-items:center;}
 .post_images__{max-width:48px;flex:0 0 48px;display:flex;width:48px;height:48px;align-items:center;justify-content:center;border-radius:10px;margin-right:5px;}
 ._share_post_.dropdown .dropdown-toggle::after{content:none;}
-.cmn_drpdwn_style .dropdown-item{padding:2px 16px;}
+.cmn_drpdwn_style .dropdown-item{padding:0px 10px;}
 .cmn_drpdwn_style .dropdown-item:hover .post_images__{background-color:rgba(18, 105, 255, 0.1);}
 .cmn_drpdwn_style .dropdown-item:hover{background-color:transparent;}
 .right-sidebar::-webkit-scrollbar{display:none;}

@@ -46,7 +46,7 @@
                                 </div>
                             </div>
                         {/if}
-                        <div class="dropdown-divider"></div>
+                        <!-- <div class="dropdown-divider"></div> -->
                     {/if}
                     {if $_post['i_save']}
                         <div href="#" class="dropdown-item pointer js_unsave-post">
@@ -73,7 +73,7 @@
                             </div>
                         </div>
                     {/if}
-                    <div class="dropdown-divider"></div>
+                    <!-- <div class="dropdown-divider"></div> -->
                     {if $_post['manage_post']}
                         <!-- Boost -->
                         {if $system['packages_enabled'] && !$_post['in_group'] && !$_post['in_event']}

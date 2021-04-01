@@ -237,7 +237,7 @@ body.footer_bar_show{padding-bottom:90px}
 .dashboard-container .offcanvas-mainbar{padding-left:13px}
 .offcanvas-mainbar .row.people-row{flex-wrap:wrap}
 .offcanvas-mainbar .row.people-row .col-lg-4{flex:1 1 auto;max-width:100%}
-.publisher-tools-tabs li{padding-left:0;padding-right:10px;position:relative;margin-bottom:10px}
+.publisher-tools-tabs li{padding-left:0;padding-right:10px;position:relative;margin-bottom:10px;overflow: hidden;border: 1px solid red;}
 .x-uploader input[type=file]{left:0;z-index:2}
 .card-body.with-form{padding:10px}
 .mobileLogo .logo-wrapper{max-width:153px}

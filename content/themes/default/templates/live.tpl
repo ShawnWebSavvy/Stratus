@@ -93,7 +93,7 @@
                         <div class="dropdown-menu">
                             <h6 class="dropdown-header"><i class="fas fa-microphone fa-fw mr5"></i>{__("Change Mic")}</h6>
                             <div id="mic-list"></div>
-                            <div class="dropdown-divider"></div>
+                            {* <div class="dropdown-divider"></div> *}
                             <h6 class="dropdown-header"><i class="fas fa-video fa-fw mr5"></i>{__("Change Cam")}</h6>
                             <div id="camera-list"></div>
                         </div>

@@ -142,13 +142,13 @@
                                         <!-- report -->
                                         <!-- manage -->
                                         {if $user->_is_admin}
-                                        <div class="dropdown-divider"></div>
+                                        <!-- <div class="dropdown-divider"></div> -->
                                         <a class="dropdown-item" href="{$system['system_url']}/admincp/events/edit_event/{$event['event_id']}">
                                             <img class="mr10" src="{$system['system_url']}/content/themes/default/images/svg/svgImg/Cog.svg">
                                             {__("Edit in Admin Panel")}
                                         </a>
                                         {elseif $user->_is_moderator}
-                                        <div class="dropdown-divider"></div>
+                                        <!-- <div class="dropdown-divider"></div> -->
                                         <a class="dropdown-item" href="{$system['system_url']}/modcp/events/edit_event/{$event['event_id']}">
                                             <img class="mr10" src="{$system['system_url']}/content/themes/default/images/svg/svgImg/Cog.svg">
                                             {__("Edit in Moderator Panel")}
