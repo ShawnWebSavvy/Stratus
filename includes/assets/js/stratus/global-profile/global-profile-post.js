@@ -1326,9 +1326,8 @@ $(function () {
           button_status(_this, "reset");
           eval(response.callback);
         } else {
-         
           if (response.post) {
-            $(".js_posts_stream").find("ul:first").prepend(response.post);
+            $(".js_posts_stream").find(".bricklayer-column").first().prepend(response.post);
           }
           $(".no_data_img_").css("display", "none");
           /* button reset */

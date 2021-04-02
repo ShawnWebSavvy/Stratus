@@ -1,4 +1,6 @@
-<div class="carsds" data-id="{$post['post_id']}" post-type="{$post['post_type']}">
+{if !$post_array}
+ <div class="carsds" data-id="{$post['post_id']}" post-type="{$post['post_type']}">
+{/if}
         {if !$standalone}
             <div class="feeds_post{if $post['childPostExists']==true}   parent-post-li{/if}"
                 data-id="{$post['post_id']}" post-type="{$post['post_type']}">
@@ -442,4 +444,6 @@
     {if !$standalone}
         </div>
     {/if}
-</div>
+{if !$post_array}    
+ </div>
+{/if}
