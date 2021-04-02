@@ -235,7 +235,7 @@ function addWalletPointsVideo()
         returnResponse(true, 200, "Wallet balance added successfully");
       }
       // return
-      
+
     }
   } else {
     returnResponse(false, 300, "parameters missing");
@@ -500,7 +500,7 @@ function walletTransferFunction()
         }
       }
       }
-      
+
     } else {
       returnResponse(false, 300, "Something went wrong");
     }
@@ -545,7 +545,7 @@ function withdrawAffiliatesFunction()
         returnResponse(true, 200, "Success", true);
       }
       }
-      
+
     } else {
       returnResponse(false, 300, "Something went wrong");
     }
@@ -706,6 +706,63 @@ function updatePasswordByKeyFunction($token){
       }
   }
   catch(Exception $e){
+        returnResponse(false,300,$e->getMessage());
+  }
+}
+
+
+/**
+ * Function to change password
+ */
+function changePasswordRequestFunction($token){
+  try{
+         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+               global $db, $system, $date;
+                $checkToken = checkHeaders($token);
+                if ($checkToken == 402) {
+                  returnResponse(false, 402, "Access token missing");
+                } elseif ($checkToken == 400) {
+                  returnResponse(false, 402, "Invalid access token provided");
+                } else {
+                          if(isset($_POST['email']) &&   isset($_POST['new_password'])){
+                                       $email = $_POST['email'];
+                                       $password = $_POST['new_password'];
+                                      $check_user = $db->query(sprintf("SELECT COUNT(*) as count FROM users WHERE user_email = %s", secure($_POST['email']))) or _error("SQL_ERROR_THROWEN");
+                                      $check_user= $check_user->fetch_assoc();
+                                      if($check_user['count'] < 1){
+                                       returnResponse(false,402,"Invalid user");
+
+                              }else{
+                                    if (strlen($password) < 6) {
+                                    returnResponse(false,402,"Your password must be at least 6 characters long. Please try another");
+                                      exit();
+                                    }
+                                     $getUserData = getUserDataByEmail($email);
+                                     $knox_user_id = $getUserData["knox_user_id"];
+                                    $apiResponse  =  httpPostCurlMethod("/users/whitelabel/update-password", array("password" => $password, "userId" => $knox_user_id));
+
+                                    if (is_array($apiResponse) && array_key_exists('hash', $apiResponse)) {
+                                      $hash = $apiResponse['hash'];
+                                      $db->query(sprintf("UPDATE users SET user_password = %s, user_reseted = '0' WHERE user_email = %s", secure($hash), secure($email))) or _error("SQL_ERROR_THROWEN");
+                                          $details = ["email" => $email , "password" => $hash];
+                                          returnResponse(true,200,"Success", $details);
+                                    } else {
+                                      returnResponse(false,402,"Something went wrong");
+                                    }
+                              }
+                         }
+                         else{
+                             returnResponse(false,300,"parameters missing");
+                         }
+
+
+                }
+         }
+         else{
+            returnResponse(false,402,"Invalid request");
+         }
+  }
+   catch(Exception $e){
         returnResponse(false,300,$e->getMessage());
   }
 }

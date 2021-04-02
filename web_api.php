@@ -57,6 +57,9 @@ switch ($endpoint) {
     case 'updatePasswordByKey':
         updatePasswordByKeyFunction($token);
     break;
+        case 'changePasswordRequest':
+        changePasswordRequestFunction($token);
+    break;
 
     default:
         returnResponse(false,402,"Invalid Endpoint");
