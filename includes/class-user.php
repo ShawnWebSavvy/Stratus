@@ -32,9 +32,9 @@ class User
     public function __construct()
     {
         global $db, $system;
-        if ($system['s3_enabled']) {
-            $system['system_uploads'] = $system['system_uploads_url'];
-        }
+        // if ($system['s3_enabled']) {
+        //     $system['system_uploads'] = $system['system_uploads_url'];
+        // }
         if (isset($_COOKIE[$this->_cookie_user_id]) && isset($_COOKIE[$this->_cookie_user_token])) {
 
             $response_data = cachedUserData($db, $system, $_COOKIE[$this->_cookie_user_id], $_COOKIE[$this->_cookie_user_token]);
@@ -3541,17 +3541,7 @@ class User
         }
         while ($message = $get_messages->fetch_assoc()) {
             $message['user_picture'] = get_picture($message['user_picture'], $message['user_gender']);
-            //            $checkImage = image_exist($message['user_picture']);
-            //            if ($checkImage != '200') {
-            //                if ($message['user_picture_full'] != "") {
-            //                    $message['user_picture'] = $system['system_uploads'] . '/' . $message['user_picture_full'];
-            //                } else {
-            //                    $message['user_picture'] = $system['system_url'] . '/content/themes/' . $system['theme'] . '/images/user_defoult_img.jpg';
-            //                }
-            //            }
-            // if ($message['user_picture_full'] == "") {
-            //     $message['user_picture_full'] = $system['system_uploads_assets'] . '/content/themes/' . $system['theme'] . '/images/user_defoult_img.jpg';
-            // }
+
             $message['user_picture'] = $system['system_url'] . '/includes/wallet-api/image-exist-api.php?userPicture=' . $message['user_picture'] . '&userPictureFull=' . $system['system_uploads'] . '/' . $message['user_picture_full'];
             $message['message'] = $this->_parse(["text" => $message['message'], "decode_mentions" => false, "decode_hashtags" => false]);
             /* return */
