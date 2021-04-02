@@ -387,7 +387,7 @@ body.publisher-focus .custom_modal_style .card.daytime_message{display:none !imp
 .global-profile-localhub .col-12.cardBodyHeight .card-body .row>div .ui-box{box-shadow:none;padding:0;}
 .global-profile-localhub .col-12.cardBodyHeight .card-body .row>div.global-profile-feeds-photo{-ms-flex:0 0 50%;flex:0 0 50%;max-width:50%;padding:3px;box-shadow:none;margin:0;}
 .global-profile-localhub .col-12.cardBodyHeight .panel-videos .card-body .row>div{-ms-flex:0 0 50%;flex:0 0 50%;max-width:50%;padding:3px;box-shadow:none;margin:0;}
-.user-popover-wrapper:before{background-color:#fff;width:100%;border:0 !important;height:10px;}
+.user-popover-wrapper:before{display: none;}
  .global-profile-localhub .col-12.cardBodyHeight .card-body .row > div{display:flex;flex-direction:column;box-shadow:0px 0px 5px 0px rgba(0, 0, 0, 0.15);flex:0 0 calc(100% / 3 - 30px);max-width:calc(100% / 3 - 30px);margin:0 15px 30px;background:#fff;padding:20px 20px 80px;}
  .offcanvas-sidebar ul.active > li.active > a .svg-container:before{background-color:rgba(18, 105, 255, 0.1);}
  .edit_btns{display:flex;align-items:center;padding:10px;justify-content:flex-end;}

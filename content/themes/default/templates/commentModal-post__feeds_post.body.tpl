@@ -574,14 +574,24 @@
                 {include file='__feeds_post.text.tpl'}
             {else}
                 {if $_post['colored_pattern']}
-                    <div class="post-colored" {if $_post['colored_pattern']['type'] == "color"}
+                    <div class="post-colored customColorPost 4" {if $_post['colored_pattern']['type'] == "color"}
                             style="background-image: linear-gradient(45deg, {$_post['colored_pattern']['background_color_1']}, {$_post['colored_pattern']['background_color_2']});"
                         {else}
                             style="background-image: url({$system['system_uploads']}/{$_post['colored_pattern']['background_image']})"
                         {/if}>
-                        <div class="post-colored-text-wrapper js_scroller" data-slimScroll-height="240">
+                        <div class="post-colored-text-wrapper">
                             <div class="post-text" dir="auto" style="color: {$_post['colored_pattern']['text_color']};">
-                                {$_post['text']}
+                                {* {$_post['text']} *}
+
+                                {if $page !== 'post'}
+                                    {if $_post['text']|count_characters:true < 101}
+                                        {$_post['text']}
+                                    {else}
+                                        {$_post['text']|truncate:100}<a class="readMoreCustom" href="{$system['system_url']}/posts/{$_post['post_id']}"> Read More</a>
+                                    {/if}
+                                {else}
+                                    {$_post['text']}
+                                {/if}
                             </div>
                         </div>
                     </div>
