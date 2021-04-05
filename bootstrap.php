@@ -24,9 +24,7 @@ if (!file_exists(ABSPATH . 'includes/config.php')) {
 
 // get system configurations
 require_once(ABSPATH . 'includes/config.php');
-//add redis files
-// require_once('redis.php');
-//require_once(ABSPATH . 'includes/redis/redis_helpers.php');
+// add redis files
 // enviroment settings
 if (DEBUGGING) {
     ini_set("display_errors", true);
@@ -115,7 +113,7 @@ $system['BASEPATH'] = ltrim(BASEPATH, '/');
 /* set system version */
 $system['system_version'] = SYS_VER;
 
-$system['investment_api_base_url'] = "https://ws.stage-apollo.xyz/api/";
+$system['investment_api_base_url'] = "http://localhost:3012/";
 
 /* set session hash */
 $session_hash = session_hash($system['session_hash']);
