@@ -179,7 +179,8 @@
                               <!-- follow -->
                               {if $profile['i_follow']}
                               <button type="button" class="btn  btn-info js_unfollow" data-uid="{$profile['user_id']}">
-                                 <i class="fa fa-check mr5"></i>{__("Following")}
+                              <img class="" src="{$system['system_url']}/content/themes/default/images/svg/svgImg/newchecked1.svg" />
+                              {__("Following")}
                               </button>
                               {else}
                               <button type="button" class="btn  btn-info js_follow" data-uid="{$profile['user_id']}">

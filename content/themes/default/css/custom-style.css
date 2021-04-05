@@ -143,7 +143,7 @@ body.publisher-focus .popup-publishBtn .colored-text-wrapper{margin-top:30px;bor
  .people-friend-list-section{padding:0;}
 .globle_frnd_sgg button.btn.btn-info.js_follow{background-color:#1e1f20 !important;font-size:14px;color:#fff;}
 .globle_frnd_sgg button.btn.btn-info.js_unfollow{background-color:#e5f0ff !important;font-size:14px;color:#1e1f20;}
- .buttonWrapPopOver button img, .buttonWrapPopOver img{width:22px;height:22px;}
+ /* .buttonWrapPopOver button img, .buttonWrapPopOver img{width:22px;height:22px;} */
 .stratusloader-icon{ width:120px; height:120px; position:absolute; top:50%; left:50%; transform:translate(-50%, -50%); -webkit-transform:translate(-50%, -50%); -moz-transform:translate(-50%, -50%); -ms-transform:translate(-50%, -50%); -o-transform:translate(-50%, -50%); }
  .stratusloader{height:100%;background-color:rgba(0,0,0,0.5);position:fixed;top:0;left:0;z-index:99999;transform:translate(-0%,-0%);width:100%;max-height:100vh;}
  .global-profile-localhub .ui-box button{ position:absolute; bottom:20px; left:50%; transform:translateX(-50%); -webkit-transform:translateX(-50%); -moz-transform:translateX(-50%); -ms-transform:translateX(-50%); -o-transform:translateX(-50%); }
@@ -365,7 +365,7 @@ body.publisher-focus .custom_modal_style .card.daytime_message{display:none !imp
 .no-post-to-show img{max-width:500px;}
 .no_data_img_ img{max-width:500px;}
 .user-popover-content{padding:15px;}
-.buttonWrapPopOver button img,.buttonWrapPopOver img{width:22px;height:22px;}
+/* .buttonWrapPopOver button img,.buttonWrapPopOver img{width:22px;height:22px;} */
  @-webkit-keyframes spin{0%{-webkit-transform:rotate(0deg);}
  100%{-webkit-transform:rotate(360deg);}
 }

@@ -1,13 +1,14 @@
 body.global-profile-localhub .js_friend-add{height:58px;width:149px;border-radius:12px;background-color:#1e1f20;border:1px solid #1e1f20;font-size:14px;font-weight:700}
 body.profile-localhub .js_friend-remove{width: 112px !important}
-body.profile-localhub .js_friend-remove img:nth-child(1){display:none}
+/* body.profile-localhub .js_friend-remove img:nth-child(1){display:none} */
+.buttonWrapPopOver button.js_friend-remove {min-width: 118px;}
 body.global-profile-localhub .js_friend-remove{height:50px;width:149px;border-radius:12px;background-color:#53d769;border:1px solid #53d769;font-size:14px;font-weight:700}
 body.profile-localhub .js_friend-cancel{height:50px;font-size:0;border-radius:12px}
 body.global-profile-localhub .js_friend-cancel{height:58px;font-size:14px;font-weight:700;border-radius:12px}
 body.profile-localhub .js_follow{height:58px;font-size:14px;font-weight:700;border-radius:12px}
 body.global-profile-localhub .js_follow{height:45px;font-size:14px;font-weight:700;border-radius:12px}
 body.profile-localhub .js_unfollow{height:45px;font-size:14px;font-weight:700;border-radius:12px}
-body.global-profile-localhub .js_unfollow{height:45px;font-size:14px;font-weight:700;border-radius:12px}
+body.global-profile-localhub .js_unfollow{height:45px;font-size:14px;font-weight:700;border-radius: 10px;display: flex;align-items: center;justify-content: center;}
 body.profile-localhub .js_chat_start{height:54px;font-size:14px;font-weight:700;border-radius:12px}
 body.group-localhub .dropdown.js_live-notifications.walletButton,body.profile-localhub .dropdown.js_live-notifications.walletButton{display:none}
 body.global-profile-localhub .dropdown.js_live-notifications.walletButton{display:none}

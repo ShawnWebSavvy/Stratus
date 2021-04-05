@@ -52,7 +52,8 @@
                 <i class="fa fa-rss mr5"></i>{__("Follow")}
             </button> {elseif $_connection == "unfollow"}
             <button type="button" class="btn  btn-info js_unfollow" data-uid="{$_user['user_id']}">
-                <i class="fa fa-check mr5"></i>{__("Following")}
+            <img class="" src="{$system['system_url']}/content/themes/default/images/svg/svgImg/newchecked1.svg" />
+                {__("Following")}
             </button> {elseif $_connection == "blocked"}
             <button type="button" class="btn  btn-danger js_unblock-user" data-uid="{$_user['user_id']}">
                 <i class="fa fa-trash mr5"></i>{__("Unblock")}
@@ -166,7 +167,8 @@
                     <i class="fa fa-rss mr5"></i>{__("Follow")}
                 </button> {elseif $_connection == "unfollow"}
                 <button type="button" class="btn  btn-info js_unfollow" data-uid="{$_user['user_id']}">
-                    <i class="fa fa-check mr5"></i>{__("Following")}
+                <img class="" src="{$system['system_url']}/content/themes/default/images/svg/svgImg/newchecked1.svg" />
+                    {__("Following")}
                 </button> {elseif $_connection == "blocked"}
                 <button type="button" class="btn  btn-danger js_unblock-user" data-uid="{$_user['user_id']}">
                     <i class="fa fa-trash mr5"></i>{__("Unblock")}

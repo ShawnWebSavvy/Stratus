@@ -431,7 +431,7 @@
  body.night-mode .ui-box .img{background:#212121;}
  .ui-box img{height:92px;width:92px;border-radius:10px;}
  .ui-box .img img{object-fit: cover;}
- .ui-box button img{height:20px;width:20px;border-radius:0px;}
+ .ui-box button img{border-radius:0px;}
  .ui-box .btn{box-shadow:none;margin:0 auto;}
  .stat-panel{border-radius:4px;margin-bottom:20px;overflow:hidden;}
  .stat-panel.border{border:1px solid #e6ecf5;}
@@ -2107,10 +2107,29 @@
  .breadcrumb-item{align-items:center;} 
  .breadcrumb-item a{display:flex;align-items:center;} 
  label.error{color:red;font-weight:500;} /* Jagjeet Style */
- .markit_page_rhs .market-categories-section-right-side ul.side-nav li span{display:none !important;} 
- .markit_page_rhs .market-categories-section-right-side ul.side-nav li a{position:relative;padding-left:55px !important;} 
- .markit_page_rhs .market-categories-section-right-side ul.side-nav li a::before{position:absolute;content:'';width:48px;height:48px;left:-10px;top:5px;border-radius:10px;background-repeat:no-repeat;background-position:center;} .markit_page_rhs .market-categories-section-right-side ul.side-nav li a:hover::before{background-color:rgba(18, 105, 255, 0.1);} .markit_page_rhs .market-categories-section-right-side ul.side-nav li a.all::before{background-image:url(../images/svg/svgImg/all_icon.svg);} .markit_page_rhs .market-categories-section-right-side ul.side-nav li a.Apparel-Accessories::before{background-image:url(../images/svg/svgImg/Apparel_icon.svg);} .markit_page_rhs .market-categories-section-right-side ul.side-nav li a.Autos-Vehicles::before{background-image:url(../images/svg/svgImg/Vehicles_icon.svg);} .markit_page_rhs .market-categories-section-right-side ul.side-nav li a.Baby-Children-s-Products::before{background-image:url(../images/svg/svgImg/reletion-icon.svg);} .markit_page_rhs .market-categories-section-right-side ul.side-nav li a.Beauty-Products-Services::before{background-image:url(../images/svg/svgImg/Beauty_icon.svg);} .markit_page_rhs .market-categories-section-right-side ul.side-nav li a.Computers-Peripherals::before{background-image:url(../images/svg/svgImg/Computers_icon.svg);} .markit_page_rhs .market-categories-section-right-side ul.side-nav li a.Consumer-Electronics::before{background-image:url(../images/svg/svgImg/Electronics_icon.svg);} .markit_page_rhs .market-categories-section-right-side ul.side-nav li a.Dating-Services::before{background-image:url(../images/svg/svgImg/reletion-icon.svg);} .markit_page_rhs .market-categories-section-right-side ul.side-nav li a.Financial-Services::before{background-image:url(../images/svg/svgImg/newcoin1.svg);} .markit_page_rhs .market-categories-section-right-side ul.side-nav li a.Gifts-Occasions::before{background-image:url(../images/svg/svgImg/dob_icon.svg);} .markit_page_rhs .market-categories-section-right-side ul.side-nav li a.Home-Garden::before{background-image:url(../images/svg/svgImg/home-icb.svg);} .markit_page_rhs .market-categories-section-right-side ul.side-nav li a.Other::before{background-image:url(../images/svg/svgImg/nav_icon_friends.svg);}
+ .markit_page_rhs .market-categories-section-right-side ul.side-nav li span{display:none !important;}
+ .markit_page_rhs .market-categories-section-right-side ul.side-nav li span.marketIconHover{display: flex !important;width: 48px;height: 48px;align-items: center;justify-content: center;border-radius: 10px;margin-right: 10px;} 
+ .markit_page_rhs .market-categories-section-right-side ul.side-nav li:hover span.marketIconHover,
+ .markit_page_rhs .market-categories-section-right-side ul.side-nav li.active span.marketIconHover{background-color: rgba(18, 105, 255, 0.1);}
+ .markit_page_rhs .market-categories-section-right-side ul.side-nav li span.marketIconHover img{width: 20px;}
+ .markit_page_rhs .market-categories-section-right-side ul.side-nav li {padding-left: 0px;}
+ .markit_page_rhs .market-categories-section-right-side ul.side-nav li a{padding: 0px;margin-bottom: 0px;display: flex;align-items: center;width: 100%;}
 
+  /*.markit_page_rhs .market-categories-section-right-side ul.side-nav li a{position:relative;padding-left:55px !important;} 
+ .markit_page_rhs .market-categories-section-right-side ul.side-nav li a::before{position:absolute;content:'';width:48px;height:48px;left:-10px;top:5px;border-radius:10px;background-repeat:no-repeat;background-position:center;} 
+ .markit_page_rhs .market-categories-section-right-side ul.side-nav li a:hover::before{background-color:rgba(18, 105, 255, 0.1);}
+ .markit_page_rhs .market-categories-section-right-side ul.side-nav li a.all::before{background-image:url(../images/svg/svgImg/all_icon.svg);} 
+ .markit_page_rhs .market-categories-section-right-side ul.side-nav li a.Apparel-Accessories::before{background-image:url(../images/svg/svgImg/Apparel_icon.svg);} 
+ .markit_page_rhs .market-categories-section-right-side ul.side-nav li a.Autos-Vehicles::before{background-image:url(../images/svg/svgImg/Vehicles_icon.svg);} 
+ .markit_page_rhs .market-categories-section-right-side ul.side-nav li a.Baby-Children-s-Products::before{background-image:url(../images/svg/svgImg/reletion-icon.svg);} 
+ .markit_page_rhs .market-categories-section-right-side ul.side-nav li a.Beauty-Products-Services::before{background-image:url(../images/svg/svgImg/Beauty_icon.svg);} 
+ .markit_page_rhs .market-categories-section-right-side ul.side-nav li a.Computers-Peripherals::before{background-image:url(../images/svg/svgImg/Computers_icon.svg);} 
+ .markit_page_rhs .market-categories-section-right-side ul.side-nav li a.Consumer-Electronics::before{background-image:url(../images/svg/svgImg/Electronics_icon.svg);} 
+ .markit_page_rhs .market-categories-section-right-side ul.side-nav li a.Dating-Services::before{background-image:url(../images/svg/svgImg/reletion-icon.svg);} 
+ .markit_page_rhs .market-categories-section-right-side ul.side-nav li a.Financial-Services::before{background-image:url(../images/svg/svgImg/newcoin1.svg);} 
+ .markit_page_rhs .market-categories-section-right-side ul.side-nav li a.Gifts-Occasions::before{background-image:url(../images/svg/svgImg/dob_icon.svg);} 
+ .markit_page_rhs .market-categories-section-right-side ul.side-nav li a.Home-Garden::before{background-image:url(../images/svg/svgImg/home-icb.svg);} 
+ .markit_page_rhs .market-categories-section-right-side ul.side-nav li a.Other::before{background-image:url(../images/svg/svgImg/nav_icon_friends.svg);} */
 
 
 .copy-wrap .affilates_copy{

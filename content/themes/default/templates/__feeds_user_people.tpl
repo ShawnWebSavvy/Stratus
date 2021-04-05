@@ -57,15 +57,11 @@
             </button>
 
             {elseif $_connection == "remove"}
-            <button type="button" class="btn  btn-success {if !$_no_action}btn-delete{/if} js_friend-remove"
-                data-uid="{$_user['user_id']}">
-                <img class="btn_image"
-                    src="{$system['system_uploads_assets']}/content/themes/default/images/svg/svgImg/newchecked1.svg">
-                <img class="btn_image_hover"
-                    src="{$system['system_uploads_assets']}/content/themes/default/images/svg/svgImg/delete_icon.svg">
+            <button type="button" class="btn  btn-success {if !$_no_action}btn-delete{/if} js_friend-remove" data-uid="{$_user['user_id']}">
+                <img class="btn_image" src="{$system['system_uploads_assets']}/content/themes/default/images/svg/svgImg/newchecked1.svg">
+                <img class="btn_image_hover" src="{$system['system_uploads_assets']}/content/themes/default/images/svg/svgImg/delete_icon.svg">
                 <span class="btn_image_"> {__("Friends")} </span>
                 <span class="btn_image_hover"> {__("Delete")} </span>
-
             </button>
 
             {elseif $_connection == "follow"}
@@ -75,7 +71,8 @@
 
             {elseif $_connection == "unfollow"}
             <button type="button" class="btn  btn-info js_unfollow" data-uid="{$_user['user_id']}">
-                <i class="fa fa-check mr5"></i>{__("Following")}
+            <img class="" src="{$system['system_url']}/content/themes/default/images/svg/svgImg/newchecked1.svg" />
+                {__("Following")}
             </button>
 
             {elseif $_connection == "blocked"}
@@ -242,7 +239,8 @@
                 </button>
                 {elseif $_connection == "unfollow"}
                 <button type="button" class="btn  btn-info js_unfollow" data-uid="{$_user['user_id']}">
-                    <i class="fa fa-check mr5"></i>{__("Following")}
+                    <img class="" src="{$system['system_url']}/content/themes/default/images/svg/svgImg/newchecked1.svg" />
+                    {__("Following")}
                 </button>
                 {elseif $_connection == "blocked"}
                 <button type="button" class="btn btn-danger js_unblock-user" data-uid="{$_user['user_id']}">

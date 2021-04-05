@@ -2,16 +2,19 @@
 .btn-group-md>.btn,.btn-md{font-size:12px;padding:16px 56px}.btn-group-sm>.btn,.btn-sm{border-radius:10px;padding:10px 30px}.btn{border:0 solid}
 ._cmn_btn{padding:12px 25px;transition:all .3s ease-in-out;color:#1e1f20}button.btn:hover img.btn_image_{display:none}button.btn:hover img.btn_image_hover{display:block}
 img.btn_image_hover{display:none}button.btn.js_friend-cancel{background-color:#e5f0ff!important;border:0!important;color:#1e1f20;font-size:0;border-radius:10px}
-button.btn.js_friend-cancel img.btn_image_{display:inline-block!important}
+button.btn.js_friend-cancel img.btn_image_{display:inline-block!important;margin-right: 0;}
 .people-friends-page .float-right._user_action_ .btn{font-size:20px;padding:6px 25px;transition:all .1s linear;border-radius:10px;font-weight:500;display:inline-block}
 .people-friends-page .float-right._user_action_ .btn.js_friend-cancel{font-size:0;min-height:42px}
-.js_friend-remove span.btn_image_hover{display:none}.cmn_btn, .js_event-invite, .js_friend-add, .js_friend-remove, .js_go-event, .js_group-invite, .js_interest-event, .js_join-group, .js_leave-group, .js_like-page, .js_page-invite, .js_ungo-event, .js_uninterest-event, .js_unlike-page, .publishBtn, .viewProfileButton, div#modal .float-right._user_action button.js_friend-add, div#modal .float-right._user_action_ button.js_friend-remove{white-space:nowrap;border-radius:10px;background-color:#e5f0ff!important;border:0!important;color:#1e1f20;display:flex;align-items:center;justify-content:center;height:50px!important;width:100%!important;font-size:14px;font-weight:500}
+.js_friend-remove span.btn_image_hover{display:none}
+.cmn_btn, .js_event-invite, .js_friend-add, .js_friend-remove, .js_go-event, .js_group-invite, .js_interest-event, .js_join-group, .js_leave-group, .js_like-page, 
+.js_page-invite, .js_ungo-event, .js_uninterest-event, .js_unlike-page, .publishBtn, .viewProfileButton, div#modal .float-right._user_action button.js_friend-add, 
+div#modal .float-right._user_action_ button.js_friend-remove{white-space:nowrap;border-radius:10px;background-color:#e5f0ff!important;border:0!important;color:#1e1f20;display:flex;align-items:center;justify-content:center;height:50px!important;width:100%!important;font-size:14px;font-weight:500}
 div#modal .float-right._user_action_ button.js_friend-remove:hover { background-color: #fb646b !important;}
 .buttonWrapPopOver button.js_friend-add{background-color:#e5f0ff}._cmn_btn:hover{background-color:#e5f0ff;color:#1e1f20}
 .js_friend-cancel,.js_friend-remove{background-color:#e5f0ff;color:#1e1f20}
 .js_boost-page,.profile_name_sec .profile-buttons-wrapper button.js_boost-page{width:100%}
 .profile-localhub .profile-button-style .js_friend-remove img{width:35px;padding:0 5px}
-.profile-localhub .profile-button-style .js_friend-remove img.btn_image{display:none!important}
+/* .profile-localhub .profile-button-style .js_friend-remove img.btn_image{display:none!important} */
 .js_friend-remove:hover,.people-friends-page .float-right._user_action_ .js_friend-remove:hover{background-color:#fb646b!important}
 .js_friend-remove:hover span.btn_image_hover{display:block}.js_friend-remove span{color:#1e1f20!important}
 .js_friend-remove:hover span.btn_image_{display:none}button.btn:hover .btn_image{display:none}
