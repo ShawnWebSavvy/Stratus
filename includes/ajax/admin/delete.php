@@ -1,7 +1,7 @@
 <?php
 /**
  * ajax -> admin -> delete
- * 
+ *
  * @package Sngine
  * @author Zamblek
  */
@@ -21,7 +21,6 @@ if($_POST['handle'] != "reports" && $_POST['handle'] != "user_points_reset") {
 
 // handle delete
 try {
-
 	switch ($_POST['handle']) {
 
 		case 'invitation_code':
@@ -306,7 +305,7 @@ try {
 			if(isset($_POST['node']) && is_numeric($_POST['node'])) {
 				/* delete report */
 				$db->query(sprintf("DELETE FROM reports WHERE report_id = %s", secure($_POST['node'], 'int') )) or _error("SQL_ERROR_THROWEN");
-			}	
+			}
 			break;
 
 		case 'comment':
@@ -412,7 +411,7 @@ try {
 			/* clear comments reactions */
 			$db->query("UPDATE posts_comments_reactions SET points_earned = '0'") or _error("SQL_ERROR_THROWEN");
 			break;
-		
+
 		case 'custom_referral':
 			// check admin|moderator permission
 			if(!$user->_is_admin) {
