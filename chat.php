@@ -2,42 +2,13 @@
 require('bootloader.php');
 
 // user access
-user_access();
-
+user_access(true);
 // page header
 
-$host = 'localhost';
-$port = '8090';
-$subfolder = "stratus";
-$colors = array('#007AFF','#FF7000','#FF7000','#15E25F','#CFC700','#CFC700','#CF1100','#CF00BE','#F00');
-$color_pick = array_rand($colors);
 //error_reporting(E_ALL);
 
 page_header(__("chat"));
-function perform_handshaking($receved_header,$client_conn, $host, $port)
-{
-	$headers = array();
-	$lines = preg_split("/\r\n/", $receved_header);
-	foreach($lines as $line)
-	{
-		$line = chop($line);
-		if(preg_match('/\A(\S+): (.*)\z/', $line, $matches))
-		{
-			$headers[$matches[1]] = $matches[2];
-		}
-	}
 
-	$secKey = $headers['Sec-WebSocket-Key'];
-	$secAccept = base64_encode(pack('H*', sha1($secKey . '258EAFA5-E914-47DA-95CA-C5AB0DC85B11')));
-	//hand shaking header
-	$upgrade  = "HTTP/1.1 101 Web Socket Protocol Handshake\r\n" .
-	"Upgrade: websocket\r\n" .
-	"Connection: Upgrade\r\n" .
-	"WebSocket-Origin: $host\r\n" .
-	"WebSocket-Location: wss://$host:$port/stratus/server.php\r\n".
-	"Sec-WebSocket-Accept:$secAccept\r\n\r\n";
-	socket_write($client_conn,$upgrade,strlen($upgrade));
-}
 try {
 
 	// check the view

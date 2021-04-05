@@ -3338,9 +3338,13 @@ class User
      * @param integer $conversation_id
      * @return array
      */
-    public function get_conversation($conversation_id)
+    public function get_conversation($conversation_id,$user_id=null)
     {
         global $db, $system;
+        if($this->_data['user_id']==null)
+        {
+            $this->_data['user_id'] = $user_id[0];
+        }
         $conversation = [];
         $get_conversation = $db->query(sprintf("SELECT conversations.*, conversations_messages.message, conversations_messages.image, conversations_messages.voice_note, conversations_messages.time, conversations_users.seen FROM conversations INNER JOIN conversations_messages ON conversations.last_message_id = conversations_messages.message_id INNER JOIN conversations_users ON conversations.conversation_id = conversations_users.conversation_id WHERE conversations_users.user_id = %s AND conversations.conversation_id = %s", secure($this->_data['user_id'], 'int'), secure($conversation_id, 'int'))) or _error("SQL_ERROR_THROWEN");
         if ($get_conversation->num_rows == 0) {
@@ -3480,9 +3484,13 @@ class User
      * @param boolean $check_deleted
      * @return integer
      */
-    public function get_mutual_conversation($recipients, $check_deleted = false)
+    public function get_mutual_conversation($recipients,$user_id=null ,$check_deleted = false)
     {
         global $db;
+        if($this->_data['user_id']==null)
+        {
+            $this->_data['user_id'] = $user_id[0];
+        }
         $recipients_array = (array)$recipients;
         $recipients_array[] = $this->_data['user_id'];
         $recipients_list = implode(',', $recipients_array);
@@ -3523,9 +3531,13 @@ class User
      * @param integer $last_message_id
      * @return array
      */
-    public function get_conversation_messages($conversation_id, $offset = 0, $last_message_id = null)
+    public function get_conversation_messages($conversation_id, $user_id=null, $offset = 0, $last_message_id = null)
     {
         global $db, $system;
+        if($this->_data['user_id']==null)
+        {
+            echo $this->_data['user_id'] = $user_id[0];
+        }
         /* check if user authorized to see this conversation */
         $check_conversation = $db->query(sprintf("SELECT COUNT(*) as count FROM conversations_users WHERE conversation_id = %s AND user_id = %s", secure($conversation_id, 'int'), secure($this->_data['user_id'], 'int'))) or _error("SQL_ERROR_THROWEN");
         if ($check_conversation->fetch_assoc()['count'] == 0) {

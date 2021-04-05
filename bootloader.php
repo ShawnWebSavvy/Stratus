@@ -10,7 +10,7 @@
 // fetch bootstrap
 require('bootstrap.php');
 require_once('includes/class-user-global.php');
-
+require_once('includes/class-user.php');
 //$end_time = microtime(TRUE);
 
 //$start_time = microtime(TRUE);

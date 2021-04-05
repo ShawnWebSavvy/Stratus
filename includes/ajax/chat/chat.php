@@ -59,7 +59,8 @@ try {
 	}
 
 	/* get convertsation details */
-	$conversation = $user->get_conversation($_GET['conversation_id']);
+
+	$conversation = $user->get_conversation($_GET['conversation_id'],$user->_data['user_id']);
 
 	/* get conversation messages */
 	$conversation['messages'] = $user->get_conversation_messages($_GET['conversation_id']);

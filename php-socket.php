@@ -1,7 +1,8 @@
 <?php
 require_once("class.chathandler.php");
 define('HOST_NAME',"localhost"); 
-define('PORT',"9020");
+define('PORT',"8060");
+//error_reporting(0);
 $null = NULL;
 $chatHandler = new ChatHandler();
 $socketResource = socket_create(AF_INET, SOCK_STREAM, SOL_TCP);

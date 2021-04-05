@@ -1,24 +1,122 @@
 {include file='_head.tpl'}
 {include file='_header.tpl'}
-
 <!-- page content -->
 
 	<script>  
 	function showMessage(messageHTML) {
 		$('#chat-box').append(messageHTML);
 	}
-
+    function chat_box(user_id, conversation_id, name, name_list, multiple, link) {
+        console.log(user_id);
+  var chat_key_value = "chat_";
+  chat_key_value += conversation_id || "u_" + user_id;
+  var chat_key = "#" + chat_key_value,
+    chat_box = $(chat_key);
+  if (0 == chat_box.length) {
+    if (0 == conversation_id) {
+      var data = { user_id: user_id };
+      if ($('.chat-box[data-uid="' + user_id + '"]').length > 0)
+        return (
+          (chat_box = $('.chat-box[data-uid="' + user_id + '"]')),
+          void (
+            chat_box.hasClass("opened") ||
+            chat_box
+              .addClass("opened")
+              .find(".chat-widget-content")
+              .slideToggle(200)
+          )
+        );
+      $("body").append(
+        render_template("#chat-box", {
+          chat_key_value: chat_key_value,
+          user_id: user_id,
+          conversation_id: conversation_id,
+          name: name.substring(0, 28),
+          name_list: name_list,
+          multiple: multiple,
+          link: link,
+        })
+      ),
+        (chat_box = $(chat_key)),
+        chat_box.find(".chat-widget-content").show(),
+        chat_box.find("textarea").focus(),
+        initialize(),
+        reconstruct_chat_widgets();
+    } else {
+      var data = { conversation_id: conversation_id };
+      $("body").append(
+        render_template("#chat-box", {
+          chat_key_value: chat_key_value,
+          user_id: user_id,
+          conversation_id: conversation_id,
+          name: name.substring(0, 28),
+          name_list: name_list,
+          multiple: multiple,
+          link: link,
+        })
+      ),
+        (chat_box = $(chat_key)),
+        chat_box.find(".chat-widget-content").show(),
+        chat_box.find("textarea").focus(),
+        initialize(),
+        reconstruct_chat_widgets();
+    }
+    $.getJSON(api["chat/messages"], data, function (response) {
+      if (response)
+        if (response.callback) eval(response.callback), chat_box.remove();
+        else {
+          if (response.conversation_id) {
+            if ($("#chat_" + response.conversation_id).length > 0)
+              return (
+                chat_box.remove(),
+                (chat_box = $("#chat_" + response.conversation_id)),
+                chat_box.hasClass("opened") ||
+                chat_box
+                  .addClass("opened")
+                  .find(".chat-widget-content")
+                  .slideToggle(200),
+                void chat_box.find("textarea").focus()
+              );
+            chat_box.attr("id", "chat_" + response.conversation_id),
+              chat_box.attr("data-cid", response.conversation_id),
+              chat_box.find(".x-form-tools-colors").show();
+          }
+          void 0 !== response.user_online &&
+            response.user_online &&
+            chat_box
+              .find(".js_chat-box-status")
+              .removeClass("fa-user-secret")
+              .addClass("fa-circle"),
+            response.messages &&
+            chat_box
+              .find(".js_scroller:first")
+              .html(response.messages)
+              .scrollTop(chat_box.find(".js_scroller:first")[0].scrollHeight),
+            response.color &&
+            (chat_box.attr("data-color", response.color),
+              color_chat_box(chat_box, response.color));
+        }
+    }).fail(function () {
+      chat_box.remove(),
+        modal("#modal-message", {
+          title: __.Error,
+          message: __["There is something that went wrong!"],
+        });
+    });
+  } else
+    chat_box.hasClass("opened") ||
+      chat_box.addClass("opened").find(".chat-widget-content").slideToggle(200),
+      chat_box.find("textarea").focus(),
+      reconstruct_chat_widgets();
+}
 	$(document).ready(function(){
-		var websocket = new WebSocket("ws://10.1.2.10:9020/php-socket.php"); 
+        function isOpen(ws) { return ws.readyState === ws.OPEN }
+
+		var websocket = new WebSocket("ws://10.1.2.10:8060/php-socket.php"); 
 		websocket.onopen = function(event) { 
 			showMessage("<div class='chat-connection-ack'>Connection is established!</div>");		
 		}
-		websocket.onmessage = function(event) {
-			var Data = JSON.parse(event.data);
-            console.log(Data);
-			showMessage("<div class='"+Data.message_type+"'>"+Data.message+"</div>");
-			$('#chat-message').val('');
-		};
+		
 		
 		websocket.onerror = function(event){
 			showMessage("<div class='error'>Problem due to some Error</div>");
@@ -26,9 +124,9 @@
 		websocket.onclose = function(event){
 			showMessage("<div class='chat-connection-ack'>Connection Closed</div>");
 		}; 
-		$('.js_chat-message').on('Click',function(event)
+        $("body").on("click", "li.js_chat-message", function (e)	
         {
-            event.preventDefault();
+            e.preventDefault();
             var _this = $(this);
             var widget = _this.parents(".chat-widget, .panel-messages");
             var textarea = widget.find("textarea.js_post-message");
@@ -40,9 +138,7 @@
 				chat_message: message,
                 conversation_id:conversation_id,
                 user_id:user_id
-			};
-			websocket.send(JSON.stringify(messageJSON));
-            
+			};		
         sendUserImage = $("body").find(".usernameOnHoverbtn").find("img").attr("src");
         nameSender = $("body").find("#currentUsername").find("span").text();
         attachments = widget.find(".chat-attachments");
@@ -95,13 +191,14 @@
             api["chat/post"],
             data,
             function (response) {
+                console.log(response);
               response &&
                 (response.callback
                   ? eval(response.callback)
-                  : widget.hasClass("fresh")
-                    ? -1 != window.location.pathname.indexOf("messages")
+                  : widget.hasClass("freshh")
+                    ? -1 != window.location.pathname.indexOf("message")
                       ? window.location.replace(
-                        site_path + "/messages/" + response.conversation_id
+                        site_path + "/chat/" + response.conversation_id
                       )
                       : (widget.remove(),
                         chat_box(
@@ -164,6 +261,13 @@
                             .hide(),
                           attachments_voice_notes.find(".js_voice-start").show()),
                       widget.removeData("sending")));
+                        if (!isOpen(websocket)) return;
+			                websocket.send(JSON.stringify(messageJSON));
+                            websocket.onmessage = function(event) {
+			                var Data = JSON.parse(event.data);
+                            console.log(Data);
+			                $('.chatBoxBlock .chat-conversations').html(Data.messages);
+                        };
             },
             "json"
           ).fail(function () {
@@ -174,17 +278,6 @@
           });
         }
         });
-		$('#frmChat').on("submit",function(event){
-			event.preventDefault();
-			$('#chat-user').attr("type","hidden");		
-			var messageJSON = {
-				chat_user: $('#currentUsername span').html(),
-				chat_message: $('#chat-message').val(),
-                conversation_id:'467',
-                user_id:'6272'
-			};
-			websocket.send(JSON.stringify(messageJSON));
-		});
 	});
 
 
@@ -194,7 +287,7 @@
 <div class="container mt20 offcanvas">
     <div class="row">
         <div class="offcanvas-sidebar sidebar-left-ant" id="sidebarHiddSwip">
-            
+            {include file='_sidebar.tpl'}
         </div>
     </div>
     <div class="row right-side-content-ant mobileMessageWrap users">
@@ -334,11 +427,6 @@
 
         <!-- conversation -->
         <div class="col-md-8 col-xl-9 offcanvas-mainbar chatBoxBlock js_conversation-container">
-        	<form name="frmChat" id="frmChat">
-			<div id="chat-box"></div>
-			<input type="text" name="chat-message" id="chat-message" placeholder="Message"  class="chat-input chat-message" required />
-			<input type="submit" id="btnSend" name="send-chat-message" value="Send" >
-		</form>
             {if $view == "new"}
             <div class="card panel-messages fresh">
                 <div class="card-header with-icon bg-transparent">
@@ -390,7 +478,7 @@
                                 <!-- start recording -->
     
                                 <!-- stop recording -->
-                                <div class="btn-voice-stop js_voice-stop" style="display: none">
+                                <div class="btn-voice-stop js_voice-stop" >
                                     <i class="far fa-stop-circle mr5"></i>{__("Recording")} <span
                                         class="js_voice-timer">00:00</span>
                                 </div>
@@ -436,7 +524,7 @@
             </div>
             {else}
             {if $conversation}
-            {include file='ajax.chat.conversation.tpl'}
+            {include file='socket.chat.conversation.tpl'}
             {else}
             <div class="card card-messages" style="padding-top: 60px;">
                 <div class="card-body text-center text-muted" style="min-height: 510px;">

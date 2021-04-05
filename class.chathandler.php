@@ -1,6 +1,8 @@
 <?php
-require('includes/class-user.php');
+require('bootstrap.php');
+//error_reporting(0);
 class ChatHandler extends User{
+	
 	
 	function send($message) {
 		global $clientSocketArray;
@@ -85,8 +87,8 @@ class ChatHandler extends User{
 	
 	function createChatBoxMessage($chat_user,$chat_box_message,$conversation_id,$user_id) {
 		$user= new User;
+		global $smarty;
 		$return = array();
-
 		// initialize the conversation
 		$conversation = array();
 		// get conversation messages
@@ -108,10 +110,18 @@ class ChatHandler extends User{
 		}
 	
 		/* get convertsation details */
-		$conversation = $user->get_conversation($conversation_id);
-	
+		$conversation = $user->get_conversation($conversation_id,(array)$user_id);
+		$online_friends = $user->get_online_friends();
+		/* get offline friends */
+		$offline_friends = $user->get_offline_friends();
+		/* get sidebar friends */
+		$sidebar_friends = array_merge( $online_friends, $offline_friends );
+		// assign variables
+		$smarty->assign('sidebar_friends', $sidebar_friends);
+		/* return */
+		$return['master']['sidebar'] = $smarty->fetch("ajax.chat.master.sidebar.tpl");
 		/* get conversation messages */
-		$conversation['messages'] = $user->get_conversation_messages($conversation_id);
+		$conversation['messages'] = $user->get_conversation_messages($conversation_id,(array)$user_id);
 		/* check if last message sent by the viewer */
 		if($conversation['seen_name_list'] && end($conversation['messages'])['user_id'] == $user->_data['user_id']) {
 			$smarty->assign('last_seen_message_id', end($conversation['messages'])['message_id']);
@@ -130,7 +140,11 @@ class ChatHandler extends User{
 		}
 	
 		// return & exit
-		return_json($return);
+		
+		//return_json($return);
+
+		$chatMessage = $this->seal(json_encode($return));
+		return $chatMessage; 
 		/* $message ="<div class='chat-box-message'>" . $chat_box_message . "</div>";
 		$messageArray = array('message'=>$message,'message_type'=>'chat-box-html');
 		$chatMessage = $this->seal(json_encode($messageArray));
