@@ -957,6 +957,8 @@
                                                         {$transaction['currency_detail']}
                                                     {elseif $transaction['tnx_type'] == "referral"}
                                                         {__("Referral Bonus")}
+                                                    {elseif $transaction['node_type'] == "video_purchase"}
+                                                    {__("Purchased Video")}
                                                     {elseif $transaction['node_type'] == "videohub_package_payment"}
                                                     {__("Buy Video Hub Package")}
                                                     {elseif $transaction['node_type'] == "package_payment"}
