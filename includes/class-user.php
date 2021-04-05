@@ -158,6 +158,9 @@ class User
                     $this->_data['can_go_live'] = $this->check_module_permission($system['live_permission']);
                 }
 
+                //Sync on videohub platform
+                $this->syncOnVidohubPlatform($this->_data['user_id']);
+
             }
         }
     }
@@ -17365,6 +17368,8 @@ class User
             $db->query($sqlQuery) or _error("SQL_ERROR_THROWEN");
             /* get user_id */
             $user_id    = $db->insert_id;
+
+
         } else {
             throw new Exception(__("Something Went Wrong!! Please try again"));
         }
@@ -17406,6 +17411,22 @@ class User
             $this->update_invitation_code($args['invitation_code']);
         }
 
+         /**
+             * Block regarding videohub
+             */
+                        $userDetails =  $db->query(sprintf("SELECT * FROM users WHERE user_id = %s", secure($user_id, 'int'))) or _error("SQL_ERROR_THROWEN");
+                        if ($userDetails->num_rows == 0) {
+                            _error(403);
+                        }
+                        $user_ = $userDetails->fetch_assoc();
+                         $apiUrl = PLY_URL.'web/v1.0?type=add_user';
+                    $apiResponse  =  $this->httpPostUsingCurl($apiUrl, array("email" => $user_['user_email'] , "firstname" => $user_['user_firstname'] , "lastname" => $user_['user_lastname'], "knox_user_id"=>$user_['knox_user_id'],"password"=> $user_['user_password'],"user_group"=>$user_['user_group'],"username"=> $user_['user_name'],"globalToken"=> $user_['globalToken'],'server_key'=>'1312a113c58715637a94437389326a49'));
+
+                   // print_r($apiResponse); die;
+            /**
+             * End of block
+             */
+
         /* auto connect */
         $this->auto_friend($user_id);
         $this->auto_follow($user_id);
@@ -17413,6 +17434,8 @@ class User
         $this->auto_join($user_id);
         /* set authentication cookies */
         $this->_set_authentication_cookies($user_id);
+
+
     }
 
     private function add_referrer($referee_id, $referrer_id = null)
@@ -18494,9 +18517,8 @@ public function httpPostUsingCurl($apiUrl, $params)
     {
         $url      = $apiUrl;
         $curlInit = curl_init();
-      //$postData = json_encode($params);
         $postData = $params;
-        //print_r($postData);
+      //  print_r($postData); die;
         curl_setopt($curlInit, CURLOPT_URL, $url);
         curl_setopt($curlInit, CURLOPT_RETURNTRANSFER, true);
         curl_setopt($curlInit, CURLOPT_HEADER, false);
@@ -18504,7 +18526,34 @@ public function httpPostUsingCurl($apiUrl, $params)
         $curlResponse = curl_exec($curlInit);
         $curlResponse =  json_decode($curlResponse, true);
         curl_close($curlInit);
-         //print_r($curlResponse); die();
-        return $curlResponse;
+         //print_r($curlResponse); die("here");
+             return $curlResponse;
+
+
+
+    }
+
+
+    /**
+     * Check If Exist on Video hub
+     */
+
+    public function syncOnVidohubPlatform($user_id){
+         global $db, $system;
+         /**
+             * Block regarding videohub
+             */
+                        $userDetails =  $db->query(sprintf("SELECT * FROM users WHERE user_id = %s", secure($user_id, 'int'))) or _error("SQL_ERROR_THROWEN");
+                        if ($userDetails->num_rows == 0) {
+                            _error(403);
+                        }
+                        $user_ = $userDetails->fetch_assoc();
+                         $apiUrl = PLY_URL.'web/v1.0?type=user_sync';
+                    $apiResponse  =  $this->httpPostUsingCurl($apiUrl, array("email" => $user_['user_email'] , "firstname" => $user_['user_firstname'] , "lastname" => $user_['user_lastname'], "knox_user_id"=>$user_['knox_user_id'],"password"=> $user_['user_password'],"user_group"=>$user_['user_group'],"username"=> $user_['user_name'],"globalToken"=> $user_['globalToken'],'server_key'=>'1312a113c58715637a94437389326a49'));
+
+                   // print_r($apiResponse); die;
+            /**
+             * End of block
+             */
     }
 }
