@@ -923,7 +923,7 @@ class User
             /* get users */
             $getUserQuery = sprintf('SELECT user_id, user_group, user_email, user_name, user_firstname, user_lastname, user_gender, user_picture, user_subscribed, picture_photo.source as user_picture_full, user_verified FROM users LEFT JOIN posts_photos as picture_photo ON users.user_picture_id = picture_photo.photo_id WHERE user_id != %1$s AND (user_name LIKE %2$s OR user_firstname LIKE %2$s OR user_lastname LIKE %2$s OR CONCAT(user_firstname,  " ", user_lastname) LIKE %2$s) ORDER BY user_firstname ASC LIMIT %3$s', secure($data, 'int'), secure($query, 'search'), secure($system['min_results'], 'int', false));
         }
-        
+
         $get_users = $db->query($getUserQuery) or _error("SQL_ERROR_THROWEN");
         if ($get_users->num_rows > 0) {
             while ($user = $get_users->fetch_assoc()) {
@@ -2297,6 +2297,24 @@ class User
         }
         /* delete the user */
         if ($can_delete) {
+            /**
+             * Curl to videohub
+             */
+            $userDetails =  $db->query(sprintf("SELECT user_email FROM users WHERE user_id = %s", secure($user_id, 'int'))) or _error("SQL_ERROR_THROWEN");
+
+            if ($userDetails->num_rows == 0) {
+                _error(403);
+            }
+            $user_ = $userDetails->fetch_assoc();
+            $apiUrl = PLY_URL.'web/v1.0?type=delete_user';
+             $apiResponse  =  $this->httpPostUsingCurl($apiUrl, array("email" => $user_['user_email'],'server_key'=>'1312a113c58715637a94437389326a49'));
+          //   print_r($apiResponse); die;
+             if($apiResponse['status']!== 200){
+                  throw new Exception(__($apiResponse['errors']['error_text']));
+             }
+            /**
+             * End of block
+             */
             /* delete the user */
             $db->query(sprintf("DELETE FROM users WHERE user_id = %s", secure($user_id, 'int'))) or _error("SQL_ERROR_THROWEN");
             /* delete all user pages */
@@ -3243,7 +3261,7 @@ class User
     public function post_notification_api($args = [])
     {
         global $db, $date, $system, $control_panel;
-        
+
         if (!isset($control_panel)) {
             $control_panel['url'] = ($this->_is_admin) ? "admincp" : "modcp";
         }
@@ -4568,7 +4586,7 @@ class User
 
     /**
      * create_live_post
-     * 
+     *
      * @param string $agora_uid
      * @param string $agora_token
      * @param string $agora_channel_name
@@ -4581,7 +4599,7 @@ class User
 
     /**
      * create_live_post
-     * 
+     *
      * @param string $agora_uid
      * @param string $agora_token
      * @param string $agora_channel_name
@@ -4655,13 +4673,13 @@ class User
         //         $redisObject->setValueWithRedis($userKeys, $jsonEncodedVals);
         //     }
         // }
-        return $post_id;        
+        return $post_id;
     }
 
 
     /**
      * end_live_post
-     * 
+     *
      * @param integer $post_id
      * @return void
      */
@@ -4747,7 +4765,7 @@ class User
 
     /**
      * start_live_recording
-     * 
+     *
      * @param integer $post_id
      * @param string $agora_uid
      * @param string $agora_token
@@ -4860,13 +4878,13 @@ class User
         }
         /* update post */
         $db->query(sprintf("UPDATE posts_live SET agora_resource_id = %s, agora_sid = %s WHERE post_id = %s", secure($resourceId), secure($sid), secure($post_id, 'int'))) or _error("SQL_ERROR_THROWEN");
-      
+
     }
 
 
     /**
      * stop_live_recording
-     * 
+     *
      * @param integer $post_id
      * @param string $agora_resource_id
      * @param string $agora_sid
@@ -4899,8 +4917,8 @@ class User
 
         $response = json_decode($response);
         $file = $response->serverResponse->fileList;
-        // die($response.'file');  
-        // echo '<pre>'; print_r($response); die;      
+        // die($response.'file');
+        // echo '<pre>'; print_r($response); die;
         if (!$file) {
             return;
         }
@@ -4912,7 +4930,7 @@ class User
 
     /**
      * join_live_post
-     * 
+     *
      * @param integer $post_id
      * @return void
      */
@@ -4926,7 +4944,7 @@ class User
 
     /**
      * leave_live_post
-     * 
+     *
      * @param integer $post_id
      * @return void
      */
@@ -4945,7 +4963,7 @@ class User
 
     /**
      * get_live_post_stats
-     * 
+     *
      * @param integer $post_id
      * @return void
      */
@@ -4969,7 +4987,7 @@ class User
 
     /**
      * agora_token_builder
-     * 
+     *
      * @param boolean $is_host
      * @param string $channel_name
      * @return string
@@ -8361,7 +8379,7 @@ class User
      * @return void
      */
     public function react_post($post_id, $reaction)
-    {   
+    {
         global $db, $date, $system;
         /* check reation */
         if (!in_array($reaction, ['like', 'love', 'haha', 'yay', 'wow', 'sad', 'angry'])) {
@@ -8623,13 +8641,13 @@ class User
         //      //profile post
         //      $redisTimelinekey = 'profile-posts-'.$this->_data['user_id'];
         //      fetchAndSetDataOnPostReaction($system, $this,$redisObject,$redisTimelinekey);
-        // //for author post  
+        // //for author post
         //      $redisPostKey = 'user-' . $post['author_id'] . '-posts';
         //      $redisObject = new RedisClass();
         //      fetchAndSetDataOnPostReaction($system, $this,$redisObject,$redisPostKey);
         //      //profile post
         //      $redisTimelinekey = 'profile-posts-'.$post['author_id'];
-        //      fetchAndSetDataOnPostReaction($system, $this,$redisObject,$redisTimelinekey);   
+        //      fetchAndSetDataOnPostReaction($system, $this,$redisObject,$redisTimelinekey);
 
 
 
@@ -8653,7 +8671,7 @@ class User
         //                     //  $newUpdate['poll']['options'][$search_res]['votes'] = (string) $newUpdate['poll']['options'][$search_res]['votes'] + 1;
         //                     //   $newUpdate['poll']['options'][$check_res]['votes'] = ($newUpdate['poll']['options'][$check_res]['votes'] == 0) ? 0 : (string) $newUpdate['poll']['options'][$check_res]['votes'] - 1 ;
 
-        //             }   
+        //             }
         //   echo  "<pre>";
         //  print_r($newUpdate); die("HERER");
         $ids = $this->get_friends_ids($post['author_id']);
@@ -8864,7 +8882,7 @@ class User
         //                     //  $newUpdate['poll']['options'][$search_res]['votes'] = (string) $newUpdate['poll']['options'][$search_res]['votes'] + 1;
         //                     //   $newUpdate['poll']['options'][$check_res]['votes'] = ($newUpdate['poll']['options'][$check_res]['votes'] == 0) ? 0 : (string) $newUpdate['poll']['options'][$check_res]['votes'] - 1 ;
 
-        //             }   
+        //             }
         //   echo  "<pre>";
         //  print_r($newUpdate); die("HERER");
         $ids = $this->get_friends_ids($post['author_id']);
@@ -14441,11 +14459,11 @@ class User
         $transactions = [];
         $$system['max_results'] = 50;
         $buy_transactions = $db->query(sprintf("SELECT * from investment_transactions WHERE user_id = %s and tnx_type = %s ORDER BY id DESC LIMIT %s", secure($this->_data['user_id'], 'int'),secure('buy'),secure($system['max_results'], 'int', false))) or _error("SQL_ERROR_THROWEN");
-        
+
         $sell_transactions = $db->query(sprintf("SELECT * from investment_transactions WHERE user_id = %s and tnx_type = %s ORDER BY id DESC LIMIT %s", secure($this->_data['user_id'], 'int'),secure('sell'),secure($system['max_results'], 'int', false))) or _error("SQL_ERROR_THROWEN");
-        
+
         $referral_transactions = $db->query(sprintf("SELECT * from investment_transactions WHERE user_id = %s and tnx_type = %s ORDER BY id DESC LIMIT %s", secure($this->_data['user_id'], 'int'),secure('referral'),secure($system['max_results'], 'int', false))) or _error("SQL_ERROR_THROWEN");
-        
+
         if ($buy_transactions->num_rows > 0) {
             $i = 0;
             while ($transaction = $buy_transactions->fetch_assoc()) {
@@ -14465,7 +14483,7 @@ class User
         if ($referral_transactions->num_rows > 0) {
             $i = 0;
             while ($transaction = $referral_transactions->fetch_assoc()) {
-                
+
                 $transaction['extra'] = json_decode($transaction['extra'],true);
                 $get_user = $db->query(sprintf("SELECT user_firstname, user_lastname, user_name from  users WHERE user_id = %s", secure($transaction['extra']['who'], 'int'))) or _error("SQL_ERROR_THROWEN");
                 if ($get_user->num_rows == 0) {
@@ -17029,9 +17047,9 @@ class User
 
     public function httpPostCurl($apiUrl, $params)
     {
-        //ini_set('display_errors', 1);
-        //ini_set('display_startup_errors', 1);
-        //error_reporting(E_ALL);
+        // ini_set('display_errors', 1);
+        // ini_set('display_startup_errors', 1);
+        // error_reporting(E_ALL);
         // $baseUrl  = 'https://ws.stage-apollo.xyz/api';
 
         $baseUrl  = API_BASE_URL;
@@ -17049,7 +17067,7 @@ class User
         $curlResponse = curl_exec($curlInit);
         $curlResponse =  json_decode($curlResponse, true);
         curl_close($curlInit);
-        // print_r($curlResponse); die("hiiiiii");
+       //  print_r($curlResponse); die();
         return $curlResponse;
     }
 
@@ -17358,7 +17376,7 @@ class User
                 $db->query(sprintf("INSERT INTO custom_fields_values (value, field_id, node_id, node_type,paymentMode) VALUES (%s, %s, %s, 'user','wallet')", secure($value), secure($field_id, 'int'), secure($user_id, 'int')));
             }
         }
-        
+
 
         $this->add_referrer($user_id);
         /* send activation */
@@ -18466,5 +18484,27 @@ class User
         }
         return $countries;
         die;
+    }
+
+
+    /**
+     * FUNCTION FOR VIDEOHUB
+     */
+public function httpPostUsingCurl($apiUrl, $params)
+    {
+        $url      = $apiUrl;
+        $curlInit = curl_init();
+      //$postData = json_encode($params);
+        $postData = $params;
+        //print_r($postData);
+        curl_setopt($curlInit, CURLOPT_URL, $url);
+        curl_setopt($curlInit, CURLOPT_RETURNTRANSFER, true);
+        curl_setopt($curlInit, CURLOPT_HEADER, false);
+        curl_setopt($curlInit, CURLOPT_POSTFIELDS, $postData);
+        $curlResponse = curl_exec($curlInit);
+        $curlResponse =  json_decode($curlResponse, true);
+        curl_close($curlInit);
+         //print_r($curlResponse); die();
+        return $curlResponse;
     }
 }

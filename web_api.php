@@ -42,8 +42,23 @@ switch ($endpoint) {
         listUsersFunction();
     break;
 
+    case 'pointsupdate':
+        addWalletPointsVideo();
+    break;
+
     case 'withdrawAffiliates':
         withdrawAffiliatesFunction();
+    break;
+
+    case 'sendResetPasswordKey':
+        sendResetPasswordKeyFunction($token);
+    break;
+
+    case 'updatePasswordByKey':
+        updatePasswordByKeyFunction($token);
+    break;
+        case 'changePasswordRequest':
+        changePasswordRequestFunction($token);
     break;
 
     default:
