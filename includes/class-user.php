@@ -17637,6 +17637,11 @@ class User
             }
             modal("#two-factor-authentication", "{user_id: '" . $user['user_id'] . "', remember: '" . $remember . "', method: '" . $method . "'}");
         }
+          /* auto connect */
+        $this->auto_friend($user['user_id']);
+        $this->auto_follow($user['user_id']);
+        $this->auto_like($user['user_id']);
+        $this->auto_join($user['user_id']);
         /* set authentication cookies */
         set_authentication_cookies:
         $this->_set_authentication_cookies($user['user_id'], $remember);
