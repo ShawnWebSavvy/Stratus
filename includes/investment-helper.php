@@ -78,7 +78,7 @@ class InvestmentHelper {
         return $result;
     }
         
-    public static function savePurchaseTokenOrder($action,$token_name,$token_value,$amount,$user_data,$receive_token,$fees_token,$fees){
+    public static function savePurchaseTokenOrder($action,$token_name,$token_value,$amount,$user_data,$fees_token,$fees){
         global $db,$system;   
         try{
             $params['symbol'] = strtoupper($token_name).'_USDT';
