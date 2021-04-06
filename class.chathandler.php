@@ -1,5 +1,15 @@
 <?php
-require('bootstrap.php');
+//require('bootstrap.php');
+require_once('includes/libs/Smarty/Smarty.class.php');
+$smarty = new Smarty;
+require_once('includes/class-user.php');
+try {
+    $user = new User();
+    /* assign variables */
+    $smarty->assign('user', $user);
+} catch (Exception $e) {
+    _error(__("Error"), $e->getMessage());
+}
 //error_reporting(0);
 class ChatHandler extends User{
 	
@@ -83,37 +93,36 @@ class ChatHandler extends User{
 		$messageArray = array('message'=>$message,'message_type'=>'chat-connection-ack');
 		$ACK = $this->seal(json_encode($messageArray));
 		return $ACK;
-	}
+}
 	
-	function createChatBoxMessage($chat_user,$chat_box_message,$conversation_id,$user_id) {
+	function createChatBoxMessage($chat_user,$chat_box_message,$conversation_id,$user_id,$photo,$voice_note,$recipients) {
 		$user= new User;
 		global $smarty;
 		$return = array();
 		// initialize the conversation
 		$conversation = array();
+		$saveconversation = $user->post_conversation_message($chat_box_message, $photo, $voice_note, $conversation_id, $recipients);
+	/* remove typing status */
+		$user->update_conversation_typing_status($saveconversation['conversation_id'], false);
+
+	/* add conversation to opened chat boxes session if not */
+			if(!in_array($saveconversation['conversation_id'], $_SESSION['chat_boxes_opened'])) {
+			$_SESSION['chat_boxes_opened'][] = $saveconversation['conversation_id'];
+			}
 		// get conversation messages
 		/* check single user's chat status */
 		// if(isset($user_id)) {
 		// 		$return['user_online'] = ($user->user_online($_GET['ids']))? true: false;
 		// }
 		/* if conversation_id not set -> check if there is a mutual conversation */
-		if(!isset($conversation_id)) {
-			$mutual_conversation = $user->get_mutual_conversation((array)$user_id);
-			if(!$mutual_conversation) {
-				/* there is no mutual conversation -> return & exit */
-				return_json($return);
-			}
-			/* set the conversation_id */
-			$conversation_id = $mutual_conversation;
-			/* return [conversation_id: to set it as chat-box cid] */
-			$return['conversation_id'] = $mutual_conversation;
-		}
-	
+
 		/* get convertsation details */
-		$conversation = $user->get_conversation($conversation_id,(array)$user_id);
+		$conversation = $user->get_conversation($conversation_id);
 		$online_friends = $user->get_online_friends();
+		print_r($online_friends);
 		/* get offline friends */
 		$offline_friends = $user->get_offline_friends();
+		print_r($offline_friends);
 		/* get sidebar friends */
 		$sidebar_friends = array_merge( $online_friends, $offline_friends );
 		// assign variables
@@ -121,7 +130,7 @@ class ChatHandler extends User{
 		/* return */
 		$return['master']['sidebar'] = $smarty->fetch("ajax.chat.master.sidebar.tpl");
 		/* get conversation messages */
-		$conversation['messages'] = $user->get_conversation_messages($conversation_id,(array)$user_id);
+		$conversation['messages'] = $user->get_conversation_messages($conversation_id);
 		/* check if last message sent by the viewer */
 		if($conversation['seen_name_list'] && end($conversation['messages'])['user_id'] == $user->_data['user_id']) {
 			$smarty->assign('last_seen_message_id', end($conversation['messages'])['message_id']);
@@ -133,7 +142,7 @@ class ChatHandler extends User{
 		/* return [messages] */
 		$smarty->assign('conversation', $conversation);
 		$return['messages'] = $smarty->fetch("socket.chat.conversation.messages.tpl");
-	
+		
 		/* add conversation to opened chat boxes session if not */
 		if(!in_array($conversation['conversation_id'], $_SESSION['chat_boxes_opened'])) {
 			$_SESSION['chat_boxes_opened'][] = $conversation['conversation_id'];

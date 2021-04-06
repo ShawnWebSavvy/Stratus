@@ -916,7 +916,9 @@ $(function () {
                     voice_recording_timer.addEventListener("reset", function (e) {
                         o.html(voice_recording_timer.getTimeValues().toString(["minutes", "seconds"]));
                     }),
-                    navigator.mediaDevices
+                    //navigator.mediaDevices
+                    navigator.getUserMedia &&
+                    (navigator.mediaDevices
                         .getUserMedia({ audio: !0, video: !1 })
                         .then(function (t) {
                             var s = new AudioContext();
@@ -930,13 +932,14 @@ $(function () {
                                 var n = e.parents(".chat-widget, .panel-messages");
                                 n.find(".x-form-tools-attach").hide(), n.find(".x-form-tools-voice").hide();
                             }
-                        })
+                        }))
                         .catch(function (e) {
                             modal("#modal-message", { title: __.Error, message: e });
                         });
             }
         }),
         $("body").on("click", ".js_voice-stop", function () {
+            console.log(voice_recording_object);
             var _this = $(this),
                 _parent = _this.parents(".voice-recording-wrapper"),
                 voice_stop_button = _this,
@@ -945,7 +948,7 @@ $(function () {
                 voice_success_message = _parent.find(".js_voice-success-message"),
                 handle = _parent.data("handle"),
                 handle_type = "voice_notes";
-            voice_stop_button.hide(),
+                voice_stop_button.hide(),
                 voice_recording_timer.reset(),
                 voice_recording_timer.stop(),
                 (voice_recording_process = !1),
