@@ -541,7 +541,11 @@ if (endUrl != "investments") {
                     button_status(current, "reset");
                 } else if (response.status == 'success') {
                     window.location.href = response.url;
-                } else {
+                } else if (response.status == 'session_expired') { 
+                    modal('#modal-message', { title:"Session expired", message: 'Please enter the amount(USD) again and buy' }); 
+                    $('#confrimModal').modal('hide');
+                    change_amount();
+                }else {
                     $('#confrimModal').html(response.initiate);
                     $('#confrimModal').modal('show');
                     button_status(current, "reset");

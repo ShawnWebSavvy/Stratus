@@ -78,16 +78,16 @@ class InvestmentHelper {
         return $result;
     }
         
-    public static function savePurchaseTokenOrder($action,$token_name,$token_value,$amount,$user_data){
+    public static function savePurchaseTokenOrder($action,$token_name,$token_value,$amount,$user_data,$receive_token,$fees_token,$fees){
         global $db,$system;   
         try{
-            $params['symbol'] = strtoupper($_POST['token_name']).'_USDT';
+            $params['symbol'] = strtoupper($token_name).'_USDT';
             $params['side'] = 'buy'; 
-            $token_price = self::get_ticker_price(strtoupper($token_name));
-            $token_value=round($amount/$token_price['data']['buy_price'], 5);
-            $fees        = $token_price['data']['buy_fees'];
-            $fees_token = round($token_value*$fees/100,5);
-            $receive_token = round($token_value-$fees_token,5);
+            // $token_price = self::get_ticker_price(strtoupper($token_name));
+            // $token_value=round($amount/$token_price['data']['buy_price'], 5);
+            // $fees        = $token_price['data']['buy_fees'];
+            // $fees_token = round($token_value*$fees/100,5);
+            $receive_token = $token_value-$fees_token;;
             $params['size'] = $receive_token;
             $result = InvestmentHelper::buySellOrder($params);
             if(isset($result['data']['data']['order_id'])){
@@ -122,17 +122,13 @@ class InvestmentHelper {
         
     }
 
-    public static function saveSellTokenOrder($action,$token_name,$token_value,$amount,$user_data){
+    public static function saveSellTokenOrder($action,$token_name,$token_value,$amount,$user_data,$receive_amount,$fees){
         global $db,$system;   
         try{
             $params['symbol'] = strtoupper($_POST['token_name']).'_USDT';
             $params['side'] = 'sell'; 
             $params['size'] = $token_value;
-            $token_price = self::get_ticker_price(strtoupper($token_name));
-            $amount=round(($token_value*$token_price['data']['sell_price']), 2);
-            $fees        = $token_price['data']['sell_fees'];
-            $fees_amount = round($amount*$fees/100,5);
-            $receive_amount = round($amount-$fees_amount,2);
+            // $receive_amount = round($amount-$fees_amount,2);
   
             $result = InvestmentHelper::buySellOrder($params);
             if(isset($result['data']['data']['order_id'])){
