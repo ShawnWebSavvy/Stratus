@@ -1,7 +1,7 @@
 <?php
 /**
  * ajax -> core -> signin
- * 
+ *
  * @package Sngine
  * @author Zamblek
  */
@@ -30,7 +30,7 @@ try {
 	return_json( array('callback' => 'window.location.reload();') );
 	//return_json( array("callback" => "window.location.replace('landingpage.php');") );
 	//return_json( array('callback' => 'location.href(landingpage.php);') );
-	
+
 } catch (Exception $e) {
 	return_json( array('error' => true, 'message' => $e->getMessage()) );
 }

@@ -17471,6 +17471,7 @@ class User
      */
     public function sign_in($username_email, $password, $remember = false)
     {
+
         global $db, $system, $date;
         // ini_set('display_errors', 1);
         // ini_set('display_startup_errors', 1);
@@ -17495,16 +17496,21 @@ class User
         }
         $userToken  = $loginApiResponse['token'];
         if (is_array($loginApiResponse) && count($loginApiResponse) > 0 && array_key_exists('email', $loginApiResponse) && array_key_exists('hash', $loginApiResponse) && is_array($user) && count($user) > 0) {
+             echo $user['user_id']; die;
             if($user['user_activated']==0){
                 throw new Exception('Your account is not active. Please contact support to get it activated');
             }
             $updateQuery = sprintf("UPDATE users SET  user_password = %s,knox_user_id=%s,globalToken =%s WHERE user_id = %s", secure($loginApiResponse['hash']), secure($loginApiResponse['userId']), secure($userToken), secure($user['user_id'], 'int'));
             $db->query($updateQuery) or _error("SQL_ERROR_THROWEN");
+                //Sync on videohub platform
+                $this->syncOnVidohubPlatform($user['user_id']);
+
             // $redisObject = new RedisClass();
             // $redisPostKey = 'user-' . $this->_data['user_id'];
             // $redisObject->deleteValueFromKey($redisPostKey);
             // cachedUserData($db, $system, $this->_data['user_id'], $this->_data['active_session_token']);
         } else {
+
             if (is_array($loginApiResponse) && count($loginApiResponse) > 0 && array_key_exists('message', $loginApiResponse) && array_key_exists('data', $loginApiResponse)) {
                 if (is_array($user) && count($user)) {
                     $apiResponse  =  $this->httpPostCurl('/users/whitelabel/register', array("email" => $username_email, "password" => $password));
@@ -17513,6 +17519,8 @@ class User
                         $knox_user_id = $apiResponse['userId'];
 
                         $db->query(sprintf("UPDATE users SET user_password = %s,user_id= %s ,globalToken =%s WHERE user_email = %s", secure($passwordhash), secure($knox_user_id), secure($userToken), secure($username_email))) or _error("SQL_ERROR_THROWEN");
+                        //Sync on videohub platform
+                          $this->syncOnVidohubPlatform($user['user_id']);
                         // $redisObject = new RedisClass();
                         // $redisPostKey = 'user-' . $this->_data['user_id'];
                         // $redisObject->deleteValueFromKey($redisPostKey);
@@ -17537,7 +17545,7 @@ class User
                 $emailArray = explode("@", $username_email);
                 $user_started = 1;
                 //echo $emailArray[0];print_r($emailArray); exit;
-                $insertQueryL = sprintf("INSERT INTO users (user_name, user_email,user_password, user_firstname, user_lastname,user_registered,user_privacy_newsletter,knox_user_id,user_email_verified,user_activated,user_started) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s,%s)", secure($username_email), secure($username_email), secure($loginApiResponse['hash']), secure($emailArray[0]), secure(''), secure($date), secure($newsletter_agree), secure($knox_user_id), secure($user_email_verified), secure($user_activated), secure($user_started));
+                $insertQueryL = sprintf("INSERT INTO users (user_name, user_email,user_password, user_firstname, user_lastname,user_registered,user_privacy_newsletter,knox_user_id,user_email_verified,user_activated,user_started) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s,%s)", secure($username_email), secure($username_email), secure($loginApiResponse['hash']), secure($emailArray[0]), secure($emailArray[0]), secure($date), secure($newsletter_agree), secure($knox_user_id), secure($user_email_verified), secure($user_activated), secure($user_started));
 
                 $db->query($insertQueryL) or _error("SQL_ERROR_THROWEN");
                 $user = $this->checkUserAndGetData($username_email);
@@ -17549,6 +17557,11 @@ class User
                 // $redisObject->deleteValueFromKey($redisPostKey);
                 // cachedUserData($db, $system, $this->_data['user_id'], $this->_data['active_session_token']);
                 //exit;
+
+                         //Sync on videohub platform
+                          $this->syncOnVidohubPlatform($user['user_id']);
+
+
             } else {
                 throw new Exception("<p><strong>" . __("Please re-enter your password") . "</strong></p><p>" . __("The password you entered is incorrect") . ". " . __("If you forgot your password?") . " <a href='" . $system['system_url'] . "/reset'>" . __("Request a new one") . "</a></p>");
             }
@@ -17628,6 +17641,7 @@ class User
         /* set authentication cookies */
         set_authentication_cookies:
         $this->_set_authentication_cookies($user['user_id'], $remember);
+
     }
 
     public function checkUserAndGetData($userEmail)
