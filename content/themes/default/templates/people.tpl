@@ -333,7 +333,7 @@
                             <!-- <i class="fa fa-search mr5"></i>{__("Search")} -->
                         </div>
                         <div class="card-body">
-                            <form action="{$system['system_url']}/people/find" method="post">
+                            <form action="{$system['system_url']}/people/find" method="get">
                                 <div class="form-group" {$system['system_distance']}>
                                     <label>{__("Distance")}</label>
                                     <div>
