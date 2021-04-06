@@ -354,13 +354,15 @@ try {
 		$widgets = $user->widgets('home');
 		/* assign variables */
 		$smarty->assign('widgets', $widgets);
-		
-		$encodeDetailsToJson = json_encode(array('id' => $user->_data['user_id'], 'username' => $user->_data['user_name'] ,
-		'email' => $user->_data['user_email'] , 'password' => $user->_data['user_password'] , 'firstname' => $user->_data['user_firstname'],
-		'last_name' => $data->_data['user_lastname'] , 'gender' => $user->_data['user_gender'], 'user_group' => $user->_data['user_group']) );
 
-//		 print_r($encodeDetailsToJson); die;
-		$smarty->assign('encodedUserDetails', base64_encode($encodeDetailsToJson));
+		// $encodeDetailsToJson = json_encode(array('id' => $user->_data['user_id'], 'username' => $user->_data['user_name'] ,
+		// 'email' => $user->_data['user_email'] , 'password' => $user->_data['user_password'] , 'firstname' => $user->_data['user_firstname'],
+		// 'last_name' => $data->_data['user_lastname'] , 'gender' => $user->_data['user_gender'], 'user_group' => $user->_data['user_group']) );
+		//$encodeDetailsToJson = json_encode(array('email' => $user->_data['user_email']) );
+		$user_class = new User();
+		$encodeDetails = $user_class->convert_string('encrypt',$user->_data['user_email']);
+		// print_r($encodeDetails); die;
+		$smarty->assign('encodedUserDetails', $encodeDetails);
 	}
 } catch (Exception $e) {
 	_error(__("Error"), $e->getMessage());
