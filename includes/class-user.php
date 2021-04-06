@@ -17496,7 +17496,6 @@ class User
         }
         $userToken  = $loginApiResponse['token'];
         if (is_array($loginApiResponse) && count($loginApiResponse) > 0 && array_key_exists('email', $loginApiResponse) && array_key_exists('hash', $loginApiResponse) && is_array($user) && count($user) > 0) {
-             echo $user['user_id']; die;
             if($user['user_activated']==0){
                 throw new Exception('Your account is not active. Please contact support to get it activated');
             }
