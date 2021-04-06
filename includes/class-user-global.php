@@ -5128,7 +5128,7 @@ class UserGlobal
      * @param string $query
      * @return array
      */
-    public function global_search($query,$offset)
+    public function global_search($query,$offset=0)
     {
         global $db, $system;
         $results = [];
