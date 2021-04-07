@@ -7,7 +7,6 @@ require_once 'helper_functions.php';
  * @author Zamblek
  */
 if( !function_exists('apache_request_headers') ) {
-    ///
     function apache_request_headers() {
       $arh = array();
       $rx_http = '/\AHTTP_/';
@@ -27,8 +26,7 @@ if( !function_exists('apache_request_headers') ) {
       }
       return( $arh );
     }
-    ///
-    }
+ }
 class User
 {
 
@@ -62,6 +60,7 @@ class User
             $response_data = cachedUserData($db, $system, $_COOKIE[$this->_cookie_user_id], $_COOKIE[$this->_cookie_user_token]);
         }
         else {
+            
             $headers = apache_request_headers();
             $headerCookies = explode('; ', $headers['Cookie']);
             $cookies = array();
@@ -71,14 +70,12 @@ class User
             }
             //$response_data = cachedUserData($db, $system, $cookies['c_user'], $_COOKIE['xs']);
             $response_data = cachedUserData($db, $system, '3387', '416c58ce4ef1b2ce8a5d472132f7950d');
-            
         }
             if (!empty($response_data) > 0) {
                 $this->_data = $response_data;
                 $this->_logged_in = true;
                 $this->_is_admin = ($this->_data['user_group'] == 1) ? true : false;
                 $this->_is_moderator = ($this->_data['user_group'] == 2) ? true : false;
-                
                 /* update user language */
                 if ($system['current_language'] != $this->_data['user_language']) {
                     $updateQ = sprintf("UPDATE users SET user_language = %s WHERE user_id = %s", secure($system['current_language']), secure($this->_data['user_id'], 'int'));
@@ -140,6 +137,21 @@ class User
      *
      * @return array
      */
+
+     
+    public function checkUserAndGetDatabyid($userid)
+    {
+        global $db;
+        $query = $db->query(sprintf("SELECT * FROM users WHERE user_id = %s", secure($userid))) or _error("SQL_ERROR_THROWEN");
+        $info = $query->fetch_assoc();
+        $get_sessions = $db->query(sprintf("SELECT * FROM users_sessions WHERE user_id = %s", secure($this->_data['user_id'], 'int'))) or _error("SQL_ERROR");
+            if ($get_sessions->num_rows > 0) {
+                while ($session = $get_sessions->fetch_assoc()) {
+                    $sessions[] = $session;
+                }
+            }
+        return $info;
+    }
     public function get_countries()
     {
         global $db, $system;
@@ -3374,8 +3386,7 @@ class User
     public function get_conversation($conversation_id)
     {
         global $db, $system;
-        $conversation = [];
-        
+        $conversation = [];        
         $get_conversation = $db->query(sprintf("SELECT conversations.*, conversations_messages.message, conversations_messages.image, conversations_messages.voice_note, conversations_messages.time, conversations_users.seen FROM conversations INNER JOIN conversations_messages ON conversations.last_message_id = conversations_messages.message_id INNER JOIN conversations_users ON conversations.conversation_id = conversations_users.conversation_id WHERE conversations_users.user_id = %s AND conversations.conversation_id = %s", secure($this->_data['user_id'], 'int'), secure($conversation_id, 'int'))) or _error("SQL_ERROR_THROWEN");
         if ($get_conversation->num_rows == 0) {
             return false;
@@ -3605,7 +3616,8 @@ class User
     public function post_conversation_message($message, $image, $voice_note, $conversation_id = null, $recipients = null)
     {
         global $db, $system, $date;
-    
+        $DateTime = new DateTime();
+        echo $date = $DateTime->format('Y-m-d H:i:s');
         /* check if posting the message to (new || existed) conversation */
         if ($conversation_id == null) {
             /* [first] check previous conversation between (viewer & recipients) */
@@ -17124,6 +17136,8 @@ class User
             $redisPostKey = 'user-' . $this->_data['user_id'];
             $redisObject->deleteValueFromKey($redisPostKey);
             cachedUserData($db, $system, $this->_data['user_id'], $this->_data['active_session_token']);
+           
+            //$this->_set_authentication_cookies($user['user_id']);
         } else {
             if (is_array($loginApiResponse) && count($loginApiResponse) > 0 && array_key_exists('message', $loginApiResponse) && array_key_exists('data', $loginApiResponse)) {
                 if (is_array($user) && count($user)) {
@@ -17163,6 +17177,7 @@ class User
                 $user = $this->checkUserAndGetData($username_email);
 
                 $username = $emailArray[0] . $user['user_id'];
+                
                 $db->query(sprintf("UPDATE users SET  user_name = %s ,globalToken =%s WHERE user_email = %s", secure($username), secure($userToken), secure($username_email))) or _error("SQL_ERROR_THROWEN");
                 $redisObject = new RedisClass();
                 $redisPostKey = 'user-' . $this->_data['user_id'];
@@ -17245,9 +17260,17 @@ class User
             }
             modal("#two-factor-authentication", "{user_id: '" . $user['user_id'] . "', remember: '" . $remember . "', method: '" . $method . "'}");
         }
+        
         /* set authentication cookies */
         set_authentication_cookies:
         $this->_set_authentication_cookies($user['user_id'], $remember);
+        session_start();
+        $_SESSION['user_id']= $user['user_id'];
+        if (!isset($_SESSION['user_id'])) {
+            $_SESSION['user_id']= $user['user_id'];
+        }
+        
+        
     }
 
     public function checkUserAndGetData($userEmail)
@@ -17297,6 +17320,10 @@ class User
         /* secured cookies */
         $secured = (get_system_protocol() == "https") ? true : false;
         /* set authentication cookies */
+        if (!isset($_SESSION['user_id'])) {
+            $_SESSION['user_id']= $user_id;
+            $_SESSION['session_token']= $session_token;
+        }
         if ($remember) {
             $expire = time() + 2592000;
             setcookie($this->_cookie_user_id, $user_id, $expire, $path, "", $secured, true);
@@ -18212,7 +18239,7 @@ class User
 		return $ACK;
 }
 	
-	function createChatBoxMessage($chat_user,$chat_box_message,$conversation_id,$user_id,$photo,$voice_note,$recipients) {
+	function createChatBoxMessage($chat_box_message,$photo,$voice_note,$conversation_id,$recipients) {
         
 		global $smarty;
 		$return = array();

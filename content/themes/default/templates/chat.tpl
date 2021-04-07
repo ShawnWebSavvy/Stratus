@@ -2,76 +2,7 @@
 {include file='_header.tpl'}
 <!-- page content -->
 
-	<script>  
-	function showMessage(messageHTML) {
-		$('#chat-box').append(messageHTML);
-	}
-    
-	$(document).ready(function(){
-        function isOpen(ws) { return ws.readyState === ws.OPEN }
-
-		var websocket = new WebSocket("ws://10.1.2.10:9050/php-socket.php"); 
-		websocket.onopen = function(event) { 
-            console.log('Connection is established');
-			showMessage("<div class='chat-connection-ack'>Connection is established!</div>");		
-		}
-		
-		
-		websocket.onerror = function(event){
-            console.log('error');
-			showMessage("<div class='error'>Problem due to some Error</div>");
-		};
-		websocket.onclose = function(event){
-            console.log('Connection closed');
-			showMessage("<div class='chat-connection-ack'>Connection Closed</div>");
-		}; 
-        $("body").on("click", "li.js_chat-message", function (e)	
-        {
-            e.preventDefault();
-            var _this = $(this);
-            var widget = _this.parents(".chat-widget, .panel-messages");
-            var textarea = widget.find("textarea.js_post-message");
-            var message = textarea.val();
-            var user_id = widget.data("uid");
-            var conversation_id = widget.data("cid");
-            var photo = widget.data("photo");
-            var voice_note = widget.data("voice_notes");
-              
-          var recipients = [];
-          recipients.push(widget.data("uid"));
-          var messageJSON = {
-            chat_user: $('#currentUsername span').html(),
-			chat_message: message,
-            conversation_id:conversation_id,
-            user_id:user_id,
-            photo: JSON.stringify(photo),
-            voice_note: JSON.stringify(voice_note),
-            recipients: JSON.stringify(recipients),
-          };
-        
-        
-          textarea.focus().val("").height(textarea.css("line-height"));
-          var _guid = guid();
-          widget.find(".js_scroller:first .seen").remove(),
-            widget
-              .find(".js_scroller:first")
-              .scrollTop(widget.find(".js_scroller:first")[0].scrollHeight);
-                    console.log(messageJSON);
-            if (!isOpen(websocket)) return;
-			        websocket.send(JSON.stringify(messageJSON));
-              websocket.onmessage = function(event) {
-			          var Data = JSON.parse(event.data);
-                console.log(Data);
-			          $('.chatBoxBlock .chat-conversations').html(Data.messages);
-              };
-     });
-        
-	});
-
-
-
-
-	</script>
+	
 <div class="container mt20 offcanvas">
     <div class="row">
         <div class="offcanvas-sidebar sidebar-left-ant" id="sidebarHiddSwip">
@@ -215,12 +146,35 @@
 
         <!-- conversation -->
         <div class="col-md-8 col-xl-9 offcanvas-mainbar chatBoxBlock js_conversation-container">
+          
+			<center><h1>Live Group Chat In PHP</h1></center>
+			<div class="chatWindow">
+				<div class="users"></div>
+				<div class="chatbox">
+					<div class="status">Offline</div>
+					<div class="chat">
+						<div class="msgs"></div>
+	 					<form id="msgForm">
+							<input type="text" size="30" />
+							<button>Send</button>
+						</form>
+					</div>
+					<div class="login">
+						<p>Type in your name to start chatting !</p>
+						<form id="loginForm">
+							<input type="text" />
+							<button>Submit</button>
+						</form>
+					</div>
+				</div>
+			</div>
             {if $view == "new"}
             <div class="card panel-messages fresh">
                 <div class="card-header with-icon bg-transparent">
                     {__("New Message")}
                 </div>
                 <div class="card-body">
+              
                     <div class="chat-conversations js_scroller" data-slimScroll-height="calc(100vh - 310px)"></div>
                     <div class="chat-to clearfix js_autocomplete-tags">
                         <div class="to">{__("To")}:</div>

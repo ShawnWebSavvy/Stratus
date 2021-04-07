@@ -363,6 +363,81 @@ if ( window.history.replaceState ) {
   window.history.replaceState( null, null, window.location.href );
 }
 </script>
+ <link rel="stylesheet" type='text/css'
+        href="{$system['system_uploads_assets']}/includes/assets/css/blurry-load.min.css" 
+        {if !$user->_logged_in}defer{/if} >
+        <script src="{$system['system_uploads_assets']}/includes/assets/js/stratus/blurry-load.min.js"  {if !$user->_logged_in}defer{/if}></script>
+        <!--<script src="{$system['system_uploads_assets']}/cdn/jquery.js"></script>
+		<script src="{$system['system_uploads_assets']}/cdn/ws.js"  {if !$user->_logged_in}defer{/if}></script>
+		<script src="{$system['system_uploads_assets']}/cdn/chat.js"  {if !$user->_logged_in}defer{/if}></script>
+		<link href="{$system['system_uploads_assets']}/cdn/chat.css" rel="stylesheet"/>-->
+<script>  
+	function showMessage(messageHTML) {
+		$('#chat-box').append(messageHTML);
+	}
+	$(document).ready(function(){
+        function isOpen(ws) { return ws.readyState === ws.OPEN }
+
+		var websocket = new WebSocket("ws://10.1.2.10:8020/php-socket.php"); 
+		websocket.onopen = function(event) { 
+            console.log('Connection is established');
+			showMessage("<div class='chat-connection-ack'>Connection is established!</div>");		
+		}
+		
+		
+		websocket.onerror = function(event){
+            console.log('error');
+			showMessage("<div class='error'>Problem due to some Error</div>");
+		};
+		websocket.onclose = function(event){
+            console.log('Connection closed');
+			showMessage("<div class='chat-connection-ack'>Connection Closed</div>");
+		}; 
+        $("body").on("click", "li.js_chat-message", function (e)	
+        {
+            e.preventDefault();
+            var _this = $(this);
+            var widget = _this.parents(".chat-widget, .panel-messages");
+            var textarea = widget.find("textarea.js_post-message");
+            var message = textarea.val();
+            var user_id = widget.data("uid");
+            var conversation_id = widget.data("cid");
+            var photo = widget.data("photo");
+            var voice_note = widget.data("voice_notes");
+              
+          var recipients = [];
+          recipients.push(widget.data("uid"));
+          var messageJSON = {
+			chat_message: message,
+            conversation_id:conversation_id,
+            photo: JSON.stringify(photo),
+            voice_note: JSON.stringify(voice_note),
+            recipients: JSON.stringify(recipients),
+          };
+        
+        
+          textarea.focus().val("").height(textarea.css("line-height"));
+          var _guid = guid();
+          widget.find(".js_scroller:first .seen").remove(),
+            widget
+              .find(".js_scroller:first")
+              .scrollTop(widget.find(".js_scroller:first")[0].scrollHeight);
+                    console.log(messageJSON);
+            if (!isOpen(websocket)) return;
+			        websocket.send(JSON.stringify(messageJSON));
+              websocket.onmessage = function(event) {
+			          var Data = JSON.parse(event.data);
+                console.log(Data);
+			          $('.chatBoxBlock .chat-conversations').html(Data.messages);
+              };
+     });
+        
+	});
+
+
+
+
+	</script>
 </body>
 
 </html>

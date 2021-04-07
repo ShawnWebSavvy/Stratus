@@ -1,4 +1,4 @@
-<div class="card panel-messages" data-cid="{$conversation['conversation_id']}" data-color="{$conversation['color']}">
+<div class="card panel-messages" data-cid="{$conversation['conversation_id']}" data-uid="{$conversation['user_id']}" data-color="{$conversation['color']}">
   <div class="card-header with-icon pb10 bg-transparent vvv">
     <div class="float-right buttonDeleteWrap">
     {if $active_page == "localhub"}
@@ -99,7 +99,7 @@
           <!--li class="x-form-tools-colors js_chat-colors-menu-toggle js_chat-color-me">
             <i class="fa fa-circle fa-lg fa-fw"></i>
           </li-->
-          <li class="x-form-tools-post js_post-message">
+          <li class="x-form-tools-post js_chat-message">
             <i class="far fa-paper-plane fa-lg fa-fw"></i>
           </li>
         </ul>

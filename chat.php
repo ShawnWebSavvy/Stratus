@@ -1,6 +1,6 @@
 <?php
 require('bootloader.php');
-
+include_once("inc/startServer.php");
 // user access
 user_access(true);
 // page header

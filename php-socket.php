@@ -1,6 +1,7 @@
 <?php
+require_once("bootloader.php");
 define('HOST_NAME',"localhost"); 
-define('PORT',"9050");
+define('PORT',"8020");
 $null = NULL;
 $socketResource = socket_create(AF_INET, SOCK_STREAM, SOL_TCP);
 socket_set_option($socketResource, SOL_SOCKET, SO_REUSEADDR, 1);
@@ -8,7 +9,6 @@ socket_bind($socketResource, 0, PORT);
 socket_listen($socketResource);
 
 $clientSocketArray = array($socketResource);
-require_once("bootloader.php");
 while (true) {
 	$newSocketArray = $clientSocketArray;
 	socket_select($newSocketArray, $null, $null, 0, 10);
@@ -34,7 +34,7 @@ while (true) {
 		while(socket_recv($newSocketArrayResource, $socketData, 1024, 0) >= 1){
 			$socketMessage = $chatHandler->unseal($socketData);
 			$messageObj = json_decode($socketMessage);
-			$chat_box_message = $chatHandler->createChatBoxMessage($messageObj->chat_user, $messageObj->chat_message,$messageObj->conversation_id, $messageObj->user_id,$messageObj->photo,$messageObj->voice_note,$messageObj->recipients);
+			$chat_box_message = $chatHandler->createChatBoxMessage($messageObj->chat_message,$messageObj->photo,$messageObj->voice_note,$messageObj->conversation_id,$messageObj->recipients);
 			$chatHandler->send($chat_box_message);
 			break 2;
 		}

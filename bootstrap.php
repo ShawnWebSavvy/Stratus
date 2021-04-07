@@ -60,7 +60,9 @@ session_start();
 /* set session secret */
 if (!isset($_SESSION['secret'])) {
     $_SESSION['secret'] = get_hash_token();
+    
 }
+
 
 
 // i18n config
@@ -226,6 +228,7 @@ require_once(ABSPATH . 'includes/class-user.php');
 // require_once(ABSPATH . 'includes/class-user-global.php');
 try {
     $user = new User();
+    
     /* assign variables */
     $smarty->assign('user', $user);
 } catch (Exception $e) {
@@ -263,9 +266,13 @@ if ($user->_is_admin) {
     $control_panel['url'] = "modcp";
 }
 
-
+if (!isset($_SESSION['user_id'])) {
+    $_SESSION['user_id'] = $user->_data['user_id'];
+    
+}
 // assign system varibles
 $smarty->assign('secret', $_SESSION['secret']);
+$smarty->assign('user_id', $_SESSION['user_id']);
 $smarty->assign('session_hash', $session_hash);
 $smarty->assign('system', $system);
 $smarty->assign('date', $date);
