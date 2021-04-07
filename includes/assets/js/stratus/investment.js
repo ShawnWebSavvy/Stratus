@@ -878,8 +878,3 @@ if (endUrl != "investments") {
     })
 
 }
-
-
-
-
-

@@ -274,11 +274,15 @@
                 <li {if $active_page=="Investment" }class="active" {/if}>
                     <a href=" {$system['system_url']}/investments">
                         <div class="svg-container ">
-                            <img src="{$system['system_uploads_assets']}/content/themes/default/images/svg/svgImg/Wallet.svg" class="blackicon">
-                            <img src="{$system['system_uploads_assets']}/content/themes/default/images/svg/svgImg/Wallet-active.svg" class="whiteicon">
+                            <img src="{$system['system_url']}/content/themes/default/images/investment/investment.svg"
+                                class="blackicon">
+                            <img src="{$system['system_url']}/content/themes/default/images/investment/investment.svg"
+                                class="whiteicon">
+
                         </div>
                         <span class="nav-text">Investment</span>
                     </a>
+
                 </li>
             </ul>
             {/if}

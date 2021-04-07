@@ -105,10 +105,10 @@ class InvestmentHelper {
                     $db->query(sprintf("UPDATE users SET $wallet_name = $wallet_name + %s WHERE user_id = %s", secure($receive_token), secure($user_data['user_id'], 'int'))) or _error("SQL_ERROR_THROWEN");
                     $db->query(sprintf("INSERT INTO crons (user_id, item_id) VALUES (%s, %s)", secure($user_data['user_id'], 'int'), secure($investment_id))) or _error("SQL_ERROR_THROWEN");
 
-                    // $redisObject = new RedisClass();
-                    // $redisPostKey = 'user-' . $user_data['user_id'];
-                    // $redisObject->deleteValueFromKey($redisPostKey);
-                    // cachedUserData($db, $system, $user_data['user_id'],$user_data['active_session_token']);
+                    $redisObject = new RedisClass();
+                    $redisPostKey = 'user-' . $user_data['user_id'];
+                    $redisObject->deleteValueFromKey($redisPostKey);
+                    cachedUserData($db, $system, $user_data['user_id'],$user_data['active_session_token']);
                 
                 }
                 return true;
@@ -144,10 +144,10 @@ class InvestmentHelper {
                    
                     $db->query(sprintf("UPDATE users SET $wallet_name = $wallet_name - %s WHERE user_id = %s", secure($token_value), secure($user_data['user_id'], 'int'))) or _error("SQL_ERROR_THROWEN");
 
-                    // $redisObject = new RedisClass();
-                    // $redisPostKey = 'user-' . $user_data['user_id'];
-                    // $redisObject->deleteValueFromKey($redisPostKey);
-                    // cachedUserData($db, $system, $user_data['user_id'],$user_data['active_session_token']);
+                    $redisObject = new RedisClass();
+                    $redisPostKey = 'user-' . $user_data['user_id'];
+                    $redisObject->deleteValueFromKey($redisPostKey);
+                    cachedUserData($db, $system, $user_data['user_id'],$user_data['active_session_token']);
                 }
                 return true;
             }else{
