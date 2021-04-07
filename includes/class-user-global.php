@@ -956,7 +956,7 @@ class UserGlobal
         $get_user = $db->query(sprintf("SELECT user_id, user_name, user_firstname, user_lastname FROM users WHERE user_name = %s", secure($matches[1]))) or _error("SQL_ERROR_THROWEN");
         if ($get_user->num_rows > 0) {
             $user = $get_user->fetch_assoc();
-            $replacement = popover($user['user_id'], $user['user_name'], $user['user_firstname'] . " " . $user['user_lastname']);
+            $replacement = global_popover($user['user_id'], $user['user_name'], $user['user_firstname'] . " " . $user['user_lastname']);
         } else {
             $replacement = $matches[0];
         }
