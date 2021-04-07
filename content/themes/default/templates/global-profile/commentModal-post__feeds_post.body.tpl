@@ -385,19 +385,27 @@
                     <div class="btn-group" data-toggle="tooltip" data-placement="top" data-value="me"
                         title='{__("Shared with: Only Me")}'>
                         <button type="button" class="btn dropdown-toggle" data-toggle="dropdown" data-display="static">
-                            <i class="btn-group-icon fa fa-lock"></i>
+                            <span class="share_sign_img privacy_{$_post['post_id']}" id="{$_post['post_id']}">
+                                <img src="{$system['system_uploads_assets']}/content/themes/default/images/svg/svgImg/Hide_form.svg"
+                                    class="blackicon">
+                            </span>
                         </button>
                     {elseif $_post['privacy'] == "friends"}
                         <div class="btn-group" data-toggle="tooltip" data-placement="top" data-value="friends"
                             title='{__("Shared with: Friends")}'>
                             <button type="button" class="btn dropdown-toggle" data-toggle="dropdown" data-display="static">
-                                <i class="btn-group-icon fa fa-users"></i>
+                                <span class="share_sign_img privacy_{$_post['post_id']}" id="{$_post['post_id']}">
+                                    <img src="{$system['system_uploads_assets']}/content/themes/default/images/svg/svgImg/friendsIcon.svg"
+                                        class="blackicon">
+                                </span>
                             </button>
                         {elseif $_post['privacy'] == "public"}
                             <div class="btn-group" data-toggle="tooltip" data-placement="top" data-value="public"
                                 title='{__("Shared with: Public")}'>
                                 <button type="button" class="btn dropdown-toggle" data-toggle="dropdown" data-display="static">
-                                    <i class="btn-group-icon fa fa-globe"></i>
+                                    <span class="share_sign_img privacy_{$_post['post_id']}" id="{$_post['post_id']}">
+                                        <img src="{$system['system_uploads_assets']}/content/themes/default/images/svg/svgImg/nav_icon_globalHub.svg" class="blackicon">
+                                    </span>
                                 </button>
                             {/if}
                             <div class="dropdown-menu dropdown-menu-right">
