@@ -29,13 +29,13 @@
                 {/if}
                 <!-- follow -->
                 <!-- message -->
-                <button type="button" class="btn btn-sm btn-primary mlr5 js_chat_start" data-uid="{$profile['user_id']}" data-name="{$profile['user_firstname']} {$profile['user_lastname']}" data-link="{$profile['user_name']}">
+                <button type="button" class="btn btn-sm btn-primary js_chat_start" data-uid="{$profile['user_id']}" data-name="{$profile['user_firstname']} {$profile['user_lastname']}" data-link="{$profile['user_name']}">
                     <i class="fa fa-comments mr5"></i>{__("Message")}
                 </button>
                 <!-- message -->
             {else}
                 <!-- edit -->
-                <a href="{$system['system_url']}/settings/profile/global" class="btn btn-sm btn-light">
+                <a href="{$system['system_url']}/settings/profile/global" class="btn btn-sm cmn_btn" style="margin: 0 auto;">
                     <i class="fa fa-pencil-alt mr5"></i>{__("Update Info")}
                 </a>
                 <!-- edit -->

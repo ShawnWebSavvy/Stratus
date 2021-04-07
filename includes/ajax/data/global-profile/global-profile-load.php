@@ -497,6 +497,19 @@ try {
 		$data = $user->get_games($_POST['offset'], true);
 
 
+	   /* get explore */
+	} elseif ($_POST['get'] == "explore") {
+		$data = $userGlobal->global_profile_explore_posts($_POST['offset']);
+   
+		/* get explore trending*/
+	} elseif ($_POST['get'] == "explore_trending") {
+		$data = $userGlobal->global_profile_trending_hashtags_posts('GlobalHub',$_POST['offset']);
+   
+		/* get explore tag */
+	}elseif ($_POST['get'] == "explore_tag") {
+		$data = $userGlobal->global_search($_POST['tag'],$_POST['offset']);
+		$data = $data['posts'];
+   
 		/* bad request */
 	} else {
 		_error(400);

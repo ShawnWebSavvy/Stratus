@@ -110,7 +110,7 @@
                                 <span id="retweetCount_{$post['post_id']}"
                                     class="reaction-counting">{$post['retweet']}</span>
                             </button>
-                            <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                            <div class="dropdown-menu dropdown-menu-left post-dropdown-menu" aria-labelledby="dropdownMenuButton">
                                 <a class="dropdown-item" href="#">Repost</a>
                                 <a class="dropdown-item" href="#">Quote Post</a>
                             </div>
@@ -161,17 +161,13 @@
                             </div>
                             <span>{$post['shares']} </span>
                         </button>
-                        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                            <a class="dropdown-item" id="js_send_direct_message" href="javascript:void(0);"
-                                data-id="{$post['post_id']}" data-userid="{$user->_data['user_id']}"
-                                data-clipboard-text="{$system['system_url']}/global-profile-posts/{$post['post_id']}">Send
-                                via Direct Message</a>
-                            <a class="dropdown-item js_bookmark-post" href="javascript:void(0);"
-                                data-id="{$post['post_id']}" data-userid="{$user->_data['user_id']}">Add Post to
-                                Bookmarks</a>
-                            <a class="dropdown-item copy-btn" href="javascript:void(0);"
-                                data-clipboard-text="{$system['system_url']}/global-profile-posts/{$post['post_id']}">Copy
-                                link to Post</a>
+                        <div class="dropdown-menu dropdown-menu-right post-dropdown-menu" aria-labelledby="dropdownMenuButton">
+                            <a class="dropdown-item" id="js_send_direct_message" href="javascript:void(0);" data-id="{$post['post_id']}" data-userid="{$user->_data['user_id']}"
+                                data-clipboard-text="{$system['system_url']}/global-profile-posts/{$post['post_id']}">Send via Direct Message</a>
+                            <a class="dropdown-item js_bookmark-post" href="javascript:void(0);" data-id="{$post['post_id']}" data-userid="{$user->_data['user_id']}">
+                                Add Post to Bookmarks</a>
+                            <a class="dropdown-item copy-btn" href="javascript:void(0);" data-clipboard-text="{$system['system_url']}/global-profile-posts/{$post['post_id']}">
+                                Copy link to Post</a>
                         </div>
                     </div>
                 </div>

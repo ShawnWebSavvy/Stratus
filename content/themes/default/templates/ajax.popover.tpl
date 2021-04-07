@@ -174,10 +174,7 @@
     <!-- message -->
     {else}
     <!-- edit -->
-    <a
-      href="{$system['system_url']}/settings/profile"
-      class="btn btn-sm btn-light"
-    >
+    <a href="{$system['system_url']}/settings/profile" class="btn btn-sm cmn_btn" style="margin: 0 auto;">
       <i class="fa fa-pencil-alt mr5"></i>{__("Update Info")}
     </a>
     <!-- edit -->
@@ -185,6 +182,81 @@
   </div>
 </div>
 <!-- user popover -->
+{elseif $type == 'groups'}
+<!-- group popover -->
+<div class="user-popover-content">
+  <div class="user-card">
+    <div class="user-card-cover"></div>
+    <div class="user-card-avatar">
+      <img class="img-fluid" src="{$profile['group_picture']}" alt="{$profile['group_title']}" />
+    </div>
+    <div class="user-card-info">
+      <a class="name" href="{$system['system_url']}/groups/{$profile['group_name']}">{$profile['group_title']}</a>
+      <div class="info">{$profile['group_members']} {__("Members")}</div>
+    </div>
+  </div>
+  <div class="buttonWrapPopOver" style="justify-content: center;">
+    <!-- like -->
+    {if $profile['i_like']}
+    <button type="button" class="btn btn-success btn-delete js_leave-group" data-id="{$profile['group_id']}" data-privacy="{$profile['group_privacy']}">
+      <i class="fa fa-check mr5"></i>Joined
+    </button>
+    {else}
+    <button type="button" class="btn btn-success js_join-group" data-id="{$profile['group_id']}" data-privacy="{$profile['group_privacy']}">
+      <img class="btn_image_" src="{$system['system_url']}/content/themes/default/images/svg/svgImg/add_friend_icon.svg" />
+      <img class="btn_image_hover" src="{$system['system_url']}/content/themes/default/images/svg/svgImg/add_friend-hover.svg" />
+    Join
+    </button>
+    
+    {/if}
+    <!-- like -->
+  </div>
+</div>
+{elseif $type == 'events'}
+<!-- event popover -->
+<div class="user-popover-content">
+  <div class="user-card">
+    <div class="user-card-cover"></div>
+    <div class="user-card-avatar">
+      <img class="img-fluid" src="{$profile['event_picture']}" alt="{$profile['event_title']}" />
+    </div>
+    <div class="user-card-info">
+      <a class="name" href="{$system['system_url']}/events/{$profile['event_id']}">{$profile['event_title']}</a>
+      <div class="info">{$profile['event_interested']} {__("Interested")}</div>
+    </div>
+  </div>
+  <div class="buttonWrapPopOver">
+    <!-- like -->
+    {if $profile['event_privacy'] == "public" || $profile['i_joined'] || $profile['i_admin']} {if
+      $profile['i_joined']['is_going']}
+      <button type="button" class="btn js_ungo-event" data-id="{$profile['event_id']}">
+          <img
+              src="{$system['system_url']}/content/themes/default/images/svg/svgImg/icon_active_state.svg">
+          {__("Going")}
+      </button> {else}
+      <button type="button" class="btn js_go-event" data-id="{$profile['event_id']}">
+          <img src="{$system['system_url']}/content/themes/default/images/svg/calendar.svg"
+              class="blackicon">
+          {__("Going")}
+      </button> {/if} {if $profile['i_joined']['is_interested']}
+      <button type="button" class="btn js_uninterest-event" data-id="{$profile['event_id']}">
+          <img
+              src="{$system['system_url']}/content/themes/default/images/svg/svgImg/icon_active_state.svg">
+          {__("Interested")}
+      </button> {else}
+      <button type="button" class="btn js_interest-event" data-id="{$profile['event_id']}">
+          <div class="svg-container">
+              <img src="{$system['system_url']}/content/themes/default/images/svg/svgImg/event.svg"
+                  class="blackicon">
+              <img src="{$system['system_url']}/content/themes/default/images/svg/svgImg/eventHover.svg"
+                  class="whiteicon">
+          </div>
+          {__("Interested")}
+      </button> {/if} {/if} 
+    <!-- like -->
+  </div>
+</div>
+
 {else}
 <!-- page popover -->
 <div class="user-popover-content">
@@ -214,7 +286,7 @@
       <div class="info">{$profile['page_likes']} {__("Likes")}</div>
     </div>
   </div>
-  <div class="buttonWrapPopOver">
+  <div class="buttonWrapPopOver" style="justify-content: center;">
     <!-- like -->
     {if $profile['i_like']}
     <button

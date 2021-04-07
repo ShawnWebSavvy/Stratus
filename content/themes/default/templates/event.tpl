@@ -15,7 +15,7 @@
     <div class="row right-side-content-ant profile-mobile-layout flex-wrap">
         <section class="profile_top_sec evnet_profile col-12">
             <!-- profile-header -->
-            <div class="profile-header no-avatar custom_p_header">
+            <div class="profile-header no-avatar eventProfileHeader custom_p_header">
                 <button class="_toggle_btn" type="button"><i class="fas fa-ellipsis-v"></i> <i
                         class="fas fa-times"></i></button>
                 <!-- profile-cover -->
@@ -79,27 +79,19 @@
                     </div>
                     <div class="profile_name_sec">
                         <!-- profile-name -->
-                        <div class="profile-name-wrapper">
-                            <a href="{$system['system_url']}/events/{$event['event_id']}">{$event['event_title']}</a>
-                            {if $event['event_privacy'] == "public"}
-                            <span class="privacy_icon cmn_icons" data-toggle="tooltip" data-placement="top"
-                                title='{__("Public Event")}'>
-                                <img class=""
-                                    src="{$system['system_url']}/content/themes/default/images/svg/svgImg/nav_icon_globalHub.svg">
-                            </span> {elseif $event['event_privacy'] == "closed"}
-                            <!-- <span class="privacy_icon cmn_icons" data-placement="top" title='{__("Closed Event")}'>
-                        <img class="" src="{$system['system_url']}/content/themes/default/images/svg/svgImg/nav_icon_globalHub.svg">
-                    </span> -->
-                            <i data-toggle="tooltip" data-placement="top" title='{__("Closed Event")}'
-                                class="fa fa-unlock-alt fa-fw privacy-badge"></i> {elseif $event['event_privacy'] ==
-                            "secret"}
-                            <span class="privacy_icon cmn_icons" data-placement="top" title='{__("Secret Event")}'>
-                                <img class=""
-                                    src="{$system['system_url']}/content/themes/default/images/svg/svgImg/lock_icon.svg">
-                            </span>
-                            <!-- <i data-toggle="tooltip" data-placement="top" title='{__("Secret Event")}'
-                          class="fa fa-lock fa-fw privacy-badge"></i> -->
-                            {/if}
+                        <div class="profile-name-wrapper event-name-wrap">
+                            <a href="{$system['system_url']}/events/{$event['event_id']}">
+                                {$event['event_title']} {if $event['event_privacy'] == "public"}
+                                <span class="privacy_icon cmn_icons" data-toggle="tooltip" data-placement="top" title='{__("Public Event")}'>
+                                    <img class="" src="{$system['system_url']}/content/themes/default/images/svg/svgImg/nav_icon_globalHub.svg">
+                                </span> 
+                                {elseif $event['event_privacy'] == "closed"}
+                                <i data-toggle="tooltip" data-placement="top" title='{__("Closed Event")}' class="fa fa-unlock-alt fa-fw privacy-badge"></i>
+                                {elseif $event['event_privacy'] == "secret"}
+                                <span class="privacy_icon cmn_icons" data-placement="top" title='{__("Secret Event")}'>
+                                    <img class="" src="{$system['system_url']}/content/themes/default/images/svg/svgImg/lock_icon.svg">
+                                </span>
+                                {/if}</a>
                         </div>
 
                         <!-- profile-name -->
@@ -113,31 +105,26 @@
                         <!-- profile-meta -->
 
                         <!-- profile-buttons -->
-                        <div class="button_action cstm_bts_w">
+                        <div class="eventBtnActions cstm_bts_w">
                             <div class="profile-buttons-wrapper">
                                 {if $event['event_privacy'] == "public" || $event['i_joined'] || $event['i_admin']} {if
                                 $event['i_joined']['is_going']}
                                 <button type="button" class="btn js_ungo-event" data-id="{$event['event_id']}">
-                                    <img
-                                        src="{$system['system_url']}/content/themes/default/images/svg/svgImg/icon_active_state.svg">
+                                    <img src="{$system['system_url']}/content/themes/default/images/svg/svgImg/icon_active_state.svg">
                                     {__("Going")}
                                 </button> {else}
                                 <button type="button" class="btn js_go-event" data-id="{$event['event_id']}">
-                                    <img src="{$system['system_url']}/content/themes/default/images/svg/calendar.svg"
-                                        class="blackicon">
+                                    <img src="{$system['system_url']}/content/themes/default/images/svg/calendar.svg" class="blackicon">
                                     {__("Going")}
                                 </button> {/if} {if $event['i_joined']['is_interested']}
                                 <button type="button" class="btn js_uninterest-event" data-id="{$event['event_id']}">
-                                    <img
-                                        src="{$system['system_url']}/content/themes/default/images/svg/svgImg/icon_active_state.svg">
+                                    <img src="{$system['system_url']}/content/themes/default/images/svg/svgImg/icon_active_state.svg">
                                     {__("Interested")}
                                 </button> {else}
                                 <button type="button" class="btn js_interest-event" data-id="{$event['event_id']}">
                                     <div class="svg-container">
-                                        <img src="{$system['system_url']}/content/themes/default/images/svg/svgImg/event.svg"
-                                            class="blackicon">
-                                        <img src="{$system['system_url']}/content/themes/default/images/svg/svgImg/eventHover.svg"
-                                            class="whiteicon">
+                                        <img src="{$system['system_url']}/content/themes/default/images/svg/svgImg/event.svg" class="blackicon">
+                                        <img src="{$system['system_url']}/content/themes/default/images/svg/svgImg/eventHover.svg" class="whiteicon">
                                     </div>
                                     {__("Interested")}
                                 </button> {/if} {/if} {if !$event['i_admin']}
@@ -149,26 +136,21 @@
                                     </button>
                                     <div class="dropdown-menu dropdown-menu-right">
                                         <!-- report -->
-                                        <div class="dropdown-item pointer js_report" data-handle="event"
-                                            data-id="{$event['event_id']}">
+                                        <div class="dropdown-item pointer js_report" data-handle="event" data-id="{$event['event_id']}">
                                             <i class="fa fa-flag fa-fw mr10"></i>{__("Report")}
                                         </div>
                                         <!-- report -->
                                         <!-- manage -->
                                         {if $user->_is_admin}
                                         <div class="dropdown-divider"></div>
-                                        <a class="dropdown-item"
-                                            href="{$system['system_url']}/admincp/events/edit_event/{$event['event_id']}">
-                                            <img class="mr10"
-                                                src="{$system['system_url']}/content/themes/default/images/svg/svgImg/Cog.svg">
+                                        <a class="dropdown-item" href="{$system['system_url']}/admincp/events/edit_event/{$event['event_id']}">
+                                            <img class="mr10" src="{$system['system_url']}/content/themes/default/images/svg/svgImg/Cog.svg">
                                             {__("Edit in Admin Panel")}
                                         </a>
                                         {elseif $user->_is_moderator}
                                         <div class="dropdown-divider"></div>
-                                        <a class="dropdown-item"
-                                            href="{$system['system_url']}/modcp/events/edit_event/{$event['event_id']}">
-                                            <img class="mr10"
-                                                src="{$system['system_url']}/content/themes/default/images/svg/svgImg/Cog.svg">
+                                        <a class="dropdown-item" href="{$system['system_url']}/modcp/events/edit_event/{$event['event_id']}">
+                                            <img class="mr10" src="{$system['system_url']}/content/themes/default/images/svg/svgImg/Cog.svg">
                                             {__("Edit in Moderator Panel")}
                                         </a>
                                         {/if}
@@ -182,8 +164,6 @@
                     </div>
                 </div>
                 <!-- profile-buttons -->
-
-
             </div>
             <!-- profile-header -->
         </section>
@@ -249,24 +229,20 @@
                                 <div class="about-list-item">
                                     {if $event['event_privacy'] == "public"}
                                     <span class="privacy_icon cmn_icons">
-                                        <img class=""
-                                            src="{$system['system_url']}/content/themes/default/images/svg/svgImg/nav_icon_globalHub.svg">
+                                        <img class="" src="{$system['system_url']}/content/themes/default/images/svg/svgImg/nav_icon_globalHub.svg">
                                     </span> {__("Public Event")} {elseif $event['event_privacy'] == "closed"}
                                     <span class="privacy_icon cmn_icons">
-                                        <img class=""
-                                            src="{$system['system_url']}/content/themes/default/images/svg/svgImg/lock_icon.svg">
+                                        <img class="" src="{$system['system_url']}/content/themes/default/images/svg/svgImg/lock_icon.svg">
                                     </span> {__("Closed Event")} {elseif $event['event_privacy'] == "secret"}
                                     <span class="privacy_icon cmn_icons">
-                                        <img class=""
-                                            src="{$system['system_url']}/content/themes/default/images/svg/svgImg/lock_icon.svg">
+                                        <img class="" src="{$system['system_url']}/content/themes/default/images/svg/svgImg/lock_icon.svg">
                                     </span> {/if}
                                 </div>
                             </li>
                             <li>
                                 <div class="about-list-item ">
                                     <span class="privacy_icon cmn_icons">
-                                        <img class=""
-                                            src="{$system['system_url']}/content/themes/default/images/svg/svgImg/clock_img.svg">
+                                        <img class="" src="{$system['system_url']}/content/themes/default/images/svg/svgImg/clock_img.svg">
                                     </span>
                                     <span class="about_date_sec">{$event['event_start_date']|date_format:"%B %e"} -
                                         {$event['event_end_date']|date_format:"%B %e"}<br>
@@ -279,20 +255,23 @@
                             <li>
                                 <div class="about-list-item">
                                     <span class="privacy_icon  cmn_icons">
-                                        <img class=""
-                                            src="{$system['system_url']}/content/themes/default/images/svg/svgImg/profile_iconN.svg">
-                                    </span> {__("Hosted By")} <a target="_blank"
-                                        href="{$system['system_url']}/{$event['user_name']}">
-                                        <span class="user__name">
-                                            {$event['user_firstname']} {$event['user_lastname']}
-                                        </span></a>
+                                        <img class="" src="{$system['system_url']}/content/themes/default/images/svg/svgImg/profile_iconN.svg">
+                                    </span> 
+                                    <span>
+                                        {__("Hosted By")} 
+                                        <a target="_blank" href="{$system['system_url']}/{$event['user_name']}">
+                                            <span class="user__name" style="padding-left: 4px;">
+                                                {$event['user_firstname']} {$event['user_lastname']}
+                                            </span>
+                                        </a>
+                                    </span>
+                                    
                                 </div>
                             </li>
                             <li>
                                 <div class="about-list-item">
                                     <span class="privacy_icon  cmn_icons">
-                                        <img class=""
-                                            src="{$system['system_url']}/content/themes/default/images/svg/svgImg/blogNewsWhite.svg">
+                                        <img class="" src="{$system['system_url']}/content/themes/default/images/svg/svgImg/blogNewsWhite.svg">
                                     </span> {__($event['event_category_name'])}
                                 </div>
                             </li>
@@ -301,8 +280,7 @@
                             <li>
                                 <div class="about-list-item">
                                     <span class="privacy_icon cmn_icons">
-                                        <img class=""
-                                            src="{$system['system_url']}/content/themes/default/images/svg/svgImg/location_icon.svg">
+                                        <img class="" src="{$system['system_url']}/content/themes/default/images/svg/svgImg/location_icon.svg">
                                     </span> {$event['event_location']}
                             </li>
                             {if $system['geolocation_enabled']}
@@ -318,8 +296,7 @@
                             <li>
                                 <div class="about-list-item">
                                     <span class="privacy_icon cmn_icons">
-                                        <img class=""
-                                            src="{$system['system_url']}/content/themes/default/images/svg/svgImg/dob_icon.svg">
+                                        <img class="" src="{$system['system_url']}/content/themes/default/images/svg/svgImg/dob_icon.svg">
                                     </span>
                                     <a href="{$system['system_url']}/events/{$event['event_id']}/going">{$event['event_going']}
                                         {__("Going")}</a>
@@ -328,8 +305,7 @@
                             <li>
                                 <div class="about-list-item">
                                     <span class="privacy_icon cmn_icons">
-                                        <img class=""
-                                            src="{$system['system_url']}/content/themes/default/images/svg/svgImg/icon_active_state.svg">
+                                        <img class="" src="{$system['system_url']}/content/themes/default/images/svg/svgImg/icon_active_state.svg">
                                     </span>
                                     <a href="{$system['system_url']}/events/{$event['event_id']}/interested">{$event['event_interested']}
                                         {__("Interested")}</a>
@@ -338,8 +314,7 @@
                             <li>
                                 <div class="about-list-item">
                                     <span class="privacy_icon cmn_icons">
-                                        <img class=""
-                                            src="{$system['system_url']}/content/themes/default/images/svg/svgImg/add_friend_icon.svg">
+                                        <img class="" src="{$system['system_url']}/content/themes/default/images/svg/svgImg/add_friend_icon.svg">
                                     </span>
                                     <a href="{$system['system_url']}/events/{$event['event_id']}/invited">{$event['event_invited']}
                                         {__("Invited")}</a>
@@ -349,7 +324,6 @@
                     </div>
                 </div>
                 <!-- panel [about] -->
-
                 <!-- custom fields [basic] -->
                 {if $custom_fields['basic']}
                 <div class="card">
@@ -369,22 +343,20 @@
                 </div>
                 {/if}
                 <!-- custom fields [basic] -->
-
                 <!-- invite friends -->
                 {if $event['i_joined'] && $event['invites']}
                 <div class="card">
                     <div class="card-header bg-transparent">
                         <div class="float-right">
-                            <small><a href="{$system['system_url']}/events/{$event['event_id']}/invites">{__("See
-                                    All")}</a></small>
+                            <small><a href="{$system['system_url']}/events/{$event['event_id']}/invites">{__("See All")}</a></small>
                         </div>
                         <!-- <i class="fa fa-user-tag mr5"></i> -->
                         <span class="usertgimg">
-                            <img class="btn_image_"
-                                src="{$system['system_url']}/content/themes/default/images/svg/svgImg/add_friend_icon.svg">
+                            <img class="btn_image_" src="{$system['system_url']}/content/themes/default/images/svg/svgImg/add_friend_icon.svg">
                         </span>
-                        <strong><a href="{$system['system_url']}/events/{$event['event_id']}/invites">{__("Invite
-                                Friends")}</a></strong>
+                        <strong>
+                            <a href="{$system['system_url']}/events/{$event['event_id']}/invites">{__("Invite Friends")}</a>
+                        </strong>
                     </div>
                     <div class="card-body">
                         <ul>
@@ -401,8 +373,9 @@
                 <div class="card panel-photos">
                     <div class="card-header bg-transparent">
                         <i class="fa fa-images mr5"></i>
-                        <strong><a
-                                href="{$system['system_url']}/events/{$event['event_id']}/photos">{__("Photos")}</a></strong>
+                        <strong>
+                            <a href="{$system['system_url']}/events/{$event['event_id']}/photos">{__("Photos")}</a>
+                        </strong>
                     </div>
                     <div class="card-body ptb10 plr10">
                         <div class="row no-gutters">

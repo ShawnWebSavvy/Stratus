@@ -263,12 +263,12 @@
                                  {$spage['page_location']}
                                 </div> 
                             </li>
-                            <li style="height: auto;">
+                            <!--li style="height: auto;">
                                 <div>
                                     <iframe width="100%" frameborder="0" style="border:0;"
                                         src="https://www.google.com/maps/embed/v1/place?key={$system['geolocation_key']}&amp;q={$spage['page_location']}&amp;language=en"></iframe>
                                 </div>
-                            </li>
+                            </li-->
                             {/if}
                             <!-- info -->
                         </ul>

@@ -50,7 +50,8 @@ try {
 				if (is_object($_POST['videos'])) {
 					/* filter the videos */
 					foreach ($_POST['videos'] as $video) {
-						$videos[] = $video;
+						$thumbnail = $userGlobal->get_video_thumbnail($video);
+						$videos[] = [ 'video' => $video, 'thumbnail' => $thumbnail ];
 					}
 				}
 			}

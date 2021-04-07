@@ -395,7 +395,7 @@
         </div>
       </div>
       <div class="text-center mt-80 w-100">
-        <a class="learn-btn" href="{$system['system_url']}/monetization" type="button">Learn More</a>
+        <a class="learn-btn btn" role="button" href="{$system['system_url']}/monetization">Learn More</a>
       </div>
     </div>
   </div>

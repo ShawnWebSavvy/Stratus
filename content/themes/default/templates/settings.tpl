@@ -466,7 +466,7 @@
                         {if $view == ""}
                         <div class="card">
                             <div class="card-header with-icon">{__("Account Settings")}</div>
-                            <form class="js_ajax-forms social-link-form" data-url="users/settings.php?edit=account">
+                            <form class="js_ajax-forms social-link-form" data-url="users/settings.php?edit=account" data-system-url="{$system['system_url']}" >
                                 <div class="card-body">
                                     <!-- <div class="heading-small mb20">
                                     {__("Email Address")}
@@ -1076,8 +1076,8 @@
                                         {__("Profile Background")}
                                     </label>
                                     <div class="col-md-9">
-                                        {if $user->_data['user_profile_background'] == ''}
-                                        <div class="x-image">
+                                        {if $user->_data['user_profile_background'] == '' || $user->_data['user_profile_background'] == "`$system['system_uploads']`/"}
+                                        <div class="x-image js_x-image-uploader">
                                             <button type="button" class="close x-hidden js_x-image-remover"
                                                 title='{__("Remove")}'>
                                                 <span>×</span>
@@ -1093,8 +1093,8 @@
                                                 value="">
                                         </div>
                                         {else}
-                                        <div class="x-image"
-                                            style="background-image: url('{$system['system_uploads']}/{$user->_data['user_profile_background']}')">
+                                        <div class="x-image js_x-image-uploader"
+                                            style="background-image: url('{$user->_data['user_profile_background']}')">
                                             <button type="button" class="close js_x-image-remover"
                                                 title='{__("Remove")}'>
                                                 <span>×</span>
