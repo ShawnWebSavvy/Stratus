@@ -526,11 +526,7 @@
             <div class="btn-group" data-toggle="tooltip" data-placement="top" data-value="me"
                 title='{__("Shared with: Only Me")}'>
                 <button type="button" class="btn dropdown-toggle" data-toggle="dropdown" data-display="static">
-<<<<<<< HEAD
                     <span class="share_sign_img privacy_{$_post['post_id']}" id="{$_post['post_id']}">
-=======
-                    <span class="share_sign_img privacy-{$_post['post_id']}" id="{$_post['post_id']}">
->>>>>>> a97182ebddd3a15c8afb307f913a46815a0d17e8
                         <img src="{$system['system_uploads_assets']}/content/themes/default/images/svg/svgImg/Hide_form.svg"
                             class="blackicon">
                     </span>
@@ -539,11 +535,7 @@
                 <div class="btn-group" data-toggle="tooltip" data-placement="top" data-value="friends"
                     title='{__("Shared with: Friends")}'>
                     <button type="button" class="btn dropdown-toggle" data-toggle="dropdown" data-display="static">
-<<<<<<< HEAD
                         <span class="share_sign_img privacy_{$_post['post_id']}" id="{$_post['post_id']}">
-=======
-                        <span class="share_sign_img privacy-{$_post['post_id']}" id="{$_post['post_id']}">
->>>>>>> a97182ebddd3a15c8afb307f913a46815a0d17e8
                             <img src="{$system['system_uploads_assets']}/content/themes/default/images/svg/svgImg/friendsIcon.svg"
                                 class="blackicon">
                         </span>
@@ -552,11 +544,7 @@
                     <div class="btn-group" data-toggle="tooltip" data-placement="top" data-value="public"
                         title='{__("Shared with: Public")}'>
                         <button type="button" class="btn dropdown-toggle" data-toggle="dropdown" data-display="static">
-<<<<<<< HEAD
                             <span class="share_sign_img privacy_{$_post['post_id']}" id="{$_post['post_id']}">
-=======
-                            <span class="share_sign_img privacy-{$_post['post_id']}" id="{$_post['post_id']}">
->>>>>>> a97182ebddd3a15c8afb307f913a46815a0d17e8
                                 <img src="{$system['system_uploads_assets']}/content/themes/default/images/svg/svgImg/nav_icon_globalHub.svg"
                                     class="blackicon">
                             </span>
