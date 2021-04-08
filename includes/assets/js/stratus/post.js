@@ -1369,17 +1369,10 @@ $(function () {
                 api["posts/edit"],
                 { handle: "privacy", id: id, privacy: privacy },
                 function (response) {
-<<<<<<< HEAD
                     "friends" == privacy && $(".privacy_" + id + ">img").attr("src", "https://cdn1.stratus.co/content/themes/default/images/svg/svgImg/friendsIcon.svg"),
                     "public" == privacy && $(".privacy_" + id + ">img").attr("src", "https://cdn1.stratus.co/content/themes/default/images/svg/svgImg/nav_icon_globalHub.svg"),
                     "me" == privacy && $(".privacy_" + id + ">img").attr("src", "https://cdn1.stratus.co/content/themes/default/images/svg/svgImg/Hide_form.svg"),
                     response.callback && eval(response.callback);
-=======
-                        "friends" == privacy && $(".privacy-" + id + ">img").each(function(){ $(this).closest('div').attr('data-original-title', privacy_title); $(this).closest('div').attr('data-title', privacy_title); $(this).attr("src", "https://cdn1.stratus.co/content/themes/default/images/svg/svgImg/friendsIcon.svg") }),
-                        "public" == privacy && $(".privacy-" + id + ">img").each(function(){ $(this).closest('div').attr('data-original-title', privacy_title); $(this).closest('div').attr('data-title', privacy_title); $(this).attr("src", "https://cdn1.stratus.co/content/themes/default/images/svg/svgImg/nav_icon_globalHub.svg") }),
-                        "me" == privacy && $(".privacy-" + id + ">img").each(function(){ $(this).closest('div').attr('data-original-title', privacy_title); $(this).closest('div').attr('data-title', privacy_title); $(this).attr("src", "https://cdn1.stratus.co/content/themes/default/images/svg/svgImg/Hide_form.svg") }),
-                        response.callback && eval(response.callback);
->>>>>>> a97182ebddd3a15c8afb307f913a46815a0d17e8
                 },
                 "json"
             ).fail(function () {

@@ -118,11 +118,7 @@
                                                         data-value="me" title='{__("Shared with: Only Me")}'>
                                                         <button type="button" class="btn dropdown-toggle"
                                                             data-toggle="dropdown" data-display="static">
-<<<<<<< HEAD
                                                             <span class="share_sign_img privacy_{$postsItem['post_id']}" id="{$postsItem['post_id']}">
-=======
-                                                            <span class="share_sign_img" id="{$postsItem['post_id']}">
->>>>>>> a97182ebddd3a15c8afb307f913a46815a0d17e8
                                                                 <img src="{$system['system_url']}/content/themes/default/images/svg/svgImg/Hide_form.svg"
                                                                     class="blackicon">
                                                             </span>
@@ -133,12 +129,7 @@
                                                             title='{__("Shared with: Friends")}'>
                                                             <button type="button" class="btn dropdown-toggle"
                                                                 data-toggle="dropdown" data-display="static">
-<<<<<<< HEAD
                                                                 <span class="share_sign_img privacy_{$postsItem['post_id']}" id="{$postsItem['post_id']}">
-=======
-                                                                <span class="share_sign_img"
-                                                                    id="{$postsItem['post_id']}">
->>>>>>> a97182ebddd3a15c8afb307f913a46815a0d17e8
                                                                     <img src="{$system['system_url']}/content/themes/default/images/svg/svgImg/friendsIcon.svg"
                                                                         class="blackicon">
                                                                 </span>
@@ -149,12 +140,7 @@
                                                                 title='{__("Shared with:Public")}'>
                                                                 <button type="button" class="btn dropdown-toggle"
                                                                     data-toggle="dropdown" data-display="static">
-<<<<<<< HEAD
                                                                     <span class="share_sign_img privacy_{$postsItem['post_id']}" id="{$postsItem['post_id']}">
-=======
-                                                                    <span class="share_sign_img"
-                                                                        id="{$postsItem['post_id']}">
->>>>>>> a97182ebddd3a15c8afb307f913a46815a0d17e8
                                                                         <img src="{$system['system_url']}/content/themes/default/images/svg/svgImg/nav_icon_globalHub.svg"
                                                                             class="blackicon">
                                                                     </span>
