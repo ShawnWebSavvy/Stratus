@@ -50,7 +50,7 @@ try {
 		$smarty->assign('conversations', $conversations);
 		/* return */
 		$return['conversations_count'] = $user->_data['user_live_messages_counter'];
-		$return['conversations'] = $smarty->fetch("ajax.live.conversations.tpl");
+		//$return['conversations'] = $smarty->fetch("ajax.live.conversations.tpl");
 		$return['conversations_group'] = $smarty->fetch("ajax.live.conversations_group.tpl");
 	}
 

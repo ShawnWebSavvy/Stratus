@@ -46,10 +46,11 @@ button.js_unlike-page img{transform:rotateX(180deg);padding:0!important;height:3
 .friendsSearchbtn{display:flex;align-items:center;justify-content:center;height:50px!important;width:100%!important;font-size:14px;font-weight:500}
 ._request_sec ._findfriendsdiv_ .feeds-item .data-container,.people-friend-list-section ._friend_list_items .feeds-item .data-container,.people-friend-list-section .globle_frnd_sgg ul .feeds-item .data-container,.people-friend-list-section ul .feeds-item .data-container{position:relative;padding-bottom:80px}
 ._findfriendsdiv_ .col-lg-6.col-xl-4 ul li.feeds-item .data-container button,._findfriendsdiv_ .feeds-item .data-container ._user_action_ button,._request_sec .globle_frnd_sgg .feeds-item .data-container ._user_action_ button,.people-friend-list-section ._friend_list_items .feeds-item .data-container ._user_action_ button,.people-friend-list-section .globle_frnd_sgg .feeds-item .data-container ._user_action_ button{position:absolute;width:90%!important;max-width:90%;left:50%;bottom:10px;transform:translateX(-50%)}
+.people-friend-list-section .globle_frnd_sgg .feeds-item .data-container ._user_action_ button.js_follow{left: auto;max-width: 260px;transform: unset;}
 .profileUpdatesDesign button,.rightSideBarScroll button{font-size:0!important;line-height:normal!important;height:auto!important;min-height:37px}
 .profileUpdatesDesign button img{margin-right:0}
 .alert-post.see-more{margin-bottom:50px!important;margin-top:50px}
-.post_images__ img{max-width:20px;flex:0 0 20px;width:20px;height:20px}
+.post_images__ img{max-width:25px;flex:0 0 25px;width:25px !important;height:25px !important;}
 #search-history button.btn.js_friend-cancel,#search-results button.btn.js_friend-cancel{border:0!important;color:#1e1f20;font-size:0}
 #search-history .data-container .data-content div.float-right,#search-results .data-container .data-content div.float-right{width:50px;display:flex;align-items:center;justify-content:center;height:50px}
 #search-history.dropdown-search button,#search-results.dropdown-search button{padding:.375rem .75rem!important;width:inherit!important;height:inherit!important;margin:0!important;background-color:#e5f0ff}

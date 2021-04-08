@@ -174,14 +174,15 @@ function publisher_tab(e, t) {
             e.find('.js_publisher-tab[data-tab="album"]').toggleClass("disabled"), e.find('.js_publisher-tab[data-tab="product"]').toggleClass("disabled"), e.find('.js_publisher-tab[data-tab="article"]').toggleClass("disabled");
     }
 }
-function update_media_views(media_type, media_id) {
+function update_media_views(event, media_type, media_id) {
+    var video_tag = event.target ;
     var _do = "video" == media_type ? "update_video_views" : "update_audio_views";
     setTimeout(function () {
         $.post(
             api["posts/reaction"],
             { do: _do, id: media_id },
             function (response) {
-                response.callback ? eval(response.callback) : $("#" + media_type + "-" + media_id).removeAttr("onplay");
+                response.callback ? eval(response.callback) : $(video_tag).removeAttr("onplay");
             },
             "json"
         );
@@ -790,7 +791,12 @@ $(function () {
                                 publisher.find(".publisher-slider").slideUp();
                                 publisher.find(".publisher-emojis").fadeOut();
                                 /* attache the new post */
-                                $(".js_posts_stream").find("ul:first").prepend();
+                                // $(".js_posts_stream").find("ul:first").prepend();
+                             
+                                if($(".js_posts_stream").data('get')=="posts_profile"){
+                                    $(".js_posts_stream").find(".bricklayer-column").prepend(response.post);
+                                }
+
                                 /* release the loading status */
                                 posts_stream.removeData("loading");
                                 /* rerun photo grid */
@@ -807,6 +813,102 @@ $(function () {
                         button_status(_this, "reset"), modal("#modal-message", { title: __.Error, message: __["There is something that went wrong!"] });
                     }));
         }),
+
+
+        $(document).off("click",".custom_modal_style").on("click",".custom_modal_style", function(){  
+            if(!$('body').hasClass('publisher-focus')){
+                clean_create_post_modal();
+            }   
+        });
+        $(".addpost-closebtn").click(function (e) {
+            clean_create_post_modal();
+        })
+
+          function clean_create_post_modal(){
+             
+            var _this = $('.custom_modal_style').find('.js_publisher'),  
+            publisher = _this.parents(".publisher"),
+            textarea = publisher.find("textarea"),
+            attachments = publisher.find(".attachments"),
+            album_meta = publisher.find('.publisher-meta[data-meta="album"]'),
+            album = album_meta.find("input"),
+            feeling_meta = publisher.find('.publisher-meta[data-meta="feelings"]'),
+            location_meta = publisher.find('.publisher-meta[data-meta="location"]'),
+            location = location_meta.find("input"),
+            colored_pattern_meta = publisher.find('.publisher-meta[data-meta="colored"]'),
+            attachments_voice_notes = publisher.find('.publisher-meta[data-meta="voice_notes"]'),
+            gif_meta = publisher.find('.publisher-meta[data-meta="gif"]'),
+            gif = gif_meta.find("input"),
+            attachments_video = publisher.find('.publisher-meta[data-meta="video"]'),
+            attachments_audio = publisher.find('.publisher-meta[data-meta="audio"]'),
+            attachments_video_thumbnail = publisher.find(".publisher-custom-thumbnail"),
+            attachments_file = publisher.find('.publisher-meta[data-meta="file"]');
+
+            button_status(_this, "reset");
+            /* prepare publisher */
+            /* remove (active|activated|disabled) from all tabs */
+            publisher
+                .find(".js_publisher-tab")
+                .removeClass("active activated disabled");
+            // textarea.val("").removeAttr("style");
+            // textarea.attr("placeholder", textarea.data("init-placeholder"));
+            /* hide & empty album */
+            album.val("");
+            album_meta.hide();
+            /* hide & empty feelings */
+            feeling_meta.hide();
+            $("#feelings-menu-toggle")
+                .removeClass("active")
+                .text($("#feelings-menu-toggle").data("init-text"));
+            $("#feelings-data").hide();
+            $("#feelings-data input")
+                .show()
+                .attr("placeholder", $("#feelings-menu-toggle").data("init-text"))
+                .removeData("action")
+                .val("");
+            $("#feelings-data span").html("");
+            $(".js_publisher-feelings").removeClass("activated active");
+            /* hide & empty location */
+            location.val("");
+            location_meta.hide();
+            /* hide & empty colored patterns */
+            publisher.removeData("colored_pattern");
+            publisher
+                .find(".colored-text-wrapper")
+                .removeAttr("style")
+                .removeClass("colored");
+            colored_pattern_meta.hide();
+            /* hide & empty voice notes */
+            attachments_voice_notes.hide();
+            attachments_voice_notes.find(".js_voice-success-message").hide();
+            attachments_voice_notes.find(".js_voice-start").show();
+            publisher.removeData("voice_notes");
+            /* hide & empty gif */
+            gif.val("");
+            gif_meta.hide();
+            /* hide & remove poll meta */
+            $('.publisher-meta[data-meta="poll"]').hide().find("input").val("");
+            /* hide & empty attachments */
+            attachments.hide();
+            attachments.find("li.item").remove();
+            publisher.removeData("photos");
+            attachments_video.hide();
+            publisher.removeData("video");
+            attachments_audio.hide();
+            publisher.removeData("audio");
+            attachments_file.hide();
+            publisher.removeData("file");
+            /* hide & empty video custom thumbnail */
+            attachments_video_thumbnail.find(".x-image").removeAttr("style");
+            attachments_video_thumbnail.find("input.js_x-image-input").val("");
+            attachments_video_thumbnail.hide();
+            /* hide & empty scraper */
+            $(".publisher-scraper").hide().html("");
+            publisher.removeData("scraping");
+
+          } 
+
+
         $("body").on("click", ".js_publisher-anonymous-toggle", function () {
             var e = $(this).parents(".publisher");
             publisher_tab(e, "anonymous"), e.find(".btn-group").toggle(), e.find(".js_publisher-privacy-public").toggle();
@@ -1010,6 +1112,9 @@ $(function () {
             $(this).parents(".chat-widget, .panel-messages").find(".chat-voice-notes").slideToggle();
         }),
         $("body").on("click", ".js_posts-filter .dropdown-item", function () {
+            if ($('.js_posts_stream').hasClass('no_data_img_')) {
+                $('.no_data_img_').remove();
+            }
             var posts_stream = $(".js_posts_stream"),
                 posts_loader = $(".js_posts_loader"),
                 data = {};
@@ -1039,7 +1144,7 @@ $(function () {
                             d.innerHTML = values;
                             var valuesPost = d.firstChild;
                             bricklayer.append(valuesPost);
-                            // bricklayer.redraw();
+                            bricklayer.redraw();
                         }
 
                         if ((data.offset++, response.append ? posts_stream.append(response.data) : posts_stream.prepend(response.data), $(window).width() > 1024)) {
@@ -1247,9 +1352,7 @@ $(function () {
             }
         });
     $("body").on("click", "li.js_update-post", function () {
-        if ($(window).width() < 970) {
-            _update_post(this);
-        }
+        _update_post(this);
     });
 
     $("body").on("click", ".js_publisher_updatebtn", function () {
@@ -1259,15 +1362,24 @@ $(function () {
             var _this = $(this),
                 post = _this.parents(".post"),
                 id = post.data("id"),
-                privacy = _this.data("value");
+                privacy = _this.data("value"),
+                privacy_title = _this.data("title");
+                
             $.post(
                 api["posts/edit"],
                 { handle: "privacy", id: id, privacy: privacy },
                 function (response) {
+<<<<<<< HEAD
                     "friends" == privacy && $(".privacy_" + id + ">img").attr("src", "https://cdn1.stratus.co/content/themes/default/images/svg/svgImg/friendsIcon.svg"),
                     "public" == privacy && $(".privacy_" + id + ">img").attr("src", "https://cdn1.stratus.co/content/themes/default/images/svg/svgImg/nav_icon_globalHub.svg"),
                     "me" == privacy && $(".privacy_" + id + ">img").attr("src", "https://cdn1.stratus.co/content/themes/default/images/svg/svgImg/Hide_form.svg"),
                     response.callback && eval(response.callback);
+=======
+                        "friends" == privacy && $(".privacy-" + id + ">img").each(function(){ $(this).closest('div').attr('data-original-title', privacy_title); $(this).closest('div').attr('data-title', privacy_title); $(this).attr("src", "https://cdn1.stratus.co/content/themes/default/images/svg/svgImg/friendsIcon.svg") }),
+                        "public" == privacy && $(".privacy-" + id + ">img").each(function(){ $(this).closest('div').attr('data-original-title', privacy_title); $(this).closest('div').attr('data-title', privacy_title); $(this).attr("src", "https://cdn1.stratus.co/content/themes/default/images/svg/svgImg/nav_icon_globalHub.svg") }),
+                        "me" == privacy && $(".privacy-" + id + ">img").each(function(){ $(this).closest('div').attr('data-original-title', privacy_title); $(this).closest('div').attr('data-title', privacy_title); $(this).attr("src", "https://cdn1.stratus.co/content/themes/default/images/svg/svgImg/Hide_form.svg") }),
+                        response.callback && eval(response.callback);
+>>>>>>> a97182ebddd3a15c8afb307f913a46815a0d17e8
                 },
                 "json"
             ).fail(function () {
@@ -1673,9 +1785,11 @@ $(function () {
                         { id: parentDataId },
                         function (response) {
                             response.callback ? ($("body").removeClass("lightbox-open"), $(".lightbox").remove(), eval(response.callback)) : (response.next, response.prev, lightbox.find(".lightbox-post").replaceWith(response.lightbox));
+                            $(window).trigger('resize'); 
                         },
                         "json"
                     );
+                   
             }
         }),
         $("body").on("click", ".js_comment-attachment-remover", function () {

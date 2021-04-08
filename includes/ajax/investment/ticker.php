@@ -48,23 +48,26 @@ try {
         case 'sell':
             $fees        = $token_price['data']['sell_fees'];
             if(!empty($_POST['type'])&&$_POST['type']=="coin"){
-                
-                $token_price['data']['sub_total'] = '$'.round($_POST['total_tokens']*$token_price['data']['sell_price'], 2);
+                $amount = round($_POST['total_tokens']*$token_price['data']['sell_price'], 2);
+                $total_fees = round($amount*$fees/100, 2);
+                $token_price['data']['sub_total'] = '$'.$amount;
 
-                $token_price['data']['total_fees'] = '$'.round($token_price['data']['sub_total']*$fees/100, 2);
+                $token_price['data']['total_fees'] = '$'.$total_fees;
 
-                $token_price['data']['amount'] = round($token_price['data']['sub_total']-$token_price['data']['total_fees'],2);
-                $token_price['data']['order_total'] = '$'.$token_price['data']['amount'];
-
+                $token_price['data']['amount'] = $amount;
+                $token_price['data']['order_total'] = '$'.round($amount-$total_fees,2);
+                // print_r($token_price['data']);die;
             }else{
                 $token_price['data']['tokens'] = sprintf('%.5f',round($_POST['amount']/$token_price['data']['sell_price'], 5));
 
                 $token_price['data']['sub_total'] =  '$'.$_POST['amount'];
-
-                $token_price['data']['total_fees'] = '$'.round($_POST['amount']*$fees/100, 2);
                 
-                $token_price['data']['amount'] = $_POST['amount']-round($_POST['amount']*$fees/100, 2);
-                $token_price['data']['order_total'] = '$'.$token_price['data']['amount'];
+                $total_fees = round($_POST['amount']*$fees/100, 2); 
+
+                $token_price['data']['total_fees'] = '$'.$total_fees;
+                
+                $token_price['data']['amount'] = $_POST['amount'];
+                $token_price['data']['order_total'] = '$'.($_POST['amount']-$total_fees);
             }
             break;
     }

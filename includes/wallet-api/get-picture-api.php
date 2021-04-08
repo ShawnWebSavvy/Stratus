@@ -75,7 +75,7 @@ if ($picture) {
 if ($checkImage != '200'||!$picture) {
 
 
-    if ($pictureFull != "" || $pictureFull != "https://cdn1.stratus.co/uploads/") {
+    if ($pictureFull != "" || $pictureFull != SYSTEM_UPLOADS."/") {
         if (isset($_GET['type_url'])) {
             $picture = $pictureFull;
         } else {

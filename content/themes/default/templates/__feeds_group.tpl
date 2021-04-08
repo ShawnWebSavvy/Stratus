@@ -7,8 +7,9 @@
             </a>
         </div>
         <div class="mt10">
-            <a class="h6"
-                href="{$system['system_url']}/groups/{$_group['group_name']}{if $_search}?ref=qs{/if}">{$_group['group_title']}</a>
+            <span class="js_user-popover" data-uid="{$_group['group_id']}" data-type="groups">
+            <a class="h6" href="{$system['system_url']}/groups/{$_group['group_name']}{if $_search}?ref=qs{/if}">{$_group['group_title']}</a>
+            </span>
             <div>{$_group['group_members']} {__("Members")}</div>
         </div>
         <div class="mt10">
@@ -68,8 +69,7 @@
             </div>
             <div>
                 <span class="name">
-                    <a
-                        href="{$system['system_url']}/groups/{$_group['group_name']}{if $_search}?ref=qs{/if}">{$_group['group_title']}</a>
+                    <a href="{$system['system_url']}/groups/{$_group['group_name']}{if $_search}?ref=qs{/if}">{$_group['group_title']}</a>
                 </span>
                 <div>{$_group['group_members']} {__("Members")} </div>
             </div>

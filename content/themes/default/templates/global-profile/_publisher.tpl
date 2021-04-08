@@ -352,9 +352,9 @@
             <li class="MainaddPostTabs uplodfileTags">
               <div class="publisher-tools-tab js_publisher-tab" data-tab="colored">
                 <img class="BlueIcon" alt="image" title="Colored Posts"
-                  src="{$system['system_url']}/content/themes/default/images/svg/svgImg/coloredpostHover.svg">
-                <img class="blackIcon" alt="image" title="Colored Posts"
-                  src="{$system['system_url']}/content/themes/default/images/svg/svgImg/coloredpost.svg">
+                src="{$system['system_url']}/content/themes/default/images/svg/svgImg/addPostProductsHover.svg">
+              <img class="blackIcon" alt="image" title="Colored Posts"
+                src="{$system['system_url']}/content/themes/default/images/svg/svgImg/addPostProducts.svg">
                 <span class="class-publisher-text">Colored Posts</span>
               </div>
 
@@ -374,7 +374,6 @@
                   class="js_x-uploader" data-handle="publisher" data-multiple="true">
                 <span class="class-publisher-text">Add Photo</span>
               </div>
-
             </li>
             <li class="MainaddPostTabs uplodfileTags">
               <div class="publisher-tools-tab js_publisher-tab" data-tab="album">
@@ -384,7 +383,6 @@
                   src="{$system['system_url']}/content/themes/default/images/svg/svgImg/addPostAlbum.svg">
                 <span class="class-publisher-text">Add Album</span>
               </div>
-
             </li>
             {/if} {if $system['colored_posts_enabled']}
             <li class="MainaddPostTabs uplodfileTags">
@@ -395,7 +393,6 @@
                   src="{$system['system_url']}/content/themes/default/images/svg/svgImg/addPostProducts.svg">
                 <span class="class-publisher-text">Colored Posts</span>
               </div>
-
             </li>
             {/if}
             {if $system['geolocation_enabled']}
@@ -407,7 +404,6 @@
                   src="{$system['system_url']}/content/themes/default/images/svg/svgImg/addpostLocation.svg">
                 <span class="class-publisher-text">Check In</span>
               </div>
-
             </li>
             {/if} {if $system['voice_notes_posts_enabled']}
             <li class="MainaddPostTabs uplodfileTags">
@@ -418,7 +414,6 @@
                   src="{$system['system_url']}/content/themes/default/images/svg/svgImg/voicenote.svg">
                 <span class="class-publisher-text">Voice Notes</span>
               </div>
-
             </li>
             {/if} {if $system['gif_enabled']}
             <li class="MainaddPostTabs uplodfileTags">
@@ -464,7 +459,6 @@
                   src="{$system['system_url']}/content/themes/default/images/svg/svgImg/addPostPoll.svg">
                 <span class="class-publisher-text">Poll</span>
               </div>
-
             </li>
             {/if} {if $system['activity_posts_enabled']}
             <li class="MainaddPostTabs uplodfileTags">
@@ -475,7 +469,6 @@
                   src="{$system['system_url']}/content/themes/default/images/svg/svgImg/feelings.svg">
                 <span class="class-publisher-text">Feelings/Activity</span>
               </div>
-
             </li>
             {/if} {if $system['videos_enabled']}
             <li class="MainaddPostTabs uplodfileTags">

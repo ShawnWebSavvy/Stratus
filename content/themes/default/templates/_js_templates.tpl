@@ -128,6 +128,11 @@
     <div class="lightbox">
         <div class="container lightbox-container">
             <div class="lightbox-preview">
+                    <div class="mobileCloseButton mobile">
+                        <button type="button" class="close lightbox-close js_lightbox-close">
+                            <img src="{$system['system_uploads_assets']}/content/themes/default/images/svg/svgImg/modelCross.svg"/>
+                        </button>
+                    </div>
                 <div class="lightbox-next js_lightbox-slider">
                     <i class="fa fa-chevron-right fa-3x"></i>
                 </div>
@@ -137,10 +142,10 @@
                 <img alt="" class="img-fluid" src="{literal}{{image}}{/literal}">
             </div>
             <div class="lightbox-data">
-                <div class="clearfix">
-                    <div class="pt5 pr5 float-right">
+                <div class="clearfix" style="position: relative;">
+                    <div class="mobileCloseButton desktop">
                         <button type="button" class="close lightbox-close js_lightbox-close">
-                            <span aria-hidden="true">&times;</span>
+                            <img src="{$system['system_uploads_assets']}/content/themes/default/images/svg/svgImg/modelCross.svg"/>
                         </button>
                     </div>
                 </div>
@@ -183,9 +188,9 @@
             </div>
             <div class="lightbox-data">
                 <div class="clearfix">
-                    <div class="pt5 pr5 float-right">
+                    <div class="mobileCloseButton">
                         <button type="button" class="close lightbox-close js_lightbox-close">
-                            <span aria-hidden="true">&times;</span>
+                            <img src="{$system['system_uploads_assets']}/content/themes/default/images/svg/svgImg/modelCross.svg"/>
                         </button>
                     </div>
                 </div>
@@ -208,9 +213,9 @@
         <div class="container lightbox-container">
             <div class="lightbox-data">
                 <div class="clearfix">
-                    <div class="pt5 pr5 float-right">
+                    <div class="mobileCloseButton">
                         <button type="button" class="close lightbox-close js_lightbox-close">
-                            <span aria-hidden="true">&times;</span>
+                            <img src="{$system['system_uploads_assets']}/content/themes/default/images/svg/svgImg/modelCross.svg"/>
                         </button>
                     </div>
                 </div>
@@ -453,6 +458,9 @@
                 <input name="file" type="file" title="{literal}{{title}}{/literal}" accept="{literal}{{accept}}{/literal}">
             {literal}{{/multiple}}{/literal}
             <input type="hidden" name="secret" value="{literal}{{secret}}{/literal}">
+            {if $page == 'profile'|| $page == 'page' || $page == 'group' }
+                <input type="hidden" name="notSave" value="true">
+            {/if}
         </form>
     </script>
 {strip}
@@ -804,7 +812,8 @@
 
 
 <script id="chat-message" type="text/template">
-        <li>
+    <!--Commented by Pankaj. this code repating the chat in opend chat window -->
+        <!--li class="feed-message_new">
             <div class="conversation clearfix right">
                 <div class="conversation-body chat-message-user-section1">
                     <div class="text js_chat-color-me" {literal}{{#color}}{/literal}style="background-color: {literal}{{color}}{/literal}"{literal}{{/color}}{/literal}>
@@ -837,7 +846,7 @@
                     
                 </div>
             </div>
-        </li>
+        </li-->
     </script>
 
 <script id="chat-calling" type="text/template">

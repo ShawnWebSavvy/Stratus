@@ -150,5 +150,12 @@ $get == 'discover' }
 {include file='__feeds_message.tpl'}
 {/foreach}
 
+{elseif $get == 'explore' || $get == 'explore_trending' || $get == 'explore_tag'}
+{foreach $data as $post} 
+  {if $post}
+  {include file='global-profile/global-profile__feeds_post.tpl'}
+  {/if}
+{/foreach}
+
 
 {/if}

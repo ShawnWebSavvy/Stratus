@@ -89,7 +89,7 @@ function getWalletBalance($token){
             }
           }
         }else{
-          returnResponse(true,300,"parameters missing");
+          returnResponse(false,300,"parameters missing");
         }
 
       }

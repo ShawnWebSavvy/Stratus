@@ -5116,15 +5116,16 @@ class UserGlobal
      * @param string $query
      * @return array
      */
-    public function global_search($query)
+    public function global_search($query,$offset=0)
     {
         global $db, $system;
         $results = [];
-        $offset *= $system['max_results'];
         /* search posts */
-        $posts = $this->global_profile_get_posts(array('query' => $query));
+        $posts = $this->global_profile_get_posts(array('query' => $query, 'offset' => $offset));
+        $offset *= $system['max_results'];
         if (count($posts) > 0) {
             $results['posts'] = $posts;
+            // $results['posts'] = array_slice ( $posts , $offset , $system['max_results']);
         }
 
         /* search articles */
@@ -5187,6 +5188,8 @@ class UserGlobal
                 }
             }
         }
+
+
         //echo "<pre>";print_r($results); exit;
         return $results;
     }
@@ -6003,7 +6006,7 @@ class UserGlobal
             $db->query(sprintf("INSERT INTO global_stories_media (story_id, source, text, time) VALUES (%s, %s, %s, %s)", secure($story_id, 'int'), secure($photo['source']), secure($message), secure($date))) or _error("SQL_ERROR_THROWEN");
         }
         foreach ($videos as $video) { //print_r($videos); 
-            $db->query(sprintf("INSERT INTO global_stories_media (story_id, source, is_photo, text, time) VALUES (%s, %s, '0', %s, %s)", secure($story_id, 'int'), secure($video), secure($message), secure($date))) or _error("SQL_ERROR_THROWEN");
+            $db->query(sprintf("INSERT INTO global_stories_media (story_id, source, is_photo, text, time, thumbnail) VALUES (%s, %s, '0', %s, %s, %s)", secure($story_id, 'int'), secure($video['video']), secure($message), secure($date), secure($video['thumbnail']))) or _error("SQL_ERROR_THROWEN");
         }
     }
 
@@ -6032,7 +6035,7 @@ class UserGlobal
                 $story['lastUpdated'] = strtotime($_story['time']);
                 $story['items'] = [];
                 /* get story media items */
-                $get_media_items = $db->query(sprintf("SELECT * FROM global_stories_media  as stories_media WHERE story_id = %s", secure($_story['story_id'], 'int'))) or _error("SQL_ERROR_THROWEN");
+                $get_media_items = $db->query(sprintf("SELECT * FROM global_stories_media  as stories_media WHERE story_id = %s ORDER BY stories_media.time DESC", secure($_story['story_id'], 'int'))) or _error("SQL_ERROR_THROWEN");
                 while ($media_item = $get_media_items->fetch_assoc()) {
                     $story_item['id'] = $media_item['media_id'];
                     $story_item['type'] = ($media_item['is_photo']) ? 'photo' : 'video';
@@ -6040,6 +6043,7 @@ class UserGlobal
                     $story_item['link'] = '#';
                     $story_item['linkText'] = $media_item['text'];
                     $story_item['time'] = strtotime($media_item['time']);
+                    $story_item['thumbnail'] =  $media_item['thumbnail'] ? $system['system_uploads'] . '/' . $media_item['thumbnail'] : null;
                     $story['items'][] = $story_item;
                 }
                 $stories[] = $story;
@@ -8208,7 +8212,7 @@ class UserGlobal
         /* check if posting the message to (new || existed) conversation */
         if ($conversation_id == null) {
             /* [first] check previous conversation between (viewer & recipients) */
-            $mutual_conversation = $this->get_mutual_conversation($recipients);
+            $mutual_conversation = $this->get_mutual_conversation($recipients,true);
             if (!$mutual_conversation) {
                 /* [1] there is no conversation between viewer and the recipients -> start new one */
                 /* insert conversation */
@@ -9039,14 +9043,16 @@ class UserGlobal
      * 
      * @return array
      */
-    public function get_trending_hashtags_posts($postType = null)
+    public function get_trending_hashtags_posts($postType = null,$get_all=true)
     {
         global $system, $db;
         $hashtags = [];
+        $offset = 0;
+       
         if ($postType == 'LocalHub') {
             $selectQuery = sprintf("SELECT hashtags.hashtag, hashtags.hashtag_id as hash_id, hashtags_posts.id as hash_post, COUNT(hashtags_posts.id) AS frequency,hashtags_posts.postHubType FROM hashtags INNER JOIN hashtags_posts as hashtags_posts ON hashtags.hashtag_id = hashtags_posts.hashtag_id WHERE hashtags_posts.created_at > DATE_SUB(CURDATE(), INTERVAL 1 %s) and hashtags_posts.postHubType = 'LocalHub'  GROUP BY hashtags_posts.hashtag_id,hashtags_posts.postHubType ORDER BY frequency DESC LIMIT %s", secure($system['trending_hashtags_interval'], "", false), secure($system['trending_hashtags_limit'], 'int', false));
         } elseif ($postType == 'GlobalHub') {
-            $selectQuery = sprintf("SELECT hashtags.hashtag, hashtags.hashtag_id as hash_id, hashtags_posts.id as hash_post, COUNT(hashtags_posts.id) AS frequency,hashtags_posts.postHubType FROM hashtags INNER JOIN hashtags_posts as hashtags_posts ON hashtags.hashtag_id = hashtags_posts.hashtag_id WHERE hashtags_posts.created_at > DATE_SUB(CURDATE(), INTERVAL 1 %s) and hashtags_posts.postHubType = 'GlobalHub'  GROUP BY hashtags_posts.hashtag_id,hashtags_posts.postHubType ORDER BY frequency DESC LIMIT %s", secure($system['trending_hashtags_interval'], "", false), secure($system['trending_hashtags_limit'], 'int', false));
+            $selectQuery = sprintf("SELECT hashtags.hashtag, hashtags.hashtag_id as hash_id, hashtags_posts.id as hash_post, COUNT(hashtags_posts.id) AS frequency,hashtags_posts.postHubType FROM hashtags INNER JOIN hashtags_posts as hashtags_posts ON hashtags.hashtag_id = hashtags_posts.hashtag_id WHERE hashtags_posts.created_at > DATE_SUB(CURDATE(), INTERVAL 1 %s) and hashtags_posts.postHubType = 'GlobalHub'  GROUP BY hashtags_posts.hashtag_id,hashtags_posts.postHubType,hash_post ORDER BY frequency DESC LIMIT %s", secure($system['trending_hashtags_interval'], "", false), secure($system['trending_hashtags_limit'], 'int', false));
         } else {
             $selectQuery = sprintf("SELECT hashtags.hashtag, hashtags.hashtag_id as hash_id, hashtags_posts.id as hash_post, COUNT(hashtags_posts.id) AS frequency,hashtags_posts.postHubType FROM hashtags INNER JOIN hashtags_posts as hashtags_posts ON hashtags.hashtag_id = hashtags_posts.hashtag_id WHERE hashtags_posts.created_at > DATE_SUB(CURDATE(), INTERVAL 1 %s) GROUP BY hashtags_posts.hashtag_id,hashtags_posts.postHubType ORDER BY frequency DESC LIMIT %s", secure($system['trending_hashtags_interval'], "", false), secure($system['trending_hashtags_limit'], 'int', false));
         }
@@ -9059,7 +9065,7 @@ class UserGlobal
             }
             $hashTagLists = implode(', ', $hashtags);
             if (count($hashtags) > 0) {
-                $gethashposts = $db->query(sprintf("SELECT DISTINCT(post_id) from hashtags_posts where hashtag_id IN (" . $hashTagLists . ") order by post_id DESC")) or _error("SQL_ERROR_THROWEN");
+                  $gethashposts = $db->query(sprintf("SELECT DISTINCT(post_id) from hashtags_posts where hashtag_id IN (" . $hashTagLists . ") order by post_id DESC")) or _error("SQL_ERROR_THROWEN");
                 if ($gethashposts->num_rows > 0) {
                     while ($hashtagValues = $gethashposts->fetch_assoc()) {
                         $detailedPosts = $this->global_profile_get_post($hashtagValues['post_id']);
@@ -9070,7 +9076,12 @@ class UserGlobal
                 }
             }
         }
+        
 
+        if(!$get_all){
+          $detailed_posts = array_slice ( $detailed_posts , $offset , $system['max_results']);
+        }
+        
         return $detailed_posts;
     }
 
@@ -9559,5 +9570,223 @@ class UserGlobal
             }
         }
         return $events;
+    }
+    
+    /**
+     * disable_post_comments
+     *
+     * @param integer $post_id
+     * @return void
+     */
+    public function disable_post_comments($post_id)
+    {
+        global $db;
+        /* (check|get) post */
+        $post = $this->global_check_post($post_id);
+        if (!$post) {
+            _error(403);
+        }
+        /* check if viewer can edit post */
+        if (!$post['manage_post']) {
+            _error(403);
+        }
+        /* trun off post commenting */
+        $db->query(sprintf("UPDATE global_posts SET comments_disabled = '1' WHERE post_id = %s", secure($post_id, 'int'))) or _error("SQL_ERROR_THROWEN");
+    }
+
+    /**
+     * enable_post_comments
+     *
+     * @param integer $post_id
+     * @return void
+     */
+    public function enable_post_comments($post_id)
+    {
+        global $db;
+        /* (check|get) post */
+        $post = $this->global_check_post($post_id);
+        if (!$post) {
+            _error(403);
+        }
+        /* check if viewer can edit post */
+        if (!$post['manage_post']) {
+            _error(403);
+        }
+
+        /* trun on post commenting */
+        $db->query(sprintf("UPDATE global_posts SET comments_disabled = '0' WHERE post_id = %s", secure($post_id, 'int'))) or _error("SQL_ERROR_THROWEN");
+    }
+
+       /**
+     * edit_comment
+     *
+     * @param integer $comment_id
+     * @param string $message
+     * @param string $photo
+     * @return array
+     */
+    public function global_edit_comment($comment_id, $message, $photo)
+    {
+        global $db, $system;
+        /* (check|get) comment */
+        $comment = $this->global_get_comment($comment_id);
+        if (!$comment) {
+            _error(403);
+        }
+        /* check if viewer can manage comment [Edit] */
+        $comment['edit_comment'] = false;
+        if ($this->_logged_in) {
+            /* viewer is (admins|moderators)] */
+            if ($this->_data['user_group'] < 3) {
+                $comment['edit_comment'] = true;
+            }
+            /* viewer is the author of comment */
+            if ($this->_data['user_id'] == $comment['author_id']) {
+                $comment['edit_comment'] = true;
+            }
+        }
+        if (!$comment['edit_comment']) {
+            _error(400);
+        }
+        /* check post max length */
+        if ($system['max_comment_length'] > 0 && $this->_data['user_group'] >= 3) {
+            if (strlen($message) >= $system['max_comment_length']) {
+                modal("MESSAGE", __("Text Length Limit Reached"), __("Your message characters length is over the allowed limit") . " (" . $system['max_comment_length'] . " " . __("Characters") . ")");
+            }
+        }
+        /* update comment */
+        $comment['text'] = $message;
+        $comment['image'] = (!is_empty($comment['image'])) ? $comment['image'] : $photo;
+        $db->query(sprintf("UPDATE global_posts_comments SET text = %s, image = %s WHERE comment_id = %s", secure($comment['text']), secure($comment['image']), secure($comment_id, 'int'))) or _error("SQL_ERROR_THROWEN");
+        /* post mention notifications if any */
+        if ($comment['node_type'] == "comment") {
+            $this->post_mentions($comment['text'], $comment['parent_comment']['node_id'], "reply_" . $comment['parent_comment']['node_type'], 'comment_' . $comment['comment_id'], array($comment['post']['author_id'], $comment['parent_comment']['author_id']));
+        } else {
+            $this->post_mentions($comment['text'], $comment['node_id'], "comment_" . $comment['node_type'], 'comment_' . $comment['comment_id'], array($comment['post']['author_id']));
+        }
+        /* parse text */
+        $comment['text_plain'] = htmlentities($comment['text'], ENT_QUOTES, 'utf-8');
+        $comment['text'] = $this->_parse(["text" => $comment['text_plain']]);
+        /* return */
+        return $comment;
+    }
+
+     /**
+     * who_shares
+     *
+     * @param integer $post_id
+     * @param integer $offset
+     * @return array
+     */
+    public function who_shares($post_id, $offset = 0)
+    {
+        global $db, $system;
+        $posts = [];
+        $offset *= $system['max_results'];
+        $get_posts = $db->query(sprintf('SELECT global_posts.post_id FROM global_posts INNER JOIN users ON global_posts.user_id = users.user_id WHERE global_posts.post_type = "shared" AND global_posts.origin_id = %s LIMIT %s, %s', secure($post_id, 'int'), secure($offset, 'int', false), secure($system['max_results'], 'int', false))) or _error("SQL_ERROR_THROWEN");
+        if ($get_posts->num_rows > 0) {
+            while ($post = $get_posts->fetch_assoc()) {
+                $post = $this->global_profile_get_post($post['post_id']);
+                if ($post) {
+                    $posts[] = $post;
+                }
+            }
+        }
+        return $posts;
+    }
+
+    /* Posts */
+    /* ------------------------------- */
+
+    /**
+     * get_posts
+     * 
+     * @param array $args
+     * @return array
+     */
+    public function global_profile_explore_posts($offset){   
+
+        global $db, $system; 
+
+        $offset = !isset($offset) ? 1 : $offset;
+        $offset *= $system['max_results'];
+
+        $detailed_posts = array();
+        $getusers = $db->query(sprintf("SELECT l.post_id, count(*) as countPost FROM global_posts_reactions l GROUP BY l.post_id ORDER BY countPost DESC LIMIT %s, %s
+        " , secure($offset, 'int', false), secure($system['max_results'], 'int', false)   )) or _error("SQL_ERROR_THROWEN");
+        if ($getusers->num_rows > 0) {
+            while ($rows = $getusers->fetch_assoc()) {
+                $detailedPosts = $this->global_profile_get_post($rows['post_id']);
+                if (!empty($detailedPosts)) {
+                    $detailed_posts[] = $detailedPosts;
+                }
+            }
+        }
+        return $detailed_posts; 
+    }
+
+
+     /**
+     * get_trending_hashtags_posts
+     * 
+     * @return array
+     */
+    public function global_profile_trending_hashtags_posts($postType = null,$offset=true)
+    {
+        global $system, $db;
+        $hashtags = [];
+        $offset = !isset($offset) ? 1 : $offset;
+        $offset *= $system['max_results'];
+       
+        if ($postType == 'LocalHub') {
+            $selectQuery = sprintf("SELECT hashtags.hashtag, hashtags.hashtag_id as hash_id, hashtags_posts.id as hash_post, COUNT(hashtags_posts.id) AS frequency,hashtags_posts.postHubType FROM hashtags INNER JOIN hashtags_posts as hashtags_posts ON hashtags.hashtag_id = hashtags_posts.hashtag_id WHERE hashtags_posts.created_at > DATE_SUB(CURDATE(), INTERVAL 1 %s) and hashtags_posts.postHubType = 'LocalHub'  GROUP BY hashtags_posts.hashtag_id,hashtags_posts.postHubType ORDER BY frequency DESC LIMIT %s", secure($system['trending_hashtags_interval'], "", false), secure($system['trending_hashtags_limit'], 'int', false));
+        } elseif ($postType == 'GlobalHub') {
+            $selectQuery = sprintf("SELECT hashtags.hashtag, hashtags.hashtag_id as hash_id, hashtags_posts.id as hash_post, COUNT(hashtags_posts.id) AS frequency,hashtags_posts.postHubType FROM hashtags INNER JOIN hashtags_posts as hashtags_posts ON hashtags.hashtag_id = hashtags_posts.hashtag_id WHERE hashtags_posts.created_at > DATE_SUB(CURDATE(), INTERVAL 1 %s) and hashtags_posts.postHubType = 'GlobalHub'  GROUP BY hashtags_posts.hashtag_id,hashtags_posts.postHubType ORDER BY frequency DESC LIMIT %s", secure($system['trending_hashtags_interval'], "", false), secure($system['trending_hashtags_limit'], 'int', false));
+        } else {
+            $selectQuery = sprintf("SELECT hashtags.hashtag, hashtags.hashtag_id as hash_id, hashtags_posts.id as hash_post, COUNT(hashtags_posts.id) AS frequency,hashtags_posts.postHubType FROM hashtags INNER JOIN hashtags_posts as hashtags_posts ON hashtags.hashtag_id = hashtags_posts.hashtag_id WHERE hashtags_posts.created_at > DATE_SUB(CURDATE(), INTERVAL 1 %s) GROUP BY hashtags_posts.hashtag_id,hashtags_posts.postHubType ORDER BY frequency DESC LIMIT %s", secure($system['trending_hashtags_interval'], "", false), secure($system['trending_hashtags_limit'], 'int', false));
+        }
+        $get_trending_hashtags = $db->query($selectQuery); 
+        // or _error("SQL_ERROR_THROWEN");
+        $detailed_posts = array();
+        if ($get_trending_hashtags->num_rows > 0) {
+            while ($hashtag = $get_trending_hashtags->fetch_assoc()) {
+                //$hashtag['hashtag'] = html_entity_decode($hashtag['hashtag'], ENT_QUOTES);
+                $hashtags[] = $hashtag['hash_id'];
+            }
+            $hashTagLists = implode(', ', $hashtags);
+            if (count($hashtags) > 0) {
+                  $gethashposts = $db->query(sprintf("SELECT DISTINCT(post_id) from hashtags_posts where hashtag_id IN (" . $hashTagLists . ") order by post_id DESC")) or _error("SQL_ERROR_THROWEN");
+                if ($gethashposts->num_rows > 0) {
+                    while ($hashtagValues = $gethashposts->fetch_assoc()) {
+                        $detailedPosts = $this->global_profile_get_post($hashtagValues['post_id']);
+                        if (!empty($detailedPosts)) {
+                            $detailed_posts[] = $detailedPosts;
+                        }
+                    }
+                }
+            }
+        }
+        
+        $detailed_posts = array_slice ( $detailed_posts , $offset , $system['max_results']);      
+        return $detailed_posts;
+    }
+
+     /**
+     * Get video thumbnail
+     *
+     */
+    public function get_video_thumbnail($video)
+    {
+        global $system;
+        if($video){
+            //Video thumbnails
+            $helpers = new helpers();
+            $result_ = $helpers->makeVideosThumbnails($system['system_uploads'] . '/' . $video, 4, 'prod');
+            if (sizeof($result_) > 0) {
+                $helpers->local_aws_s3_upload($result_['img_path'], $result_['filename']);
+            }
+            return  'thumbnails/'.$result_['thumb'] ;
+
+        }
     }
 }

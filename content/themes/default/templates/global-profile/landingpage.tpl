@@ -118,7 +118,11 @@
                                                         data-value="me" title='{__("Shared with: Only Me")}'>
                                                         <button type="button" class="btn dropdown-toggle"
                                                             data-toggle="dropdown" data-display="static">
+<<<<<<< HEAD
                                                             <span class="share_sign_img privacy_{$postsItem['post_id']}" id="{$postsItem['post_id']}">
+=======
+                                                            <span class="share_sign_img" id="{$postsItem['post_id']}">
+>>>>>>> a97182ebddd3a15c8afb307f913a46815a0d17e8
                                                                 <img src="{$system['system_url']}/content/themes/default/images/svg/svgImg/Hide_form.svg"
                                                                     class="blackicon">
                                                             </span>
@@ -129,7 +133,12 @@
                                                             title='{__("Shared with: Friends")}'>
                                                             <button type="button" class="btn dropdown-toggle"
                                                                 data-toggle="dropdown" data-display="static">
+<<<<<<< HEAD
                                                                 <span class="share_sign_img privacy_{$postsItem['post_id']}" id="{$postsItem['post_id']}">
+=======
+                                                                <span class="share_sign_img"
+                                                                    id="{$postsItem['post_id']}">
+>>>>>>> a97182ebddd3a15c8afb307f913a46815a0d17e8
                                                                     <img src="{$system['system_url']}/content/themes/default/images/svg/svgImg/friendsIcon.svg"
                                                                         class="blackicon">
                                                                 </span>
@@ -140,26 +149,30 @@
                                                                 title='{__("Shared with:Public")}'>
                                                                 <button type="button" class="btn dropdown-toggle"
                                                                     data-toggle="dropdown" data-display="static">
+<<<<<<< HEAD
                                                                     <span class="share_sign_img privacy_{$postsItem['post_id']}" id="{$postsItem['post_id']}">
+=======
+                                                                    <span class="share_sign_img"
+                                                                        id="{$postsItem['post_id']}">
+>>>>>>> a97182ebddd3a15c8afb307f913a46815a0d17e8
                                                                         <img src="{$system['system_url']}/content/themes/default/images/svg/svgImg/nav_icon_globalHub.svg"
                                                                             class="blackicon">
                                                                     </span>
                                                                 </button>
                                                                 {/if}
                                                                 <!-- <div class="dropdown-menu dropdown-menu-right">
-                            <div class="dropdown-item pointer js_edit-privacy" data-title='{__("Shared with:Public")}' data-value="public">
-                                <i class="fa fa-globe"></i> {__("Public")}
-                            </div>
-                            <div class="dropdown-item pointer js_edit-privacy" data-title='{__("Shared with:Friends")}' data-value="friends">
-                                <i class="fa fa-users"></i> {__("Friends")}
-                            </div>
-                            <div class="dropdown-item pointer js_edit-privacy" data-title='{__("Shared with:Only Me")}' data-value="me">
-                                <i class="fa fa-lock"></i> {__("Only Me")}
-                            </div>
-                        </div> -->
+                                                                    <div class="dropdown-item pointer js_edit-privacy" data-title='{__("Shared with:Public")}' data-value="public">
+                                                                        <i class="fa fa-globe"></i> {__("Public")}
+                                                                    </div>
+                                                                    <div class="dropdown-item pointer js_edit-privacy" data-title='{__("Shared with:Friends")}' data-value="friends">
+                                                                        <i class="fa fa-users"></i> {__("Friends")}
+                                                                    </div>
+                                                                    <div class="dropdown-item pointer js_edit-privacy" data-title='{__("Shared with:Only Me")}' data-value="me">
+                                                                        <i class="fa fa-lock"></i> {__("Only Me")}
+                                                                    </div>
+                                                                </div> -->
 
-                                                                <div
-                                                                    class="dropdown-menu dropdown-menu-right _postshare__">
+                                                                <div class="dropdown-menu dropdown-menu-right _postshare__">
                                                                     <div class="dropdown-item pointer js_edit-privacy"
                                                                         data-title='{__("Shared with: Public")}'
                                                                         data-value="public">
@@ -242,7 +255,7 @@
                                                         {else}
                                                         style="background-image:url({$system['system_uploads']}/{$postsItem['colored_pattern']['background_image']})"
                                                         {/if}>
-                                                        <div class="post-colored-text-wrapper js_scroller"
+                                                        <div class="post-colored-text-wrapper"
                                                             data-slimScroll-height="240">
                                                             <div class="post-text" dir="auto"
                                                                 style="color:{$postsItem['colored_pattern']['text_color']};">
@@ -323,7 +336,7 @@
                                                     <div class="plr10">
                                                         <audio class="js_audio"
                                                             id="audio-{$postsItem['audio']['audio_id']}" {if
-                                                            $user->_logged_in}onplay="update_media_views('audio',
+                                                            $user->_logged_in}onplay="update_media_views(event, 'audio',
                                                             {$postsItem['audio']['audio_id']})" {/if} controls
                                                             preload="auto" style="width: 100%;">
                                                             <source
@@ -343,7 +356,7 @@
                                                     <div class="plr10">
                                                         <audio class="js_audio"
                                                             id="audio-{$postsItem['origin']['audio']['audio_id']}" {if
-                                                            $user->_logged_in}onplay="update_media_views('audio',
+                                                            $user->_logged_in}onplay="update_media_views(event, 'audio',
                                                             {$postsItem['origin']['audio']['audio_id']})" {/if} controls
                                                             preload="auto" style="width: 100%;">
                                                             <source

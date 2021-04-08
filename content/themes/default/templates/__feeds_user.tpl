@@ -130,8 +130,8 @@
 {elseif $_tpl == "list"}
 {if $_user['user_id'] > 0}
 <li class="feeds-item" {if $_user['id']}data-id="{$_user['id']}" {/if}>
-    <div class="data-container searchSectionWrap ssdssd">
-        <div class="_user_detail_sec hmmm">
+    <div class="data-container searchSectionWrap">
+        <div class="_user_detail_sec">
             <div class="user__imgs">
                 <a class="data-avatar" href="{$system['system_url']}/{$_user['user_name']}{if $_search}?ref=qs{/if}">
                     <img class="lazyload" data-src="{$_user['user_picture']}"

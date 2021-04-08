@@ -197,24 +197,28 @@ try {
 	}
 	$postHtml = '';
 	$newLength = count($postDataArray);
-	//print_r($postDataArra); exit;
-	// for ($i = 0; $i < $newLength; $i++) {
-	// 	$smarty->assign('post', $postDataArray[$i]);
-	// 	$smarty->assign('_get', $_get);
-	// 	$postHtml .= $smarty->fetch("global-profile/global-profile__feeds_post.tpl");
-	// }
-	// /* return */
-	// if ($newLength == 1) {
-	// 	$finalpostHtml = $postHtml;
-	// } else if ($newLength > 1) {
-	// 	$finalpostHtml = "<li class='feeds_post parent-post-li' data-id='" . $postDataArray[0]['post_id'] . "'>";
-	// 	//$finalpostHtml.="<ul class='child-post-ul'>";
-	// 	$finalpostHtml .= $postHtml;
-	// 	$finalpostHtml .= "</li>";
-	// }
-
-	// $return['post'] = $finalpostHtml;
-	$return['post'] = true;
+	// print_r($postDataArra); exit;
+	// echo '<pre>'; print_r($postDataArray);die;
+	for ($i = 0; $i < $newLength; $i++) {
+		$smarty->assign('post', $postDataArray[$i]);
+		$smarty->assign('_get', $_get);
+		if ($newLength > 1) {
+			$smarty->assign('post_array', true);
+		}
+		$postHtml .= $smarty->fetch("global-profile/global-profile__feeds_post.tpl");
+	}
+		// echo '<pre>'; print_r($postHtml);die;
+	/* return */
+	if ($newLength == 1) {
+		$finalpostHtml = $postHtml;
+	} else if ($newLength > 1) {
+		$finalpostHtml  = '<div class="carsds" data-id="'.$postDataArray[0]['post_id'].'" post-type="'.$postDataArray[0]['post_type'].'">';
+		$finalpostHtml .= $postHtml;
+		$finalpostHtml .= '</div>';
+	}
+	//  echo($finalpostHtml);die;
+	$return['post'] = $finalpostHtml;
+	// $return['post'] = true;
 	return_json($return);
 } catch (Exception $e) {
 	modal("ERROR", __("Error"), $e->getMessage());

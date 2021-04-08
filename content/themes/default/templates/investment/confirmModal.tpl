@@ -9,15 +9,15 @@
                             <img src="{$system['system_url']}/content/themes/default/images/investment/{if $token_name==btc}bit{else}{$token_name}{/if}Coin.svg"
                                 alt="bit coin">
                             <div class="TextWrap">
-                                <h4><span class="overall_coin">{$token_value}</span> {strtoupper($token_name)}</h4>
+                                <h4><span class="">{$token_value}</span> {strtoupper($token_name)}</h4>
                                 
-                                <p><span class="per_coin_price">{$per_coin_price}</span> per USD</p>
+                                <p><span class="">{$per_coin_price}</span> per USD</p>
                                 {if $action=='buy'}
-                                    <p>Fees=<span class="total_fees_amount" id="fees_amount_buy">{$fees} {strtoupper($token_name)}</span></p>
+                                    <p>Fees=<span class="" id="fees_amount_buy">{$fees} {strtoupper($token_name)}</span></p>
                                     <p>Total=<span class="amount_received_model">{$receive_amount} {strtoupper($token_name)}</span></p>
                                 {else}
-                                    <p>Fees=<span class="total_fees_amount" id="fees_amount_buy">${$fees}</span></p>
-                                    <p>Total=<span class="amount_received_model">${$receive_amount}</span></p>
+                                    <p>Fees=<span class="" id="">${$fees}</span></p>
+                                    <p>Total=<span class="">${$receive_amount}</span></p>
                                 {/if}
                                 <p>* 1% +/- Arbitrage applies</p>
                             </div>
