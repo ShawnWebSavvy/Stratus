@@ -129,7 +129,8 @@
                                                             title='{__("Shared with: Friends")}'>
                                                             <button type="button" class="btn dropdown-toggle"
                                                                 data-toggle="dropdown" data-display="static">
-                                                                <span class="share_sign_img" id="{$postsItem['post_id']}">
+                                                                <span class="share_sign_img"
+                                                                    id="{$postsItem['post_id']}">
                                                                     <img src="{$system['system_url']}/content/themes/default/images/svg/svgImg/friendsIcon.svg"
                                                                         class="blackicon">
                                                                 </span>
@@ -140,26 +141,26 @@
                                                                 title='{__("Shared with:Public")}'>
                                                                 <button type="button" class="btn dropdown-toggle"
                                                                     data-toggle="dropdown" data-display="static">
-                                                                    <span class="share_sign_img" id="{$postsItem['post_id']}">
+                                                                    <span class="share_sign_img"
+                                                                        id="{$postsItem['post_id']}">
                                                                         <img src="{$system['system_url']}/content/themes/default/images/svg/svgImg/nav_icon_globalHub.svg"
                                                                             class="blackicon">
                                                                     </span>
                                                                 </button>
                                                                 {/if}
                                                                 <!-- <div class="dropdown-menu dropdown-menu-right">
-                            <div class="dropdown-item pointer js_edit-privacy" data-title='{__("Shared with:Public")}' data-value="public">
-                                <i class="fa fa-globe"></i> {__("Public")}
-                            </div>
-                            <div class="dropdown-item pointer js_edit-privacy" data-title='{__("Shared with:Friends")}' data-value="friends">
-                                <i class="fa fa-users"></i> {__("Friends")}
-                            </div>
-                            <div class="dropdown-item pointer js_edit-privacy" data-title='{__("Shared with:Only Me")}' data-value="me">
-                                <i class="fa fa-lock"></i> {__("Only Me")}
-                            </div>
-                        </div> -->
+                                                                    <div class="dropdown-item pointer js_edit-privacy" data-title='{__("Shared with:Public")}' data-value="public">
+                                                                        <i class="fa fa-globe"></i> {__("Public")}
+                                                                    </div>
+                                                                    <div class="dropdown-item pointer js_edit-privacy" data-title='{__("Shared with:Friends")}' data-value="friends">
+                                                                        <i class="fa fa-users"></i> {__("Friends")}
+                                                                    </div>
+                                                                    <div class="dropdown-item pointer js_edit-privacy" data-title='{__("Shared with:Only Me")}' data-value="me">
+                                                                        <i class="fa fa-lock"></i> {__("Only Me")}
+                                                                    </div>
+                                                                </div> -->
 
-                                                                <div
-                                                                    class="dropdown-menu dropdown-menu-right _postshare__">
+                                                                <div class="dropdown-menu dropdown-menu-right _postshare__">
                                                                     <div class="dropdown-item pointer js_edit-privacy"
                                                                         data-title='{__("Shared with: Public")}'
                                                                         data-value="public">

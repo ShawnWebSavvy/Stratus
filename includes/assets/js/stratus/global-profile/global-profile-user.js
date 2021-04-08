@@ -108,7 +108,7 @@ function data_heartbeat() {
             data["last_post"] = posts_stream.find('.carsds').first().data("id");
             // data["last_post"] = last_id_column.getElementsByClassName('carsds')[0].dataset.id || 0;
         } else {
-            data["last_post"] = 0;
+            return false;
         }
         $.post(api["data/live"], data, function (response) {
         if (response.callback) eval(response.callback);

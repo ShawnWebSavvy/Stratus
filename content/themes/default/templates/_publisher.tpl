@@ -10,8 +10,9 @@
             <!-- publisher loader -->
             <div class="addpostHeadFocussed">
                 <h2>Create Post</h2>
-                <a class="addpost-closebtn" href="javascript:void(0)"><img
-                        src="{$system['system_uploads_assets']}/content/themes/default/images/svg/svgImg/modelCross.svg" /></a>
+                <a class="addpost-closebtn" href="javascript:void(0)">
+                    <img src="{$system['system_uploads_assets']}/content/themes/default/images/svg/svgImg/modelCross.svg"/>
+                </a>
             </div>
 
             <!-- publisher-message -->
@@ -67,20 +68,16 @@
                                         <div class="dropdown-item pointer" data-title='{__("Shared with: Public")}'
                                             data-value="public">
                                             <div class="post_images__">
-                                                <img src="{$system['system_uploads_assets']}/content/themes/default/images/svg/svgImg/nav_icon_globalHub.svg"
-                                                    class="blackicon" />
-                                                <img src="{$system['system_uploads_assets']}/content/themes/default/images/svg/svgImg/nav_icon_globalHub-active.svg"
-                                                    class="whiteicon" />
+                                                <img src="{$system['system_uploads_assets']}/content/themes/default/images/svg/svgImg/nav_icon_globalHub.svg" class="blackicon" />
+                                                <img src="{$system['system_uploads_assets']}/content/themes/default/images/svg/svgImg/nav_icon_globalHub-active.svg" class="whiteicon" />
                                             </div>
                                             <span> {__("Public")} </span>
                                         </div>
                                         <div class="dropdown-item pointer" data-title='{__("Shared with: Friends")}'
                                             data-value="friends">
                                             <div class="post_images__">
-                                                <img src="{$system['system_uploads_assets']}/content/themes/default/images/svg/friendsIcon.svg"
-                                                    class="blackicon" />
-                                                <img src="{$system['system_uploads_assets']}/content/themes/default/images/svg/friendsIconHover.svg"
-                                                    class="whiteicon" />
+                                                <img src="{$system['system_uploads_assets']}/content/themes/default/images/svg/friendsIcon.svg" class="blackicon" />
+                                                <img src="{$system['system_uploads_assets']}/content/themes/default/images/svg/friendsIconHover.svg" class="whiteicon" />
                                             </div>
                                             <span> {__("Friends")} </span>
                                         </div>
@@ -88,10 +85,8 @@
                                         <div class="dropdown-item pointer" data-title='{__("Shared with: Only Me")}'
                                             data-value="me">
                                             <div class="post_images__">
-                                                <img src="{$system['system_uploads_assets']}/content/themes/default/images/svg/svgImg/Hide_form.svg"
-                                                    class="blackicon" />
-                                                <img src="{$system['system_uploads_assets']}/content/themes/default/images/svg/svgImg/Hide_form-hover.svg"
-                                                    class="whiteicon" />
+                                                <img src="{$system['system_uploads_assets']}/content/themes/default/images/svg/svgImg/Hide_form.svg" class="blackicon" />
+                                                <img src="{$system['system_uploads_assets']}/content/themes/default/images/svg/svgImg/Hide_form-hover.svg" class="whiteicon" />
                                             </div>
                                             <span> {__("Only Me")} </span>
                                         </div>
@@ -123,31 +118,24 @@
                                 {if $system['photos_enabled']}
                                 <li class="">
                                     <div class="publisher-tools-tab attach js_publisher-tab" data-tab="photos">
-                                        <img alt="image" title="Upload Image"
-                                            src="{$system['system_uploads_assets']}/content/themes/{$system['theme']}/images/svg/svgImg/photo_message_icon.svg"
-                                            class="js_x-uploader" data-handle="publisher"
-                                            data-multiple="true" />{__("Photos")}
+                                        <img alt="image" title="Upload Image" src="{$system['system_uploads_assets']}/content/themes/{$system['theme']}/images/svg/svgImg/photo_message_icon.svg"
+                                            class="js_x-uploader" data-handle="publisher" data-multiple="true" />{__("Photos")}
                                     </div>
                                 </li>
                                 {/if} {if $system['videos_enabled']}
                                 <li class="uplodfileTags">
                                     <div class="publisher-tools-tab attach js_publisher-tab" data-tab="video">
-                                        <img alt="video" title="Upload Video"
-                                            src="{$system['system_uploads_assets']}/content/themes/{$system['theme']}/images/svg/svgImg/add_video_icon.svg"
-                                            class="js_x-uploader" data-type="video" data-handle="publisher"
-                                            data-multiple="true" />
+                                        <img alt="video" title="Upload Video" src="{$system['system_uploads_assets']}/content/themes/{$system['theme']}/images/svg/svgImg/add_video_icon.svg"
+                                            class="js_x-uploader" data-type="video" data-handle="publisher" data-multiple="true"/>
                                     </div>
                                 </li>
                                 {if $user->_data['can_go_live'] && $_handle != "page" && $_handle != "group" && $_handle
                                 != "event"}
                                 <li class="">
                                     <div class="publisher-tools-tab attach js_publisher-tab" data-tab="photos">
-
                                         <a style="margin-left: 0;" data-tab="live" href="{$system['system_url']}/live">
-                                            <img alt="image" title="Go Live"
-                                                src="{$system['system_uploads_assets']}/content/themes/{$system['theme']}/images/svg/live.svg"
-                                                class="" data-handle="publisher" data-multiple="true"
-                                                style="width:30px" />
+                                            <img alt="image" title="Go Live" src="{$system['system_uploads_assets']}/content/themes/{$system['theme']}/images/svg/live.svg"
+                                                class="" data-handle="publisher" data-multiple="true" style="width:30px"/>
                                         </a>
                                     </div>
                                 </li>
@@ -199,7 +187,6 @@
                         <!-- post attachments -->
                         <div class="publisher-attachments attachments clearfix x-hidden"></div>
                         <!-- post attachments -->
-
                         <!-- post album -->
                         <div class="publisher-meta" data-meta="album">
                             {include file='__svg_icons.tpl' icon="album" width="16px"
@@ -207,7 +194,6 @@
                             <input type="text" placeholder='{__("Album title")}' />
                         </div>
                         <!-- post album -->
-
                         <!-- post feelings -->
                         <div class="publisher-meta" data-meta="feelings">
                             <div id="feelings-menu-toggle" data-init-text='{__("What are you doing?")}'>
@@ -253,7 +239,6 @@
                             </div>
                         </div>
                         <!-- post feelings -->
-
                         <!-- post location -->
                         <div class="publisher-meta" data-meta="location">
                             {include file='__svg_icons.tpl' icon="map" width="16px"
@@ -261,7 +246,6 @@
                             <input class="js_geocomplete" type="text" placeholder='{__("Where are you?")}' />
                         </div>
                         <!-- post location -->
-
                         <!-- post colored -->
                         <div class="publisher-meta" data-meta="colored">
                             {foreach $colored_patterns as $pattern} <div
@@ -277,7 +261,6 @@
                             {/foreach}
                         </div>
                         <!-- post colored -->
-
                         <!-- post voice notes -->
                         <div class="publisher-meta" data-meta="voice_notes">
                             <div class="voice-recording-wrapper" data-handle="publisher">
@@ -316,14 +299,12 @@
                             </div>
                         </div>
                         <!-- post voice notes -->
-
                         <!-- post gif -->
                         <div class="publisher-meta" data-meta="gif">
                             {include file='__svg_icons.tpl' icon="gif" width="16px" height="16px"}
                             <input class="js_publisher-gif-search" type="text" placeholder='{__("Search GIFs")}' />
                         </div>
                         <!-- post gif -->
-
                         <!-- post poll -->
                         <div class="publisher-meta" data-meta="poll">
                             {include file='__svg_icons.tpl' icon="plus" width="16px"
@@ -336,7 +317,6 @@
                             <input type="text" placeholder='{__("Add an option")}...' />
                         </div>
                         <!-- post poll -->
-
                         <!-- post video -->
                         <div class="publisher-meta" data-meta="video">
                             {include file='__svg_icons.tpl' icon="checkmark" class="static mr5"
@@ -365,7 +345,6 @@
                             </div>
                         </div>
                         <!-- post video -->
-
                         <!-- post audio -->
                         <div class="publisher-meta" data-meta="audio">
                             {include file='__svg_icons.tpl' icon="checkmark" class="static mr5"
@@ -378,7 +357,6 @@
                             </div>
                         </div>
                         <!-- post audio -->
-
                         <!-- post file -->
                         <div class="publisher-meta" data-meta="file">
                             {include file='__svg_icons.tpl' icon="checkmark" class="static mr5"
@@ -391,7 +369,6 @@
                             </div>
                         </div>
                         <!-- post file -->
-
                         <!-- publisher scraper -->
                         <div class="publisher-scraper"></div>
                         <!-- publisher scraper -->
@@ -460,20 +437,20 @@
                                 </li>
                                 {/if}
                             </ul>
-                            <ul
-                                class="row publisher-tools-tabs-ul publisher-tools-tabs-ul-newDesign-stratus publisher-tools-tabs-ulDropDown">
-
+                            <ul class="row publisher-tools-tabs-ul publisher-tools-tabs-ul-newDesign-stratus publisher-tools-tabs-ulDropDown">
                                 {if $system['photos_enabled']}
                                 <li class="uplodfileTags">
-                                    <div class="publisher-tools-tab attach js_publisher-tab" data-tab="photos">
-                                        <!-- <i class="fas fa-camera js_x-uploader" data-handle="publisher" data-multiple="true"></i> -->
-                                        <img class="blackIcon" alt="image" title="Upload Image"
+                                    <div class="publisher-tools-tab  js_publisher-tab" data-tab="photos">
+                                        <!-- attach -->
+                                        <div class="addPhotoButton js_x-uploader">
+                                            <img class="blackIcon" alt="image" title="Upload Image"
                                             src="{$system['system_uploads_assets']}/content/themes/default/images/svg/svgImg/photo_message_iconHover.svg"
-                                            class="js_x-uploader" data-handle="publisher" data-multiple="true" />
-                                        <img class="BlueIcon js_x-uploader" alt="image" title="Upload Image"
+                                            data-handle="publisher" data-multiple="true" />
+                                            <img class="BlueIcon" alt="image" title="Upload Image"
                                             src="{$system['system_uploads_assets']}/content/themes/default/images/svg/svgImg/photo_message_icon.svg"
-                                            class="js_x-uploader" data-handle="publisher" data-multiple="true" />
-                                        <span class="class-publisher-text">Add Photo</span>
+                                            data-handle="publisher" data-multiple="true" />
+                                            <span class="class-publisher-text">Add Photo</span>
+                                        </div>
                                     </div>
                                 </li>
                                 <li class="uplodfileTags">
