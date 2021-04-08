@@ -191,11 +191,13 @@
                 {/if} {if $system['geolocation_enabled']}
                 <li class="uplodfileTags">
                     <div class="publisher-tools-tab js_publisher-tab" data-tab="location">
-                        <img class="BlueIcon js_x-uploader" alt="Check In" title="Check In"
+                    <div class="addPhotoButton js_x-uploader" data-handle="publisher" data-multiple="true" >
+                        <img class="BlueIcon" alt="Check In" title="Check In"
                             src="{$system['system_uploads_assets']}/content/themes/default/images/svg/svgImg/addpostLocationHover.svg" />
                         <img class="blackIcon" alt="Check In" title="Check In"
                             src="{$system['system_uploads_assets']}/content/themes/default/images/svg/svgImg/addpostLocation.svg" />
                         <span class="class-publisher-text">Check In</span>
+                    </div>
                     </div>
                 </li>
                 {/if}

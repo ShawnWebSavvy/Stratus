@@ -1,6 +1,6 @@
 <div class="post-replace">
 	{if $post['colored_pattern']}
-	<div class="post-colored customColorPost 3" {if $post['colored_pattern']['type']=="color" }
+	<div class="post-colored customColorPost" {if $post['colored_pattern']['type']=="color" }
 		style="background-image: linear-gradient(45deg, {$post['colored_pattern']['background_color_1']}, {$post['colored_pattern']['background_color_2']});"
 		{else} style="background-image: url({$system['system_uploads']}/{$post['colored_pattern']['background_image']})"
 		{/if}>

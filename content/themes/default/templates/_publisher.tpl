@@ -379,7 +379,7 @@
                             <ul class="row publisher-tools-tabs-ul publisher-tools-tabs-ul-newDesign">
                                 {if $system['photos_enabled']}
                                 <li class="uplodfileTags">
-                                    <div class="publisher-tools-tab  js_publisher-tab" data-tab="photos">
+                                    <div class="publisher-tools-tab attach js_publisher-tab" data-tab="photos">
                                         <!-- attach -->
                                         <div class="addPhotoButton js_x-uploader" data-handle="publisher" data-multiple="true">
                                             <img class="blackIcon" alt="image" title="Upload Image"
@@ -405,7 +405,6 @@
                                 != "event"}
                                 <li class="">
                                     <div class="publisher-tools-tab attach js_publisher-tab" data-tab="photos">
-
                                         <a style="margin-left: 0;" data-tab="live" href="{$system['system_url']}/live">
                                             <img alt="image" title="Go Live"
                                                 src="{$system['system_uploads_assets']}/content/themes/{$system['theme']}/images/svg/live.svg"
@@ -440,15 +439,13 @@
                             <ul class="row publisher-tools-tabs-ul publisher-tools-tabs-ul-newDesign-stratus publisher-tools-tabs-ulDropDown">
                                 {if $system['photos_enabled']}
                                 <li class="uplodfileTags">
-                                    <div class="publisher-tools-tab  js_publisher-tab" data-tab="photos">
+                                    <div class="publisher-tools-tab attach js_publisher-tab" data-tab="photos">
                                         <!-- attach -->
-                                        <div class="addPhotoButton js_x-uploader">
+                                        <div class="addPhotoButton js_x-uploader" data-handle="publisher" data-multiple="true" >
                                             <img class="blackIcon" alt="image" title="Upload Image"
-                                            src="{$system['system_uploads_assets']}/content/themes/default/images/svg/svgImg/photo_message_iconHover.svg"
-                                            data-handle="publisher" data-multiple="true" />
+                                                src="{$system['system_uploads_assets']}/content/themes/default/images/svg/svgImg/photo_message_iconHover.svg"/>
                                             <img class="BlueIcon" alt="image" title="Upload Image"
-                                            src="{$system['system_uploads_assets']}/content/themes/default/images/svg/svgImg/photo_message_icon.svg"
-                                            data-handle="publisher" data-multiple="true" />
+                                                src="{$system['system_uploads_assets']}/content/themes/default/images/svg/svgImg/photo_message_icon.svg"/>
                                             <span class="class-publisher-text">Add Photo</span>
                                         </div>
                                     </div>
@@ -474,32 +471,38 @@
                                 </li>
                                 {/if} {if $system['geolocation_enabled']}
                                 <li class="uplodfileTags">
-                                    <div class="publisher-tools-tab js_publisher-tab" data-tab="location">
-                                        <img class="BlueIcon js_x-uploader" alt="Check In" title="Check In"
-                                            src="{$system['system_uploads_assets']}/content/themes/default/images/svg/svgImg/addpostLocationHover.svg" />
-                                        <img class="blackIcon" alt="Check In" title="Check In"
-                                            src="{$system['system_uploads_assets']}/content/themes/default/images/svg/svgImg/addpostLocation.svg" />
-                                        <span class="class-publisher-text">Check In</span>
+                                    <div class="publisher-tools-tab attach js_publisher-tab" data-tab="location">
+                                        <div class="addPhotoButton js_x-uploader">
+                                            <img class="BlueIcon" alt="Check In" title="Check In"
+                                                src="{$system['system_uploads_assets']}/content/themes/default/images/svg/svgImg/addpostLocationHover.svg" />
+                                            <img class="blackIcon" alt="Check In" title="Check In"
+                                                src="{$system['system_uploads_assets']}/content/themes/default/images/svg/svgImg/addpostLocation.svg" />
+                                            <span class="class-publisher-text">Check In</span>
+                                        </div>
                                     </div>
                                 </li>
                                 {/if} {if $system['voice_notes_posts_enabled']}
                                 <li class="uplodfileTags">
-                                    <div class="publisher-tools-tab js_publisher-tab" data-tab="voice_notes">
-                                        <img class="BlueIcon js_x-uploader" alt="Voice Notes" title="Voice Notes"
-                                            src="{$system['system_uploads_assets']}/content/themes/default/images/svg/svgImg/voicenoteHover.svg" />
-                                        <img class="blackIcon" alt="Voice Notes" title="Voice Notes"
-                                            src="{$system['system_uploads_assets']}/content/themes/default/images/svg/svgImg/voicenote.svg" />
-                                        <span class="class-publisher-text">Voice Notes</span>
+                                    <div class="publisher-tools-tab attach js_publisher-tab" data-tab="voice_notes">
+                                        <div class="addPhotoButton js_x-uploader" data-handle="publisher" data-multiple="true">
+                                            <img class="BlueIcon" alt="Voice Notes" title="Voice Notes"
+                                                src="{$system['system_uploads_assets']}/content/themes/default/images/svg/svgImg/voicenoteHover.svg" />
+                                            <img class="blackIcon" alt="Voice Notes" title="Voice Notes"
+                                                src="{$system['system_uploads_assets']}/content/themes/default/images/svg/svgImg/voicenote.svg" />
+                                            <span class="class-publisher-text">Voice Notes</span>
+                                        </div>
                                     </div>
                                 </li>
                                 {/if} {if $system['gif_enabled']}
                                 <li class="uplodfileTags">
-                                    <div class="publisher-tools-tab js_publisher-tab" data-tab="gif">
-                                        <img class="BlueIcon js_x-uploader" alt="GIF" title="GIF"
-                                            src="{$system['system_uploads_assets']}/content/themes/default/images/svg/svgImg/addPostGifHover.svg" />
-                                        <img class="blackIcon" alt="GIF" title="GIF"
-                                            src="{$system['system_uploads_assets']}/content/themes/default/images/svg/svgImg/addPostGif.svg" />
-                                        <span class="class-publisher-text">GIF</span>
+                                    <div class="publisher-tools-tab attach js_publisher-tab" data-tab="gif">
+                                        <div class="addPhotoButton js_x-uploader" data-handle="publisher" data-multiple="true">
+                                            <img class="BlueIcon" alt="GIF" title="GIF"
+                                                src="{$system['system_uploads_assets']}/content/themes/default/images/svg/svgImg/addPostGifHover.svg" />
+                                            <img class="blackIcon" alt="GIF" title="GIF"
+                                                src="{$system['system_uploads_assets']}/content/themes/default/images/svg/svgImg/addPostGif.svg" />
+                                            <span class="class-publisher-text">GIF</span>
+                                        </div>
                                     </div>
                                 </li>
                                 {/if} {if $user->_data['can_sell_products'] && $_handle != "page" &&
@@ -549,23 +552,19 @@
                                 {/if} {if $system['videos_enabled']}
                                 <li class="uplodfileTags">
                                     <div class="publisher-tools-tab attach js_publisher-tab" data-tab="video">
-                                        <!-- <i class="fas fa-video" class="js_x-uploader" data-handle="publisher" data-type="video"></i> -->
-                                        <img class="blackIcon" alt="video" title="Upload Video"
-                                            src="{$system['system_uploads_assets']}/content/themes/default/images/svg/svgImg/add_video_iconHover.svg"
-                                            class="js_x-uploader" data-type="video" data-handle="publisher"
-                                            data-multiple="true" />
-                                        <img class="BlueIcon js_x-uploader" alt="video" title="Upload Video"
-                                            src="{$system['system_uploads_assets']}/content/themes/default/images/svg/svgImg/add_video_icon.svg"
-                                            class="js_x-uploader" data-type="video" data-handle="publisher"
-                                            data-multiple="true" />
-                                        <span class="class-publisher-text">Video</span>
+                                        <div class="addPhotoButton js_x-uploader" data-type="video" data-handle="publisher" data-multiple="true">
+                                            <img class="blackIcon" alt="video" title="Upload Video"
+                                                src="{$system['system_uploads_assets']}/content/themes/default/images/svg/svgImg/add_video_iconHover.svg" />
+                                            <img class="BlueIcon" alt="video" title="Upload Video"
+                                                src="{$system['system_uploads_assets']}/content/themes/default/images/svg/svgImg/add_video_icon.svg" />
+                                            <span class="class-publisher-text">Video</span>
+                                        </div>
                                     </div>
                                 </li>
                                 {if $user->_data['can_go_live'] && $_handle != "page" && $_handle != "group" && $_handle
                                 != "event"}
                                 <li class="">
-                                    <div class="publisher-tools-tab attach js_publisher-tab" data-tab="photos">
-
+                                    <div class="publisher-tools-tab js_publisher-tab" data-tab="photos">
                                         <a style="margin-left: 0;" data-tab="live" href="{$system['system_url']}/live">
                                             <img alt="image" title="Go Live"
                                                 src="{$system['system_uploads_assets']}/content/themes/{$system['theme']}/images/svg/live.svg"
@@ -578,25 +577,25 @@
                                 {/if} {if $system['audio_enabled']}
                                 <li class="uplodfileTags">
                                     <div class="publisher-tools-tab attach js_publisher-tab" data-tab="audio">
-                                        <img class="blackIcon" alt="audio" title="Audio"
-                                            src="{$system['system_uploads_assets']}/content/themes/default/images/svg/svgImg/add_voice_notesHover.svg"
-                                            class="js_x-uploader" data-handle="publisher" data-type="audio" />
-                                        <img class="BlueIcon js_x-uploader" alt="audio" title="Audio"
-                                            src="{$system['system_uploads_assets']}/content/themes/default/images/svg/svgImg/add_voice_notes.svg"
-                                            class="js_x-uploader" data-handle="publisher" data-type="audio" />
-                                        <span class="class-publisher-text">Audio</span>
+                                        <div class="addPhotoButton js_x-uploader" data-handle="publisher" data-type="audio">
+                                            <img class="blackIcon" alt="audio" title="Audio"
+                                                src="{$system['system_uploads_assets']}/content/themes/default/images/svg/svgImg/add_voice_notesHover.svg"/>
+                                            <img class="BlueIcon" alt="audio" title="Audio"
+                                                src="{$system['system_uploads_assets']}/content/themes/default/images/svg/svgImg/add_voice_notes.svg" />
+                                            <span class="class-publisher-text">Audio</span>
+                                        </div>
                                     </div>
                                 </li>
                                 {/if} {if $system['file_enabled']}
                                 <li class="uplodfileTags">
                                     <div class="publisher-tools-tab attach js_publisher-tab" data-tab="file">
-                                        <img class="BlueIcon js_x-uploader" alt="file" title="file"
-                                            src="{$system['system_uploads_assets']}/content/themes/default/images/svg/svgImg/fileUplodeHover.svg"
-                                            class="js_x-uploader" data-handle="publisher" data-type="file" />
-                                        <img class="blackIcon" alt="file" title="file"
-                                            src="{$system['system_uploads_assets']}/content/themes/default/images/svg/svgImg/fileUplode.svg"
-                                            class="js_x-uploader" data-handle="publisher" data-type="file" />
-                                        <span class="class-publisher-text">file</span>
+                                        <div class="addPhotoButton js_x-uploader" data-handle="publisher" data-type="file">
+                                            <img class="BlueIcon" alt="file" title="file" 
+                                                src="{$system['system_uploads_assets']}/content/themes/default/images/svg/svgImg/fileUplodeHover.svg" />
+                                            <img class="blackIcon" alt="file" title="file" 
+                                                src="{$system['system_uploads_assets']}/content/themes/default/images/svg/svgImg/fileUplode.svg" />
+                                            <span class="class-publisher-text">file</span>
+                                        </div>
                                     </div>
                                 </li>
                                 {/if}

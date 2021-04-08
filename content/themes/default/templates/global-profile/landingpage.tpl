@@ -221,7 +221,7 @@
                                                     </div>
                                                     {/if}
                                                     {if $postsItem['colored_pattern']}
-                                                    <div class="post-colored customColorPost 8" {if $postsItem['colored_pattern']['type']=="color" }
+                                                    <div class="post-colored customColorPost" {if $postsItem['colored_pattern']['type']=="color" }
                                                         style="background-image:linear-gradient(45deg, {$postsItem['colored_pattern']['background_color_1']}, {$postsItem['colored_pattern']['background_color_2']});"
                                                         {else}
                                                         style="background-image:url({$system['system_uploads']}/{$postsItem['colored_pattern']['background_image']})"
