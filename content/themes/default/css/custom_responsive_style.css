@@ -42,7 +42,7 @@ body.publisher-focus .custom_modal_style.customModalAddPhoto {top: 50%;transform
 .market-localhub .modal-dialog .modal-body{overflow-y:auto}
 .modal-open .modal{padding-bottom:30px}
 .js_story-deleter{position:absolute;z-index:2;background-color:transparent;color:#fff;left:255px;top:-2px;padding:0!important}
-.js_story-deleter.js_zuck_btn{ left:114px;top:-6px;}
+.js_story-deleter.js_zuck_btn{ left:auto; right: -10px; top:-6px;}
 .body.group-localhub .js_leave-group{width:100%!important}
 .publisher-focus{overflow:hidden}
 .rightSideBarScroll button img{margin-right:0}
@@ -384,7 +384,7 @@ body.login-index-body .mainloginBlock{display:flex;padding-bottom:60px;height:10
 .profileUpdatesDesign .global-profile-feeds-photo{width:calc(100% / 2)}
 .profileUpdatesDesign .searchSectionWrap ._user_detail_sec ._user_details{width:100%}
 .mainloginBlock .cloud_imgs::before{display:none;}
-.js_story-deleter.js_zuck_btn{left: 104px;top: -3px;}
+.js_story-deleter.js_zuck_btn{left: auto; right: -10px; top: -3px;}
 }
 @media (max-width:767px){.global-profile-localhub .col-12.cardBodyHeight .card-body .row>div{flex:0 0 calc(100% / 2 - 30px);max-width:calc(100% / 2 - 30px)}
 .headingAdsManager h5{font-size:20px}
