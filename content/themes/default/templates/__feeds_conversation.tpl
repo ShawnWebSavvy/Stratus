@@ -1,6 +1,5 @@
 {if $conversation['group_recipients'] != 'show'}
 <li class="feeds-item {if !$conversation['seen']}unread{/if}" data-last-message="{$conversation['last_message_id']}">
-    
     <a class="data-container js_chat_start" data-cid="{$conversation['conversation_id']}"
         data-uid="{$conversation['user_id']}" data-name="{$conversation['name']}"
         data-name-list="{$conversation['name_list']}" data-link="{$conversation['link']}"

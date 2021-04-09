@@ -12,8 +12,7 @@ require('bootstrap.php');
 require_once('includes/class-user-global.php');
 require_once('includes/class-user.php');
 //$end_time = microtime(TRUE);
-
-//$start_time = microtime(TRUE);
+//shell_exec('nohup php -q'.ABSPATH.'phpsocket.sh');
 
 // get user
 if ($user->_logged_in) {
@@ -24,7 +23,6 @@ if ($user->_logged_in) {
     /* all_blogs_categories */
     $blogs_categories = get_blogs_categories($user);
     $smarty->assign('all_blogs_categories', $blogs_categories);
-
     /* get All friend */
     $user->_data['all_friends'] = getAllFriends($user, $offset = 0, $get_all = true);
 

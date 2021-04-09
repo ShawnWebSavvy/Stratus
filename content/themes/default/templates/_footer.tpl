@@ -367,19 +367,18 @@ if ( window.history.replaceState ) {
         href="{$system['system_uploads_assets']}/includes/assets/css/blurry-load.min.css" 
         {if !$user->_logged_in}defer{/if} >
         <script src="{$system['system_uploads_assets']}/includes/assets/js/stratus/blurry-load.min.js"  {if !$user->_logged_in}defer{/if}></script>
-        <!--<script src="{$system['system_uploads_assets']}/cdn/jquery.js"></script>
-		<script src="{$system['system_uploads_assets']}/cdn/ws.js"  {if !$user->_logged_in}defer{/if}></script>
-		<script src="{$system['system_uploads_assets']}/cdn/chat.js"  {if !$user->_logged_in}defer{/if}></script>
-		<link href="{$system['system_uploads_assets']}/cdn/chat.css" rel="stylesheet"/>-->
 <script>  
 	function showMessage(messageHTML) {
 		$('#chat-box').append(messageHTML);
 	}
-	$(document).ready(function(){
-        function isOpen(ws) { return ws.readyState === ws.OPEN }
+	$(document).ready(function(){			
+			
 
-		var websocket = new WebSocket("ws://10.1.2.10:8020/php-socket.php"); 
+        function isOpen(ws) { return ws.readyState === ws.OPEN }
+		var websocket = new WebSocket("ws://10.1.2.10:8250/php-socket.php"); 
+		
 		websocket.onopen = function(event) { 
+			console.log(document.cookie);
             console.log('Connection is established');
 			showMessage("<div class='chat-connection-ack'>Connection is established!</div>");		
 		}
@@ -393,6 +392,7 @@ if ( window.history.replaceState ) {
             console.log('Connection closed');
 			showMessage("<div class='chat-connection-ack'>Connection Closed</div>");
 		}; 
+		
         $("body").on("click", "li.js_chat-message", function (e)	
         {
             e.preventDefault();
@@ -407,12 +407,16 @@ if ( window.history.replaceState ) {
               
           var recipients = [];
           recipients.push(widget.data("uid"));
+		  
+		
           var messageJSON = {
 			chat_message: message,
             conversation_id:conversation_id,
             photo: JSON.stringify(photo),
             voice_note: JSON.stringify(voice_note),
             recipients: JSON.stringify(recipients),
+			session_token:'{$user->_data['active_session_token']}',
+			user_id:{$user->_data['user_id']}
           };
         
         
@@ -427,8 +431,236 @@ if ( window.history.replaceState ) {
 			        websocket.send(JSON.stringify(messageJSON));
               websocket.onmessage = function(event) {
 			          var Data = JSON.parse(event.data);
-                console.log(Data);
-			          $('.chatBoxBlock .chat-conversations').html(Data.messages);
+                	var response= Data;
+					console.log(response);
+					
+          var updated_seen_conversations = [];
+          if (
+            (response.master &&
+              ($("body").attr("data-chat-enabled",response.master.chat_enabled),
+                $(".js_chat-online-users").text(
+                  response.master.online_friends_count
+                ),
+                $(".leftSideChatBar .js_scroller").html('<ul>'+response.  master.sidebar+'</ul>'),
+                $(".chat-sidebar-filter").keyup()),
+              -1 == window.location.pathname.indexOf("messages") &&
+              (void 0 !== response.chat_boxes_closed &&
+                ($.each(response.chat_boxes_closed, function (e, a) {
+                  $("#chat_" + a).remove();
+                }),
+                  reconstruct_chat_widgets()),
+                response.chat_boxes_opened &&
+                $.each(response.chat_boxes_opened, function (e, a) {
+                  chat_box(
+                    a.user_id,
+                    a.conversation_id,
+                    a.name,
+                    a.name_list,
+                    a.multiple_recipients,
+                    a.link
+                  );
+                }),
+                response.chat_boxes_updated &&
+                $.each(response.chat_boxes_updated, function (e, a) {
+                  var s = $("#chat_" + a.conversation_id);
+                  if (
+                    (a.messages &&
+                      (s.find(".js_scroller:first ul").append(a.messages),
+                        s
+                          .find(".js_scroller:first")
+                          .scrollTop(
+                            s.find(".js_scroller:first")[0].scrollHeight
+                          ),
+                        a.is_me ||
+                        (s.hasClass("opened")
+                          ? chat_seen_enabled &&
+                          updated_seen_conversations.push(a.conversation_id)
+                          : s
+                            .addClass("new")
+                            .find(".js_chat-box-label")
+                            .text(a.messages_count),
+                          chat_sound && $("#chat-sound")[0].play())),
+                      a.typing_name_list
+                        ? (s
+                          .find(".js_chat-typing-users")
+                          .text(a.typing_name_list),
+                          s.find(".chat-typing").show())
+                        : s.find(".chat-typing").hide(),
+                      a.seen_name_list)
+                  ) {
+                    var t = s.find(
+                      ".js_scroller:first li:last .conversation.right"
+                    );
+                    t.length > 0 &&
+                      (0 == t.find(".seen").length
+                        ? (t
+                          .find(".time")
+                          .after(
+                            "<div class='seen'>" +
+                            __["Seen by"] +
+                            " " +
+                            a.seen_name_list +
+                            "<div>"
+                          ),
+                          s
+                            .find(".js_scroller:first")
+                            .scrollTop(
+                              s.find(".js_scroller:first")[0].scrollHeight
+                            ))
+                        : t
+                          .find(".seen")
+                          .replaceWith(
+                            "<div class='seen'>" +
+                            __["Seen by"] +
+                            " " +
+                            a.seen_name_list +
+                            "<div>"
+                          ));
+                  }
+                  a.multiple_recipients ||
+                    (a.user_online
+                      ? s
+                        .find(".js_chat-box-status")
+                        .removeClass("fa-user-secret")
+                        .addClass("fa-circle")
+                      : s
+                        .find(".js_chat-box-status")
+                        .removeClass("fa-circle")
+                        .addClass("fa-user-secret")),
+                    color_chat_box(s, a.color);
+                }),
+                response.chat_boxes_new &&
+                $.each(response.chat_boxes_new, function (e, a) {
+                  chat_box(
+                    a.user_id,
+                    a.conversation_id,
+                    a.name,
+                    a.name_list,
+                    a.multiple_recipients,
+                    a.link
+                  ),
+                    chat_sound && $("#chat-sound")[0].play();
+                })),
+              response.thread_updated &&
+              -1 != window.location.pathname.indexOf("messages"))
+          ) {
+            var converstaion_widget = $(
+              '.panel-messages[data-cid="' +
+              response.thread_updated.conversation_id +
+              '"]'
+            );
+            if (converstaion_widget.length > 0) {
+              if (
+                (response.thread_updated.messages &&
+                  (converstaion_widget
+                    .find(".js_scroller:first ul")
+                    .append(response.thread_updated.messages),
+                    converstaion_widget
+                      .find(".js_scroller:first")
+                      .scrollTop(
+                        converstaion_widget.find(".js_scroller:first")[0]
+                          .scrollHeight
+                      ),
+                    response.thread_updated.is_me ||
+                    (chat_seen_enabled &&
+                      updated_seen_conversations.push(
+                        response.thread_updated.conversation_id
+                      ),
+                      chat_sound && $("#chat-sound")[0].play())),
+                  response.thread_updated.typing_name_list
+                    ? (converstaion_widget
+                      .find(".js_chat-typing-users")
+                      .text(response.thread_updated.typing_name_list),
+                      converstaion_widget.find(".chat-typing").show())
+                    : converstaion_widget.find(".chat-typing").hide(),
+                  response.thread_updated.seen_name_list)
+              ) {
+                var last_message_box = converstaion_widget.find(
+                  ".js_scroller:first li:last .conversation.right"
+                );
+                last_message_box.length > 0 &&
+                  (0 == last_message_box.find(".seen").length
+                    ? (last_message_box
+                      .find(".time")
+                      .after(
+                        "<div class='seen'>" +
+                        __["Seen by"] +
+                        " " +
+                        response.thread_updated.seen_name_list +
+                        "<div>"
+                      ),
+                      converstaion_widget
+                        .find(".js_scroller:first")
+                        .scrollTop(
+                          converstaion_widget.find(".js_scroller:first")[0]
+                            .scrollHeight
+                        ))
+                    : last_message_box
+                      .find(".seen")
+                      .replaceWith(
+                        "<div class='seen'>" +
+                        __["Seen by"] +
+                        " " +
+                        response.thread_updated.seen_name_list +
+                        "<div>"
+                      ));
+              }
+              color_chat_box(
+                converstaion_widget,
+                response.thread_updated.color
+              );
+            }
+          }
+          1 == response.has_audiocall
+            ? 0 == chat_incall_process &&
+            0 == chat_audiocall_ringing_process &&
+            ((chat_audiocall_ringing_process = !0),
+              modal("#chat-ringing", {
+                type: "audio",
+                is_video: !1,
+                is_audio: !0,
+                id: response.audiocall.call_id,
+                name: response.audiocall.caller_name,
+                image: response.audiocall.caller_picture,
+              }),
+              $("#chat-ringing-sound")[0].play())
+            : 0 == chat_incall_process &&
+            1 == chat_audiocall_ringing_process &&
+            ((chat_audiocall_ringing_process = !1),
+              $("#modal").hasClass("show") &&
+              $("#modal").find(".js_chat-call-answer").length > 0 &&
+              $("#modal").modal("hide"),
+              $("#chat-ringing-sound")[0].stop()),
+            1 == response.has_videocall
+              ? 0 == chat_incall_process &&
+              0 == chat_videocall_ringing_process &&
+              ((chat_videocall_ringing_process = !0),
+                modal(
+                  "#chat-ringing",
+                  {
+                    type: "video",
+                    is_video: !0,
+                    is_audio: !1,
+                    id: response.videocall.call_id,
+                    name: response.videocall.caller_name,
+                    image: response.videocall.caller_picture,
+                  },
+                  "large"
+                ),
+                $("#chat-ringing-sound")[0].play())
+              : 0 == chat_incall_process &&
+              1 == chat_videocall_ringing_process &&
+              ((chat_videocall_ringing_process = !1),
+                $("#modal").hasClass("show") &&
+                $("#modal").find(".js_chat-call-answer").length > 0 &&
+                $("#modal").modal("hide"),
+                $("#chat-ringing-sound")[0].stop()),
+            chat_seen_enabled &&
+            updated_seen_conversations.length > 0 &&
+            	$('.chatBoxBlock .chat-conversations').html(Data.messages);
+				$('.leftSideChatBar .js_scroller').html('<ul>'+Data.conversations+'</ul>');
+
+			        
               };
      });
         

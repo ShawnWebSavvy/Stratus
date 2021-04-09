@@ -169,6 +169,7 @@ RewriteRule ^live/?$ live.php [L,QSA]
 RewriteRule ^contacts/?$ contact.php [L,QSA]
 
 #Landing Page
+RewriteRule ^phpsocket php-socket.php [L,QSA]
 RewriteRule ^convenience/?$ new-landing-page.php?do=conv [L,QSA]
 RewriteRule ^data-privacy/?$ new-landing-page.php?do=dataPriv [L,QSA]
 RewriteRule ^fraud-leaks/?$ new-landing-page.php?do=fraud [L,QSA]

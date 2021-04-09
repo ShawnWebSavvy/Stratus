@@ -56,16 +56,16 @@ try {
 	}
 
 	// [2] check for new messgaes
-	if ($_POST['last_message'] != $user->_data['user_live_messages_lastid']) {
-		$conversations = $user->get_conversations();
-		//print_r($conversations); die;
-		/* assign variables */
-		$smarty->assign('conversations', $conversations);
-		/* return */
-		$return['conversations_count'] = $user->_data['user_live_messages_counter'];
-		$return['conversations'] = $smarty->fetch("ajax.live.conversations.tpl");
-		$return['conversations_group'] = $smarty->fetch("ajax.live.conversations_group.tpl");
-	}
+	// if ($_POST['last_message'] != $user->_data['user_live_messages_lastid']) {
+	// 	$conversations = $user->get_conversations();
+	// 	//print_r($conversations); die;
+	// 	/* assign variables */
+	// 	$smarty->assign('conversations', $conversations);
+	// 	/* return */
+	// 	$return['conversations_count'] = $user->_data['user_live_messages_counter'];
+	// 	$return['conversations'] = $smarty->fetch("ajax.live.conversations.tpl");
+	// 	$return['conversations_group'] = $smarty->fetch("ajax.live.conversations_group.tpl");
+	// }
 
 	// [3] check for new notifications
 	$notifications = $user->get_notifications(0, $_POST['last_notification']);

@@ -4,6 +4,7 @@
 <!-- page content -->
 <div class="container mt20 offcanvas">
     <div class="row">
+    
         <div class="offcanvas-sidebar sidebar-left-ant" id="sidebarHiddSwip">
             {include file='_sidebar.tpl'}
         </div>
@@ -232,7 +233,7 @@
                                 <li class="x-form-tools-emoji js_emoji-menu-toggle">
                                     <i class="far fa-smile-wink fa-lg fa-fw"></i>
                                 </li>
-                                <li class="x-form-tools-post js_post-message">
+                                <li class="x-form-tools-post js_chat-message">
                                     <i class="far fa-paper-plane fa-lg fa-fw"></i>
                                 </li>
                             </ul>

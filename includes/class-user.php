@@ -6,27 +6,6 @@ require_once 'helper_functions.php';
  * @package Sngine
  * @author Zamblek
  */
-if( !function_exists('apache_request_headers') ) {
-    function apache_request_headers() {
-      $arh = array();
-      $rx_http = '/\AHTTP_/';
-      foreach($_SERVER as $key => $val) {
-        if( preg_match($rx_http, $key) ) {
-          $arh_key = preg_replace($rx_http, '', $key);
-          $rx_matches = array();
-          // do some nasty string manipulations to restore the original letter case
-          // this should work in most cases
-          $rx_matches = explode('_', $arh_key);
-          if( count($rx_matches) > 0 and strlen($arh_key) > 2 ) {
-            foreach($rx_matches as $ak_key => $ak_val) $rx_matches[$ak_key] = ucfirst($ak_val);
-            $arh_key = implode('-', $rx_matches);
-          }
-          $arh[$arh_key] = $val;
-        }
-      }
-      return( $arh );
-    }
- }
 class User
 {
 
@@ -49,27 +28,23 @@ class User
      *
      * @return void
      */
-    public function __construct()
+    public function __construct($session_token=null, $user_id=null)
     {
         global $db, $system;
+        
         // if ($system['s3_enabled']) {
         //     $system['system_uploads'] = $system['system_uploads_url'];
         // }
+        
         if (isset($_COOKIE[$this->_cookie_user_id]) && isset($_COOKIE[$this->_cookie_user_token])) {
-
+        
             $response_data = cachedUserData($db, $system, $_COOKIE[$this->_cookie_user_id], $_COOKIE[$this->_cookie_user_token]);
+            $_SESSION['users_id'] = $_COOKIE[$this->_cookie_user_id];
         }
-        else {
-            
-            $headers = apache_request_headers();
-            $headerCookies = explode('; ', $headers['Cookie']);
-            $cookies = array();
-            foreach($headerCookies as $itm) {
-                list($key, $val) = explode('=', $itm,2);
-                $cookies[$key] = $val;
-            }
-            //$response_data = cachedUserData($db, $system, $cookies['c_user'], $_COOKIE['xs']);
-            $response_data = cachedUserData($db, $system, '3387', '416c58ce4ef1b2ce8a5d472132f7950d');
+        if(empty($_COOKIE)) 
+        {
+           
+            $response_data = cachedUserData($db, $system, $user_id, $session_token);
         }
             if (!empty($response_data) > 0) {
                 $this->_data = $response_data;
@@ -83,8 +58,8 @@ class User
                 }
                 /* update user last seen */
                 $db->query(sprintf("UPDATE users SET user_last_seen = NOW() WHERE user_id = %s", secure($this->_data['user_id'], 'int'))) or _error("SQL_ERROR_THROWEN");
-                // $redisObject = new RedisClass();
-                // $redisPostKey = 'user-' . $this->_data['user_id'];
+                            
+                
                 // $redisObject->deleteValueFromKey($redisPostKey);
                 // cachedUserData($db, $system, $this->_data['user_id'], $this->_data['active_session_token']);
 
@@ -3617,7 +3592,7 @@ class User
     {
         global $db, $system, $date;
         $DateTime = new DateTime();
-        echo $date = $DateTime->format('Y-m-d H:i:s');
+        $date = $DateTime->format('Y-m-d H:i:s');
         /* check if posting the message to (new || existed) conversation */
         if ($conversation_id == null) {
             /* [first] check previous conversation between (viewer & recipients) */
@@ -17296,6 +17271,11 @@ class User
         $db->query(sprintf("DELETE FROM users_sessions WHERE session_token = %s AND user_id = %s", secure($_COOKIE[$this->_cookie_user_token]), secure($_COOKIE[$this->_cookie_user_id], 'int'))) or _error("SQL_ERROR_THROWEN");
         /* destroy the session */
         session_destroy();
+        $redisObject = new RedisClass();
+        $userid = 'user-id';
+        $usertoken = 'user-token';
+        $redisObject->deleteValueFromKey($userid);
+        $redisObject->deleteValueFromKey($usertoken);
         /* unset the cookies */
         unset($_COOKIE[$this->_cookie_user_id]);
         unset($_COOKIE[$this->_cookie_user_token]);
@@ -18239,12 +18219,13 @@ class User
 		return $ACK;
 }
 	
-	function createChatBoxMessage($chat_box_message,$photo,$voice_note,$conversation_id,$recipients) {
+	function createChatBoxMessage($chat_box_message,$photo,$voice_note,$conversation_id,$recipients, $session_token, $user_id) {
         
 		global $smarty;
 		$return = array();
 		// initialize the conversation
 		$conversation = array();
+        $this->__construct($session_token, $user_id);
 		$saveconversation = $this->post_conversation_message($chat_box_message, $photo, $voice_note, $conversation_id, $recipients);
 	/* remove typing status */
 		$this->update_conversation_typing_status($saveconversation['conversation_id'], false);
@@ -18271,15 +18252,108 @@ class User
 		$sidebar_friends = array_merge( $online_friends, $offline_friends );
 		// assign variables
 		$smarty->assign('sidebar_friends', $sidebar_friends);
+        $return['master']['sidebar'] = $smarty->fetch("ajax.chat.master.sidebar.tpl");
+        if($this->_data['user_chat_enabled']) {
+			/* return */
+			$return['master']['chat_enabled'] = '1';
+			$return['master']['online_friends_count'] = count($online_friends);
+		} elseif (!$this->_data['user_chat_enabled'] && $_GET['chat_enabled']) {
+			/* return */
+			$return['master']['chat_enabled'] = '0';
+		}
+        
+		/* prepare session */
+		if(($key = array_search(NULL, $_SESSION['chat_boxes_opened'])) !== false) {
+			unset($_SESSION['chat_boxes_opened'][$key]);
+		}
+
+		// [3] & [4] & [5]
+		if(!(empty($chat_boxes_opened_client) && empty($_SESSION['chat_boxes_opened']))) {
+
+			// [3] [get] closed chat boxes
+			$chat_boxes_closed = array_diff(array_keys($chat_boxes_opened_client), $_SESSION['chat_boxes_opened']);
+			if(count($chat_boxes_closed) > 0) {
+				$return['chat_boxes_closed'] = $chat_boxes_closed;
+			}
+			// [4] [get] opened chat boxes
+			$chat_boxes_pre_opened = array_diff($_SESSION['chat_boxes_opened'], array_keys($chat_boxes_opened_client));
+			$chat_boxes_opened = [];
+			foreach($chat_boxes_pre_opened as $opened_conversation_id) {
+				/* get conversation */
+				$conversation = $this->get_conversation($opened_conversation_id);
+				if($conversation) {
+					$chat_boxes_opened[] = $conversation;
+				}
+			}
+
+			if(count($chat_boxes_opened) > 0) {
+				$return['chat_boxes_opened'] = $chat_boxes_opened;
+			}
+			
+			// [5] [get] updated chat boxes
+			$chat_boxes_pre_updated = array_intersect($_SESSION['chat_boxes_opened'], array_keys($chat_boxes_opened_client));
+			$chat_boxes_updated = [];
+			foreach($chat_boxes_pre_updated as $updated_conversation_id) {
+				/* get conversation */
+				$conversation = $this->get_conversation($updated_conversation_id);
+				if($conversation) {
+					$return_this = false;
+					/* [1] check for a new messages for this chat box */
+					if($conversation['last_message_id'] != $chat_boxes_opened_client[$conversation['conversation_id']]) {
+						$return_this = true;
+						/* get new messages */
+						$messages = $this->get_conversation_messages($conversation['conversation_id'], 0, $chat_boxes_opened_client[$conversation['conversation_id']]);
+						/* assign variables */
+						$smarty->assign('messages', $messages);
+						/* return */
+						$last_message = end($messages);
+						$conversation['is_me'] = ($last_message['user_id'] == $this->_data['user_id'])? true: false;
+						$conversation['messages_count'] = count($messages);
+						// $conversation['messages'] = $smarty->fetch("ajax.chat.messages.tpl");
+					}
+					/* [2] check if any recipient typing */
+					if($conversation['typing_name_list']) {
+						$return_this = true;
+					}
+					/* [3] check if any recipient seen */
+					if($conversation['seen_name_list']) {
+						$return_this = true;
+					}
+					/* [4] check single user's chat status (online|offline) */
+					if(!$conversation['multiple_recipients']) {
+						$return_this = true;
+						/* update single user's chat status */
+						$conversation['user_online'] = ($this->user_online($conversation['recipients'][0]['user_id']))? true: false;
+					}
+					/* return */
+					if($return_this) {
+						$chat_boxes_updated[] = $conversation;
+					}
+					
+				}
+				
+			}
+			$conversations = $this->get_conversations();
+		//print_r($conversations); die;
+		/* assign variables */ 
+		$smarty->assign('conversations', $conversations);
 		/* return */
-		$return['master']['sidebar'] = $smarty->fetch("ajax.chat.master.sidebar.tpl");
+		$return['conversations_count'] = $this->_data['user_live_messages_counter'];
+		$return['conversations'] = $smarty->fetch("ajax.live.conversations.tpl");
+		$return['conversations_group'] = $smarty->fetch("ajax.live.conversations_group.tpl");
+			if(count($chat_boxes_updated) > 0) {
+				$return['chat_boxes_updated'] = $chat_boxes_updated;
+			}
+        }
+		/* return */
+		//$return['master']['sidebar'] = $smarty->fetch("ajax.chat.master.sidebar.tpl");
 		/* get conversation messages */
 		$conversation['messages'] = $this->get_conversation_messages($conversation_id);
 		/* check if last message sent by the viewer */
 		if($conversation['seen_name_list'] && end($conversation['messages'])['user_id'] == $this->_data['user_id']) {
 			$smarty->assign('last_seen_message_id', end($conversation['messages'])['message_id']);
 		}
-	
+        
 		/* return [color] */
 		$return['color'] = $conversation['color'];
 	
@@ -18287,7 +18361,9 @@ class User
 		$smarty->assign('conversation', $conversation);
 		$return['messages'] = $smarty->fetch("ajax.chat.conversation.messages.tpl");
 		
-		
+		$return['conversations_count'] = $this->_data['user_live_messages_counter'];
+		$return['conversations'] = $smarty->fetch("ajax.live.conversations.tpl");
+		$return['conversations_group'] = $smarty->fetch("ajax.live.conversations_group.tpl");
 		// return & exit
 		
 		//return_json($return);
