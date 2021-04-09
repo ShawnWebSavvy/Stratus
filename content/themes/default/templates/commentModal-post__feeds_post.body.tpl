@@ -505,31 +505,13 @@
                     <div class="btn-group" data-toggle="tooltip" data-placement="top" data-value="public"
                         title='{__("Shared with: Public")}'>
                         <button type="button" class="btn dropdown-toggle" data-toggle="dropdown" data-display="static">
-                            <span class="share_sign_img" id="{$_post['post_id']}">
-                                <img src="{$system['system_uploads_assets']}/content/themes/default/images/svg/svgImg/Hide_form.svg"
+                            <span class="share_sign_img privacy-{$_post['post_id']}">
+                                <img src="{$system['system_uploads_assets']}/content/themes/default/images/svg/svgImg/nav_icon_globalHub.svg"
                                     class="blackicon">
                             </span>
                         </button>
-                    {elseif $_post['privacy'] == "friends"}
-                        <div class="btn-group" data-toggle="tooltip" data-placement="top" data-value="friends"
-                            title='{__("Shared with: Friends")}'>
-                            <button type="button" class="btn dropdown-toggle" data-toggle="dropdown" data-display="static">
-                                <span class="share_sign_img" id="{$_post['post_id']}">
-                                    <img src="{$system['system_uploads_assets']}/content/themes/default/images/svg/svgImg/friendsIcon.svg"
-                                        class="blackicon">
-                                </span>
-                            </button>
-                        {elseif $_post['privacy'] == "public"}
-                            <div class="btn-group" data-toggle="tooltip" data-placement="top" data-value="public"
-                                title='{__("Shared with: Public")}'>
-                                <button type="button" class="btn dropdown-toggle" data-toggle="dropdown" data-display="static">
-                                    <span class="share_sign_img" id="{$_post['post_id']}">
-                                        <img src="{$system['system_uploads_assets']}/content/themes/default/images/svg/svgImg/nav_icon_globalHub.svg"
-                                            class="blackicon">
-                                    </span>
-                                </button>
-                            {/if}
-                            <div class="dropdown-menu dropdown-menu-left _postshare__">
+                        {/if}
+                        <div class="dropdown-menu dropdown-menu-left _postshare__">
                                 <div class="dropdown-item pointer js_edit-privacy" data-title='{__("Shared with: Public")}'
                                     data-value="public">
                                     <div class="post_images__">
