@@ -212,6 +212,11 @@ try {
 			$smarty->assign('posts', $posts);
 			$smarty->assign('posts_count', count($posts));
 			$smarty->assign('subactive_page', 'globalhub_profile');
+
+			if( ($user->_data['user_id'] == $profile['user_id'])||($profile['user_privacy_wall'] == 'friends'&&$profile['we_friends'] || $profile['user_privacy_wall'] == 'public') ){
+				$smarty->assign('addPost', true);
+			}
+
 			break;
 
 		case 'friends':
