@@ -74,6 +74,7 @@ try {
 			$params['exchangeId'] = $_POST['exchange_id'];
 			
 			$detail = InvestmentHelper::getAdminSettingDetail('investment/admin/settings/fee/',$params);
+			
 			$return['bitmart_price'] = round($detail['price'],5);
 			$return['stratus_buy_price'] = round($detail['price']+$detail['price']*$_POST['markup_price']/100,5);
 			$return['stratus_sell_price'] = round((($detail['price'])-(($detail['price']*$_POST['markdown_price'])/100)),5);
