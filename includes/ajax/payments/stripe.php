@@ -107,7 +107,10 @@ try {
 				/* wallet transaction */
         		$user->wallet_set_transaction($user->_data['user_id'], 'recharge', 0, $_SESSION['wallet_replenish_amount'], 'in');
 		    }
-
+			$redisObject = new RedisClass();
+			$redisPostKey = 'user-' . $user->_data['user_id'];
+			$redisObject->deleteValueFromKey($redisPostKey);
+			cachedUserData($db, $system, $user->_data['user_id'],$user_data);
 			// return
 			return_json( array('callback' => 'window.location.href = "'.$system['system_url'].'/wallet?replenish_succeed";') );
 			break;
