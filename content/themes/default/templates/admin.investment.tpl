@@ -160,7 +160,7 @@
                             </label>
                             <div class="col-md-9">
                                 <div class="input-group">
-                                   <label class="col-md-3 form-control-label">{$detail['trade_pair']|upper}</label>
+                                   <label class="col-md-3 form-control-label" id="trade_pair">{$detail['trade_pair']|upper}</label>
                                 </div>
                             </div>
                         </div>
@@ -172,7 +172,7 @@
                             </label>
                             <div class="col-md-9">
                                 <div class="input-group">
-                                    <label class="col-md-3 form-control-label">${$price}</label>
+                                    <label class="col-md-3 form-control-label">$<span id="bitmart_buy_price">{$price}</span></label>
                                 </div>
                             </div>
                         </div>
@@ -192,7 +192,7 @@
                             </label>
                             <div class="col-md-9">
                                 <div class="input-group">
-                                    <label class="col-md-3 form-control-label" id="buy_price">${$price+($price*$detail['markup_price']/100)}</label>
+                                    <label class="col-md-3 form-control-label" id="buy_price">$<span id="stratus_buy_price">{$price+($price*$detail['markup_price']/100)}</span></label>
                                 </div>
                             </div>
                         </div>
@@ -202,7 +202,7 @@
                             </label>
                             <div class="col-md-9">
                                 <div class="input-group">
-                                    <label class="col-md-3 form-control-label">${$price}</label>
+                                    <label class="col-md-3 form-control-label">$<span id="bitmart_sell_price">{$price}</span></label>
                                 </div>
                             </div>
                         </div>
@@ -222,7 +222,7 @@
                             </label>
                             <div class="col-md-9">
                                 <div class="input-group">
-                                    <label class="col-md-3 form-control-label">${$price-($price*$detail['markdown_price']/100)}</label>
+                                    <label class="col-md-3 form-control-label" >$<span id="stratus_sell_price">{$price-($price*$detail['markdown_price']/100)}</span></label>
                                 </div>
                             </div>
                         </div>
