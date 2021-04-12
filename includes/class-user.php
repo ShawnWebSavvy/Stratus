@@ -8164,10 +8164,11 @@ class User
                 if($search_vals&&!empty($search_vals['poll']['options'])){
 
                     $search_res = array_search($option_id, array_column($search_vals['poll']['options'], 'option_id'));
-                    if ($search_res !== false) {
-                        $search_vals['poll']['options'][$search_res]['votes'] = (string) $search_vals['poll']['options'][$search_res]['votes'] + 1;
+                    if(!empty($search_res)){
+                        if ($search_res !== false) {
+                            $search_vals['poll']['options'][$search_res]['votes'] = (string) $search_vals['poll']['options'][$search_res]['votes'] + 1;
+                        }
                     }
-    
                     $new_vals =  removeElementWithValue($jsonValuesRes, 'post_id', $poll['post_id']);
                     //array_unshift($new_vals,$newUpdate);
                     array_unshift($new_vals, $search_vals);
@@ -8242,10 +8243,12 @@ class User
                 if($search_vals&&!empty($search_vals['poll']['options'])){
 
                     $search_res = array_search($option_id, array_column($search_vals['poll']['options'], 'option_id'));
-                    if ($search_res !== false) {
-                        $search_vals['poll']['options'][$search_res]['votes'] = (string) $search_vals['poll']['options'][$search_res]['votes'] - 1;
-                        //    $search_vals['poll']['options'][$checked_id]['votes'] = (string) $search_vals['poll']['options'][$search_res]['votes'] + 1;
-    
+                    if(!empty($search_res)){
+                        if ($search_res !== false) {
+                            $search_vals['poll']['options'][$search_res]['votes'] = (string) $search_vals['poll']['options'][$search_res]['votes'] - 1;
+                            //    $search_vals['poll']['options'][$checked_id]['votes'] = (string) $search_vals['poll']['options'][$search_res]['votes'] + 1;
+        
+                        }
                     }
                     //   $checked_res = array_search($checked_id, array_column($search_vals['poll']['options'], 'option_id'));
                     //    if($checked_res!==false){
