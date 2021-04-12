@@ -11948,6 +11948,10 @@ class User
         if (!$this->_data['can_write_articles']) {
             throw new Exception(__("You don't have the permission to do this"));
         }
+        /* validate cover */
+        if (is_empty($cover)) {
+            throw new Exception(__("You must upload image"));
+        }
         /* validate title */
         if (is_empty($title)) {
             throw new Exception(__("You must enter a title for your article"));
