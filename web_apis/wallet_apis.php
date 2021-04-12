@@ -236,10 +236,9 @@ function addWalletPointsVideo()
         /* wallet transaction */
         $transc = sprintf("INSERT INTO ads_users_wallet_transactions (user_id, node_type, node_id, amount, type, date, platformType, paymentMode) VALUES (%s, %s, %s, %s, %s, %s, %s, %s)", secure($id, 'int'), secure('withdraw_points', 'string'), secure($id, 'int'), secure($_POST['amount']), secure('in'), secure($date), secure('TubeNow', 'string'), secure('wallet', 'string'));
         $db->query($transc) or _error("SQL_ERROR_THROWEN");
-        returnResponse(true, 200, "Wallet balance added successfully");
+        returnResponse(true, 200, "Points Reedemed Successfully");
       }
       // return
-
     }
   } else {
     returnResponse(false, 300, "parameters missing");
