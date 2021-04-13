@@ -1184,6 +1184,7 @@ function init_picture_position() {
                                     : _this.hasClass("js_page-admin-addation")
                                         ? _this.replaceWith('<button type="button" class="btn btn-sm btn-danger js_page-admin-remove" data-id="' + id + '" data-uid="' + uid + '"><i class="fa fa-trash mr5"></i>' + __["Remove Admin"] + "</button>")
                                         : _this.replaceWith('<button type="button" class="btn btn-sm btn-primary js_page-admin-addation" data-id="' + id + '" data-uid="' + uid + '"><i class="fa fa-check mr5"></i>' + __["Make Admin"] + "</button>");
+                                        location.reload();
                             },
                             "json"
                         ).fail(function () {

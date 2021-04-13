@@ -316,7 +316,7 @@ try {
 		if (!isset($_POST['id']) || !is_numeric($_POST['id'])) {
 			_error(400);
 		}
-		$data = $user->get_page_members($_POST['id'], $_POST['offset']);
+		$data = $user->get_page_members_without_admins($_POST['id'], $_POST['offset']);
 
 
 		/* get page admins */
