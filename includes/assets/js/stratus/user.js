@@ -193,7 +193,7 @@ function data_heartbeat() {
                             loopArray.push('<div class="carsds"' + ArrayVal[i])
                         }
                     }
-
+                    loopArray.reverse();
                     for (var ik = 0; ik < loopArray.length; ik++) {
                         var values = loopArray[ik];
                         var d = document.createElement('div');
