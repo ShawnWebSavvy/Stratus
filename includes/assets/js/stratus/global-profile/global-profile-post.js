@@ -1863,20 +1863,21 @@ $(function () {
                 loopArray.push('<div class="carsds"' + ArrayVal[i])
               }
             }
-
+            
             for (var ik = 0; ik < loopArray.length; ik++) {
               var values = loopArray[ik];
               var d = document.createElement('div');
               d.innerHTML = values;
               var valuesPost = d.firstChild;
               bricklayer.append(valuesPost);
-              // bricklayer.redraw();
+              bricklayer.redraw();
             }
           }
             posts_loader.hide();
             posts_stream.removeData("loading");
             posts_stream.html(response.posts);
             setTimeout(photo_grid(), 200);
+            posts_stream.data("filter", data.filter)
             // console.log("Af")
             // if ($(window).width() > 1024) {
             //   if ($('body #landing_feeds_post_ul').length > 0) {
