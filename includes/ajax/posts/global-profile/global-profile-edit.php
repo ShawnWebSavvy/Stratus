@@ -63,7 +63,7 @@ try {
 			$smarty->assign('post', $post);
 
 			// return
-			$return['post'] = $smarty->fetch("__feeds_post.text.tpl");
+			$return['post'] = $smarty->fetch("__global_feeds_post.text.tpl");
 			break;
 
 		case 'product':

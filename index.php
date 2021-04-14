@@ -81,6 +81,9 @@ try {
 				$smarty->assign('groups', $groups);
 				/* assign variables */
 				$smarty->assign('posts', $posts);
+
+				$smarty->assign('addPost', true);
+
 				break;
 
 			case 'popular':

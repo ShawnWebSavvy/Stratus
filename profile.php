@@ -226,6 +226,13 @@ try {
 			$smarty->assign("userpage", "profile");
 			/* assign variables */
 			$smarty->assign('posts', $posts);
+
+
+			if( ($user->_data['user_id'] == $profile['user_id']) || ($system['wall_posts_enabled'] && ( $profile['user_privacy_wall'] == 'friends'&&$profile['we_friends'] || $profile['user_privacy_wall'] == 'public' )) ){
+				$smarty->assign('addPost', true);
+			}
+
+
 			break;
 
 		case 'friends':

@@ -628,7 +628,7 @@
             </div>
         </div>
         {else}
-        <div class="post-text js_readmores" dir="auto">{$_post['text']}</div>
+        <div class="post-text js_readmores" dir="auto"> {include file='__feeds_post.text.tpl' post=$_post}</div>
         {/if}
         <div class="post-text-translation x-hidden" dir="auto"></div>
         {/if}

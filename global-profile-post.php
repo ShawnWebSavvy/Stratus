@@ -44,6 +44,8 @@ try {
 	$smarty->assign('new_people', $new_people);
 	$smarty->assign('userGlobal', $userGlobal);
 	$smarty->assign('active_page', 'GlobalHub');
+	$smarty->assign('show_all', true);
+
 } catch (Exception $e) {
 	_error(__("Error"), $e->getMessage());
 }

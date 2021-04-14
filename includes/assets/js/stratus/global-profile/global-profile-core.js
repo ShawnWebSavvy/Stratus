@@ -713,9 +713,9 @@ $(function () {
         var hashtags = query.match(/#(\w+)/gi);
         if (hashtags !== null && hashtags.length > 0) {
           var query = hashtags[0].replace("#", "");
-          window.location = site_path + "/globalhub-search/hashtag/" + query;
+          window.location = encodeURI(site_path + "/globalhub-search/hashtag/" + query);
         } else {
-          window.location = site_path + "/globalhub-search/" + query;
+          window.location = encodeURI(site_path + "/globalhub-search/" + query);
         }
       }
       return false;
@@ -743,14 +743,14 @@ $(function () {
     if (!is_empty(query)) {
       if (handle !== undefined) {
         window.location =
-          site_path + "/" + handle + "/globalhub-search/" + query;
+        encodeURI(site_path + "/" + handle + "/globalhub-search/" + query );
       } else {
         var hashtags = query.match(/#(\w+)/gi);
         if (hashtags !== null && hashtags.length > 0) {
           var query = hashtags[0].replace("#", "");
-          window.location = site_path + "/globalhub-search/hashtag/" + query;
+          window.location = encodeURI(site_path + "/globalhub-search/hashtag/" + query);
         } else {
-          window.location = site_path + "/globalhub-search/" + query;
+          window.location = encodeURI( site_path + "/globalhub-search/" + query );
         }
       }
     }

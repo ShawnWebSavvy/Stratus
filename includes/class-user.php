@@ -6993,17 +6993,17 @@ class User
             /* where statement */
             $where_statement = ($reaction_type == "all") ? "" : sprintf("AND posts_reactions.reaction = %s", secure($reaction_type));
             /* get users who like the post */
-            $get_users = $db->query(sprintf('SELECT posts_reactions.reaction, users.user_id, users.user_name, users.user_firstname, users.user_lastname, users.user_gender, users.user_picture, users.user_subscribed, users.user_verified FROM posts_reactions INNER JOIN users ON (posts_reactions.user_id = users.user_id) WHERE posts_reactions.post_id = %s ' . $where_statement . ' LIMIT %s, %s', secure($post_id, 'int'), secure($offset, 'int', false), secure($system['max_results'], 'int', false))) or _error("SQL_ERROR_THROWEN");
+            $get_users = $db->query(sprintf('SELECT posts_reactions.reaction, users.user_id, users.user_name, users.user_firstname, users.user_picture_id, users.user_lastname, users.user_gender, posts_photos.source as user_picture_full, users.user_picture, users.user_subscribed, users.user_verified FROM posts_reactions INNER JOIN users ON (posts_reactions.user_id = users.user_id) LEFT JOIN posts_photos ON users.user_picture_id = posts_photos.photo_id WHERE posts_reactions.post_id = %s ' . $where_statement . ' LIMIT %s, %s', secure($post_id, 'int'), secure($offset, 'int', false), secure($system['max_results'], 'int', false))) or _error("SQL_ERROR_THROWEN");
         } elseif ($photo_id != null) {
             /* where statement */
             $where_statement = ($reaction_type == "all") ? "" : sprintf("AND posts_photos_reactions.reaction = %s", secure($reaction_type));
             /* get users who like the photo */
-            $get_users = $db->query(sprintf('SELECT posts_photos_reactions.reaction, users.user_id, users.user_name, users.user_firstname, users.user_lastname, users.user_gender, users.user_picture, users.user_subscribed, users.user_verified FROM posts_photos_reactions INNER JOIN users ON (posts_photos_reactions.user_id = users.user_id) WHERE posts_photos_reactions.photo_id = %s ' . $where_statement . ' LIMIT %s, %s', secure($photo_id, 'int'), secure($offset, 'int', false), secure($system['max_results'], 'int', false))) or _error("SQL_ERROR_THROWEN");
+            $get_users = $db->query(sprintf('SELECT posts_photos_reactions.reaction, posts_photos.source as user_picture_full, users.user_picture_id, users.user_id, users.user_name, users.user_firstname, users.user_lastname, users.user_gender, users.user_picture, users.user_subscribed, users.user_verified FROM posts_photos_reactions INNER JOIN users ON (posts_photos_reactions.user_id = users.user_id) LEFT JOIN posts_photos ON users.user_picture_id = posts_photos.photo_id WHERE posts_photos_reactions.photo_id = %s ' . $where_statement . ' LIMIT %s, %s', secure($photo_id, 'int'), secure($offset, 'int', false), secure($system['max_results'], 'int', false))) or _error("SQL_ERROR_THROWEN");
         } else {
             /* where statement */
             $where_statement = ($reaction_type == "all") ? "" : sprintf("AND posts_comments_reactions.reaction = %s", secure($reaction_type));
             /* get users who like the comment */
-            $get_users = $db->query(sprintf('SELECT posts_comments_reactions.reaction, users.user_id, users.user_name, users.user_firstname, users.user_lastname, users.user_gender, users.user_picture, users.user_subscribed, users.user_verified FROM posts_comments_reactions INNER JOIN users ON (posts_comments_reactions.user_id = users.user_id) WHERE posts_comments_reactions.comment_id = %s ' . $where_statement . ' LIMIT %s, %s', secure($comment_id, 'int'), secure($offset, 'int', false), secure($system['max_results'], 'int', false))) or _error("SQL_ERROR_THROWEN");
+            $get_users = $db->query(sprintf('SELECT posts_comments_reactions.reaction, posts_photos.source as user_picture_full, users.user_picture_id, users.user_id, users.user_name, users.user_firstname, users.user_lastname, users.user_gender, users.user_picture, users.user_subscribed, users.user_verified FROM posts_comments_reactions INNER JOIN users ON (posts_comments_reactions.user_id = users.user_id) LEFT JOIN posts_photos ON users.user_picture_id = posts_photos.photo_id WHERE posts_comments_reactions.comment_id = %s ' . $where_statement . ' LIMIT %s, %s', secure($comment_id, 'int'), secure($offset, 'int', false), secure($system['max_results'], 'int', false))) or _error("SQL_ERROR_THROWEN");
         }
         if ($get_users->num_rows > 0) {
             while ($_user = $get_users->fetch_assoc()) {
@@ -8719,28 +8719,35 @@ class User
 
         // print_r($ids); die;
 
-        // foreach ($ids as $id) {
-        //     $userKeys = 'user-' . $id . '-posts';
-        //     $isUserExist = $redisObject->isRedisKeyExist($userKeys);
-        //     if ($isUserExist == true) {
-        //         $getPostsFromRedis = $redisObject->getValueFromKey($userKeys);
-        //         $jsonValuesRes = json_decode($getPostsFromRedis, true);
-        //         $search_vals =  searchSubArray($jsonValuesRes, 'post_id', $poll['post_id']);
-        //         // print_r($search_vals); die;
-        //         $search_res = array_search($option_id, array_column($search_vals['poll']['options'], 'option_id'));
-        //         if ($search_res !== false) {
-        //             $search_vals['poll']['options'][$search_res]['votes'] = (string) $search_vals['poll']['options'][$search_res]['votes'] + 1;
-        //         }
+        foreach ($ids as $id) {
+            $userKeys = 'user-' . $id . '-posts';
+            $isUserExist = $redisObject->isRedisKeyExist($userKeys);
+            if ($isUserExist == true) {
+                $getPostsFromRedis = $redisObject->getValueFromKey($userKeys);
+                $jsonValuesRes = json_decode($getPostsFromRedis, true);
+                $search_vals =  searchSubArray($jsonValuesRes, 'post_id', $poll['post_id']);
+                // print_r($search_vals); die;
 
-        //         $new_vals =  removeElementWithValue($jsonValuesRes, 'post_id', $poll['post_id']);
-        //         //array_unshift($new_vals,$newUpdate);
-        //         array_unshift($new_vals, $search_vals);
+                if($search_vals&&!empty($search_vals['poll']['options'])){
 
+                    $search_res = array_search($option_id, array_column($search_vals['poll']['options'], 'option_id'));
+                    if(!empty($search_res)){
+                        if ($search_res !== false) {
+                            $search_vals['poll']['options'][$search_res]['votes'] = (string) $search_vals['poll']['options'][$search_res]['votes'] + 1;
+                        }
+                    }
+                    $new_vals =  removeElementWithValue($jsonValuesRes, 'post_id', $poll['post_id']);
+                    //array_unshift($new_vals,$newUpdate);
+                    array_unshift($new_vals, $search_vals);
+    
+    
+                    $jsonEncodedVals = json_encode($new_vals);
+                    $redisObject->setValueWithRedis($userKeys, $jsonEncodedVals);
 
-        //         $jsonEncodedVals = json_encode($new_vals);
-        //         $redisObject->setValueWithRedis($userKeys, $jsonEncodedVals);
-        //     }
-        // }
+                }
+
+            }
+        }
     }
 
 
@@ -8791,36 +8798,44 @@ class User
         //     array_push($ids, $post['author_id']);
         // }
 
-        // foreach ($ids as $id) {
-        //     $userKeys = 'user-' . $id . '-posts';
-        //     $isUserExist = $redisObject->isRedisKeyExist($userKeys);
-        //     if ($isUserExist == true) {
-        //         $getPostsFromRedis = $redisObject->getValueFromKey($userKeys);
-        //         $jsonValuesRes = json_decode($getPostsFromRedis, true);
-        //         $search_vals =  searchSubArray($jsonValuesRes, 'post_id', $poll['post_id']);
-        //         //print_r($search_vals); die;
-        //         $search_res = array_search($option_id, array_column($search_vals['poll']['options'], 'option_id'));
-        //         if ($search_res !== false) {
-        //             $search_vals['poll']['options'][$search_res]['votes'] = (string) $search_vals['poll']['options'][$search_res]['votes'] - 1;
-        //             //    $search_vals['poll']['options'][$checked_id]['votes'] = (string) $search_vals['poll']['options'][$search_res]['votes'] + 1;
+        foreach ($ids as $id) {
+            $userKeys = 'user-' . $id . '-posts';
+            $isUserExist = $redisObject->isRedisKeyExist($userKeys);
+            if ($isUserExist == true) {
+                $getPostsFromRedis = $redisObject->getValueFromKey($userKeys);
+                $jsonValuesRes = json_decode($getPostsFromRedis, true);
+                $search_vals =  searchSubArray($jsonValuesRes, 'post_id', $poll['post_id']);
+                //print_r($search_vals); die;
 
-        //         }
-        //         //   $checked_res = array_search($checked_id, array_column($search_vals['poll']['options'], 'option_id'));
-        //         //    if($checked_res!==false){
-        //         //       $search_vals['poll']['options'][$checked_res]['votes'] = (string) $search_vals['poll']['options'][$checked_res]['votes'] -1 ;
-        //         //     //    $search_vals['poll']['options'][$checked_id]['votes'] = (string) $search_vals['poll']['options'][$search_res]['votes'] + 1;
+                if($search_vals&&!empty($search_vals['poll']['options'])){
 
-        //         //  }
+                    $search_res = array_search($option_id, array_column($search_vals['poll']['options'], 'option_id'));
+                    if(!empty($search_res)){
+                        if ($search_res !== false) {
+                            $search_vals['poll']['options'][$search_res]['votes'] = (string) $search_vals['poll']['options'][$search_res]['votes'] - 1;
+                            //    $search_vals['poll']['options'][$checked_id]['votes'] = (string) $search_vals['poll']['options'][$search_res]['votes'] + 1;
+        
+                        }
+                    }
+                    //   $checked_res = array_search($checked_id, array_column($search_vals['poll']['options'], 'option_id'));
+                    //    if($checked_res!==false){
+                    //       $search_vals['poll']['options'][$checked_res]['votes'] = (string) $search_vals['poll']['options'][$checked_res]['votes'] -1 ;
+                    //     //    $search_vals['poll']['options'][$checked_id]['votes'] = (string) $search_vals['poll']['options'][$search_res]['votes'] + 1;
+    
+                    //  }
+    
+                    $new_vals =  removeElementWithValue($jsonValuesRes, 'post_id', $poll['post_id']);
+                    //array_unshift($new_vals,$newUpdate);
+                    array_unshift($new_vals, $search_vals);
+    
+    
+                    $jsonEncodedVals = json_encode($new_vals);
+                    $redisObject->setValueWithRedis($userKeys, $jsonEncodedVals);
 
-        //         $new_vals =  removeElementWithValue($jsonValuesRes, 'post_id', $poll['post_id']);
-        //         //array_unshift($new_vals,$newUpdate);
-        //         array_unshift($new_vals, $search_vals);
+                }
 
-
-        //         $jsonEncodedVals = json_encode($new_vals);
-        //         $redisObject->setValueWithRedis($userKeys, $jsonEncodedVals);
-        //     }
-        // }
+            }
+        }
 
 
 
@@ -8878,6 +8893,9 @@ class User
         //  $authorTimelineData = $redisObject->getValueFromKey($redisAuthorKey);
         //  $decodedAuthorData = json_decode($authorTimelineData, TRUE);
         $newUpdate =  searchSubArray($decodedAuthorData, 'post_id', $poll['post_id']);
+
+
+        if($newUpdate&&!empty($newUpdate['poll']['options'])){
 
         $search_res = array_search($option_id, array_column($newUpdate['poll']['options'], 'option_id'));
         //    $check_res = array_search($checked_id, array_column($newUpdate['poll']['options'], 'option_id'));
@@ -9005,6 +9023,9 @@ class User
         //         $redisObject->setValueWithRedis($userKeys, $jsonEncodedVals);
         //     }
         // }
+
+
+        }
 
         //Redis Block
     }
