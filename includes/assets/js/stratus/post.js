@@ -1351,6 +1351,24 @@ $(function () {
                 // _update_post(this);
             }
         });
+    $("body").on("click", ".js_addPost-privacy", function(){
+        var _this = $(this);
+        var privacy_value = _this.data('value');
+        var privacy_img   = _this.closest('.js_publisher-privacy').find('.share_sign_img img');
+        switch(privacy_value) {
+            case 'public':
+                  privacy_img.attr("src", "https://cdn1.stratus.co/content/themes/default/images/svg/svgImg/nav_icon_globalHub.svg");
+              break;
+            case 'friends':
+                  privacy_img.attr("src", "https://cdn1.stratus.co/content/themes/default/images/svg/svgImg/friendsIcon.svg");
+              break;
+            case 'me':
+                  privacy_img.attr("src", "https://cdn1.stratus.co/content/themes/default/images/svg/svgImg/Hide_form.svg");
+               break;  
+          }
+
+    });
+
     $("body").on("click", "li.js_update-post", function () {
         _update_post(this);
     });

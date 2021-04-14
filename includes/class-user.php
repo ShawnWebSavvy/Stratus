@@ -11418,6 +11418,36 @@ class User
     }
 
 
+
+     /**
+     * get_page_members without admins
+     *
+     * @param integer $page_id
+     * @param integer $offset
+     * @return array
+     */
+    public function get_page_members_without_admins($page_id, $offset = 0)
+    {
+        global $db, $system;
+        $members = [];
+        $offset *= $system['max_results_even'];
+        $get_members = $db->query(sprintf("SELECT users.user_id, users.user_name, users.user_firstname, users.user_lastname, users.user_gender, users.user_picture, users.user_subscribed, users.user_verified FROM pages_likes INNER JOIN users ON pages_likes.user_id = users.user_id LEFT JOIN pages_admins ON users.user_id = pages_admins.user_id  WHERE pages_likes.page_id = %s AND pages_admins.user_id IS NULL LIMIT %s, %s", secure($page_id, 'int'), secure($offset, 'int', false), secure($system['max_results_even'], 'int', false))) or _error("SQL_ERROR_THROWEN");
+        if ($get_members->num_rows > 0) {
+            /* get page admins ids */
+            $page_admins_ids = $this->get_page_admins_ids($page_id);
+            while ($member = $get_members->fetch_assoc()) {
+                $member['user_picture'] = get_picture($member['user_picture'], $member['user_gender']);
+                /* get the connection */
+                $member['i_admin'] = in_array($member['user_id'], $page_admins_ids);
+                $member['connection'] = 'page_manage';
+                $member['node_id'] = $page_id;
+                $members[] = $member;
+            }
+        }
+        return $members;
+    }
+
+
     /**
      * get_page_invites
      *
@@ -12517,6 +12547,10 @@ class User
         /* check blogs permission */
         if (!$this->_data['can_write_articles']) {
             throw new Exception(__("You don't have the permission to do this"));
+        }
+        /* validate cover */
+        if (is_empty($cover)) {
+            throw new Exception(__("You must upload image"));
         }
         /* validate title */
         if (is_empty($title)) {

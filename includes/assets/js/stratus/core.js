@@ -402,8 +402,8 @@ function button_status(e, t) {
                             var t = a.match(/#(\w+)/gi);
                             if (null !== t && t.length > 0) {
                                 var a = t[0].replace("#", "");
-                                window.location = site_path + "/search/hashtag/" + a;
-                            } else window.location = site_path + "/search/" + a;
+                                window.location = encodeURI(site_path + "/search/hashtag/" + a);
+                            } else window.location = encodeURI(site_path + "/search/" + a);
                         }
                         return !1;
                     }
@@ -419,10 +419,10 @@ function button_status(e, t) {
                     var t = this.query.value,
                         a = $(this).data("handle");
                     if (!is_empty(t))
-                        if (void 0 !== a) window.location = site_path + "/" + a + "/search/" + t;
+                        if (void 0 !== a) window.location = encodeURI(site_path + "/" + a + "/search/" + t);
                         else {
                             var s = t.match(/#(\w+)/gi);
-                            null !== s && s.length > 0 ? ((t = s[0].replace("#", "")), (window.location = site_path + "/search/hashtag/" + t)) : (window.location = site_path + "/search/" + t);
+                            null !== s && s.length > 0 ? ((t = s[0].replace("#", "")), (window.location = encodeURI(site_path + "/search/hashtag/" + t))) : (window.location = encodeURI(site_path + "/search/" + t));
                         }
                     return !1;
                 }),

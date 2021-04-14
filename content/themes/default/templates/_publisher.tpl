@@ -65,7 +65,7 @@
                                     </button>
                                     {/if}
                                     <div class="dropdown-menu dropdown-menu-right _postshare__">
-                                        <div class="dropdown-item pointer" data-title='{__("Shared with: Public")}'
+                                        <div class="dropdown-item pointer js_addPost-privacy" data-title='{__("Shared with: Public")}'
                                             data-value="public">
                                             <div class="post_images__">
                                                 <img src="{$system['system_uploads_assets']}/content/themes/default/images/svg/svgImg/nav_icon_globalHub.svg" class="blackicon" />
@@ -73,7 +73,7 @@
                                             </div>
                                             <span> {__("Public")} </span>
                                         </div>
-                                        <div class="dropdown-item pointer" data-title='{__("Shared with: Friends")}'
+                                        <div class="dropdown-item pointer js_addPost-privacy" data-title='{__("Shared with: Friends")}'
                                             data-value="friends">
                                             <div class="post_images__">
                                                 <img src="{$system['system_uploads_assets']}/content/themes/default/images/svg/friendsIcon.svg" class="blackicon" />
@@ -82,7 +82,7 @@
                                             <span> {__("Friends")} </span>
                                         </div>
                                         {if $_handle == 'me'}
-                                        <div class="dropdown-item pointer" data-title='{__("Shared with: Only Me")}'
+                                        <div class="dropdown-item pointer js_addPost-privacy" data-title='{__("Shared with: Only Me")}'
                                             data-value="me">
                                             <div class="post_images__">
                                                 <img src="{$system['system_uploads_assets']}/content/themes/default/images/svg/svgImg/Hide_form.svg" class="blackicon" />
