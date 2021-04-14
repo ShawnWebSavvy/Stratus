@@ -156,7 +156,7 @@ function cachedUserData($db, $system, $user_id, $user_token)
     $userClassObject = new userClass();
     $isKeyExistOnRedis = $redisObject->isRedisKeyExist($redisPostKey);
 
-    // $redisObject->deleteValueFromKey($redisPostKey);
+    $redisObject->deleteValueFromKey($redisPostKey);
     //print_r($isKeyExistOnRedis);
     //die;
     if ($isKeyExistOnRedis == false) {
