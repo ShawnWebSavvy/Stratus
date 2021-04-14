@@ -504,11 +504,7 @@ class User
                 $following['user_picture_full'] = ($following['user_picture_full']) ? $system['system_uploads'] . '/' . $following['user_picture_full'] : $following['user_picture_full'];
                 if ($following['user_picture'] != "") {
 
-<<<<<<< HEAD
                     $following['user_picture'] =  $system['system_url'] . '/includes/wallet-api/image-exist-api.php?userPicture=' . $following['user_picture'] . '&userPictureFull=' . $system['system_uploads'] . '/'. $following['user_picture_full'] . '&type=1';
-=======
-                    $following['user_picture'] =  $system['system_url'] . '/includes/wallet-api/image-exist-api.php?userPicture=' . $following['user_picture'] . '&userPictureFull=' .$system['system_uploads'] . '/' .  $following['user_picture_full'] . '&type=1';
->>>>>>> 9102fb93bf770a43ab0446798a3f7fe6aa90eca6
                 }
                 if ($following['user_picture'] == "") {
                     $following['user_picture'] =  $system['system_url'] . '/content/themes/' . $system['theme'] . '/images/user_defoult_img.jpg';
@@ -546,11 +542,7 @@ class User
                 $follower['user_picture_full'] = ($follower['user_picture_full']) ? $system['system_uploads'] . '/' . $follower['user_picture_full'] : $follower['user_picture_full'];
                 if ($follower['user_picture'] != "") {
 
-<<<<<<< HEAD
                     $follower['user_picture'] =  $system['system_url'] . '/includes/wallet-api/image-exist-api.php?userPicture=' . $follower['user_picture'] . '&userPictureFull=' . $system['system_uploads'] . '/'. $follower['user_picture_full'] . '&type=1';
-=======
-                    $follower['user_picture'] =  $system['system_url'] . '/includes/wallet-api/image-exist-api.php?userPicture=' . $follower['user_picture'] . '&userPictureFull=' . $system['system_uploads'] . '/' . $follower['user_picture_full'] . '&type=1';
->>>>>>> 9102fb93bf770a43ab0446798a3f7fe6aa90eca6
                 }
                 if ($follower['user_picture'] == "") {
                     $follower['user_picture'] =  $system['system_url'] . '/content/themes/' . $system['theme'] . '/images/user_defoult_img.jpg';
@@ -1282,11 +1274,7 @@ class User
                 switch ($result['node_type']) {
                     case 'user':
                         $result['user_picture'] = get_picture($result['user_picture'], $result['user_gender']);
-<<<<<<< HEAD
                         $result['user_picture'] = $system['system_url'] . '/includes/wallet-api/image-exist-api.php?userPicture=' . $result['user_picture'] . '&userPictureFull=' . $system['system_uploads'] . '/'. $result['user_picture_full'];
-=======
-                        $result['user_picture'] = $system['system_url'] . '/includes/wallet-api/image-exist-api.php?userPicture=' . $result['user_picture'] . '&userPictureFull=' . $system['system_uploads'] . '/' . $result['user_picture_full'];
->>>>>>> 9102fb93bf770a43ab0446798a3f7fe6aa90eca6
                         /* get the connection between the viewer & the target */
                         $result['connection'] = $this->connection($result['user_id']);
                         break;
@@ -5092,11 +5080,7 @@ class User
                 $profile['user_picture_full'] = ($profile['user_picture_full']) ? $system['system_uploads'] . '/' . $profile['user_picture_full'] : $profile['user_picture_full'];
                 if ($profile['user_picture'] != "") {
 
-<<<<<<< HEAD
                     $profile['user_picture'] =  $system['system_url'] . '/includes/wallet-api/image-exist-api.php?userPicture=' . $profile['user_picture'] . '&userPictureFull=' . $system['system_uploads'] . '/'. $profile['user_picture_full'] . '&type=1';
-=======
-                    $profile['user_picture'] =  $system['system_url'] . '/includes/wallet-api/image-exist-api.php?userPicture=' . $profile['user_picture'] . '&userPictureFull=' .$system['system_uploads'] . '/' . $profile['user_picture_full'] . '&type=1';
->>>>>>> 9102fb93bf770a43ab0446798a3f7fe6aa90eca6
                 }
                 if ($profile['user_picture'] == "") {
                     $profile['user_picture'] =  $system['system_url'] . '/content/themes/' . $system['theme'] . '/images/user_defoult_img.jpg';
@@ -8743,15 +8727,12 @@ class User
                 $jsonValuesRes = json_decode($getPostsFromRedis, true);
                 $search_vals =  searchSubArray($jsonValuesRes, 'post_id', $poll['post_id']);
                 // print_r($search_vals); die;
-<<<<<<< HEAD
                 $search_res = array_search($option_id, array_column($search_vals['poll']['options'], 'option_id'));
                 if(!empty($search_res)){
                     if ($search_res !== false) {
                         $search_vals['poll']['options'][$search_res]['votes'] = (string) $search_vals['poll']['options'][$search_res]['votes'] + 1;
                     }
                 }
-=======
->>>>>>> 9102fb93bf770a43ab0446798a3f7fe6aa90eca6
 
                 if($search_vals&&!empty($search_vals['poll']['options'])){
 
@@ -8831,21 +8812,6 @@ class User
                 $jsonValuesRes = json_decode($getPostsFromRedis, true);
                 $search_vals =  searchSubArray($jsonValuesRes, 'post_id', $poll['post_id']);
                 //print_r($search_vals); die;
-<<<<<<< HEAD
-                $search_res = array_search($option_id, array_column($search_vals['poll']['options'], 'option_id'));
-                if(!empty($search_res)){
-                    if ($search_res !== false) {
-                        $search_vals['poll']['options'][$search_res]['votes'] = (string) $search_vals['poll']['options'][$search_res]['votes'] - 1;
-                            //    $search_vals['poll']['options'][$checked_id]['votes'] = (string) $search_vals['poll']['options'][$search_res]['votes'] + 1;
-                    }
-                }
-                
-                //   $checked_res = array_search($checked_id, array_column($search_vals['poll']['options'], 'option_id'));
-                //    if($checked_res!==false){
-                //       $search_vals['poll']['options'][$checked_res]['votes'] = (string) $search_vals['poll']['options'][$checked_res]['votes'] -1 ;
-                //     //    $search_vals['poll']['options'][$checked_id]['votes'] = (string) $search_vals['poll']['options'][$search_res]['votes'] + 1;
-=======
->>>>>>> 9102fb93bf770a43ab0446798a3f7fe6aa90eca6
 
                 if($search_vals&&!empty($search_vals['poll']['options'])){
 
