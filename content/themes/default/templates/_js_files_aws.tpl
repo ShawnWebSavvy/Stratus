@@ -385,7 +385,7 @@
     <script src="{$system['system_uploads_assets']}/includes/assets/js/stratus/chat.js?{$cacheremovejs}" {if !$user->_logged_in}defer{/if}></script>
     <script src="{$system['system_uploads_assets']}/includes/assets/js/stratus/showads.js?{$cacheremovejs}" {if !$user->_logged_in}defer{/if}></script>
     {if $system['live_enabled'] && $page == "live"}
-        <script src="{$system['system_uploads_assets']}/includes/assets/js/stratus/live.js"></script>
+        <script src="{$system['system_url']}/includes/assets/js/stratus/live.js"></script>
     {/if}
 
     {if $page == "investment/activity" || $page == "investment/buy_sell"  || $page == "investment/index" }

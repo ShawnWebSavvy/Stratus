@@ -53,12 +53,9 @@ try {
 			$return['agora_audience_token'] = $post['live']['agora_audience_token'];
 			$return['agora_channel_name'] = $post['live']['agora_channel_name'];
 			$return['live_ended'] = ($post['live']['live_ended'])? true: false;
- 
 			if(!empty($post['live']['agora_file'])&&$return['live_ended']){
 				$return['live_ended'] = "live_ended";
-				$return['live_data'] = $smarty->fetch("ajax.live.tpl");
 			}
-
 			$return['lightbox'] = $smarty->fetch("ajax.lightbox-live.tpl");
 			break;
 
@@ -77,7 +74,14 @@ try {
 			$return['live_count'] = $stats['live_count'];
 			$return['comments'] = $smarty->fetch("ajax.live.comments.tpl");
 			break;
-
+		case 'update_live_post':
+			$post = $user->get_post($_POST['post_id'], true, true);
+			if($post['live']['agora_file'] && $post['live']['live_ended']){
+				$smarty->assign('post', $post);
+				$return['live_data'] = $smarty->fetch("ajax.live.tpl");
+			}
+			
+			break;
 		default:
 			_error(400);
 			break;

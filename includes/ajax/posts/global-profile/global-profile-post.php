@@ -21,12 +21,9 @@ user_access(true);
 if (!in_array($_POST['handle'], array('me', 'user', 'page', 'group', 'event'))) {
 	_error(400);
 }
-
-
 /* filter link */
 if (isset($_POST['link'])) {
 	$_POST['link'] = json_decode($_POST['link']);
-	$_POST['link']->source_title = ($_POST['link']->source_title=='Error')?"":$_POST['link']->source_title;
 	if (!is_object($_POST['link'])) {
 		_error(400);
 	}
@@ -205,6 +202,9 @@ try {
 	for ($i = 0; $i < $newLength; $i++) {
 		$smarty->assign('post', $postDataArray[$i]);
 		$smarty->assign('_get', $_get);
+		if ($newLength > 1) {
+			$smarty->assign('post_array', true);
+		}
 		$postHtml .= $smarty->fetch("global-profile/global-profile__feeds_post.tpl");
 	}
 		// echo '<pre>'; print_r($postHtml);die;
@@ -212,10 +212,9 @@ try {
 	if ($newLength == 1) {
 		$finalpostHtml = $postHtml;
 	} else if ($newLength > 1) {
-		$finalpostHtml = "<li class='feeds_post parent-post-li' data-id='" . $postDataArray[0]['post_id'] . "'>";
-		//$finalpostHtml.="<ul class='child-post-ul'>";
+		$finalpostHtml  = '<div class="carsds" data-id="'.$postDataArray[0]['post_id'].'" post-type="'.$postDataArray[0]['post_type'].'">';
 		$finalpostHtml .= $postHtml;
-		$finalpostHtml .= "</li>";
+		$finalpostHtml .= '</div>';
 	}
 	//  echo($finalpostHtml);die;
 	$return['post'] = $finalpostHtml;

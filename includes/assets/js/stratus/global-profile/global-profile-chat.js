@@ -725,7 +725,7 @@ $(function () {
         if (!widget.hasClass('fresh') && photo === undefined && voice_note === undefined) {
             textarea.focus().val('').height(textarea.css('line-height'));
             var _guid = guid()
-            widget.find(".js_scroller:first ul").append(render_template('#chat-message', { 'message': htmlEntities(message), 'sendUserImage': sendUserImage, 'id': _guid, 'name_list': nameSender, 'time': moment.utc().format("YYYY-MM-DD H:mm:ss") }));
+            // widget.find(".js_scroller:first ul").append(render_template('#chat-message', { 'message': htmlEntities(message), 'sendUserImage': sendUserImage, 'id': _guid, 'name_list': nameSender, 'time': moment.utc().format("YYYY-MM-DD H:mm:ss") }));
             widget.find(".js_scroller:first .seen").remove(); // remove any seen status before
             widget.find(".js_scroller:first").scrollTop(widget.find(".js_scroller:first")[0].scrollHeight);
         } else {

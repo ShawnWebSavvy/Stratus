@@ -128,6 +128,11 @@
     <div class="lightbox">
         <div class="container lightbox-container">
             <div class="lightbox-preview">
+                    <div class="mobileCloseButton mobile">
+                        <button type="button" class="close lightbox-close js_lightbox-close">
+                            <img src="{$system['system_uploads_assets']}/content/themes/default/images/svg/svgImg/modelCross.svg"/>
+                        </button>
+                    </div>
                 <div class="lightbox-next js_lightbox-slider">
                     <i class="fa fa-chevron-right fa-3x"></i>
                 </div>
@@ -137,10 +142,10 @@
                 <img alt="" class="img-fluid" src="{literal}{{image}}{/literal}">
             </div>
             <div class="lightbox-data">
-                <div class="clearfix">
-                    <div class="pt5 pr5 float-right">
+                <div class="clearfix" style="position: relative;">
+                    <div class="mobileCloseButton desktop">
                         <button type="button" class="close lightbox-close js_lightbox-close">
-                            <span aria-hidden="true">&times;</span>
+                            <img src="{$system['system_uploads_assets']}/content/themes/default/images/svg/svgImg/modelCross.svg"/>
                         </button>
                     </div>
                 </div>
@@ -168,7 +173,7 @@
     <div class="lightbox" data-live-post-id="{literal}{{post_id}}{/literal}">
         <div class="container lightbox-container">
             <div class="lightbox-preview with-live">
-                <div class="live-stream-video" id="js_live-video" style="display:none">
+                <div class="live-stream-video" id="js_live-video">
                     <div class="live-counter" id="js_live-counter">
                         <span class="status offline" id=js_live-counter-status>{__("Offline")}</span>
                         <span class="number">
@@ -183,9 +188,9 @@
             </div>
             <div class="lightbox-data">
                 <div class="clearfix">
-                    <div class="pt5 pr5 float-right">
+                    <div class="mobileCloseButton">
                         <button type="button" class="close lightbox-close js_lightbox-close">
-                            <span aria-hidden="true">&times;</span>
+                            <img src="{$system['system_uploads_assets']}/content/themes/default/images/svg/svgImg/modelCross.svg"/>
                         </button>
                     </div>
                 </div>
@@ -208,9 +213,9 @@
         <div class="container lightbox-container">
             <div class="lightbox-data">
                 <div class="clearfix">
-                    <div class="pt5 pr5 float-right">
+                    <div class="mobileCloseButton">
                         <button type="button" class="close lightbox-close js_lightbox-close">
-                            <span aria-hidden="true">&times;</span>
+                            <img src="{$system['system_uploads_assets']}/content/themes/default/images/svg/svgImg/modelCross.svg"/>
                         </button>
                     </div>
                 </div>

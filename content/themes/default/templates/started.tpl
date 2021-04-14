@@ -66,7 +66,7 @@
                                     </div>
                                 </div>
                                 <div class="profile-avatar-crop {if $user->_data['user_picture_default'] || !$user->_data['user_picture_id']}x-hidden{/if}">
-                                    <i class="fa fa-crop-alt js_init-crop-picture" data-image="{$user->_data['user_picture_full']}" data-system-url="{$system['system_url']}" data-handle="user" data-id="{$user->_data['user_id']}"></i>
+                                    <i class="fa fa-crop-alt js_init-crop-picture" data-image="{$user->_data['user_picture_full']}" data-handle="user" data-id="{$user->_data['user_id']}"></i>
                                 </div>
                                 {if !$profile['user_picture_default']}
                                 <div class="profile-avatar-delete {if $user->_data['user_picture_default']}x-hidden{/if}">

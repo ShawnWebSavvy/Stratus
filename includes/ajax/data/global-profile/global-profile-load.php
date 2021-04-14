@@ -153,7 +153,7 @@ try {
 		if (!isset($_POST['id']) || !is_numeric($_POST['id'])) {
 			_error(400);
 		}
-		$data = $userGlobal->global_get_photos($_POST['id'], $_POST['type'],"", $_POST['offset'], false);
+		$data = $user->get_photos($_POST['id'], $_POST['type'], $_POST['offset'], false);
 		$context = ($_POST['type'] == "album") ? "album" : "photos";
 		$smarty->assign('context', $context);
 
@@ -526,7 +526,6 @@ try {
 		/* return */
 		$return['append'] = $append;
 		$return['data'] = $smarty->fetch("global-profile/global-profile_ajax.load_more.tpl");
-	
 	}
 
 	// return & exit

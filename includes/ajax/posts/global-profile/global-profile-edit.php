@@ -38,7 +38,7 @@ try {
 			}
 
 			// edit comment
-			$comment = $userGlobal->global_edit_comment($_POST['id'], $_POST['message'], $_POST['photo']);
+			$comment = $user->edit_comment($_POST['id'], $_POST['message'], $_POST['photo']);
 			/* assign variables */
 			$smarty->assign('_comment', $comment);
 
@@ -63,7 +63,7 @@ try {
 			$smarty->assign('post', $post);
 
 			// return
-			$return['post'] = $smarty->fetch("__feeds_post.text.tpl");
+			$return['post'] = $smarty->fetch("__global_feeds_post.text.tpl");
 			break;
 
 		case 'product':
@@ -97,7 +97,7 @@ try {
 			}
 
 			// edit product
-			$userGlobal->edit_product($_POST['id'], $_POST['message'], $_POST['name'], $_POST['price'], $_POST['category'], $_POST['status'], $_POST['location']);
+			$user->edit_product($_POST['id'], $_POST['message'], $_POST['name'], $_POST['price'], $_POST['category'], $_POST['status'], $_POST['location']);
 
 			// return
 			$return['callback'] = 'window.location = "' . $system['system_url'] . '/posts/' . $_POST['id'] . '";';

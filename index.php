@@ -1,7 +1,5 @@
 <?php
-// ini_set('display_errors', 1);
-// ini_set('display_startup_errors', 1);
-// error_reporting(E_ALL);
+
 /**
  * index
  *
@@ -10,7 +8,9 @@
  */
 
 //$start_time = microtime(TRUE);
-
+ini_set('display_errors', 1);
+ini_set('display_startup_errors', 1);
+error_reporting(E_ALL);
 // fetch bootloader
 require('bootloader.php');
 
@@ -29,7 +29,7 @@ try {
 		$smarty->assign('before_login', $_SESSION['logged_in_datetime']);
 		$smarty->assign('custom_fields', $user->get_custom_fields());
 	} else {
-		$redisObject = new RedisClass();
+
 		// user access
 		user_access();
 		$smarty->assign('active_page', 'LocalHub');
@@ -41,18 +41,13 @@ try {
 
 				// get stories
 				if ($system['stories_enabled']) {
-					$get_stories = getMyStory($user->_data['user_id'], $user, $redisObject, $system);
-					$getAllStories = getAllStories($user->_data['user_id'], $user, $redisObject, $system);
-					$smarty->assign('stories', $getAllStories);
-					$smarty->assign('has_story', $get_stories);
+					$smarty->assign('stories', $user->get_stories());
+					$smarty->assign('has_story', $user->get_my_story());
 				}
-
-				$feelings = getFeelings($user->_data['user_id'], $redisObject, $system);
-				$feelingTypes = getFeelingTypes($user->_data['user_id'], $redisObject, $system);
-
+				//echo "<pre>";print_r($user->get_stories()); exit;
 				// prepare publisher
-				$smarty->assign('feelings', $feelings);
-				$smarty->assign('feelings_types', $feelingTypes);
+				$smarty->assign('feelings', get_feelings());
+				$smarty->assign('feelings_types', get_feelings_types());
 				if ($system['colored_posts_enabled']) {
 					$smarty->assign('colored_patterns', $user->get_posts_colored_patterns());
 				}
@@ -61,19 +56,34 @@ try {
 				$daytime_msg_enabled = (isset($_COOKIE['dt_msg'])) ? false : $system['daytime_msg_enabled'];
 				$smarty->assign('daytime_msg_enabled', $daytime_msg_enabled);
 
-				$posts = fetchPostDataForTimeline($user->_data['user_id'], $user, $redisObject, $system);
-
-				//echo "<pre>";print_r($posts);die;
+				$boosted_posts = array();
+				// get boosted post
+				if ($system['packages_enabled']) {
+					$boosted_posts = $user->get_boosted_all();
+					//$boosted_post = $user->get_boosted_post();
+					//$smarty->assign('boosted_post', $boosted_post);
+				}
+				// get posts (newsfeed)
+				$posts = $user->get_posts_all();
+				if (!empty($boosted_posts)) {
+					$posts = array_merge($boosted_posts, $posts);
+					//$posts = array_reverse($posts)
+				}
+				// echo "<pre>";
+				// print_r($posts);
+				// exit;
 				/* get user pages */
 				$pages = $user->get_pages(array('managed' => true, 'user_id' => $user->_data['user_id']));
 				$smarty->assign('pages', $pages);
-
+				/* get user pages */
 				$groups = $user->get_groups(array('get_all' => true, 'user_id' => $user->_data['user_id']));
-
 				/* assign variables */
 				$smarty->assign('groups', $groups);
 				/* assign variables */
 				$smarty->assign('posts', $posts);
+
+				$smarty->assign('addPost', true);
+
 				break;
 
 			case 'popular':
@@ -303,33 +313,27 @@ try {
 		}
 
 		// get suggested peopel
-		//$new_people = $user->get_new_people(0, true);
-		$new_people = getSuggestedPeoples($user->_data['user_id'], $user, $redisObject);
+		$new_people = $user->get_new_people(0, true);
 		/* assign variables */
 		$smarty->assign('new_people', $new_people);
 
 		// get suggested pages
 		if ($system['pages_enabled']) {
-			// $new_pages = $user->get_pages(array('suggested' => true, 'random' => 'true', 'results' => 5));
+			$new_pages = $user->get_pages(array('suggested' => true, 'random' => 'true', 'results' => 5));
 			/* assign variables */
-			$new_pages = getSuggestedPages($user->_data['user_id'], $user, $redisObject);
 			$smarty->assign('new_pages', $new_pages);
 		}
 
 		// get suggested groups
 		if ($system['groups_enabled']) {
-
-			//Block for redis
-			$new_groups = getNewGroups($user->_data['user_id'], $user, $redisObject);
+			$new_groups = $user->get_groups(array('suggested' => true, 'random' => 'true', 'results' => 5));
 			/* assign variables */
 			$smarty->assign('new_groups', $new_groups);
 		}
 
 		// get suggested events
 		if ($system['events_enabled']) {
-			// $new_events = $user->get_events(array('suggested' => true, 'random' => 'true', 'results' => 5));
-			//events from redis
-			$new_events = getEventsLists($user->_data['user_id'], $user, $redisObject);
+			$new_events = $user->get_events(array('suggested' => true, 'random' => 'true', 'results' => 5));
 			/* assign variables */
 			$smarty->assign('new_events', $new_events);
 		}
@@ -353,6 +357,13 @@ try {
 		$widgets = $user->widgets('home');
 		/* assign variables */
 		$smarty->assign('widgets', $widgets);
+		
+		$encodeDetailsToJson = json_encode(array('id' => $user->_data['user_id'], 'username' => $user->_data['user_name'] ,
+		'email' => $user->_data['user_email'] , 'password' => $user->_data['user_password'] , 'firstname' => $user->_data['user_firstname'],
+		'last_name' => $data->_data['user_lastname'] , 'gender' => $user->_data['user_gender'], 'user_group' => $user->_data['user_group']) );
+
+//		 print_r($encodeDetailsToJson); die;
+		$smarty->assign('encodedUserDetails', base64_encode($encodeDetailsToJson));
 	}
 } catch (Exception $e) {
 	_error(__("Error"), $e->getMessage());
