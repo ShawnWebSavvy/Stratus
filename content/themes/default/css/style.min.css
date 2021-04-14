@@ -849,6 +849,7 @@
  .post-media-image div{background-size: cover;background-repeat:no-repeat;background-position:center top;background-color:#eee;width:100%;height:250px;overflow:hidden;display:inline-block;min-width:100px;}
  .post-media-image div.source{min-height:unset;padding-top:0px;}
  .embed-ifram-wrapper *{width:100% !important;}
+ .embed-ifram-wrapper video{max-height: 250px !important;}
  /* .embed-ifram-wrapper iframe{min-height:441px;max-height:441px;} */
  .embed-ifram-wrapper iframe {min-height: auto;	max-height: 250px;}
  .post-media-meta{padding:15px;width:100%;-webkit-transition:all 0.2s;transition:all 0.2s;}
@@ -1972,7 +1973,7 @@
  .nav-search.nav-fill .nav-item{width:auto;flex:inherit;}
  .child-post-ul{box-shadow:0px 3px 15px 0px rgba(0, 0, 0, 0.1);border:1px solid #ebeaef;background-color:#fff;margin-bottom:20px;border-radius:10px;}
  .child-post-ul .post{box-shadow:none;border:none;margin-bottom:0px;position:relative;}
- .child-post-ul .post .post-body .post-replace,.child-post-ul .post .post-body .post-stats,.child-post-ul .post .post-body .imageWrapeGlobal,.child-post-ul .post .post-body .post-actions{padding-left:52px;}
+ .child-post-ul .post .post-body .post-replace,.child-post-ul .post .post-body .post-stats,.child-post-ul .post .post-body .imageWrapeGlobal,.child-post-ul .post .post-body .post-actions,.child-post-ul .post .post-body .post-replace + .mt10{padding-left:52px;}
  .child-post-ul .post:last-child{margin-bottom:20px;}
  .invite-friend-sidebar .form-group{margin-bottom:7px;}
  .child-post-ul li{position:relative;position:relative;width:100% !important;padding:0px !important;}
@@ -2064,7 +2065,7 @@
  .publisher-tools-tabs-ul-newDesign{display:flex;justify-content:flex-start;flex-wrap:nowrap;padding-left:20px;align-items:center;flex-wrap:wrap;} 
  .addPostText{display:inline-block;flex:1;color:#A7B4CB;font-size:14px;font-weight:600;letter-spacing:0;line-height:20px;min-width:119px;} 
  .hiddBar{display:none !important;} .postThreadButton{position:relative;padding-top:0px;padding-bottom:0px;} 
- .postThreadButton .post-replace,.postThreadButton .post-header .post-meta,.postThreadButton .imageWrapeGlobal{display:none;} 
+ .postThreadButton .post-replace,.postThreadButton .post-header .post-meta,.postThreadButton .imageWrapeGlobal,.postThreadButton .post-replace + .mt10{display:none;} 
  .threadButtonPosition{ position:absolute; top:50%; left:65px; transform:translateY(-50%); padding-bottom:6px; -webkit-transform:translateY(-50%); -moz-transform:translateY(-50%); -ms-transform:translateY(-50%); -o-transform:translateY(-50%); }
  .secoundPostHidd .feeds_post{display:none;} 
  .reaction-btn-icon.likeButton .likeIcon,.reaction-btn-icon.unLikeButton .unLikeIcon{display:flex;} 

@@ -103,9 +103,9 @@
                         <!-- comments -->
 
                         <!-- shares -->
-                        <span class="pointer ml10 {if $post['shares'] == 0}x-hidden{/if}" data-toggle="modal"
+                        <span class="pointer ml10 shareButtonIcon {if $post['shares'] == 0}x-hidden{/if}" data-toggle="modal"
                             data-url="posts/who_shares.php?post_id={$post['post_id']}">
-                            {$post['shares']} {__("Shares")}
+                            <i class="fa fa-share"></i> {$post['shares']} {__("Shares")}
                         </span>
                         <!-- shares -->
                     </span>

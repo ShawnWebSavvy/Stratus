@@ -53,3 +53,5 @@ div#modal .whoreactModal .float-right._user_action_ button.js_friend-remove img{
 .whoreactModal .searchSectionWrap .usernamesWrapBlock ._user_action_ button span img{margin-right: 0;display: inline-block;}
 div#modal .whoreactModal .float-right._user_action_ button.js_friend-remove img:nth-child(1) {display: inline-block;}
 .post-header .post-meta .dropdown-toggle .share_sign_img {display: flex;}
+.shareButtonIcon {display: flex;align-items: center;}
+.shareButtonIcon .fa-share{margin-right: 8px;}
