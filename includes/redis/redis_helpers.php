@@ -159,6 +159,7 @@ function cachedUserData($db, $system, $user_id, $user_token)
     // $redisObject->deleteValueFromKey($redisPostKey);
     //print_r($isKeyExistOnRedis);
     //die;
+    $isKeyExistOnRedis = false;
     if ($isKeyExistOnRedis == false) {
         /* get user pages */
         $userQuery = sprintf(
