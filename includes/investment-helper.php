@@ -108,7 +108,7 @@ class InvestmentHelper {
                     $redisObject = new RedisClass();
                     $redisPostKey = 'user-' . $user_data['user_id'];
                     $redisObject->deleteValueFromKey($redisPostKey);
-                    cachedUserData($db, $system, $user_data['user_id'],$user_data['active_session_token']);
+                    // cachedUserData($db, $system, $user_data['user_id'],$user_data['active_session_token']);
                 
                 }
                 return true;
@@ -147,7 +147,7 @@ class InvestmentHelper {
                     $redisObject = new RedisClass();
                     $redisPostKey = 'user-' . $user_data['user_id'];
                     $redisObject->deleteValueFromKey($redisPostKey);
-                    cachedUserData($db, $system, $user_data['user_id'],$user_data['active_session_token']);
+                    // cachedUserData($db, $system, $user_data['user_id'],$user_data['active_session_token']);
                 }
                 return true;
             }else{
