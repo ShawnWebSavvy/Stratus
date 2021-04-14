@@ -61,6 +61,9 @@ try {
 				$posts = $userGlobal->global_profile_get_posts();
 				/* assign variables */
 				$smarty->assign('posts', $posts);
+
+				$smarty->assign('addPost', true);
+
 				break;
 
 			case 'popular':

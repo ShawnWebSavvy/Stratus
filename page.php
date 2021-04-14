@@ -74,6 +74,11 @@ try {
 			$posts = $user->get_posts(array('get' => 'posts_page', 'id' => $spage['page_id']));
 			/* assign variables */
 			$smarty->assign('posts', $posts);
+		 
+			if($spage['i_admin']){
+			   $smarty->assign('addPost', true);
+			}
+
 			break;
 
 		case 'photos':
