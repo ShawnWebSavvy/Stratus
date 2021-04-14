@@ -7,6 +7,10 @@ function returnResponse($status , $code,$msg , $data = array()){
 
 function checkHeaders($headerToken){
     $headers = getallheaders();
+    if(isset($headers['api-key'])){
+        $headers['API-KEY'] = $headers['api-key'];
+        unset($headers['api-key']);
+    }
     if(!isset($headers['API-KEY'])){
         return 402;
     }
