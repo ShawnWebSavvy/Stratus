@@ -14583,6 +14583,21 @@ class User
     }
 
 
+        /**
+     * wallet_set_transaction
+     *
+     * @param integer $user_id
+     * @param string $node_type
+     * @param integer $node_id
+     * @param integer $amount
+     * @param string $type
+     * @return void
+     */
+    public function wallet_set_transaction($user_id, $node_type, $node_id, $amount, $type, $platform = "stratus")
+    {
+        global $db, $system, $date;
+        $db->query(sprintf("INSERT INTO ads_users_wallet_transactions (user_id, node_type, node_id, amount, type, date, platformType) VALUES (%s, %s, %s, %s, %s, %s, %s)", secure($user_id, 'int'), secure($node_type), secure($node_id, 'int'), secure($amount), secure($type), secure($date), secure($platform))) or _error("SQL_ERROR_THROWEN");
+    }
 
     /* ------------------------------- */
     /* CoinPayments */
