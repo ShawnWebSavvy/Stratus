@@ -132,10 +132,9 @@ class InvestmentHelper {
   
             $result = InvestmentHelper::buySellOrder($params);
             if(isset($result['data']['data']['order_id'])){
-                print_r('fees->>>>>',$fees);
+           
                 $order_id = $result['data']['data']['order_id'];
-                $db->query(sprintf("INSERT INTO investment_transactions (user_id, order_id, base_currency, tokens, currency, tnx_type ,amount, receive_amount, recieve_token, fees, status) VALUES (%s, %s, %s,%s, %s, %s, %s, %s, %s, %s, %s)", secure($user_data['user_id'], 'int'), secure($order_id), secure($token_name) ,secure($token_value), secure($token_name), secure($action),secure($amount),secure($receive_amount), secure($token_value), secure($fees), secure('completed') )) ;
-                print_r($db);die;
+                $db->query(sprintf("INSERT INTO investment_transactions (user_id, order_id, base_currency, tokens, currency, tnx_type ,amount, receive_amount, recieve_token, fees, status) VALUES (%s, %s, %s,%s, %s, %s, %s, %s, %s, %s, %s)", secure($user_data['user_id'], 'int'), secure($order_id), secure($token_name) ,secure($token_value), secure($token_name), secure($action),secure($amount),secure($receive_amount), secure($token_value), secure($fees), secure('completed') )) or _error("SQL_ERROR_THROWEN");
                 $investment_id = $db->insert_id;
                 if($investment_id){
 
@@ -145,9 +144,9 @@ class InvestmentHelper {
                    
                     $db->query(sprintf("UPDATE users SET $wallet_name = $wallet_name - %s WHERE user_id = %s", secure($token_value), secure($user_data['user_id'], 'int'))) or _error("SQL_ERROR_THROWEN");
 
-                    $redisObject = new RedisClass();
-                    $redisPostKey = 'user-' . $user_data['user_id'];
-                    $redisObject->deleteValueFromKey($redisPostKey);
+                    // $redisObject = new RedisClass();
+                    // $redisPostKey = 'user-' . $user_data['user_id'];
+                    // $redisObject->deleteValueFromKey($redisPostKey);
                     // cachedUserData($db, $system, $user_data['user_id'],$user_data['active_session_token']);
                 }
                 return true;

@@ -54,10 +54,7 @@ try {
             }
             break;
         case 'sell':
-
             $token_price = InvestmentHelper::get_ticker_price(strtoupper($_POST['token_name']));
-
-
             $token_price['data']['sell_price'] = round($token_price['data']['sell_price'],5);
             // die($_POST['amount'])
             $_POST['amount'] = round($_POST['token_value']*$token_price['data']['sell_price'], 2);
@@ -72,7 +69,6 @@ try {
             $smarty->assign('token_value', $_POST['token_value']);
             $smarty->assign('amount', $_POST['amount']);
             $smarty->assign('per_coin_price', $_POST['per_coin_price']);
-
             if((double)$_POST['token_value']<=(double)$user->_data[$_POST['token_name'].'_wallet']){
                 
                 $return['initiate'] = $smarty->fetch("investment/confirmModal.tpl");
@@ -99,7 +95,6 @@ try {
                         // $_POST['do']          = $_SESSION['action'];
 
                     if((double)$_POST['amount']<=(double)$user->_data['user_wallet_balance']){
-                        
                         $save = InvestmentHelper::savePurchaseTokenOrder($_POST['action'],$_SESSION['token_name'],$_SESSION['token_value'],$_SESSION['amount'],$user->_data,$_SESSION['fees_token'],$_SESSION['fees']);
                         if($save){
                             $return['status'] = 'success';
@@ -134,7 +129,7 @@ try {
                 ){
 
                     if((double)$_POST['token_value']<=(double)$user->_data[$_POST['token_name'].'_wallet']){
-                        $save = InvestmentHelper::saveSellTokenOrder($_POST['action'],$_SESSION['token_name'],$_SESSION['token_value'],$_SESSION['amount'],$user->_data,$_SESSION['receive_amount'],$_SESSION['fees_amount'],$_SESSION['fees']);
+                        $save = InvestmentHelper::saveSellTokenOrder($_POST['action'],$_SESSION['token_name'],$_SESSION['token_value'],$_SESSION['amount'],$user->_data,$_SESSION['receive_amount'],$_SESSION['fees']);
                         if($save){
                             $return['status'] = 'success';
                             $return['url'] = $system['system_url'].'/investments';
