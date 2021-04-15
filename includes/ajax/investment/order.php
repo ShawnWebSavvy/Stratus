@@ -54,9 +54,10 @@ try {
             }
             break;
         case 'sell':
+
+            echo'<pre>';print_r($_POST);die;
             $token_price = InvestmentHelper::get_ticker_price(strtoupper($_POST['token_name']));
 
-            echo '<pre>'; print_r($token_price);die;
 
             $token_price['data']['sell_price'] = round($token_price['data']['sell_price'],5);
             // die($_POST['amount'])
