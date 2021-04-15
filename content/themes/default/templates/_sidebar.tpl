@@ -255,7 +255,7 @@
                 </a>
                 </li>
             </ul>
-            {if $system['investment_module_status']}
+            {* {if $system['investment_module_status']}
             <ul class="main-side-nav main-left-side-nav left-sidebar-first-ul {if $page=="investment/buy_sell" || $page=="investment/index" } active {/if}">
                 <li {if $active_page=="Investment" }class="active" {/if}>
                     <a href=" {$system['system_url']}/investments">
@@ -271,7 +271,7 @@
 
                 </li>
             </ul>
-            {/if}
+            {/if} *}
             <!-- ADS Hub end -->
             <!-- Market HUB Starts -->
             {if $system['market_enabled']}
