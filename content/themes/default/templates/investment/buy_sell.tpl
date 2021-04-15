@@ -2,8 +2,8 @@
 {include file='_header.tpl'}
 <style>
 
-@media (max-width: 460x) {
-  .MobileCrousle.mob_style .flickity-enabled.is-draggable .flickity-viewport {
+@media (max-width: 460px) {
+ .buySellSection .MobileCrousle.mob_style .flickity-enabled.is-draggable .flickity-viewport {
     height: 334.5px !important;
   }
 }
