@@ -14,7 +14,7 @@
                 <div class="home-page-middel-block">
                     <div class="card investmentWrapSection">
                         <div class="delistingsUpdate">
-                            <div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel">
+                            {* <div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel">
                                 <ol class="carousel-indicators">
                                     <li data-target="#carouselExampleIndicators" data-slide-to="0" class="active"></li>
                                     <li data-target="#carouselExampleIndicators" data-slide-to="1"></li>
@@ -46,9 +46,10 @@
                                         </div>
                                     </div>
                                 </div>
-                            </div>
+                            </div> *}
+                            <img src="{$system['system_url']}/content/themes/default/images/investment/News@3x.png">
                         </div>
-                        <div class="MobileCrousle">
+                        {* <div class="MobileCrousle">
                             <div class="gallery js-flickity" data-flickity-options='{ "wrapAround": true,"prevNextButtons": false, "pageDots": false }'>
                                 <div class="gallery-cell">
                                     <div class="delistingsUpdate">
@@ -101,7 +102,7 @@
                                     </div>
                                 </div>
                             </div>
-                        </div>
+                        </div> *}
                         <div class="coreAssets">
                             <div class="heading">
                                 <h3>Core Assets</h3>

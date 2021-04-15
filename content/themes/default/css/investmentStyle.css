@@ -19,7 +19,7 @@
     background-color: transparent;
   }
 }
-
+/* 
 .investmentWrapSection .delistingsUpdate {
 	background-image: url("../images/investment/News@3x.png");
 	background-position: center;
@@ -31,6 +31,11 @@
 	padding: 30px;
 	width: 100%;
   margin: 0 auto;
+} */
+.investmentWrapSection .delistingsUpdate {
+	max-width: 751px;
+	width: 100%;
+  margin: 0 auto;
 }
 
 
@@ -39,7 +44,6 @@
   .investmentWrapSection .delistingsUpdate {
     max-width: 100%;
     width: 100%;
-    display: none;
   }
 }
 @media (max-width: 575px) {
@@ -1522,6 +1526,12 @@ select.flat-select:hover {
   align-items: center;
   justify-content: center;
   font-size: 28px;
+}
+
+.investmentWrapSection .delistingsUpdate img {
+	max-width: 100%;
+	border-radius: 10px;
+	overflow: hidden;
 }
 /* End */
 
