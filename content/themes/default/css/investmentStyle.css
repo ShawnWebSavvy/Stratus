@@ -1537,7 +1537,7 @@ select.flat-select:hover {
 
 
 @media(max-width: 460px){
-  .MobileCrousle .flickity-enabled.is-draggable .flickity-viewport {
+  .MobileCrousle.mob_style .flickity-enabled.is-draggable .flickity-viewport {
     height: 334.5px !important;
   }
 }
