@@ -79,6 +79,7 @@ try {
                 $_SESSION['receive_amount']     = $receive_amount;
                 $_SESSION['fees']           = $token_price['data']['sell_fees'];
                 $_SESSION['time']           = time();
+                echo '<pre>'; print_r($token_price['data']);die;
             }else{
                 $return['failed'] = $smarty->fetch("investment/top_up.tpl");
             }
@@ -95,7 +96,7 @@ try {
                         // $_POST['do']          = $_SESSION['action'];
 
                     if((double)$_POST['amount']<=(double)$user->_data['user_wallet_balance']){
-                        echo '<pre>'; print_r($_SESSION['fees']);die;
+                        
                         $save = InvestmentHelper::savePurchaseTokenOrder($_POST['action'],$_SESSION['token_name'],$_SESSION['token_value'],$_SESSION['amount'],$user->_data,$_SESSION['fees_token'],$_SESSION['fees']);
                         if($save){
                             $return['status'] = 'success';
