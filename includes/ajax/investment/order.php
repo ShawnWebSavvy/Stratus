@@ -55,6 +55,9 @@ try {
             break;
         case 'sell':
             $token_price = InvestmentHelper::get_ticker_price(strtoupper($_POST['token_name']));
+
+            echo '<pre>'; print_r('token_price---',$token_price['data']);die;
+
             $token_price['data']['sell_price'] = round($token_price['data']['sell_price'],5);
             // die($_POST['amount'])
             $_POST['amount'] = round($_POST['token_value']*$token_price['data']['sell_price'], 2);
@@ -79,7 +82,6 @@ try {
                 $_SESSION['receive_amount']     = $receive_amount;
                 $_SESSION['fees']           = $token_price['data']['sell_fees'];
                 $_SESSION['time']           = time();
-                echo '<pre>'; print_r($token_price['data']);die;
             }else{
                 $return['failed'] = $smarty->fetch("investment/top_up.tpl");
             }
