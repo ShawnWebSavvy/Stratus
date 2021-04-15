@@ -1513,13 +1513,18 @@ select.flat-select:hover {
 
 .investmentWrapSection .delistingsUpdate img {
 	max-width: 100%;
-	border-radius: 10px;
-	overflow: hidden;
+	border-radius: 10px !important;
+	overflow: hidden !important;
+}
+.investmentWrapSection .delistingsUpdate{
+  background: transparent !important;
+  background-image: none !important;
+  padding: 0 !important;
 }
 /* End */
 
 
-@media(max-width: 460px){
+@media (max-width: 460x) {
   .MobileCrousle.mob_style .flickity-enabled.is-draggable .flickity-viewport {
     height: 334.5px !important;
   }
