@@ -88,7 +88,7 @@ class InvestmentHelper {
             // $fees        = $token_price['data']['buy_fees'];
             // $fees_token = round($token_value*$fees/100,5);
             $receive_token = $token_value-$fees_token;;
-            $params['size'] = $receive_token;
+            $params['size'] = $token_value;
             $result = InvestmentHelper::buySellOrder($params);
             if(isset($result['data']['data']['order_id'])){
                 $order_id = $result['data']['data']['order_id'];
