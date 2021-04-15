@@ -55,7 +55,6 @@ try {
             break;
         case 'sell':
 
-            echo'<pre>';print_r($_POST);die;
             $token_price = InvestmentHelper::get_ticker_price(strtoupper($_POST['token_name']));
 
 
@@ -73,6 +72,8 @@ try {
             $smarty->assign('token_value', $_POST['token_value']);
             $smarty->assign('amount', $_POST['amount']);
             $smarty->assign('per_coin_price', $_POST['per_coin_price']);
+
+            echo'<pre>';print_r($token_price);die;
             if((double)$_POST['token_value']<=(double)$user->_data[$_POST['token_name'].'_wallet']){
                 
                 $return['initiate'] = $smarty->fetch("investment/confirmModal.tpl");
