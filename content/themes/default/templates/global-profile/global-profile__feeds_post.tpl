@@ -1,6 +1,5 @@
-{if !$post_array}
- <div class="carsds" data-id="{$post['post_id']}" post-type="{$post['post_type']}">
-{/if}
+ <div class="carsds {$_notOrigin}" data-id="{$post['post_id']}" post-type="{$post['post_type']}">
+
         {if !$standalone}
             <div class="feeds_post{if $post['childPostExists']==true}   parent-post-li{/if}"
                 data-id="{$post['post_id']}" post-type="{$post['post_type']}">
@@ -436,7 +435,7 @@
                     {/foreach} -->
 
             {foreach $post['childPostData'] as $post}
-            {include file='global-profile/global-profile__feeds_post.tpl' _get=$_get}
+            {include file='global-profile/global-profile__feeds_post.tpl' _get=$_get  _notOrigin='notOrigin'}
             {/foreach}
             <!-- post body button show thread -->
             {if ($page!="global-profile/global-profile-post") }
@@ -456,6 +455,5 @@
         {if !$standalone}
     </div>
     {/if}
-{if !$post_array}    
+
  </div>
-{/if}

@@ -295,7 +295,7 @@ function load_more(element) {
       } else {
         if (response.data) {
             var datatta = response.data;
-            var ArrayVal = datatta.split('<div class="carsds"');
+            var ArrayVal = datatta.split('<div class="carsds "');
             var loopArray = [];
             if (ArrayVal.length > 0) {
               for (var i = 1; i < ArrayVal.length; i++) {

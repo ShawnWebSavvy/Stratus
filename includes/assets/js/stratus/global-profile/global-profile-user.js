@@ -128,7 +128,7 @@ function data_heartbeat() {
             if (response.posts && response.posts != null) {
                 console.log("response.posts->>>>>>>", response.posts);
                 var datatta = response.posts;
-                var ArrayVal = datatta.split('<div class="carsds"');
+                var ArrayVal = datatta.split('<div class="carsds "');
                 var loopArray = [];
                 if (ArrayVal.length > 0) {
                     for (var i = 1; i < ArrayVal.length; i++) {
