@@ -46,7 +46,7 @@
                         <div class="alert alert-success x-hidden"></div>
                         <!-- success -->
                         <!-- error -->
-                        <div class="alert alert-danger text-center x-hidden"></div>
+                        <div class="alert alert-danger x-hidden"></div>
                         <!-- error -->
                     </form>
                 </div>

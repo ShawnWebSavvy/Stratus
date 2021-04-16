@@ -1,5 +1,4 @@
 <?php
-
 /**
  * ajax -> core -> signin
  * 
@@ -17,8 +16,8 @@ require('../../../bootstrap.php');
 is_ajax();
 
 // check user logged in
-if ($user->_logged_in) {
-	return_json(array('callback' => 'window.location.reload();'));
+if($user->_logged_in) {
+    return_json( array('callback' => 'window.location.reload();') );
 }
 
 try {
@@ -26,14 +25,12 @@ try {
 	// signin
 	$remember = (isset($_POST['remember'])) ? true : false;
 	$user->sign_in($_POST['username_email'], $_POST['password'], $remember);
-	$url = $system['system_url'];
 
-	return_json(array('callback' => 'window.location.assign("'.$url.'");'));
 	// return
-	//return_json(array('callback' => 'window.location.reload();'));
-	//return_json( array("callback" => "window.location.replace('landingpage');") );
-	//return_json( array('callback' => 'location.href(landingpage);') );
-
+	return_json( array('callback' => 'window.location.reload();') );
+	//return_json( array("callback" => "window.location.replace('landingpage.php');") );
+	//return_json( array('callback' => 'location.href(landingpage.php);') );
+	
 } catch (Exception $e) {
-	return_json(array('error' => true, 'message' => $e->getMessage()));
+	return_json( array('error' => true, 'message' => $e->getMessage()) );
 }

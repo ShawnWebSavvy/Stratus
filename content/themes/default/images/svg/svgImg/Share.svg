@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="18px" height="18px" viewBox="0 0 18 18" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <title>Icon/Share</title>
+    <defs>
+        <path d="M18,9 L11,2 L11,6 C4,7 1,12 0,17 C2.5,13.5 6,11.9 11,11.9 L11,16 L18,9 Z" id="path-1"></path>
+    </defs>
+    <g id="Icon/Share" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <mask id="mask-2" fill="white">
+            <use xlink:href="#path-1"></use>
+        </mask>
+        <use id="Shape" fill="#1E1F20" xlink:href="#path-1"></use>
+    </g>
+</svg>

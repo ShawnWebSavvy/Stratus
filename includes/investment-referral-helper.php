@@ -84,8 +84,9 @@ class InvestmentReferralHelper
             return false;
         }
 
-        $custom_bonus = $db->query(sprintf("SELECT * FROM user_custom_referrals where user_id=$user_id")) or _error("SQL_ERROR_THROWEN"); 
-        if ($custom_bonus->num_rows > 0 && $amount>0) {
+        $custom_bonus = $db->query(sprintf("SELECT * FROM user_custom_referrals where user_id=$user_id")) or _error("SQL_ERROR_THROWEN");
+        $zero_level = ($level=='lv0'||$level=='level0') ? true : false; 
+        if ($custom_bonus->num_rows > 0 && $amount>0 && $zero_level==true) {
             
             $custom_bonus = $custom_bonus->fetch_assoc();
             $COINS = json_decode($custom_bonus['referral'],true);
@@ -119,7 +120,6 @@ class InvestmentReferralHelper
 
         try{    
             $transaction = null;
-            $zero_level = ($level=='lv0'||$level=='level0') ? true : false;
             $order_id = rand(100, 9999);
          
             $base_currency = 'usd';

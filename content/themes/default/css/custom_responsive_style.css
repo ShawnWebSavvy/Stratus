@@ -230,7 +230,7 @@ body.group-localhub .profile-mobile-layout .profileUpdatesDesign .row.no-gutters
 .__mob-icons_,._mob-icons{display:flex!important}
 .search-localhub .js_friend-add{font-size:0}
 .login-index-body .rightSideBarScroll{height:calc(100vh - 400px)!important;overflow-x:hidden}
-.openInNewTab{display:none!important}
+/* .openInNewTab{display:none!important} */
 .card-header.bg-transparent{font-size:14px;line-height:normal}
 .leftSidebarButton{padding:0;font-size:19px;display:inline-block}
 .mini-footer{display:none}

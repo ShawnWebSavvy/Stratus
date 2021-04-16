@@ -11,7 +11,8 @@
                 <a class="h6" href="{$system['system_url']}/global-profile.php?username={$_user['user_name']}"
                     title="{$_user['user_firstname']} {$_user['user_lastname']}">
                     {$_user['user_firstname']} {$_user['user_lastname']}
-                    <!-- <span class="search_username" style="color:#a7b4cb;font-size:12px;letter-spacing:0;line-height:20px;">{$_user['user_name']}</span> -->
+                    <br><span class="search_username"
+                        style="color:#a7b4cb;font-size:12px;letter-spacing:0;line-height:20px;">{$_user['user_name']}</span>
                 </a>
             </span>
             {if $_user['user_verified']}
@@ -51,7 +52,7 @@
             <button type="button" class="btn  btn-success {if !$_no_action}btn-delete{/if} js_friend-remove"
                 data-uid="{$_user['user_id']}">
                 <img class="btn_image"
-                    src="{$system['system_url']}/content/themes/default/images/svg/svgImg/newchecked1.svg">
+                    src="{$system['system_url']}/content/themes/default/images/svg/svgImg/plus_icon.svg">
                 <img class="btn_image_hover"
                     src="{$system['system_url']}/content/themes/default/images/svg/svgImg/delete_icon.svg">
                 <span class="btn_image_"> {__("Friends")} </span>
@@ -191,7 +192,7 @@
                 <button type="button" class="btn  btn-success {if !$_no_action}btn-delete{/if} js_friend-remove"
                     data-uid="{$_user['user_id']}">
                     <img class="btn_image"
-                        src="{$system['system_url']}/content/themes/default/images/svg/svgImg/newchecked1.svg">
+                        src="{$system['system_url']}/content/themes/default/images/svg/svgImg/plus_icon.svg">
                     <img class="btn_image_hover"
                         src="{$system['system_url']}/content/themes/default/images/svg/svgImg/delete_icon.svg">
                     <span class="btn_image_"> {__("Friends")} </span>

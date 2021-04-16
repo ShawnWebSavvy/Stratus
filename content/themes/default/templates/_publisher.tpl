@@ -407,11 +407,13 @@
                                     <div class="publisher-tools-tab attach js_publisher-tab" data-tab="photos">
                                         <a style="margin-left: 0;" data-tab="live" href="{$system['system_url']}/live">
                                             <img alt="image" title="Go Live"
-                                                src="{$system['system_uploads_assets']}/content/themes/{$system['theme']}/images/svg/live.svg"
-                                                class="" data-handle="publisher" data-multiple="true"
+                                                src="{$system['system_uploads_assets']}/content/themes/default/images/svg/svgImg/liveVideo.svg"
+                                                class="blackIcon" 
                                                 style="width:30px" />
-                                        </a>
-                                    </div>
+                                             <span class="class-publisher-text">Live</span>
+                                        
+                                        </div>
+                                    </a>
                                 </li>
                                 {/if}
                                 {if $system['activity_posts_enabled']}
@@ -419,7 +421,7 @@
                                     <div class="publisher-tools-tab js_publisher-feelings">
                                         <img class="BlueIcon" alt="image" title="Feelings/Activity"
                                             src="{$system['system_uploads_assets']}/content/themes/default/images/svg/svgImg/feelingsHover.svg" />
-                                        <img class="blackIcon" alt="image" title="Feelings/Activity"
+                                        <img class="blackIcon" class="BlueIcon" alt="image" title="Feelings/Activity"
                                             src="{$system['system_uploads_assets']}/content/themes/default/images/svg/svgImg/feelings.svg" />
                                         <span class="class-publisher-text">Feelings/Activity</span>
                                     </div>

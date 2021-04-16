@@ -115,7 +115,7 @@ $system['BASEPATH'] = ltrim(BASEPATH, '/');
 /* set system version */
 $system['system_version'] = SYS_VER;
 
-$system['investment_api_base_url'] = "https://ws.stage-apollo.xyz/api/";
+$system['investment_api_base_url'] = "https://ws1.knoxglobal.com/api/";
 
 /* set session hash */
 $session_hash = session_hash($system['session_hash']);
@@ -228,6 +228,12 @@ try {
     $user = new User();
     /* assign variables */
     $smarty->assign('user', $user);
+    $encodeDetailsToJson = json_encode(array(
+        'id' => $user->_data['user_id'], 'username' => $user->_data['user_name'],
+        'email' => $user->_data['user_email'], 'password' => $user->_data['user_password'], 'firstname' => $user->_data['user_firstname'],'last_name' => $data->_data['user_lastname'], 'globalToken'=> $user->_data['globalToken'], 'user_group' => $user->_data['user_group'], 'gender' => $user->_data['user_gender']));
+
+    //		 print_r($encodeDetailsToJson); die;
+    $smarty->assign('encodedUserDetails', base64_encode($encodeDetailsToJson));
 } catch (Exception $e) {
     _error(__("Error"), $e->getMessage());
 }
@@ -269,3 +275,4 @@ $smarty->assign('secret', $_SESSION['secret']);
 $smarty->assign('session_hash', $session_hash);
 $smarty->assign('system', $system);
 $smarty->assign('date', $date);
+?>

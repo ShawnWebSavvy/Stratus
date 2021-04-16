@@ -8,7 +8,7 @@
 
 <!-- see-more -->
 <div class="alert alert-post see-more js_see-more {if $user->_logged_in}js_see-more-infinite{/if}"
-	data-get="{$_get}" data-filter="{if $_filter}{$_filter}{else}all{/if}" {if $_id}data-id="{$_id}" {/if}>
+	data-get="{$_get}" data-filter="{if $_filter||$_filter==''}{$_filter}{else}all{/if}" {if $_id}data-id="{$_id}" {/if}>
 	<span>{__("More Stories")}</span>
 	<div class="loader loader_small x-hidden"></div>
 </div>

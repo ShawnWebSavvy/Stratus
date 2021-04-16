@@ -27,7 +27,7 @@ try {
 	}
 	$smarty->assign('url', $_GET['url']);
 
-	
+	$smarty->assign('addPost', true);
 
 } catch (Exception $e) {
 	_error(__("Error"), $e->getMessage());

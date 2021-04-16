@@ -665,14 +665,14 @@
 {elseif $_post['post_type'] == "video" && $_post['video']}
     <div>
         <video class="js_fluidplayer" id="video-{$_post['video']['video_id']}{if $pinned || $boosted}-{$_post['post_id']}{/if}" {if $user->
-          _logged_in}onplay="update_media_views('video', {$_post['video']['video_id']})"{/if} {if $_post['video']['thumbnail']}poster="{$system['system_uploads']}/{$_post['video']['thumbnail']}"{/if} controls preload="auto" style="width:100%;height:100%;" width="100%" height="100%">
+          _logged_in}onplay="update_media_views(event, 'video', {$_post['video']['video_id']})"{/if} {if $_post['video']['thumbnail']}poster="{$system['system_uploads']}/{$_post['video']['thumbnail']}"{/if} controls preload="auto" style="width:100%;height:100%;" width="100%" height="100%">
           <source src="{$system['system_uploads']}/{$_post['video']['source']}" type="video/mp4">
           <source src="{$system['system_uploads']}/{$_post['video']['source']}" type="video/webm">
        </video>
     </div>
 {elseif $_post['post_type'] == "audio" && $_post['audio']}
     <div class="plr10">
-        <audio class="js_audio" id="audio-{$_post['audio']['audio_id']}" {if $user->_logged_in}onplay="update_media_views('audio', {$_post['audio']['audio_id']})"{/if} controls preload="auto" style="width: 100%;">
+        <audio class="js_audio" id="audio-{$_post['audio']['audio_id']}" {if $user->_logged_in}onplay="update_media_views(event, 'audio', {$_post['audio']['audio_id']})"{/if} controls preload="auto" style="width: 100%;">
             <source src="{$system['system_uploads']}/{$_post['audio']['source']}" type="audio/mpeg">
             <source src="{$system['system_uploads']}/{$_post['audio']['source']}" type="audio/mp3">
             {__("Your browser does not support HTML5 audio")}

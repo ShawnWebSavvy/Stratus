@@ -1,3 +1,5 @@
+var save_file_name ='';
+var image_blured = 0;
 function initialize_modal() {
     $(".js_scroller").each(function() {
         var e = $(this),
@@ -429,8 +431,13 @@ api["data/live"] = ajax_path + "data/global-profile/global-profile-live.php", ap
                                 init_picture_position()
                             }, 1e3)
                         } else if ("picture-user" == i || "picture-page" == i || "picture-group" == i) {
+                            save_file_name = e.file;
+                            image_blured = e.image_blured;
+
                             t = uploads_path + "/" + e.file;
-                            $(".profile-avatar-wrapper img").attr("src", t), $(".js_init-crop-picture").data("image", t), init_picture_crop($(".js_init-crop-picture"))
+                            // $(".profile-avatar-wrapper img").attr("src", t),
+                            $(".js_init-crop-picture").data("image", t),
+                            init_picture_crop($(".js_init-crop-picture"))
                         } else if ("publisher" == i) {
                             p && p.remove();
                             var n = f.data("photos");
@@ -599,7 +606,9 @@ api["data/live"] = ajax_path + "data/global-profile/global-profile-live.php", ap
             x: values.x,
             y: values.y,
             height: values.height,
-            width: values.width
+            width: values.width,
+            save_file_name:save_file_name,
+            image_blured: image_blured
         }, function(response) {
             response.callback ? eval(response.callback) : ($("#modal").modal("hide"), window.location.reload())
         }, "json").fail(function() {

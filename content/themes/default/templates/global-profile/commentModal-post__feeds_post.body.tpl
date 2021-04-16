@@ -495,19 +495,27 @@
                     <div class="btn-group" data-toggle="tooltip" data-placement="top" data-value="me"
                         title='{__("Shared with: Only Me")}'>
                         <button type="button" class="btn dropdown-toggle" data-toggle="dropdown" data-display="static">
-                            <i class="btn-group-icon fa fa-lock"></i>
+                            <span class="share_sign_img privacy_{$_post['post_id']}" id="{$_post['post_id']}">
+                                <img src="{$system['system_uploads_assets']}/content/themes/default/images/svg/svgImg/Hide_form.svg"
+                                    class="blackicon">
+                            </span>
                         </button>
                     {elseif $_post['privacy'] == "friends"}
                         <div class="btn-group" data-toggle="tooltip" data-placement="top" data-value="friends"
                             title='{__("Shared with: Friends")}'>
                             <button type="button" class="btn dropdown-toggle" data-toggle="dropdown" data-display="static">
-                                <i class="btn-group-icon fa fa-users"></i>
+                                <span class="share_sign_img privacy_{$_post['post_id']}" id="{$_post['post_id']}">
+                                    <img src="{$system['system_uploads_assets']}/content/themes/default/images/svg/svgImg/friendsIcon.svg"
+                                        class="blackicon">
+                                </span>
                             </button>
                         {elseif $_post['privacy'] == "public"}
                             <div class="btn-group" data-toggle="tooltip" data-placement="top" data-value="public"
                                 title='{__("Shared with: Public")}'>
                                 <button type="button" class="btn dropdown-toggle" data-toggle="dropdown" data-display="static">
-                                    <i class="btn-group-icon fa fa-globe"></i>
+                                    <span class="share_sign_img privacy_{$_post['post_id']}" id="{$_post['post_id']}">
+                                        <img src="{$system['system_uploads_assets']}/content/themes/default/images/svg/svgImg/nav_icon_globalHub.svg" class="blackicon">
+                                    </span>
                                 </button>
                             {/if}
                             <div class="dropdown-menu dropdown-menu-right">
@@ -807,7 +815,7 @@
             <div>
                 <video class="js_fluidplayer"
                     id="video-{$_post['video']['video_id']}{if $pinned || $boosted}-{$_post['post_id']}{/if}"
-                    {if $user->_logged_in}onplay="update_media_views('video', {$_post['video']['video_id']})" {/if}
+                    {if $user->_logged_in}onplay="update_media_views(event, 'video', {$_post['video']['video_id']})" {/if}
                     {if $_post['video']['thumbnail']}poster="{$system['system_uploads']}/{$_post['video']['thumbnail']}"
                     {/if} controls preload="auto" style="width:100%;height:100%;" width="100%" height="100%">
                     <source src="{$system['system_uploads']}/{$_post['video']['source']}" type="video/mp4">
@@ -841,7 +849,7 @@
         {elseif $_post['post_type'] == "audio" && $_post['audio']}
         <div class="plr10">
             <audio class="js_audio" id="audio-{$_post['audio']['audio_id']}"
-                {if $user->_logged_in}onplay="update_media_views('audio', {$_post['audio']['audio_id']})" {/if} controls
+                {if $user->_logged_in}onplay="update_media_views(event,'audio', {$_post['audio']['audio_id']})" {/if} controls
                 preload="auto" style="width: 100%;">
                 <source src="{$system['system_uploads']}/{$_post['audio']['source']}" type="audio/mpeg">
                 <source src="{$system['system_uploads']}/{$_post['audio']['source']}" type="audio/mp3">

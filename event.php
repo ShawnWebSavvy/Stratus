@@ -97,6 +97,12 @@ try {
 			/* assign variables */
 			$smarty->assign('posts', $posts);
 			$smarty->assign('get', $get);
+
+            if( $event['i_joined'] && ($event['event_publish_enabled'] || (!$event['event_publish_enabled'] && $event['i_admin'])) ){
+				$smarty->assign('addPost', true);
+			}
+
+
 			break;
 
 		case 'photos':

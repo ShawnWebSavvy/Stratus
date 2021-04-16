@@ -5,15 +5,10 @@ function onimgTagclick(e) {
         s = $(e).attr("data-video"),
         a = $(e).attr("data-vid");
     $(e).after(
-        '<video class="js_fluidplayer stratus-customvideo thumb_crsp_video_tag" id="video-' +
-        a + '-' + video_index +
-        '" onplay="update_media_views("video", ' +
-        a +
-        ')" controls  preload="auto" style="width:100%;height:100%;" width="100%" height="100%"><source src="' +
-        s +
-        '" type="video/mp4"><source src="' +
-        s +
-        '" type="video/webm"></video>'
+        `<video class="js_fluidplayer stratus-customvideo thumb_crsp_video_tag" id="video-${a}-${video_index}" onplay="update_media_views(event,'video',${a})" controls  preload="auto" style="width:100%;height:100%;" width="100%" height="100%">
+            <source src="${s}" type="video/mp4">
+            <source src="${s}" type="video/webm">
+        </video>`
     ),
         //$("#hide_play_img" + a).hide(),
         $(e).closest('div').find(".play_video_icon").hide();

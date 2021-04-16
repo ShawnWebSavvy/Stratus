@@ -118,7 +118,7 @@
                                                         data-value="me" title='{__("Shared with: Only Me")}'>
                                                         <button type="button" class="btn dropdown-toggle"
                                                             data-toggle="dropdown" data-display="static">
-                                                            <span class="share_sign_img" id="{$postsItem['post_id']}">
+                                                            <span class="share_sign_img privacy_{$postsItem['post_id']}" id="{$postsItem['post_id']}">
                                                                 <img src="{$system['system_url']}/content/themes/default/images/svg/svgImg/Hide_form.svg"
                                                                     class="blackicon">
                                                             </span>
@@ -129,8 +129,7 @@
                                                             title='{__("Shared with: Friends")}'>
                                                             <button type="button" class="btn dropdown-toggle"
                                                                 data-toggle="dropdown" data-display="static">
-                                                                <span class="share_sign_img"
-                                                                    id="{$postsItem['post_id']}">
+                                                                <span class="share_sign_img privacy_{$postsItem['post_id']}" id="{$postsItem['post_id']}">
                                                                     <img src="{$system['system_url']}/content/themes/default/images/svg/svgImg/friendsIcon.svg"
                                                                         class="blackicon">
                                                                 </span>
@@ -141,8 +140,7 @@
                                                                 title='{__("Shared with:Public")}'>
                                                                 <button type="button" class="btn dropdown-toggle"
                                                                     data-toggle="dropdown" data-display="static">
-                                                                    <span class="share_sign_img"
-                                                                        id="{$postsItem['post_id']}">
+                                                                    <span class="share_sign_img privacy_{$postsItem['post_id']}" id="{$postsItem['post_id']}">
                                                                         <img src="{$system['system_url']}/content/themes/default/images/svg/svgImg/nav_icon_globalHub.svg"
                                                                             class="blackicon">
                                                                     </span>
@@ -247,7 +245,7 @@
                                                         <div class="post-media">
                                                             {if $postsItem['article']['cover']}
                                                             <a class="post-media-image"
-                                                                href="{$system['system_url']}/blogs/{$postsItem['post_id']}/{$postsItem['article']['title_url']}">
+                                                                href="{$system['system_url']}/blogs/{$postsItem['post_id']}/{$_post['article']['title_url']}">
                                                                 <div
                                                                     style="padding-top:50%; background-image:url('{$system['system_uploads']}/{$postsItem['article']['cover']}');">
                                                                 </div>
@@ -314,7 +312,7 @@
                                                     <div class="plr10">
                                                         <audio class="js_audio"
                                                             id="audio-{$postsItem['audio']['audio_id']}" {if
-                                                            $user->_logged_in}onplay="update_media_views('audio',
+                                                            $user->_logged_in}onplay="update_media_views(event, 'audio',
                                                             {$postsItem['audio']['audio_id']})" {/if} controls
                                                             preload="auto" style="width: 100%;">
                                                             <source
@@ -334,7 +332,7 @@
                                                     <div class="plr10">
                                                         <audio class="js_audio"
                                                             id="audio-{$postsItem['origin']['audio']['audio_id']}" {if
-                                                            $user->_logged_in}onplay="update_media_views('audio',
+                                                            $user->_logged_in}onplay="update_media_views(event, 'audio',
                                                             {$postsItem['origin']['audio']['audio_id']})" {/if} controls
                                                             preload="auto" style="width: 100%;">
                                                             <source
