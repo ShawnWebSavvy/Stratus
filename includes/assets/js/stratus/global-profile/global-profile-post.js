@@ -1328,6 +1328,9 @@ $(function () {
         } else {
           if (response.post) {
             $(".js_posts_stream").find(".bricklayer-column").first().prepend(response.post);
+            if(bricklayer){
+               bricklayer.redraw();
+            }
           }
           $(".no_data_img_").css("display", "none");
           /* button reset */
@@ -1856,27 +1859,28 @@ $(function () {
         } else {
           if (response.posts) {
             var datatta = response.posts;
-            var ArrayVal = datatta.split('<div class="carsds"');
+            var ArrayVal = datatta.split('<div class="carsds "');
             var loopArray = [];
             if (ArrayVal.length > 0) {
               for (var i = 1; i < ArrayVal.length; i++) {
                 loopArray.push('<div class="carsds"' + ArrayVal[i])
               }
             }
-
+            
             for (var ik = 0; ik < loopArray.length; ik++) {
               var values = loopArray[ik];
               var d = document.createElement('div');
               d.innerHTML = values;
               var valuesPost = d.firstChild;
               bricklayer.append(valuesPost);
-              // bricklayer.redraw();
+              bricklayer.redraw();
             }
           }
             posts_loader.hide();
             posts_stream.removeData("loading");
             posts_stream.html(response.posts);
             setTimeout(photo_grid(), 200);
+            posts_stream.data("filter", data.filter)
             // console.log("Af")
             // if ($(window).width() > 1024) {
             //   if ($('body #landing_feeds_post_ul').length > 0) {
@@ -2200,13 +2204,15 @@ $(function () {
   /* delete post */
   $("body").on("click", ".js_delete-post", function (e) {
     e.preventDefault();
-    var post = $(this).parents(".post");
-    var id = post.data("id");
+    var _this = $(this);
+    var post  = _this.parents(".post");
+    var id    = post.data("id");
+    
     confirm(
       __["Delete Post"],
       __["Are you sure you want to delete this post?"],
       function () {
-        post.hide();
+        _this.closest('.carsds').hide();
         $.post(
           api["posts/reaction"],
           { do: "delete_post", id: id },
