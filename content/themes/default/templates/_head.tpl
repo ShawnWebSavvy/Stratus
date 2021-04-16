@@ -110,4 +110,13 @@
     <!-- Load jQuery now so we can lazy load components -->
     <script src="https://code.jquery.com/jquery-3.5.1.min.js"
         integrity="sha256-9/aliU8dGd2tb6OSsuzixeV4y/faTqgFtohetphbbj0=" crossorigin="anonymous"  {if !$user->_logged_in}defer{/if}></script>
+
+        <style>
+
+@media (max-width: 460px) {
+ .buySellSection .MobileCrousle.mob_style .flickity-enabled.is-draggable .flickity-viewport {
+    height: 334.5px !important;
+  }
+}
+</style>
 </head>
