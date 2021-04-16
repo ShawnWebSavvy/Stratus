@@ -17,3 +17,4 @@ define("SYSTEM_UPLOADS_URL", "https://cdn1.stratus.co/uploads");
 define("SYSTEM_UPLOADS_ASSETS", "https://cdn1.stratus.co");
 define("PLY_URL", "https://videohub.stratus-stage.xyz/");
 define("PLAYTUBE_LINK", "https://videohub.stratus-stage.xyz/logout");
+?>
