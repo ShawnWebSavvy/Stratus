@@ -131,6 +131,7 @@ background-attachment: fixed;" {/if} {if $page=="share" && $url}onload="initiali
                         <!--  -->
                         <ul {$page} {$active_page}>
                            <li class="addPost mob_show_">
+                            {if $addPost }
                               {if $active_page =="GlobalHub"} 
                               <!-- publisher -->
                               {include file='_publisher.tpl' _handle="me" _privacy=true}
@@ -169,6 +170,7 @@ background-attachment: fixed;" {/if} {if $page=="share" && $url}onload="initiali
                                        class="blackicon">
                                  </div>
                               </a>
+                              {/if}
                               {/if}
                            </li>
                         </ul>

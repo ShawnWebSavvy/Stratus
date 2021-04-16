@@ -63,6 +63,13 @@
 </audio>
 <!-- Video -->
 {/if}
+<script>
+    $(document).ready(function() {
+        $("#addAlbumClick").click(function() {
+            $("body").addClass("publisher-focus");
+        });
+    });
+</script>
 <!-- Sounds -->
 {if ($page!="global-profile/landingpage")}
 <div class="footer_mobile">

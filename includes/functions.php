@@ -1749,6 +1749,23 @@ function popover($uid, $username, $name)
 
 
 
+/**
+ * popover
+ * 
+ * @param integer $uid
+ * @param string $username
+ * @param string $name
+ * @return string
+ */
+function global_popover($uid, $username, $name)
+{
+    global $system;
+    $popover = '<span class="js_user-popover" data-uid="' . $uid . '"><a href="' . $system['system_url'] . '/global-profile.php?username=' . $username . '">' . $name . '</a></span>';
+    return $popover;
+}
+
+
+
 /* ------------------------------- */
 /* Page */
 /* ------------------------------- */

@@ -88,7 +88,7 @@
 
                     <!-- audio views -->
                     {if $post['post_type'] == "audio"}
-                    <span style="display: flex;align-items: center;">
+                    <span>
                         <i class="fa fa-eye"></i> {$post['audio']['views']}
                     </span>
                     {/if}
@@ -175,7 +175,7 @@
                             <i class="icon-post icon_share"></i>
                             <span>{__("Share")}</span>
                         </div>
-                        <div class="_share-dropdown_ dropdown-menu fade _share_btn_element"
+                        <div class="_share-dropdown_ dropdown-menu dropdown-menu-right fade _share_btn_element"
                             aria-labelledby="stratus_post_{$post['post_id']}" data-toggle="modal"
                             data-url="posts/share.php?do=create&post_id={$post['post_id']}">
                             <div class="share_icon_list">

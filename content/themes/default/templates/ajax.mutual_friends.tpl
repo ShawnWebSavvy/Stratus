@@ -5,7 +5,7 @@
     </button>
 </div>
 <div class="modal-body">
-    <ul class="whoreactModal">
+    <ul>
         {foreach $mutual_friends as $_user}
         {include file='__feeds_user.tpl' _tpl="list" _connection="remove"}
         {/foreach}

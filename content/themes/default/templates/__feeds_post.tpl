@@ -89,7 +89,7 @@
 
                     <!-- audio views -->
                     {if $post['post_type'] == "audio"}
-                    <span style="display: flex;align-items: center;">
+                    <span>
                         <i class="fa fa-eye"></i> {$post['audio']['views']}
                     </span>
                     {/if}
@@ -177,7 +177,7 @@
                             <i class="icon-post icon_share"></i>
                             <span>{__("Share")}</span>
                         </div>
-                        <div class="_share-dropdown_ dropdown-menu fade _share_btn_element"
+                        <div class="_share-dropdown_ dropdown-menu dropdown-menu-right fade _share_btn_element"
                             aria-labelledby="stratus_post_{$post['post_id']}" data-toggle="modal"
                             data-url="posts/share.php?do=create&post_id={$post['post_id']}">
                             <div class="share_icon_list">
@@ -188,14 +188,14 @@
                                                 to Timeline</span></label>
                                     </li>
 
-                                    {if $system['groups_enabled'] && !empty($groups) && count($groups) > 0}
+                                    {if $system['groups_enabled'] && count($groups) > 0}
                                     <li class="stratus_local_share" id="share_group"><label for="share_to_group"><span
                                                 class="__list_icon"> <img
                                                     src="{$system['system_uploads_assets']}/content/themes/default/images/share_grp.svg"></span><span>Share
                                                 to Group</span></label>
                                     </li>
                                     {/if}
-                                    {if $system['pages_enabled'] && !empty($pages) && count($pages) > 0}
+                                    {if $system['pages_enabled'] && count($pages) > 0}
                                     <li class="stratus_local_share" id="share_page"><label for="share_to_page"><span
                                                 class="__list_icon"> <img
                                                     src="{$system['system_uploads_assets']}/content/themes/default/images/share-page.svg"></span><span>Share

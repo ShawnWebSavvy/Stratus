@@ -7,6 +7,7 @@
 
 // initialize API URLs
 api['admin/delete'] = ajax_path + "admin/delete.php";
+api['admin/investment'] = ajax_path + "admin/investment.php?do=updateCoin";
 api['admin/test'] = ajax_path + "admin/test.php";
 api['admin/verify'] = ajax_path + "admin/verify.php";
 api['admin/bank'] = ajax_path + "admin/bank.php";
@@ -268,4 +269,36 @@ $(function () {
         eAjaxSuccess: function (data) { return data },
         pagination: true
     });
+
 });
+let page = window.location.pathname;
+let urlParts = page.split("/");
+let firstSection = urlParts[urlParts.length - 2];
+let endUrl = urlParts[urlParts.length - 1];
+
+if ((firstSection+endUrl)&&firstSection+endUrl == "coinedit") {
+    $(document).ready(function () {
+    
+        updateCoin();
+        setInterval(updateCoin, 10000);
+        function updateCoin() {
+            let markup_price = $("input[name=markup_price]").val();
+            let markdown_price = $("input[name=markdown_price]").val();
+            let trade_pair = $("input[name=trade]").val();
+            let exchange_id = $("input[name=exchange_id]").val();
+            $.post(api['admin/investment'], { 'markup_price': markup_price, 'markdown_price': markdown_price, 'trade_pair': trade_pair, 'exchange_id': exchange_id }, 'json')
+                .done(function (response) {
+                    if (response.data) {
+                        console.log(response);
+                        $('#bitmart_buy_price').html(response.data.bitmart_price);
+                        $('#stratus_buy_price').html(response.data.stratus_buy_price);
+                        $('#bitmart_sell_price').html(response.data.bitmart_price);
+                        $('#stratus_sell_price').html(response.data.stratus_sell_price);
+                    }
+                })
+                .fail(function () {
+                    // modal('#modal-message', { title: __['Error'], message: __['There is something that went wrong!'] });
+                });
+        }
+    })
+}
