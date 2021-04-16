@@ -129,7 +129,7 @@ try {
                 ){
 
                     if((double)$_POST['token_value']<=(double)$user->_data[$_POST['token_name'].'_wallet']){
-                        $save = InvestmentHelper::saveSellTokenOrder($_POST['action'],$_SESSION['token_name'],$_SESSION['token_value'],$_SESSION['amount'],$user->_data,$_SESSION['receive_amount'],$_SESSION['fees_amount'],$_SESSION['fees']);
+                        $save = InvestmentHelper::saveSellTokenOrder($_POST['action'],$_SESSION['token_name'],$_SESSION['token_value'],$_SESSION['amount'],$user->_data,$_SESSION['receive_amount'],$_SESSION['fees']);
                         if($save){
                             $return['status'] = 'success';
                             $return['url'] = $system['system_url'].'/investments';

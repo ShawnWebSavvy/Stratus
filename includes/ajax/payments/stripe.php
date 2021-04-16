@@ -110,7 +110,7 @@ try {
 			$redisObject = new RedisClass();
 			$redisPostKey = 'user-' . $user->_data['user_id'];
 			$redisObject->deleteValueFromKey($redisPostKey);
-			cachedUserData($db, $system, $user->_data['user_id'],$user_data);
+			// cachedUserData($db, $system, $user->_data['user_id'],$user_data);
 			// return
 			return_json( array('callback' => 'window.location.href = "'.$system['system_url'].'/wallet?replenish_succeed";') );
 			break;

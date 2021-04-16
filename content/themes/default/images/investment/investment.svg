@@ -1,25 +1,9 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<svg width="22px" height="18px" viewBox="0 0 22 18" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
-    <title>Icon/Plus Square</title>
-    <defs>
-        <radialGradient cx="50%" cy="0%" fx="50%" fy="0%" r="116.062695%" gradientTransform="translate(0.500000,0.000000),scale(0.818182,1.000000),rotate(93.289188),scale(1.000000,3.127546),translate(-0.500000,-0.000000)" id="radialGradient-1">
-            <stop stop-color="#5E5E5E" offset="0%"></stop>
-            <stop stop-color="#161514" offset="100%"></stop>
-            <stop stop-color="#161514" offset="100%"></stop>
-        </radialGradient>
-        <radialGradient cx="68.6755151%" cy="-11.7355238%" fx="68.6755151%" fy="-11.7355238%" r="134.601659%" gradientTransform="translate(0.686755,-0.117355),scale(0.777767,1.000000),rotate(96.394063),scale(1.000000,2.690756),translate(-0.686755,0.117355)" id="radialGradient-2">
-            <stop stop-color="#FFF4DC" offset="0%"></stop>
-            <stop stop-color="#EDB134" offset="100%"></stop>
-        </radialGradient>
-    </defs>
-    <g id="Symbols" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
-        <g id="Menu/InvestPlatform" transform="translate(-30.000000, -505.000000)">
-            <g id="Bottom/Icon-Copy-22" transform="translate(17.000000, 490.000000)">
-                <g id="Icon/Plus-Square" transform="translate(13.000000, 15.000000)">
-                    <path d="M0,2 C0,0.895 0.895,0 2,0 L20,0 C21.105,0 22,0.895 22,2 L22,16 C22,17.105 21.105,18 20,18 L2,18 C0.895,18 0,17.105 0,16 L0,2 Z" id="Path" fill="url(#radialGradient-1)"></path>
-                    <path d="M19.868,3.496 C20.142,3.017 19.976,2.406 19.496,2.132 C19.017,1.858 18.406,2.025 18.132,2.504 L14.883,8.189 C14.661,8.578 14.207,8.771 13.773,8.663 L8.712,7.397 C7.408,7.072 6.047,7.653 5.38,8.82 L2.132,14.504 C1.858,14.984 2.024,15.594 2.504,15.868 C2.983,16.142 3.594,15.976 3.868,15.496 L7.117,9.812 C7.339,9.423 7.793,9.229 8.227,9.338 L13.288,10.603 C14.592,10.929 15.953,10.348 16.62,9.181 L19.868,3.496 Z" id="Path" fill="url(#radialGradient-2)"></path>
-                </g>
-            </g>
-        </g>
-    </g>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 30 30" width="30" height="30">
+	<defs>
+		<image width="22" height="18" id="img1" href="data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iVVRGLTgiPz4KPHN2ZyB3aWR0aD0iMjJweCIgaGVpZ2h0PSIxOHB4IiB2aWV3Qm94PSIwIDAgMjIgMTgiIHZlcnNpb249IjEuMSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIiB4bWxuczp4bGluaz0iaHR0cDovL3d3dy53My5vcmcvMTk5OS94bGluayI+CiAgICA8dGl0bGU+SWNvbi9QbHVzIFNxdWFyZTwvdGl0bGU+CiAgICA8ZGVmcz4KICAgICAgICA8cmFkaWFsR3JhZGllbnQgY3g9IjUwJSIgY3k9IjAlIiBmeD0iNTAlIiBmeT0iMCUiIHI9IjExNi4wNjI2OTUlIiBncmFkaWVudFRyYW5zZm9ybT0idHJhbnNsYXRlKDAuNTAwMDAwLDAuMDAwMDAwKSxzY2FsZSgwLjgxODE4MiwxLjAwMDAwMCkscm90YXRlKDkzLjI4OTE4OCksc2NhbGUoMS4wMDAwMDAsMy4xMjc1NDYpLHRyYW5zbGF0ZSgtMC41MDAwMDAsLTAuMDAwMDAwKSIgaWQ9InJhZGlhbEdyYWRpZW50LTEiPgogICAgICAgICAgICA8c3RvcCBzdG9wLWNvbG9yPSIjNUU1RTVFIiBvZmZzZXQ9IjAlIj48L3N0b3A+CiAgICAgICAgICAgIDxzdG9wIHN0b3AtY29sb3I9IiMxNjE1MTQiIG9mZnNldD0iMTAwJSI+PC9zdG9wPgogICAgICAgICAgICA8c3RvcCBzdG9wLWNvbG9yPSIjMTYxNTE0IiBvZmZzZXQ9IjEwMCUiPjwvc3RvcD4KICAgICAgICA8L3JhZGlhbEdyYWRpZW50PgogICAgICAgIDxyYWRpYWxHcmFkaWVudCBjeD0iNjguNjc1NTE1MSUiIGN5PSItMTEuNzM1NTIzOCUiIGZ4PSI2OC42NzU1MTUxJSIgZnk9Ii0xMS43MzU1MjM4JSIgcj0iMTM0LjYwMTY1OSUiIGdyYWRpZW50VHJhbnNmb3JtPSJ0cmFuc2xhdGUoMC42ODY3NTUsLTAuMTE3MzU1KSxzY2FsZSgwLjc3Nzc2NywxLjAwMDAwMCkscm90YXRlKDk2LjM5NDA2Myksc2NhbGUoMS4wMDAwMDAsMi42OTA3NTYpLHRyYW5zbGF0ZSgtMC42ODY3NTUsMC4xMTczNTUpIiBpZD0icmFkaWFsR3JhZGllbnQtMiI+CiAgICAgICAgICAgIDxzdG9wIHN0b3AtY29sb3I9IiNGRkY0REMiIG9mZnNldD0iMCUiPjwvc3RvcD4KICAgICAgICAgICAgPHN0b3Agc3RvcC1jb2xvcj0iI0VEQjEzNCIgb2Zmc2V0PSIxMDAlIj48L3N0b3A+CiAgICAgICAgPC9yYWRpYWxHcmFkaWVudD4KICAgIDwvZGVmcz4KICAgIDxnIGlkPSJTeW1ib2xzIiBzdHJva2U9Im5vbmUiIHN0cm9rZS13aWR0aD0iMSIgZmlsbD0ibm9uZSIgZmlsbC1ydWxlPSJldmVub2RkIj4KICAgICAgICA8ZyBpZD0iTWVudS9JbnZlc3RQbGF0Zm9ybSIgdHJhbnNmb3JtPSJ0cmFuc2xhdGUoLTMwLjAwMDAwMCwgLTUwNS4wMDAwMDApIj4KICAgICAgICAgICAgPGcgaWQ9IkJvdHRvbS9JY29uLUNvcHktMjIiIHRyYW5zZm9ybT0idHJhbnNsYXRlKDE3LjAwMDAwMCwgNDkwLjAwMDAwMCkiPgogICAgICAgICAgICAgICAgPGcgaWQ9Ikljb24vUGx1cy1TcXVhcmUiIHRyYW5zZm9ybT0idHJhbnNsYXRlKDEzLjAwMDAwMCwgMTUuMDAwMDAwKSI+CiAgICAgICAgICAgICAgICAgICAgPHBhdGggZD0iTTAsMiBDMCwwLjg5NSAwLjg5NSwwIDIsMCBMMjAsMCBDMjEuMTA1LDAgMjIsMC44OTUgMjIsMiBMMjIsMTYgQzIyLDE3LjEwNSAyMS4xMDUsMTggMjAsMTggTDIsMTggQzAuODk1LDE4IDAsMTcuMTA1IDAsMTYgTDAsMiBaIiBpZD0iUGF0aCIgZmlsbD0idXJsKCNyYWRpYWxHcmFkaWVudC0xKSI+PC9wYXRoPgogICAgICAgICAgICAgICAgICAgIDxwYXRoIGQ9Ik0xOS44NjgsMy40OTYgQzIwLjE0MiwzLjAxNyAxOS45NzYsMi40MDYgMTkuNDk2LDIuMTMyIEMxOS4wMTcsMS44NTggMTguNDA2LDIuMDI1IDE4LjEzMiwyLjUwNCBMMTQuODgzLDguMTg5IEMxNC42NjEsOC41NzggMTQuMjA3LDguNzcxIDEzLjc3Myw4LjY2MyBMOC43MTIsNy4zOTcgQzcuNDA4LDcuMDcyIDYuMDQ3LDcuNjUzIDUuMzgsOC44MiBMMi4xMzIsMTQuNTA0IEMxLjg1OCwxNC45ODQgMi4wMjQsMTUuNTk0IDIuNTA0LDE1Ljg2OCBDMi45ODMsMTYuMTQyIDMuNTk0LDE1Ljk3NiAzLjg2OCwxNS40OTYgTDcuMTE3LDkuODEyIEM3LjMzOSw5LjQyMyA3Ljc5Myw5LjIyOSA4LjIyNyw5LjMzOCBMMTMuMjg4LDEwLjYwMyBDMTQuNTkyLDEwLjkyOSAxNS45NTMsMTAuMzQ4IDE2LjYyLDkuMTgxIEwxOS44NjgsMy40OTYgWiIgaWQ9IlBhdGgiIGZpbGw9InVybCgjcmFkaWFsR3JhZGllbnQtMikiPjwvcGF0aD4KICAgICAgICAgICAgICAgIDwvZz4KICAgICAgICAgICAgPC9nPgogICAgICAgIDwvZz4KICAgIDwvZz4KPC9zdmc+"/>
+	</defs>
+	<style>
+		tspan { white-space:pre }
+	</style>
+	<use id="investment" href="#img1" transform="matrix(1,0,0,1,4,6)"/>
 </svg>

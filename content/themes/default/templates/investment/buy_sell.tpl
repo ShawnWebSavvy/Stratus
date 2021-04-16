@@ -36,7 +36,7 @@
                         </div>
                         <div class="coinSelection">
                             <ul>
-                                <div class="MobileCrousle">
+                                <div class="MobileCrousle mob_style">
                                     <div class="gallery js-flickity" data-flickity-options='{ "cellAlign": "left", "wrapAround": false, "contain": true, "prevNextButtons": false, "pageDots": false }'>
                                         {foreach $token_details as $tkn_detail}
                                         <div class="gallery-cell">
@@ -131,7 +131,7 @@
                         </div>
                         <div class="coinSelection">
                             <ul>
-                                <div class="MobileCrousle">
+                                <div class="MobileCrousle mob_style>
                                     <div class="gallery js-flickity" data-flickity-options='{ "cellAlign": "left", "wrapAround": false, "contain": true, "prevNextButtons": false, "pageDots": false }'>
                                         <div class="gallery-cell">
                                             <li>
