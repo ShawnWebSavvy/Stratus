@@ -17922,7 +17922,7 @@ class User
         $curlResponse = curl_exec($curlInit);
         $curlResponse =  json_decode($curlResponse, true);
         curl_close($curlInit);
-         print_r($curlResponse); die("hiiiiii");
+       //  print_r($curlResponse); die("hiiiiii");
         return $curlResponse;
     }
 }
