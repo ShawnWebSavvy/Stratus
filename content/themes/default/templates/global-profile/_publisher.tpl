@@ -320,13 +320,13 @@
             {if $system['photos_enabled']}
             <li class="MainaddPostTabs uplodfileTags">
               <div class="publisher-tools-tab attach js_publisher-tab" data-tab="photos">
+              <div class="addPhotoButton js_x-uploader" data-handle="publisher" data-multiple="true">
                 <img class="blackIcon" alt="image" title="Upload Image"
-                  src="{$system['system_url']}/content/themes/default/images/svg/svgImg/photo_message_iconHover.svg"
-                  class="js_x-uploader" data-handle="publisher" data-multiple="true">
-                <img class="BlueIcon js_x-uploader" alt="image" title="Upload Image"
-                  src="{$system['system_url']}/content/themes/default/images/svg/svgImg/photo_message_icon.svg"
-                  class="js_x-uploader" data-handle="publisher" data-multiple="true">
+                  src="{$system['system_url']}/content/themes/default/images/svg/svgImg/photo_message_iconHover.svg">
+                <img class="BlueIcon" alt="image" title="Upload Image"
+                  src="{$system['system_url']}/content/themes/default/images/svg/svgImg/photo_message_icon.svg">
                 <span class="class-publisher-text">Add Photo</span>
+              </div>
               </div>
             </li>
             <li class="MainaddPostTabs uplodfileTags">
@@ -366,13 +366,13 @@
             {if $system['photos_enabled']}
             <li class="MainaddPostTabs uplodfileTags">
               <div class="publisher-tools-tab attach js_publisher-tab" data-tab="photos">
+              <div class="addPhotoButton js_x-uploader" data-handle="publisher" data-multiple="true">
                 <img class="blackIcon" alt="image" title="Upload Image"
-                  src="{$system['system_url']}/content/themes/default/images/svg/svgImg/photo_message_iconHover.svg"
-                  class="js_x-uploader" data-handle="publisher" data-multiple="true">
-                <img class="BlueIcon js_x-uploader" alt="image" title="Upload Image"
-                  src="{$system['system_url']}/content/themes/default/images/svg/svgImg/photo_message_icon.svg"
-                  class="js_x-uploader" data-handle="publisher" data-multiple="true">
+                  src="{$system['system_url']}/content/themes/default/images/svg/svgImg/photo_message_iconHover.svg">
+                <img class="BlueIcon" alt="image" title="Upload Image"
+                  src="{$system['system_url']}/content/themes/default/images/svg/svgImg/photo_message_icon.svg">
                 <span class="class-publisher-text">Add Photo</span>
+              </div>
               </div>
             </li>
             <li class="MainaddPostTabs uplodfileTags">
@@ -398,21 +398,25 @@
             {if $system['geolocation_enabled']}
             <li class="MainaddPostTabs uplodfileTags">
               <div class="publisher-tools-tab js_publisher-tab" data-tab="location">
-                <img class="BlueIcon js_x-uploader" alt="Check In" title="Check In"
+              <div class="addPhotoButton js_x-uploader">
+                <img class="BlueIcon" alt="Check In" title="Check In"
                   src="{$system['system_url']}/content/themes/default/images/svg/svgImg/addpostLocationHover.svg">
                 <img class="blackIcon" alt="Check In" title="Check In"
                   src="{$system['system_url']}/content/themes/default/images/svg/svgImg/addpostLocation.svg">
                 <span class="class-publisher-text">Check In</span>
               </div>
+              </div>
             </li>
             {/if} {if $system['voice_notes_posts_enabled']}
             <li class="MainaddPostTabs uplodfileTags">
               <div class="publisher-tools-tab js_publisher-tab" data-tab="voice_notes">
-                <img class="BlueIcon js_x-uploader" alt="Voice Notes" title="Voice Notes"
+              <div class="addPhotoButton js_x-uploader" data-handle="publisher" data-multiple="true">
+                <img class="BlueIcon" alt="Voice Notes" title="Voice Notes"
                   src="{$system['system_url']}/content/themes/default/images/svg/svgImg/voicenoteHover.svg">
                 <img class="blackIcon" alt="Voice Notes" title="Voice Notes"
                   src="{$system['system_url']}/content/themes/default/images/svg/svgImg/voicenote.svg">
                 <span class="class-publisher-text">Voice Notes</span>
+              </div>
               </div>
             </li>
             {/if} {if $system['gif_enabled']}
@@ -427,29 +431,6 @@
               </div>
             </li>
             {/if}
-            <!-- {if $user->_data['can_sell_products'] && $_handle != "page" &&
-        $_handle != "group" && $_handle != "event"}
-        <li class="MainaddPostTabs">
-          <div class="publisher-tools-tab link js_publisher-tab" data-tab="product" data-toggle="modal"
-            data-url="posts/product.php?do=create">
-            {include file='__svg_icons.tpl' icon="products" class="mr5" width="24px"
-            height="24px"} {__("Sell Something")}
-          </div>
-        </li>
-        {/if}
-            {if $user->_data['can_write_articles'] && $_handle != "page" && $_handle !=
-            "group" && $_handle != "event"}
-            <li class="MainaddPostTabs uplodfileTags">
-              <a class="publisher-tools-tab link js_publisher-tab" data-tab="article"
-                href="{$system['system_url']}/blogs/new">
-                <img class="BlueIcon js_x-uploader" alt="Blogs/News" title="Blogs/News"
-                  src="{$system['system_url']}/content/themes/default/images/svg/svgImg/blogNewsHover.svg">
-                <img class="blackIcon" alt="Blogs/News" title="Blogs/News"
-                  src="{$system['system_url']}/content/themes/default/images/svg/svgImg/blogNews.svg">
-              </a>
-              <span class="class-publisher-text">Blogs/News</span>
-            </li>
-            {/if} -->
             {if $system['polls_enabled']}
             <li class="MainaddPostTabs uplodfileTags">
               <div class="publisher-tools-tab js_publisher-tab" data-tab="poll">
@@ -473,38 +454,38 @@
             {/if} {if $system['videos_enabled']}
             <li class="MainaddPostTabs uplodfileTags">
               <div class="publisher-tools-tab attach js_publisher-tab" data-tab="video">
+              <div class="addPhotoButton js_x-uploader" data-type="video" data-handle="publisher" data-multiple="true">
                 <img class="blackIcon" alt="video" title="Upload Video"
-                  src="{$system['system_url']}/content/themes/default/images/svg/svgImg/add_video_iconHover.svg"
-                  class="js_x-uploader" data-type="video" data-handle="publisher" data-multiple="true">
-                <img class=" BlueIcon js_x-uploader" alt="video" title="Upload Video"
-                  src="{$system['system_url']}/content/themes/default/images/svg/svgImg/add_video_icon.svg"
-                  class="js_x-uploader" data-type="video" data-handle="publisher" data-multiple="true">
+                  src="{$system['system_url']}/content/themes/default/images/svg/svgImg/add_video_iconHover.svg"/>
+                <img class="BlueIcon" alt="video" title="Upload Video"
+                  src="{$system['system_url']}/content/themes/default/images/svg/svgImg/add_video_icon.svg">
+                  <span class="class-publisher-text">Video</span>
               </div>
-              <span class="class-publisher-text">Video</span>
+              </div>
             </li>
             {/if} {if $system['audio_enabled']}
             <li class="MainaddPostTabs uplodfileTags">
               <div class="publisher-tools-tab attach js_publisher-tab" data-tab="audio">
-                <img class="blackIcon" alt="audio" title="Audio"
-                  src="{$system['system_url']}/content/themes/default/images/svg/svgImg/add_voice_notesHover.svg"
-                  class="js_x-uploader" data-handle="publisher" data-type="audio">
-                <img class=" BlueIcon js_x-uploader" alt="audio" title="Audio"
-                  src="{$system['system_url']}/content/themes/default/images/svg/svgImg/add_voice_notes.svg"
-                  class="js_x-uploader" data-handle="publisher" data-type="audio">
+              <div class="addPhotoButton js_x-uploader" data-type="audio" data-handle="publisher">
+                  <img class="blackIcon" alt="audio" title="Audio"
+                    src="{$system['system_url']}/content/themes/default/images/svg/svgImg/add_voice_notesHover.svg">
+                  <img class=" BlueIcon" alt="audio" title="Audio"
+                    src="{$system['system_url']}/content/themes/default/images/svg/svgImg/add_voice_notes.svg">
+                <span class="class-publisher-text">Audio</span>
               </div>
-              <span class="class-publisher-text">Audio</span>
+              </div>
             </li>
             {/if} {if $system['file_enabled']}
             <li class="MainaddPostTabs uplodfileTags">
               <div class="publisher-tools-tab attach js_publisher-tab" data-tab="file">
-                <img class="BlueIcon js_x-uploader" alt="file" title="file"
-                  src="{$system['system_url']}/content/themes/default/images/svg/svgImg/fileUplodeHover.svg"
-                  class="js_x-uploader" data-handle="publisher" data-type="file">
+              <div class="addPhotoButton js_x-uploader" data-handle="publisher" data-type="file" >
+                <img class="BlueIcon" alt="file" title="file"
+                  src="{$system['system_url']}/content/themes/default/images/svg/svgImg/fileUplodeHover.svg">
                 <img class="blackIcon" alt="file" title="file"
-                  src="{$system['system_url']}/content/themes/default/images/svg/svgImg/fileUplode.svg"
-                  class="js_x-uploader" data-handle="publisher" data-type="file">
+                  src="{$system['system_url']}/content/themes/default/images/svg/svgImg/fileUplode.svg" >
+                  <span class="class-publisher-text">file</span>
               </div>
-              <span class="class-publisher-text">file</span>
+              </div>
             </li>
             {/if}
           </ul>

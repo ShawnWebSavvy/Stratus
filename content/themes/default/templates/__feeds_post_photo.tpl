@@ -130,9 +130,9 @@
             <!-- comments -->
 
             <!-- shares -->
-            <span class="pointer ml10 {if $post['shares'] == 0}x-hidden{/if}" data-toggle="modal"
+            <span class="pointer ml10 shareButtonIcon {if $post['shares'] == 0}x-hidden{/if}" data-toggle="modal"
                 data-url="posts/who_shares.php?post_id={$post['post_id']}">
-                {$post['shares']} {__("Shares")}
+                <i class="fa fa-share"></i> {$post['shares']} {__("Shares")}
             </span>
             <!-- shares -->
         </span>
@@ -197,7 +197,7 @@
                 <i class="icon-post icon_share"></i>
                 <span>{__("Share")}</span>
             </div>
-            <div class="_share-dropdown_ dropdown-menu fade" aria-labelledby="stratus_post_{$post['post_id']}"
+            <div class="_share-dropdown_ dropdown-menu-right dropdown-menu fade" aria-labelledby="stratus_post_{$post['post_id']}"
                 data-toggle="modal" data-url="posts/share.php?do=create&post_id={$post['post_id']}">
                 <div class="share_icon_list">
                     <ul class="-list_items">

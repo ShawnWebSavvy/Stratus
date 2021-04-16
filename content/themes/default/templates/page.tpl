@@ -167,13 +167,13 @@
                                         <!-- report -->
                                         <!-- manage -->
                                         {if $user->_is_admin}
-                                        <div class="dropdown-divider"></div>
+                                        {* <div class="dropdown-divider"></div> *}
                                         <a class="dropdown-item"
                                             href="{$system['system_url']}/admincp/pages/edit_page/{$spage['page_id']}">
                                             <i class="fa fa-cog fa-fw mr10"></i>{__("Edit in Admin Panel")}
                                         </a>
                                         {elseif $user->_is_moderator}
-                                        <div class="dropdown-divider"></div>
+                                        {* <div class="dropdown-divider"></div> *}
                                         <a class="dropdown-item"
                                             href="{$system['system_url']}/modcp/pages/edit_page/{$spage['page_id']}">
                                             <i class="fa fa-cog fa-fw mr10"></i>{__("Edit in Moderator Panel")}

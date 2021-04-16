@@ -66,7 +66,8 @@
 
             {elseif $_connection == "unfollow"}
             <button type="button" class="btn  btn-info js_unfollow" data-uid="{$_user['user_id']}">
-                <i class="fa fa-check mr5"></i>{__("Following")}
+            <img class="" src="{$system['system_url']}/content/themes/default/images/svg/svgImg/newchecked1.svg" />
+                {__("Following")}
             </button>
 
             {elseif $_connection == "blocked"}
@@ -205,7 +206,8 @@
 
                 {elseif $_connection == "unfollow"}
                 <button type="button" title="Unfollow" class="btn  btn-info js_unfollow" data-uid="{$_user['user_id']}">
-                    <i class="fa fa-check mr5"></i>{__("Following")}
+                <img class="" src="{$system['system_url']}/content/themes/default/images/svg/svgImg/newchecked1.svg" />
+                {__("Following")}
                 </button>
 
                 {elseif $_connection == "blocked"}

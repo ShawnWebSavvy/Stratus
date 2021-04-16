@@ -147,7 +147,7 @@ body.publisher-focus .popup-publishBtn .colored-text-wrapper{margin-top:30px;bor
  .people-friend-list-section{padding:0;}
 .globle_frnd_sgg button.btn.btn-info.js_follow{background-color:#1e1f20 !important;font-size:14px;color:#fff;}
 .globle_frnd_sgg button.btn.btn-info.js_unfollow{background-color:#e5f0ff !important;font-size:14px;color:#1e1f20;}
- .buttonWrapPopOver button img, .buttonWrapPopOver img{width:22px;height:22px;}
+ /* .buttonWrapPopOver button img, .buttonWrapPopOver img{width:22px;height:22px;} */
 .stratusloader-icon{ width:120px; height:120px; position:absolute; top:50%; left:50%; transform:translate(-50%, -50%); -webkit-transform:translate(-50%, -50%); -moz-transform:translate(-50%, -50%); -ms-transform:translate(-50%, -50%); -o-transform:translate(-50%, -50%); }
  .stratusloader{height:100%;background-color:rgba(0,0,0,0.5);position:fixed;top:0;left:0;z-index:99999;transform:translate(-0%,-0%);width:100%;max-height:100vh;}
  .global-profile-localhub .ui-box button{ position:absolute; bottom:20px; left:50%; transform:translateX(-50%); -webkit-transform:translateX(-50%); -moz-transform:translateX(-50%); -ms-transform:translateX(-50%); -o-transform:translateX(-50%); }
@@ -212,7 +212,7 @@ body.publisher-focus .publisher{border-radius:15px;}
 .post-dropdown-menu .action{display:flex;align-items:center;}
 .post_images__{max-width:48px;flex:0 0 48px;display:flex;width:48px;height:48px;align-items:center;justify-content:center;border-radius:10px;margin-right:5px;}
 ._share_post_.dropdown .dropdown-toggle::after{content:none;}
-.cmn_drpdwn_style .dropdown-item{padding:2px 16px;}
+.cmn_drpdwn_style .dropdown-item{padding:0px 10px;}
 .cmn_drpdwn_style .dropdown-item:hover .post_images__{background-color:rgba(18, 105, 255, 0.1);}
 .cmn_drpdwn_style .dropdown-item:hover{background-color:transparent;}
 .right-sidebar::-webkit-scrollbar{display:none;}
@@ -340,7 +340,7 @@ video{max-width:100% !important;max-height:400px !important;height:100%; outline
  to{background-position:0 0;}
 }
 body.publisher-focus .custom_modal_style .card.daytime_message{display:none !important;}
-/* .globalDropdown .dropdown-menu.show{left:100% !important;} */
+.globalDropdown .dropdown-menu.show .dropdown-item{padding: 7px 15px;}
 .global-profile-share .globalDropdown .dropdown-menu.show{left:auto !important;min-width:181px;}
  .chat-conversations.js_scroller{-ms-overflow-style:none;scrollbar-width:none;}
  .userNameWrap._user_details .mt5{display:flex;align-items:center;}
@@ -369,7 +369,7 @@ body.publisher-focus .custom_modal_style .card.daytime_message{display:none !imp
 .no-post-to-show img{max-width:500px;}
 .no_data_img_ img{max-width:500px;}
 .user-popover-content{padding:15px;}
-.buttonWrapPopOver button img,.buttonWrapPopOver img{width:22px;height:22px;}
+/* .buttonWrapPopOver button img,.buttonWrapPopOver img{width:22px;height:22px;} */
  @-webkit-keyframes spin{0%{-webkit-transform:rotate(0deg);}
  100%{-webkit-transform:rotate(360deg);}
 }
@@ -391,7 +391,7 @@ body.publisher-focus .custom_modal_style .card.daytime_message{display:none !imp
 .global-profile-localhub .col-12.cardBodyHeight .card-body .row>div .ui-box{box-shadow:none;padding:0;}
 .global-profile-localhub .col-12.cardBodyHeight .card-body .row>div.global-profile-feeds-photo{-ms-flex:0 0 50%;flex:0 0 50%;max-width:50%;padding:3px;box-shadow:none;margin:0;}
 .global-profile-localhub .col-12.cardBodyHeight .panel-videos .card-body .row>div{-ms-flex:0 0 50%;flex:0 0 50%;max-width:50%;padding:3px;box-shadow:none;margin:0;}
-.user-popover-wrapper:before{background-color:#fff;width:100%;border:0 !important;height:10px;}
+.user-popover-wrapper:before{display: none;}
  .global-profile-localhub .col-12.cardBodyHeight .card-body .row > div{display:flex;flex-direction:column;box-shadow:0px 0px 5px 0px rgba(0, 0, 0, 0.15);flex:0 0 calc(100% / 3 - 30px);max-width:calc(100% / 3 - 30px);margin:0 15px 30px;background:#fff;padding:20px 20px 80px;}
  .offcanvas-sidebar ul.active > li.active > a .svg-container:before{background-color:rgba(18, 105, 255, 0.1);}
  .edit_btns{display:flex;align-items:center;padding:10px;justify-content:flex-end;}

@@ -139,7 +139,7 @@
                             <!-- article title -->
                             <!-- article meta -->
                             <div class="mb20 ctm_action_btn">
-                                <div class="float-right">
+                                <div class="float-right blogActionButton">
                                     {if $article['manage_post']}
                                     <a class="article-meta-counter unselectable"
                                         href="{$system['system_url']}/blogs/edit/{$article['post_id']}">
@@ -340,7 +340,7 @@
                                         <i class="icon-post icon_share"></i>
                                         <span>{__("Share")}</span>
                                     </div>
-                                    <div class="_share-dropdown_ dropdown-menu dropdown-menu-right fade" aria-labelledby="stratus_post_{$article['post_id']}" data-toggle="modal"
+                                    <div class="_share-dropdown_ dropdown-menu-right dropdown-menu fade" aria-labelledby="stratus_post_{$article['post_id']}" data-toggle="modal"
                                         data-url="posts/share.php?do=create&post_id={$article['post_id']}">
                                         <div class="share_icon_list">
                                             <ul class="-list_items">

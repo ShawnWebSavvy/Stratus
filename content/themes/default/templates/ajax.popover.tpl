@@ -69,33 +69,18 @@
     {if $user->_data['user_id'] != $profile['user_id']}
     <!-- add friend -->
     {if $profile['we_friends']}
-    <button
-      type="button"
-      class="btn btn-sm btn-success btn-delete js_friend-remove"
-      data-uid="{$profile['user_id']}"
-    >
-      <img
-        class="btn_image"
-        src="{$system['system_url']}/content/themes/default/images/svg/svgImg/plus_icon.svg"
-      />
-      <img
-        class="btn_image_hover"
-        src="{$system['system_url']}/content/themes/default/images/svg/svgImg/delete_icon.svg"
-      />
+    <button type="button" class="btn btn-sm btn-success btn-delete js_friend-remove" data-uid="{$profile['user_id']}">
+      <img class="btn_image" src="{$system['system_url']}/content/themes/default/images/svg/svgImg/newchecked1.svg" />
+      <img class="btn_image_hover" src="{$system['system_url']}/content/themes/default/images/svg/svgImg/delete_icon.svg" />
       <span class="btn_image_"> {__("Friends")} </span>
       <span class="btn_image_hover"> {__("Delete")} </span>
     </button>
     {elseif $profile['he_request']}
-    <button
-      type="button"
-      class="btn btn-sm btn-primary js_friend-accept"
-      data-uid="{$profile['user_id']}"
-    >
-<span class="request_aspct"><img 
-                    src="{$system['system_uploads_assets']}/content/themes/default/images/svg/svgImg/tick.svg">
-                    </span>
-{__("Confirm")}
-
+    <button type="button" class="btn btn-sm btn-primary js_friend-accept" data-uid="{$profile['user_id']}">
+      <span class="request_aspct">
+        <img src="{$system['system_uploads_assets']}/content/themes/default/images/svg/svgImg/tick.svg">
+      </span>
+      {__("Confirm")}
     </button>
     <button
       type="button"
@@ -103,11 +88,9 @@
       data-uid="{$profile['user_id']}"
     >
       <span class="request_dlt">
-                <img
-                    src="{$system['system_uploads_assets']}/content/themes/default/images/svg/svgImg/delete_icon.svg">
-                    </span>
-{__("Delete")}
-
+        <img src="{$system['system_uploads_assets']}/content/themes/default/images/svg/svgImg/delete_icon.svg">
+      </span>
+      {__("Delete")}
     </button>
     {elseif $profile['i_request']}
     <button
@@ -128,14 +111,8 @@
       data-uid="{$profile['user_id']}"
     >
       <!-- <i class="fa fa-plus mr5"></i> -->
-      <img
-        class="btn_image_"
-        src="{$system['system_url']}/content/themes/default/images/svg/svgImg/add_friend_icon.svg"
-      />
-      <img
-        class="btn_image_hover"
-        src="{$system['system_url']}/content/themes/default/images/svg/svgImg/add_friend-hover.svg"
-      />
+      <img class="btn_image_" src="{$system['system_url']}/content/themes/default/images/svg/svgImg/add_friend_icon.svg" />
+      <img class="btn_image_hover" src="{$system['system_url']}/content/themes/default/images/svg/svgImg/add_friend-hover.svg" />
       {__("Add Friend")}
     </button>
     {/if}
@@ -143,12 +120,9 @@
 
     <!-- follow -->
     {if $profile['i_follow']}
-    <button
-      type="button"
-      class="btn btn-sm btn-info js_unfollow"
-      data-uid="{$profile['user_id']}"
-    >
-      <i class="fa fa-check mr5"></i>{__("Following")}
+    <button type="button" class="btn btn-sm btn-info js_unfollow" data-uid="{$profile['user_id']}">
+    <img class="" src="{$system['system_url']}/content/themes/default/images/svg/svgImg/newchecked1.svg" />
+      {__("Following")}
     </button>
     {else}
     <button
@@ -230,26 +204,21 @@
     {if $profile['event_privacy'] == "public" || $profile['i_joined'] || $profile['i_admin']} {if
       $profile['i_joined']['is_going']}
       <button type="button" class="btn js_ungo-event" data-id="{$profile['event_id']}">
-          <img
-              src="{$system['system_url']}/content/themes/default/images/svg/svgImg/icon_active_state.svg">
+          <img src="{$system['system_url']}/content/themes/default/images/svg/svgImg/icon_active_state.svg">
           {__("Going")}
       </button> {else}
       <button type="button" class="btn js_go-event" data-id="{$profile['event_id']}">
-          <img src="{$system['system_url']}/content/themes/default/images/svg/calendar.svg"
-              class="blackicon">
+          <img src="{$system['system_url']}/content/themes/default/images/svg/calendar.svg" class="blackicon">
           {__("Going")}
       </button> {/if} {if $profile['i_joined']['is_interested']}
       <button type="button" class="btn js_uninterest-event" data-id="{$profile['event_id']}">
-          <img
-              src="{$system['system_url']}/content/themes/default/images/svg/svgImg/icon_active_state.svg">
+          <img src="{$system['system_url']}/content/themes/default/images/svg/svgImg/icon_active_state.svg">
           {__("Interested")}
       </button> {else}
       <button type="button" class="btn js_interest-event" data-id="{$profile['event_id']}">
           <div class="svg-container">
-              <img src="{$system['system_url']}/content/themes/default/images/svg/svgImg/event.svg"
-                  class="blackicon">
-              <img src="{$system['system_url']}/content/themes/default/images/svg/svgImg/eventHover.svg"
-                  class="whiteicon">
+              <img src="{$system['system_url']}/content/themes/default/images/svg/svgImg/event.svg" class="blackicon">
+              <img src="{$system['system_url']}/content/themes/default/images/svg/svgImg/eventHover.svg" class="whiteicon">
           </div>
           {__("Interested")}
       </button> {/if} {/if} 
