@@ -229,7 +229,9 @@ class User
     {
         global $db;
         $friends = [];
-        $get_friends = $db->query(sprintf('SELECT users.user_id FROM friends INNER JOIN users ON (friends.user_one_id = users.user_id AND friends.user_one_id != %1$s) OR (friends.user_two_id = users.user_id AND friends.user_two_id != %1$s) WHERE status = 1 AND (user_one_id = %1$s OR user_two_id = %1$s)', secure($user_id, 'int'))) or _error("SQL_ERROR_THROWEN");
+        //$get_friends = $db->query(sprintf('SELECT users.user_id FROM friends INNER JOIN users ON (friends.user_one_id = users.user_id AND friends.user_one_id != %1$s) OR (friends.user_two_id = users.user_id AND friends.user_two_id != %1$s) WHERE status = 1 AND (user_one_id = %1$s OR user_two_id = %1$s)', secure($user_id, 'int'))) or _error("SQL_ERROR_THROWEN");
+        /*optimise Query by Vishal */
+        $get_friends = $db->query(sprintf('SELECT users.user_id FROM friends FORCE INDEX(friends_id_one, friends_id_two) INNER JOIN users ON (friends.user_one_id = users.user_id AND friends.user_one_id != %1$s) OR (friends.user_two_id = users.user_id AND friends.user_two_id != %1$s) WHERE status = 1 AND (user_one_id = %1$s OR user_two_id = %1$s)', secure($user_id, 'int'))) or _error("SQL_ERROR_THROWEN");
         if ($get_friends->num_rows > 0) {
             while ($friend = $get_friends->fetch_assoc()) {
                 $friends[] = $friend['user_id'];
@@ -337,7 +339,10 @@ class User
     {
         global $db;
         $requests = [];
-        $get_requests = $db->query(sprintf("SELECT user_one_id FROM friends WHERE status = 0 AND user_two_id = %s", secure($this->_data['user_id'], 'int'))) or _error("SQL_ERROR_THROWEN");
+        //$get_requests = $db->query(sprintf("SELECT user_one_id FROM friends WHERE status = 0 AND user_two_id = %s", secure($this->_data['user_id'], 'int'))) or _error("SQL_ERROR_THROWEN");
+        /* optimised query by adding index */
+        
+        $get_requests = $db->query(sprintf("SELECT user_one_id FROM friends FORCE INDEX (id_status_two)  WHERE status = 0 AND user_two_id = %s", secure($this->_data['user_id'], 'int'))) or _error("SQL_ERROR_THROWEN");
         if ($get_requests->num_rows > 0) {
             while ($request = $get_requests->fetch_assoc()) {
                 $requests[] = $request['user_one_id'];
@@ -2395,10 +2400,16 @@ class User
         }
         $offset *= $system['max_results'];
         $notifications = [];
+        // if ($last_notification_id !== null) {
+        //     $notificationQuery = sprintf("SELECT notifications.*, users.user_id, users.user_name, users.user_firstname, posts_photos.source as user_picture_full, users.user_lastname, users.user_gender, users.user_picture, users.user_subscribed, users.user_verified FROM notifications INNER JOIN users ON notifications.from_user_id = users.user_id LEFT JOIN posts_photos ON users.user_picture_id = posts_photos.photo_id WHERE (notifications.to_user_id = %s OR notifications.to_user_id = '0') AND notifications.notification_id > %s ORDER BY notifications.notification_id DESC", secure($this->_data['user_id'], 'int'), secure($last_notification_id, 'int'));
+        // } else {
+        //     $notificationQuery = sprintf("SELECT notifications.*, users.user_id, users.user_name, users.user_firstname, posts_photos.source as user_picture_full, users.user_lastname, users.user_gender, users.user_picture, users.user_subscribed, users.user_verified FROM notifications INNER JOIN users ON notifications.from_user_id = users.user_id LEFT JOIN posts_photos ON users.user_picture_id = posts_photos.photo_id WHERE notifications.to_user_id = %s OR notifications.to_user_id = '0' ORDER BY notifications.notification_id DESC LIMIT %s, %s", secure($this->_data['user_id'], 'int'), secure($offset, 'int', false), secure($system['max_results'], 'int', false));
+        // }
         if ($last_notification_id !== null) {
-            $notificationQuery = sprintf("SELECT notifications.*, users.user_id, users.user_name, users.user_firstname, posts_photos.source as user_picture_full, users.user_lastname, users.user_gender, users.user_picture, users.user_subscribed, users.user_verified FROM notifications INNER JOIN users ON notifications.from_user_id = users.user_id LEFT JOIN posts_photos ON users.user_picture_id = posts_photos.photo_id WHERE (notifications.to_user_id = %s OR notifications.to_user_id = '0') AND notifications.notification_id > %s ORDER BY notifications.notification_id DESC", secure($this->_data['user_id'], 'int'), secure($last_notification_id, 'int'));
+            /* Optimised query by adding INDEX to the Query */
+            $notificationQuery = sprintf("SELECT notifications.*, users.user_id, users.user_name, users.user_firstname, posts_photos.source as user_picture_full, users.user_lastname, users.user_gender, users.user_picture, users.user_subscribed, users.user_verified FROM notifications FORCE INDEX (to_user_id) INNER JOIN users ON notifications.from_user_id = users.user_id LEFT JOIN posts_photos ON users.user_picture_id = posts_photos.photo_id WHERE (notifications.to_user_id = %s OR notifications.to_user_id = '0') AND notifications.notification_id > %s ORDER BY notifications.notification_id DESC", secure($this->_data['user_id'], 'int'), secure($last_notification_id, 'int'));
         } else {
-            $notificationQuery = sprintf("SELECT notifications.*, users.user_id, users.user_name, users.user_firstname, posts_photos.source as user_picture_full, users.user_lastname, users.user_gender, users.user_picture, users.user_subscribed, users.user_verified FROM notifications INNER JOIN users ON notifications.from_user_id = users.user_id LEFT JOIN posts_photos ON users.user_picture_id = posts_photos.photo_id WHERE notifications.to_user_id = %s OR notifications.to_user_id = '0' ORDER BY notifications.notification_id DESC LIMIT %s, %s", secure($this->_data['user_id'], 'int'), secure($offset, 'int', false), secure($system['max_results'], 'int', false));
+            $notificationQuery = sprintf("SELECT notifications.*, users.user_id, users.user_name, users.user_firstname, posts_photos.source as user_picture_full, users.user_lastname, users.user_gender, users.user_picture, users.user_subscribed, users.user_verified FROM notifications FORCE INDEX (to_user_id) INNER JOIN users ON notifications.from_user_id = users.user_id LEFT JOIN posts_photos ON users.user_picture_id = posts_photos.photo_id WHERE notifications.to_user_id = %s OR notifications.to_user_id = '0' ORDER BY notifications.notification_id DESC LIMIT %s, %s", secure($this->_data['user_id'], 'int'), secure($offset, 'int', false), secure($system['max_results'], 'int', false));
         }
 
         $get_notifications = $db->query($notificationQuery) or _error("SQL_ERROR_THROWEN");
