@@ -703,7 +703,7 @@
     </script>
 
 <script id="chat-box" type="text/template">
-        <div class="chat-widget chat-box opened" id="{literal}{{chat_key_value}}{/literal}" 
+        <div class="chat-widget chat-box opened tools" id="{literal}{{chat_key_value}}{/literal}" 
         {literal}{{#conversation_id}}{/literal}data-cid="{literal}{{conversation_id}}{/literal}"{literal}{{/conversation_id}}{/literal}
         {literal}{{#user_id}}{/literal}data-uid="{literal}{{user_id}}{/literal}"{literal}{{/user_id}}{/literal}>
             <!-- head -->

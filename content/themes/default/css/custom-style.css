@@ -105,11 +105,11 @@ body.publisher-focus .publisher{z-index:9999999 !important;}
 .chat-message-add-new .chat-form .x-form-tools{position:static !important;right:15px;display:flex;padding-left:0;padding-right:20px;z-index:99;}
 .chat-form .emoji-menu::after{right:24px !important;left:auto !important;}
 .chat-form .emoji-menu::before{right:23px !important;left:auto !important;}
-.chat-widget.chat-box.opened.fresh{overflow:visible !important;bottom:10px;}
-.chat-widget.chat-box.opened.fresh .dropdown-menu.auto-complete{border:1px solid #e8e8e8bd;border-radius:8px;box-shadow:0px 3px 10px -1px rgba(0, 0, 0, 0.1);}
-.chat-widget.chat-box.opened.fresh .x-form-tools.clearfix{position:relative !important;display:flex;}
-.chat-widget.chat-box.opened.fresh .x-form.chat-form{display:flex;align-items:center;padding:5px 5px 10px;}
-.chat-widget.chat-box.opened.fresh .chat-form-message{border:1px solid #0000000f;border-radius:10px;}
+.chat-widget.chat-box.opened.fresh, .chat-widget.chat-box.opened.tools{overflow:visible !important;bottom:10px;}
+.chat-widget.chat-box.opened.fresh .dropdown-menu.auto-complete,.chat-widget.chat-box.opened.tools .dropdown-menu.auto-complete{border:1px solid #e8e8e8bd;border-radius:8px;box-shadow:0px 3px 10px -1px rgba(0, 0, 0, 0.1);}
+.chat-widget.chat-box.opened.fresh .x-form-tools.clearfix, .chat-widget.chat-box.opened.tools .x-form-tools.clearfix{position:relative !important;display:flex;}
+.chat-widget.chat-box.opened.fresh .x-form.chat-form, .chat-widget.chat-box.opened.tools .x-form.chat-form{display:flex;align-items:center;padding:5px 5px 10px;}
+.chat-widget.chat-box.opened.fresh .chat-form-message, .chat-widget.chat-box.opened.tools .chat-form-message{border:1px solid #0000000f;border-radius:10px;}
 body .no-data-main .feeds_post_ul .no-post-to-show{ position:relative !important; left:0% !important; top:0% !important; transform:translate(-0%, -0%); -webkit-transform:translate(-0%, -0%); -moz-transform:translate(-0%, -0%); -ms-transform:translate(-0%, -0%); -o-transform:translate(-0%, -0%); }
 .js_posts_stream.no-data-main .feeds_post_ul{justify-content:center !important;align-items:center !important;align-content:center;}
 .no_data_img_{text-align:center;}
