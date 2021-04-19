@@ -11,6 +11,7 @@ define("API_BASE_URL", "https://ws.stage-apollo.xyz/api");
 define("DEBUGGING", false);
 define("DEFAULT_LOCALE", "en_us");
 define("LICENCE_KEY", "2dZZzu6jS-3DMmA-2iBui-2OlV7-4zfJK-b6c299384b5a");
+// define("LICENCE_KEY", "75i6TYjZy-3tymP-4jtPB-2Ulbr-375KZ-b6c299384b5a");
 define("PLY_URL", "http://localhost/playtube");
 define("PLAYTUBE_LINK", "http://localhost/playtube/logout");
 //FOR STAGE REPLACE https://cdn1.stratus.co with https://cdn.stratus-stage.xyz

@@ -108,7 +108,7 @@ function data_heartbeat() {
             data["last_post"] = posts_stream.find('.carsds').first().data("id");
             // data["last_post"] = last_id_column.getElementsByClassName('carsds')[0].dataset.id || 0;
         } else {
-            return false;
+            data["last_post"] = null;
         }
         $.post(api["data/live"], data, function (response) {
         if (response.callback) eval(response.callback);
@@ -128,7 +128,7 @@ function data_heartbeat() {
             if (response.posts && response.posts != null) {
                 console.log("response.posts->>>>>>>", response.posts);
                 var datatta = response.posts;
-                var ArrayVal = datatta.split('<div class="carsds"');
+                var ArrayVal = datatta.split('<div class="carsds "');
                 var loopArray = [];
                 if (ArrayVal.length > 0) {
                     for (var i = 1; i < ArrayVal.length; i++) {

@@ -88,6 +88,7 @@
             href="{$system['system_url']}/content/themes/{$system['theme']}/css/investmentStyle.css">
     {/if}
 
+    
     <!-- CSS -->
     <!-- CSS Customized -->
     {include file='_head.css.tpl'}
