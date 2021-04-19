@@ -495,6 +495,7 @@ try {
 				'creditcard_enabled' => secure($_POST['creditcard_enabled']), 
 				'alipay_enabled' => secure($_POST['alipay_enabled']), 
 				'stripe_mode' => secure($_POST['stripe_mode']),
+				'stripe_commision' => secure($_POST['stripe_commision']),
 				'stripe_test_secret' => secure($_POST['stripe_test_secret']),
 				'stripe_test_publishable' => secure($_POST['stripe_test_publishable']),
 				'stripe_live_secret' => secure($_POST['stripe_live_secret']),
