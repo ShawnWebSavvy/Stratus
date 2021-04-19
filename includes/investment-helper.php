@@ -247,8 +247,11 @@ class InvestmentHelper {
         $eth_price = $total_eth>0?$currency_price['eth_price']:0;
         $eth_total_amount = ($total_eth>0)?($total_eth*$eth_price):0;
 
+        $total_gsx = $user_data['gsx_wallet'];
+        $gsx_price = $total_gsx>0?$currency_price['gsx_wallet']:0;
+        $gsx_total_amount = ($total_gsx>0)?($total_gsx*$gsx_price):0;
 
-        $total['amount']  = round($apl_total_amount+$eth_total_amount+$btc_total_amount,2);
+        $total['amount']  = round($gsx_total_amount+$apl_total_amount+$eth_total_amount+$btc_total_amount,2);
         $total['total_token_btc'] =  $total['amount']>0?number_format(($total['amount']/$btc_price), 8):0;
         // $eth_price =  $total_eth>0?self::get_ticker_price('ETH_USDT'):0;   
         // echo '<pre>'; print_r($total); die;
