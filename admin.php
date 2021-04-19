@@ -407,6 +407,9 @@ try {
 						if ($get_referral->num_rows > 0) {
 							$row = $get_referral->fetch_assoc();
 							$COINS = json_decode($row['referral'],true);
+							if($COINS['3']['coin']!="gsx_usdt"){
+								$COINS['3'] = array("type"=>"percent","amount"=>"0","coin"=>"gsx_usdt");
+							}
 							
 						}
 						// echo '<pre>'; print_r($COINS); die;
