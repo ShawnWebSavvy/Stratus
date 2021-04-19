@@ -91,7 +91,7 @@
                                             </li>
                                         </div>
                                         {/foreach}
-                                        <div class="gallery-cell" disabled>
+                                        {* <div class="gallery-cell" disabled>
                                             <li>
                                                 <a href="javascript:;" class="coinDetailPrice"  data-coin="gsx">
                                                     <div class="coinDetailHeader">
@@ -125,7 +125,7 @@
                                                   
                                                 </a>
                                             </li>
-                                        </div>
+                                        </div> *}
                                      
                                     </div>
                                 </div>

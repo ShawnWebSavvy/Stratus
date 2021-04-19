@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="48px" height="48px" viewBox="0 0 48 48" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <title>Icon</title>
+    <g id="InvestPlatform" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="InvestPlatform/Home" transform="translate(-697.000000, -1113.000000)">
+            <g id="assets" transform="translate(279.000000, 619.000000)">
+                <g id="assets-board" transform="translate(0.000000, 72.000000)">
+                    <g id="assets/card-01-copy-5" transform="translate(394.000000, 398.000000)">
+                        <g id="GSX" transform="translate(24.000000, 24.000000)">
+                            <circle id="Oval" fill="#1269FF" fill-rule="nonzero" opacity="0.598541969" cx="24" cy="24" r="24"></circle>
+                            <g id="Group-9" transform="translate(9.000000, 5.000000)" fill="#FFFFFF">
+                                <polygon id="Fill-5" points="15.4515625 0 0 9.36373507 0 28 1.9375 26.8346001 1.9375 10.5292363 15.4515625 2.34093377 29.0528125 10.5292363 31 9.35349982"></polygon>
+                                <polygon id="Fill-2" opacity="0.750522347" points="28.9623246 10.2231249 28.9816393 10.2332332 28.9816393 26.4872838 15.46139 34.6650022 1.93148349 26.5177097 1.93148349 26.4872838 1.93146407e-05 27.6497386 1.93146407e-05 27.6902729 15.46139 36.9999191 30.9131034 27.659948 30.9131034 9.06067004 30.9034461 9.05046065"></polygon>
+                                <polygon id="Fill-7" opacity="0.741983103" points="7 23.4947044 15.4436464 29 24 23.4947044 15.4248619 18"></polygon>
+                                <polygon id="Fill-6" points="15.4247788 8 7 13.5104636 15.4530808 19 24 13.4999474"></polygon>
+                            </g>
+                        </g>
+                    </g>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>

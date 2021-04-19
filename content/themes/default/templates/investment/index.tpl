@@ -166,7 +166,7 @@
                                         </div>
                                     </div>
                                 {/foreach}
-                                <div class="coinDetailSection"  style="display: flex;
+                                {* <div class="coinDetailSection"  style="display: flex;
                                 flex-direction: column;
                                 justify-content: space-between;">
                                     <div class="coinSectionHeader">
@@ -200,7 +200,7 @@
                                             class="btn coinBaseButton" disabled>Sell</a>
                                     
                                     </div>
-                                </div>
+                                </div> *}
 
                                 <div class="MobileCrousle">
                                     <div class="gallery js-flickity" data-flickity-options='{ "wrapAround": true,"prevNextButtons": false, "pageDots": false }'>
@@ -258,7 +258,7 @@
                                                 </div>
                                             {/foreach}
                                         {/if}
-                                        <div class="gallery-cell">
+                                        {* <div class="gallery-cell">
                                             <div class="coinDetailSection">
                                                 <div class="coinSectionHeader">
                                                     <img src="{$system['system_url']}/content/themes/default/images/investment/gsx.svg"
@@ -292,7 +292,7 @@
                                                 
                                                 </div>
                                             </div>
-                                        </div>
+                                        </div> *}
                                     
                                     </div>
                                 </div>
