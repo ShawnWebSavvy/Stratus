@@ -4362,6 +4362,19 @@
 
                         <div class="form-group form-row">
                             <label class="col-md-3 form-control-label">
+                                {__("Commision")}
+                            </label>
+                            <div class="col-md-9">
+                                <input type="text" autocomplete="off" class="form-control" name="stripe_commision"
+                                    value="{$system['stripe_commision']}">
+                                <span class="form-text">
+                                    {__("Add Commision in %")}
+                                </span>
+                            </div>
+                        </div>
+
+                        <div class="form-group form-row">
+                            <label class="col-md-3 form-control-label">
                                 {__("Test Secret Key")}
                             </label>
                             <div class="col-md-9">
