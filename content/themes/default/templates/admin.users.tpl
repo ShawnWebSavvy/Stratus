@@ -146,7 +146,7 @@
 
     {elseif $sub_view == "edit"}
         
-        <div class="card-body">
+        <div class="card-body custom-tabs">
             <div class="row">
                 <div class="col-12 col-md-2 text-center mb20">
                     <img class="img-fluid img-thumbnail rounded-circle" src="{$data['user_picture']}">
@@ -186,38 +186,38 @@
             </div>
 
             <!-- tabs nav -->
-            <ul class="nav nav-tabs custom-tabs mb20">
+            <ul class="nav nav-tabs mb20">
                 <li class="nav-item">
                     <a class="nav-link active" href="#account" data-toggle="tab">
-                        <i class="fa fa-cog fa-fw mr5"></i><strong class="mr5">{__("Account")}</strong>
+                        {__("Account")}
                     </a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="#profile" data-toggle="tab">
-                        <i class="fa fa-user fa-fw mr5"></i><strong class="mr5">{__("Profile")}</strong>
+                        {__("Profile")}
                     </a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="#privacy" data-toggle="tab">
-                        <i class="fa fa-lock fa-fw mr5"></i><strong class="mr5">{__("Privacy")}</strong>
+                        {__("Privacy")}
                     </a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="#security" data-toggle="tab">
-                        <i class="fa fa-shield-alt fa-fw mr5"></i><strong class="mr5">{__("Security")}</strong>
+                        {__("Security")}
                     </a>
                 </li>
                 {if $system['packages_enabled']}
                     <li class="nav-item">
                         <a class="nav-link" href="#membership" data-toggle="tab">
-                            <i class="fa fa-id-card fa-fw mr5"></i><strong class="mr5">{__("Membership")}</strong>
+                            {__("Membership")}
                         </a>
                     </li>
                 {/if}
                 {if $system['wallet_enabled'] || $system['points_enabled']}
                     <li class="nav-item">
                         <a class="nav-link" href="#extra" data-toggle="tab">
-                            <i class="fa fa-cubes fa-fw mr5"></i><strong class="mr5">{__("Extra")}</strong>
+                            {__("Extra")}
                         </a>
                     </li>
                 {/if}

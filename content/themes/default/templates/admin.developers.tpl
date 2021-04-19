@@ -2,23 +2,28 @@
     <div class="card-header with-icon">
         {if $sub_view == "categories"}
             <div class="float-right">
-                <a href="{$system['system_url']}/{$control_panel['url']}/developers/add_category" class="btn btn-sm btn-primary">
+                <a href="{$system['system_url']}/{$control_panel['url']}/developers/add_category" class="btn cmn_btn">
                     <i class="fa fa-plus mr5"></i>{__("Add New Category")}
                 </a>
             </div>
         {elseif $sub_view == "add_category" || $sub_view == "edit_category"}
             <div class="float-right">
-                <a href="{$system['system_url']}/{$control_panel['url']}/developers/categories" class="btn btn-sm btn-light">
+                <a href="{$system['system_url']}/{$control_panel['url']}/developers/categories" class="btn cmn_btn">
                     <i class="fa fa-arrow-circle-left mr5"></i>{__("Go Back")}
                 </a>
             </div>
         {/if}
-        <i class="fa fa-cubes mr10"></i>{__("Developers")}
-        {if $sub_view == ""} &rsaquo; {__("Settings")}{/if}
-        {if $sub_view == "apps"} &rsaquo; {__("Apps")}{/if}
-        {if $sub_view == "categories"} &rsaquo; {__("Categories")}{/if}
-        {if $sub_view == "add_category"} &rsaquo; {__("Categories")} &rsaquo; {__("Add New Category")}{/if}
-        {if $sub_view == "edit_category"} &rsaquo; {__("Categories")} &rsaquo; {$data['category_name']}{/if}
+        <div class="d-flex align-items-center">
+            <div class="svg-container mr10">
+                <img style="width: 25px;" src="{$system['system_url']}/content/themes/default/images/svg/svgImg/devloper.svg" class="">
+            </div>
+            {__("Developers")}
+            {if $sub_view == ""} &rsaquo; {__("Settings")}{/if}
+            {if $sub_view == "apps"} &rsaquo; {__("Apps")}{/if}
+            {if $sub_view == "categories"} &rsaquo; {__("Categories")}{/if}
+            {if $sub_view == "add_category"} &rsaquo; {__("Categories")} &rsaquo; {__("Add New Category")}{/if}
+            {if $sub_view == "edit_category"} &rsaquo; {__("Categories")} &rsaquo; {$data['category_name']}{/if}
+        </div>
     </div>
 
     {if $sub_view == ""}
@@ -26,9 +31,9 @@
         <form class="js_ajax-forms " data-url="admin/developers.php?do=settings">
             <div class="card-body">
                 <div class="form-table-row">
-                    <div class="avatar">
+                    {* <div class="avatar">
                         {include file='__svg_icons.tpl' icon="developers" width="40px" height="40px"}
-                    </div>
+                    </div> *}
                     <div>
                         <div class="form-control-label h6">{__("Developers Apps")}</div>
                         <div class="form-text d-none d-sm-block">
@@ -45,9 +50,9 @@
                 </div>
 
                 <div class="form-table-row">
-                    <div class="avatar">
+                    {* <div class="avatar">
                         {include file='__svg_icons.tpl' icon="share_plugin" width="40px" height="40px"}
-                    </div>
+                    </div> *}
                     <div>
                         <div class="form-control-label h6">{__("Share Plugin")}</div>
                         <div class="form-text d-none d-sm-block">{__("Turn the share plugin On and Off")}</div>

@@ -8,28 +8,33 @@
             </div> -->
         {elseif $sub_view == "find"}
             <div class="float-right">
-                <a href="{$system['system_url']}/{$control_panel['url']}/users" class="btn btn-sm btn-light">
+                <a href="{$system['system_url']}/{$control_panel['url']}/users" class="btn cmn_btn">
                     <i class="fa fa-arrow-circle-left mr5"></i>{__("Go Back")}
                 </a>
             </div>
         {elseif $sub_view == "edit"}
             <div class="float-right">
-                <a href="{$system['system_url']}/{$control_panel['url']}/users" class="btn btn-sm btn-light">
+                <a href="{$system['system_url']}/{$control_panel['url']}/users" class="btn cmn_btn">
                     <i class="fa fa-arrow-circle-left"></i><span class="ml5 d-none d-lg-inline-block">{__("Go Back")}</span>
                 </a>
-                <a target="_blank" href="{$system['system_url']}/{$data['user_name']}" class="btn btn-sm btn-info">
+                <a target="_blank" href="{$system['system_url']}/{$data['user_name']}" class="btn cmn_btn">
                         <img  width="30px" height="30px" src="{$system['system_url']}/content/themes/default/images/svg/svgImg/eye-icon.svg"/>
                     <span class="ml5 d-none d-lg-inline-block">{__("View Profile")}</span>
                 </a>
-                <button type="button" class="btn btn-sm btn-danger js_admin-deleter" data-handle="user_posts" data-id="{$data['user_id']}">
+                <button type="button" class="btn cmn_btn js_admin-deleter" data-handle="user_posts" data-id="{$data['user_id']}">
                     <i class="fa fa-trash-alt"></i><span class="ml5 d-none d-lg-inline-block">{__("Delete All Posts")}</span>
                 </button>
             </div>
         {/if}
-        <i class="fa fa-user mr10"></i>Investment
-        {if $sub_view == "coin" || $sub_view == "coins"} &rsaquo; {__(Exchanges)}{/if}
-        {if $sub_view != "" && $sub_view != "edit"} &rsaquo; {__($sub_view|capitalize)}{/if}
-        {if $sub_view == "coin"} &rsaquo; Edit{/if}
+        <div class="d-flex align-items-center">
+            <div class="svg-container mr10">
+                <img style="width: 25px;" src="{$system['system_uploads_assets']}/content/themes/default/images/svg/svgImg/curancy.svg" class="">
+            </div>
+            {__("Investment")}
+            {if $sub_view == "coin" || $sub_view == "coins"} &rsaquo; {__(Exchanges)}{/if}
+            {if $sub_view != "" && $sub_view != "edit"} &rsaquo; {__($sub_view|capitalize)}{/if}
+            {if $sub_view == "coin"} &rsaquo; Edit{/if}
+        </div>
     </div>
 
     {if $sub_view == "" || $sub_view == "exchanges"}

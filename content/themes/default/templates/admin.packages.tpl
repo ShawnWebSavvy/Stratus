@@ -2,22 +2,27 @@
     <div class="card-header with-icon">
         {if $sub_view == ""}
             <div class="float-right">
-                <a href="{$system['system_url']}/{$control_panel['url']}/packages/add" class="btn btn-sm btn-primary">
+                <a href="{$system['system_url']}/{$control_panel['url']}/packages/add" class="btn cmn_btn">
                     <i class="fa fa-plus mr5"></i>{__("Add New Package")}
                 </a>
             </div>
         {elseif $sub_view == "add" || $sub_view == "edit"}
             <div class="float-right">
-                <a href="{$system['system_url']}/{$control_panel['url']}/packages" class="btn btn-sm btn-light">
+                <a href="{$system['system_url']}/{$control_panel['url']}/packages" class="btn cmn_btn">
                     <i class="fa fa-arrow-circle-left mr5"></i>{__("Go Back")}
                 </a>
             </div>
         {/if}
-        <i class="fa fa-cubes mr5"></i>{__("Pro Packages")}
-        {if $sub_view == "edit"} &rsaquo; {$data['name']}{/if}
-        {if $sub_view == "add"} &rsaquo; {__("Add New Package")}{/if}
-        {if $sub_view == "subscribers"} &rsaquo; {__("Subscribers")}{/if}
-        {if $sub_view == "earnings"} &rsaquo; {__("Earnings")}{/if}
+        <div class="d-flex align-items-center">
+            <div class="svg-container mr10">
+                <img style="width: 20px;" src="{$system['system_uploads_assets']}/content/themes/default/images/svg/pro_packages.svg" class="">
+            </div>
+            {__("Pro Packages")}
+            {if $sub_view == "edit"} &rsaquo; {$data['name']}{/if}
+            {if $sub_view == "add"} &rsaquo; {__("Add New Package")}{/if}
+            {if $sub_view == "subscribers"} &rsaquo; {__("Subscribers")}{/if}
+            {if $sub_view == "earnings"} &rsaquo; {__("Earnings")}{/if}
+        </div>
     </div>
 
     {if $sub_view == ""}

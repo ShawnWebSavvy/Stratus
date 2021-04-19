@@ -2,21 +2,26 @@
     <div class="card-header with-icon">
         {if $sub_view == "categories"}
             <div class="float-right">
-                <a href="{$system['system_url']}/{$control_panel['url']}/market/add_category" class="btn btn-sm btn-primary btn-antier-skyblue btn-antier-no-border-skyblue">
+                <a href="{$system['system_url']}/{$control_panel['url']}/market/add_category" class="btn cmn_btn">
                     <i class="fa fa-plus mr5"></i>{__("Add New Category")}
                 </a>
             </div>
         {elseif $sub_view == "add_category" || $sub_view == "edit_category"}
             <div class="float-right">
-                <a href="{$system['system_url']}/{$control_panel['url']}/market/categories" class="btn btn-sm btn-light btn-antier-skyblue btn-antier-no-border-skyblue">
+                <a href="{$system['system_url']}/{$control_panel['url']}/market/categories" class="btn cmn_btn">
                     <i class="fa fa-arrow-circle-left mr5"></i>{__("Go Back")}
                 </a>
             </div>
         {/if}
-        <i class="fa fa-shopping-bag mr10"></i>{__("Marketplace")}
-        {if $sub_view == "categories"} &rsaquo; {__("Categories")}{/if}
-        {if $sub_view == "add_category"} &rsaquo; {__("Categories")} &rsaquo; {__("Add New Category")}{/if}
-        {if $sub_view == "edit_category"} &rsaquo; {__("Categories")} &rsaquo; {$data['category_name']}{/if}
+        <div class="d-flex align-items-center">
+            <div class="svg-container mr10">
+                <img src="{$system['system_uploads_assets']}/content/themes/default/images/svg/svgImg/market_hubN.svg" class="">
+            </div>
+            {__("Marketplace")}
+            {if $sub_view == "categories"} &rsaquo; {__("Categories")}{/if}
+            {if $sub_view == "add_category"} &rsaquo; {__("Categories")} &rsaquo; {__("Add New Category")}{/if}
+            {if $sub_view == "edit_category"} &rsaquo; {__("Categories")} &rsaquo; {$data['category_name']}{/if}
+        </div>
     </div>
 
     {if $sub_view == "categories"}

@@ -2,41 +2,48 @@
     <div class="card-header with-icon">
         {if $sub_view == "find"}
             <div class="float-right">
-                <a href="{$system['system_url']}/{$control_panel['url']}/events" class="btn btn-sm btn-light btn-antier-skyblue btn-antier-no-border-skyblue">
+                <a href="{$system['system_url']}/{$control_panel['url']}/events" class="btn cmn_btn">
                     <i class="fa fa-arrow-circle-left mr5"></i>{__("Go Back")}
                 </a>
             </div>
         {elseif $sub_view == "edit_event"}
             <div class="float-right">
-                <a href="{$system['system_url']}/{$control_panel['url']}/events" class="btn btn-sm btn-light btn-antier-skyblue btn-antier-no-border-skyblue">
+                <a href="{$system['system_url']}/{$control_panel['url']}/events" class="btn cmn_btn">
                     <i class="fa fa-arrow-circle-left"></i><span class="ml5 d-none d-lg-inline-block">{__("Go Back")}</span>
                 </a>
-                <a target="_blank" href="{$system['system_url']}/events/{$data['event_id']}" class="btn btn-sm btn-info">
+                <a target="_blank" href="{$system['system_url']}/events/{$data['event_id']}" class="btn cmn_btn">
                     <i class="fa fa-tv"></i><span class="ml5 d-none d-lg-inline-block">{__("View Event")}</span>
                 </a>
-                <button type="button" class="btn btn-sm btn-danger js_admin-deleter" data-handle="event_posts" data-id="{$data['event_id']}">
+                <button type="button" class="btn cmn_btn js_admin-deleter" data-handle="event_posts" data-id="{$data['event_id']}">
                     <i class="fa fa-trash-alt"></i><span class="ml5 d-none d-lg-inline-block">{__("Delete All Posts")}</span>
                 </button>
             </div>
         {elseif $sub_view == "categories"}
             <div class="float-right">
-                <a href="{$system['system_url']}/{$control_panel['url']}/events/add_category" class="btn btn-sm btn-light btn-antier-skyblue btn-antier-no-border-skyblue">
+                <a href="{$system['system_url']}/{$control_panel['url']}/events/add_category" class="btn cmn_btn">
                     <i class="fa fa-plus"></i><span class="ml5 d-none d-lg-inline-block">{__("Add New Category")}</span>
                 </a>
             </div>
         {elseif $sub_view == "add_category" || $sub_view == "edit_category"}
             <div class="float-right">
-                <a href="{$system['system_url']}/{$control_panel['url']}/events/categories" class="btn btn-sm btn-light btn-antier-skyblue btn-antier-no-border-skyblue">
+                <a href="{$system['system_url']}/{$control_panel['url']}/events/categories" class="btn cmn_btn">
                     <i class="fa fa-arrow-circle-left"></i><span class="ml5 d-none d-lg-inline-block">{__("Go Back")}</span>
                 </a>
             </div>
         {/if}
-        <i class="fa fa-calendar mr10"></i>{__("Events")}
-        {if $sub_view == "find"} &rsaquo; {__("Find")}{/if}
-        {if $sub_view == "edit_event"} &rsaquo; {$data['event_title']}{/if}
-        {if $sub_view == "categories"} &rsaquo; {__("Categories")}{/if}
-        {if $sub_view == "add_category"} &rsaquo; {__("Categories")} &rsaquo; {__("Add New Category")}{/if}
-        {if $sub_view == "edit_category"} &rsaquo; {__("Categories")} &rsaquo; {$data['category_name']}{/if}
+
+        <div class="d-flex align-items-center">
+            <div class="svg-container mr10">
+                <img src="{$system['system_uploads_assets']}/content/themes/default/images/svg/svgImg/event_add_iconSidebar.svg" class="">
+            </div>
+            {__("Events")}
+            {if $sub_view == "find"} &rsaquo; {__("Find")}{/if}
+            {if $sub_view == "edit_event"} &rsaquo; {$data['event_title']}{/if}
+            {if $sub_view == "categories"} &rsaquo; {__("Categories")}{/if}
+            {if $sub_view == "add_category"} &rsaquo; {__("Categories")} &rsaquo; {__("Add New Category")}{/if}
+            {if $sub_view == "edit_category"} &rsaquo; {__("Categories")} &rsaquo; {$data['category_name']}{/if}
+        </div>
+
     </div>
 
     {if $sub_view == "" || $sub_view == "find"}
@@ -131,7 +138,7 @@
     {elseif $sub_view == "edit_event"}
 
         <form class="js_ajax-forms event-edit-event-form" data-url="admin/events.php?do=edit_event&id={$data['event_id']}">
-            <div class="card-body">
+            <div class="card-body custom-tabs">
                 <div class="row">
                     <div class="col-12 col-md-2 text-center mb20">
                         <img class="img-fluid img-thumbnail rounded" src="{$data['event_picture']}">
@@ -175,10 +182,11 @@
                 </div>
 
                 <!-- tabs nav -->
-                <ul class="nav nav-tabs custom-tabs mb20">
+                <ul class="nav nav-tabs mb20">
                     <li class="nav-item">
                         <a class="nav-link active" href="#event_settings" data-toggle="tab">
-                            <i class="fa fa-cog fa-fw mr5"></i><strong>{__("Event Settings")}</strong>
+                            {* <i class="fa fa-cog fa-fw mr5"></i> *}
+                            {__("Event Settings")}
                         </a>
                     </li>
                 </ul>

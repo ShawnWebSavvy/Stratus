@@ -3,15 +3,12 @@
     <div class="card-header with-icon">
         <i class="fa fa-user mr10"></i>Custom Referrals
         {if $sub_view == ""}
-            <div class="card-header with-icon">
             <div class="float-right"> 
-                <a href="{$system['system_url']}/{$control_panel['url']}/custom-referrals/add" class="btn btn-sm btn-primary">
+                <a href="{$system['system_url']}/{$control_panel['url']}/custom-referrals/add" class="btn cmn_btn">
                     <i class="fa fa-plus"></i><span class="ml5 d-none d-lg-inline-block">Add New Custom Referral</span>
                 </a> 
-            </div>                    
-        </div>
+            </div>
         {/if}
-
         {if $sub_view == "edit"} &rsaquo; Edit{/if}
     </div>
 

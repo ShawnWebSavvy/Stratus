@@ -7,9 +7,9 @@
     <form class="js_ajax-forms " data-url="admin/newsletter.php">
         <div class="card-body">
             <div class="form-table-row">
-                <div class="avatar">
+                {* <div class="avatar">
                     {include file='__svg_icons.tpl' icon="account_activation" width="40px" height="40px"}
-                </div>
+                </div> *}
                 <div>
                     <div class="form-control-label h6">{__("Test Message")}</div>
                     <div class="form-text d-none d-sm-block">{__("The message will sent to Website Email only")}</div>

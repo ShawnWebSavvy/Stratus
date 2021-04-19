@@ -1,6 +1,9 @@
 <div class="card">
-    <div class="card-header with-icon">
-        <i class="fa fa-tachometer-alt mr10"></i>{__("Dashboard")}
+    <div class="card-header with-icon d-flex align-items-center">
+        <div class="svg-container mr10">
+            <img src="{$system['system_uploads_assets']}/content/themes/default/images/svg/svgImg/apps_icon.svg" class="">
+        </div>
+        {__("Dashboard")}
     </div>
     <div class="card-body">
         {if $user->_is_admin}

@@ -2,18 +2,20 @@
     <div class="card-header with-icon">
         {if $sub_view == ""}
             <div class="float-right">
-                <a href="{$system['system_url']}/{$control_panel['url']}/blacklist/add" class="btn btn-sm btn-primary">
+                <a href="{$system['system_url']}/{$control_panel['url']}/blacklist/add" class="btn cmn_btn">
                     <i class="fa fa-plus mr5"></i>{__("Add New")}
                 </a>
             </div>
         {elseif $sub_view == "add"}
             <div class="float-right">
-                <a href="{$system['system_url']}/{$control_panel['url']}/blacklist" class="btn btn-sm btn-light">
+                <a href="{$system['system_url']}/{$control_panel['url']}/blacklist" class="btn cmn_btn">
                     <i class="fa fa-arrow-circle-left mr5"></i>{__("Go Back")}
                 </a>
             </div>
         {/if}
-        <i class="fa fa-minus-circle mr5"></i>{__("Blacklist")}
+        <div class="d-flex align-items-center">
+            <i class="fa fa-minus-circle mr5"></i>{__("Blacklist")}
+        </div>
         {if $sub_view == "add"} &rsaquo; {__("Add New")}{/if}
     </div>
 

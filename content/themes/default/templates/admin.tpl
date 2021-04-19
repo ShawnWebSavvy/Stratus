@@ -20,7 +20,7 @@
                             <li {if $view=="dashboard" }class="active" {/if}>
                                 <a href="{$system['system_url']}/{$control_panel['url']}">
                                     <div class="svg-container">
-                                        <img src="{$system['system_uploads_assets']}/content/themes/default/images/svg/footer-icon/Apps.svg" class="">
+                                        <img src="{$system['system_uploads_assets']}/content/themes/default/images/svg/svgImg/apps_icon.svg" class="">
                                     </div>
                                     {__("Dashboard")}
                                 </a>
@@ -118,7 +118,7 @@
                                 <!-- Settings -->
                                 <li>
                                     <a href="#investment" data-toggle="collapse">
-                                          <div class="svg-container">
+                                        <div class="svg-container">
                                             <img style="width: 25px;" src="{$system['system_uploads_assets']}/content/themes/default/images/svg/svgImg/curancy.svg" class="">
                                         </div>
                                         Investment
@@ -147,7 +147,7 @@
                                 <li {if $view=="themes" }class="active" {/if}>
                                     <a href="{$system['system_url']}/{$control_panel['url']}/themes">
                                         <div class="svg-container">
-                                            <img style="width: 25px;" src="{$system['system_uploads_assets']}/content/themes/default/images/svg/svgImg/theme.svg" class="">
+                                            <img style="width: 20px;" src="{$system['system_uploads_assets']}/content/themes/default/images/svg/svgImg/theme.svg" class="">
                                         </div>
                                         {__("Themes")}
                                     </a>
@@ -157,7 +157,7 @@
                                 <li {if $view=="design" }class="active" {/if}>
                                     <a href="{$system['system_url']}/{$control_panel['url']}/design">
                                         <div class="svg-container">
-                                            <img style="width: 25px;" src="{$system['system_uploads_assets']}/content/themes/default/images/svg/svgImg/design.svg" class="">
+                                            <img style="width: 20px;" src="{$system['system_uploads_assets']}/content/themes/default/images/svg/svgImg/design.svg" class="">
                                         </div>
                                         {__("Design")}
                                     </a>
@@ -187,7 +187,7 @@
                                 <li {if $view=="users" }class="active" {/if}>
                                     <a href="#users" data-toggle="collapse" {if $view=="users" }aria-expanded="true" {/if}>
                                         <div class="svg-container">
-                                            <img src="{$system['system_uploads_assets']}/content/themes/default/images/svg/svgImg/friend_iconN.svg" class="">
+                                            <img style="width: 25px;" src="{$system['system_uploads_assets']}/content/themes/default/images/svg/svgImg/friend_iconN.svg" class="">
                                         </div>
                                         {__("Users")}
                                     </a>
@@ -261,7 +261,7 @@
                             <li {if $view=="groups" }class="active" {/if}>
                                 <a href="#groups" data-toggle="collapse" {if $view=="groups" }aria-expanded="true" {/if}>
                                    <div class="svg-container">
-                                        <img style="width: 25px;" src="{$system['system_uploads_assets']}/content/themes/default/images/svg/svgImg/group_icon.svg" class="">
+                                        <img style="width: 22px;" src="{$system['system_uploads_assets']}/content/themes/default/images/svg/svgImg/group_icon.svg" class="">
                                     </div>
                                     {__("Groups")}
                                 </a>
@@ -649,7 +649,7 @@
                                 <li {if $view=="tools" }class="active" {/if}>
                                     <a href="#tools" data-toggle="collapse" {if $view=="tools" }aria-expanded="true" {/if}>
                                         <div class="svg-container">
-                                            <img style="width: 25px;" src="{$system['system_uploads_assets']}/content/themes/default/images/svg/svgImg/tools.svg" class="">
+                                            <img style="width: 19px;" src="{$system['system_uploads_assets']}/content/themes/default/images/svg/svgImg/tools.svg" class="">
                                         </div>
                                         {__("Tools")}
                                     </a>
@@ -696,7 +696,7 @@
                                 <li {if $view=="static" }class="active" {/if}>
                                     <a href="{$system['system_url']}/{$control_panel['url']}/static">
                                         <div class="svg-container">
-                                            <img style="width: 25px;" src="{$system['system_uploads_assets']}/content/themes/default/images/svg/svgImg/staticPage.svg" class="">
+                                            <img style="width: 17px;" src="{$system['system_uploads_assets']}/content/themes/default/images/svg/svgImg/staticPage.svg" class="">
                                         </div>
                                         {__("Static Pages")}
                                     </a>
@@ -722,7 +722,10 @@
                                 <!-- Emojis -->
                                 <li {if $view=="emojis" }class="active" {/if}>
                                     <a href="{$system['system_url']}/{$control_panel['url']}/emojis">
-                                        <i class="fa fa-smile fa-fw mr10" style="color: #FF5722"></i>{__("Emojis")}
+                                        <div class="svg-container">
+                                            <img style="width: 22px;" src="{$system['system_uploads_assets']}/content/themes/default/images/svg/svgImg/feelingsHover.svg" class="">
+                                        </div>
+                                        {__("Emojis")}
                                     </a>
                                 </li>
                                 <!-- Emojis -->
@@ -756,7 +759,7 @@
                                 <li {if $view=="notifications" }class="active" {/if}>
                                     <a href="{$system['system_url']}/{$control_panel['url']}/notifications">
                                         <div class="svg-container">
-                                            <img style="width: 25px;" src="{$system['system_uploads_assets']}/content/themes/default/images/svg/svgImg/notifications_icon_hover.svg" class="">
+                                            <img style="width: 30px;" src="{$system['system_uploads_assets']}/content/themes/default/images/svg/svgImg/notifications_icon_hover.svg" class="">
                                         </div>
                                         {__("Mass Notifications")}
                                     </a>
