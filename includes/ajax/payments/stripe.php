@@ -99,9 +99,9 @@ try {
 		    ));
 		    
 		    if($charge) {
-				$newprice = $_POST['price'] * ((100-$system['stripe_commision']) / 100);
+				//$newprice = $_POST['price'] * ((100-$system['stripe_commision']) / 100);
 		    	// update user wallet balance
-				$_SESSION['wallet_replenish_amount'] = round($newprice);
+				$_SESSION['wallet_replenish_amount'] = $_SESSION['wallet_pay_to_user'];
 				$chargeQuery = sprintf("UPDATE users SET user_wallet_balance = user_wallet_balance + %s WHERE user_id = %s", secure($_SESSION['wallet_replenish_amount']), secure($user->_data['user_id'], 'int'));
 				
 				$db->query($chargeQuery) or _error("SQL_ERROR_THROWEN");
