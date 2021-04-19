@@ -15,6 +15,6 @@ define("LICENCE_KEY", "2dZZzu6jS-3DMmA-2iBui-2OlV7-4zfJK-b6c299384b5a");
 define("SYSTEM_UPLOADS", "https://cdn.stratus-stage.xyz/uploads");
 define("SYSTEM_UPLOADS_URL", "https://cdn.stratus-stage.xyz/uploads");
 define("SYSTEM_UPLOADS_ASSETS", "https://cdn.stratus-stage.xyz");
-define("PLY_URL", "https://videohub.stratus-stage.xyz/");
-define("PLAYTUBE_LINK", "https://videohub.stratus-stage.xyz/logout");
+define("PLY_URL", "https://videohubstage.stratus.co/");
+define("PLAYTUBE_LINK", "https://videohubstage.stratus.co/logout");
 ?>
