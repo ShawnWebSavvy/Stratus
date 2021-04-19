@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="22px" height="18px" viewBox="0 0 22 18" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <title>Icon/Plus Square</title>
+    <defs>
+        <radialGradient cx="50%" cy="0%" fx="50%" fy="0%" r="116.062695%" gradientTransform="translate(0.500000,0.000000),scale(0.818182,1.000000),rotate(93.289188),scale(1.000000,3.127546),translate(-0.500000,-0.000000)" id="radialGradient-1">
+            <stop stop-color="#5E5E5E" offset="0%"></stop>
+            <stop stop-color="#161514" offset="100%"></stop>
+            <stop stop-color="#161514" offset="100%"></stop>
+        </radialGradient>
+        <radialGradient cx="68.6755151%" cy="-11.7355238%" fx="68.6755151%" fy="-11.7355238%" r="134.601659%" gradientTransform="translate(0.686755,-0.117355),scale(0.777767,1.000000),rotate(96.394063),scale(1.000000,2.690756),translate(-0.686755,0.117355)" id="radialGradient-2">
+            <stop stop-color="#FFF4DC" offset="0%"></stop>
+            <stop stop-color="#EDB134" offset="100%"></stop>
+        </radialGradient>
+    </defs>
+    <g id="Symbols" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="Menu/InvestPlatform" transform="translate(-30.000000, -505.000000)">
+            <g id="Bottom/Icon-Copy-22" transform="translate(17.000000, 490.000000)">
+                <g id="Icon/Plus-Square" transform="translate(13.000000, 15.000000)">
+                    <path d="M0,2 C0,0.895 0.895,0 2,0 L20,0 C21.105,0 22,0.895 22,2 L22,16 C22,17.105 21.105,18 20,18 L2,18 C0.895,18 0,17.105 0,16 L0,2 Z" id="Path" fill="url(#radialGradient-1)"></path>
+                    <path d="M19.868,3.496 C20.142,3.017 19.976,2.406 19.496,2.132 C19.017,1.858 18.406,2.025 18.132,2.504 L14.883,8.189 C14.661,8.578 14.207,8.771 13.773,8.663 L8.712,7.397 C7.408,7.072 6.047,7.653 5.38,8.82 L2.132,14.504 C1.858,14.984 2.024,15.594 2.504,15.868 C2.983,16.142 3.594,15.976 3.868,15.496 L7.117,9.812 C7.339,9.423 7.793,9.229 8.227,9.338 L13.288,10.603 C14.592,10.929 15.953,10.348 16.62,9.181 L19.868,3.496 Z" id="Path" fill="url(#radialGradient-2)"></path>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>

@@ -75,22 +75,18 @@
 								</div>
 								<div class="product-image">
 									{if $post['photos_num'] > 0}
-									<img src="{$system['system_uploads']}/{$post['photos'][0]['source']}">
+										<img src="{$system['system_uploads']}/{$post['photos'][0]['source']}">
 									{else}
-									<img
-										src="{$system['system_url']}/content/themes/{$system['theme']}/images/blank_product.jpg">
+										<img src="{$system['system_url']}/content/themes/{$system['theme']}/images/blank_product.jpg">
 									{/if}
 									<div class="product-overlay">
-									 <div>
-										<a class="btn btn-sm btn-outline-secondary "
-											href="{$system['system_url']}/posts/{$post['post_id']}">
-											{__("More")}
-										</a>
+									 	<div>
+											<a class="btn btn-sm cmn_btn" style="margin: 0 auto;max-width: fit-content;margin-bottom:5px" href="{$system['system_url']}/posts/{$post['post_id']}">{__("More")}</a>
 										</div>
 										{if $post['author_id'] != $user->_data['user_id'] }
-										<button type="button" class="saller_btn btn btn-sm btn-info  js_chat_start"
-											data-uid="{$post['author_id']}" data-name="{$post['post_author_name']}"><i
-												class="fa fa-comments mr5"></i>{__("Contact Seller")}</button>
+										<button type="button" class="saller_btn btn cmn_btn js_chat_start" style="margin: 0 auto;max-width: fit-content;" data-uid="{$post['author_id']}" data-name="{$post['post_author_name']}">
+											<i class="fa fa-comments mr5"></i>{__("Contact Seller")}
+										</button>
 										{/if}
 									</div>
 								</div>
@@ -135,25 +131,20 @@
 										src="{$system['system_url']}/content/themes/{$system['theme']}/images/blank_product.jpg">
 									{/if}
 									<div class="product-overlay">
-									<div>
-										<a class="btn btn-sm btn-outline-secondary "
-											href="{$system['system_url']}/posts/{$post['post_id']}">
-											{__("More")}
-										</a>
+										<div>
+											<a class="btn btn-sm cmn_btn" href="{$system['system_url']}/posts/{$post['post_id']}"
+											style="margin: 0 auto;max-width: fit-content;margin-bottom:5px">{__("More")}</a>
 										</div>
 										{if $post['author_id'] != $user->_data['user_id'] }
-										<button type="button" class="saller_btn btn btn-sm btn-info  js_chat_start"
-											data-uid="{$post['author_id']}" data-name="{$post['post_author_name']}"><i
-												class="fa fa-comments mr5"></i>{__("Contact Seller")}</button>
+										<button type="button" style="margin: 0 auto;max-width: fit-content;" class="saller_btn btn cmn_btn js_chat_start" data-uid="{$post['author_id']}" data-name="{$post['post_author_name']}">
+											<i class="fa fa-comments mr5"></i>{__("Contact Seller")}</button>
 										{/if}
 									</div>
 								</div>
 								<div class="product-info">
 									<div class="product-meta  product_name_section">
-										<a href="{$system['system_url']}/posts/{$post['post_id']}"
-											class="title">{$post['product']['name']}</a>
+										<a href="{$system['system_url']}/posts/{$post['post_id']}" class="title">{$post['product']['name']}</a>
 									</div>
-
 									<div class="product-meta product_type_section">
 										<i class="fa fa-tag fa-fw mr5" style="color: #1f9cff;"></i>{__("Type")}:
 										{if $post['product']['status'] == "new"}{__("New")}{else}{__("Used")}{/if}

@@ -626,6 +626,10 @@ form.js_ajax-forms a,.registered_link {
     border-color: transparent;
     background-color: rgb(51, 103, 214);
 }
+.cc-color-override-1420035967 .cc-btn:focus {
+    border-color: transparent;
+    outline: none;
+}
 @media (max-width: 991px){
 .cc-window.cc-floating {
     padding: 15px 15px !important;

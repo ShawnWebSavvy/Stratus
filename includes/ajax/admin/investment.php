@@ -11,7 +11,7 @@ set_time_limit(0); /* unlimited max execution time */
 
 // fetch bootstrap
 require('../../../bootstrap.php');
-
+require('../../investment-helper.php');
 // check AJAX Request
 is_ajax();
 
@@ -67,33 +67,25 @@ try {
 			}
 			/* return */
 			break;
-		
-		// case 'edit_points':
-		// 	/* valid inputs */
-		// 	if (!isset($_GET['id']) || !is_numeric($_GET['id'])) {
-		// 		_error(400);
-		// 	}
-		// 	/* get user info */
-		// 	$user_info = $user->get_user($_GET['id']);
-		// 	if (!$user_info) {
-		// 		throw new Exception(__("This account not exist"));
-		// 	}
-		// 	/* valid inputs */
-		// 	if (is_empty($_POST['user_points']) || !is_numeric($_POST['user_points']) || $_POST['user_points'] < 0) {
-		// 		throw new Exception(__("You must enter valid amount of points"));
-		// 	}
-		// 	/* update */
-		// 	$db->query(sprintf("UPDATE users SET user_points = %s WHERE user_id = %s", secure($_POST['user_points']), secure($_GET['id'], 'int'))) or _error("SQL_ERROR_THROWEN");
-		// 	/* return */
-		// 	return_json(array('success' => true, 'message' => __("User info have been updated")));
-		// 	break;
-
-		
-
+		case 'updateCoin':
+			// $params['markup'] = $_POST['markup_price'];
+            // $params['markdown'] = $_POST['markdown_price'];
+			$params['tradePair'] = $_POST['trade_pair'];
+			$params['exchangeId'] = $_POST['exchange_id'];
+			
+			$detail = InvestmentHelper::getAdminSettingDetail('investment/admin/settings/fee/',$params);
+			
+			$return['bitmart_price'] = round($detail['price'],5);
+			$return['stratus_buy_price'] = round($detail['price']+$detail['price']*$_POST['markup_price']/100,5);
+			$return['stratus_sell_price'] = round((($detail['price'])-(($detail['price']*$_POST['markdown_price'])/100)),5);
+			// return $return;
+			return_json( array('data' => $return) );
+			break;
 		default:
 			_error(400);
 			break;
 	}
 } catch (Exception $e) {
+	die($e);
 	return_json(array('error' => true, 'message' => $e->getMessage()));
 }

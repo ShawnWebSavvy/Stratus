@@ -82,11 +82,11 @@ try {
 
 	$profile['user_picture_lightbox'] = $userGlobal->check_privacy($profile['user_picture_privacy'], $profile['user_id']);
 
-	if ($profile['global_user_picture'] == "https://cdn1.stratus.co/uploads/") {
+	if ($profile['global_user_picture'] == SYSTEM_UPLOADS) {
 		$profile['global_user_picture'] = $system['system_url'] . '/content/themes/' . $system['theme'] . '/images/user_defoult_img.jpg';
 	}
 
-	if ($profile['user_picture'] == "https://cdn1.stratus.co/uploads/") {
+	if ($profile['user_picture'] == SYSTEM_UPLOADS) {
 		$profile['user_picture'] = $system['system_url'] . '/content/themes/' . $system['theme'] . '/images/user_defoult_img.jpg';
 	}
 
@@ -212,6 +212,11 @@ try {
 			$smarty->assign('posts', $posts);
 			$smarty->assign('posts_count', count($posts));
 			$smarty->assign('subactive_page', 'globalhub_profile');
+
+			if( ($user->_data['user_id'] == $profile['user_id'])||($profile['user_privacy_wall'] == 'friends'&&$profile['we_friends'] || $profile['user_privacy_wall'] == 'public') ){
+				$smarty->assign('addPost', true);
+			}
+
 			break;
 
 		case 'friends':

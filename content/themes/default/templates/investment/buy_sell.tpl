@@ -1,6 +1,13 @@
 {include file='_head.tpl'}
 {include file='_header.tpl'}
+<style>
 
+@media (max-width: 460px) {
+ .buySellSection .MobileCrousle.mob_style .flickity-enabled.is-draggable .flickity-viewport {
+    height: 334.5px !important;
+  }
+}
+</style>
 <!-- page content -->
 <div class="container mt20 offcanvas">
     <div class="row">
@@ -36,7 +43,7 @@
                         </div>
                         <div class="coinSelection">
                             <ul>
-                                <div class="MobileCrousle">
+                                <div class="MobileCrousle mob_style">
                                     <div class="gallery js-flickity" data-flickity-options='{ "cellAlign": "left", "wrapAround": false, "contain": true, "prevNextButtons": false, "pageDots": false }'>
                                         {foreach $token_details as $tkn_detail}
                                         <div class="gallery-cell">
@@ -131,7 +138,7 @@
                         </div>
                         <div class="coinSelection">
                             <ul>
-                                <div class="MobileCrousle">
+                                <div class="MobileCrousle mob_style>
                                     <div class="gallery js-flickity" data-flickity-options='{ "cellAlign": "left", "wrapAround": false, "contain": true, "prevNextButtons": false, "pageDots": false }'>
                                         <div class="gallery-cell">
                                             <li>

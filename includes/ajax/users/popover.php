@@ -16,7 +16,7 @@ is_ajax();
 user_access(true);
 
 // valid inputs
-if(!in_array($_GET['type'], array('user', 'page'))) {
+if(!in_array($_GET['type'], array('user', 'page', 'groups', 'events'))) {
 	_error(400);
 }
 /* check uid */
@@ -31,7 +31,6 @@ try {
 
 	// get (user|page) popover
 	$profile = $user->popover($_GET['uid'], $_GET['type']);
-	// echo '<pre>'; print_r($profile); die;
 	if($profile) {
 		/* assign variables */
 		$smarty->assign('type', $_GET['type']);

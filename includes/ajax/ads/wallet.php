@@ -27,13 +27,17 @@ try {
 			break;
 
 		case 'wallet_replenish':
-			// valid inputs
+			// valid inputs 
 			if(!isset($_POST['amount']) || !is_numeric($_POST['amount'])) {
 				throw new Exception(__("Enter valid amount of money for example '50'"));
 			}
-			
+			//calculate percentage
+			$percentage = 100 + $system['stripe_commision'];
+            $new_amount = ($percentage / 100) * $_POST['amount'];
+            $fee_amount = $new_amount - $_POST['amount'];
+			$_SESSION['wallet_pay_to_user'] = $_POST['amount'];
 			// return
-			modal("#payment", "{'handle': 'wallet', 'price': '".$_POST['amount']."'}");
+			modal("#payment", "{'handle': 'wallet', 'new_amount':'".number_format((float)$new_amount, 2, '.', '')."', 'fee_amount':'".number_format((float)$fee_amount, 2, '.', '')."', 'price': '".$_POST['amount']."'}");
 			break;
 
 		case 'wallet_withdraw_affiliates':

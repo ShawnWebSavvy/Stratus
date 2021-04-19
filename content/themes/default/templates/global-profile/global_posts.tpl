@@ -1,4 +1,6 @@
 <!-- posts-filter -->
+<link rel="stylesheet" href="{$system['system_uploads_assets']}/content/themes/default/css/bricklayer.css"  {if !$user->_logged_in}defer{/if}>
+<link rel="stylesheet" href="{$system['system_uploads_assets']}/content/themes/default/css/bricklayer-custom.css"  {if !$user->_logged_in}defer{/if}>
 <div class="posts-filter col-12">
     <span>{if $_title}{$_title}{else}{__("Recent Updates")}{/if}</span>
     {if !$_filter}
@@ -115,16 +117,34 @@
 	</div>
 </div>
 <!-- posts-loader -->
-
+{if $subactive_page=='globalhub_timeline'}
+<style>
+	@media screen and (min-width: 700px) {
+		.bricklayer-column-sizer {
+			/* If page is greater than 700px, columns will be 5% wide. That means there will be lots of columns */
+			width: 50% !important;
+		}
+	}
+</style>
+{else}
+<style>
+	@media screen and (min-width: 700px) {
+		.bricklayer-column-sizer {
+			/* If page is greater than 700px, columns will be 5% wide. That means there will be lots of columns */
+			width: 100% !important;
+		}
+	}
+</style>
+{/if}
 <div class="js_posts_stream" data-get="{$_get}" data-filter="{if $_filter}{$_filter}{else}all{/if}" {if $_id}data-id="{$_id}"{/if}>
 	{if $posts}
-		<ul class="global-profile-ul-post feeds_post_ul asfasfasfasfasfasf" id="{if $_get === "newsfeed"}timeline_profile{else}global_profile_posts{/if}">
+		<div class="bricklayer">
 			<!-- posts -->
 			{foreach $posts as $post}
 				{include file='global-profile/global-profile__feeds_post.tpl' _get=$_get}
 			{/foreach}
 			<!-- posts -->
-		</ul>
+		</div>
 
 		<!-- see-more -->
 		<div class="alert alert-post see-more js_see-more {if $user->_logged_in}js_see-more-infinite{/if}" data-get="{$_get}" data-filter="{if $_filter}{$_filter}{else}all{/if}" {if $_id}data-id="{$_id}"{/if}>
@@ -145,5 +165,3 @@
 		</div>
 	{/if}
 </div>
-
-		

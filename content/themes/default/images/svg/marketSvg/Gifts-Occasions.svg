@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="20px" height="20px" viewBox="0 0 20 20" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <title>Icon/Plus Square</title>
+    <defs>
+        <radialGradient cx="55.9341948%" cy="-36.7017717%" fx="55.9341948%" fy="-36.7017717%" r="137.647883%" gradientTransform="translate(0.559342,-0.367018),scale(0.800000,1.000000),rotate(96.721605),scale(1.000000,2.196601),translate(-0.559342,0.367018)" id="radialGradient-1">
+            <stop stop-color="#FFEB99" offset="0%"></stop>
+            <stop stop-color="#FF9632" offset="100%"></stop>
+        </radialGradient>
+        <radialGradient cx="61.7758911%" cy="-28.0814902%" fx="61.7758911%" fy="-28.0814902%" r="277.238969%" gradientTransform="translate(0.617759,-0.280815),scale(1.000000,0.500000),rotate(92.885556),scale(1.000000,2.941459),translate(-0.617759,0.280815)" id="radialGradient-2">
+            <stop stop-color="#69BFFF" offset="0%"></stop>
+            <stop stop-color="#4545EA" offset="100%"></stop>
+        </radialGradient>
+    </defs>
+    <g id="Market-Hub" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="Home/MarketHub/Market" transform="translate(-1157.000000, -931.000000)">
+            <g id="RightSideMenu" transform="translate(1113.000000, 139.000000)">
+                <g id="Group" transform="translate(0.000000, 260.000000)">
+                    <g id="Bottom/Icon-Copy-28" transform="translate(30.000000, 518.000000)">
+                        <g id="Icon/Plus-Square" transform="translate(14.000000, 14.000000)">
+                            <path d="M18,11 C18.5523,11 19,11.4477 19,12 L19,17 C19,18.6569 17.6569,20 16,20 L4,20 C2.34315,20 1,18.6569 1,17 L1,12 C1,11.4477 1.44772,11 2,11 L18,11 Z M18,4 C19.1046,4 20,4.89543 20,6 L20,7 C20,8.1046 19.1046,9 18,9 L2,9 C0.89543,9 0,8.1046 0,7 L0,6 C0,4.89543 0.89543,4 2,4 L18,4 Z" id="Shape" fill="url(#radialGradient-1)"></path>
+                            <path d="M10.5,11 C10.7761,11 11,11.2239 11,11.5 L11,19.5 C11,19.7761 10.7761,20 10.5,20 L9.5,20 C9.2239,20 9,19.7761 9,19.5 L9,11.5 C9,11.2239 9.2239,11 9.5,11 L10.5,11 Z M12,0 C13.6569,0 15,1.34315 15,3 C15,4.59767679 13.7511226,5.90366059 12.1762773,5.99490729 L12,6 L11,6 L11,8.5 C11,8.74542222 10.8230914,8.9496 10.5898645,8.99194294 L10.5,9 L9.5,9 C9.25457778,9 9.0504,8.82309136 9.00805706,8.58986447 L9,8.5 L9,6 L8,6 C6.34315,6 5,4.65685 5,3 C5,1.34315 6.34315,0 8,0 C8.7684,0 9.4692,0.28885 10,0.76389 C10.5308,0.28885 11.2316,0 12,0 Z M8,2 C7.44772,2 7,2.44772 7,3 C7,3.55228 7.44772,4 8,4 L8.5,4 C8.7761,4 9,3.77614 9,3.5 L9,3 C9,2.44772 8.5523,2 8,2 Z M12,2 C11.48715,2 11.0644908,2.38604429 11.0067275,2.88337975 L11,3 L11,3.5 C11,3.74545778 11.1769086,3.9496079 11.4101355,3.99194425 L11.5,4 L12,4 C12.5523,4 13,3.55228 13,3 C13,2.44772 12.5523,2 12,2 Z" id="Shape" fill="url(#radialGradient-2)"></path>
+                        </g>
+                    </g>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>

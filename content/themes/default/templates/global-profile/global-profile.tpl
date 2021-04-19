@@ -88,7 +88,7 @@
                            </div>
                            <div
                               class="profile-avatar-crop {if $profile['user_picture_default'] || !$profile['user_picture_id']}x-hidden{/if}">
-                              <i class="fa fa-crop-alt js_init-crop-picture" data-image="{$profile['user_picture']}"
+                              <i class="fa fa-crop-alt js_init-crop-picture" data-image="{$profile['user_picture_full']}"
                                  data-handle="user" data-system-url="{$system['system_url']}" data-id="{$profile['user_id']}"></i>
                            </div>
                            {if !$profile['user_picture_default']}
@@ -179,7 +179,8 @@
                               <!-- follow -->
                               {if $profile['i_follow']}
                               <button type="button" class="btn  btn-info js_unfollow" data-uid="{$profile['user_id']}">
-                                 <i class="fa fa-check mr5"></i>{__("Following")}
+                              <img class="" src="{$system['system_url']}/content/themes/default/images/svg/svgImg/newchecked1.svg" />
+                              {__("Following")}
                               </button>
                               {else}
                               <button type="button" class="btn  btn-info js_follow" data-uid="{$profile['user_id']}">

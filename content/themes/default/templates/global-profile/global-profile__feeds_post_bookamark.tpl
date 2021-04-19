@@ -1,4 +1,5 @@
-{if !$standalone}<li class="feeds_post {if $post['childPostExists']==true} parent-post-li{/if}"
+<div class="carsds">
+{if !$standalone}<div class="feeds_post {if $post['childPostExists']==true} parent-post-li{/if}"
     data-id="{$post['post_id']}" post-type="{$post['post_type']}">{/if}
     <!-- post -->
     {if $post['childPostExists']==false}
@@ -76,7 +77,7 @@
 
 
                         <!-- shares -->
-                        <span class="pointer ml10 {if $post['shares'] == 0}x-hidden{/if}" data-toggle="modal"
+                        <span class="pointer ml10 shareButtonIcon {if $post['shares'] == 0}x-hidden{/if}" data-toggle="modal"
                             data-url="posts/global-profile/who_shares.php?post_id={$post['post_id']}">
                             <i class="shareiconBtn"></i> {__("Shares")}
                         </span>
@@ -114,19 +115,16 @@
                                     </div>
                                     <span class="reaction-counting">{$post['reactions_total_count']}</span>
                                 </button>
-                                <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                                <div class="dropdown-menu dropdown-menu-left post-dropdown-menu" aria-labelledby="dropdownMenuButton">
                                     {if $post['retweetPost']}
-                                    <a class="dropdown-item tweet-global" data-reaction="undoRetweet"
-                                        id="tweetPost_{$post['post_id']}" data-id="{$post['post_id']}"
+                                    <a class="dropdown-item tweet-global" data-reaction="undoRetweet" id="tweetPost_{$post['post_id']}" data-id="{$post['post_id']}"
                                         href="javascript:void(0);">Undo Repost</a>
                                     {else}
-                                    <a class="dropdown-item tweet-global" data-reaction="retweet"
-                                        id="tweetPost_{$post['post_id']}" data-id="{$post['post_id']}"
+                                    <a class="dropdown-item tweet-global" data-reaction="retweet" id="tweetPost_{$post['post_id']}" data-id="{$post['post_id']}"
                                         href="javascript:void(0);">Repost</a>
                                     {/if}
-                                    <a class="dropdown-item" data-toggle="modal"
-                                        data-url="posts/global-profile/share.php?do=create&amp;post_id={$post['post_id']}">Quote
-                                        Post</a>
+                                    <a class="dropdown-item" data-toggle="modal" data-url="posts/global-profile/share.php?do=create&amp;post_id={$post['post_id']}">
+                                        Quote Post</a>
 
                                 </div>
                             </div>
@@ -174,17 +172,14 @@
                                 </div>
                                 <span>{$post['shares']} </span>
                             </button>
-                            <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                                <a class="dropdown-item" id="js_send_direct_message" href="javascript:void(0);"
-                                    data-id="{$post['post_id']}" data-userid="{$user->_data['user_id']}"
-                                    data-clipboard-text="{$system['system_url']}/global-profile-posts/{$post['post_id']}">Send
-                                    via Direct Message</a>
-                                <a class="dropdown-item js_removebookmark-post" href="javascript:void(0);"
-                                    data-id="{$post['post_id']}" data-userid="{$user->_data['user_id']}">Remove Post
-                                    from Bookmarks</a>
-                                <a class="dropdown-item copy-btn" href="javascript:void(0);"
-                                    data-clipboard-text="{$system['system_url']}/global-profile-posts/{$post['post_id']}">Copy
-                                    link to Post</a>
+                            <div class="dropdown-menu dropdown-menu-right post-dropdown-menu" aria-labelledby="dropdownMenuButton">
+                                <a class="dropdown-item" id="js_send_direct_message" href="javascript:void(0);" data-id="{$post['post_id']}" data-userid="{$user->_data['user_id']}"
+                                    data-clipboard-text="{$system['system_url']}/global-profile-posts/{$post['post_id']}">
+                                    Send via Direct Message</a>
+                                <a class="dropdown-item js_removebookmark-post" href="javascript:void(0);" data-id="{$post['post_id']}" data-userid="{$user->_data['user_id']}">
+                                    Remove Post from Bookmarks</a>
+                                <a class="dropdown-item copy-btn" href="javascript:void(0);" data-clipboard-text="{$system['system_url']}/global-profile-posts/{$post['post_id']}">
+                                    Copy link to Post</a>
                             </div>
                         </div>
                     </div>
@@ -284,7 +279,7 @@
                         <!-- comments & shares -->
                         <span class="float-right">
                             <!-- shares -->
-                            <span class="pointer ml10 {if $post['shares'] == 0}x-hidden{/if}" data-toggle="modal"
+                            <span class="pointer ml10 shareButtonIcon {if $post['shares'] == 0}x-hidden{/if}" data-toggle="modal"
                                 data-url="posts/global-profile/who_shares.php?post_id={$post['post_id']}">
                                 <i class="fa fa-share"></i> {__("Shares")}
                             </span>
@@ -323,20 +318,16 @@
                                         </div>
                                         <span class="reaction-counting">{$post['reactions_total_count']}</span>
                                     </button>
-                                    <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                                    <div class="dropdown-menu dropdown-menu-left post-dropdown-menu" aria-labelledby="dropdownMenuButton">
                                         {if $post['retweetPost']}
-                                        <a class="dropdown-item tweet-global" data-reaction="undoRetweet"
-                                            id="tweetPost_{$post['post_id']}" data-id="{$post['post_id']}"
+                                        <a class="dropdown-item tweet-global" data-reaction="undoRetweet" id="tweetPost_{$post['post_id']}" data-id="{$post['post_id']}"
                                             href="javascript:void(0);">Undo Repost</a>
                                         {else}
-                                        <a class="dropdown-item tweet-global" data-reaction="retweet"
-                                            id="tweetPost_{$post['post_id']}" data-id="{$post['post_id']}"
+                                        <a class="dropdown-item tweet-global" data-reaction="retweet" id="tweetPost_{$post['post_id']}" data-id="{$post['post_id']}"
                                             href="javascript:void(0);">Repost</a>
                                         {/if}
-                                        <a class="dropdown-item" data-toggle="modal"
-                                            data-url="posts/global-profile/share.php?do=create&amp;post_id={$post['post_id']}">Quote
-                                            Post</a>
-
+                                        <a class="dropdown-item" data-toggle="modal" data-url="posts/global-profile/share.php?do=create&amp;post_id={$post['post_id']}">
+                                            Quote Post</a>
                                     </div>
                                 </div>
                             </div>
@@ -384,17 +375,13 @@
                                     </div>
                                     <span>{$post['shares']} </span>
                                 </button>
-                                <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                                    <a class="dropdown-item" id="js_send_direct_message" href="javascript:void(0);"
-                                        data-id="{$post['post_id']}" data-userid="{$user->_data['user_id']}"
-                                        data-clipboard-text="{$system['system_url']}/global-profile-posts/{$post['post_id']}">Send
-                                        via Direct Message</a>
+                                <div class="dropdown-menu dropdown-menu-right post-dropdown-menu" aria-labelledby="dropdownMenuButton">
+                                    <a class="dropdown-item" id="js_send_direct_message" href="javascript:void(0);" data-id="{$post['post_id']}" data-userid="{$user->_data['user_id']}"
+                                        data-clipboard-text="{$system['system_url']}/global-profile-posts/{$post['post_id']}">Send via Direct Message</a>
                                     <a class="dropdown-item js_bookmark-post" href="javascript:void(0);"
-                                        data-id="{$post['post_id']}" data-userid="{$user->_data['user_id']}">Add Post to
-                                        Bookmarks</a>
-                                    <a class="dropdown-item copy-btn" href="javascript:void(0);"
-                                        data-clipboard-text="{$system['system_url']}/global-profile-posts/{$post['post_id']}">Copy
-                                        link to Post</a>
+                                        data-id="{$post['post_id']}" data-userid="{$user->_data['user_id']}">Add Post to Bookmarks</a>
+                                    <a class="dropdown-item copy-btn" href="javascript:void(0);" data-clipboard-text="{$system['system_url']}/global-profile-posts/{$post['post_id']}">
+                                        Copy link to Post</a>
                                 </div>
                             </div>
                         </div>
@@ -437,11 +424,10 @@
         {/foreach}
         <!-- post body button show thread -->
         {if ($page!="global-profile/global-profile-post") }
-        <div class="post-body postThreadButton">
+        <div class="post-body postThreadButton ">
             {include file='global-profile/global-profile__feeds_post.body.tpl' _post=$post _shared=false}
             <div class="threadButtonPosition">
-                <a href="{$system['system_url']}/global-profile-posts/{$post['post_id']}" class="btn">Show this
-                    thread</a>
+                <a href="{$system['system_url']}/global-profile-posts/{$post['post_id']}" class="btn">Show this thread</a>
             </div>
         </div>
         {/if}
@@ -451,4 +437,4 @@
     {/if}
     <!-- post -->
     {if !$standalone}
-</li>{/if}
+</div>{/if}</div>

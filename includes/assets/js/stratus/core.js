@@ -59,7 +59,7 @@ function initialize() {
         }),
         $(".js_readmore").each(function () {
             var e = $(this),
-                t = e.attr("data-height") || 110;
+                t = e.attr("data-height") || 140;
             void 0 === e.attr("data-readmore") &&
                 ($(this).closest(".feeds_post").data("id"), window.location.origin, e.readmore({ collapsedHeight: t, moreLink: '<a href="#">' + __["Read more"] + "</a>", lessLink: '<a href="#">' + __["Read less"] + "</a>" }));
         }),
@@ -148,7 +148,7 @@ function load_more(element) {
                     }
 
                     if(!stream.hasClass('-list_items wq')){
-                        if ((data.offset++, response.append ? stream.append(response.data) : stream.prepend(response.data), $(window).width() > 1024)) {
+                        if ((response.append ? stream.append(response.data) : stream.prepend(response.data), $(window).width() > 1024)) {
                             if ($("body #landing_feeds_post_ul").length > 0) var macyInstance = Macy({ container: ".feeds_post_ul", trueOrder: !0, columns: 2, waitForImages: !0 });
                             if ($("body #feeds_post_ul").length > 0) var macyInstance = Macy({ container: ".feeds_post_ul", trueOrder: !0, columns: 2, waitForImages: !0 }); //macyInstance.recalculate();
                         }
@@ -236,10 +236,17 @@ function button_status(e, t) {
             if (element.find(".js_hidden-section").length > 0 && !element.find(".js_hidden-section").is(":visible")) return element.find(".js_hidden-section").slideDown(), !1;
             button_status(submit, "loading"), "undefined" != typeof tinyMCE && tinyMCE.triggerSave();
             var data = element.hasClass("js_ajax-forms") ? element.serialize() : element.find("select, textarea, input").serialize();
+            var systemUrl = element.data('systemUrl');
+            if(systemUrl){
+              var username = element.find("input[name='username']").val();
+             }
             $.post(
                 ajax_path + url,
                 data,
                 function (response) {
+                    if(response.success&&systemUrl&&username){
+                        $("#sidebarHiddSwip .profile-link").attr("href", `${systemUrl}/${username}`);
+                     } 
                     button_status(submit, "reset"),
                         response.error
                             ? (success.is(":visible") && success.hide(), error.html(response.message).slideDown())
@@ -250,6 +257,7 @@ function button_status(e, t) {
                         $("#getInTouch").get(0).reset(),
                         // $(".learn-btn").text("Submit");
                         $(".cnt_btn").text("Submit");
+                        
                 },
                 "json"
             ).fail(function () {
@@ -394,8 +402,8 @@ function button_status(e, t) {
                             var t = a.match(/#(\w+)/gi);
                             if (null !== t && t.length > 0) {
                                 var a = t[0].replace("#", "");
-                                window.location = site_path + "/search/hashtag/" + a;
-                            } else window.location = site_path + "/search/" + a;
+                                window.location = encodeURI(site_path + "/search/hashtag/" + a);
+                            } else window.location = encodeURI(site_path + "/search/" + a);
                         }
                         return !1;
                     }
@@ -411,10 +419,10 @@ function button_status(e, t) {
                     var t = this.query.value,
                         a = $(this).data("handle");
                     if (!is_empty(t))
-                        if (void 0 !== a) window.location = site_path + "/" + a + "/search/" + t;
+                        if (void 0 !== a) window.location = encodeURI(site_path + "/" + a + "/search/" + t);
                         else {
                             var s = t.match(/#(\w+)/gi);
-                            null !== s && s.length > 0 ? ((t = s[0].replace("#", "")), (window.location = site_path + "/search/hashtag/" + t)) : (window.location = site_path + "/search/" + t);
+                            null !== s && s.length > 0 ? ((t = s[0].replace("#", "")), (window.location = encodeURI(site_path + "/search/hashtag/" + t))) : (window.location = encodeURI(site_path + "/search/" + t));
                         }
                     return !1;
                 }),

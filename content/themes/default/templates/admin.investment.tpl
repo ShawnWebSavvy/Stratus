@@ -160,7 +160,7 @@
                             </label>
                             <div class="col-md-9">
                                 <div class="input-group">
-                                   <label class="col-md-3 form-control-label">{$detail['trade_pair']|upper}</label>
+                                   <label class="col-md-3 form-control-label" id="trade_pair">{$detail['trade_pair']|upper}</label>
                                 </div>
                             </div>
                         </div>
@@ -172,7 +172,7 @@
                             </label>
                             <div class="col-md-9">
                                 <div class="input-group">
-                                    <label class="col-md-3 form-control-label">${$price}</label>
+                                    <label class="col-md-3 form-control-label">$<span id="bitmart_buy_price">{$price}</span></label>
                                 </div>
                             </div>
                         </div>
@@ -192,7 +192,7 @@
                             </label>
                             <div class="col-md-9">
                                 <div class="input-group">
-                                    <label class="col-md-3 form-control-label" id="buy_price">${$price+($price*$detail['markup_price']/100)}</label>
+                                    <label class="col-md-3 form-control-label" id="buy_price">$<span id="stratus_buy_price">{$price+($price*$detail['markup_price']/100)}</span></label>
                                 </div>
                             </div>
                         </div>
@@ -202,7 +202,7 @@
                             </label>
                             <div class="col-md-9">
                                 <div class="input-group">
-                                    <label class="col-md-3 form-control-label">${$price}</label>
+                                    <label class="col-md-3 form-control-label">$<span id="bitmart_sell_price">{$price}</span></label>
                                 </div>
                             </div>
                         </div>
@@ -222,7 +222,7 @@
                             </label>
                             <div class="col-md-9">
                                 <div class="input-group">
-                                    <label class="col-md-3 form-control-label">${$price-($price*$detail['markdown_price']/100)}</label>
+                                    <label class="col-md-3 form-control-label" >$<span id="stratus_sell_price">{$price-($price*$detail['markdown_price']/100)}</span></label>
                                 </div>
                             </div>
                         </div>
@@ -405,6 +405,7 @@
                 <table class="table table-striped table-bordered table-hover">
                     <thead>
                         <tr>
+                            <th>{__("Date")}</th>
                             <th>{__("TRANX ID")}</th>
                             <th>{__("Order Type")}</th>
                             {if $tnx_type == 'buy'}
@@ -437,6 +438,9 @@
                         {if $rows}
                             {foreach $rows as $key=>$row}
                                 <tr>
+                                    <td><span class=" "
+                                        data-time="{$row['created_at']|date_format}">{$row['created_at']|date_format}</span>
+                                    </td>
                                     <td>
                                         {$row['order_id']}
                                     </td>
@@ -448,7 +452,14 @@
                                         <td>{$row['currency']|strtoupper}/USDT</td>
                                         <td><a href="{$system['system_url']}/{$row['user_name']}" target="_blank">{$row['user_name']}</a></td>
                                         <td>{$row['tokens']}</td>
-                                        <td>{$row['fees']}</td>
+                                        <td>
+                                            {if $row['recieve_token']!=$row['tokens']}
+                                                {$row['fees']}
+                                            {else}
+                                                -
+                                            {/if}
+
+                                        </td>
                                         <td>{$row['recieve_token']}</td>
                                         <td>{$row['amount']}</td>
                                     {else if $tnx_type == 'sell'}
@@ -456,7 +467,13 @@
                                         <td><a href="{$system['system_url']}/{$row['user_name']}" target="_blank">{$row['user_name']}</a></td>
                                         <td>{$row['tokens']}</td>
                                         <td>{$row['amount']}</td>
-                                        <td>{$row['fees']}</td>
+                                        <td>
+                                            {if $row['amount']!=$row['receive_amount']}
+                                                {$row['fees']}
+                                            {else}
+                                                -
+                                            {/if}
+                                        </td>
                                         <td>{$row['receive_amount']}</td>
                                     {else}
                                         <td><a href="{$system['system_url']}/{$row['user_name']}" target="_blank">{$row['user_name']}</a></td>

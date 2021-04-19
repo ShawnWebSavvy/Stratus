@@ -13,8 +13,10 @@
             <div class="row">
                 <div class="home-page-middel-block">
                     <div class="card investmentWrapSection">
-                        <div class="delistingsUpdate">
-                            <div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel">
+                        <div class="delistingsUpdate" style="display: block !important;background: transparent !important;
+  background-image: none !important;
+  padding: 0 !important;">
+                            {* <div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel">
                                 <ol class="carousel-indicators">
                                     <li data-target="#carouselExampleIndicators" data-slide-to="0" class="active"></li>
                                     <li data-target="#carouselExampleIndicators" data-slide-to="1"></li>
@@ -46,9 +48,11 @@
                                         </div>
                                     </div>
                                 </div>
-                            </div>
+                            </div> *}
+                            <img src="{$system['system_url']}/content/themes/default/images/investment/News@3x.png" style="max-width: 100% !important; width: 100%;	border-radius: 10px !important;
+	overflow: hidden !important;">
                         </div>
-                        <div class="MobileCrousle">
+                        {* <div class="MobileCrousle">
                             <div class="gallery js-flickity" data-flickity-options='{ "wrapAround": true,"prevNextButtons": false, "pageDots": false }'>
                                 <div class="gallery-cell">
                                     <div class="delistingsUpdate">
@@ -101,7 +105,7 @@
                                     </div>
                                 </div>
                             </div>
-                        </div>
+                        </div> *}
                         <div class="coreAssets">
                             <div class="heading">
                                 <h3>Core Assets</h3>
@@ -186,7 +190,7 @@
                                         <h3><span class="coin_price">0.1</span> USD</h3>
                                     </div>
                                      <div class="comming_soon_text">
-                                         <p>Comming Soon</p>
+                                         <p>Coming Soon</p>
                                      </div>
                                     </div>
                                     <div class="coinBaseButtonSection btn-group" role="group">
@@ -276,7 +280,7 @@
                                                     <p><span class="coin_price">0.1</span> USD</p>
                                                 
                                                     <div class="comming_soon_text">
-                                                        <p>Comming Soon</p>
+                                                        <p>Coming Soon</p>
                                                     </div>
                                                 
                                                 </div>

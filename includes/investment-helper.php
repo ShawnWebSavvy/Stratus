@@ -78,17 +78,17 @@ class InvestmentHelper {
         return $result;
     }
         
-    public static function savePurchaseTokenOrder($action,$token_name,$token_value,$amount,$user_data){
+    public static function savePurchaseTokenOrder($action,$token_name,$token_value,$amount,$user_data,$fees_token,$fees){
         global $db,$system;   
         try{
-            $params['symbol'] = strtoupper($_POST['token_name']).'_USDT';
+            $params['symbol'] = strtoupper($token_name).'_USDT';
             $params['side'] = 'buy'; 
-            $token_price = self::get_ticker_price(strtoupper($token_name));
-            $token_value=round($amount/$token_price['data']['buy_price'], 5);
-            $fees        = $token_price['data']['buy_fees'];
-            $fees_token = round($token_value*$fees/100,5);
-            $receive_token = round($token_value-$fees_token,5);
-            $params['size'] = $receive_token;
+            // $token_price = self::get_ticker_price(strtoupper($token_name));
+            // $token_value=round($amount/$token_price['data']['buy_price'], 5);
+            // $fees        = $token_price['data']['buy_fees'];
+            // $fees_token = round($token_value*$fees/100,5);
+            $receive_token = $token_value-$fees_token;;
+            $params['size'] = $token_value;
             $result = InvestmentHelper::buySellOrder($params);
             if(isset($result['data']['data']['order_id'])){
                 $order_id = $result['data']['data']['order_id'];
@@ -122,17 +122,13 @@ class InvestmentHelper {
         
     }
 
-    public static function saveSellTokenOrder($action,$token_name,$token_value,$amount,$user_data){
+    public static function saveSellTokenOrder($action,$token_name,$token_value,$amount,$user_data,$receive_amount,$fees){
         global $db,$system;   
         try{
             $params['symbol'] = strtoupper($_POST['token_name']).'_USDT';
             $params['side'] = 'sell'; 
             $params['size'] = $token_value;
-            $token_price = self::get_ticker_price(strtoupper($token_name));
-            $amount=round(($token_value*$token_price['data']['sell_price']), 2);
-            $fees        = $token_price['data']['sell_fees'];
-            $fees_amount = round($amount*$fees/100,5);
-            $receive_amount = round($amount-$fees_amount,2);
+            // $receive_amount = round($amount-$fees_amount,2);
   
             $result = InvestmentHelper::buySellOrder($params);
             if(isset($result['data']['data']['order_id'])){
@@ -148,9 +144,9 @@ class InvestmentHelper {
                    
                     $db->query(sprintf("UPDATE users SET $wallet_name = $wallet_name - %s WHERE user_id = %s", secure($token_value), secure($user_data['user_id'], 'int'))) or _error("SQL_ERROR_THROWEN");
 
-                    $redisObject = new RedisClass();
-                    $redisPostKey = 'user-' . $user_data['user_id'];
-                    $redisObject->deleteValueFromKey($redisPostKey);
+                    // $redisObject = new RedisClass();
+                    // $redisPostKey = 'user-' . $user_data['user_id'];
+                    // $redisObject->deleteValueFromKey($redisPostKey);
                     // cachedUserData($db, $system, $user_data['user_id'],$user_data['active_session_token']);
                 }
                 return true;
@@ -223,12 +219,10 @@ class InvestmentHelper {
                     $return['series'][$key1] = round($item*100/$return['total_coin'],2);
                 }
             }else{
-                $return['series'] = array(0.00000000,0.00000000,0.00000000);
+                $return['series'] = array(0.0,0.0,0.0);
             }
             $return['total_balance'] = self::getBtcBlance($user_data,$currency_price);
         }
-        
-       
         // echo '<pre>'; print_r($return); die;
         return $return;
    
@@ -255,7 +249,7 @@ class InvestmentHelper {
 
 
         $total['amount']  = round($apl_total_amount+$eth_total_amount+$btc_total_amount,2);
-        $total['total_token_btc'] =  $total['amount']>0?round($total['amount']/$btc_price, 5):0;
+        $total['total_token_btc'] =  $total['amount']>0?number_format(($total['amount']/$btc_price), 8):0;
         // $eth_price =  $total_eth>0?self::get_ticker_price('ETH_USDT'):0;   
         // echo '<pre>'; print_r($total); die;
         return $total;

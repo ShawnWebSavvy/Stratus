@@ -44,7 +44,7 @@
 
         <div class="form-group">
             <label class="form-control-label">{__("Photos")}</label>
-            <div class="attachments clearfix" data-type="photos">
+            <div class="attachments addproductPhoto clearfix" data-type="photos">
                 <ul>
                     <li class="add">
                         <i class="fa fa-camera js_x-uploader" data-handle="publisher-mini" data-multiple="true"></i>

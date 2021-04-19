@@ -68,7 +68,7 @@
             
 
                     <!-- shares -->
-                    <span class="pointer ml10 {if $post['shares'] == 0}x-hidden{/if}" data-toggle="modal" data-url="posts/who_shares.php?post_id={$post['post_id']}">
+                    <span class="pointer ml10 shareButtonIcon {if $post['shares'] == 0}x-hidden{/if}" data-toggle="modal" data-url="posts/who_shares.php?post_id={$post['post_id']}">
                         <i class="fa fa-share"></i> {$post['shares']}
                     </span>
                     <!-- shares -->
@@ -79,6 +79,33 @@
 
         <!-- post actions -->
         {if $user->_logged_in && $_get != "posts_information"}
+
+        <!-- reactions stats -->
+        {if $post['reactions_total_count'] > 0}
+        <div class="post-actions clearfix">
+          <div class="float-left mr10 work3" data-toggle="modal"
+            data-url="posts/who_reacts.php?post_id={$post['post_id']}">
+            <div class="reactions-stats">
+                {foreach $post['reactions'] as $reaction_type => $reaction_count}
+                {if $reaction_count > 0}
+                <div class="reactions-stats-item">
+                    <div class="inline-emoji no_animation">
+                        {include file='__reaction_emojis.tpl' _reaction=$reaction_type}
+                    </div>
+                </div>
+                {/if}
+                {/foreach}
+                <!-- reactions count -->
+                <span>
+                    {$post['reactions_total_count']}
+                </span>
+                <!-- reactions count -->
+            </div>
+         </div>
+         </div>
+        {/if}
+        <!-- reactions stats -->
+
         <div class="post-actions clearfix">
             <!-- reactions -->
             <div class="action-btn unselectable reactions-wrapper {if $post['i_react']}js_unreact-post{/if}" data-reaction="{$post['i_reaction']}">
@@ -128,7 +155,7 @@
                     <i class="icon-post icon_share "></i>
                     <span>{__("Share")}</span>
                 </div>
-                <div class="_share-dropdown_ dropdown-menu fade" aria-labelledby="stratus_post_{$post['post_id']}" data-toggle="modal" data-url="posts/share.php?do=create&post_id={$post['post_id']}">
+                <div class="_share-dropdown_ dropdown-menu-right dropdown-menu fade" aria-labelledby="stratus_post_{$post['post_id']}" data-toggle="modal" data-url="posts/share.php?do=create&post_id={$post['post_id']}">
                             <div class="share_icon_list">
                                 <ul class="-list_items">
                                     <li class="stratus_local_share" id="share_timeline"><label for="share_to_timeline"><span class="__list_icon"><img src="{$system['system_url']}/content/themes/default/images/share-timeline.svg"></span><span>Share to Timeline</span></label>
