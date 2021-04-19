@@ -8,10 +8,10 @@
 		<div class="post-colored-text-wrapper">
 			<div class="post-text" dir="auto" style="color: {$post['colored_pattern']['text_color']};">
 				{if $page !== 'post'}
-					{if $post['text']|count_characters:true < 101}
-						{$post['text']}
+					{if $post['text_plain']|count_characters:true < 101}
+						{$post['slice_text']}
 					{else}
-						{$post['text']|truncate:100}<a class="readMoreCustom" href="{$system['system_url']}/global-profile-posts/{$post['post_id']}"> Read More</a>
+						{$post['slice_text']}... <a class="readMoreCustom" href="{$system['system_url']}/global-profile-posts/{$post['post_id']}"> Read More</a>
 					{/if}
 				{else}
 					{$post['text']}
