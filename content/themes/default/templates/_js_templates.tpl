@@ -1513,7 +1513,7 @@
                         <label class="form-control-label" for="amount">{__("Amount")}</label>
                         <div class="input-money">
                             <span>{$system['system_currency_symbol']}</span>
-                            <input type="text" class="form-control" placeholder="0.00" min="1.00" max="1000" name="amount">
+                            <input type="text" autocomplete="off" class="form-control" placeholder="0.00" min="1.00" max="1000" name="amount">
                         </div>
                     </div>
                     <!-- error -->
@@ -1726,16 +1726,22 @@
                         </div>
                     {/if}
                     {if $system['creditcard_enabled']}
+                        
                         <div class="col-12 col-sm-4 plr5">
                             <button class="js_payment-stripe btn btn-block btn-payment plr20 mb10" 
                             data-handle="{literal}{{handle}}{/literal}" 
                             {literal}{{#id}}{/literal} data-id="{literal}{{id}}{/literal}" {literal}{{/id}}{/literal} 
-                            {literal}{{#price}}{/literal} data-price="{literal}{{price}}{/literal}" {literal}{{/price}}{/literal} 
+                            {literal}{{#new_amount}}{/literal} data-price="{literal}{{new_amount}}{/literal}" {literal}{{/new_amount}}{/literal} 
                             {literal}{{#name}}{/literal} data-name="{literal}{{name}}{/literal}" {literal}{{/name}}{/literal} 
                             {literal}{{#img}}{/literal} data-img="{literal}{{img}}{/literal}" {literal}{{/img}}{/literal} 
                             data-method="credit"> 
                                 <i class="fa fa-credit-card fa-lg fa-fw mr5" style="color: #8798CC;"></i>{__("Credit Card")}
                             </button>
+                            <span>
+                                <b>Credit Card Fee </b> : {literal}{{fee_amount}}{/literal}
+                                <br>
+                                <b>Total Amount</b> : {literal}{{new_amount}}{/literal}
+                            </span>
                         </div>
                     {/if}
                     {if $system['alipay_enabled']}
