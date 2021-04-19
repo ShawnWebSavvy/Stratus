@@ -84,42 +84,7 @@
                                             </li>
                                         </div>
                                         {/foreach}
-                                        {* <div class="gallery-cell" disabled>
-                                            <li>
-                                                <a href="javascript:;" class="coinDetailPrice"  data-coin="gsx">
-                                                    <div class="coinDetailHeader">
-                                                        <img src="{$system['system_url']}/content/themes/default/images/investment/gsx.svg"
-                                                            alt="bit coin">
-                                                        <div class="textSection">
-                                                            <h5>Gold Secured Currency</h5>
-                                                            <p>GSX</p>
-                                                            <p class="comingSoon comingSoon1">Coming Soon</p>
-                                                        </div>
-                                                          <div class="priceCount priceCountDetail">
-                                                            <p>
-                                                                <span>
-                                                                    0.1
-                                                                </span>
-                                                                USD
-                                                            </p>
-                                                        </div>
-                                                    </div>
-                                                     <div class="buySellBox">
-                                                            <p class="d-flex align-items-start ">
-                                                                <img src="{$system['system_url']}/content/themes/default/images/svg/svgImg/Wallet_icon_header.svg"
-                                                                    alt="wallet">
-                                                                    <span>
-                                                                        0 GSX
-                                                                        <br/>
-                                                                        $0
-                                                                    </span>
-                                                            </p>
-                                                        </div>
-                                                  
-                                                </a>
-                                            </li>
-                                        </div> *}
-                                     
+                                    
                                     </div>
                                 </div>
                             </ul>
