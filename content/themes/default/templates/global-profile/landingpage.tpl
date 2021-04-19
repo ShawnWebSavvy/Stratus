@@ -159,9 +159,7 @@
                                                                 </div> -->
 
                                                                 <div class="dropdown-menu dropdown-menu-right _postshare__">
-                                                                    <div class="dropdown-item pointer js_edit-privacy"
-                                                                        data-title='{__("Shared with: Public")}'
-                                                                        data-value="public">
+                                                                    <div class="dropdown-item pointer js_edit-privacy" data-title='{__("Shared with: Public")}' data-value="public">
                                                                         <div class="post_images__">
                                                                             <img src="{$system['system_uploads_assets']}/content/themes/default/images/svg/svgImg/nav_icon_globalHub.svg"
                                                                                 class="blackicon">
@@ -170,9 +168,7 @@
                                                                         </div>
                                                                         <span> {__("Public")}</span>
                                                                     </div>
-                                                                    <div class="dropdown-item pointer js_edit-privacy"
-                                                                        data-title='{__("Shared with: Friends")}'
-                                                                        data-value="friends">
+                                                                    <div class="dropdown-item pointer js_edit-privacy" data-title='{__("Shared with: Friends")}' data-value="friends">
                                                                         <div class="post_images__">
                                                                             <img src="{$system['system_uploads_assets']}/content/themes/default/images/svg/friendsIcon.svg"
                                                                                 class="blackicon">
@@ -181,9 +177,7 @@
                                                                         </div>
                                                                         <span>{__("Friends")}</span>
                                                                     </div>
-                                                                    <div class="dropdown-item pointer js_edit-privacy"
-                                                                        data-title='{__("Shared with: Only Me")}'
-                                                                        data-value="me">
+                                                                    <div class="dropdown-item pointer js_edit-privacy" data-title='{__("Shared with: Only Me")}' data-value="me">
                                                                         <div class="post_images__">
                                                                             <img src="{$system['system_uploads_assets']}/content/themes/default/images/svg/svgImg/Hide_form.svg"
                                                                                 class="blackicon">
@@ -193,27 +187,17 @@
                                                                         <span> {__("Only Me")} </span>
                                                                     </div>
                                                                 </div>
-
-
                                                             </div>
                                                             <!-- privacy -->
                                                             {else}
                                                             {if $postsItem['privacy'] == "me"}
-                                                            <i class="fa fa-lock" data-toggle="tooltip"
-                                                                data-placement="top"
-                                                                title='{__("Shared with")} {__("Only Me")}'></i>
+                                                            <i class="fa fa-lock" data-toggle="tooltip" data-placement="top" title='{__("Shared with")} {__("Only Me")}'></i>
                                                             {elseif $postsItem['privacy'] == "friends"}
-                                                            <i class="fa fa-users" data-toggle="tooltip"
-                                                                data-placement="top"
-                                                                title='{__("Shared with")} {__("Friends")}'></i>
+                                                            <i class="fa fa-users" data-toggle="tooltip" data-placement="top" title='{__("Shared with")} {__("Friends")}'></i>
                                                             {elseif $postsItem['privacy'] == "public"}
-                                                            <i class="fa fa-globe" data-toggle="tooltip"
-                                                                data-placement="top"
-                                                                title='{__("Shared with")} {__("Public")}'></i>
+                                                            <i class="fa fa-globe" data-toggle="tooltip" data-placement="top" title='{__("Shared with")} {__("Public")}'></i>
                                                             {elseif $postsItem['privacy'] == "custom"}
-                                                            <i class="fa fa-cog" data-toggle="tooltip"
-                                                                data-placement="top"
-                                                                title='{__("Shared with")} {__("Custom People")}'></i>
+                                                            <i class="fa fa-cog" data-toggle="tooltip" data-placement="top" title='{__("Shared with")} {__("Custom People")}'></i>
                                                             {/if}
                                                             {/if}{/if}
                                                         </div>
@@ -227,7 +211,7 @@
                                                     {if $postsItem['post_type'] == "shared"}
                                                     <div class="mt10 {if $_snippet}x-hidden{/if}">
                                                         <div class="post-media">
-                                                            <div class="post-media-meta">
+                                                            <div class="post-media-meta circleSubpost">
                                                                 {include file='__feeds_post.body.tpl'
                                                                 _post=$postsItem['origin'] _shared=true}
                                                             </div>
@@ -235,17 +219,23 @@
                                                     </div>
                                                     {/if}
                                                     {if $postsItem['colored_pattern']}
-                                                    <div class="post-colored" {if
-                                                        $postsItem['colored_pattern']['type']=="color" }
+                                                    <div class="post-colored customColorPost" {if $postsItem['colored_pattern']['type']=="color" }
                                                         style="background-image:linear-gradient(45deg, {$postsItem['colored_pattern']['background_color_1']}, {$postsItem['colored_pattern']['background_color_2']});"
                                                         {else}
                                                         style="background-image:url({$system['system_uploads']}/{$postsItem['colored_pattern']['background_image']})"
                                                         {/if}>
-                                                        <div class="post-colored-text-wrapper"
-                                                            data-slimScroll-height="240">
-                                                            <div class="post-text" dir="auto"
-                                                                style="color:{$postsItem['colored_pattern']['text_color']};">
-                                                                {$postsItem['text']}
+                                                        <div class="post-colored-text-wrapper">
+                                                            <div class="post-text" dir="auto" style="color:{$postsItem['colored_pattern']['text_color']};">
+                                                                {* {$postsItem['text']} *}
+                                                                {if $page !== 'post'}
+                                                                    {if $postsItem['text']|count_characters:true < 101}
+                                                                        {$postsItem['text']}
+                                                                    {else}
+                                                                        {$postsItem['text']|truncate:100}<a class="readMoreCustom" href="{$system['system_url']}/posts/{$postsItem['post_id']}"> Read More</a>
+                                                                    {/if}
+                                                                {else}
+                                                                    {$postsItem['text']}
+                                                                {/if}
                                                             </div>
                                                         </div>
                                                     </div>
@@ -261,7 +251,7 @@
                                                                 </div>
                                                             </a>
                                                             {/if}
-                                                            <div class="post-media-meta">
+                                                            <div class="post-media-meta circleSubpost">
                                                                 <a class="title mb5"
                                                                     href="{$system['system_url']}/blogs/{$postsItem['post_id']}/{$postsItem['article']['title_url']}">{$postsItem['article']['title']}</a>
                                                                 <div class="text mb5">

@@ -1328,6 +1328,9 @@ $(function () {
         } else {
           if (response.post) {
             $(".js_posts_stream").find(".bricklayer-column").first().prepend(response.post);
+            if(bricklayer){
+               bricklayer.redraw();
+            }
           }
           $(".no_data_img_").css("display", "none");
           /* button reset */
@@ -1856,27 +1859,28 @@ $(function () {
         } else {
           if (response.posts) {
             var datatta = response.posts;
-            var ArrayVal = datatta.split('<div class="carsds"');
+            var ArrayVal = datatta.split('<div class="carsds "');
             var loopArray = [];
             if (ArrayVal.length > 0) {
               for (var i = 1; i < ArrayVal.length; i++) {
                 loopArray.push('<div class="carsds"' + ArrayVal[i])
               }
             }
-
+            
             for (var ik = 0; ik < loopArray.length; ik++) {
               var values = loopArray[ik];
               var d = document.createElement('div');
               d.innerHTML = values;
               var valuesPost = d.firstChild;
               bricklayer.append(valuesPost);
-              // bricklayer.redraw();
+              bricklayer.redraw();
             }
           }
             posts_loader.hide();
             posts_stream.removeData("loading");
             posts_stream.html(response.posts);
             setTimeout(photo_grid(), 200);
+            posts_stream.data("filter", data.filter)
             // console.log("Af")
             // if ($(window).width() > 1024) {
             //   if ($('body #landing_feeds_post_ul').length > 0) {
@@ -2200,13 +2204,15 @@ $(function () {
   /* delete post */
   $("body").on("click", ".js_delete-post", function (e) {
     e.preventDefault();
-    var post = $(this).parents(".post");
-    var id = post.data("id");
+    var _this = $(this);
+    var post  = _this.parents(".post");
+    var id    = post.data("id");
+    
     confirm(
       __["Delete Post"],
       __["Are you sure you want to delete this post?"],
       function () {
-        post.hide();
+        _this.closest('.carsds').hide();
         $.post(
           api["posts/reaction"],
           { do: "delete_post", id: id },
@@ -3932,6 +3938,9 @@ $(function () {
   //     }
   // });
   $(".addpost-closebtn").click(function (e) {
+
+    clean_create_post_modal();
+
     $("#js_hide_div").show();
     e.stopPropagation();
     var originVar = window.location.host;
@@ -3981,6 +3990,104 @@ $(function () {
     $(".publisher-emojis").hide();
     $(".wrapFooterDiv-old").show();
   });
+
+
+
+  $(document).off("click",".custom_modal_style").on("click",".custom_modal_style", function(){  
+    if(!$('body').hasClass('publisher-focus')){
+        clean_create_post_modal();
+    }   
+  });
+
+
+
+  function clean_create_post_modal(){
+
+    var _this = $('.custom_modal_style').find('.js_publisher'),  
+    publisher = _this.parents(".publisher"),
+    textarea = publisher.find("textarea"),
+    attachments = publisher.find(".attachments"),
+    album_meta = publisher.find('.publisher-meta[data-meta="album"]'),
+    album = album_meta.find("input"),
+    feeling_meta = publisher.find('.publisher-meta[data-meta="feelings"]'),
+    location_meta = publisher.find('.publisher-meta[data-meta="location"]'),
+    location = location_meta.find("input"),
+    colored_pattern_meta = publisher.find('.publisher-meta[data-meta="colored"]'),
+    attachments_voice_notes = publisher.find('.publisher-meta[data-meta="voice_notes"]'),
+    gif_meta = publisher.find('.publisher-meta[data-meta="gif"]'),
+    gif = gif_meta.find("input"),
+    attachments_video = publisher.find('.publisher-meta[data-meta="video"]'),
+    attachments_audio = publisher.find('.publisher-meta[data-meta="audio"]'),
+    attachments_video_thumbnail = publisher.find(".publisher-custom-thumbnail"),
+    attachments_file = publisher.find('.publisher-meta[data-meta="file"]');
+
+    button_status(_this, "reset");
+    /* prepare publisher */
+    /* remove (active|activated|disabled) from all tabs */
+    publisher
+        .find(".js_publisher-tab")
+        .removeClass("active activated disabled");
+    // textarea.val("").removeAttr("style");
+    // textarea.attr("placeholder", textarea.data("init-placeholder"));
+    /* hide & empty album */
+    album.val("");
+    album_meta.hide();
+    /* hide & empty feelings */
+    feeling_meta.hide();
+    $("#feelings-menu-toggle")
+        .removeClass("active")
+        .text($("#feelings-menu-toggle").data("init-text"));
+    $("#feelings-data").hide();
+    $("#feelings-data input")
+        .show()
+        .attr("placeholder", $("#feelings-menu-toggle").data("init-text"))
+        .removeData("action")
+        .val("");
+    $("#feelings-data span").html("");
+    $(".js_publisher-feelings").removeClass("activated active");
+    /* hide & empty location */
+    location.val("");
+    location_meta.hide();
+    /* hide & empty colored patterns */
+    publisher.removeData("colored_pattern");
+    publisher
+        .find(".colored-text-wrapper")
+        .removeAttr("style")
+        .removeClass("colored");
+    colored_pattern_meta.hide();
+    /* hide & empty voice notes */
+    attachments_voice_notes.hide();
+    attachments_voice_notes.find(".js_voice-success-message").hide();
+    attachments_voice_notes.find(".js_voice-start").show();
+    publisher.removeData("voice_notes");
+    /* hide & empty gif */
+    gif.val("");
+    gif_meta.hide();
+    /* hide & remove poll meta */
+    $('.publisher-meta[data-meta="poll"]').hide().find("input").val("");
+    /* hide & empty attachments */
+    attachments.hide();
+    attachments.find("li.item").remove();
+    publisher.removeData("photos");
+    attachments_video.hide();
+    publisher.removeData("video");
+    attachments_audio.hide();
+    publisher.removeData("audio");
+    attachments_file.hide();
+    publisher.removeData("file");
+    /* hide & empty video custom thumbnail */
+    attachments_video_thumbnail.find(".x-image").removeAttr("style");
+    attachments_video_thumbnail.find("input.js_x-image-input").val("");
+    attachments_video_thumbnail.hide();
+    /* hide & empty scraper */
+    $(".publisher-scraper").hide().html("");
+    publisher.removeData("scraping");
+
+  } 
+
+
+
+
 
   $(function () {
     $(".publisher-tools-tabs-ul-newDesign-stratus").hide();

@@ -175,8 +175,10 @@ try {
 					$spage['page_admins'] = $user->get_page_admins($spage['page_id']);
 
 					/* get members */
+					$spage['members_count'] = 0;
 					if ($spage['page_likes'] > 0) {
-						$spage['members'] = $user->get_page_members($spage['page_id']);
+						$spage['members'] = $user->get_page_members_without_admins($spage['page_id']);
+						$spage['members_count'] = count($spage['members']);
 					}
 					break;
 

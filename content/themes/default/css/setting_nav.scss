@@ -174,7 +174,7 @@ body.index-localhub, body.profile-localhub {
     li {
         margin: 0 2px;
         display: flex;
-        overflow: hidden;
+        // overflow: hidden;
         @media(max-width: 990px) {
             width: 100%;
             display: flex;
@@ -227,7 +227,7 @@ a.s-more {
     justify-content: space-between;
     height: 30px;
     align-items: center;
-    @media(max-width: 990px) {
+    @media(max-width: 991px) {
         align-self: flex-start;
         width: 38px;
         height: 38px;
@@ -236,7 +236,7 @@ a.s-more {
         border-radius: 6px;
         padding: 6.5px;
         position: relative;
-        margin-left: 5px;
+        margin-left: 0px;
         margin-top: 10px;
         &:before {
             position: absolute;

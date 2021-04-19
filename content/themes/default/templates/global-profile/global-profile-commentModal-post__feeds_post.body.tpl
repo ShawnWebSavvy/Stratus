@@ -44,7 +44,7 @@
                                 </div>
                             </div>
                         {/if}
-                        <div class="dropdown-divider"></div>
+                        <!-- <div class="dropdown-divider"></div> -->
                     {/if}
                     {if $_post['i_save']}
                         <div href="#" class="dropdown-item pointer js_unsave-post">
@@ -71,7 +71,7 @@
                             </div>
                         </div>
                     {/if}
-                    <div class="dropdown-divider"></div>
+                    <!-- <div class="dropdown-divider"></div> -->
                     {if $_post['manage_post']}
                         <!-- Boost -->
                         {if $system['packages_enabled'] && !$_post['in_group'] && !$_post['in_event']}
@@ -296,7 +296,7 @@
                             </div>
                         </div>
                     {/if}
-                    <div class="dropdown-divider"></div>
+                    <!-- <div class="dropdown-divider"></div> -->
                     <a href="{$system['system_url']}/posts/{$_post['post_id']}" target="_blank" class="dropdown-item openInNewTab">
                         <div class="action no-desc">
                             <div class="post_images__">
@@ -307,7 +307,7 @@
                         </div>
                     </a>
                     {if $_post['is_anonymous'] && ($user->_is_admin || $user->_is_moderator)}
-                    <div class="dropdown-divider"></div>
+                    <!-- <div class="dropdown-divider"></div> -->
                         <a href="{$_post['post_author_url']}" target="_blank" class="dropdown-item">
                             <div class="action no-desc">
                                  <div class="post_images__">
@@ -482,10 +482,20 @@
         {include file='__feeds_post.text.tpl'}
     {else}
         {if $_post['colored_pattern']}
-            <div class="post-colored" {if $_post['colored_pattern']['type'] == "color"} style="background-image: linear-gradient(45deg, {$_post['colored_pattern']['background_color_1']}, {$_post['colored_pattern']['background_color_2']});" {else} style="background-image: url({$system['system_uploads']}/{$_post['colored_pattern']['background_image']})" {/if}>
+            <div class="post-colored customColorPost" {if $_post['colored_pattern']['type'] == "color"} style="background-image: linear-gradient(45deg, {$_post['colored_pattern']['background_color_1']}, {$_post['colored_pattern']['background_color_2']});" {else} style="background-image: url({$system['system_uploads']}/{$_post['colored_pattern']['background_image']})" {/if}>
                 <div class="post-colored-text-wrapper js_scroller" data-slimScroll-height="240">
                     <div class="post-text" dir="auto" style="color: {$_post['colored_pattern']['text_color']};">
-                        {$_post['text']}
+                        {* {$_post['text']} *}
+
+                        {if $page !== 'post'}
+                            {if $_post['text']|count_characters:true < 101}
+                                {$_post['text']}
+                            {else}
+                                {$_post['text']|truncate:100}<a class="readMoreCustom" href="{$system['system_url']}/global-profile-posts/{$_post['post_id']}"> Read More</a>
+                            {/if}
+                        {else}
+                            {$_post['text']}
+                        {/if}
                     </div>
                 </div>
             </div>

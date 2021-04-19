@@ -102,7 +102,7 @@
             <!-- comments -->
 
             <!-- shares -->
-            <span class="pointer ml10 {if $post['shares'] == 0}x-hidden{/if}" data-toggle="modal"
+            <span class="pointer ml10 shareButtonIcon {if $post['shares'] == 0}x-hidden{/if}" data-toggle="modal"
                 data-url="posts/who_shares.php?post_id={$post['post_id']}">
                 <i class="fa fa-share"></i> {$post['shares']} {__("Shares")}
             </span>
@@ -161,7 +161,7 @@
         <!-- share -->
         {if $post['privacy'] == "public"}
         <div class="_share_post_ dropdown">
-            <div class="action-btn dropdown-toggle dropdown-toggle-share" id="stratus_post_{$post['post_id']}"
+            <div class="action-btn dropdown-toggle dropdown-menu-right dropdown-toggle-share" id="stratus_post_{$post['post_id']}"
                 parent-data-id="{$post['post_id']}" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"
                 data-url="posts/share.php?do=create&post_id={$post['post_id']}">
                 <!--include file='__svg_icons.tpl' icon="share" width="16px" height="16px" class="mr5" -->
@@ -169,7 +169,7 @@
                 <i class="icon-post icon_share"></i>
                 <span>{__("Share")}</span>
             </div>
-            <div class="_share-dropdown_ dropdown-menu fade" aria-labelledby="stratus_post_{$post['post_id']}"
+            <div class="_share-dropdown_ dropdown-menu-right dropdown-menu fade" aria-labelledby="stratus_post_{$post['post_id']}"
                 data-toggle="modal" data-url="posts/share.php?do=create&post_id={$post['post_id']}">
                 <div class="share_icon_list">
                     <ul class="-list_items">
