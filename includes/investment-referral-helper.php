@@ -86,8 +86,7 @@ class InvestmentReferralHelper
 
         $custom_bonus = $db->query(sprintf("SELECT * FROM user_custom_referrals where user_id=$user_id")) or _error("SQL_ERROR_THROWEN");
         $zero_level = ($level=='lv0'||$level=='level0') ? true : false; 
-        if ($custom_bonus->num_rows > 0 && $amount>0 && $zero_level==true) {
-            
+        if ($custom_bonus->num_rows > 0 && $amount>0 && ($level=='lv1'||$level=='level1')) {
             $custom_bonus = $custom_bonus->fetch_assoc();
             $COINS = json_decode($custom_bonus['referral'],true);
             $key = array_search($this->transaction->token_name.'_usdt', array_column($COINS,'coin'));
