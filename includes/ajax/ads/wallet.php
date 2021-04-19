@@ -31,6 +31,7 @@ try {
 			if(!isset($_POST['amount']) || !is_numeric($_POST['amount'])) {
 				throw new Exception(__("Enter valid amount of money for example '50'"));
 			}
+			//calculate percentage
 			$percentage = 100 + $system['stripe_commision'];
             $new_amount = ($percentage / 100) * $_POST['amount'];
             $fee_amount = $new_amount - $_POST['amount'];
