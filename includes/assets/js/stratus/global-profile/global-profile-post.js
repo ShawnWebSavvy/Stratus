@@ -56,6 +56,21 @@ $("body").on("click", ".btn-add-textarea", function (e) {
   $("#inputTextareaId").val(inputTextareaId);
   var userImage = $("#global-profile-publisher-avatar").attr("src");
   var userImage = $(".publisher-avatar").attr("src");
+
+  var publisher =  $(this).parents(".publisher");
+  var htmlDate_color;
+  var colored_pattern = publisher.find('.publisher-meta[data-meta="colored"] .colored-pattern-item.active');
+
+  if(colored_pattern.length){
+    var background_color_1 = colored_pattern.data("background-color-1");
+    var background_color_2 = colored_pattern.data("background-color-2"); 
+    var text_color = colored_pattern.data("text-color");
+    console.log(background_color_1);
+    htmlDate_color = `'>x</span><div class='colored-text-wrapper' style='background-image: linear-gradient(45deg, ${background_color_1}, ${background_color_2});' ><textarea maxlength='260' class='postTextArea js_autosize js_mention js_publisher-scraper' maxlength='290' style='color:${text_color}'  id='text_`;
+  } else {
+    htmlDate_color = `'>x</span><div class='colored-text-wrapper'><textarea maxlength='260' class='postTextArea js_autosize js_mention js_publisher-scraper'    maxlength='290' id='text_`;
+  }
+
   var htmlData =
     "<div class='postTextAreaDiv' id='postTextAreaDiv_" +
     inputTextareaId +
@@ -63,9 +78,9 @@ $("body").on("click", ".btn-add-textarea", function (e) {
     userImage +
     "'></div><div class='inputDiv'><span class='deletePostTextarea' id='deletePostTextarea_" +
     inputTextareaId +
-    "'>x</span><textarea maxlength='260' class='postTextArea js_autosize js_mention js_publisher-scraper' maxlength='290' id='text_" +
+     htmlDate_color +
     inputTextareaId +
-    "' placeholder='What is your Stratus? @mention #hashtag'></textarea></div></div>";
+    "' placeholder='What is your Stratus? @mention #hashtag'></textarea></div> </div></div>";
   $(".divAppendTextarea").append(htmlData);
 });
 

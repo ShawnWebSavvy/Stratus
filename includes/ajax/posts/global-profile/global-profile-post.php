@@ -170,6 +170,7 @@ try {
 			$inputs1['handle']  = $_POST['handle'];
 			$inputs1['privacy'] = $inputs['privacy'];
 			$inputs1['message'] = $subPostArray[$i];
+			$inputs1['colored_pattern'] = $_POST['colored_pattern'];
 			$post2 = $userGlobal->global_publisher($inputs1);
 			//print_r($post2); exit;
 			array_push($postIdArray, $post2['post_id']);
