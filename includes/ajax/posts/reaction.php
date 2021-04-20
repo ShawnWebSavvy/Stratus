@@ -29,7 +29,7 @@ try {
 	switch ($_POST['do']) {
 		case 'delete_post':
 			// delete post
-			$refresh = $user->delete_post($_POST['id']);
+			$refresh = $user->delete_post($_POST['id'],false);
 			if ($refresh) {
 				/* return */
 				if ($refresh['callback']) {
