@@ -8851,7 +8851,7 @@ class User
 
 
         //Redis Block
-        // $redisObject = new RedisClass();
+        $redisObject = new RedisClass();
 
         // //update current logged in user response
         // $redisKey = 'user-' . $this->_data['user_id'] . '-posts';
@@ -9029,6 +9029,7 @@ class User
         $poll = $get_poll->fetch_assoc();
         /* (check|get) post */
         $post = $this->_check_post($poll['post_id']);
+        // echo "<pre>";print_r($post);die;
         if (!$post) {
             _error(403);
         }
@@ -9042,8 +9043,9 @@ class User
             /* insert new vote */
             $db->query(sprintf("INSERT INTO posts_polls_options_users (user_id, poll_id, option_id) VALUES (%s, %s, %s)", secure($this->_data['user_id'], 'int'), secure($poll['poll_id'], 'int'), secure($option_id, 'int'))) or _error("SQL_ERROR_THROWEN");
         }
+        // die('fine till here');
         //Redis Block
-        // $redisObject = new RedisClass();
+        $redisObject = new RedisClass();
 
         // //update current logged in user response
         // $redisKey = 'user-' . $this->_data['user_id'] . '-posts';
@@ -9056,10 +9058,10 @@ class User
 
         //update response for author & its friends
 
-        //  $redisAuthorKey = 'user-' . $post['author_id'] . '-posts';
-        //  fetchAndSetDataOnPostReaction($system, $this,$redisObject,$redisAuthorKey);
-        //  $authorTimelineData = $redisObject->getValueFromKey($redisAuthorKey);
-        //  $decodedAuthorData = json_decode($authorTimelineData, TRUE);
+         $redisAuthorKey = 'user-' . $post['author_id'] . '-posts';
+         fetchAndSetDataOnPostReaction($system, $this,$redisObject,$redisAuthorKey);
+         $authorTimelineData = $redisObject->getValueFromKey($redisAuthorKey);
+         $decodedAuthorData = json_decode($authorTimelineData, TRUE);
         $newUpdate =  searchSubArray($decodedAuthorData, 'post_id', $poll['post_id']);
 
 
