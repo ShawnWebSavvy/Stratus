@@ -618,13 +618,13 @@
                                         <img style="width: 20px;" src="{$system['system_url']}/content/themes/default/images/svg/svgImg/tick.svg" class="">
                                     </div>
                                     {__("Verification")}
+                                    {if $verification_requests_insights}
+                                    <span class="float-right badge badge-pill badge-danger ml10">{$verification_requests_insights}</span>{/if}
                                 </a>
                                 <div class='collapse {if $view == "verification"}show{/if}' id="verification">
                                     <ul>
                                         <li {if $view=="verification" && $sub_view=="" }class="active" {/if}>
                                             <a href="{$system['system_url']}/{$control_panel['url']}/verification">
-                                                {if $verification_requests_insights}<span
-                                                    class="float-right badge badge-pill badge-danger">{$verification_requests_insights}</span>{/if}
                                                 {__("List Requests")}
                                             </a>
                                         </li>

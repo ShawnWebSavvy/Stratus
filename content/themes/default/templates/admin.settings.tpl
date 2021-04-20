@@ -736,7 +736,7 @@
     {elseif $sub_view == "posts"}
 
         <!-- card-header -->
-        <div class="card-header with-icon">
+        <div class="card-header with-icon d-flex align-items-center">
             <!-- panel title -->
             <i class="fa fa-cog mr10"></i>{__("Settings")} &rsaquo; {__("Posts")}
             <!-- panel title -->
@@ -1293,7 +1293,7 @@
         <!-- card-header -->
         <div class="card-header with-icon with-nav custom-tabs">
             <!-- panel title -->
-            <div class="mb20">
+            <div class="mb20 d-flex align-items-center">
                 <i class="fa fa-cog mr10"></i>{__("Settings")} &rsaquo; {__("Registration")}
             </div>
             <!-- panel title -->
@@ -2048,7 +2048,7 @@
     {elseif $sub_view == "email"}
 
         <!-- card-header -->
-        <div class="card-header with-icon">
+        <div class="card-header with-icon d-flex align-items-center">
             <!-- panel title -->
             <i class="fa fa-cog mr10"></i>{__("Settings")} &rsaquo; {__("Email")}
             <!-- panel title -->
@@ -2185,7 +2185,7 @@
     {elseif $sub_view == "sms"}
 
         <!-- card-header -->
-        <div class="card-header with-icon">
+        <div class="card-header with-icon d-flex align-items-center">
             <!-- panel title -->
             <i class="fa fa-cog mr10"></i>{__("Settings")} &rsaquo; {__("SMS")}
             <!-- panel title -->
@@ -2371,7 +2371,7 @@
         <!-- card-header -->
         <div class="card-header with-icon with-nav custom-tabs">
             <!-- panel title -->
-            <div class="mb20">
+            <div class="mb20 d-flex align-items-center">
                 <i class="fa fa-bell mr10"></i>{__("Settings")} &rsaquo; {__("Notifications")}
             </div>
             <!-- panel title -->
@@ -2632,7 +2632,7 @@
     {elseif $sub_view == "chat"}
 
         <!-- card-header -->
-        <div class="card-header with-icon">
+        <div class="card-header with-icon d-flex align-items-center">
             <!-- panel title -->
             <i class="fa fa-cog mr10"></i>{__("Settings")} &rsaquo; {__("Chat")}
             <!-- panel title -->
@@ -2812,7 +2812,7 @@
     {elseif $sub_view == "live"}
 
         <!-- card-header -->
-        <div class="card-header with-icon">
+        <div class="card-header with-icon d-flex align-items-center">
             <!-- panel title -->
             <i class="fa fa-cog mr10"></i>{__("Settings")} &rsaquo; {__("Live Stream")}
             <!-- panel title -->
@@ -3021,7 +3021,7 @@
         <!-- card-header -->
         <div class="card-header with-icon with-nav custom-tabs">
             <!-- panel title -->
-            <div class="mb20">
+            <div class="mb20 d-flex align-items-center">
                 <i class="fa fa-cog mr10"></i>{__("Settings")} &rsaquo; {__("Uploads")}
             </div>
             <!-- panel title -->
@@ -3972,7 +3972,7 @@
     {elseif $sub_view == "security"}
 
         <!-- card-header -->
-        <div class="card-header with-icon">
+        <div class="card-header with-icon d-flex align-items-center">
             <!-- panel title -->
             <i class="fa fa-cog mr10"></i>{__("Settings")} &rsaquo; {__("Security")}
             <!-- panel title -->
@@ -4186,7 +4186,7 @@
         <!-- card-header -->
         <div class="card-header with-icon with-nav custom-tabs">
             <!-- panel title -->
-            <div class="mb20">
+            <div class="mb20 d-flex align-items-center">
                 <i class="fa fa-cog mr10"></i>{__("Settings")} &rsaquo; {__("Payments")}
             </div>
             <!-- panel title -->
@@ -4723,7 +4723,7 @@
     {elseif $sub_view == "limits"}
 
         <!-- card-header -->
-        <div class="card-header with-icon">
+        <div class="card-header with-icon d-flex align-items-center">
             <!-- panel title -->
             <i class="fa fa-cog mr10"></i>{__("Settings")} &rsaquo; {__("Limits")}
             <!-- panel title -->
@@ -4839,7 +4839,7 @@
     {elseif $sub_view == "analytics"}
 
         <!-- card-header -->
-        <div class="card-header with-icon">
+        <div class="card-header with-icon d-flex align-items-center">
             <!-- panel title -->
             <i class="fa fa-cog mr10"></i>{__("Settings")} &rsaquo; {__("Analytics")}
             <!-- panel title -->
@@ -4877,7 +4877,7 @@
     {elseif $sub_view == "investment"}
 
         <!-- card-header -->
-        <div class="card-header with-icon">
+        <div class="card-header with-icon d-flex align-items-center">
             <!-- panel title -->
             <i class="fa fa-cog mr10"></i>{__("Settings")} &rsaquo; {__("Investment")}
             <!-- panel title -->
@@ -4919,7 +4919,7 @@
     {elseif $sub_view == "referral"}
 
         <!-- card-header -->
-        <div class="card-header with-icon">
+        <div class="card-header with-icon d-flex align-items-center">
             <!-- panel title -->
             <i class="fa fa-cog mr10"></i>{__("Settings")} &rsaquo; {__("Investment Referral")}
             <!-- panel title -->

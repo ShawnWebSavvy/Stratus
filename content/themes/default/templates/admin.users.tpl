@@ -2,22 +2,22 @@
     <div class="card-header with-icon">
         {if $sub_view == "banned"}
             <div class="float-right">
-                <a href="{$system['system_url']}/{$control_panel['url']}/blacklist" class="btn btn-sm btn-danger">
-                    <i class="fa fa-minus-circle"></i><span class="ml5 d-none d-lg-inline-block">{__("Manage Banned IPs")}</span>
+                <a href="{$system['system_url']}/{$control_panel['url']}/blacklist" class="btn btn-sm btn-danger" style='color:#fff;'>
+                    <span class="ml5 d-none d-lg-inline-block">{__("Manage Banned IPs")}</span>
                 </a>
             </div>
         {elseif $sub_view == "find"}
             <div class="float-right">
-                <a href="{$system['system_url']}/{$control_panel['url']}/users" class="btn btn-sm btn-light">
+                <a href="{$system['system_url']}/{$control_panel['url']}/users" class="btn cmn_btn" >
                     <i class="fa fa-arrow-circle-left mr5"></i>{__("Go Back")}
                 </a>
             </div>
         {elseif $sub_view == "edit"}
             <div class="float-right">
-                <a href="{$system['system_url']}/{$control_panel['url']}/users" class="btn btn-sm btn-light">
+                <a href="{$system['system_url']}/{$control_panel['url']}/users" class="btn cmn_btn">
                     <i class="fa fa-arrow-circle-left"></i><span class="ml5 d-none d-lg-inline-block">{__("Go Back")}</span>
                 </a>
-                <a target="_blank" href="{$system['system_url']}/{$data['user_name']}" class="btn btn-sm btn-info">
+                <a target="_blank" href="{$system['system_url']}/{$data['user_name']}" class="btn cmn_btn">
                         <img  width="30px" height="30px" src="{$system['system_url']}/content/themes/default/images/svg/svgImg/eye-icon.svg"/>
                     <span class="ml5 d-none d-lg-inline-block">{__("View Profile")}</span>
                 </a>
@@ -26,9 +26,15 @@
                 </button>
             </div>
         {/if}
-        <i class="fa fa-user mr10"></i>{__("Users")}
-        {if $sub_view != "" && $sub_view != "edit"} &rsaquo; {__($sub_view|capitalize)}{/if}
-        {if $sub_view == "edit"} &rsaquo; {$data['user_firstname']} {$data['user_lastname']}{/if}
+
+        <div class='d-flex align-items-center'>
+            <div class="svg-container mr10">
+                <img style="width: 25px;" src="{$system['system_uploads_assets']}/content/themes/default/images/svg/svgImg/friend_iconN.svg" class="">
+            </div>
+            {__("Users")}
+            {if $sub_view != "" && $sub_view != "edit"} &rsaquo; {__($sub_view|capitalize)}{/if}
+            {if $sub_view == "edit"} &rsaquo; {$data['user_firstname']} {$data['user_lastname']}{/if}
+        </div>
     </div>
 
     {if $sub_view == "" || $sub_view == "admins" || $sub_view == "moderators" || $sub_view == "online" || $sub_view == "banned" || $sub_view == "find"}
