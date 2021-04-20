@@ -42,7 +42,7 @@ body.publisher-focus .custom_modal_style.customModalAddPhoto {top: 50%;transform
 .market-localhub .modal-dialog .modal-body{overflow-y:auto}
 .modal-open .modal{padding-bottom:30px}
 .js_story-deleter{position:absolute;z-index:2;background-color:transparent;color:#fff;left:255px;top:-2px;padding:0!important}
-.js_story-deleter.js_zuck_btn{left: 110px;top: 2px;background-color: #fff;font-size: 0;line-height: 0;border-radius: 100%;}
+.js_story-deleter.js_zuck_btn{left:auto; right: -5px; top:-1px; background-color: #fff;font-size: 0;line-height: 0;border-radius: 100%;}
 .js_story-deleter.js_zuck_btn img{margin: 0px;}
 .body.group-localhub .js_leave-group{width:100%!important}
 .publisher-focus{overflow:hidden}
@@ -385,7 +385,7 @@ body.login-index-body .mainloginBlock{display:flex;padding-bottom:60px;height:10
 .profileUpdatesDesign .global-profile-feeds-photo{width:calc(100% / 2)}
 .profileUpdatesDesign .searchSectionWrap ._user_detail_sec ._user_details{width:100%}
 .mainloginBlock .cloud_imgs::before{display:none;}
-.js_story-deleter.js_zuck_btn{left: 100px;}
+.js_story-deleter.js_zuck_btn{left: auto; right: -5px; top: -1px;}
 .publisher-tools-tabs-ul .uplodfileTags .publisher-tools-tab{padding: 10px;margin: 0px !important;min-width: 100%;max-width: none;}
 .publisher-tools-tabs-ul .uplodfileTags:hover .publisher-tools-tab::before{left: 0;transform: translate(-0% , -50%);}
 .post-colored .post-text, .publisher-message.colored textarea {font-size: 20px;font-weight: 500;}

@@ -6156,6 +6156,7 @@ class UserGlobal
         if ($get_stories->num_rows > 0) {
             while ($_story = $get_stories->fetch_assoc()) {
                 $story['id'] = $_story['story_id'];
+                $story['user_id'] = $_story['user_id'];
                 $story['photo'] = get_picture($_story['global_user_picture'], $_story['user_gender']);
                 $story['name'] = $_story['user_firstname'] . " " . $_story['user_lastname'];
                 $story['lastUpdated'] = strtotime($_story['time']);
