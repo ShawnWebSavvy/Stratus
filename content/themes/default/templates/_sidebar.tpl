@@ -222,6 +222,7 @@
                 <!-- sub of global end -->
             <!-- Global Hub End here -->
             <!-- playtube -->
+            {if $system['stripe_mode'] != "live"}
             <ul class="main-side-nav main-left-side-nav left-sidebar first-ul">
                 <li>
                     <a href="{PLY_URL}?dtl={$encodedUserDetails}" class="{$page}">
@@ -237,6 +238,7 @@
                     </a>
                 </li>
             </ul>
+            {/if}
             <!-- playtube -->
             <!-- Blog Hub starts-->
             {if $system['blogs_enabled']}
