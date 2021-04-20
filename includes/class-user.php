@@ -18586,7 +18586,6 @@ class User
         return $countries;
         die;
     }
-<<<<<<< HEAD
     /* delete from playtube users table */
     function deleteFromVideoHub($user_id,$email){
         $apiUrl = '/aj/ap/delete-user';
@@ -18596,9 +18595,8 @@ class User
         $postData = array("email"=>$email);
         $postData = json_encode($params);
         curl_setopt($curlInit, CURLOPT_HTTPHEADER, array('Content-Type: application/json'));
-=======
 
-
+    }
     /**
      * FUNCTION FOR VIDEOHUB
      */
@@ -18609,20 +18607,10 @@ class User
       //$postData = json_encode($params);
         $postData = $params;
         //print_r($postData);
->>>>>>> 328a19dd56d3eac2e824d53f04b349daa16b0ba2
         curl_setopt($curlInit, CURLOPT_URL, $url);
         curl_setopt($curlInit, CURLOPT_RETURNTRANSFER, true);
         curl_setopt($curlInit, CURLOPT_HEADER, false);
         curl_setopt($curlInit, CURLOPT_POSTFIELDS, $postData);
-<<<<<<< HEAD
-
-        $curlResponse = curl_exec($curlInit);
-        $curlResponse =  json_decode($curlResponse, true);
-        curl_close($curlInit);
-       //  print_r($curlResponse); die("hiiiiii");
-        return $curlResponse;
-    }
-=======
         $curlResponse = curl_exec($curlInit);
         $curlResponse =  json_decode($curlResponse, true);
         curl_close($curlInit);
@@ -18650,5 +18638,4 @@ class User
          }
     }
 
->>>>>>> 328a19dd56d3eac2e824d53f04b349daa16b0ba2
 }

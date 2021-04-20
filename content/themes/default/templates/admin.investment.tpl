@@ -405,6 +405,7 @@
                 <table class="table table-striped table-bordered table-hover">
                     <thead>
                         <tr>
+                            <th>{__("Date")}</th>
                             <th>{__("TRANX ID")}</th>
                             <th>{__("Order Type")}</th>
                             {if $tnx_type == 'buy'}
@@ -437,6 +438,9 @@
                         {if $rows}
                             {foreach $rows as $key=>$row}
                                 <tr>
+                                    <td><span class=" "
+                                        data-time="{$row['created_at']|date_format}">{$row['created_at']|date_format}</span>
+                                    </td>
                                     <td>
                                         {$row['order_id']}
                                     </td>

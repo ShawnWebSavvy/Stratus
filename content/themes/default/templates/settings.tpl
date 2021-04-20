@@ -3351,7 +3351,7 @@
                         <div class="card-body">
                             <div class="alert deleteAccountChanges"
                                 style=" display: flex;flex-direction: column;align-items: center;justify-content: center;">
-                                <img class="mb20" style="margin: 0 auto;" height="50%"
+                                <img class="mb20" style="margin: 0 auto; width:70%;"
                                     src="{$system['system_url']}/content/themes/default/images/svg/svgImg/deletePage.png" />
                                 <div style="color: #1E1F20;font-size: 20px;font-weight: 600;">
                                     {__("Once you delete your account you will no longer can access it again")}

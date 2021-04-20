@@ -77,8 +77,8 @@
 
 
                         <!-- shares -->
-                        <span class="pointer ml10 {if $post['shares'] == 0}x-hidden{/if}" data-toggle="modal"
-                            data-url="posts/who_shares.php?post_id={$post['post_id']}">
+                        <span class="pointer ml10 shareButtonIcon {if $post['shares'] == 0}x-hidden{/if}" data-toggle="modal"
+                            data-url="posts/global-profile/who_shares.php?post_id={$post['post_id']}">
                             <i class="shareiconBtn"></i> {__("Shares")}
                         </span>
                         <!-- shares -->
@@ -279,8 +279,8 @@
                         <!-- comments & shares -->
                         <span class="float-right">
                             <!-- shares -->
-                            <span class="pointer ml10 {if $post['shares'] == 0}x-hidden{/if}" data-toggle="modal"
-                                data-url="posts/who_shares.php?post_id={$post['post_id']}">
+                            <span class="pointer ml10 shareButtonIcon {if $post['shares'] == 0}x-hidden{/if}" data-toggle="modal"
+                                data-url="posts/global-profile/who_shares.php?post_id={$post['post_id']}">
                                 <i class="fa fa-share"></i> {__("Shares")}
                             </span>
                             <!-- shares -->
@@ -424,11 +424,10 @@
         {/foreach}
         <!-- post body button show thread -->
         {if ($page!="global-profile/global-profile-post") }
-        <div class="post-body postThreadButton">
+        <div class="post-body postThreadButton ">
             {include file='global-profile/global-profile__feeds_post.body.tpl' _post=$post _shared=false}
             <div class="threadButtonPosition">
-                <a href="{$system['system_url']}/global-profile-posts/{$post['post_id']}" class="btn">Show this
-                    thread</a>
+                <a href="{$system['system_url']}/global-profile-posts/{$post['post_id']}" class="btn">Show this thread</a>
             </div>
         </div>
         {/if}

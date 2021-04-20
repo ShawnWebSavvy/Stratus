@@ -68,8 +68,8 @@
                     <!-- comments & shares -->
                     <span class="float-right">
                         <!-- shares -->
-                        <span class="pointer ml10 {if $post['shares'] == 0}x-hidden{/if}" data-toggle="modal"
-                            data-url="posts/who_shares.php?post_id={$post['post_id']}">
+                        <span class="pointer ml10 shareButtonIcon {if $post['shares'] == 0}x-hidden{/if}" data-toggle="modal"
+                            data-url="posts/global-profile/who_shares.php?post_id={$post['post_id']}">
                             <i class="fa fa-share"></i> {__("Shares")}
                         </span>
                         <!-- shares -->

@@ -153,7 +153,7 @@
                             <!-- article title -->
                             <!-- article meta -->
                             <div class="mb20 ctm_action_btn">
-                                <div class="float-right">
+                                <div class="float-right blogActionButton">
                                     {if $article['manage_post']}
                                     <a class="article-meta-counter unselectable"
                                         href="{$system['system_url']}/blogs/edit/{$article['post_id']}">
@@ -289,8 +289,7 @@
                                 <ul>
                                     {foreach $article['article']['parsed_tags'] as $tag}
                                     <li>
-                                        <a href="{$system['system_url']}/search/hashtag/{$tag}"
-                                            class="blog-before-login">{$tag}</a>
+                                        <a href="{$system['system_url']}/search/hashtag/{$tag}" class="blog-before-login">{$tag}</a>
                                     </li>
                                     {/foreach}
                                 </ul>

@@ -19,23 +19,10 @@
     background-color: transparent;
   }
 }
-/* 
 .investmentWrapSection .delistingsUpdate {
-	background-image: url("../images/investment/News@3x.png");
-	background-position: center;
-	background-repeat: no-repeat;
-	background-size: 100%;
-	max-width: 751px;
-	height: 100%;
-	display: inline-block;
-	padding: 30px;
+	/* max-width: 920px; */
 	width: 100%;
-  margin: 0 auto;
-} */
-.investmentWrapSection .delistingsUpdate {
-	max-width: 751px;
-	width: 100%;
-  margin: 0 auto;
+  /* margin: 0 auto; */
 }
 
 
@@ -46,11 +33,7 @@
     width: 100%;
   }
 }
-@media (max-width: 575px) {
-  .investmentWrapSection .delistingsUpdate{
-    background-size: cover;
-  }
-  }
+
 
 .investmentWrapSection .delistingsUpdate .carousel.slide {
   max-width: 258px;
@@ -1530,13 +1513,18 @@ select.flat-select:hover {
 
 .investmentWrapSection .delistingsUpdate img {
 	max-width: 100%;
-	border-radius: 10px;
-	overflow: hidden;
+	border-radius: 10px !important;
+	overflow: hidden !important;
+}
+.investmentWrapSection .delistingsUpdate{
+  background: transparent !important;
+  background-image: none !important;
+  padding: 0 !important;
 }
 /* End */
 
 
-@media(max-width: 460px){
+@media (max-width: 460x) {
   .MobileCrousle.mob_style .flickity-enabled.is-draggable .flickity-viewport {
     height: 334.5px !important;
   }
