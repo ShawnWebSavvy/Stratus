@@ -31,8 +31,9 @@ class InvestmentHelper {
     }
     public static function get_all_token_price($user_data=null)
     {   global $db,$system;
+        $redisObject = new RedisClass();
+        $tokens = cachedInvestmentBuySellData($system,$redisObject);
         $return = [];
-        $tokens  =  httpGetCurl('investment/get_tickers',$system['investment_api_base_url']);
         if(!empty($tokens)){
             foreach($tokens['data'] as $i=>$token){
                 $return['token'][$i]['buy_price']=$token['buy_price'];
@@ -194,8 +195,11 @@ class InvestmentHelper {
     }
 
     public static function getDashboardDate($user_data){
-        global $db,$system;
-        $tokens  =  httpGetCurl('investment/dashboard_detail',$system['investment_api_base_url']);
+        global $system;
+
+        $redisObject = new RedisClass();
+        $tokens = cachedInvestmentDashboardData($system,$redisObject);
+
         $return = [];
         $currency_price = [];
         if(!empty($tokens)){
