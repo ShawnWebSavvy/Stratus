@@ -1240,7 +1240,7 @@
           if (data.items[0].type == "video") {
             /*var srcBackground =(option("avatars") || !preview || preview =="" ? get(data,"photo")
             : preview); */
-            var srcBackground = window.location.origin + "/content/themes/default/images/video_square_white.png";
+            var srcBackground = items[0].thumbnail ? items[0].thumbnail : window.location.origin + "/content/themes/default/images/video_square_white.png";
           } else {
             var srcBackground = items[0].src;
           }

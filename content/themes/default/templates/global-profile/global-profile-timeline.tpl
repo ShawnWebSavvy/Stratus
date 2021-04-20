@@ -34,9 +34,15 @@
                     <!-- stories -->
                     {if $system['stories_enabled']}
                     <div class="card story-card">
-                     
+                        {if $has_story}
+                        <button data-toggle="tooltip" data-placement="top" title='{__("Delete Your Story")}'
+                            class="btn btn-sm btn-icon btn-rounded js_story-deleter">
+                            <img src="{$system['system_url']}/content/themes/default/images/svg/svgImg/modelCross.svg"
+                                class="blackicon">
+                        </button>
+                        {/if}
                         <div class="card-body stories-wrapper">
-                            <div id="stories" data-system-url= "{$system['system_url']}" data-user-id="{$userGlobal->_data['user_id']}" data-json='{htmlspecialchars($stories["json"], ENT_QUOTES, "UTF-8")}'>
+                            <div id="stories" data-json='{htmlspecialchars($stories["json"], ENT_QUOTES, "UTF-8")}'>
                                 <div class="add-story add-story-test" data-toggle="modal"
                                     data-url="posts/story.php?do=create">
 

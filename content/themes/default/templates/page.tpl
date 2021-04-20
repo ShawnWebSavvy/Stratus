@@ -83,7 +83,6 @@
                                 <div class="profile-avatar-crop {if $spage['page_picture_default']}x-hidden{/if}">
                                     <i class="fa fa-crop-alt js_init-crop-picture"
                                         data-image="{$spage['page_picture_full']}" data-handle="page"
-                                        data-system-url="{$system['system_url']}"
                                         data-id="{$spage['page_id']}"></i>
                                 </div>
                                 {if !$profile['user_picture_default']}
@@ -168,13 +167,13 @@
                                         <!-- report -->
                                         <!-- manage -->
                                         {if $user->_is_admin}
-                                        <div class="dropdown-divider"></div>
+                                        {* <div class="dropdown-divider"></div> *}
                                         <a class="dropdown-item"
                                             href="{$system['system_url']}/admincp/pages/edit_page/{$spage['page_id']}">
                                             <i class="fa fa-cog fa-fw mr10"></i>{__("Edit in Admin Panel")}
                                         </a>
                                         {elseif $user->_is_moderator}
-                                        <div class="dropdown-divider"></div>
+                                        {* <div class="dropdown-divider"></div> *}
                                         <a class="dropdown-item"
                                             href="{$system['system_url']}/modcp/pages/edit_page/{$spage['page_id']}">
                                             <i class="fa fa-cog fa-fw mr10"></i>{__("Edit in Moderator Panel")}
@@ -1041,15 +1040,15 @@
                             <div class="divider"></div>
                             <!-- members -->
                             <div class="heading-small mb20">
-                                {__("All Members")} <span class="text-muted">({$spage['page_likes']})</span>
+                                {__("All Members")} <span class="text-muted">({$spage['members_count']})</span>
                             </div>
                             <div class="pl-md-4 PageUserCount">
-                                {if $spage['page_likes'] > 0}
+                                {if $spage['members_count'] > 0}
                                 <ul>
                                     {foreach $spage['members'] as $_user} {include file='__feeds_user.tpl' _tpl="list"
                                     _connection=$_user["connection"]} {/foreach}
                                 </ul>
-                                {if $spage['page_likes'] >= $system['max_results_even']}
+                                {if $spage['members_count'] >= $system['max_results_even']}
                                 <!-- see-more -->
                                 <div class="alert alert-info see-more js_see-more" data-get="page_members"
                                     data-id="{$spage['page_id']}">

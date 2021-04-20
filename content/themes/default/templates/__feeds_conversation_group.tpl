@@ -9,7 +9,7 @@
             <div class="left-avatar" style="background-image: url('{$conversation['picture_left']}')"></div>
             <div class="right-avatar" style="background-image: url('{$conversation['picture_right']}')"></div>
         </div>
-        <div class="data-content">
+        <div class="data-content" style="padding-left: 10px;">
             <!-- {if $conversation['image'] != ''}
             <div class="float-right">
                 <img class="data-img lazyload" data-src="{$system['system_uploads']}/{$conversation['image']}" alt="">

@@ -68,7 +68,7 @@
             
 
                     <!-- shares -->
-                    <span class="pointer ml10 {if $post['shares'] == 0}x-hidden{/if}" data-toggle="modal" data-url="posts/who_shares.php?post_id={$post['post_id']}">
+                    <span class="pointer ml10 shareButtonIcon {if $post['shares'] == 0}x-hidden{/if}" data-toggle="modal" data-url="posts/who_shares.php?post_id={$post['post_id']}">
                         <i class="fa fa-share"></i> {$post['shares']}
                     </span>
                     <!-- shares -->
@@ -155,7 +155,7 @@
                     <i class="icon-post icon_share "></i>
                     <span>{__("Share")}</span>
                 </div>
-                <div class="_share-dropdown_ dropdown-menu fade" aria-labelledby="stratus_post_{$post['post_id']}" data-toggle="modal" data-url="posts/share.php?do=create&post_id={$post['post_id']}">
+                <div class="_share-dropdown_ dropdown-menu-right dropdown-menu fade" aria-labelledby="stratus_post_{$post['post_id']}" data-toggle="modal" data-url="posts/share.php?do=create&post_id={$post['post_id']}">
                             <div class="share_icon_list">
                                 <ul class="-list_items">
                                     <li class="stratus_local_share" id="share_timeline"><label for="share_to_timeline"><span class="__list_icon"><img src="{$system['system_url']}/content/themes/default/images/share-timeline.svg"></span><span>Share to Timeline</span></label>

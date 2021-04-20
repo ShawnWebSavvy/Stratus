@@ -24,15 +24,13 @@ try {
 	$userGlobal = new UserGlobal();
 	// get post
 	$post = $userGlobal->global_profile_get_post($_GET['post_id']);
-	if(!empty($post)){
-		$post['childPostData'] = $userGlobal->global_profile_get_child_post($post['post_id'], true, true);
-		if ($post['childPostData']) {
-			$post['childPostExists'] = true;
-		} else {
-			$post['childPostExists'] = false;
-		}
+
+	$post['childPostData'] = $userGlobal->global_profile_get_child_post($post['post_id'], true, true);
+	if ($post['childPostData']) {
+		$post['childPostExists'] = true;
+	} else {
+		$post['childPostExists'] = false;
 	}
-	
 	if (!$post) {
 		_error(404);
 	}
@@ -46,6 +44,8 @@ try {
 	$smarty->assign('new_people', $new_people);
 	$smarty->assign('userGlobal', $userGlobal);
 	$smarty->assign('active_page', 'GlobalHub');
+	$smarty->assign('show_all', true);
+
 } catch (Exception $e) {
 	_error(__("Error"), $e->getMessage());
 }

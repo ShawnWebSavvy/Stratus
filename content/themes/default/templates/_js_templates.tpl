@@ -128,6 +128,11 @@
     <div class="lightbox">
         <div class="container lightbox-container">
             <div class="lightbox-preview">
+                    <div class="mobileCloseButton mobile">
+                        <button type="button" class="close lightbox-close js_lightbox-close">
+                            <img src="{$system['system_uploads_assets']}/content/themes/default/images/svg/svgImg/modelCross.svg"/>
+                        </button>
+                    </div>
                 <div class="lightbox-next js_lightbox-slider">
                     <i class="fa fa-chevron-right fa-3x"></i>
                 </div>
@@ -137,10 +142,10 @@
                 <img alt="" class="img-fluid" src="{literal}{{image}}{/literal}">
             </div>
             <div class="lightbox-data">
-                <div class="clearfix">
-                    <div class="pt5 pr5 float-right">
+                <div class="clearfix" style="position: relative;">
+                    <div class="mobileCloseButton desktop">
                         <button type="button" class="close lightbox-close js_lightbox-close">
-                            <span aria-hidden="true">&times;</span>
+                            <img src="{$system['system_uploads_assets']}/content/themes/default/images/svg/svgImg/modelCross.svg"/>
                         </button>
                     </div>
                 </div>
@@ -168,7 +173,7 @@
     <div class="lightbox" data-live-post-id="{literal}{{post_id}}{/literal}">
         <div class="container lightbox-container">
             <div class="lightbox-preview with-live">
-                <div class="live-stream-video" id="js_live-video" style="display:none">
+                <div class="live-stream-video" id="js_live-video">
                     <div class="live-counter" id="js_live-counter">
                         <span class="status offline" id=js_live-counter-status>{__("Offline")}</span>
                         <span class="number">
@@ -183,9 +188,9 @@
             </div>
             <div class="lightbox-data">
                 <div class="clearfix">
-                    <div class="pt5 pr5 float-right">
+                    <div class="mobileCloseButton">
                         <button type="button" class="close lightbox-close js_lightbox-close">
-                            <span aria-hidden="true">&times;</span>
+                            <img src="{$system['system_uploads_assets']}/content/themes/default/images/svg/svgImg/modelCross.svg"/>
                         </button>
                     </div>
                 </div>
@@ -208,9 +213,9 @@
         <div class="container lightbox-container">
             <div class="lightbox-data">
                 <div class="clearfix">
-                    <div class="pt5 pr5 float-right">
+                    <div class="mobileCloseButton">
                         <button type="button" class="close lightbox-close js_lightbox-close">
-                            <span aria-hidden="true">&times;</span>
+                            <img src="{$system['system_uploads_assets']}/content/themes/default/images/svg/svgImg/modelCross.svg"/>
                         </button>
                     </div>
                 </div>
@@ -1508,7 +1513,7 @@
                         <label class="form-control-label" for="amount">{__("Amount")}</label>
                         <div class="input-money">
                             <span>{$system['system_currency_symbol']}</span>
-                            <input type="text" class="form-control" placeholder="0.00" min="1.00" max="1000" name="amount">
+                            <input type="text" autocomplete="off" class="form-control" placeholder="0.00" min="1.00" max="1000" name="amount">
                         </div>
                     </div>
                     <!-- error -->
@@ -1721,16 +1726,22 @@
                         </div>
                     {/if}
                     {if $system['creditcard_enabled']}
+                        
                         <div class="col-12 col-sm-4 plr5">
                             <button class="js_payment-stripe btn btn-block btn-payment plr20 mb10" 
                             data-handle="{literal}{{handle}}{/literal}" 
                             {literal}{{#id}}{/literal} data-id="{literal}{{id}}{/literal}" {literal}{{/id}}{/literal} 
-                            {literal}{{#price}}{/literal} data-price="{literal}{{price}}{/literal}" {literal}{{/price}}{/literal} 
+                            {literal}{{#new_amount}}{/literal} data-price="{literal}{{new_amount}}{/literal}" {literal}{{/new_amount}}{/literal} 
                             {literal}{{#name}}{/literal} data-name="{literal}{{name}}{/literal}" {literal}{{/name}}{/literal} 
                             {literal}{{#img}}{/literal} data-img="{literal}{{img}}{/literal}" {literal}{{/img}}{/literal} 
                             data-method="credit"> 
                                 <i class="fa fa-credit-card fa-lg fa-fw mr5" style="color: #8798CC;"></i>{__("Credit Card")}
                             </button>
+                            <span>
+                                <b>Credit Card Fee </b> : {literal}{{fee_amount}}{/literal}
+                                <br>
+                                <b>Total Amount</b> : {literal}{{new_amount}}{/literal}
+                            </span>
                         </div>
                     {/if}
                     {if $system['alipay_enabled']}

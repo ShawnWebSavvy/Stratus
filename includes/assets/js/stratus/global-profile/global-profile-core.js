@@ -271,6 +271,9 @@ function load_more(element) {
   if (_this.data("id") !== undefined) {
     data["id"] = _this.data("id");
   }
+  if (_this.data("tag") !== undefined) {
+    data["tag"] = _this.data("tag");
+  }
   data["offset"] =
     _this.data("offset") ||
     1; /* we start from iteration 1 because 0 already loaded */
@@ -292,7 +295,7 @@ function load_more(element) {
       } else {
         if (response.data) {
             var datatta = response.data;
-            var ArrayVal = datatta.split('<div class="carsds"');
+            var ArrayVal = datatta.split('<div class="carsds "');
             var loopArray = [];
             if (ArrayVal.length > 0) {
               for (var i = 1; i < ArrayVal.length; i++) {
@@ -710,9 +713,9 @@ $(function () {
         var hashtags = query.match(/#(\w+)/gi);
         if (hashtags !== null && hashtags.length > 0) {
           var query = hashtags[0].replace("#", "");
-          window.location = site_path + "/globalhub-search/hashtag/" + query;
+          window.location = encodeURI(site_path + "/globalhub-search/hashtag/" + query);
         } else {
-          window.location = site_path + "/globalhub-search/" + query;
+          window.location = encodeURI(site_path + "/globalhub-search/" + query);
         }
       }
       return false;
@@ -740,14 +743,14 @@ $(function () {
     if (!is_empty(query)) {
       if (handle !== undefined) {
         window.location =
-          site_path + "/" + handle + "/globalhub-search/" + query;
+        encodeURI(site_path + "/" + handle + "/globalhub-search/" + query );
       } else {
         var hashtags = query.match(/#(\w+)/gi);
         if (hashtags !== null && hashtags.length > 0) {
           var query = hashtags[0].replace("#", "");
-          window.location = site_path + "/globalhub-search/hashtag/" + query;
+          window.location = encodeURI(site_path + "/globalhub-search/hashtag/" + query);
         } else {
-          window.location = site_path + "/globalhub-search/" + query;
+          window.location = encodeURI( site_path + "/globalhub-search/" + query );
         }
       }
     }

@@ -80,12 +80,15 @@
     <link rel="stylesheet" type='text/css'
         href="{$system['system_uploads_assets']}/content/themes/default/css/style-custom-light.css"  {if !$user->_logged_in}defer{/if}>
     <link rel="stylesheet" type='text/css'
-        href="{$system['system_url']}/content/themes/default/css/custom_responsive_style.css">
+        href="{$system['system_uploads_assets']}/content/themes/default/css/buttonCustom.css">
+    <link rel="stylesheet" type='text/css'
+        href="{$system['system_uploads_assets']}/content/themes/default/css/custom_responsive_style.css">
     <!-- CSS -->
     <link rel="stylesheet" type='text/css'
             href="{$system['system_uploads_assets']}/content/themes/{$system['theme']}/css/investmentStyle.css">
     {/if}
 
+    
     <!-- CSS -->
     <!-- CSS Customized -->
     {include file='_head.css.tpl'}
@@ -107,4 +110,13 @@
     <!-- Load jQuery now so we can lazy load components -->
     <script src="https://code.jquery.com/jquery-3.5.1.min.js"
         integrity="sha256-9/aliU8dGd2tb6OSsuzixeV4y/faTqgFtohetphbbj0=" crossorigin="anonymous"  {if !$user->_logged_in}defer{/if}></script>
+
+        <style>
+
+@media (max-width: 460px) {
+ .buySellSection .MobileCrousle.mob_style .flickity-enabled.is-draggable .flickity-viewport {
+    height: 334.5px !important;
+  }
+}
+</style>
 </head>

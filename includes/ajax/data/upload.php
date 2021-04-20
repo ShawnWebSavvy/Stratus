@@ -1,5 +1,4 @@
 <?php
-require_once '../../../includes/helper_functions.php';
 
 /**
  * ajax -> data -> upload
@@ -605,13 +604,7 @@ try {
                     // upload to
                     if ($system['s3_enabled']) {
                         /* Amazon S3 */
-                        $helpers = new helpers();
-                        $result_ = $helpers->getVideoDuration($file['tmp_name'], 'prod');
-                        if($result_ > 4){
-                            aws_s3_upload($file['tmp_name'], $file_name);
-                        }else{
-                            modal("MESSAGE", __("Upload Error"), __("Please upload minimum 5 seconds Video"));
-                        }
+                        aws_s3_upload($file['tmp_name'], $file_name);
                     } elseif ($system['digitalocean_enabled']) {
                         /* DigitalOcean */
                         digitalocean_space_upload($file['tmp_name'], $file_name);

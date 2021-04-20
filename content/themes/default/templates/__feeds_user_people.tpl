@@ -57,15 +57,11 @@
             </button>
 
             {elseif $_connection == "remove"}
-            <button type="button" class="btn  btn-success {if !$_no_action}btn-delete{/if} js_friend-remove"
-                data-uid="{$_user['user_id']}">
-                <img class="btn_image"
-                    src="{$system['system_uploads_assets']}/content/themes/default/images/svg/svgImg/newchecked1.svg">
-                <img class="btn_image_hover"
-                    src="{$system['system_uploads_assets']}/content/themes/default/images/svg/svgImg/delete_icon.svg">
+            <button type="button" class="btn  btn-success {if !$_no_action}btn-delete{/if} js_friend-remove" data-uid="{$_user['user_id']}">
+                <img class="btn_image" src="{$system['system_uploads_assets']}/content/themes/default/images/svg/svgImg/newchecked1.svg">
+                <img class="btn_image_hover" src="{$system['system_uploads_assets']}/content/themes/default/images/svg/svgImg/delete_icon.svg">
                 <span class="btn_image_"> {__("Friends")} </span>
                 <span class="btn_image_hover"> {__("Delete")} </span>
-
             </button>
 
             {elseif $_connection == "follow"}
@@ -75,7 +71,8 @@
 
             {elseif $_connection == "unfollow"}
             <button type="button" class="btn  btn-info js_unfollow" data-uid="{$_user['user_id']}">
-                <i class="fa fa-check mr5"></i>{__("Following")}
+            <img class="" src="{$system['system_url']}/content/themes/default/images/svg/svgImg/newchecked1.svg" />
+                {__("Following")}
             </button>
 
             {elseif $_connection == "blocked"}
@@ -207,95 +204,133 @@
                 <!-- buttons -->
                 {if $_connection == "request"}
                 <button type="button" class="btn  btn-primary js_friend-accept" data-uid="{$_user['user_id']}">
-                    <span class="request_aspct">
-                        <img src="{$system['system_uploads_assets']}/content/themes/default/images/svg/svgImg/tick.svg">
+                    <span class="request_aspct"><img
+                            src="{$system['system_uploads_assets']}/content/themes/default/images/svg/svgImg/tick.svg">
                     </span>
-                    {__("Confirm")}
-                </button>
+                    {__("Confirm")}</button>
                 <button type="button" class="btn  btn-danger js_friend-decline" data-uid="{$_user['user_id']}">
                     <span class="request_dlt">
-                        <img src="{$system['system_uploads_assets']}/content/themes/default/images/svg/svgImg/delete_icon.svg">
+                        <img
+                            src="{$system['system_uploads_assets']}/content/themes/default/images/svg/svgImg/delete_icon.svg">
                     </span>
-                    {__("Delete")}
-                </button>
+
+                    {__("Delete")}</button>
+
                 {elseif $_connection == "add"}
                 <button type="button" class="btn  btn-success js_friend-add" data-uid="{$_user['user_id']}">
-                    <img class="btn_image_" src="{$system['system_uploads_assets']}/content/themes/default/images/svg/svgImg/add_friend_icon.svg">
-                    <img class="btn_image_hover" src="{$system['system_uploads_assets']}/content/themes/default/images/svg/svgImg/add_friend-hover.svg">
+                    <!--<i class="fa fa-user-plus mr5"></i> {if $_small} {__("Add")} {else}{__("Add Friend")}{/if} -->
+                    <img class="btn_image_"
+                        src="{$system['system_uploads_assets']}/content/themes/default/images/svg/svgImg/add_friend_icon.svg">
+                    <img class="btn_image_hover"
+                        src="{$system['system_uploads_assets']}/content/themes/default/images/svg/svgImg/add_friend-hover.svg">
                     {if !$_small} {__("Add Friend")}{/if}
                 </button>
+
                 {elseif $_connection == "cancel"}
                 <button type="button" class="btn  btn-warning js_friend-cancel" data-uid="{$_user['user_id']}">
-                    <img class="btn_image_" src="{$system['system_uploads_assets']}/content/themes/default/images/svg/svgImg/tick.svg">
+                    <img class="btn_image_"
+                        src="{$system['system_uploads_assets']}/content/themes/default/images/svg/svgImg/tick.svg">
                     {__("Friend Request Sent")}
                 </button>
+
                 {elseif $_connection == "remove"}
-                <button type="button" class="btn  btn-success {if !$_no_action}btn-delete{/if} js_friend-remove" data-uid="{$_user['user_id']}">
-                    <img class="btn_image" src="{$system['system_uploads_assets']}/content/themes/default/images/svg/svgImg/newchecked1.svg">
-                    <img class="btn_image_hover" src="{$system['system_uploads_assets']}/content/themes/default/images/svg/svgImg/delete_icon.svg">
+                <button type="button" class="btn  btn-success {if !$_no_action}btn-delete{/if} js_friend-remove"
+                    data-uid="{$_user['user_id']}">
+                    <img class="btn_image"
+                        src="{$system['system_uploads_assets']}/content/themes/default/images/svg/svgImg/plus_icon.svg">
+                    <img class="btn_image_hover"
+                        src="{$system['system_uploads_assets']}/content/themes/default/images/svg/svgImg/delete_icon.svg">
+
                     <span class="btn_image_"> {__("Friends")} </span>
                     <span class="btn_image_hover"> {__("Delete")} </span>
                 </button>
+
                 {elseif $_connection == "follow"}
                 <button type="button" class="btn  btn-info js_follow" data-uid="{$_user['user_id']}">
                     <i class="fa fa-rss mr5"></i>{__("Follow")}
                 </button>
+
                 {elseif $_connection == "unfollow"}
                 <button type="button" class="btn  btn-info js_unfollow" data-uid="{$_user['user_id']}">
-                    <i class="fa fa-check mr5"></i>{__("Following")}
+                    <img class="" src="{$system['system_url']}/content/themes/default/images/svg/svgImg/newchecked1.svg" />
+                    {__("Following")}
                 </button>
+
                 {elseif $_connection == "blocked"}
-                <button type="button" class="btn btn-danger js_unblock-user" data-uid="{$_user['user_id']}">
+                <button type="button" class="btn  btn-danger js_unblock-user" data-uid="{$_user['user_id']}">
                     <i class="fa fa-trash mr5"></i>{__("Unblock")}
                 </button>
+
                 {elseif $_connection == "page_invite"}
-                <button type="button" class="btn js_page-invite" data-id="{$_user['node_id']}" data-uid="{$_user['user_id']}">
-                    <img class="btn_image_" src="{$system['system_uploads_assets']}/content/themes/default/images/svg/svgImg/add_friend_icon.svg">
-                    <img class="btn_image_hover" src="{$system['system_uploads_assets']}/content/themes/default/images/svg/svgImg/add_friend-hover.svg">
+                <button type="button" class="btn js_page-invite" data-id="{$_user['node_id']}"
+                    data-uid="{$_user['user_id']}">
+                    <img class="btn_image_"
+                        src="{$system['system_uploads_assets']}/content/themes/default/images/svg/svgImg/add_friend_icon.svg">
+                    <img class="btn_image_hover"
+                        src="{$system['system_uploads_assets']}/content/themes/default/images/svg/svgImg/add_friend-hover.svg">
                     {__("Invite")}
                 </button>
+
                 {elseif $_connection == "page_manage"}
-                <button type="button" class="btn btn-danger js_page-member-remove" data-id="{$_user['node_id']}" data-uid="{$_user['user_id']}">
+                <button type="button" class="btn btn-danger js_page-member-remove" data-id="{$_user['node_id']}"
+                    data-uid="{$_user['user_id']}">
                     <i class="fa fa-trash mr5"></i>{__("Remove")}
                 </button>
                 {if $_user['i_admin']}
-                <button type="button" class="btn btn-danger js_page-admin-remove" data-id="{$_user['node_id']}" data-uid="{$_user['user_id']}">
+                <button type="button" class="btn btn-danger js_page-admin-remove" data-id="{$_user['node_id']}"
+                    data-uid="{$_user['user_id']}">
                     <i class="fa fa-trash mr5"></i>{__("Remove Admin")}
                 </button>
                 {else}
-                <button type="button" class="btn btn-primary js_page-admin-addation" data-id="{$_user['node_id']}" data-uid="{$_user['user_id']}">
+                <button type="button" class="btn btn-primary js_page-admin-addation" data-id="{$_user['node_id']}"
+                    data-uid="{$_user['user_id']}">
                     <i class="fa fa-check mr5"></i>{__("Make Admin")}
                 </button>
                 {/if}
+
                 {elseif $_connection == "group_invite"}
-                <button type="button" class="btn btn-info js_group-invite" data-id="{$_user['node_id']}" data-uid="{$_user['user_id']}">
+                <button type="button" class="btn  btn-info js_group-invite" data-id="{$_user['node_id']}"
+                    data-uid="{$_user['user_id']}">
                     <span class="btns_img">
-                        <img class="btn_image_" src="{$system['system_uploads_assets']}/content/themes/default/images/svg/svgImg/add_friend_icon.svg">
-                        <img class="btn_image_hover" src="{$system['system_uploads_assets']}/content/themes/default/images/svg/svgImg/add_friend-hover.svg">
+                        <img class="btn_image_"
+                            src="{$system['system_uploads_assets']}/content/themes/default/images/svg/svgImg/add_friend_icon.svg">
+                        <img class="btn_image_hover"
+                            src="{$system['system_uploads_assets']}/content/themes/default/images/svg/svgImg/add_friend-hover.svg">
                     </span>
                     {__("Add")}
                 </button>
+
                 {elseif $_connection == "group_request"}
-                <button type="button" class="btn  btn-primary js_group-request-accept" data-id="{$_user['node_id']}" data-uid="{$_user['user_id']}">{__("Approve")}</button>
-                <button type="button" class="btn  btn-danger js_group-request-decline" data-id="{$_user['node_id']}" data-uid="{$_user['user_id']}">{__("Decline")}</button>
+                <button type="button" class="btn  btn-primary js_group-request-accept" data-id="{$_user['node_id']}"
+                    data-uid="{$_user['user_id']}">{__("Approve")}</button>
+                <button type="button" class="btn  btn-danger js_group-request-decline" data-id="{$_user['node_id']}"
+                    data-uid="{$_user['user_id']}">{__("Decline")}</button>
+
                 {elseif $_connection == "group_manage"}
-                <button type="button" class="btn  btn-danger js_group-member-remove" data-id="{$_user['node_id']}" data-uid="{$_user['user_id']}">
+                <button type="button" class="btn  btn-danger js_group-member-remove" data-id="{$_user['node_id']}"
+                    data-uid="{$_user['user_id']}">
                     <i class="fa fa-trash mr5"></i>{__("Remove")}
                 </button>
                 {if $_user['i_admin']}
-                <button type="button" class="btn  btn-danger js_group-admin-remove" data-id="{$_user['node_id']}" data-uid="{$_user['user_id']}">
+                <button type="button" class="btn  btn-danger js_group-admin-remove" data-id="{$_user['node_id']}"
+                    data-uid="{$_user['user_id']}">
                     <i class="fa fa-trash mr5"></i>{__("Remove Admin")}
                 </button>
                 {else}
-                <button type="button" class="btn  btn-primary js_group-admin-addation" data-id="{$_user['node_id']}" data-uid="{$_user['user_id']}">
+                <button type="button" class="btn  btn-primary js_group-admin-addation" data-id="{$_user['node_id']}"
+                    data-uid="{$_user['user_id']}">
                     <i class="fa fa-check mr5"></i>{__("Make Admin")}
                 </button>
                 {/if}
+
                 {elseif $_connection == "event_invite"}
-                <button type="button" class="btn  btn-info js_event-invite" data-id="{$_user['node_id']}" data-uid="{$_user['user_id']}">
-                    <img src="{$system['system_uploads_assets']}/content/themes/default/images/svg/svgImg/add_friend_icon.svg">
+                <button type="button" class="btn  btn-info js_event-invite" data-id="{$_user['node_id']}"
+                    data-uid="{$_user['user_id']}">
+                    <img
+                        src="{$system['system_uploads_assets']}/content/themes/default/images/svg/svgImg/add_friend_icon.svg">
                     {__("Invite")}
                 </button>
+
                 {/if}
                 <!-- buttons -->
             </div>

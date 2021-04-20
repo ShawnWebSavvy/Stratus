@@ -13,95 +13,13 @@
             <div class="row">
                 <div class="home-page-middel-block">
                     <div class="card investmentWrapSection">
-                        <div class="delistingsUpdate">
-                            <div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel">
-                                <ol class="carousel-indicators">
-                                    <li data-target="#carouselExampleIndicators" data-slide-to="0" class="active"></li>
-                                    <li data-target="#carouselExampleIndicators" data-slide-to="1"></li>
-                                    <li data-target="#carouselExampleIndicators" data-slide-to="2"></li>
-                                </ol>
-                                <div class="carousel-inner">
-                                    <div class="carousel-item active">
-                                        <div class="delistingsTextWrap">
-                                            <h6>November 2020 </h6>
-                                            <h4>Asset Delistings Update</h4>
-                                            <p>The Grin blockchain has presented significant technical challenges.</p>
-                                            <button class="btn findMore">Find out more</button>
-                                        </div>
-                                    </div>
-                                    <div class="carousel-item">
-                                        <div class="delistingsTextWrap">
-                                            <h6>November 2021 </h6>
-                                            <h4>Asset Delistings Update</h4>
-                                            <p>The Grin blockchain has presented significant technical challenges.</p>
-                                            <button class="btn findMore">Find out more</button>
-                                        </div>
-                                    </div>
-                                    <div class="carousel-item">
-                                        <div class="delistingsTextWrap">
-                                            <h6>November 2022 </h6>
-                                            <h4>Asset Delistings Update</h4>
-                                            <p>The Grin blockchain has presented significant technical challenges.</p>
-                                            <button class="btn findMore">Find out more</button>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
+                        <div class="delistingsUpdate" style="display: block !important;background: transparent !important;
+  background-image: none !important;
+  padding: 0 !important;">
+                            <img src="{$system['system_url']}/content/themes/default/images/investment/News@3x.png" style="max-width: 100% !important; width: 100%;	border-radius: 10px !important;
+	overflow: hidden !important;">
                         </div>
-                        <div class="MobileCrousle">
-                            <div class="gallery js-flickity" data-flickity-options='{ "wrapAround": true,"prevNextButtons": false, "pageDots": false }'>
-                                <div class="gallery-cell">
-                                    <div class="delistingsUpdate">
-                                        <div class="delistingsTextWrap">
-                                            <h6>November 2020 </h6>
-                                            <h4>Asset Delistings Update</h4>
-                                            <p>The Grin blockchain has presented significant technical challenges.</p>
-                                            <button class="btn findMore">Find out more</button>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="gallery-cell">
-                                    <div class="delistingsUpdate">
-                                        <div class="delistingsTextWrap">
-                                            <h6>November 2021 </h6>
-                                            <h4>Asset Delistings Update</h4>
-                                            <p>The Grin blockchain has presented significant technical challenges.</p>
-                                            <button class="btn findMore">Find out more</button>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="gallery-cell">
-                                    <div class="delistingsUpdate">
-                                        <div class="delistingsTextWrap">
-                                            <h6>November 2022 </h6>
-                                            <h4>Asset Delistings Update</h4>
-                                            <p>The Grin blockchain has presented significant technical challenges.</p>
-                                            <button class="btn findMore">Find out more</button>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="gallery-cell">
-                                    <div class="delistingsUpdate">
-                                        <div class="delistingsTextWrap">
-                                            <h6>November 2020 </h6>
-                                            <h4>Asset Delistings Update</h4>
-                                            <p>The Grin blockchain has presented significant technical challenges.</p>
-                                            <button class="btn findMore">Find out more</button>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="gallery-cell">
-                                    <div class="delistingsUpdate">
-                                        <div class="delistingsTextWrap">
-                                            <h6>November 2020 </h6>
-                                            <h4>Asset Delistings Update</h4>
-                                            <p>The Grin blockchain has presented significant technical challenges.</p>
-                                            <button class="btn findMore">Find out more</button>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
+                     
                         <div class="coreAssets">
                             <div class="heading">
                                 <h3>Core Assets</h3>
@@ -157,47 +75,10 @@
                                                 class="btn coinBaseButton">Buy</a>
                                             <a href="{$system['system_url']}/investment/buy-sell"
                                                 class="btn coinBaseButton">Sell</a>
-                                         <!--    <a href="javascript:;"
-                                                class="btn coinBaseButton">Info</a> -->
                                         </div>
                                     </div>
                                 {/foreach}
-                                <div class="coinDetailSection"  style="display: flex;
-                                flex-direction: column;
-                                justify-content: space-between;">
-                                    <div class="coinSectionHeader">
-                                        <img src="{$system['system_url']}/content/themes/default/images/investment/gsx.svg"
-                                                    alt="bit coin">
-                                        <div class="coinNameValue">
-                                            <h5 class="token_name">Gold Secured Currency</h5>
-                                            <p>
-                                                <img src="{$system['system_url']}/content/themes/default/images/svg/svgImg/Wallet_icon_header.svg"
-                                                    alt="wallet">
-                                                    <span>
-                                                        0 GSX
-                                                        <br/>
-                                                        $0
-                                                    </span>
-                                            </p>
-                                        </div>
-                                    </div>
-                                    <div class="GraphSection" style="height: 100%">
-                                    <div class="graphSectionHeader">
-                                        <h3><span class="coin_price">0.1</span> USD</h3>
-                                    </div>
-                                     <div class="comming_soon_text">
-                                         <p>Comming Soon</p>
-                                     </div>
-                                    </div>
-                                    <div class="coinBaseButtonSection btn-group" role="group">
-                                        <a href="javascript:;"
-                                            class="btn coinBaseButton" disabled>Buy</a>
-                                        <a href="javascript:;"
-                                            class="btn coinBaseButton" disabled>Sell</a>
-                                    
-                                    </div>
-                                </div>
-
+                           
                                 <div class="MobileCrousle">
                                     <div class="gallery js-flickity" data-flickity-options='{ "wrapAround": true,"prevNextButtons": false, "pageDots": false }'>
                                         {if $allTokens}
@@ -254,54 +135,11 @@
                                                 </div>
                                             {/foreach}
                                         {/if}
-                                        <div class="gallery-cell">
-                                            <div class="coinDetailSection">
-                                                <div class="coinSectionHeader">
-                                                    <img src="{$system['system_url']}/content/themes/default/images/investment/gsx.svg"
-                                                            alt="bit coin">
-                                                    <div class="coinNameValue">
-                                                        <h5 class="token_name">Gold Secured Currency</h5>
-                                                        <p>
-                                                            <img src="{$system['system_url']}/content/themes/default/images/svg/svgImg/Wallet_icon_header.svg"
-                                                                alt="wallet">
-                                                            <span>
-                                                                0 GSX
-                                                                <br/>
-                                                                $0
-                                                            </span>
-                                                        </p>
-                                                    </div>
-                                                </div>
-                                                <div class="GraphSection">
-                                                    <p><span class="coin_price">0.1</span> USD</p>
-                                                
-                                                    <div class="comming_soon_text">
-                                                        <p>Comming Soon</p>
-                                                    </div>
-                                                
-                                                </div>
-                                                <div class="coinBaseButtonSection btn-group" role="group">
-                                                    <a href="javascript:;"
-                                                        class="btn coinBaseButton" disabled>Buy</a>
-                                                    <a href="javascript:;"
-                                                        class="btn coinBaseButton" disabled>Sell</a>
-                                                
-                                                </div>
-                                            </div>
-                                        </div>
-                                    
                                     </div>
                                 </div>
-                                
                             {/if}
-                           
                         </div>
-                       <!--  <div class="MoreAssetsSection">
-                            <button type="button" class="btn MoreAssetsbutton">Discover more assets</button>
-                        </div> -->
                     </div>
-
-
                 </div>
                 <!-- right panel -->
                 <div class="right-sidebar js_sticky-sidebar">

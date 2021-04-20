@@ -1,17 +1,17 @@
 <!-- album buttons -->
 {if $album['manage_album'] && $album['can_delete']}
-<div class="text-center">
-    <button type="button" class="btn btn-sm btn-outline-primary rounded-pill ml5 mb5" data-toggle="modal"
+<div class="albumEditDltButton text-center">
+    <button type="button" class="btn cmn_btn ml5 mb5" data-toggle="modal"
         data-url="albums/modal.php?do=edit_title&id={$album['album_id']}">
         <i class="fa fa-pencil-alt mr5"></i>{__("Edit Album")}
     </button>
     {if $system['photos_enabled']}
-    <button type="button" class="btn btn-sm btn-outline-primary rounded-pill ml5 mb5" data-toggle="modal"
+    <button type="button" class="btn cmn_btn ml5 mb5" id="addAlbumClick" data-toggle="modal"
         data-url="albums/modal.php?do=add_photos&id={$album['album_id']}">
         <i class="fa fa-plus-circle mr5"></i>{__("Add Photos")}
     </button>
     {/if}
-    <button type="button" class="btn btn-sm btn-outline-danger rounded-pill ml5 mb5 js_delete-album"
+    <button type="button" class="btn cmn_btn ml5 mb5 js_delete-album"
         data-id="{$album['album_id']}">
         <i class="fa fa-trash-alt mr5"></i>{__("Delete Album")}
     </button>
@@ -23,7 +23,7 @@
 <div class="album-title">
     {$album['title']}
 </div>
-<div class="album-meta">
+<div class="album-meta" style="display: flex;align-items: center;justify-content: center;">
     {if $album['privacy'] == "me"}
     {__("Shared with")} <i class="fa fa-lock" data-toggle="tooltip" data-placement="top"
         title='{__("Shared with")}: {__("Only Me")}'></i>

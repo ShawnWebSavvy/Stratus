@@ -1076,8 +1076,8 @@
                                         {__("Profile Background")}
                                     </label>
                                     <div class="col-md-9">
-                                        {if $user->_data['user_profile_background'] == ''}
-                                        <div class="x-image">
+                                        {if $user->_data['user_profile_background'] == '' || $user->_data['user_profile_background'] == "`$system['system_uploads']`/"}
+                                        <div class="x-image js_x-image-uploader">
                                             <button type="button" class="close x-hidden js_x-image-remover"
                                                 title='{__("Remove")}'>
                                                 <span>×</span>
@@ -1093,8 +1093,8 @@
                                                 value="">
                                         </div>
                                         {else}
-                                        <div class="x-image"
-                                            style="background-image: url('{$system['system_uploads']}/{$user->_data['user_profile_background']}')">
+                                        <div class="x-image js_x-image-uploader"
+                                            style="background-image: url('{$user->_data['user_profile_background']}')">
                                             <button type="button" class="close js_x-image-remover"
                                                 title='{__("Remove")}'>
                                                 <span>×</span>
@@ -3351,7 +3351,7 @@
                         <div class="card-body">
                             <div class="alert deleteAccountChanges"
                                 style=" display: flex;flex-direction: column;align-items: center;justify-content: center;">
-                                <img class="mb20" style="margin: 0 auto;" height="50%"
+                                <img class="mb20" style="margin: 0 auto; width:70%;"
                                     src="{$system['system_url']}/content/themes/default/images/svg/svgImg/deletePage.png" />
                                 <div style="color: #1E1F20;font-size: 20px;font-weight: 600;">
                                     {__("Once you delete your account you will no longer can access it again")}

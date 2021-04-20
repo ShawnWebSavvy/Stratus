@@ -1,3 +1,5 @@
+var save_file_name ='';
+var image_blured = 0;
 function initialize_modal() {
     $(".js_scroller").each(function() {
         var e = $(this),
@@ -106,7 +108,7 @@ function data_heartbeat() {
             data["last_post"] = posts_stream.find('.carsds').first().data("id");
             // data["last_post"] = last_id_column.getElementsByClassName('carsds')[0].dataset.id || 0;
         } else {
-            data["last_post"] = 0;
+            data["last_post"] = null;
         }
         $.post(api["data/live"], data, function (response) {
         if (response.callback) eval(response.callback);
@@ -126,7 +128,7 @@ function data_heartbeat() {
             if (response.posts && response.posts != null) {
                 console.log("response.posts->>>>>>>", response.posts);
                 var datatta = response.posts;
-                var ArrayVal = datatta.split('<div class="carsds"');
+                var ArrayVal = datatta.split('<div class="carsds "');
                 var loopArray = [];
                 if (ArrayVal.length > 0) {
                     for (var i = 1; i < ArrayVal.length; i++) {
@@ -429,8 +431,13 @@ api["data/live"] = ajax_path + "data/global-profile/global-profile-live.php", ap
                                 init_picture_position()
                             }, 1e3)
                         } else if ("picture-user" == i || "picture-page" == i || "picture-group" == i) {
+                            save_file_name = e.file;
+                            image_blured = e.image_blured;
+
                             t = uploads_path + "/" + e.file;
-                            $(".profile-avatar-wrapper img").attr("src", t), $(".js_init-crop-picture").data("image", t), init_picture_crop($(".js_init-crop-picture"))
+                            // $(".profile-avatar-wrapper img").attr("src", t),
+                            $(".js_init-crop-picture").data("image", t),
+                            init_picture_crop($(".js_init-crop-picture"))
                         } else if ("publisher" == i) {
                             p && p.remove();
                             var n = f.data("photos");
@@ -599,7 +606,9 @@ api["data/live"] = ajax_path + "data/global-profile/global-profile-live.php", ap
             x: values.x,
             y: values.y,
             height: values.height,
-            width: values.width
+            width: values.width,
+            save_file_name:save_file_name,
+            image_blured: image_blured
         }, function(response) {
             response.callback ? eval(response.callback) : ($("#modal").modal("hide"), window.location.reload())
         }, "json").fail(function() {

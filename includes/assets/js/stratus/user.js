@@ -193,7 +193,7 @@ function data_heartbeat() {
                             loopArray.push('<div class="carsds"' + ArrayVal[i])
                         }
                     }
-
+                    loopArray.reverse();
                     for (var ik = 0; ik < loopArray.length; ik++) {
                         var values = loopArray[ik];
                         var d = document.createElement('div');
@@ -506,7 +506,15 @@ function init_picture_position() {
                 }),
               
                 $("body").on("focus", ".js_mention", function () {
+                    $(".ui-menu.ui-autocomplete").css({'overflow': 'hidden', 'max-height':'none','padding-top':'0px'});
+
                     $(this).triggeredAutocomplete({ hidden: "#hidden_inputbox", source: api["users/mention"], trigger: "@", maxLength: 20 });
+                    var height_comment = $(this).closest('.post-comments').find('.js_comments ').outerHeight();
+                    if($('.light-commentModal').length){
+                        height_comment = height_comment > 15 ? height_comment+30 : 45;
+                        $(".ui-menu.ui-autocomplete").css({'overflow': 'auto', 'max-height': height_comment+'px','padding-top':'0px'});
+                    }
+
                 }),
                 $("body").on("mouseenter", ".js_user-popover", function () {
                     if (!($(window).width() < 751)) {
@@ -1176,6 +1184,7 @@ function init_picture_position() {
                                     : _this.hasClass("js_page-admin-addation")
                                         ? _this.replaceWith('<button type="button" class="btn btn-sm btn-danger js_page-admin-remove" data-id="' + id + '" data-uid="' + uid + '"><i class="fa fa-trash mr5"></i>' + __["Remove Admin"] + "</button>")
                                         : _this.replaceWith('<button type="button" class="btn btn-sm btn-primary js_page-admin-addation" data-id="' + id + '" data-uid="' + uid + '"><i class="fa fa-check mr5"></i>' + __["Make Admin"] + "</button>");
+                                        location.reload();
                             },
                             "json"
                         ).fail(function () {

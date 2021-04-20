@@ -1,15 +1,6 @@
-/vendor/*
-content/themes/default/templates_compiled/*
-includes/config.php
-content/uploads/*
-# Ignore files with credentials
-.htaccess
-
-# Ignore Intellij Files
-.idea/*
-
-# Ignore vim files
-*.swp
-*.swo
-*.swn
-.DS_Store
+#content/themes/default/templates_compiled/
+content/themes/default/templates_compiled/
+content/themes/default/emojis-icon/
+content/uploads/
+vendor
+includes/config.php/

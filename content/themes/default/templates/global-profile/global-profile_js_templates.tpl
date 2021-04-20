@@ -126,9 +126,9 @@
           </div>
           <div class="lightbox-data">
               <div class="clearfix">
-                  <div class="pt5 pr5 float-right">
+                  <div class="mobileCloseButton">
                       <button type="button" class="close lightbox-close js_lightbox-close">
-                          <span aria-hidden="true">&times;</span>
+                        <img src="{$system['system_uploads_assets']}/content/themes/default/images/svg/svgImg/modelCross.svg"/>
                       </button>
                   </div>
               </div>
@@ -159,9 +159,9 @@
       <div class="container lightbox-container">
           <div class="lightbox-data">
               <div class="clearfix">
-                  <div class="pt5 pr5 float-right">
+                  <div class="mobileCloseButton">
                       <button type="button" class="close lightbox-close js_lightbox-close">
-                          <span aria-hidden="true">&times;</span>
+                        <img src="{$system['system_uploads_assets']}/content/themes/default/images/svg/svgImg/modelCross.svg"/>
                       </button>
                   </div>
               </div>

@@ -106,6 +106,11 @@ try {
 			/* assign variables */
 			$smarty->assign('posts', $posts);
 			$smarty->assign('get', $get);
+
+			if( $group['i_joined'] == "approved" && ($group['group_publish_enabled'] || (!$group['group_publish_enabled'] && $group['i_admin'])) ){
+				$smarty->assign('addPost', true);
+			}
+
 			break;
 
 		case 'photos':

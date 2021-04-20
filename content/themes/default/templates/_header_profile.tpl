@@ -99,8 +99,8 @@
                         xlink:href="data:img/png;base64,iVBORw0KGgoAAAANSUhEUgAAAQAAAAEACAQAAAD2e2DtAAAABGdBTUEAALGPC/xhBQAAACBjSFJNAAB6JgAAgIQAAPoAAACA6AAAdTAAAOpgAAA6mAAAF3CculE8AAAAAmJLR0QAAKqNIzIAAAAJcEhZcwAAB2IAAAdiATh6mdsAAAAHdElNRQfkCxoLMCTmZUgdAAAEJUlEQVR42u3dy2tcZRiA8ed8Y2rUtLZqmU1JKxMXVYj1QkHUbqpN02iLtDS4cONCEAUvWET/AUW7cOVO60LQ2IVN0ZqoEcFbL1aaZlGthoDEtlErjebWaBIX4zQmVnCRnFdmnt9s5pyZxQPfewaG78ABSZIkSZIkSZIkSZIkSZIkSZIkSZIkSZIkSdL/VDbvuMRmShSpiw7TgvudIfrpov/fvrCZL5nxVfWvI7TMLnrlF+AKXmNH9IgqN2/xIKNQGYAV9HBTdJNy9RUbOQcJKPC6y19zbqaDS6AAPM6j0TUKUOJnDmcso59rolsU4idKiftc/pq1km2Je6MrFGhrojm6QYGaM36jIbpCYUYSM9ENCjSdOB3doEA/JI5HNyhQX2J/dIMCdWYspZ+V0R0K8SOlApNM0BpdohBP81kGFOikLbpFueumjanydvByPnI/sMYcZSPD5e1gOMed7I0uUo7eZAPDUBkAGGUnLRyO7lIODrGJ+xkrH8y/KfRaWilRZEl0pRbcJGfop4uB6BBJkiRJkiRJkiRJkiRJkiRJkiRJkiRJkiRJkiRJkiRJkiRJkiRJkiRJkiRJkqrZ3IdHL6eNVtZQvPBUcVWPaYYY4D0OcG725OwANLCLJ2mIrtSiG2E3uxktH1QGoIn9rI0uU26+ZStfQ2UA1vIpV0U3KVdnuZ1vygOwgsM0RfcodydZz3ABeI4t0S0KcDV1vJ+xiu+4NLpFISYoJXa4/DWrnu2JtugKBboncV10gwI1ZYxTH12hMOOJsegGBRpNnIpuUKBTiS+iGxTo80RndIMC7c8o0MsN0R0KcYLmxBTPRHcoyFP8UQBOsozboluUuxd5GQoA9LCaddE9ytUeHmOmMgAz7ONX7mBJdJVyMcIunmUGKgMAcJA91NHI0ug6LarTvEo7PZXDbN7HiXWsYRWXRXdqwY0zyADHyle+JEmSJEmSJEmSJEmSJEmSJEmSJEmSJEmSJEmSJEmSJEmSJEmSJEmSJEmSJGnRZBc5lyj67OAqNM4Q0/NPzh2ADbTTSuPfnimuajLF9xygg09mT80OwPW8xN3RhcpFN09wovy2MgBbeINl0V3KzQgPsA8qA9DCu/7s15hptvFOeQCaOOrVX4OGuYX+BLzg8tekK3keMpo5dtE/g6p+MzQndrj8NStje+Ku6AoF2pRYHd2gQI0Z51kSXaEw5xO/RDco0NnEYHSDAg0meqIbFOjDxNvRDQq0L3GID6IrFKSLIxlwIwepj25R7iZYT18CenkoukUBHqGPvzaBj3OGFjeEa8gkD/MKcGHRj/Ixt1KM7lIuemkv3w4y957AxE7a2cTl0X1aNGN008He2ZtD/7kTWKBIkRRdqgU3zRBDTEVnSJIkSZIkSZIkSZIkSZIkSZIkSZIkSZIkSZL+oz8BLkedNfIIF1wAAAAASUVORK5CYII=" />
                     </svg>
                   </button>
+                  {if $addPost }
                   {if $active_page =="GlobalHub"}
-
                   <a href="javascript:initialize_scraper()" id="openPost">
                   <div class="svg-container">
                     <img
@@ -127,6 +127,7 @@
                     </div>
                   </a>
                   {/if}
+                 {/if}
                 </li>
               </ul>
               <div class="logo-wrapper for_desktop">

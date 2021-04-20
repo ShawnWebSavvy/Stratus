@@ -131,6 +131,13 @@ function agora_change_stream_source(deviceIndex, deviceType) {
             localStreams.camera.micId = deviceId;
         } else if (deviceType === "video") {
             localStreams.camera.camId = deviceId;
+            navigator.mediaDevices.getUserMedia({
+                video: {deviceId: deviceId},
+              }).then((data)=>{
+
+                $("#js_live-video")[0].srcObject = data;
+                streamData = data;
+              })
         } else {
             /* update live status */
             show_live_status();
@@ -144,6 +151,7 @@ function agora_change_stream_source(deviceIndex, deviceType) {
         hide_live_status();
     });
 }
+
 
 
 // [agora] get camera devices
@@ -391,18 +399,21 @@ $(function () {
             localStreams.camera.stream.muteVideo();
             _this.removeClass('js_mute-cam btn-secondary').addClass('js_unmute-cam btn-danger');
             _this.find("i").removeClass("fa-video").addClass("fa-video-slash");
-            navigator.mediaDevices.getUserMedia({ audio: true, video: false })
-                .then((stream) => {
-                    $("#js_live-video")[0].srcObject = stream;
-                })
+            // navigator.mediaDevices.getUserMedia({ audio: true, video: false })
+            //     .then((stream) => {
+            //         $("#js_live-video")[0].srcObject = stream;
+            //     })
+            $("#js_live-video").hide();
         } else {
             localStreams.camera.stream.unmuteVideo();
             _this.removeClass('js_unmute-cam btn-danger').addClass('js_mute-cam btn-secondary');
             _this.find("i").removeClass("fa-video-slash").addClass("fa-video");
-            navigator.mediaDevices.getUserMedia({ audio: true, video: true })
-            .then((stream) => {
-                $("#js_live-video")[0].srcObject = streamData;
-            })
+            // navigator.mediaDevices.getUserMedia({ audio: true, video: true })
+            // .then((stream) => {
+            //     $("#js_live-video")[0].srcObject = streamData;
+            // })
+                        $("#js_live-video").show();
+
         }
     });
 
@@ -424,11 +435,6 @@ $(function () {
     });
 
 
-    // change camera
-    $('body').on('click', '.js_live-change-camera', function () {
-        var camera_id = $(this).attr("id").split('_')[1];
-        agora_change_stream_source(camera_id, "video");
-    });
 
 
     // change mic
@@ -437,4 +443,9 @@ $(function () {
         agora_change_stream_source(mic_id, "audio");
     });
 
+    // change camera
+    $(document).on('click', '.js_live-change-camera', function () {
+        var camera_id = $(this).attr("id").split('_')[1];
+        agora_change_stream_source(camera_id, "video");
+    });
 }); 

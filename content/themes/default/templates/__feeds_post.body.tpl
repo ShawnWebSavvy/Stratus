@@ -23,17 +23,13 @@
             <span class=" dropdown-toggle post_custm_option" data-toggle="dropdown" data-display="static"><i
                     class="fas fa-ellipsis-h"></i></span>
             <div class="dropdown-menu dropdown-menu-right post-dropdown-menu cmn_drpdwn_style">
-                {if $_post['manage_post'] && $_post['post_type'] == "product"&& $_post['author_id']==$user->_data['user_id']}
+                {if $_post['manage_post'] && $_post['post_type'] == "product"}
                 {if $_post['product']['available']}
                 <div class="dropdown-item pointer js_sold-post">
                     <div class="action no-desc">
                         <div class="post_images__">
-                            <img style="height:20px;width:20px;"
-                                src="{$system['system_uploads_assets']}/content/themes/default/images/svg/svgImg/blogNewsWhite.svg"
-                                class="blackicon">
-                            <img style="height:20px;width:20px;"
-                                src="{$system['system_uploads_assets']}/content/themes/default/images/svg/svgImg/blogNewsHover.svg"
-                                class="whiteicon">
+                            <img style="height:20px;width:20px;" src="{$system['system_uploads_assets']}/content/themes/default/images/svg/svgImg/blogNewsWhite.svg" class="blackicon">
+                            <img style="height:20px;width:20px;" src="{$system['system_uploads_assets']}/content/themes/default/images/svg/svgImg/blogNewsHover.svg" class="whiteicon">
                         </div>
                         <span>{__("Mark as Sold")}</span>
                     </div>
@@ -42,12 +38,8 @@
                 <div class="dropdown-item pointer js_unsold-post">
                     <div class="action no-desc">
                         <div class="post_images__">
-                            <img style="height:20px;width:20px;"
-                                src="{$system['system_uploads_assets']}/content/themes/default/images/svg/svgImg/blogNewsWhite.svg"
-                                class="blackicon">
-                            <img style="height:20px;width:20px;"
-                                src="{$system['system_uploads_assets']}/content/themes/default/images/svg/svgImg/blogNewsHover.svg"
-                                class="whiteicon">
+                            <img style="height:20px;width:20px;" src="{$system['system_uploads_assets']}/content/themes/default/images/svg/svgImg/blogNewsWhite.svg" class="blackicon">
+                            <img style="height:20px;width:20px;" src="{$system['system_uploads_assets']}/content/themes/default/images/svg/svgImg/blogNewsHover.svg" class="whiteicon">
                         </div>
                         <span>{__("Mark as Available")}</span>
                     </div>
@@ -59,12 +51,8 @@
                 <div href="#" class="dropdown-item pointer js_unsave-post">
                     <div class="action no-desc">
                         <div class="post_images__">
-                            <img style="height:20px;width:20px;"
-                                src="{$system['system_uploads_assets']}/content/themes/default/images/svg/svgImg/bookMark.svg"
-                                class="blackicon">
-                            <img style="height:20px;width:20px;"
-                                src="{$system['system_uploads_assets']}/content/themes/default/images/svg/svgImg/bookMarkHover.svg"
-                                class="whiteicon">
+                            <img style="height:20px;width:20px;" src="{$system['system_uploads_assets']}/content/themes/default/images/svg/svgImg/bookMark.svg" class="blackicon">
+                            <img style="height:20px;width:20px;" src="{$system['system_uploads_assets']}/content/themes/default/images/svg/svgImg/bookMarkHover.svg" class="whiteicon">
                         </div>
                         <span>{__("Unsave Post")}</span>
                     </div>
@@ -85,7 +73,7 @@
                 </div>
                 {/if}
                 <!-- <div class="dropdown-divider"></div> -->
-                {if $_post['manage_post'] && $_post['author_id']==$user->_data['user_id']}
+                {if $_post['manage_post']}
                 <!-- Boost -->
                 {if $system['packages_enabled'] && !$_post['in_group'] && !$_post['in_event']}
                 {if $_post['boosted']}
@@ -322,6 +310,10 @@
                 <!-- <div class="dropdown-divider"></div>  -->
                 <a href="{$_post['post_author_url']}" class="dropdown-item">
                     <div class="action no-desc">
+                        <div class="post_images__">
+                            <img src="{$system['system_uploads_assets']}/content/themes/default/images/svg/svgImg/timelineOff.svg" class="blackicon">
+                            <img src="{$system['system_uploads_assets']}/content/themes/default/images/svg/svgImg/timelineOff-hover.svg" class="whiteicon"> 
+                        </div>
                         <span>{__("Open Author Profile")}</span>
                     </div>
                 </a>
@@ -528,13 +520,13 @@
             -
             {if !$_post['is_anonymous'] && !$_shared && $_post['manage_post'] && $_post['user_type'] == 'user' &&
             !$_post['in_group'] && !$_post['in_event'] && $_post['post_type'] != "product" && $_post['post_type'] !=
-            "article" && $_post['author_id']==$user->_data['user_id']}
-            <!-- privacy --> 
+            "article"}
+            <!-- privacy -->
             {if $_post['privacy'] == "me"}
             <div class="btn-group" data-toggle="tooltip" data-placement="top" data-value="me"
                 title='{__("Shared with: Only Me")}'>
                 <button type="button" class="btn dropdown-toggle" data-toggle="dropdown" data-display="static">
-                    <span class="share_sign_img" id="{$_post['post_id']}">
+                    <span class="share_sign_img privacy_{$_post['post_id']}" id="{$_post['post_id']}">
                         <img src="{$system['system_uploads_assets']}/content/themes/default/images/svg/svgImg/Hide_form.svg"
                             class="blackicon">
                     </span>
@@ -543,7 +535,7 @@
                 <div class="btn-group" data-toggle="tooltip" data-placement="top" data-value="friends"
                     title='{__("Shared with: Friends")}'>
                     <button type="button" class="btn dropdown-toggle" data-toggle="dropdown" data-display="static">
-                        <span class="share_sign_img" id="{$_post['post_id']}">
+                        <span class="share_sign_img privacy_{$_post['post_id']}" id="{$_post['post_id']}">
                             <img src="{$system['system_uploads_assets']}/content/themes/default/images/svg/svgImg/friendsIcon.svg"
                                 class="blackicon">
                         </span>
@@ -552,15 +544,14 @@
                     <div class="btn-group" data-toggle="tooltip" data-placement="top" data-value="public"
                         title='{__("Shared with: Public")}'>
                         <button type="button" class="btn dropdown-toggle" data-toggle="dropdown" data-display="static">
-                            <span class="share_sign_img" id="{$_post['post_id']}">
+                            <span class="share_sign_img privacy_{$_post['post_id']}" id="{$_post['post_id']}">
                                 <img src="{$system['system_uploads_assets']}/content/themes/default/images/svg/svgImg/nav_icon_globalHub.svg"
                                     class="blackicon">
                             </span>
                         </button>
                         {/if}
                         <div class="dropdown-menu dropdown-menu-right _postshare__">
-                            <div class="dropdown-item pointer js_edit-privacy" data-title='{__("Shared with: Public")}'
-                                data-value="public">
+                            <div class="dropdown-item pointer js_edit-privacy" data-title='{__("Shared with: Public")}' data-value="public">
                                 <div class="post_images__">
                                     <img src="{$system['system_uploads_assets']}/content/themes/default/images/svg/svgImg/nav_icon_globalHub.svg"
                                         class="blackicon">
@@ -569,8 +560,7 @@
                                 </div>
                                 <span> {__("Public")}</span>
                             </div>
-                            <div class="dropdown-item pointer js_edit-privacy" data-title='{__("Shared with: Friends")}'
-                                data-value="friends">
+                            <div class="dropdown-item pointer js_edit-privacy" data-title='{__("Shared with: Friends")}' data-value="friends">
                                 <div class="post_images__">
                                     <img src="{$system['system_uploads_assets']}/content/themes/default/images/svg/friendsIcon.svg"
                                         class="blackicon">
@@ -579,8 +569,7 @@
                                 </div>
                                 <span>{__("Friends")}</span>
                             </div>
-                            <div class="dropdown-item pointer js_edit-privacy" data-title='{__("Shared with: Only Me")}'
-                                data-value="me">
+                            <div class="dropdown-item pointer js_edit-privacy" data-title='{__("Shared with: Only Me")}' data-value="me">
                                 <div class="post_images__">
                                     <img src="{$system['system_uploads_assets']}/content/themes/default/images/svg/svgImg/Hide_form.svg"
                                         class="blackicon">
@@ -625,21 +614,30 @@
         {if !$_shared}
         {include file='__feeds_post.text.tpl'}
         {else}
-        {if $_post['colored_pattern']}
-        <div class="post-colored" {if $_post['colored_pattern']['type']=="color" }
+        {if $_post['colored_pattern'] && isset($post['colored_pattern']['type'])}
+        <div class="post-colored customColorPost" {if $_post['colored_pattern']['type']=="color" }
             style="background-image: linear-gradient(45deg, {$_post['colored_pattern']['background_color_1']}, {$_post['colored_pattern']['background_color_2']});"
             {else}
             style="background-image: url({$system['system_uploads']}/{$_post['colored_pattern']['background_image']})"
             {/if}>
-            <div class="post-colored-text-wrapper js_scroller" data-slimScroll-height="240">
+            <div class="post-colored-text-wrapper">
                 <div class="post-text" dir="auto" style="color: {$_post['colored_pattern']['text_color']};">
-                    {$_post['text']|count_characters:true}
+                    {* {$_post['text']|count_characters:true} *}
 
+                    {if $page !== 'post'}
+                        {if $_post['text']|count_characters:true < 101}
+                            {$_post['text']}
+                        {else}
+                            {$_post['text']|truncate:100}<a class="readMoreCustom" href="{$system['system_url']}/posts/{$_post['post_id']}"> Read More</a>
+                        {/if}
+                    {else}
+                        {$_post['text']}
+                    {/if}
                 </div>
             </div>
         </div>
         {else}
-        <div class="post-text js_readmores" dir="auto">{$_post['text']}</div>
+        <div class="post-text js_readmores" dir="auto"> {include file='__feeds_post.text.tpl' post=$_post}</div>
         {/if}
         <div class="post-text-translation x-hidden" dir="auto"></div>
         {/if}
@@ -857,12 +855,12 @@
             <!-- show thumbnail -->
             {if $_post['video']['thumbnail']}
             <img class="stratus-thumbsrc" onclick="onimgTagclick(this)" id="thumb_src_tag_{$_post['post_id']}"
-                data-vid="{$_post['post_id']}" data-video="{$system['system_uploads']}/{$_post['video']['source']}"
+                data-vid="{$_post['video']['video_id']}" data-video="{$system['system_uploads']}/{$_post['video']['source']}"
                 src="{$system['system_uploads']}/{$_post['video']['thumbnail']}" alt="" style="width:100%">
             <img id="hide_play_img{$_post['post_id']}" class="play_video_icon"
                 src="https://www.myaccelerate.io/images/play-btn.png" alt="play_btn"
                 style="width: 17%; position: absolute; right: 0px; left: 39%; top: 42%; pointer-events: none;">
-            <!-- <video style="display:none;" class="js_fluidplayer thumb_crsp_video_tag" id="video-{$_post['video']['video_id']}{if $pinned || $boosted}-{$_post['post_id']}{/if}" {if $user->_logged_in}onplay="update_media_views('video', {$_post['video']['video_id']})"{/if} {if $_post['video']['thumbnail']}poster="{$system['system_uploads']}/{$_post['video']['thumbnail']}"{/if} controls preload="auto" style="width:100%;height:100%;" width="100%" height="100%">
+            <!-- <video style="display:none;" class="js_fluidplayer thumb_crsp_video_tag" id="video-{$_post['video']['video_id']}{if $pinned || $boosted}-{$_post['post_id']}{/if}" {if $user->_logged_in}onplay="update_media_views(event,'video', {$_post['video']['video_id']})"{/if} {if $_post['video']['thumbnail']}poster="{$system['system_uploads']}/{$_post['video']['thumbnail']}"{/if} controls preload="auto" style="width:100%;height:100%;" width="100%" height="100%">
           <source src="{$system['system_uploads']}/{$_post['video']['source']}" type="video/mp4">
           <source src="{$system['system_uploads']}/{$_post['video']['source']}" type="video/webm">
       </video> -->
@@ -870,7 +868,7 @@
             {else}
             <video class="js_fluidplayer"
                 id="video-{$_post['video']['video_id']}{if $pinned || $boosted}-{$_post['post_id']}{/if}" {if
-                $user->_logged_in}onplay="update_media_views('video', {$_post['video']['video_id']})" {/if} {if
+                $user->_logged_in}onplay="update_media_views(event, 'video', {$_post['video']['video_id']})" {/if} {if
                 $_post['video']['thumbnail']}poster="{$system['system_uploads']}/{$_post['video']['thumbnail']}" {/if}
                 controls preload="auto" style="width:100%;height:100%;" width="100%" height="100%">
                 <source src="{$system['system_uploads']}/{$_post['video']['source']}" type="video/mp4">
@@ -881,7 +879,7 @@
         {elseif $_post['post_type'] == "audio" && $_post['audio']}
         <div class="plr10">
             <audio class="js_audio" id="audio-{$_post['audio']['audio_id']}" {if
-                $user->_logged_in}onplay="update_media_views('audio', {$_post['audio']['audio_id']})" {/if} controls
+                $user->_logged_in}onplay="update_media_views(event, 'audio', {$_post['audio']['audio_id']})" {/if} controls
                 preload="auto" style="width: 100%;">
                 <source src="{$system['system_uploads']}/{$_post['audio']['source']}" type="audio/mpeg">
                 <source src="{$system['system_uploads']}/{$_post['audio']['source']}" type="audio/mp3">
@@ -910,7 +908,7 @@
                     $_post['live']['video_thumbnail']}poster="{$system['system_uploads']}/{$_post['live']['video_thumbnail']}"
                     {/if} controls preload="auto" controls preload="auto" style="width:100%;height:100%;" width="100%"
                     height="100%">
-                    <source src="{$system['system_uploads_assets']}/{$_post['live']['agora_file']}"
+                    <source src="{$system['system_agora_uploads']}/{$_post['live']['agora_file']}"
                         type="application/x-mpegURL">
                 </video>
             </div>
@@ -937,7 +935,7 @@
         {/if}
         <div class="mt10 {if $_snippet}x-hidden{/if}">
             <div class="post-media">
-                <div class="post-media-meta circleSubpost">
+                <div class="post-media-meta">
                     {include file='__feeds_post.body.tpl' _post=$_post['origin'] _shared=true}
                 </div>
             </div>

@@ -31,22 +31,22 @@ try {
 			page_header(__("Find People"));
 
 			// valid inputs
-			if (!isset($_POST['submit'])) {
+			if (!isset($_REQUEST['submit'])) {
 				redirect('/people');
 			}
 
 			// search users 
-			$people = $user->search_users($_POST['distance_value'], $_POST['query'], $_POST['gender'], $_POST['relationship'], $_POST['status']);
+			$people = $user->search_users($_REQUEST['distance_value'], $_REQUEST['query'], $_REQUEST['gender'], $_REQUEST['relationship'], $_REQUEST['status']);
 			$smarty->assign('people', $people);
-			if ($_POST['distance_value']) {
-				$smarty->assign('distance_value', $_POST['distance_value']);
+			if ($_REQUEST['distance_value']) {
+				$smarty->assign('distance_value', $_REQUEST['distance_value']);
 			} else {
 				$smarty->assign('distance_value', 5000);
 			}
-			$smarty->assign('keyword', $_POST['query']);
-			$smarty->assign('gender', $_POST['gender']);
-			$smarty->assign('relationship', $_POST['relationship']);
-			$smarty->assign('status', $_POST['status']);
+			$smarty->assign('keyword', $_REQUEST['query']);
+			$smarty->assign('gender', $_REQUEST['gender']);
+			$smarty->assign('relationship', $_REQUEST['relationship']);
+			$smarty->assign('status', $_REQUEST['status']);
 			break;
 
 		case 'friend_requests':

@@ -68,7 +68,13 @@
                                                 </td>
                                               
                                                 <td>{$buy_tnx['tokens']}</td>
-                                                <td>{$buy_tnx['fees']}</td>
+                                                <td>
+                                                    {if $buy_tnx['recieve_token']!=$buy_tnx['tokens']}
+                                                        {$buy_tnx['fees']}
+                                                    {else}
+                                                        -
+                                                    {/if}
+                                                </td>
                                                 <td>{$buy_tnx['recieve_token']}</td>
                                                 <td>{$buy_tnx['amount']}</td>
                                                 <td>{$buy_tnx['status']}</td>
@@ -125,7 +131,13 @@
                                             <td>{$sell_tnx['tokens']}</td>
                                           
                                             <td>{$sell_tnx['amount']}</td>
-                                            <td>{$sell_tnx['fees']}</td>
+                                            <td>
+                                                {if $sell_tnx['amount']!=$sell_tnx['receive_amount']}
+                                                    {$sell_tnx['fees']}
+                                                {else}
+                                                    -
+                                                {/if}
+                                            </td>
                                             <td>{$sell_tnx['receive_amount']}</td>
                                             <td>{$sell_tnx['status']}</td>
                                         </tr>

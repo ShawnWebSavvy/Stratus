@@ -2,7 +2,7 @@
 <!-- page header -->
 <div class="page-header blog-header-tpl ads-background">
     <img class="floating-img d-none d-md-block"
-        src="{$system['system_url']}/content/themes/{$system['theme']}/images/ads-banner.png">
+        src="{$system['system_uploads_assets']}/content/themes/{$system['theme']}/images/ads-banner.png">
     <div class="crystal c03"></div>
     <div class="circle-2"></div>
     <div class="circle-3"></div>
@@ -13,10 +13,8 @@
 </div>
 <!-- page header -->
 {/if}
-
 <div class="container mt20 {if $user->_logged_in}offcanvas{/if}">
     <div class="row {if $user->_logged_in} right-side-content-ant {/if}">
-
         {if $view == ""}
         <!-- content panel -->
         <div class="col-12 {if $user->_logged_in}offcanvas-mainbar{/if}">
@@ -29,7 +27,6 @@
                     {/foreach}
                     <!-- articles -->
                 </ul>
-
                 <!-- see-more -->
                 <div class="alert alert-post see-more js_see-more" data-get="articles">
                     <span>{__("More Articles")}</span>
@@ -39,8 +36,7 @@
                 {else}
                 <!-- no articles -->
                 <div class="text-center no_dataimg_ ">
-                    <img width="100%"
-                        src="{$system['system_url']}/content/themes/{$system['theme']}/images/no_results4.png">
+                    <img width="100%" src="{$system['system_uploads_assets']}/content/themes/{$system['theme']}/images/no_results4.png">
                     <p class="mb10"><strong>{__("No articles to show")}</strong></p>
                 </div>
                 <!-- no articles -->
@@ -48,7 +44,6 @@
             </div>
         </div>
         <!-- content panel -->
-
         {elseif $view == "category"}
         <div class="row">
             <!-- side panel -->
@@ -59,7 +54,6 @@
             {/if}
             <!-- side panel -->
         </div>
-
         <!-- content panel -->
         <div class="col-12 {if $user->_logged_in}offcanvas-mainbar{/if}">
             <div class="row">
@@ -71,7 +65,6 @@
                         {include file='__feeds_article.tpl'}
                         {/foreach}
                     </ul>
-
                     <!-- see-more -->
                     <div class="alert alert-post see-more js_see-more" data-get="category_articles"
                         data-id="{$category_id}">
@@ -82,59 +75,48 @@
                     {else}
                     <!-- no articles -->
                     <div class="text-center no_dataimg_ ">
-                        <img width="100%"
-                            src="{$system['system_url']}/content/themes/{$system['theme']}/images/no_results4.png">
+                        <img width="100%" src="{$system['system_uploads_assets']}/content/themes/{$system['theme']}/images/no_results4.png">
                         <p class="mb10"><strong>{__("No articles to show")}</strong></p>
                     </div>
                     <!-- no articles -->
                     {/if}
                 </div>
                 <!-- left panel -->
-
                 <!-- right panel -->
                 <div class="col-md-4">
                     <!-- add new article -->
                     {if $user->_logged_in && $user->_data['can_write_articles']}
                     <div class="mb10 d-none d-sm-block">
                         <a href="{$system['system_url']}/blogs/new" class="btn btn-sm _cmn_btn btn-block">
-                            <img
-                                src="{$system['system_url']}/content/themes/{$system['theme']}/images/svg/svgImg/filePlusIcon.svg">
+                            <img src="{$system['system_uploads_assets']}/content/themes/{$system['theme']}/images/svg/svgImg/filePlusIcon.svg">
                             {__("Write New Article")}
                         </a>
                     </div>
                     {/if}
                     <!-- add new article -->
-
                     {include file='_ads.tpl'}
                     {include file='_widget.tpl'}
-
                     <!-- blogs categoris -->
                     <div class="articles-widget-header">
                         <div class="articles-widget-title">{__("Categories")}</div>
                     </div>
-
                     <ul class="article-categories clearfix">
                         {foreach $blogs_categories as $category}
                         <li>
-                            <a class="article-category"
-                                href="{$system['system_url']}/blogs/category/{$category['category_id']}/{$category['category_url']}">
+                            <a class="article-category" href="{$system['system_url']}/blogs/category/{$category['category_id']}/{$category['category_url']}">
                                 {$category['category_name']}
                             </a>
                         </li>
                         {/foreach}
                         <li>
-                            <a class="article-category" href="{$system['system_url']}/blogs/category/0/Uncategorized">
-                                {__("Uncategorized")}
-                            </a>
+                            <a class="article-category" href="{$system['system_url']}/blogs/category/0/Uncategorized">{__("Uncategorized")}</a>
                         </li>
                     </ul>
                     <!-- blogs categoris -->
-
                     <!-- read more -->
                     <div class="articles-widget-header">
                         <div class="articles-widget-title">{__("Read More")}</div>
                     </div>
-
                     {foreach $latest_articles as $article}
                     {include file='__feeds_article.tpl' _small=true}
                     {/foreach}
@@ -144,18 +126,14 @@
             </div>
         </div>
         <!-- content panel -->
-
         {elseif $view == "article"}
         <div class="row">
             <!-- side panel -->
             {if $user->_logged_in}
-            <div class="col-12 offcanvas-sidebar" id="sidebarHiddSwip">
-                {include file='_sidebar.tpl'}
-            </div>
+            <div class="col-12 offcanvas-sidebar" id="sidebarHiddSwip">{include file='_sidebar.tpl'}</div>
             {/if}
             <!-- side panel -->
         </div>
-
         <!-- content panel -->
         <div class="col-12 {if $user->_logged_in}offcanvas-mainbar{/if}">
             <div class="row">
@@ -165,91 +143,73 @@
                         <div class="article-wrapper {if $user->_logged_in}pb10{/if}">
                             <!-- article category -->
                             <div class="mb10">
-                                <a class="article-category"
-                                    href="{$system['system_url']}/blogs/category/{$article['article']['category_id']}/{$article['article']['category_url']}">
+                                <a class="article-category" href="{$system['system_url']}/blogs/category/{$article['article']['category_id']}/{$article['article']['category_url']}">
                                     {$article['article']['category_name']}
                                 </a>
                             </div>
                             <!-- article category -->
-
                             <!-- article title -->
                             <h3>{$article['article']['title']}</h3>
                             <!-- article title -->
-
                             <!-- article meta -->
                             <div class="mb20 ctm_action_btn">
-                                <div class="float-right">
+                                <div class="float-right blogActionButton">
                                     {if $article['manage_post']}
                                     <a class="article-meta-counter unselectable"
                                         href="{$system['system_url']}/blogs/edit/{$article['post_id']}">
                                         <div class="cmn_icn_styles">
-                                            <img class="blackicon"
-                                                src="{$system['system_url']}/content/themes/default/images/svg/svgImg/edit_icon.svg">
-                                            <img class="whiteicon"
-                                                src="{$system['system_url']}/content/themes/default/images/svg/svgImg/edit_icon_hover.svg">
+                                            <img class="blackicon" src="{$system['system_uploads_assets']}/content/themes/default/images/svg/svgImg/edit_icon.svg">
+                                            <img class="whiteicon" src="{$system['system_uploads_assets']}/content/themes/default/images/svg/svgImg/edit_icon_hover.svg">
                                         </div>
                                         <span> {__("Edit")} </span>
                                     </a>
                                     <a class="article-meta-counter unselectable js_delete-article" href="#"
                                         data-id="{$article['post_id']}">
                                         <div class="cmn_icn_styles">
-                                            <img class="blackicon"
-                                                src="{$system['system_url']}/content/themes/default/images/svg/svgImg/delete_icon.svg">
-                                            <img class="whiteicon"
-                                                src="{$system['system_url']}/content/themes/default/images/svg/svgImg/delete_icon_hover.svg">
+                                            <img class="blackicon" src="{$system['system_uploads_assets']}/content/themes/default/images/svg/svgImg/delete_icon.svg">
+                                            <img class="whiteicon" src="{$system['system_uploads_assets']}/content/themes/default/images/svg/svgImg/delete_icon_hover.svg">
                                         </div>
                                     </a>
                                     {/if}
                                     <a class="article-meta-counter unselectable" href="#article-comments">
                                         <div class="cmn_icn_styles">
-                                            <img class="blackicon"
-                                                src="{$system['system_url']}/content/themes/default/images/svg/svgImg/nav_icon_messages.svg">
-                                            <img class="whiteicon"
-                                                src="{$system['system_url']}/content/themes/default/images/svg/svgImg/nav_icon_nav_icon_messages_hover.svg">
+                                            <img class="blackicon" src="{$system['system_uploads_assets']}/content/themes/default/images/svg/svgImg/nav_icon_messages.svg">
+                                            <img class="whiteicon" src="{$system['system_uploads_assets']}/content/themes/default/images/svg/svgImg/nav_icon_nav_icon_messages_hover.svg">
                                         </div>
                                         <span> {$article['comments']}</span>
                                     </a>
                                     <div class="article-meta-counter unselectable">
                                         <div class="cmn_icn_styles">
-                                            <img class="blackicon"
-                                                src="{$system['system_url']}/content/themes/default/images/svg/svgImg/eye-icon.svg">
-                                            <img class="whiteicon"
-                                                src="{$system['system_url']}/content/themes/default/images/svg/svgImg/eye-icon_hover.svg">
+                                            <img class="blackicon" src="{$system['system_uploads_assets']}/content/themes/default/images/svg/svgImg/eye-icon.svg">
+                                            <img class="whiteicon" src="{$system['system_uploads_assets']}/content/themes/default/images/svg/svgImg/eye-icon_hover.svg">
                                         </div>
                                         <span>{$article['article']['views']} </span>
                                     </div>
                                 </div>
-
                                 <div class="post-avatar">
-                                    <a class="post-avatar-picture" href="{$article['post_author_url']}"
-                                        style="background-image:url({$article['post_author_picture']});">
-                                    </a>
+                                    <a class="post-avatar-picture" href="{$article['post_author_url']}" style="background-image:url({$article['post_author_picture']});"></a>
                                 </div>
                                 <div class="post-meta">
                                     <div>
                                         <!-- post author name -->
-                                        <span class="js_user-popover" data-type="{$article['user_type']}"
-                                            data-uid="{$article['user_id']}">
+                                        <span class="js_user-popover" data-type="{$article['user_type']}" data-uid="{$article['user_id']}">
                                             <a href="{$article['post_author_url']}">{$article['post_author_name']}</a>
                                         </span>
                                         {if $article['post_author_verified']}
                                         {if $article['user_type'] == "user"}
-                                        <i data-toggle="tooltip" data-placement="top" title='{__("Verified User")}'
-                                            class="fa fa-check-circle fa-fw verified-badge"></i>
+                                        <i data-toggle="tooltip" data-placement="top" title='{__("Verified User")}' class="fa fa-check-circle fa-fw verified-badge"></i>
                                         {else}
-                                        <i data-toggle="tooltip" data-placement="top" title='{__("Verified Page")}'
-                                            class="fa fa-check-circle fa-fw verified-badge"></i>
+                                        <i data-toggle="tooltip" data-placement="top" title='{__("Verified Page")}' class="fa fa-check-circle fa-fw verified-badge"></i>
                                         {/if}
                                         {/if}
                                         {if $article['user_subscribed']}
-                                        <i data-toggle="tooltip" data-placement="top" title='{__("Pro User")}'
-                                            class="fa fa-bolt fa-fw pro-badge"></i>
+                                        <i data-toggle="tooltip" data-placement="top" title='{__("Pro User")}' class="fa fa-bolt fa-fw pro-badge"></i>
                                         {/if}
                                         <!-- post author name -->
                                     </div>
                                     <div class="post-time">
-                                        {__("Posted")} <span class="js_moment"
-                                            data-time="{$article['time']}">{$article['time']}</span>
+                                        {__("Posted")} 
+                                        <span class="js_moment" data-time="{$article['time']}">{$article['time']}</span>
                                     </div>
                                 </div>
                             </div>
@@ -283,43 +243,34 @@
                             <div class="mb20">
                                 <a href="http://www.facebook.com/sharer.php?u={$system['system_url']}/blogs/{$article['post_id']}/{$article['article']['title_url']}"
                                     class="btn btn-sm btn-rounded btn-social-icon" target="_blank">
-                                    <img src="{$system['system_url']}/content/themes/default/images/svg/svgImg/fbIcons.svg"
-                                        width="20px" height="20px">
+                                    <img src="{$system['system_uploads_assets']}/content/themes/default/images/svg/svgImg/fbIcons.svg" width="20px" height="20px">
                                 </a>
                                 <a href="https://twitter.com/intent/tweet?url={$system['system_url']}/blogs/{$article['post_id']}/{$article['article']['title_url']}"
                                     class="btn btn-sm btn-rounded btn-social-icon btn-rounded " target="_blank">
-                                    <img src="{$system['system_url']}/content/themes/default/images/svg/svgImg/twittericon.svg"
-                                        width="20px" height="20px">
+                                    <img src="{$system['system_uploads_assets']}/content/themes/default/images/svg/svgImg/twittericon.svg" width="20px" height="20px">
                                 </a>
                                 <a href="https://vk.com/share.php?url={$system['system_url']}/blogs/{$article['post_id']}/{$article['article']['title_url']}"
                                     class="btn btn-sm btn-rounded btn-social-icon " target="_blank">
-                                    <img src="{$system['system_url']}/content/themes/default/images/svg/svgImg/vkIcon.svg"
-                                        width="20px" height="20px">
+                                    <img src="{$system['system_uploads_assets']}/content/themes/default/images/svg/svgImg/vkIcon.svg" width="20px" height="20px">
                                 </a>
                                 <a href="https://www.linkedin.com/shareArticle?mini=true&url={$system['system_url']}/blogs/{$article['post_id']}/{$article['article']['title_url']}"
                                     class="btn btn-sm btn-rounded btn-social-icon " target="_blank">
-                                    <img src="{$system['system_url']}/content/themes/default/images/svg/svgImg/inIcon.svg"
-                                        width="20px" height="20px">
+                                    <img src="{$system['system_uploads_assets']}/content/themes/default/images/svg/svgImg/inIcon.svg" width="20px" height="20px">
                                 </a>
                                 <a href="https://api.whatsapp.com/send?text={$system['system_url']}/blogs/{$article['post_id']}/{$article['article']['title_url']}"
                                     class="btn btn-sm btn-rounded btn-social-icon " target="_blank">
-                                    <img src="{$system['system_url']}/content/themes/default/images/svg/svgImg/watsapIcon.svg"
-                                        width="20px" height="20px">
+                                    <img src="{$system['system_uploads_assets']}/content/themes/default/images/svg/svgImg/watsapIcon.svg" width="20px" height="20px">
                                 </a>
                                 <a href="https://reddit.com/submit?url={$system['system_url']}/blogs/{$article['post_id']}/{$article['article']['title_url']}"
                                     class="btn btn-sm btn-rounded btn-social-icon  " target="_blank">
-                                    <img src="{$system['system_url']}/content/themes/default/images/svg/svgImg/catIcon.svg"
-                                        width="20px" height="20px">
+                                    <img src="{$system['system_uploads_assets']}/content/themes/default/images/svg/svgImg/catIcon.svg" width="20px" height="20px">
                                 </a>
                                 <a href="https://pinterest.com/pin/create/button/?url={$system['system_url']}/blogs/{$article['post_id']}/{$article['article']['title_url']}"
                                     class="btn btn-sm btn-rounded btn-social-icon " target="_blank">
-                                    <img src="{$system['system_url']}/content/themes/default/images/svg/svgImg/pintIcon.svg"
-                                        width="20px" height="20px">
+                                    <img src="{$system['system_uploads_assets']}/content/themes/default/images/svg/svgImg/pintIcon.svg" width="20px" height="20px">
                                 </a>
                             </div>
-
                             <!-- social share -->
-
                             <!-- article cover -->
                             {if $article['article']['cover']}
                             <div class="mb20">
@@ -327,28 +278,24 @@
                             </div>
                             {/if}
                             <!-- article cover -->
-
                             <!-- article text -->
                             <div class="article-text text-with-list" dir="auto">
                                 {$article['article']['parsed_text']}
                             </div>
                             <!-- article text -->
-
                             <!-- article tags -->
                             {if $article['article']['parsed_tags']}
                             <div class="article-tags">
                                 <ul>
                                     {foreach $article['article']['parsed_tags'] as $tag}
                                     <li>
-                                        <a href="{$system['system_url']}/search/hashtag/{$tag}"
-                                            class="blog-before-login">{$tag}</a>
+                                        <a href="{$system['system_url']}/search/hashtag/{$tag}" class="blog-before-login">{$tag}</a>
                                     </li>
                                     {/foreach}
                                 </ul>
                             </div>
                             {/if}
                             <!-- article tags -->
-
                             <!-- post stats -->
                             <div class="post-stats clearfix">
                                 <!-- reactions stats -->
@@ -376,7 +323,6 @@
                                 <!-- reactions stats -->
                             </div>
                             <!-- post stats -->
-
                             <!-- post actions -->
                             {if $user->_logged_in}
                             <div class="post-actions clearfix">
@@ -396,12 +342,10 @@
                                                 {include file='__reaction_emojis.tpl' _reaction=$article['i_reaction']}
                                             </div>
                                         </div>
-                                        <span
-                                            class="reaction-btn-name {$article['i_reaction_details']['color']}">{$article['i_reaction_details']['title']}</span>
+                                        <span class="reaction-btn-name {$article['i_reaction_details']['color']}">{$article['i_reaction_details']['title']}</span>
                                         {/if}
                                     </div>
                                     <!-- reaction-btn -->
-
                                     <!-- reactions-container -->
                                     <div class="reactions-container">
                                         {foreach $reactions as $reaction}
@@ -453,8 +397,7 @@
                     {if $user->_logged_in && $user->_data['can_write_articles']}
                     <div class="mb10 d-none d-sm-block">
                         <a href="{$system['system_url']}/blogs/new" class="btn btn-sm _cmn_btn btn-block">
-                            <img
-                                src="{$system['system_url']}/content/themes/{$system['theme']}/images/svg/svgImg/filePlusIcon.svg">
+                            <img src="{$system['system_uploads_assets']}/content/themes/{$system['theme']}/images/svg/svgImg/filePlusIcon.svg">
                             {__("Write New Article")}
                         </a>
                     </div>
