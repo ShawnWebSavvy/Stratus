@@ -1930,12 +1930,12 @@ class User
                     $interested = ($member['is_interested'] == '1') ? true : false;
                 }
                 $approved = false;
+                /* get event */
+                $get_event = $db->query(sprintf("SELECT * FROM `events` WHERE event_id = %s", secure($id, 'int'))) or _error("SQL_ERROR_THROWEN");
+                $event = $get_event->fetch_assoc();
                 if ($invited || $interested) {
                     $approved = true;
                 } else {
-                    /* get event */
-                    $get_event = $db->query(sprintf("SELECT * FROM `events` WHERE event_id = %s", secure($id, 'int'))) or _error("SQL_ERROR_THROWEN");
-                    $event = $get_event->fetch_assoc();
                     if ($event['event_privacy'] == 'public') {
                         /* the event is public */
                         $approved = true;
@@ -1952,6 +1952,9 @@ class User
                     }
                     /* update going counter +1 */
                     $db->query(sprintf("UPDATE `events` SET event_going = event_going + 1  WHERE event_id = %s", secure($id, 'int'))) or _error("SQL_ERROR_THROWEN");
+                }
+                if($invited){
+                    $this->post_notification(array('to_user_id' => $event['event_admin'], 'action' => 'event_accept', 'hub' => "LocalHub",  'node_type' => $event['event_title'], 'node_url' =>  $event['event_id'] ));
                 }
                 break;
 
@@ -2664,6 +2667,12 @@ class User
                         $notification['url'] = $system['system_url'] . '/events/' . $notification['node_url'];
                         $notification['message'] = __("approved your your pending post in event") . " '" . html_entity_decode($notification['node_type'], ENT_QUOTES) . "'";
                         break;
+                    
+                    case 'event_accept':
+                        $notification['icon'] = "fa fa-calendar";
+                        $notification['url'] = $system['system_url'] . '/events/' . $notification['node_url'];
+                        $notification['message'] = __("accepted your request to join") . " '" . html_entity_decode($notification['node_type'], ENT_QUOTES) . "' " . __("event");
+                        break;
 
                     case 'forum_reply':
                         $notification['icon'] = "fa fa-comment";
@@ -3136,6 +3145,11 @@ class User
                     $notification['url'] = $system['system_url'] . '/events/' . $node_url;
                     $notification['message'] = __("approved your your pending post in event") . " '" . html_entity_decode($node_type, ENT_QUOTES) . "'";
                     break;
+
+                case 'event_accept':
+                    $notification['url'] = $system['system_url'] . '/events/' .$node_url;
+                    $notification['message'] = __("accepted your request to join") . " '" . html_entity_decode($node_type, ENT_QUOTES) . "'". __("event");;
+                    break;    
 
                 case 'forum_reply':
                     $notification['url'] = $system['system_url'] . '/forums/thread/' . $node_url;
@@ -12345,6 +12359,10 @@ class User
         }
         if (strlen($args['title']) < 3) {
             throw new Exception(__("Event name must be at least 3 characters long. Please try another"));
+        }
+        /* validate location */
+        if ($args['location']&&!preg_match('~[\p{L}]+~u' , $args['location'])) {
+            throw new Exception(__("Event location not correct"));
         }
         /* validate start & end dates */
         if (is_empty($args['start_date'])) {

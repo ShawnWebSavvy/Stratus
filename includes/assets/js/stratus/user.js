@@ -14,7 +14,7 @@ function initialize_modal() {
     }),
         geolocation_enabled && $(".js_geocomplete").geocomplete(),
         $(".selectpicker").length > 0 && $(".selectpicker").selectpicker({ style: "btn-outline-light" }),
-        $(".js_datetimepicker").length > 0 && $(".js_datetimepicker").datetimepicker({ format: system_datetime_format, locale: $("html").attr("lang").split("_", 1).toString() || "en" }),
+        $(".js_datetimepicker").length > 0 && $(".js_datetimepicker").datetimepicker({ format: system_datetime_format,  minDate: new Date(), locale: $("html").attr("lang").split("_", 1).toString() || "en" }),
         initialize_uploader();
 }
 function initialize_uploader() {
