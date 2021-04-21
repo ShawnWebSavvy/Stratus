@@ -355,7 +355,8 @@ try {
 			case 'custom-referrals':
 				$COINS = array(array("type"=>"percent","amount"=>"","coin"=>"btc_usdt"),
 							array("type"=>"percent","amount"=>"","coin"=>"eth_usdt")
-							,array("type"=>"percent","amount"=>"","coin"=>"apl_usdt"));
+							,array("type"=>"percent","amount"=>"","coin"=>"apl_usdt")	
+							,array("type"=>"percent","amount"=>"","coin"=>"gsx_usdt"));
 				// print_r($COINS);die;
 				if ($user->_is_moderator) {
 					_error(__('System Message'), __("You don't have the right permission to access this"));
@@ -406,6 +407,9 @@ try {
 						if ($get_referral->num_rows > 0) {
 							$row = $get_referral->fetch_assoc();
 							$COINS = json_decode($row['referral'],true);
+							if($COINS['3']['coin']!="gsx_usdt"){
+								$COINS['3'] = array("type"=>"percent","amount"=>"0","coin"=>"gsx_usdt");
+							}
 							
 						}
 						// echo '<pre>'; print_r($COINS); die;

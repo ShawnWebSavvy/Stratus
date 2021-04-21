@@ -222,7 +222,23 @@
                 <!-- sub of global end -->
             <!-- Global Hub End here -->
             <!-- playtube -->
-           
+            {if $system['stripe_mode'] != "live"}
+            <ul class="main-side-nav main-left-side-nav left-sidebar first-ul">
+                <li>
+                    <a href="{PLY_URL}?dtl={$encodedUserDetails}" class="{$page}">
+                        <div class="svg-container">
+                            <img src="{$system['system_url']}/content/themes/default/images/svg/svgImg/video_hub_icon.svg"
+                                class="">
+                            <!-- <img src="{$system['system_url']}/content/themes/default/images/svg/svgImg/nav_icon_favourite.svg"
+                            class="blackicon">
+                            <img src="{$system['system_url']}/content/themes/default/images/svg/svgImg/nav_icon_favourits_active.svg"
+                            class="whiteicon"> -->
+                        </div>
+                        <span class="nav-text">{__("Video Hub")}</span>
+                    </a>
+                </li>
+            </ul>
+            {/if}
             <!-- playtube -->
             <!-- Blog Hub starts-->
             {if $system['blogs_enabled']}

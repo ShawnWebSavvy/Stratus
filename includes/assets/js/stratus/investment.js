@@ -835,7 +835,7 @@ if (endUrl != "investments") {
 
 
         var options = {
-            colors: ['#f7931a', '#627eea', '#16161f'],
+            colors: ['#70a5ff','#f7931a', '#627eea', '#16161f'],
             series: series,
             chart: {
                 height: 270,

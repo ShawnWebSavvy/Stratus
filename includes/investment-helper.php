@@ -31,8 +31,9 @@ class InvestmentHelper {
     }
     public static function get_all_token_price($user_data=null)
     {   global $db,$system;
+        $redisObject = new RedisClass();
+        $tokens = cachedInvestmentBuySellData($system,$redisObject);
         $return = [];
-        $tokens  =  httpGetCurl('investment/get_tickers',$system['investment_api_base_url']);
         if(!empty($tokens)){
             foreach($tokens['data'] as $i=>$token){
                 $return['token'][$i]['buy_price']=$token['buy_price'];
@@ -194,8 +195,11 @@ class InvestmentHelper {
     }
 
     public static function getDashboardDate($user_data){
-        global $db,$system;
-        $tokens  =  httpGetCurl('investment/dashboard_detail',$system['investment_api_base_url']);
+        global $system;
+
+        $redisObject = new RedisClass();
+        $tokens = cachedInvestmentDashboardData($system,$redisObject);
+
         $return = [];
         $currency_price = [];
         if(!empty($tokens)){
@@ -247,8 +251,11 @@ class InvestmentHelper {
         $eth_price = $total_eth>0?$currency_price['eth_price']:0;
         $eth_total_amount = ($total_eth>0)?($total_eth*$eth_price):0;
 
+        $total_gsx = $user_data['gsx_wallet'];
+        $gsx_price = $total_gsx>0?$currency_price['gsx_wallet']:0;
+        $gsx_total_amount = ($total_gsx>0)?($total_gsx*$gsx_price):0;
 
-        $total['amount']  = round($apl_total_amount+$eth_total_amount+$btc_total_amount,2);
+        $total['amount']  = round($gsx_total_amount+$apl_total_amount+$eth_total_amount+$btc_total_amount,2);
         $total['total_token_btc'] =  $total['amount']>0?number_format(($total['amount']/$btc_price), 8):0;
         // $eth_price =  $total_eth>0?self::get_ticker_price('ETH_USDT'):0;   
         // echo '<pre>'; print_r($total); die;
