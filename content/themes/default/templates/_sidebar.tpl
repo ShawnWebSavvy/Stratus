@@ -96,7 +96,14 @@
                 <li>
                     <a href="{$system['system_url']}/modcp">
                         {include file='__svg_icons.tpl' icon="dashboard" class="" width="24px" height="24px"}
-                        <span class="nav-text">__("Moderator Panel")}</span>
+                        <span class="nav-text">{__("Moderator Panel")}</span>
+                    </a>
+                </li>
+                {elseif $user->_is_subAdmin}
+                <li>
+                    <a href="{$system['system_url']}/admincp">
+                        {include file='__svg_icons.tpl' icon="dashboard" class="" width="24px" height="24px"}
+                        <span class="nav-text">{__("Sub Admin Panel")}</span>
                     </a>
                 </li>
                 {/if}

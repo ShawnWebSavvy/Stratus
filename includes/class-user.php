@@ -13,6 +13,7 @@ class User
     public $_logged_in = false;
     public $_is_admin = false;
     public $_is_moderator = false;
+    public $_is_subAdmin = false;
     public $_data = [];
 
     private $_cookie_user_id = "c_user";
@@ -68,12 +69,13 @@ class User
         if (isset($_COOKIE[$this->_cookie_user_id]) && isset($_COOKIE[$this->_cookie_user_token])) {
 
             $response_data = cachedUserData($db, $system, $_COOKIE[$this->_cookie_user_id], $_COOKIE[$this->_cookie_user_token]);
-            //print_r($response_data);
+            // echo "<pre>";print_r($response_data);die;
             if (!empty($response_data) > 0) {
                 $this->_data = $response_data;
                 $this->_logged_in = true;
                 $this->_is_admin = ($this->_data['user_group'] == 1) ? true : false;
                 $this->_is_moderator = ($this->_data['user_group'] == 2) ? true : false;
+                $this->_is_subAdmin = ($this->_data['user_group'] == 4) ? true : false;
 
                 /* update user language */
                 if ($system['current_language'] != $this->_data['user_language']) {
