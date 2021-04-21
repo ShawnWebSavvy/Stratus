@@ -89,7 +89,7 @@ function getWalletBalance($token){
             }
           }
         }else{
-          returnResponse(false,300,"parameters missing");
+          returnResponse(true,300,"parameters missing");
         }
 
       }
@@ -133,12 +133,8 @@ function updateWAlletBalanceFunction($token)
             if ($query == true) {
               /* log this transaction */
               //  wallet_transaction_logs($_POST['id'], 'videohub_package_payment', 0, $_POST['price'], 'out');
-              if(isset($_POST['type']) && $_POST['type'] == "video_purchase"){
-                $packageType = "video_purchase";
-              }else{
-                $packageType = "videohub_package_payment";
-              }
-              $db->query(sprintf("INSERT INTO ads_users_wallet_transactions (user_id, node_type, node_id, amount, type, date, platformType, paymentMode) VALUES (%s, %s, %s, %s, %s, %s, %s, %s)", secure($check_user['id'], 'int'), secure($packageType), secure(0, 'int'), secure($_POST['price']), secure('out'), secure($date), secure('videohub', 'string'), secure('wallet', 'string'))) or _error("SQL_ERROR_THROWEN");
+
+              $db->query(sprintf("INSERT INTO ads_users_wallet_transactions (user_id, node_type, node_id, amount, type, date, platformType) VALUES (%s, %s, %s, %s, %s, %s, %s)", secure($check_user['id'], 'int'), secure('videohub_package_payment'), secure(0, 'int'), secure($_POST['price']), secure('out'), secure($date), secure('videohub'))) or _error("SQL_ERROR_THROWEN");
 
               returnResponse(true, 200, "Success");
             } else {
@@ -236,9 +232,10 @@ function addWalletPointsVideo()
         /* wallet transaction */
         $transc = sprintf("INSERT INTO ads_users_wallet_transactions (user_id, node_type, node_id, amount, type, date, platformType, paymentMode) VALUES (%s, %s, %s, %s, %s, %s, %s, %s)", secure($id, 'int'), secure('withdraw_points', 'string'), secure($id, 'int'), secure($_POST['amount']), secure('in'), secure($date), secure('TubeNow', 'string'), secure('wallet', 'string'));
         $db->query($transc) or _error("SQL_ERROR_THROWEN");
-        returnResponse(true, 200, "Points Reedemed Successfully");
+        returnResponse(true, 200, "Wallet balance added successfully");
       }
       // return
+
     }
   } else {
     returnResponse(false, 300, "parameters missing");
@@ -769,3 +766,74 @@ function changePasswordRequestFunction($token){
         returnResponse(false,300,$e->getMessage());
   }
 }
+
+
+/**
+ * Function to sync user to stratus
+ * param : @email
+ */
+
+ function registerPlaytubeUserFunction($token){
+      try {
+            if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+                    global $db, $system, $date;
+                      $checkToken = checkHeaders($token);
+                if ($checkToken == 402) {
+                  returnResponse(false, 402, "Access token missing");
+                } elseif ($checkToken == 400) {
+                  returnResponse(false, 402, "Invalid access token provided");
+                } else {
+                          if(isset($_POST['email']) && isset($_POST['username'])){
+                                //check if user exists
+                                 $check_user = $db->query(sprintf("SELECT COUNT(*) as count FROM users WHERE user_email = %s", secure($_POST['email']))) or _error("SQL_ERROR_THROWEN");
+                                 $check_user= $check_user->fetch_assoc();
+                                 if($check_user['count'] < 1){
+                                          $apiResponseNew  =  (new User())->httpGetCurl('/users/whitelabel/get-user-info/' . $_POST['email']);
+                                          $apiResponse = $apiResponseNew;
+                                     if (array_key_exists('userId', $apiResponse)) {
+
+                                         $knox_user_id = $apiResponse['userId'];
+                                         $email = $apiResponse['email'];
+                                         $hash = $apiResponse['hash'];
+                                         $user_email_verified = 1;
+                                         $user_activated = 1;
+                                         $global_user_album_pictures = 0;
+                                         $username = $_POST['username'];
+                                          $db->query(sprintf("INSERT INTO users (user_name,user_email,user_password, user_firstname,user_lastname,user_gender,user_registered,knox_user_id,user_email_verified,user_activated,global_user_album_pictures) VALUES (%s,%s,%s,%s, %s,%s,%s,%s,%s,%s,%s)", secure($email), secure($email), secure($hash), secure(''), secure(''), secure('other'), secure($date), secure($knox_user_id), $user_email_verified, $user_activated,$global_user_album_pictures)) or _error("SQL_ERROR_THROWEN");
+                                           $getUserData = (new User())->checkUserAndGetData($email);
+                                         $emailArray = explode("@", $email);
+                                         //$userName = $emailArray[0] . $getUserData['user_id'];
+                                         $userName = $username;
+                                         $db->query(sprintf("UPDATE users SET user_name =%s WHERE user_email = %s", secure($userName), secure($email))) or _error("SQL_ERROR_THROWEN");
+
+                                         $wallet_query = $db->query(sprintf("SELECT  * FROM users WHERE user_email = %s", secure(  $_POST['email']))) or _error("SQL_ERROR_THROWEN");
+                                           $result= $wallet_query->fetch_assoc();
+                                           if(!empty($result)){
+                                               returnResponse(true,200,"Success");
+                                           }//if of result
+                                            else{
+                                                returnResponse(false,300,"Something went wrong");
+                                            }
+                                      }//if statement id api response
+                                      else {
+                                        returnResponse(false,402,"Invalid user, doesn't belong to any account");
+                                     }
+                                 }
+                          }
+                          else{
+                             returnResponse(false,300,"parameters missing");
+                          }
+
+
+                }//end of else
+
+            }
+            else{
+                   returnResponse(false,402,"Invalid request");
+            }
+
+      } catch (Exception $e) {
+        returnResponse(false,300,$e->getMessage());
+
+      }
+  }
