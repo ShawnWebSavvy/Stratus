@@ -619,7 +619,7 @@ function cachedInvestmentDashboardData($system,$redisObject)
     if ($isKeyExistOnRedis == false) {
         $data =  httpGetCurl('investment/dashboard_detail',$system['investment_api_base_url']);
         $jsonValue = json_encode($data);
-        $redisObject->setValueWithExpireInRedis($redisKey, 5, $jsonValue);
+        $redisObject->setValueWithExpireInRedis($redisKey, 10, $jsonValue);
         $getValuesFromRedis = $redisObject->getValueFromKey($redisKey);
         $jsonValue = json_decode($getValuesFromRedis, true);
         $response = $jsonValue;
@@ -639,7 +639,7 @@ function cachedInvestmentBuySellData($system,$redisObject)
     if ($isKeyExistOnRedis == false) {
         $data = httpGetCurl('investment/get_tickers',$system['investment_api_base_url']);
         $jsonValue = json_encode($data);
-        $redisObject->setValueWithExpireInRedis($redisKey, 5, $jsonValue);
+        $redisObject->setValueWithExpireInRedis($redisKey, 10, $jsonValue);
         $getValuesFromRedis = $redisObject->getValueFromKey($redisKey);
         $jsonValue = json_decode($getValuesFromRedis, true);
         $response = $jsonValue;
