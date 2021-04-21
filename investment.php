@@ -46,10 +46,9 @@ try {
                 $smarty->assign('set_active_coin','btc');
             }
             $_details = InvestmentHelper::get_all_token_price($user->_data);
-            //    echo '<pre>'; print_r($_details); die;
             $lat_transactions = $user->investment_latest_transactions();
+            
             $_details['wallet_amount']['balance']['usd']= $user->_data['user_wallet_balance'];
-            // echo '<pre>'; print_r($_details['wallet_amount']['balance']); die;
             $smarty->assign('order_detail', $_details['order']);
             $smarty->assign('wallet_coins_amount',$_details['wallet_amount']['balance']);
             $smarty->assign('wallet_balance', $_details['wallet_amount']);
@@ -62,8 +61,6 @@ try {
         case 'investment_activities':
             // get wallet transactions
             $all_transactions = $user->investment_get_transactions();
-           
-            //  echo '<pre>'; print_r($all_transactions); die;
 			/* assign variables */
             $smarty->assign('all_transactions', $all_transactions);
 
