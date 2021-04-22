@@ -506,16 +506,19 @@ function init_picture_position() {
                 }),
               
                 $("body").on("focus", ".js_mention", function () {
-                    $(".ui-menu.ui-autocomplete").css({'overflow': 'hidden', 'max-height':'none','padding-top':'0px'});
-
+                    $(".ui-menu.ui-autocomplete").css({'overflow': 'hidden', 'max-height':'none','padding':'0px'});
                     $(this).triggeredAutocomplete({ hidden: "#hidden_inputbox", source: api["users/mention"], trigger: "@", maxLength: 20 });
                     var height_comment = $(this).closest('.post-comments').find('.js_comments ').outerHeight();
                     if($('.light-commentModal').length){
-                        height_comment = height_comment > 15 ? height_comment+30 : 45;
-                        $(".ui-menu.ui-autocomplete").css({'overflow': 'auto', 'max-height': height_comment+'px','padding-top':'0px'});
+                        height_comment = height_comment > 20 ? height_comment+30 : 50;
+                        $(".ui-menu.ui-autocomplete").css({'overflow': 'auto', 'max-height': height_comment+'px','padding':'0px'});
                     }
-
                 }),
+
+                $(window).resize(function(){
+                    $(".ui-menu.ui-autocomplete").hide();
+                }),
+
                 $("body").on("mouseenter", ".js_user-popover", function () {
                     if (!($(window).width() < 751)) {
                         var _this = $(this),
