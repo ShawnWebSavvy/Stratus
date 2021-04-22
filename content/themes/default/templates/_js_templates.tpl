@@ -1744,6 +1744,13 @@
                             </span>
                         </div>
                     {/if}
+                    {if $system['authorize_enabled']}
+                        <div class="col-12 col-sm-4 plr5">
+                            <button class="btn btn-block btn-payment plr20 mb10" data-toggle="modal" data-url="#authorize-transfer" data-options='{literal}{{/literal} "handle": "{literal}{{handle}}{/literal}", "price": "{literal}{{price}}{/literal}", "id": "{literal}{{id}}{/literal}" {literal}}{/literal}' data-size="large">
+                                <i class="fa fa-university fa-lg fa-fw mr5" style="color: #4CAF50;"></i>{__("Pay through Aurhorise.net")}
+                            </button>
+                        </div>
+                    {/if}
                     {if $system['alipay_enabled']}
                         <div class="col-12 col-sm-4 plr5">
                             <button class="js_payment-stripe btn btn-block btn-payment plr20 mb10" 
@@ -1984,6 +1991,105 @@
                     </div>
                 </form>
             </script>
+{/if}
+<!-- Bank Transfer -->
+<!-- Bank Transfer -->
+{if $system['authorize_enabled']}
+<script id="authorize-transfer" type="text/template">
+    <div class="modal-header">
+        <h6 class="modal-title"><i class="fa fa-university mr5"></i>{__("Authorize.net Transfer")}</h6>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+    <form id="frmPayment" method="post">
+        <div class="modal-body">
+            <div class="form-group form-row">
+                <div class="field-row">
+                    <label>Card Number</label> <span id="card-number-info" class="info"></span><br />
+                    <input type="text" id="card-number" name="card-number" class="cardNumber" />
+                </div>
+                <div class="field-row">
+                    <div class="contact-row column-right">
+                        <label>Expiry Month / Year</label> <span id="userEmail-info" class="info"></span><br />
+                        {html_select_date prefix='expire_' month_format='%m' display_years=false display_days=false}
+                        {html_select_date prefix='expire_' end_year='+15' display_months=false display_days=false}
+                    </div>
+                </div>
+            </div>
+
+            <!-- success -->
+            <div class="alert alert-success mb0 x-hidden"></div>
+            <!-- success -->
+
+            <!-- error -->
+            <div class="alert alert-danger mb0 x-hidden" id="error-message"></div>
+            <!-- error -->
+        </div>
+        <div class="modal-footer">
+            <input type="hidden" name="handle" value="{literal}{{handle}}{/literal}">
+            <input type="hidden" name="package_id" value="{literal}{{id}}{/literal}">
+            <input type="hidden" name="price" value="{literal}{{price}}{/literal}">
+            <button type="button" class="btn btn-light" data-dismiss="modal">{__("Cancel")}</button>
+            <button type="submit" class="btn btn-success btn-antier-green"><i class="fa fa-check-circle mr10"></i>{__("Pay Now")}</button>
+        </div>
+    </form>
+</script>
+<script>
+$("body #frmPayment").submit(function(e){
+    console.log("Asf")
+    return false;
+});
+
+function cardValidation () {
+    var valid = true;
+    var cardNumber = $('body #card-number').val();
+    var month = $('body #month').val();
+    var year = $('body #year').val();
+    $("body #error-message").addClass("x-hidden");
+    $("body #error-message").html("").hide();
+
+    if (cardNumber == "") {
+        console.log("AS")
+        valid = false;
+    }
+
+    if(!is_creditCard(cardNumber)){
+        console.log("A3S")
+        valid = false;
+    }
+
+    if (month == "") {
+        console.log("A2S")
+        valid = false;
+    }
+    if (year == "") {
+        valid = false;
+        console.log("A5S")
+    }
+
+    if(valid == false) {
+        $("body #error-message").removeClass("x-hidden");
+        $("body #error-message").html("All Fields are required").show();
+    }else{
+        $("body #error-message").addClass("x-hidden");
+    }
+
+    return valid;
+}
+function is_creditCard(str)
+{
+    console.log("str "+str)
+    regexp = /^(?:(4[0-9]{12}(?:[0-9]{3})?)|(5[1-5][0-9]{14})|(6(?:011|5[0-9]{2})[0-9]{12})|(3[47][0-9]{13})|(3(?:0[0-5]|[68][0-9])[0-9]{11})|((?:2131|1800|35[0-9]{3})[0-9]{11}))$/;
+
+    if (regexp.test(str)){
+        return true;
+    }
+    else{
+        return false;
+    }
+}
+</script>
 {/if}
 <!-- Bank Transfer -->
 {/if}

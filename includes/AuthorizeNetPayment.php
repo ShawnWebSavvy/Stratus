@@ -54,8 +54,9 @@ class AuthorizeNetPayment
 
     public function chargeCreditCard($cardDetails)
     {
-        $paymentType = $this->setCreditCard($_POST);
-        $transactionRequestType = $this->setTransactionRequestType($paymentType, $_POST["amount"]);
+        global $system;
+        $paymentType = $this->setCreditCard($cardDetails);
+        $transactionRequestType = $this->setTransactionRequestType($paymentType, $_SESSION['wallet_pay_to_user']);
         
         $request = new AnetAPI\CreateTransactionRequest();
         $request->setMerchantAuthentication($this->merchantAuthentication);

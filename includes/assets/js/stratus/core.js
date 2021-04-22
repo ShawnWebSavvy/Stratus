@@ -448,6 +448,9 @@ function button_status(e, t) {
                             button_status(_this, "reset"), modal("#modal-message", { title: __.Error, message: __["There is something that went wrong!"] });
                         });
                 }),
+                $("body").on("click", ".js_payment-authorise", function () {
+                    alert("Thanks for choosing us");
+                }),
                 $("body").on("click", ".js_payment-stripe", function () {
                     var _this = $(this),
                         method = _this.data("method"),
