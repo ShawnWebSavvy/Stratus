@@ -388,7 +388,7 @@ background-attachment: fixed;" {/if} {if $page=="share" && $url}onload="initiali
                                        <i class="fas fa-chevron-left"></i>
                                     </a>
                                     {elseif $page=='messages'}
-                                    <a class="btn btn-success msgLocal" data-toggle="tooltip" title="Back to Friends"
+                                    <a class="btn btn-success msgLocal" onclick="window.history.back();" data-toggle="tooltip" title="Back to Friends"
                                        data-placement="bottom">
                                        <i class="fas fa-chevron-left"></i>
                                     </a>
