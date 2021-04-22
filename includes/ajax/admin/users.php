@@ -17,7 +17,8 @@ require('../../../bootstrap.php');
 is_ajax();
 
 // check admin|moderator permission
-if (!$user->_is_admin) {
+// echo "<pre>";print_r($user);die;
+if ((!$user->_is_admin) && (!$user->_is_subAdmin)) {
 	modal("MESSAGE", __("System Message"), __("You don't have the right permission to access this"));
 }
 
