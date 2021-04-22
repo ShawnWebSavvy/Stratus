@@ -31,7 +31,7 @@
         {if $sub_view == "edit"} &rsaquo; {$data['user_firstname']} {$data['user_lastname']}{/if}
     </div>
 
-    {if $sub_view == "" || $sub_view == "admins" || $sub_view == "moderators" || $sub_view == "online" || $sub_view == "banned" || $sub_view == "find"}
+    {if $sub_view == "" || $sub_view == "admins" || $sub_view == "subadmins" || $sub_view == "moderators" || $sub_view == "online" || $sub_view == "banned" || $sub_view == "find"}
         
         <div class="card-body">
 

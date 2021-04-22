@@ -684,6 +684,32 @@ try {
 					$smarty->assign('rows', $rows);
 					$smarty->assign('pager', $pager->getPager());
 					break;
+				
+					case 'subadmins':
+						// page header
+						page_header($control_panel['title'] . " &rsaquo; " . __("Users") . " &rsaquo; " . __("Sub Admins"));
+	
+						// get data
+						require('includes/class-pager.php');
+						$params['selected_page'] = ((int) $_GET['page'] == 0) ? 1 : $_GET['page'];
+						$total = $db->query("SELECT COUNT(*) as count FROM users WHERE user_group = '4'") or _error("SQL_ERROR");
+						$params['total_items'] = $total->fetch_assoc()['count'];
+						$params['items_per_page'] = $system['max_results'];
+						$params['url'] = $system['system_url'] . '/' . $control_panel['url'] . '/users/admins?page=%s';
+						$pager = new Pager($params);
+						$limit_query = $pager->getLimitSql();
+						$get_rows = $db->query("SELECT * FROM users WHERE user_group = '4' ORDER BY user_id ASC " . $limit_query) or _error("SQL_ERROR");
+						if ($get_rows->num_rows > 0) {
+							while ($row = $get_rows->fetch_assoc()) {
+								$row['user_picture'] = get_picture($row['user_picture'], $row['user_gender']);
+								$rows[] = $row;
+							}
+						}
+	
+						// assign variables
+						$smarty->assign('rows', $rows);
+						$smarty->assign('pager', $pager->getPager());
+						break;
 
 				case 'moderators':
 					// page header
