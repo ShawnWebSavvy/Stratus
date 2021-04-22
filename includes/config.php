@@ -2,7 +2,7 @@
 define("DB_NAME", "stratus_prod");
 define("DB_USER", "root");
 define("DB_PASSWORD", "Admin@123");
-define("DB_HOST", "127.0.0.1");
+define("DB_HOST", "localhost");
 define("DB_PORT", "3306");
 define("SYS_URL", "http://localhost/stratus");
 //https://ws.stage-apollo.xyz/api
