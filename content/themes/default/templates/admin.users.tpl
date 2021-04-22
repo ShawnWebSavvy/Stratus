@@ -2,22 +2,22 @@
     <div class="card-header with-icon">
         {if $sub_view == "banned"}
             <div class="float-right">
-                <a href="{$system['system_url']}/{$control_panel['url']}/blacklist" class="btn btn-sm btn-danger" style='color:#fff;'>
+                <a href="{$system['system_url']}/{$control_panel['url']}/blacklist" class="btn btn-sm btn-danger mb5" style='color:#fff;'>
                     <span class="ml5 d-none d-lg-inline-block">{__("Manage Banned IPs")}</span>
                 </a>
             </div>
         {elseif $sub_view == "find"}
             <div class="float-right">
-                <a href="{$system['system_url']}/{$control_panel['url']}/users" class="btn cmn_btn" >
+                <a href="{$system['system_url']}/{$control_panel['url']}/users" class="btn cmn_btn mb5" >
                     <i class="fa fa-arrow-circle-left mr5"></i>{__("Go Back")}
                 </a>
             </div>
         {elseif $sub_view == "edit"}
             <div class="float-right">
-                <a href="{$system['system_url']}/{$control_panel['url']}/users" class="btn cmn_btn">
+                <a href="{$system['system_url']}/{$control_panel['url']}/users" class="btn cmn_btn mb5">
                     <i class="fa fa-arrow-circle-left"></i><span class="ml5 d-none d-lg-inline-block">{__("Go Back")}</span>
                 </a>
-                <a target="_blank" href="{$system['system_url']}/{$data['user_name']}" class="btn cmn_btn">
+                <a target="_blank" href="{$system['system_url']}/{$data['user_name']}" class="btn cmn_btn mb5">
                         <img  width="30px" height="30px" src="{$system['system_url']}/content/themes/default/images/svg/svgImg/eye-icon.svg"/>
                     <span class="ml5 d-none d-lg-inline-block">{__("View Profile")}</span>
                 </a>

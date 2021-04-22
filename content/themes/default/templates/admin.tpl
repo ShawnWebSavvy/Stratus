@@ -792,16 +792,17 @@
                                     </div>
                                 </li>
                                 <!-- Build -->
+                                 {/if}
                             </ul>
                         </div>
                     </div>
-                {/if}
+               
                 <!-- Stratus -->
             </div>
         </div>
         <!-- left panel -->
         <!-- right panel -->
-        <div class="col-md-12 col-lg-9 offcanvas-mainbar">
+        <div class="col-md-12 col-lg-9 offcanvas-mainbar fixadmin">
             {include file="admin.$view.tpl"}
         </div>
         <!-- right panel -->
