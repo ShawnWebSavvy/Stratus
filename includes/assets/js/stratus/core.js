@@ -183,7 +183,9 @@ function photo_grid() {
         $("#feeds_post_ul").length > 0 && Macy({ container: ".feeds_post_ul", trueOrder: !0, columns: 2, waitForImages: !0 });
 }
 function button_status(e, t) {
-    "loading" == t ? (e.data("text", e.html()), e.prop("disabled", !0), e.html('<span class="spinner-grow spinner-grow-sm mr10"></span>' + __.Loading)) : (e.prop("disabled", !1), e.html(e.data("text")));
+    "loading" == t ? (e.data("text", e.html()), e.prop("disabled", !0), e.html(`<div class="spinner-grow spinner-grow-sm mr10" role="status">
+                                                                                    <span class="sr-only">Loading...</span>
+                                                                                </div>` + __.Loading)) : (e.prop("disabled", !1), e.html(e.data("text")));
 }
 (api["core/theme"] = ajax_path + "core/theme.php"),
     (api["data/load"] = ajax_path + "data/load.php"),

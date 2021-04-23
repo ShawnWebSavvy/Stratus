@@ -455,7 +455,9 @@ function button_status(element, handle) {
     element.data("text", element.html());
     element.prop("disabled", true);
     element.html(
-      '<span class="spinner-grow spinner-grow-sm mr10"></span>' + __["Loading"]
+      `<div class="spinner-grow spinner-grow-sm mr10" role="status">
+          <span class="sr-only">Loading...</span>
+       </div>` + __["Loading"]
     );
   } else {
     /* reset */
