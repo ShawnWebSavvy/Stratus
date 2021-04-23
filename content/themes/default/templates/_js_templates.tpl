@@ -1713,22 +1713,68 @@
         </button>
                 <div class="row justify-content-center" style="margin-left: -5px; margin-right: -5px;">
                     {if $system['paypal_enabled']}
-                        <div class="col-12 col-sm-4 plr5">
-                        <button class="js_payment-paypal btn btn-block btn-payment plr20 mb10" 
-                        data-handle="{literal}{{handle}}{/literal}" 
-                        {literal}{{#id}}{/literal} data-id="{literal}{{id}}{/literal}" {literal}{{/id}}{/literal} 
-                        {literal}{{#price}}{/literal} data-price="{literal}{{price}}{/literal}" {literal}{{/price}}{/literal} 
-                        {literal}{{#name}}{/literal} data-name="{literal}{{name}}{/literal}" {literal}{{/name}}{/literal} 
-                        {literal}{{#img}}{/literal} data-img="{literal}{{img}}{/literal}" {literal}{{/img}}{/literal} 
-                        >
-                            <i class="fab fa-paypal fa-lg fa-fw mr5" style="color: #00186A;"></i>{__("PayPal")}
-                        </button>
+                        <div class="col-12 col-sm-6 plr5 d-flex align-items-center">
+                            <button class="js_payment-paypal btn btn-block btn-payment plr20 mb10" 
+                            data-handle="{literal}{{handle}}{/literal}" 
+                            {literal}{{#id}}{/literal} data-id="{literal}{{id}}{/literal}" {literal}{{/id}}{/literal} 
+                            {literal}{{#price}}{/literal} data-price="{literal}{{price}}{/literal}" {literal}{{/price}}{/literal} 
+                            {literal}{{#name}}{/literal} data-name="{literal}{{name}}{/literal}" {literal}{{/name}}{/literal} 
+                            {literal}{{#img}}{/literal} data-img="{literal}{{img}}{/literal}" {literal}{{/img}}{/literal} 
+                            >
+                                <i class="fab fa-paypal fa-lg fa-fw mr5" style="color: #00186A;"></i>{__("PayPal")}
+                            </button>
+                        </div>
+                    {/if}
+                    {if $system['alipay_enabled']}
+                        <div class="col-12 col-sm-6 plr5">
+                            <button class="js_payment-stripe btn btn-block btn-payment plr20 mb10 d-flex align-items-center" 
+                            data-handle="{literal}{{handle}}{/literal}" 
+                            {literal}{{#id}}{/literal} data-id="{literal}{{id}}{/literal}" {literal}{{/id}}{/literal} 
+                            {literal}{{#price}}{/literal} data-price="{literal}{{price}}{/literal}" {literal}{{/price}}{/literal} 
+                            {literal}{{#name}}{/literal} data-name="{literal}{{name}}{/literal}" {literal}{{/name}}{/literal} 
+                            {literal}{{#img}}{/literal} data-img="{literal}{{img}}{/literal}" {literal}{{/img}}{/literal} 
+                            data-method="alipay">
+                                <i class="fab fa-alipay fa-lg fa-fw mr5" style="color: #5B9EDD;"></i>{__("Alipay")}
+                            </button>
+                        </div>
+                    {/if}
+                    {if $system['coinpayments_enabled']}
+                        <div class="col-12 col-sm-6 plr5">
+                            <button class="js_payment-coinpayments btn btn-block btn-payment plr20 mb10 d-flex align-items-center" 
+                            data-handle="{literal}{{handle}}{/literal}" 
+                            {literal}{{#id}}{/literal} data-id="{literal}{{id}}{/literal}" {literal}{{/id}}{/literal} 
+                            {literal}{{#price}}{/literal} data-price="{literal}{{price}}{/literal}" {literal}{{/price}}{/literal} 
+                            {literal}{{#name}}{/literal} data-name="{literal}{{name}}{/literal}" {literal}{{/name}}{/literal} 
+                            {literal}{{#img}}{/literal} data-img="{literal}{{img}}{/literal}" {literal}{{/img}}{/literal} 
+                            >
+                                <i class="fab fa-bitcoin fa-lg fa-fw mr5" style="color: #FFC107;"></i>{__("CoinPayments")}
+                            </button>
+                        </div>
+                    {/if}
+                    {if $system['2checkout_enabled']}
+                        <div class="col-12 col-sm-6 plr5">
+                            <button class="btn btn-block btn-payment plr20 mb10 d-flex align-items-center" data-toggle="modal" data-url="#twocheckout" data-options='{literal}{{/literal} "handle": "{literal}{{handle}}{/literal}", "price": "{literal}{{price}}{/literal}", "id": "{literal}{{id}}{/literal}" {literal}}{/literal}'>
+                                {include file='__svg_icons.tpl' icon="2co" width="20px" height="20px" class="mr5"}{__("2Checkout")}
+                            </button>
+                        </div>
+                    {/if}
+                    {if $system['bank_transfers_enabled']}
+                        <div class="col-12 col-sm-6 plr5">
+                            <button class="btn btn-block btn-payment plr20 mb10 d-flex align-items-center" data-toggle="modal" data-url="#bank-transfer" data-options='{literal}{{/literal} "handle": "{literal}{{handle}}{/literal}", "price": "{literal}{{price}}{/literal}", "id": "{literal}{{id}}{/literal}" {literal}}{/literal}' data-size="large">
+                                <i class="fa fa-university fa-lg fa-fw mr5" style="color: #4CAF50;"></i>{__("Bank Transfer")}
+                            </button>
+                        </div>
+                    {/if}
+                    {if $page == "packages" && $system['ads_enabled'] &&  $system['packages_wallet_payment_enabled']}
+                        <div class="col-12 col-sm-6 plr5">
+                            <button class="js_payment-wallet-package btn btn-block btn-payment plr20 d-flex align-items-center" data-id="{literal}{{id}}{/literal}">
+                                <i class="fa fa-wallet fa-lg fa-fw mr5" style="color: #007bff;"></i>{__("Wallet Credit")}
+                            </button>
                         </div>
                     {/if}
                     {if $system['creditcard_enabled']}
-                        
-                        <div class="col-12 col-sm-4 plr5">
-                            <button class="js_payment-stripe btn btn-block btn-payment plr20 mb10" 
+                        <div class="col-12 col-sm-6 plr5">
+                            <button class="js_payment-stripe btn btn-block btn-payment plr20 mb10 d-flex align-items-center" 
                             data-handle="{literal}{{handle}}{/literal}" 
                             {literal}{{#id}}{/literal} data-id="{literal}{{id}}{/literal}" {literal}{{/id}}{/literal} 
                             {literal}{{#new_amount}}{/literal} data-price="{literal}{{new_amount}}{/literal}" {literal}{{/new_amount}}{/literal} 
@@ -1742,53 +1788,6 @@
                                 <br>
                                 <b>Total Amount</b> : {literal}{{new_amount}}{/literal}
                             </span>
-                        </div>
-                    {/if}
-                    {if $system['alipay_enabled']}
-                        <div class="col-12 col-sm-4 plr5">
-                            <button class="js_payment-stripe btn btn-block btn-payment plr20 mb10" 
-                            data-handle="{literal}{{handle}}{/literal}" 
-                            {literal}{{#id}}{/literal} data-id="{literal}{{id}}{/literal}" {literal}{{/id}}{/literal} 
-                            {literal}{{#price}}{/literal} data-price="{literal}{{price}}{/literal}" {literal}{{/price}}{/literal} 
-                            {literal}{{#name}}{/literal} data-name="{literal}{{name}}{/literal}" {literal}{{/name}}{/literal} 
-                            {literal}{{#img}}{/literal} data-img="{literal}{{img}}{/literal}" {literal}{{/img}}{/literal} 
-                            data-method="alipay">
-                                <i class="fab fa-alipay fa-lg fa-fw mr5" style="color: #5B9EDD;"></i>{__("Alipay")}
-                            </button>
-                        </div>
-                    {/if}
-                    {if $system['coinpayments_enabled']}
-                        <div class="col-12 col-sm-4 plr5">
-                            <button class="js_payment-coinpayments btn btn-block btn-payment plr20 mb10" 
-                            data-handle="{literal}{{handle}}{/literal}" 
-                            {literal}{{#id}}{/literal} data-id="{literal}{{id}}{/literal}" {literal}{{/id}}{/literal} 
-                            {literal}{{#price}}{/literal} data-price="{literal}{{price}}{/literal}" {literal}{{/price}}{/literal} 
-                            {literal}{{#name}}{/literal} data-name="{literal}{{name}}{/literal}" {literal}{{/name}}{/literal} 
-                            {literal}{{#img}}{/literal} data-img="{literal}{{img}}{/literal}" {literal}{{/img}}{/literal} 
-                            >
-                                <i class="fab fa-bitcoin fa-lg fa-fw mr5" style="color: #FFC107;"></i>{__("CoinPayments")}
-                            </button>
-                        </div>
-                    {/if}
-                    {if $system['2checkout_enabled']}
-                        <div class="col-12 col-sm-4 plr5">
-                            <button class="btn btn-block btn-payment plr20 mb10" data-toggle="modal" data-url="#twocheckout" data-options='{literal}{{/literal} "handle": "{literal}{{handle}}{/literal}", "price": "{literal}{{price}}{/literal}", "id": "{literal}{{id}}{/literal}" {literal}}{/literal}'>
-                                {include file='__svg_icons.tpl' icon="2co" width="20px" height="20px" class="mr5"}{__("2Checkout")}
-                            </button>
-                        </div>
-                    {/if}
-                    {if $system['bank_transfers_enabled']}
-                        <div class="col-12 col-sm-4 plr5">
-                            <button class="btn btn-block btn-payment plr20 mb10" data-toggle="modal" data-url="#bank-transfer" data-options='{literal}{{/literal} "handle": "{literal}{{handle}}{/literal}", "price": "{literal}{{price}}{/literal}", "id": "{literal}{{id}}{/literal}" {literal}}{/literal}' data-size="large">
-                                <i class="fa fa-university fa-lg fa-fw mr5" style="color: #4CAF50;"></i>{__("Bank Transfer")}
-                            </button>
-                        </div>
-                    {/if}
-                    {if $page == "packages" && $system['ads_enabled'] &&  $system['packages_wallet_payment_enabled']}
-                        <div class="col-12 col-sm-4 plr5">
-                            <button class="js_payment-wallet-package btn btn-block btn-payment plr20" data-id="{literal}{{id}}{/literal}">
-                                <i class="fa fa-wallet fa-lg fa-fw mr5" style="color: #007bff;"></i>{__("Wallet Credit")}
-                            </button>
                         </div>
                     {/if}
                 </div>

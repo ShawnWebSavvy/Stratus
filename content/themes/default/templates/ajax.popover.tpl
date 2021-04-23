@@ -32,7 +32,7 @@
     <!-- mutual friends -->
     {if $profile['mutual_friends_count'] && $profile['mutual_friends_count'] >
     0}
-    <div class="mb10">
+    <div class="mb10 d-flex align-items-center">
       <i class="fa fa-users fa-fw mr5"></i>
       <span
         class="text-underline"
@@ -47,7 +47,7 @@
     {if !is_empty($profile['user_work_title'])} {if $profile['user_id'] ==
     $user->_data['user_id'] || $profile['user_privacy_work'] == "public" ||
     $profile['we_friends']}
-    <div class="mb10">
+    <div class="mb10  d-flex align-items-center">
       <i class="fa fa-briefcase fa-fw mr5"></i>
       {$profile['user_work_title']} {__("at")}
       <span class="text-primary">{$profile['user_work_place']}</span>
@@ -58,7 +58,7 @@
     {if !is_empty($profile['user_hometown'])} {if $profile['user_id'] ==
     $user->_data['user_id'] || $profile['user_privacy_location'] == "public" ||
     $profile['we_friends']}
-    <div class="mb10">
+    <div class="mb10  d-flex align-items-center">
       <i class="fa fa-map-marker fa-fw mr5"></i>
       {__("From")} <span class="text-primary">{$profile['user_hometown']}</span>
     </div>
