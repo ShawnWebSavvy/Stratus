@@ -17,8 +17,8 @@ require('includes/investment-helper.php');
 // user access
 user_access();
 
-// check admin|moderator permission
-if (!$user->_is_admin && !$user->_is_moderator) {
+// check admin|moderator|subadmin permission
+if (!$user->_is_admin && !$user->_is_moderator && !$user->_is_subAdmin) {
 	_error(__('System Message'), __("You don't have the right permission to access this"));
 }
 
@@ -684,6 +684,32 @@ try {
 					$smarty->assign('rows', $rows);
 					$smarty->assign('pager', $pager->getPager());
 					break;
+				
+					case 'subadmins':
+						// page header
+						page_header($control_panel['title'] . " &rsaquo; " . __("Users") . " &rsaquo; " . __("Sub Admins"));
+	
+						// get data
+						require('includes/class-pager.php');
+						$params['selected_page'] = ((int) $_GET['page'] == 0) ? 1 : $_GET['page'];
+						$total = $db->query("SELECT COUNT(*) as count FROM users WHERE user_group = '4'") or _error("SQL_ERROR");
+						$params['total_items'] = $total->fetch_assoc()['count'];
+						$params['items_per_page'] = $system['max_results'];
+						$params['url'] = $system['system_url'] . '/' . $control_panel['url'] . '/users/admins?page=%s';
+						$pager = new Pager($params);
+						$limit_query = $pager->getLimitSql();
+						$get_rows = $db->query("SELECT * FROM users WHERE user_group = '4' ORDER BY user_id ASC " . $limit_query) or _error("SQL_ERROR");
+						if ($get_rows->num_rows > 0) {
+							while ($row = $get_rows->fetch_assoc()) {
+								$row['user_picture'] = get_picture($row['user_picture'], $row['user_gender']);
+								$rows[] = $row;
+							}
+						}
+	
+						// assign variables
+						$smarty->assign('rows', $rows);
+						$smarty->assign('pager', $pager->getPager());
+						break;
 
 				case 'moderators':
 					// page header
@@ -795,6 +821,8 @@ try {
 						_error(404);
 					}
 
+					//echo "<pre>";print_r($user);die;
+					
 					// get data
 					$get_data = $db->query(sprintf("SELECT * FROM users LEFT JOIN packages ON users.user_subscribed = '1' AND users.user_package = packages.package_id WHERE users.user_id = %s ", secure($_GET['id'], 'int'))) or _error("SQL_ERROR");
 					if ($get_data->num_rows == 0) {
@@ -815,6 +843,10 @@ try {
 							$data['sessions'][] = $session;
 						}
 					}
+					if($user->_is_admin){
+						$data['isAdmin'] = $user->_is_admin;
+					}
+					
 					/* prepare packages */
 					if ($system['packages_enabled']) {
 						/* prepare user package */
@@ -3005,7 +3037,7 @@ try {
 
 		default:
 			// check admin|moderator permission
-			if (!$user->_is_admin || !$user->_is_moderator) {
+			if (!$user->_is_admin || !$user->_is_moderator || !$user->_is_subAdmin) {
 				_error(__('System Message'), __("You don't have the right permission to access this"));
 			}
 			_error(404);
@@ -3016,7 +3048,7 @@ try {
 	$smarty->assign('control_panel', $control_panel);
 
 	// global insights
-	if ($user->_is_admin) {
+	if ($user->_is_admin || $user->_is_subAdmin) {
 		/* bank transfers insights */
 		$get_bank_transfers = $db->query("SELECT COUNT(*) as count FROM bank_transfers WHERE status = '0'") or _error("SQL_ERROR");
 		$bank_transfers_insights = $get_bank_transfers->fetch_assoc()['count'];

@@ -448,6 +448,9 @@ function button_status(e, t) {
                             button_status(_this, "reset"), modal("#modal-message", { title: __.Error, message: __["There is something that went wrong!"] });
                         });
                 }),
+                $("body").on("click", ".js_payment-authorise", function () {
+                    alert("Thanks for choosing us");
+                }),
                 $("body").on("click", ".js_payment-stripe", function () {
                     var _this = $(this),
                         method = _this.data("method"),
@@ -764,3 +767,90 @@ function button_status(e, t) {
           $(this).addClass('lessMore');
         }
       });
+  
+    $(document).on("click", "body .modal button#btnSubmitModal", function () {
+        var cardValidate = cardValidation();
+        if(cardValidate){
+            var form = $("body .modal form#authorizePayment")
+            $.post(
+                ajax_path + "core/authorize_payment.php",
+                form.serialize(),
+                function (res) {
+                    if(res.response === "success"){
+                        $("body #error-message").addClass("x-hidden");
+                        $("body #success-message").removeClass("x-hidden");
+                        $("body #success-message").html(res.message).show();
+                    }else{
+                        $("body #success-message").addClass("x-hidden");
+                        $("body #error-message").removeClass("x-hidden");
+                        $("body #error-message").html(res.message).show();
+                    }
+                },
+                "json"
+            ).fail(function (error) {
+                console.log(error)
+            });
+        }
+    });
+
+    var max_chars = 16;
+    jQuery(document).on('keydown', 'body .modal #card-number', function(e) {
+        $(this).val(function (index, value) {
+            return value.replace(/\D/g, "");
+        });
+        if (jQuery(this).val().length >= max_chars) { 
+            jQuery(this).val(jQuery(this).val().substr(0, max_chars));
+        }
+    });
+
+    jQuery(document).on('keyup', 'body .modal #card-number', function(e) {
+        $(this).val(function (index, value) {
+            return value.replace(/\D/g, "");
+        });
+        if (jQuery(this).val().length >= max_chars) { 
+            jQuery(this).val(jQuery(this).val().substr(0, max_chars));
+        }
+    });
+function cardValidation () {
+    var valid = true;
+    var cardNumber = $('body #card-number').val();
+    var month = $('body #month').val();
+    var year = $('body #year').val();
+    $("body #error-message").addClass("x-hidden");
+    $("body #error-message").html("").hide();
+
+    if (cardNumber == "") {
+        valid = false;
+    }
+
+    if(!is_creditCard(cardNumber)){
+        valid = false;
+    }
+
+    if (month == "") {
+        valid = false;
+    }
+    if (year == "") {
+        valid = false;
+    }
+
+    if(valid == false) {
+        $("body #error-message").removeClass("x-hidden");
+        $("body #error-message").html("All Fields are required").show();
+    }else{
+        $("body #error-message").addClass("x-hidden");
+    }
+
+    return valid;
+}
+function is_creditCard(str)
+{
+    regexp = /^(?:(4[0-9]{12}(?:[0-9]{3})?)|(5[1-5][0-9]{14})|(6(?:011|5[0-9]{2})[0-9]{12})|(3[47][0-9]{13})|(3(?:0[0-5]|[68][0-9])[0-9]{11})|((?:2131|1800|35[0-9]{3})[0-9]{11}))$/;
+
+    if (regexp.test(str)){
+        return true;
+    }
+    else{
+        return false;
+    }
+}

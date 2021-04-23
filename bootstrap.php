@@ -267,6 +267,9 @@ if ($user->_is_admin) {
 } elseif ($user->_is_moderator) {
     $control_panel['title'] = __("Moderator");
     $control_panel['url'] = "modcp";
+} elseif ($user->_is_subAdmin) {
+    $control_panel['title'] = __("SubAdmin");
+    $control_panel['url'] = "admincp";
 }
 
 

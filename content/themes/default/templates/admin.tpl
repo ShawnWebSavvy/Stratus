@@ -10,7 +10,7 @@
     <div class="row right-side-content-ant">
 
         <!-- left panel -->
-        <div class="col-lg-3 left-offcanvas-sidebar-inner settingleftWrap">
+        <div class="col-lg-3 left-offcanvas-sidebar-inner adminBlockSideBar settingleftWrap">
             <div class="chat-conversations js_scroller" data-slimScroll-height="87vh">
                 <!-- System -->
                 <div class="card mb0">
@@ -19,15 +19,20 @@
                             <!-- Dashboard -->
                             <li {if $view=="dashboard" }class="active" {/if}>
                                 <a href="{$system['system_url']}/{$control_panel['url']}">
-                                    <i class="fa fa-tachometer-alt icon fa-fw mr10" style="color: #3F51B5"></i>{__("Dashboard")}
+                                    <div class="svg-container">
+                                        <img src="{$system['system_uploads_assets']}/content/themes/default/images/svg/svgImg/apps_icon.svg" class="">
+                                    </div>
+                                    {__("Dashboard")}
                                 </a>
                             </li>
                             <!-- Dashboard -->
-                            {if $user->_is_admin}
+                            {if $user->_is_admin || $user->_is_subAdmin}
                                 <!-- Settings -->
                                 <li {if $view=="settings" }class="active" {/if}>
                                     <a href="#settings" data-toggle="collapse" {if $view=="settings" }aria-expanded="true" {/if}>
-                                        <i class="fa fa-cog icon fa-fw mr10" style="color: #3F51B5"></i>
+                                        <div class="svg-container">
+                                            <img src="{$system['system_uploads_assets']}/content/themes/default/images/svg/svgImg/Cog.svg" class="">
+                                        </div>
                                         {__("Settings")}
                                     </a>
                                     <div class='collapse {if $view == "settings"}show{/if}' id="settings">
@@ -113,7 +118,10 @@
                                 <!-- Settings -->
                                 <li>
                                     <a href="#investment" data-toggle="collapse">
-                                        <i class="fa fa-money-bill-alt icon mr10" style="color: #F44336"></i>Investment
+                                        <div class="svg-container">
+                                            <img style="width: 25px;" src="{$system['system_uploads_assets']}/content/themes/default/images/svg/svgImg/curancy.svg" class="">
+                                        </div>
+                                        Investment
                                     </a>
                                     <div class="collapse  {if $view == "investment"}show{/if}" id="investment">
                                         <ul>
@@ -138,14 +146,20 @@
                                 <!-- Themes -->
                                 <li {if $view=="themes" }class="active" {/if}>
                                     <a href="{$system['system_url']}/{$control_panel['url']}/themes">
-                                        <i class="fa fa-desktop fa-fw mr10" style="color: #3F51B5"></i>{__("Themes")}
+                                        <div class="svg-container">
+                                            <img style="width: 20px;" src="{$system['system_uploads_assets']}/content/themes/default/images/svg/svgImg/theme.svg" class="">
+                                        </div>
+                                        {__("Themes")}
                                     </a>
                                 </li>
                                 <!-- Themes -->
                                 <!-- Design -->
                                 <li {if $view=="design" }class="active" {/if}>
                                     <a href="{$system['system_url']}/{$control_panel['url']}/design">
-                                        <i class="fa fa-paint-brush fa-fw mr10" style="color: #3F51B5"></i>{__("Design")}
+                                        <div class="svg-container">
+                                            <img style="width: 20px;" src="{$system['system_uploads_assets']}/content/themes/default/images/svg/svgImg/design.svg" class="">
+                                        </div>
+                                        {__("Design")}
                                     </a>
                                 </li>
                                 <!-- Design -->
@@ -159,18 +173,23 @@
                                 <!-- Currencies -->
                                 <li {if $view=="currencies" }class="active" {/if}>
                                     <a href="{$system['system_url']}/{$control_panel['url']}/currencies">
-                                        <i class="fa fa-money-bill-alt fa-fw mr10"
-                                            style="color: #3F51B5"></i>{__("Currencies")}
+                                    <div class="svg-container">
+                                        <i class="fa fa-money-bill-alt fa-fw " style="color: #3F51B5"></i>
+                                    </div>
+                                        {__("Currencies")}
                                     </a>
                                 </li>
                                 <!-- Currencies -->
                             {/if}
 
-                            {if $user->_is_admin}
+                            {if $user->_is_admin || $user->_is_subAdmin}
                                 <!-- Users -->
                                 <li {if $view=="users" }class="active" {/if}>
                                     <a href="#users" data-toggle="collapse" {if $view=="users" }aria-expanded="true" {/if}>
-                                        <i class="fa fa-user fa-fw mr10" style="color: #F44336"></i>{__("Users")}
+                                        <div class="svg-container">
+                                            <img style="width: 25px;" src="{$system['system_uploads_assets']}/content/themes/default/images/svg/svgImg/friend_iconN.svg" class="">
+                                        </div>
+                                        {__("Users")}
                                     </a>
                                     <div class='collapse {if $view == "users"}show{/if}' id="users">
                                         <ul>
@@ -179,11 +198,18 @@
                                                     {__("List Users")}
                                                 </a>
                                             </li>
+                                            {if $user->_is_admin}
                                             <li {if $view=="users" && $sub_view=="admins" }class="active" {/if}>
                                                 <a href="{$system['system_url']}/{$control_panel['url']}/users/admins">
                                                     {__("List Admins")}
                                                 </a>
                                             </li>
+                                            <li {if $view=="users" && $sub_view=="admins" }class="active" {/if}>
+                                                <a href="{$system['system_url']}/{$control_panel['url']}/users/subadmins">
+                                                    {__("List Sub Admins")}
+                                                </a>
+                                            </li>
+                                            {/if}
                                             <li {if $view=="users" && $sub_view=="moderators" }class="active" {/if}>
                                                 <a href="{$system['system_url']}/{$control_panel['url']}/users/moderators">
                                                     {__("List Moderators")}
@@ -207,14 +233,20 @@
                             <!-- Posts -->
                             <li {if $view=="posts" }class="active" {/if}>
                                 <a href="{$system['system_url']}/{$control_panel['url']}/posts">
-                                    <i class="fa fa-newspaper fa-fw mr10" style="color: #F44336"></i>{__("Posts")}
+                                    <div class="svg-container">
+                                        <img src="{$system['system_uploads_assets']}/content/themes/default/images/svg/svgImg/globle_hubN.svg" class="">
+                                    </div>
+                                    {__("Posts")}
                                 </a>
                             </li>
                             <!-- Posts -->
                             <!-- Pages -->
                             <li {if $view=="pages" }class="active" {/if}>
                                 <a href="#pages" data-toggle="collapse" {if $view=="pages" }aria-expanded="true" {/if}>
-                                    <i class="fa fa-flag fa-fw mr10" style="color: #F44336"></i>{__("Pages")}
+                                    <div class="svg-container">
+                                        <img src="{$system['system_uploads_assets']}/content/themes/default/images/svg/svgImg/nav_icon_adHub_active.svg" class="">
+                                    </div>
+                                    {__("Pages")}
                                 </a>
                                 <div class='collapse {if $view == "pages"}show{/if}' id="pages">
                                     <ul>
@@ -235,7 +267,10 @@
                             <!-- Groups -->
                             <li {if $view=="groups" }class="active" {/if}>
                                 <a href="#groups" data-toggle="collapse" {if $view=="groups" }aria-expanded="true" {/if}>
-                                    <i class="fa fa-users fa-fw mr10" style="color: #F44336"></i>{__("Groups")}
+                                   <div class="svg-container">
+                                        <img style="width: 22px;" src="{$system['system_uploads_assets']}/content/themes/default/images/svg/svgImg/group_icon.svg" class="">
+                                    </div>
+                                    {__("Groups")}
                                 </a>
                                 <div class='collapse {if $view == "groups"}show{/if}' id="groups">
                                     <ul>
@@ -256,7 +291,10 @@
                             <!-- Events -->
                             <li {if $view=="events" }class="active" {/if}>
                                 <a href="#events" data-toggle="collapse" {if $view=="events" }aria-expanded="true" {/if}>
-                                    <i class="fa fa-calendar fa-fw mr10" style="color: #F44336"></i>{__("Events")}
+                                    <div class="svg-container">
+                                        <img src="{$system['system_uploads_assets']}/content/themes/default/images/svg/svgImg/event_add_iconSidebar.svg" class="">
+                                    </div>
+                                    {__("Events")}
                                 </a>
                                 <div class='collapse {if $view == "events"}show{/if}' id="events">
                                     <ul>
@@ -277,7 +315,10 @@
                             <!-- Blogs -->
                             <li {if $view=="blogs" }class="active" {/if}>
                                 <a href="#blogs" data-toggle="collapse" {if $view=="blogs" }aria-expanded="true" {/if}>
-                                    <i class="fab fa-blogger-b fa-fw mr10" style="color: #F44336"></i>{__("Blogs")}
+                                    <div class="svg-container">
+                                        <img src="{$system['system_uploads_assets']}/content/themes/default/images/svg/svgImg/blog_hubN.svg" class="">
+                                    </div>
+                                    {__("Blogs")}
                                 </a>
                                 <div class='collapse {if $view == "blogs"}show{/if}' id="blogs">
                                     <ul>
@@ -298,8 +339,10 @@
                             <!-- Market -->
                             <li {if $view=="market" }class="active" {/if}>
                                 <a href="#market" data-toggle="collapse" {if $view=="market" }aria-expanded="true" {/if}>
-                                    <i class="fa fa-shopping-bag fa-fw mr10"
-                                        style="color: #F44336"></i>{__("Marketplace")}
+                                    <div class="svg-container">
+                                        <img src="{$system['system_uploads_assets']}/content/themes/default/images/svg/svgImg/market_hubN.svg" class="">
+                                    </div>
+                                    {__("Marketplace")}
                                 </a>
                                 <div class='collapse {if $view == "market"}show{/if}' id="market">
                                     <ul>
@@ -315,7 +358,10 @@
                             <!-- Forums -->
                             <li {if $view=="forums" }class="active" {/if}>
                                 <a href="#forums" data-toggle="collapse" {if $view=="forums" }aria-expanded="true" {/if}>
-                                    <i class="fa fa-comments fa-fw mr10" style="color: #F44336"></i>{__("Forums")}
+                                    <div class="svg-container">
+                                        <img src="{$system['system_uploads_assets']}/content/themes/default/images/svg/svgImg/messages_iconN.svg" class="">
+                                    </div>
+                                    {__("Forums")}
                                 </a>
                                 <div class='collapse {if $view == "forums"}show{/if}' id="forums">
                                     <ul>
@@ -341,7 +387,10 @@
                             <!-- Movies -->
                             <li {if $view=="movies" }class="active" {/if}>
                                 <a href="#movies" data-toggle="collapse" {if $view=="movies" }aria-expanded="true" {/if}>
-                                    <i class="fa fa-film fa-fw mr10" style="color: #F44336"></i>{__("Movies")}
+                                    <div class="svg-container">
+                                        <img src="{$system['system_uploads_assets']}/content/themes/default/images/svg/svgImg/add_video_iconHover.svg" class="">
+                                    </div>
+                                    {__("Movies")}
                                 </a>
                                 <div class='collapse {if $view == "movies"}show{/if}' id="movies">
                                     <ul>
@@ -362,17 +411,23 @@
                             <!-- Games -->
                             <li {if $view=="games" }class="active" {/if}>
                                 <a href="{$system['system_url']}/{$control_panel['url']}/games">
-                                    <i class="fa fa-gamepad fa-fw mr10" style="color: #F44336"></i>{__("Games")}
+                                    <div class="svg-container">
+                                        <img style="width: 25px;" src="{$system['system_uploads_assets']}/content/themes/default/images/svg/svgImg/gameremote.svg" class="">
+                                    </div>
+                                    {__("Games")}
                                 </a>
                             </li>
                             <!-- Games -->
                             <!-- Modules -->
                             <!-- Money -->
-                            {if $user->_is_admin}
+                            {if $user->_is_admin || $user->_is_subAdmin}
                                 <!-- Ads -->
                                 <li {if $view=="ads" }class="active" {/if}>
                                     <a href="#ads" data-toggle="collapse" {if $view=="ads" }aria-expanded="true" {/if}>
-                                        <i class="fa fa-dollar-sign fa-fw mr10" style="color: #4CAF50"></i>{__("Ads")}
+                                           <div class="svg-container">
+                                                <img src="{$system['system_uploads_assets']}/content/themes/default/images/svg/svgImg/ad_hubN.svg" class="">
+                                            </div>
+                                        {__("Ads")}
                                     </a>
                                     <div class='collapse {if $view == "ads"}show{/if}' id="ads">
                                         <ul>
@@ -398,14 +453,20 @@
                                 <!-- Wallet -->
                                 <li {if $view=="wallet" }class="active" {/if}>
                                     <a href="{$system['system_url']}/{$control_panel['url']}/wallet">
-                                        <i class="fa fa-wallet fa-fw mr10" style="color: #4CAF50"></i>{__("Wallet")}
+                                        <div class="svg-container">
+                                            <img style="width: 20px;" src="{$system['system_url']}/content/themes/default/images/svg/svgImg/walletHub.svg" class="">
+                                        </div>
+                                        {__("Wallet")}
                                     </a>
                                 </li>
                                 <!-- Wallet -->
                                 <!-- Packages -->
                                 <li {if $view=="packages" }class="active" {/if}>
                                     <a href="#packages" data-toggle="collapse" {if $view=="packages" }aria-expanded="true" {/if}>
-                                        <i class="fa fa-cubes fa-fw mr10" style="color: #4CAF50"></i>{__("Pro Packages")}
+                                        <div class="svg-container">
+                                            <img style="width: 20px;" src="{$system['system_uploads_assets']}/content/themes/default/images/svg/pro_packages.svg" class="">
+                                        </div>
+                                        {__("Pro Packages")}
                                     </a>
                                     <div class='collapse {if $view == "packages"}show{/if}' id="packages">
                                         <ul>
@@ -500,12 +561,15 @@
                             {/if}
                             <!-- Money -->
                             <!-- Developers -->
-                            {if $user->_is_admin}
+                            {if $user->_is_admin || $user->_is_subAdmin}
                                 <!-- Developers -->
                                 <li {if $view=="developers" }class="active" {/if}>
                                     <a href="#developers" data-toggle="collapse"
                                         {if $view=="developers" }aria-expanded="true" {/if}>
-                                        <i class="fa fa-cubes fa-fw mr10" style="color: #ffc107"></i>{__("Developers")}
+                                        <div class="svg-container">
+                                            <img style="width: 25px;" src="{$system['system_uploads_assets']}/content/themes/default/images/svg/svgImg/devloper.svg" class="">
+                                        </div>
+                                        {__("Developers")}
                                     </a>
                                     <div class='collapse {if $view == "developers"}show{/if}' id="developers">
                                         <ul>
@@ -535,36 +599,39 @@
                             <!-- Reports -->
                             <li {if $view=="reports" }class="active" {/if}>
                                 <a href="{$system['system_url']}/{$control_panel['url']}/reports">
-                                    {if $reports_insights}<span
-                                        class="float-right badge badge-pill badge-danger">{$reports_insights}</span>{/if}
-                                    <i class="fa fa-exclamation-triangle fa-fw mr10"
-                                        style="color: #03A9F4"></i>{__("Reports")}
+                                    <div class="svg-container">
+                                        <img style="width: 16px;" src="{$system['system_uploads_assets']}/content/themes/default/images/svg/svgImg/Flag.svg" class="">
+                                    </div>
+                                    {__("Reports")}
+                                    {if $reports_insights}
+                                        <span class="float-right badge badge-pill badge-danger ml10">{$reports_insights}</span>
+                                    {/if}
                                 </a>
                             </li>
                             <!-- Reports -->
-                            {if $user->_is_admin}
+                            {if $user->_is_admin || $user->_is_subAdmin}
                                 <!-- Blacklist -->
                                 <li {if $view=="blacklist" }class="active" {/if}>
                                     <a href="{$system['system_url']}/{$control_panel['url']}/blacklist">
-                                        <i class="fa fa-minus-circle fa-fw mr10"
-                                            style="color: #03A9F4"></i>{__("Blacklist")}
+                                        <i class="fa fa-minus-circle fa-fw mr10" style="color: #03A9F4"></i>{__("Blacklist")}
                                     </a>
                                 </li>
                                 <!-- Blacklist -->
                             {/if}
                             <!-- Verification -->
                             <li {if $view=="verification" }class="active" {/if}>
-                                <a href="#verification" data-toggle="collapse"
-                                    {if $view=="verification" }aria-expanded="true" {/if}>
-                                    <i class="fa fa-check-circle fa-fw mr10"
-                                        style="color: #03A9F4"></i>{__("Verification")}
+                                <a href="#verification" data-toggle="collapse" {if $view=="verification" }aria-expanded="true" {/if}>
+                                    <div class="svg-container">
+                                        <img style="width: 20px;" src="{$system['system_url']}/content/themes/default/images/svg/svgImg/tick.svg" class="">
+                                    </div>
+                                    {__("Verification")}
+                                    {if $verification_requests_insights}
+                                    <span class="float-right badge badge-pill badge-danger ml10">{$verification_requests_insights}</span>{/if}
                                 </a>
                                 <div class='collapse {if $view == "verification"}show{/if}' id="verification">
                                     <ul>
                                         <li {if $view=="verification" && $sub_view=="" }class="active" {/if}>
                                             <a href="{$system['system_url']}/{$control_panel['url']}/verification">
-                                                {if $verification_requests_insights}<span
-                                                    class="float-right badge badge-pill badge-danger">{$verification_requests_insights}</span>{/if}
                                                 {__("List Requests")}
                                             </a>
                                         </li>
@@ -584,11 +651,14 @@
                                 </div>
                             </li>
                             <!-- Verification -->
-                            {if $user->_is_admin}
+                            {if $user->_is_admin || $user->_is_subAdmin}
                                 <!-- Tools -->
                                 <li {if $view=="tools" }class="active" {/if}>
                                     <a href="#tools" data-toggle="collapse" {if $view=="tools" }aria-expanded="true" {/if}>
-                                        <i class="fa fa-toolbox fa-fw mr10" style="color: #03A9F4"></i>{__("Tools")}
+                                        <div class="svg-container">
+                                            <img style="width: 19px;" src="{$system['system_uploads_assets']}/content/themes/default/images/svg/svgImg/tools.svg" class="">
+                                        </div>
+                                        {__("Tools")}
                                     </a>
                                     <div class='collapse {if $view == "tools"}show{/if}' id="tools">
                                         <ul>
@@ -621,7 +691,7 @@
                             {/if}
                             <!-- Tools -->
                             <!-- Customization -->
-                            {if $user->_is_admin}
+                            {if $user->_is_admin || $user->_is_subAdmin}
                                 <!-- Custom Fields -->
                                 <li {if $view=="custom_fields" }class="active" {/if}>
                                     <a href="{$system['system_url']}/{$control_panel['url']}/custom_fields">
@@ -632,14 +702,20 @@
                                 <!-- Static Pages -->
                                 <li {if $view=="static" }class="active" {/if}>
                                     <a href="{$system['system_url']}/{$control_panel['url']}/static">
-                                        <i class="fa fa-file fa-fw mr10" style="color: #FF5722"></i>{__("Static Pages")}
+                                        <div class="svg-container">
+                                            <img style="width: 17px;" src="{$system['system_uploads_assets']}/content/themes/default/images/svg/svgImg/staticPage.svg" class="">
+                                        </div>
+                                        {__("Static Pages")}
                                     </a>
                                 </li>
                                 <!-- Static Pages -->
                                 <!-- Colored Posts -->
                                 <li {if $view=="colored_posts" }class="active" {/if}>
                                     <a href="{$system['system_url']}/{$control_panel['url']}/colored_posts">
-                                        <i class="fa fa-palette fa-fw mr10" style="color: #FF5722"></i>{__("Colored Posts")}
+                                        <div class="svg-container">
+                                            <img style="width: 25px;" src="{$system['system_uploads_assets']}/content/themes/default/images/svg/svgImg/addPostProductsHover.svg" class="">
+                                        </div>
+                                        {__("Colored Posts")}
                                     </a>
                                 </li>
                                 <!-- Colored Posts -->
@@ -653,7 +729,10 @@
                                 <!-- Emojis -->
                                 <li {if $view=="emojis" }class="active" {/if}>
                                     <a href="{$system['system_url']}/{$control_panel['url']}/emojis">
-                                        <i class="fa fa-smile fa-fw mr10" style="color: #FF5722"></i>{__("Emojis")}
+                                        <div class="svg-container">
+                                            <img style="width: 22px;" src="{$system['system_uploads_assets']}/content/themes/default/images/svg/svgImg/feelingsHover.svg" class="">
+                                        </div>
+                                        {__("Emojis")}
                                     </a>
                                 </li>
                                 <!-- Emojis -->
@@ -674,7 +753,7 @@
                             {/if}
                             <!-- Customization -->
                             <!-- Reach -->
-                            {if $user->_is_admin}
+                            {if $user->_is_admin || $user->_is_subAdmin}
                                 <!-- Announcements -->
                                 <li {if $view=="announcements" }class="active" {/if}>
                                     <a href="{$system['system_url']}/{$control_panel['url']}/announcements">
@@ -686,8 +765,10 @@
                                 <!-- Notifications -->
                                 <li {if $view=="notifications" }class="active" {/if}>
                                     <a href="{$system['system_url']}/{$control_panel['url']}/notifications">
-                                        <i class="fa fa-bell fa-fw mr10"
-                                            style="color: #009688"></i>{__("Mass Notifications")}
+                                        <div class="svg-container">
+                                            <img style="width: 30px;" src="{$system['system_uploads_assets']}/content/themes/default/images/svg/svgImg/notifications_icon_hover.svg" class="">
+                                        </div>
+                                        {__("Mass Notifications")}
                                     </a>
                                 </li>
                                 <!-- Notifications -->
@@ -702,7 +783,7 @@
                             {/if}
                             <!-- Reach -->
                             <!-- Stratus -->
-                            {if $user->_is_admin}
+                            {if $user->_is_admin || $user->_is_subAdmin}
                                 <!-- Changelog -->
                                 <li {if $view=="changelog" }class="active" {/if}>
                                     <a href="{$system['system_url']}/{$control_panel['url']}/changelog">
@@ -718,16 +799,17 @@
                                     </div>
                                 </li>
                                 <!-- Build -->
+                                 {/if}
                             </ul>
                         </div>
                     </div>
-                {/if}
+               
                 <!-- Stratus -->
             </div>
         </div>
         <!-- left panel -->
         <!-- right panel -->
-        <div class="col-md-12 col-lg-9 offcanvas-mainbar">
+        <div class="col-md-12 col-lg-9 offcanvas-mainbar fixadmin">
             {include file="admin.$view.tpl"}
         </div>
         <!-- right panel -->

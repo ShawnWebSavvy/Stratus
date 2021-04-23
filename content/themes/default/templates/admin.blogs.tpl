@@ -2,19 +2,19 @@
     <div class="card-header with-icon">
         {if $sub_view == "find"}
             <div class="float-right">
-                <a href="{$system['system_url']}/{$control_panel['url']}/blogs" class="btn btn-sm btn-light btn-antier-skyblue btn-antier-no-border-skyblue">
+                <a href="{$system['system_url']}/{$control_panel['url']}/blogs" class="btn cmn_btn">
                     <i class="fa fa-arrow-circle-left mr5"></i>{__("Go Back")}
                 </a>
             </div>
         {elseif $sub_view == "categories"}
             <div class="float-right">
-                <a href="{$system['system_url']}/{$control_panel['url']}/blogs/add_category"  class="btn btn-sm btn-primary btn-antier-skyblue btn-antier-no-border-skyblue">
+                <a href="{$system['system_url']}/{$control_panel['url']}/blogs/add_category"  class="btn cmn_btn">
                     <i class="fa fa-plus mr5"></i>{__("Add New Category")}
                 </a>
             </div>
         {elseif $sub_view == "add_category" || $sub_view == "edit_category"}
             <div class="float-right">
-                <a href="{$system['system_url']}/{$control_panel['url']}/blogs/categories" class="btn btn-sm btn-light btn-antier-skyblue btn-antier-no-border-skyblue">
+                <a href="{$system['system_url']}/{$control_panel['url']}/blogs/categories" class="btn cmn_btn">
                     <i class="fa fa-arrow-circle-left mr5"></i>{__("Go Back")}
                 </a>
             </div>
@@ -25,11 +25,8 @@
         {if $sub_view == "add_category"} &rsaquo; {__("Categories")} &rsaquo; {__("Add New Category")}{/if}
         {if $sub_view == "edit_category"} &rsaquo; {__("Categories")} &rsaquo; {$data['category_name']}{/if}
     </div>
-
     {if $sub_view == "" || $sub_view == "find"}
-
         <div class="card-body">
-
             <!-- search form -->
             <div class="mb20">
                 <form class="form-inline admin-blog-search-form" action="{$system['system_url']}/{$control_panel['url']}/blogs/find" method="get">
@@ -76,8 +73,8 @@
                                     </td>
                                     <td><span class="js_moment" data-time="{$row['time']}">{$row['time']}</span></td>
                                     <td>
-                                        <a class="btn btn-sm btn-light" href="{$system['system_url']}/blogs/{$row['post_id']}/{$row['article_title_url']}" target="_blank">
-                                            <i class="fa fa-eye mr5"></i>{__("View")}
+                                        <a class="btn cmn_btn" href="{$system['system_url']}/blogs/{$row['post_id']}/{$row['article_title_url']}" target="_blank">
+                                            {__("View")}
                                         </a>
                                     </td>
                                     <td>
@@ -99,9 +96,7 @@
             </div>
             {$pager}
         </div>
-
     {elseif $sub_view == "categories"}
-
         <div class="card-body">
             <div class="table-responsive">
                 <table class="table table-striped table-bordered table-hover js_dataTable">
@@ -133,9 +128,7 @@
                 </table>
             </div>
         </div>
-
     {elseif $sub_view == "add_category"}
-
         <form class="js_ajax-forms blog-add-category-form" data-url="admin/blogs.php?do=add_category">
             <div class="card-body">
                 <div class="form-group form-row">
@@ -146,7 +139,6 @@
                         <input class="form-control" name="category_name">
                     </div>
                 </div>
-
                 <div class="form-group form-row">
                     <label class="col-md-3 form-control-label">
                         {__("Order")}
@@ -155,11 +147,9 @@
                         <input class="form-control" name="category_order">
                     </div>
                 </div>
-
                 <!-- success -->
                 <div class="alert alert-success mb0 x-hidden"></div>
                 <!-- success -->
-
                 <!-- error -->
                 <div class="alert alert-danger mb0 x-hidden"></div>
                 <!-- error -->
@@ -168,9 +158,7 @@
                 <button type="submit" class="btn btn-success btn-antier-green">{__("Save Changes")}</button>
             </div>
         </form>
-
     {elseif $sub_view == "edit_category"}
-
         <form class="js_ajax-forms blog-edit-category-form" data-url="admin/blogs.php?do=edit_category&id={$data['category_id']}">
             <div class="card-body">
                 <div class="form-group form-row">
@@ -181,7 +169,6 @@
                         <input class="form-control" name="category_name" value="{$data['category_name']}">
                     </div>
                 </div>
-
                 <div class="form-group form-row">
                     <label class="col-md-3 form-control-label">
                         {__("Order")}
@@ -190,11 +177,9 @@
                         <input class="form-control" name="category_order" value="{$data['category_order']}">
                     </div>
                 </div>
-
                 <!-- success -->
                 <div class="alert alert-success mb0 x-hidden"></div>
                 <!-- success -->
-
                 <!-- error -->
                 <div class="alert alert-danger mb0 x-hidden"></div>
                 <!-- error -->
@@ -203,6 +188,5 @@
                 <button type="submit" class="btn btn-success btn-antier-green">{__("Save Changes")}</button>
             </div>
         </form>
-        
     {/if}
 </div>

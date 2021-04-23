@@ -2,22 +2,22 @@
     <div class="card-header with-icon">
         {if $sub_view == "banned"}
             <div class="float-right">
-                <a href="{$system['system_url']}/{$control_panel['url']}/blacklist" class="btn btn-sm btn-danger">
-                    <i class="fa fa-minus-circle"></i><span class="ml5 d-none d-lg-inline-block">{__("Manage Banned IPs")}</span>
+                <a href="{$system['system_url']}/{$control_panel['url']}/blacklist" class="btn btn-sm btn-danger mb5" style='color:#fff;'>
+                    <span class="ml5 d-none d-lg-inline-block">{__("Manage Banned IPs")}</span>
                 </a>
             </div>
         {elseif $sub_view == "find"}
             <div class="float-right">
-                <a href="{$system['system_url']}/{$control_panel['url']}/users" class="btn btn-sm btn-light">
+                <a href="{$system['system_url']}/{$control_panel['url']}/users" class="btn cmn_btn mb5" >
                     <i class="fa fa-arrow-circle-left mr5"></i>{__("Go Back")}
                 </a>
             </div>
         {elseif $sub_view == "edit"}
             <div class="float-right">
-                <a href="{$system['system_url']}/{$control_panel['url']}/users" class="btn btn-sm btn-light">
+                <a href="{$system['system_url']}/{$control_panel['url']}/users" class="btn cmn_btn mb5">
                     <i class="fa fa-arrow-circle-left"></i><span class="ml5 d-none d-lg-inline-block">{__("Go Back")}</span>
                 </a>
-                <a target="_blank" href="{$system['system_url']}/{$data['user_name']}" class="btn btn-sm btn-info">
+                <a target="_blank" href="{$system['system_url']}/{$data['user_name']}" class="btn cmn_btn mb5">
                         <img  width="30px" height="30px" src="{$system['system_url']}/content/themes/default/images/svg/svgImg/eye-icon.svg"/>
                     <span class="ml5 d-none d-lg-inline-block">{__("View Profile")}</span>
                 </a>
@@ -26,12 +26,18 @@
                 </button>
             </div>
         {/if}
-        <i class="fa fa-user mr10"></i>{__("Users")}
-        {if $sub_view != "" && $sub_view != "edit"} &rsaquo; {__($sub_view|capitalize)}{/if}
-        {if $sub_view == "edit"} &rsaquo; {$data['user_firstname']} {$data['user_lastname']}{/if}
+
+        <div class='d-flex align-items-center'>
+            <div class="svg-container mr10">
+                <img style="width: 25px;" src="{$system['system_uploads_assets']}/content/themes/default/images/svg/svgImg/friend_iconN.svg" class="">
+            </div>
+            {__("Users")}
+            {if $sub_view != "" && $sub_view != "edit"} &rsaquo; {__($sub_view|capitalize)}{/if}
+            {if $sub_view == "edit"} &rsaquo; {$data['user_firstname']} {$data['user_lastname']}{/if}
+        </div>
     </div>
 
-    {if $sub_view == "" || $sub_view == "admins" || $sub_view == "moderators" || $sub_view == "online" || $sub_view == "banned" || $sub_view == "find"}
+    {if $sub_view == "" || $sub_view == "admins" || $sub_view == "subadmins" || $sub_view == "moderators" || $sub_view == "online" || $sub_view == "banned" || $sub_view == "find"}
         
         <div class="card-body">
 
@@ -146,7 +152,7 @@
 
     {elseif $sub_view == "edit"}
         
-        <div class="card-body">
+        <div class="card-body custom-tabs">
             <div class="row">
                 <div class="col-12 col-md-2 text-center mb20">
                     <img class="img-fluid img-thumbnail rounded-circle" src="{$data['user_picture']}">
@@ -186,44 +192,45 @@
             </div>
 
             <!-- tabs nav -->
-            <ul class="nav nav-tabs custom-tabs mb20">
+            <ul class="nav nav-tabs mb20">
                 <li class="nav-item">
                     <a class="nav-link active" href="#account" data-toggle="tab">
-                        <i class="fa fa-cog fa-fw mr5"></i><strong class="mr5">{__("Account")}</strong>
+                        {__("Account")}
                     </a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="#profile" data-toggle="tab">
-                        <i class="fa fa-user fa-fw mr5"></i><strong class="mr5">{__("Profile")}</strong>
+                        {__("Profile")}
                     </a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="#privacy" data-toggle="tab">
-                        <i class="fa fa-lock fa-fw mr5"></i><strong class="mr5">{__("Privacy")}</strong>
+                        {__("Privacy")}
                     </a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="#security" data-toggle="tab">
-                        <i class="fa fa-shield-alt fa-fw mr5"></i><strong class="mr5">{__("Security")}</strong>
+                        {__("Security")}
                     </a>
                 </li>
                 {if $system['packages_enabled']}
                     <li class="nav-item">
                         <a class="nav-link" href="#membership" data-toggle="tab">
-                            <i class="fa fa-id-card fa-fw mr5"></i><strong class="mr5">{__("Membership")}</strong>
+                            {__("Membership")}
                         </a>
                     </li>
                 {/if}
-                {if $system['wallet_enabled'] || $system['points_enabled']}
-                    <li class="nav-item">
-                        <a class="nav-link" href="#extra" data-toggle="tab">
-                            <i class="fa fa-cubes fa-fw mr5"></i><strong class="mr5">{__("Extra")}</strong>
-                        </a>
-                    </li>
+                {if $data['isAdmin'] == 1}
+                    {if $system['wallet_enabled'] || $system['points_enabled']}
+                        <li class="nav-item">
+                            <a class="nav-link" href="#extra" data-toggle="tab">
+                                <i class="fa fa-cubes fa-fw mr5"></i><strong class="mr5">{__("Extra")}</strong>
+                            </a>
+                        </li>
+                    {/if}
                 {/if}
             </ul>
             <!-- tabs nav -->
-
             <!-- tabs content -->
             <div class="tab-content">
                 <!-- account tab -->
@@ -292,24 +299,29 @@
                             </div>
                         {/if}
 
-                        <div class="form-group form-row">
-                            <label class="col-md-3 form-control-label">
-                                {__("User Group")}
-                            </label>
-                            <div class="col-md-9">
-                                <select class="form-control" name="user_group">
-                                    <option value="1" {if $data['user_group'] == '1'}selected{/if}>
-                                        {__("Administrators")}
-                                    </option>
-                                    <option value="2" {if $data['user_group'] == '2'}selected{/if}>
-                                        {__("Moderators")}
-                                    </option>
-                                    <option value="3" {if $data['user_group'] == '3'}selected{/if}>
-                                        {__("Users")}
-                                    </option>
-                                </select>
+                        {if $data['isAdmin'] == 1}
+                            <div class="form-group form-row">
+                                <label class="col-md-3 form-control-label">
+                                    {__("User Group")}
+                                </label>
+                                <div class="col-md-9">
+                                    <select class="form-control" name="user_group">
+                                        <option value="1" {if $data['user_group'] == '1'}selected{/if}>
+                                            {__("Administrators")}
+                                        </option>
+                                        <option value="2" {if $data['user_group'] == '2'}selected{/if}>
+                                            {__("Moderators")}
+                                        </option>
+                                        <option value="3" {if $data['user_group'] == '3'}selected{/if}>
+                                            {__("Users")}
+                                        </option>
+                                        <option value="4" {if $data['user_group'] == '4'}selected{/if}>
+                                            {__("Sub Administrators")}
+                                        </option>
+                                    </select>
+                                </div>
                             </div>
-                        </div>
+                        {/if}
 
                         <div class="form-group form-row">
                             <label class="col-md-3 form-control-label">
@@ -1241,6 +1253,7 @@
                 <!-- membership tab -->
 
                 <!-- extra tab -->
+            
                 <div class="tab-pane" id="extra">
                     {if $system['wallet_enabled']}
                         <div class="heading-small mb20">
@@ -1318,6 +1331,7 @@
                         </div>
                     {/if}
                 </div>
+                
                 <!-- extra tab -->
             </div>
             <!-- tabs content -->

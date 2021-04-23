@@ -2,13 +2,18 @@
     <div class="card-header with-icon">
         {if $sub_view == "find"}
             <div class="float-right">
-                <a href="{$system['system_url']}/{$control_panel['url']}/posts" class="btn btn-sm btn-light btn-antier-skyblue btn-antier-no-border-skyblue">
+                <a href="{$system['system_url']}/{$control_panel['url']}/posts" class="btn cmn_btn">
                     <i class="fa fa-arrow-circle-left mr5"></i>{__("Go Back")}
                 </a>
             </div>
         {/if}
-        <i class="fa fa-newspaper mr10"></i>{__("Posts")}
-        {if $sub_view == "find"} &rsaquo; {__("Find")}{/if}
+        <div class="d-flex align-items-center">
+            <div class="svg-container mr10">
+                <img src="{$system['system_uploads_assets']}/content/themes/default/images/svg/svgImg/globle_hubN.svg" class="">
+            </div>
+            {__("Posts")}
+            {if $sub_view == "find"} &rsaquo; {__("Find")}{/if}
+        </div>
     </div>
 
     {if $sub_view == "" || $sub_view == "find"}
@@ -148,7 +153,7 @@
                                     <td><span class="js_moment" data-time="{$row['time']}">{$row['time']}</span></td>
                                     <td>
                                         <a class="btn btn-sm btn-light" href="{$system['system_url']}/posts/{$row['post_id']}" target="_blank">
-                                            <i class="fa fa-eye mr5"></i>{__("View")}
+                                            {__("View")}
                                         </a>
                                     </td>
                                     <td>

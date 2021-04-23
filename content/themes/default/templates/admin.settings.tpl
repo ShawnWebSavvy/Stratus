@@ -3,28 +3,28 @@
     {if $sub_view == ""}
 
         <!-- card-header -->
-        <div class="card-header with-icon with-nav">
+        <div class="card-header with-icon with-nav custom-tabs">
             <!-- panel title -->
-            <div class="mb20">
+            <div class="mb20 d-flex align-items-center">
                 <i class="fa fa-cog mr10"></i>{__("Settings")}
             </div>
             <!-- panel title -->
 
             <!-- panel nav -->
-            <ul class="nav nav-tabs custom-tabs">
+            <ul class="nav nav-tabs ">
                 <li class="nav-item">
                     <a class="nav-link active" href="#General" data-toggle="tab">
-                        <i class="fa fa-server fa-fw mr5"></i><strong>{__("General")}</strong>
+                        {__("General")}
                     </a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="#Features" data-toggle="tab">
-                        <i class="fa fa-microchip fa-fw mr5"></i><strong>{__("Features")}</strong>
+                        {__("Features")}
                     </a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="#Modules" data-toggle="tab">
-                        <i class="fa fa-dice-d6 fa-fw mr5"></i><strong>{__("Modules")}</strong>
+                        {__("Modules")}
                     </a>
                 </li>
             </ul>
@@ -57,9 +57,9 @@
                         </div>
 
                         <div class="form-table-row">
-                            <div class="avatar">
+                            {* <div class="avatar">
                                 {include file='__svg_icons.tpl' icon="website_live" width="40px" height="40px"}
-                            </div>
+                            </div> *}
                             <div>
                                 <div class="form-control-label h6">{__("Website Live")}</div>
                                 <div class="form-text d-none d-sm-block">{__("Turn the entire website On and Off")}</div>
@@ -736,7 +736,7 @@
     {elseif $sub_view == "posts"}
 
         <!-- card-header -->
-        <div class="card-header with-icon">
+        <div class="card-header with-icon d-flex align-items-center">
             <!-- panel title -->
             <i class="fa fa-cog mr10"></i>{__("Settings")} &rsaquo; {__("Posts")}
             <!-- panel title -->
@@ -747,9 +747,9 @@
         <form class="js_ajax-forms admin-setting-edit-post-form" data-url="admin/settings.php?edit=posts">
             <div class="card-body">
                 <div class="form-table-row">
-                    <div class="avatar">
+                    {* <div class="avatar">
                         {include file='__svg_icons.tpl' icon="24_hours" width="40px" height="40px"}
-                    </div>
+                    </div> *}
                     <div>
                         <div class="form-control-label h6 mb5">{__("Stories")}</div>
                         <div class="form-text d-none d-sm-block">
@@ -769,9 +769,9 @@
                 <div class="divider"></div>
 
                 <div class="form-table-row">
-                    <div class="avatar">
+                    {* <div class="avatar">
                         {include file='__svg_icons.tpl' icon="popularity" width="40px" height="40px"}
-                    </div>
+                    </div> *}
                     <div>
                         <div class="form-control-label h6">{__("Popular Posts")}</div>
                         <div class="form-text d-none d-sm-block">
@@ -791,9 +791,9 @@
                 <div class="divider"></div>
 
                 <div class="form-table-row">
-                    <div class="avatar">
+                    {* <div class="avatar">
                         {include file='__svg_icons.tpl' icon="posts_discover" width="40px" height="40px"}
-                    </div>
+                    </div> *}
                     <div>
                         <div class="form-control-label h6">{__("Discover Posts")}</div>
                         <div class="form-text d-none d-sm-block">
@@ -813,9 +813,9 @@
                 <div class="divider"></div>
 
                 <div class="form-table-row">
-                    <div class="avatar">
+                    {* <div class="avatar">
                         {include file='__svg_icons.tpl' icon="memories" width="40px" height="40px"}
-                    </div>
+                    </div> *}
                     <div>
                         <div class="form-control-label h6 mb5">{__("Memories")}</div>
                         <div class="form-text d-none d-sm-block">
@@ -835,9 +835,9 @@
                 <div class="divider"></div>
 
                 <div class="form-table-row">
-                    <div class="avatar">
+                    {* <div class="avatar">
                         {include file='__svg_icons.tpl' icon="wall_posts" width="40px" height="40px"}
-                    </div>
+                    </div> *}
                     <div>
                         <div class="form-control-label h6">{__("Wall Posts")}</div>
                         <div class="form-text d-none d-sm-block">{__("Users can publish posts on their friends walls")}
@@ -855,9 +855,9 @@
                 <div class="divider"></div>
 
                 <div class="form-table-row">
-                    <div class="avatar">
+                    {* <div class="avatar">
                         {include file='__svg_icons.tpl' icon="posts_colored" width="40px" height="40px"}
-                    </div>
+                    </div> *}
                     <div>
                         <div class="form-control-label h6">{__("Colored Posts")}</div>
                         <div class="form-text d-none d-sm-block">
@@ -878,9 +878,9 @@
                 <div class="divider"></div>
 
                 <div class="form-table-row">
-                    <div class="avatar">
+                    {* <div class="avatar">
                         {include file='__svg_icons.tpl' icon="smile" width="40px" height="40px"}
-                    </div>
+                    </div> *}
                     <div>
                         <div class="form-control-label h6">{__("Feelings/Activity Posts")}</div>
                         <div class="form-text d-none d-sm-block">
@@ -899,9 +899,9 @@
                 <div class="divider"></div>
 
                 <div class="form-table-row">
-                    <div class="avatar">
+                    {* <div class="avatar">
                         {include file='__svg_icons.tpl' icon="voice_notes" width="40px" height="40px"}
-                    </div>
+                    </div> *}
                     <div>
                         <div class="form-control-label h6">{__("Voice Notes")}</div>
                         <div class="form-text d-none d-sm-block">
@@ -918,9 +918,9 @@
                 </div>
 
                 <div class="form-table-row">
-                    <div class="avatar">
+                    {* <div class="avatar">
                         <div style="width: 40px; height: 40px;"></div>
-                    </div>
+                    </div> *}
                     <div>
                         <div class="form-control-label h6">{__("Voice Notes in Comments")}</div>
                         <div class="form-text d-none d-sm-block">
@@ -939,9 +939,9 @@
                 <div class="divider"></div>
 
                 <div class="form-table-row">
-                    <div class="avatar">
+                    {* <div class="avatar">
                         {include file='__svg_icons.tpl' icon="polls" width="40px" height="40px"}
-                    </div>
+                    </div> *}
                     <div>
                         <div class="form-control-label h6">{__("Polls")}</div>
                         <div class="form-text d-none d-sm-block">{__("Turn the poll posts On and Off")}</div>
@@ -958,9 +958,9 @@
                 <div class="divider"></div>
 
                 <div class="form-table-row">
-                    <div class="avatar">
+                    {* <div class="avatar">
                         {include file='__svg_icons.tpl' icon="map" width="40px" height="40px"}
-                    </div>
+                    </div> *}
                     <div>
                         <div class="form-control-label h6">{__("Geolocation")}</div>
                         <div class="form-text d-none d-sm-block">{__("Turn the post Geolocation On and Off")}</div>
@@ -989,9 +989,9 @@
                 <div class="divider"></div>
 
                 <div class="form-table-row">
-                    <div class="avatar">
+                    {* <div class="avatar">
                         {include file='__svg_icons.tpl' icon="gif" width="40px" height="40px"}
-                    </div>
+                    </div> *}
                     <div>
                         <div class="form-control-label h6">{__("GIF")}</div>
                         <div class="form-text d-none d-sm-block">{__("Turn the gif posts On and Off")}</div>
@@ -1020,9 +1020,9 @@
                 <div class="divider"></div>
 
                 <div class="form-table-row">
-                    <div class="avatar">
+                    {* <div class="avatar">
                         {include file='__svg_icons.tpl' icon="language" width="40px" height="40px"}
-                    </div>
+                    </div> *}
                     <div>
                         <div class="form-control-label h6">{__("Post Translation")}</div>
                         <div class="form-text d-none d-sm-block">{__("Turn the post translation On and Off")}</div>
@@ -1051,9 +1051,9 @@
                 <div class="divider"></div>
 
                 <div class="form-table-row">
-                    <div class="avatar">
+                    {* <div class="avatar">
                         {include file='__svg_icons.tpl' icon="youtube" width="40px" height="40px"}
-                    </div>
+                    </div> *}
                     <div>
                         <div class="form-control-label h6">{__("Smart YouTube Player")}</div>
                         <div class="form-text d-none d-sm-block">{__("Smart YouTube player will save a lot of bandwidth")}
@@ -1071,9 +1071,9 @@
                 <div class="divider"></div>
 
                 <div class="form-table-row">
-                    <div class="avatar">
+                    {* <div class="avatar">
                         {include file='__svg_icons.tpl' icon="social_share" width="40px" height="40px"}
-                    </div>
+                    </div> *}
                     <div>
                         <div class="form-control-label h6">{__("Social Media Share")}</div>
                         <div class="form-text d-none d-sm-block">{__("Turn the social media share for posts On and Off")}
@@ -1162,9 +1162,9 @@
                 <div class="divider"></div>
 
                 <div class="form-table-row">
-                    <div class="avatar">
+                    {* <div class="avatar">
                         {include file='__svg_icons.tpl' icon="spy" width="40px" height="40px"}
-                    </div>
+                    </div> *}
                     <div>
                         <div class="form-control-label h6 mb5">{__("Post As Anonymous")}</div>
                         <div class="form-text d-none d-sm-block">
@@ -1184,9 +1184,9 @@
                 <div class="divider"></div>
 
                 <div class="form-table-row">
-                    <div class="avatar">
+                    {* <div class="avatar">
                         {include file='__svg_icons.tpl' icon="user_online" width="40px" height="40px"}
-                    </div>
+                    </div> *}
                     <div>
                         <div class="form-control-label h6 mb5">{__("Online Status on Posts")}</div>
                         <div class="form-text d-none d-sm-block">
@@ -1205,9 +1205,9 @@
                 <div class="divider"></div>
 
                 <div class="form-table-row">
-                    <div class="avatar">
+                    {* <div class="avatar">
                         {include file='__svg_icons.tpl' icon="scroll" width="40px" height="40px"}
-                    </div>
+                    </div> *}
                     <div>
                         <div class="form-control-label h6 mb5">{__("Mobile Infinite Scroll")}</div>
                         <div class="form-text d-none d-sm-block">
@@ -1226,9 +1226,9 @@
                 <div class="divider"></div>
 
                 <div class="form-table-row">
-                    <div class="avatar">
+                    {* <div class="avatar">
                         {include file='__svg_icons.tpl' icon="trending" width="40px" height="40px"}
-                    </div>
+                    </div> *}
                     <div>
                         <div class="form-control-label h6 mb5">{__("Trending Hashtags")}</div>
                         <div class="form-text d-none d-sm-block">{__("Turn the trending hashtags feature On and Off")}</div>
@@ -1291,28 +1291,28 @@
     {elseif $sub_view == "registration"}
 
         <!-- card-header -->
-        <div class="card-header with-icon with-nav">
+        <div class="card-header with-icon with-nav custom-tabs">
             <!-- panel title -->
-            <div class="mb20">
+            <div class="mb20 d-flex align-items-center">
                 <i class="fa fa-cog mr10"></i>{__("Settings")} &rsaquo; {__("Registration")}
             </div>
             <!-- panel title -->
 
             <!-- panel nav -->
-            <ul class="nav nav-tabs custom-tabs">
+            <ul class="nav nav-tabs ">
                 <li class="nav-item">
                     <a class="nav-link active" href="#General" data-toggle="tab">
-                        <i class="fa fa-sign-in-alt fa-fw mr5"></i><strong>{__("General")}</strong>
+                        {__("General")}
                     </a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="#Social" data-toggle="tab">
-                        <i class="fab fa-facebook fa-fw mr5"></i><strong>{__("Social Login")}</strong>
+                        {__("Social Login")}
                     </a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="#Invitation" data-toggle="tab">
-                        <i class="far fa-handshake fa-fw mr5"></i><strong>{__("Invitation Codes")}</strong>
+                        {__("Invitation Codes")}
                     </a>
                 </li>
             </ul>
@@ -2048,7 +2048,7 @@
     {elseif $sub_view == "email"}
 
         <!-- card-header -->
-        <div class="card-header with-icon">
+        <div class="card-header with-icon d-flex align-items-center">
             <!-- panel title -->
             <i class="fa fa-cog mr10"></i>{__("Settings")} &rsaquo; {__("Email")}
             <!-- panel title -->
@@ -2185,7 +2185,7 @@
     {elseif $sub_view == "sms"}
 
         <!-- card-header -->
-        <div class="card-header with-icon">
+        <div class="card-header with-icon d-flex align-items-center">
             <!-- panel title -->
             <i class="fa fa-cog mr10"></i>{__("Settings")} &rsaquo; {__("SMS")}
             <!-- panel title -->
@@ -2369,28 +2369,28 @@
     {elseif $sub_view == "notifications"}
 
         <!-- card-header -->
-        <div class="card-header with-icon with-nav">
+        <div class="card-header with-icon with-nav custom-tabs">
             <!-- panel title -->
-            <div class="mb20">
+            <div class="mb20 d-flex align-items-center">
                 <i class="fa fa-bell mr10"></i>{__("Settings")} &rsaquo; {__("Notifications")}
             </div>
             <!-- panel title -->
 
             <!-- panel nav -->
-            <ul class="nav nav-tabs custom-tabs">
+            <ul class="nav nav-tabs ">
                 <li class="nav-item">
                     <a class="nav-link active" href="#Website" data-toggle="tab">
-                        <i class="fa fa-bell fa-fw mr5"></i><strong>{__("Website Notifications")}</strong>
+                        {__("Website Notifications")}
                     </a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="#Email" data-toggle="tab">
-                        <i class="fa fa-envelope fa-fw mr5"></i><strong>{__("Email Notifications")}</strong>
+                        {__("Email Notifications")}
                     </a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="#Push" data-toggle="tab">
-                        <i class="fas fa-broadcast-tower fa-fw mr5"></i><strong>{__("Push Notifications")}</strong>
+                        {__("Push Notifications")}
                     </a>
                 </li>
             </ul>
@@ -2632,7 +2632,7 @@
     {elseif $sub_view == "chat"}
 
         <!-- card-header -->
-        <div class="card-header with-icon">
+        <div class="card-header with-icon d-flex align-items-center">
             <!-- panel title -->
             <i class="fa fa-cog mr10"></i>{__("Settings")} &rsaquo; {__("Chat")}
             <!-- panel title -->
@@ -2812,7 +2812,7 @@
     {elseif $sub_view == "live"}
 
         <!-- card-header -->
-        <div class="card-header with-icon">
+        <div class="card-header with-icon d-flex align-items-center">
             <!-- panel title -->
             <i class="fa fa-cog mr10"></i>{__("Settings")} &rsaquo; {__("Live Stream")}
             <!-- panel title -->
@@ -3019,33 +3019,33 @@
     {elseif $sub_view == "uploads"}
 
         <!-- card-header -->
-        <div class="card-header with-icon with-nav">
+        <div class="card-header with-icon with-nav custom-tabs">
             <!-- panel title -->
-            <div class="mb20">
+            <div class="mb20 d-flex align-items-center">
                 <i class="fa fa-cog mr10"></i>{__("Settings")} &rsaquo; {__("Uploads")}
             </div>
             <!-- panel title -->
 
             <!-- panel nav -->
-            <ul class="nav nav-tabs custom-tabs">
+            <ul class="nav nav-tabs ">
                 <li class="nav-item">
                     <a class="nav-link active" href="#General" data-toggle="tab">
-                        <i class="fa fa-upload fa-fw mr5"></i><strong class="pr5">{__("General")}</strong>
+                        {__("General")}
                     </a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="#S3" data-toggle="tab">
-                        <i class="fab fa-amazon fa-fw mr5"></i><strong class="pr5">{__("Amazon S3")}</strong>
+                        {__("Amazon S3")}
                     </a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="#DigitalOcean" data-toggle="tab">
-                        <i class="fab fa-digital-ocean fa-fw mr5"></i><strong class="pr5">{__("DigitalOcean")}</strong>
+                        {__("DigitalOcean")}
                     </a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="#FTP" data-toggle="tab">
-                        <i class="fa fa-cloud-upload-alt fa-fw mr5"></i><strong class="pr5">{__("FTP")}</strong>
+                        {__("FTP")}
                     </a>
                 </li>
             </ul>
@@ -3972,7 +3972,7 @@
     {elseif $sub_view == "security"}
 
         <!-- card-header -->
-        <div class="card-header with-icon">
+        <div class="card-header with-icon d-flex align-items-center">
             <!-- panel title -->
             <i class="fa fa-cog mr10"></i>{__("Settings")} &rsaquo; {__("Security")}
             <!-- panel title -->
@@ -4184,44 +4184,43 @@
     {elseif $sub_view == "payments"}
 
         <!-- card-header -->
-        <div class="card-header with-icon with-nav">
+        <div class="card-header with-icon with-nav custom-tabs">
             <!-- panel title -->
-            <div class="mb20">
+            <div class="mb20 d-flex align-items-center">
                 <i class="fa fa-cog mr10"></i>{__("Settings")} &rsaquo; {__("Payments")}
             </div>
             <!-- panel title -->
 
             <!-- panel nav -->
-            <ul class="nav nav-tabs custom-tabs">
+            <ul class="nav nav-tabs ">
                 <li class="nav-item">
                     <a class="nav-link active" href="#Paypal" data-toggle="tab">
-                        <i class="fab fa-paypal fa-fw mr5"></i><strong class="pr5">{__("PayPal")}</strong>
+                        {__("PayPal")}
                     </a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="#Stripe" data-toggle="tab">
-                        <i class="fab fa-stripe-s fa-fw mr5"></i><strong class="pr5">{__("Stripe")}</strong>
+                        {__("Stripe")}
                     </a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="#CoinPayments" data-toggle="tab">
-                        <i class="fab fa-bitcoin fa-fw mr5"></i><strong class="pr5">{__("CoinPayments")}</strong>
+                        {__("CoinPayments")}
                     </a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="#TwoCheckout" data-toggle="tab">
-                        {include file='__svg_icons.tpl' icon="2co" width="20px" height="20px" class="mr5"}<strong
-                            class="pr5">{__("2Checkout")}</strong>
+                        {__("2Checkout")}
                     </a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="#Bank" data-toggle="tab">
-                        <i class="fa fa-university fa-fw mr5"></i><strong class="pr5">{__("Bank Transfers")}</strong>
+                        {__("Bank Transfers")}
                     </a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="#Currency" data-toggle="tab">
-                        <i class="fa fa-dollar-sign fa-fw mr5"></i><strong class="pr5">{__("Currency")}</strong>
+                        {__("Currency")}
                     </a>
                 </li>
                 <li class="nav-item">
@@ -4820,7 +4819,7 @@
     {elseif $sub_view == "limits"}
 
         <!-- card-header -->
-        <div class="card-header with-icon">
+        <div class="card-header with-icon d-flex align-items-center">
             <!-- panel title -->
             <i class="fa fa-cog mr10"></i>{__("Settings")} &rsaquo; {__("Limits")}
             <!-- panel title -->
@@ -4936,7 +4935,7 @@
     {elseif $sub_view == "analytics"}
 
         <!-- card-header -->
-        <div class="card-header with-icon">
+        <div class="card-header with-icon d-flex align-items-center">
             <!-- panel title -->
             <i class="fa fa-cog mr10"></i>{__("Settings")} &rsaquo; {__("Analytics")}
             <!-- panel title -->
@@ -4974,7 +4973,7 @@
     {elseif $sub_view == "investment"}
 
         <!-- card-header -->
-        <div class="card-header with-icon">
+        <div class="card-header with-icon d-flex align-items-center">
             <!-- panel title -->
             <i class="fa fa-cog mr10"></i>{__("Settings")} &rsaquo; {__("Investment")}
             <!-- panel title -->
@@ -5016,7 +5015,7 @@
     {elseif $sub_view == "referral"}
 
         <!-- card-header -->
-        <div class="card-header with-icon">
+        <div class="card-header with-icon d-flex align-items-center">
             <!-- panel title -->
             <i class="fa fa-cog mr10"></i>{__("Settings")} &rsaquo; {__("Investment Referral")}
             <!-- panel title -->

@@ -14,6 +14,7 @@ class AuthorizeNetPayment
 
     public function __construct()
     {
+        global $system;
         $this->APILoginId = $system['authorize_login_id'];
         $this->APIKey = $system['authorize_trans_key'];
         $this->refId = 'ref' . time();
@@ -35,7 +36,7 @@ class AuthorizeNetPayment
     {
         $creditCard = new AnetAPI\CreditCardType();
         $creditCard->setCardNumber($cardDetails["card-number"]);
-        $creditCard->setExpirationDate( $cardDetails["year"] . "-" . $cardDetails["month"]);
+        $creditCard->setExpirationDate( $cardDetails["expire_Year"] . "-" . $cardDetails["expire_Month"]);
         $paymentType = new AnetAPI\PaymentType();
         $paymentType->setCreditCard($creditCard);
         
@@ -54,8 +55,9 @@ class AuthorizeNetPayment
 
     public function chargeCreditCard($cardDetails)
     {
-        $paymentType = $this->setCreditCard($_POST);
-        $transactionRequestType = $this->setTransactionRequestType($paymentType, $_POST["amount"]);
+        global $system;
+        $paymentType = $this->setCreditCard($cardDetails);
+        $transactionRequestType = $this->setTransactionRequestType($paymentType, $_SESSION['wallet_pay_to_user']);
         
         $request = new AnetAPI\CreateTransactionRequest();
         $request->setMerchantAuthentication($this->merchantAuthentication);

@@ -55,3 +55,6 @@ div#modal .whoreactModal .float-right._user_action_ button.js_friend-remove img:
 .post-header .post-meta .dropdown-toggle .share_sign_img {display: flex;}
 .shareButtonIcon {display: flex;align-items: center;}
 .shareButtonIcon .fa-share{margin-right: 8px;}
+/* #authorizePayment .form-group {width: 100%;}
+#authorizePayment .form-group .field-row {display: inline-block;width: 100%;}
+#authorizePayment .form-group .field-row {display: inline-block;width: 100%;} */

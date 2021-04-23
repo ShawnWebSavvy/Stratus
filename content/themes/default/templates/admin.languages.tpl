@@ -2,20 +2,23 @@
     <div class="card-header with-icon">
         {if $sub_view == ""}
             <div class="float-right">
-                <a href="{$system['system_url']}/{$control_panel['url']}/languages/add" class="btn btn-sm btn-primary">
+                <a href="{$system['system_url']}/{$control_panel['url']}/languages/add" class="btn cmn_btn">
                     <i class="fa fa-plus mr5"></i>{__("Add New Language")}
                 </a>
             </div>
         {elseif $sub_view == "add" || $sub_view == "edit"}
             <div class="float-right">
-                <a href="{$system['system_url']}/{$control_panel['url']}/languages" class="btn btn-sm btn-light">
+                <a href="{$system['system_url']}/{$control_panel['url']}/languages" class="btn cmn_btn">
                     <i class="fa fa-arrow-circle-left mr5"></i>{__("Go Back")}
                 </a>
             </div>
         {/if}
-        <i class="fa fa-globe mr10"></i>{__("Languages")}
-        {if $sub_view == "edit"} &rsaquo; {$data['title']}{/if}
-        {if $sub_view == "add"} &rsaquo; {__("Add New Language")}{/if}
+        <div class="d-flex align-items-center">
+            <i class="fa fa-language fa-fw mr10" style="color: #3F51B5"></i>
+            {__("Languages")}
+            {if $sub_view == "edit"} &rsaquo; {$data['title']}{/if}
+            {if $sub_view == "add"} &rsaquo; {__("Add New Language")}{/if}
+        </div>
     </div>
 
     {if $sub_view == ""}

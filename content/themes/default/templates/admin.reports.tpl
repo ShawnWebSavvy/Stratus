@@ -1,11 +1,16 @@
 <div class="card">
     <div class="card-header with-icon">
         <div class="float-right">
-            <button type="button" class="btn btn-sm btn-success js_admin-deleter" data-handle="reports">
+            <button type="button" class="btn cmn_btn js_admin-deleter" data-handle="reports">
                 <i class="fa fa-check"></i><span class="ml5 d-none d-lg-inline-block">{__("Mark All As Safe")}</span>
             </button>
         </div>
-        <i class="fa fa-exclamation-triangle mr10"></i>{__("Reports")}
+        <div class="d-flex align-items-center">
+            <div class="svg-container mr10">
+                <img src="{$system['system_uploads_assets']}/content/themes/default/images/svg/svgImg/Flag.svg" class="">
+            </div>
+            {__("Reports")}
+        </div>
     </div>
     <div class="card-body">
         <div class="table-responsive">
@@ -47,19 +52,19 @@
                                     </a>
                                 {elseif $row['node_type'] == "post"}
                                     <a class="btn btn-sm btn-light" href="{$system['system_url']}/posts/{$row['node_id']}" target="_blank">
-                                        <i class="fa fa-eye mr5"></i>{__("View Post")}
+                                       {__("View Post")}
                                     </a>
                                 {elseif $row['node_type'] == "comment"}
                                     <a class="btn btn-sm btn-light" href="{$row['url']}" target="_blank">
-                                        <i class="fa fa-eye mr5"></i>{__("View Comment")}
+                                        {__("View Comment")}
                                     </a>
                                 {elseif $row['node_type'] == "forum_thread"}
                                     <a class="btn btn-sm btn-light" href="{$row['url']}" target="_blank">
-                                        <i class="fa fa-eye mr5"></i>{__("View Thread")}
+                                        {__("View Thread")}
                                     </a>
                                 {elseif $row['node_type'] == "forum_reply"}
                                     <a class="btn btn-sm btn-light" href="{$row['url']}" target="_blank">
-                                        <i class="fa fa-eye mr5"></i>{__("View Reply")}
+                                        {__("View Reply")}
                                     </a>
                                 {/if}
                             </td>
@@ -100,7 +105,7 @@
                                         <i class="fa fa-pencil-alt"></i>
                                     </a>
                                 {/if}
-                                <button data-toggle="tooltip" data-placement="top" title='{__("Mark as Safe")}' class="btn btn-sm btn-icon btn-rounded btn-success js_admin-deleter" data-handle="report" data-id="{$row['report_id']}">
+                                <button data-toggle="tooltip" data-placement="top" title='{__("Mark as Safe")}' class="btn btn-sm btn-icon btn-rounded btn-primary js_admin-deleter" data-handle="report" data-id="{$row['report_id']}">
                                     <i class="fa fa-check"></i>
                                 </button>
                                 <button data-toggle="tooltip" data-placement="top" title='{__("Delete")}' class="btn btn-sm btn-icon btn-rounded btn-danger js_admin-deleter" data-handle="{$row['node_type']}" data-id="{$row['node_id']}" data-node="{$row['report_id']}">
