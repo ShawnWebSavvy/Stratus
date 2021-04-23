@@ -1947,7 +1947,7 @@
                             <label class="col-md-3 form-control-label">
                                 {__("Bank Receipt")}
                             </label>
-                            <div class="col-md-9">
+                            {* <div class="col-md-9">
                                 <div class="x-image">
                                     <button type="button" class="close x-hidden js_x-image-remover" title='{__("Remove")}'>
                                         <span>×</span>
@@ -1964,9 +1964,9 @@
                                 <span class="form-text">
                                     {__("Please attach your bank receipt")}
                                 </span>
-                            </div>
+                            </div> *}
                         </div>
-
+                         <input type="hidden" class="js_x-image-input" name="bank_receipt" value="">
                         <!-- success -->
                         <div class="alert alert-success mb0 x-hidden"></div>
                         <!-- success -->
