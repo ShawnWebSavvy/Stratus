@@ -2006,10 +2006,11 @@ $(document).ready(function (e) {
         });
     }));
 
-    $("#ImageBrowse").on('change', function() {
-        alert('here');
-        //$('.secret').val(secret);
-        //$("#bank_trans").submit();
+    $("#ImageBrowse").change( function() {
+       // alert('here');
+
+        $('.secret').val(secret);
+        $("#bank_trans").submit();
     });
 });
 </script>
