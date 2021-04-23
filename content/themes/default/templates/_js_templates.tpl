@@ -1973,7 +1973,7 @@
                             <input type="hidden" class="secret" name="secret" value="{$_SESSION['secret']}">
 
                     </form>
-            </script>
+
 {/if}
 <!-- Bank Transfer -->
 {/if}
@@ -2006,8 +2006,8 @@ $(document).ready(function (e) {
         });
     }));
 
-    $("#bank_trans #ImageBrowse").change( function() {
-        alert('here');
+    $("#ImageBrowse").change( function() {
+      //  alert('here');
 
         $('.secret').val(secret);
         $("#bank_trans").submit();
