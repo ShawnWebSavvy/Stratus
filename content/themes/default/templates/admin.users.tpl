@@ -231,7 +231,6 @@
                 {/if}
             </ul>
             <!-- tabs nav -->
-
             <!-- tabs content -->
             <div class="tab-content">
                 <!-- account tab -->
