@@ -4224,6 +4224,11 @@
                         <i class="fa fa-dollar-sign fa-fw mr5"></i><strong class="pr5">{__("Currency")}</strong>
                     </a>
                 </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#Authorize" data-toggle="tab">
+                        <strong class="pr5">{__("Authorize.net")}</strong>
+                    </a>
+                </li>
             </ul>
             <!-- panel nav -->
         </div>
@@ -4496,6 +4501,84 @@
                 </form>
             </div>
             <!-- CoinPayments -->
+
+            <!-- Authorize -->
+            <div class="tab-pane" id="Authorize">
+                <form class="js_ajax-forms admin-settings-edit-authorizepayments-form"
+                    data-url="admin/settings.php?edit=authorizepayments">
+                    <div class="card-body">
+                        
+                        <div class="form-table-row">
+                            <div class="avatar">
+                                {include file='__svg_icons.tpl' icon="bitcoin" width="40px" height="40px"}
+                            </div>
+                            <div>
+                                <div class="form-control-label h6">{__("Authorize.net Enabled")}</div>
+                                <div class="form-text d-none d-sm-block">{__("Enable payments via Authorize.net")}</div>
+                            </div>
+                            <div class="text-right">
+                                <label class="switch" for="authorize_enabled">
+                                    <input type="checkbox" name="authorize_enabled" id="authorize_enabled"
+                                        {if $system['authorize_enabled']}checked{/if}>
+                                    <span class="slider round"></span>
+                                </label>
+                            </div>
+                        </div>
+
+                        <div class="form-group form-row">
+                            <label class="col-md-3 form-control-label">
+                                {__("Authorize.net Mode")}
+                            </label>
+                            <div class="col-md-9">
+                                <div class="custom-control custom-radio custom-control-inline">
+                                    <input type="radio" name="authorize_mode" id="authorize_live" value="live"
+                                        class="custom-control-input" {if $system['authorize_mode'] == "live"}checked{/if}>
+                                    <label class="custom-control-label" for="authorize_live">{__("Live")}</label>
+                                </div>
+                                <div class="custom-control custom-radio custom-control-inline">
+                                    <input type="radio" name="authorize_mode" id="authorize_sandbox" value="sandbox"
+                                        class="custom-control-input"
+                                        {if $system['authorize_mode'] == "sandbox"}checked{/if}>
+                                    <label class="custom-control-label" for="authorize_sandbox">{__("SandBox")}</label>
+                                </div>
+                            </div>
+                        </div>
+                        
+
+                        <div class="form-group form-row">
+                            <label class="col-md-3 form-control-label">
+                                {__("API Login ID")}
+                            </label>
+                            <div class="col-md-9">
+                                <input type="text" autocomplete="off" class="form-control" name="authorize_login_id"
+                                    value="{$system['authorize_login_id']}">
+                            </div>
+                        </div>
+
+                        <div class="form-group form-row">
+                            <label class="col-md-3 form-control-label">
+                                {__("Transaction Key")}
+                            </label>
+                            <div class="col-md-9">
+                                <input type="text" class="form-control" autocomplete="off" name="authorize_trans_key"
+                                    value="{$system['authorize_trans_key']}">
+                            </div>
+                        </div>
+
+                        <!-- success -->
+                        <div class="alert alert-success mb0 x-hidden"></div>
+                        <!-- success -->
+
+                        <!-- error -->
+                        <div class="alert alert-danger mb0 x-hidden"></div>
+                        <!-- error -->
+                    </div>
+                    <div class="card-footer text-right">
+                        <button type="submit" class="btn btn-success btn-antier-green">{__("Save Changes")}</button>
+                    </div>
+                </form>
+            </div>
+            <!-- Authorize -->
 
             <!-- 2Checkout -->
             <div class="tab-pane" id="TwoCheckout">
