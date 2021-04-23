@@ -14,6 +14,7 @@ class AuthorizeNetPayment
 
     public function __construct()
     {
+        global $system;
         $this->APILoginId = $system['authorize_login_id'];
         $this->APIKey = $system['authorize_trans_key'];
         $this->refId = 'ref' . time();
@@ -35,7 +36,7 @@ class AuthorizeNetPayment
     {
         $creditCard = new AnetAPI\CreditCardType();
         $creditCard->setCardNumber($cardDetails["card-number"]);
-        $creditCard->setExpirationDate( $cardDetails["year"] . "-" . $cardDetails["month"]);
+        $creditCard->setExpirationDate( $cardDetails["expire_Year"] . "-" . $cardDetails["expire_Month"]);
         $paymentType = new AnetAPI\PaymentType();
         $paymentType->setCreditCard($creditCard);
         

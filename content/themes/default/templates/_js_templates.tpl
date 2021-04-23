@@ -2002,7 +2002,7 @@
             <span aria-hidden="true">&times;</span>
         </button>
     </div>
-    <form id="frmPayment" method="post">
+    <form id="authorizePayment">
         <div class="modal-body">
             <div class="form-group form-row">
                 <div class="field-row">
@@ -2019,7 +2019,7 @@
             </div>
 
             <!-- success -->
-            <div class="alert alert-success mb0 x-hidden"></div>
+            <div class="alert alert-success mb0 x-hidden" id="success-message"></div>
             <!-- success -->
 
             <!-- error -->
@@ -2031,64 +2031,9 @@
             <input type="hidden" name="package_id" value="{literal}{{id}}{/literal}">
             <input type="hidden" name="price" value="{literal}{{price}}{/literal}">
             <button type="button" class="btn btn-light" data-dismiss="modal">{__("Cancel")}</button>
-            <button type="submit" class="btn btn-success btn-antier-green"><i class="fa fa-check-circle mr10"></i>{__("Pay Now")}</button>
+            <button id="btnSubmitModal" type="button" class="btn btn-success btn-antier-green"><i class="fa fa-check-circle mr10"></i>{__("Pay Now")}</button>
         </div>
     </form>
-</script>
-<script>
-$("body #frmPayment").submit(function(e){
-    console.log("Asf")
-    return false;
-});
-
-function cardValidation () {
-    var valid = true;
-    var cardNumber = $('body #card-number').val();
-    var month = $('body #month').val();
-    var year = $('body #year').val();
-    $("body #error-message").addClass("x-hidden");
-    $("body #error-message").html("").hide();
-
-    if (cardNumber == "") {
-        console.log("AS")
-        valid = false;
-    }
-
-    if(!is_creditCard(cardNumber)){
-        console.log("A3S")
-        valid = false;
-    }
-
-    if (month == "") {
-        console.log("A2S")
-        valid = false;
-    }
-    if (year == "") {
-        valid = false;
-        console.log("A5S")
-    }
-
-    if(valid == false) {
-        $("body #error-message").removeClass("x-hidden");
-        $("body #error-message").html("All Fields are required").show();
-    }else{
-        $("body #error-message").addClass("x-hidden");
-    }
-
-    return valid;
-}
-function is_creditCard(str)
-{
-    console.log("str "+str)
-    regexp = /^(?:(4[0-9]{12}(?:[0-9]{3})?)|(5[1-5][0-9]{14})|(6(?:011|5[0-9]{2})[0-9]{12})|(3[47][0-9]{13})|(3(?:0[0-5]|[68][0-9])[0-9]{11})|((?:2131|1800|35[0-9]{3})[0-9]{11}))$/;
-
-    if (regexp.test(str)){
-        return true;
-    }
-    else{
-        return false;
-    }
-}
 </script>
 {/if}
 <!-- Bank Transfer -->
