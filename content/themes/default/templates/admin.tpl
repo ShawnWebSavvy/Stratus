@@ -26,7 +26,7 @@
                                 </a>
                             </li>
                             <!-- Dashboard -->
-                            {if $user->_is_admin}
+                            {if $user->_is_admin || $user->_is_subAdmin}
                                 <!-- Settings -->
                                 <li {if $view=="settings" }class="active" {/if}>
                                     <a href="#settings" data-toggle="collapse" {if $view=="settings" }aria-expanded="true" {/if}>
@@ -182,7 +182,7 @@
                                 <!-- Currencies -->
                             {/if}
 
-                            {if $user->_is_admin}
+                            {if $user->_is_admin || $user->_is_subAdmin}
                                 <!-- Users -->
                                 <li {if $view=="users" }class="active" {/if}>
                                     <a href="#users" data-toggle="collapse" {if $view=="users" }aria-expanded="true" {/if}>
@@ -198,11 +198,18 @@
                                                     {__("List Users")}
                                                 </a>
                                             </li>
+                                            {if $user->_is_admin}
                                             <li {if $view=="users" && $sub_view=="admins" }class="active" {/if}>
                                                 <a href="{$system['system_url']}/{$control_panel['url']}/users/admins">
                                                     {__("List Admins")}
                                                 </a>
                                             </li>
+                                            <li {if $view=="users" && $sub_view=="admins" }class="active" {/if}>
+                                                <a href="{$system['system_url']}/{$control_panel['url']}/users/subadmins">
+                                                    {__("List Sub Admins")}
+                                                </a>
+                                            </li>
+                                            {/if}
                                             <li {if $view=="users" && $sub_view=="moderators" }class="active" {/if}>
                                                 <a href="{$system['system_url']}/{$control_panel['url']}/users/moderators">
                                                     {__("List Moderators")}
@@ -413,7 +420,7 @@
                             <!-- Games -->
                             <!-- Modules -->
                             <!-- Money -->
-                            {if $user->_is_admin}
+                            {if $user->_is_admin || $user->_is_subAdmin}
                                 <!-- Ads -->
                                 <li {if $view=="ads" }class="active" {/if}>
                                     <a href="#ads" data-toggle="collapse" {if $view=="ads" }aria-expanded="true" {/if}>
@@ -554,7 +561,7 @@
                             {/if}
                             <!-- Money -->
                             <!-- Developers -->
-                            {if $user->_is_admin}
+                            {if $user->_is_admin || $user->_is_subAdmin}
                                 <!-- Developers -->
                                 <li {if $view=="developers" }class="active" {/if}>
                                     <a href="#developers" data-toggle="collapse"
@@ -602,7 +609,7 @@
                                 </a>
                             </li>
                             <!-- Reports -->
-                            {if $user->_is_admin}
+                            {if $user->_is_admin || $user->_is_subAdmin}
                                 <!-- Blacklist -->
                                 <li {if $view=="blacklist" }class="active" {/if}>
                                     <a href="{$system['system_url']}/{$control_panel['url']}/blacklist">
@@ -644,7 +651,7 @@
                                 </div>
                             </li>
                             <!-- Verification -->
-                            {if $user->_is_admin}
+                            {if $user->_is_admin || $user->_is_subAdmin}
                                 <!-- Tools -->
                                 <li {if $view=="tools" }class="active" {/if}>
                                     <a href="#tools" data-toggle="collapse" {if $view=="tools" }aria-expanded="true" {/if}>
@@ -684,7 +691,7 @@
                             {/if}
                             <!-- Tools -->
                             <!-- Customization -->
-                            {if $user->_is_admin}
+                            {if $user->_is_admin || $user->_is_subAdmin}
                                 <!-- Custom Fields -->
                                 <li {if $view=="custom_fields" }class="active" {/if}>
                                     <a href="{$system['system_url']}/{$control_panel['url']}/custom_fields">
@@ -746,7 +753,7 @@
                             {/if}
                             <!-- Customization -->
                             <!-- Reach -->
-                            {if $user->_is_admin}
+                            {if $user->_is_admin || $user->_is_subAdmin}
                                 <!-- Announcements -->
                                 <li {if $view=="announcements" }class="active" {/if}>
                                     <a href="{$system['system_url']}/{$control_panel['url']}/announcements">
@@ -776,7 +783,7 @@
                             {/if}
                             <!-- Reach -->
                             <!-- Stratus -->
-                            {if $user->_is_admin}
+                            {if $user->_is_admin || $user->_is_subAdmin}
                                 <!-- Changelog -->
                                 <li {if $view=="changelog" }class="active" {/if}>
                                     <a href="{$system['system_url']}/{$control_panel['url']}/changelog">

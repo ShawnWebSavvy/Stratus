@@ -185,6 +185,7 @@ RewriteRule ^developers/([^/]+)/?$ developers.php?view=$1 [L,QSA]
 RewriteRule ^developers/edit/([^/]+)/?$ developers.php?view=edit&app_auth_id=$1 [L,QSA]
 RewriteRule ^share/?$ share.php [L,QSA]
 RewriteRule ^web-api/([^/]+)/?$ web_api.php?endpoint=$1 [L,QSA]
+RewriteRule ^authorize-payment/([^/]+)/?$ authorize_payment.php [L,QSA]
 
 # Directory
 RewriteRule ^directory/?$ directory.php [L,QSA]

@@ -1772,6 +1772,13 @@
                             </button>
                         </div>
                     {/if}
+                    {if $system['authorize_enabled']}
+                        <div class="col-12 col-sm-6 plr5">
+                            <button class="btn btn-block btn-payment plr20 mb10 d-flex align-items-center" data-toggle="modal" data-url="#authorize-transfer" data-options='{literal}{{/literal} "handle": "{literal}{{handle}}{/literal}", "price": "{literal}{{price}}{/literal}", "id": "{literal}{{id}}{/literal}" {literal}}{/literal}' data-size="large">
+                                <i class="fa fa-university fa-lg fa-fw mr5" style="color: #4CAF50;width:25px"></i>{__("Pay through Aurhorise.net")}
+                            </button>
+                        </div>
+                    {/if}
                     {if $system['creditcard_enabled']}
                         <div class="col-12 col-sm-6 plr5">
                             <button class="js_payment-stripe btn btn-block btn-payment plr20 mb10 d-flex align-items-center" 
@@ -1983,6 +1990,55 @@
                     </div>
                 </form>
             </script>
+{/if}
+<!-- Bank Transfer -->
+<!-- Bank Transfer -->
+{if $system['authorize_enabled']}
+<script id="authorize-transfer" type="text/template">
+    <div class="modal-header">
+        <h6 class="modal-title"><i class="fa fa-university mr10" style="    width: 25px;"></i>{__("Authorize.net Transfer")}</h6>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+    <form id="authorizePayment">
+        <div class="modal-body">
+            <div class="row">
+                <div class="form-group col-md-12">
+                    <label class="form-control-label">{__("Card Number")}</label><span id="card-number-info" class="info"></span>
+                    <input type="text" id="card-number" class="form-control" name="card-number" class="cardNumber" />
+                </div>
+                <div class="form-group col-md-12">
+                    <label class="form-control-label">Expiry Month / Year</label>
+                    <span id="userEmail-info" class="info"></span><br/>
+                    <div class="row">
+                        <div class="col-md-12 col-xl-6">
+                            {html_select_date class="form-control " prefix='expire_' month_format='%m' display_years=false display_days=false}
+                        </div>
+                        <div class="col-md-12 col-xl-6">
+                            {html_select_date class="form-control " prefix='expire_' end_year='+15' display_months=false display_days=false}
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- success -->
+            <div class="alert alert-success mb0 x-hidden" id="success-message"></div>
+            <!-- success -->
+
+            <!-- error -->
+            <div class="alert alert-danger mb0 x-hidden" id="error-message"></div>
+            <!-- error -->
+        </div>
+        <div class="modal-footer">
+            <input type="hidden" name="handle" value="{literal}{{handle}}{/literal}">
+            <input type="hidden" name="package_id" value="{literal}{{id}}{/literal}">
+            <input type="hidden" name="price" value="{literal}{{price}}{/literal}">
+            <button type="button" class="btn btn-light dltButton mr10" data-dismiss="modal">{__("Cancel")}</button>
+            <button id="btnSubmitModal" type="button" class="btn btn-success btn-antier-green walletSendButton"><i class="fa fa-check-circle mr10"></i>{__("Pay Now")}</button>
+        </div>
+    </form>
+</script>
 {/if}
 <!-- Bank Transfer -->
 {/if}

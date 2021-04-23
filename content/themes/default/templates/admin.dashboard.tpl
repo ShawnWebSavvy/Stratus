@@ -6,7 +6,7 @@
         {__("Dashboard")}
     </div>
     <div class="card-body">
-        {if $user->_is_admin}
+        {if $user->_is_admin || $user->_is_subAdmin}
             <div id="admin-chart-dashboard" class="admin-chart mb20"></div>
             <div class="form-row">
                 <div class="col-sm-3">
