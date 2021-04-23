@@ -181,8 +181,14 @@ function data_heartbeat() {
                     // var notifications = parseInt(response.notifications_count);
                     // $(".js_live-notifications").find("span.counterlive").text(notifications).show(), notifications_sound;
                     var notifications = (parseInt($(".js_live-notifications").find("span.counterlive").text())?parseInt($(".js_live-notifications").find("span.counterlive").text()):0)+ response.notifications_count;
-                    $(".js_live-notifications").find("span.counterlive").text(notifications).show();notifications_sound
+                    $(".js_live-notifications").find("span.counterlive").text(notifications).show();notifications_sound;
+                    if (notifications_sound) {
+                        $("#notification-sound")[0].play();
+                    }
+
                 }
+
+
                 if (response.posts && response.posts != null) {
                     //console.log("response.posts->>>>>>>", response.posts);
                     var datatta = response.posts;

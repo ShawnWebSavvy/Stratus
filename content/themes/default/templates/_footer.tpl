@@ -43,9 +43,9 @@
 <!-- Sounds -->
 {if $user->_logged_in}
 <!-- Notification -->
-{* <audio id="notification-sound" preload="auto">
-	<source src="{$system['system_uploads_assets']}/includes/assets/sounds/notification.mp3" type="audio/mpeg">
-</audio> *}
+<audio id="notification-sound" preload="auto">
+	<source src="{$system['system_url']}/includes/assets/sounds/notification.mp3" type="audio/mpeg">
+</audio> 
 <!-- Notification -->
 <!-- Chat -->
 <audio id="chat-sound" preload="auto">

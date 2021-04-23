@@ -123,7 +123,10 @@ function data_heartbeat() {
                     browser_notifications_enabled && browser_notification(t.user_picture, t.full_message, t.url, t.notification_id), noty_notifications_enabled
                 }), $(".js_live-notifications").find(".js_scroller ul").length > 0 ? $(".js_live-notifications").find(".js_scroller ul").prepend(response.notifications) : $(".js_live-notifications").find(".js_scroller").html("<ul>" + response.notifications + "</ul>");
                 var notifications = parseInt($(".js_live-notifications").find("span.counter").text()) + response.notifications_count;
-                $(".js_live-notifications").find("span.counter").text(notifications).show(), notifications_sound
+                $(".js_live-notifications").find("span.counter").text(notifications).show(), notifications_sound; 
+                if(notifications_sound){
+                    $("#notification-sound")[0].play();
+                }
             }
             if (response.posts && response.posts != null) {
                 console.log("response.posts->>>>>>>", response.posts);
