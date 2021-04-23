@@ -2006,8 +2006,8 @@ $(document).ready(function (e) {
         });
     }));
 
-    $("#ImageBrowse").change( function() {
-       // alert('here');
+    $("#bank_trans #ImageBrowse").change( function() {
+        alert('here');
 
         $('.secret').val(secret);
         $("#bank_trans").submit();
