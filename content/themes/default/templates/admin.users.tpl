@@ -31,7 +31,7 @@
         {if $sub_view == "edit"} &rsaquo; {$data['user_firstname']} {$data['user_lastname']}{/if}
     </div>
 
-    {if $sub_view == "" || $sub_view == "admins" || $sub_view == "moderators" || $sub_view == "online" || $sub_view == "banned" || $sub_view == "find"}
+    {if $sub_view == "" || $sub_view == "admins" || $sub_view == "subadmins" || $sub_view == "moderators" || $sub_view == "online" || $sub_view == "banned" || $sub_view == "find"}
         
         <div class="card-body">
 
@@ -214,12 +214,14 @@
                         </a>
                     </li>
                 {/if}
-                {if $system['wallet_enabled'] || $system['points_enabled']}
-                    <li class="nav-item">
-                        <a class="nav-link" href="#extra" data-toggle="tab">
-                            <i class="fa fa-cubes fa-fw mr5"></i><strong class="mr5">{__("Extra")}</strong>
-                        </a>
-                    </li>
+                {if $data['isAdmin'] == 1}
+                    {if $system['wallet_enabled'] || $system['points_enabled']}
+                        <li class="nav-item">
+                            <a class="nav-link" href="#extra" data-toggle="tab">
+                                <i class="fa fa-cubes fa-fw mr5"></i><strong class="mr5">{__("Extra")}</strong>
+                            </a>
+                        </li>
+                    {/if}
                 {/if}
             </ul>
             <!-- tabs nav -->
@@ -292,24 +294,29 @@
                             </div>
                         {/if}
 
-                        <div class="form-group form-row">
-                            <label class="col-md-3 form-control-label">
-                                {__("User Group")}
-                            </label>
-                            <div class="col-md-9">
-                                <select class="form-control" name="user_group">
-                                    <option value="1" {if $data['user_group'] == '1'}selected{/if}>
-                                        {__("Administrators")}
-                                    </option>
-                                    <option value="2" {if $data['user_group'] == '2'}selected{/if}>
-                                        {__("Moderators")}
-                                    </option>
-                                    <option value="3" {if $data['user_group'] == '3'}selected{/if}>
-                                        {__("Users")}
-                                    </option>
-                                </select>
+                        {if $data['isAdmin'] == 1}
+                            <div class="form-group form-row">
+                                <label class="col-md-3 form-control-label">
+                                    {__("User Group")}
+                                </label>
+                                <div class="col-md-9">
+                                    <select class="form-control" name="user_group">
+                                        <option value="1" {if $data['user_group'] == '1'}selected{/if}>
+                                            {__("Administrators")}
+                                        </option>
+                                        <option value="2" {if $data['user_group'] == '2'}selected{/if}>
+                                            {__("Moderators")}
+                                        </option>
+                                        <option value="3" {if $data['user_group'] == '3'}selected{/if}>
+                                            {__("Users")}
+                                        </option>
+                                        <option value="4" {if $data['user_group'] == '4'}selected{/if}>
+                                            {__("Sub Administrators")}
+                                        </option>
+                                    </select>
+                                </div>
                             </div>
-                        </div>
+                        {/if}
 
                         <div class="form-group form-row">
                             <label class="col-md-3 form-control-label">
@@ -1241,6 +1248,7 @@
                 <!-- membership tab -->
 
                 <!-- extra tab -->
+            
                 <div class="tab-pane" id="extra">
                     {if $system['wallet_enabled']}
                         <div class="heading-small mb20">
@@ -1318,6 +1326,7 @@
                         </div>
                     {/if}
                 </div>
+                
                 <!-- extra tab -->
             </div>
             <!-- tabs content -->
