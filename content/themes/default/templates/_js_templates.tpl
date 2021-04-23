@@ -1948,7 +1948,7 @@
                                 {__("Bank Receipt")}
                             </label>
                         </div>
-                         <input type="hidden" class="js_x-image-input" name="bank_receipt" value="">
+                         <input type="hidden" class="js_x-image-input cusclass" name="bank_receipt" value="">
                         <!-- success -->
                         <div class="alert alert-success mb0 x-hidden"></div>
                         <!-- success -->
