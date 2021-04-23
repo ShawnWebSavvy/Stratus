@@ -1962,17 +1962,16 @@
                         <input type="hidden" name="package_id" value="{literal}{{id}}{/literal}">
                         <input type="hidden" name="price" value="{literal}{{price}}{/literal}">
                         <button type="button" class="btn btn-light" data-dismiss="modal">{__("Cancel")}</button>
-                        <button type="submit" class="btn btn-success btn-antier-green"><i class="fa fa-check-circle mr10"></i>{__("Send")}</button>
+                        <button type="submit" id="send_bank_transfer_form" class="btn btn-success btn-antier-green"><i class="fa fa-check-circle mr10"></i>{__("Send")}</button>
                     </div>
                 </form>
-                 <form id="bank_trans" action="includes/ajax/data/upload.php" method="post" enctype="multipart/form-data">
-                            <input name="file" id="ImageBrowse" type="file" class="file" id="baffnk_trans" title="Upload Image" accept=".png, .gif, .jpeg, .jpg">
-                            <input type="hidden" name="type" value="photos">
-                            <input type="hidden" name="handle" value="publisher">
-                              <input type="hidden" name="multiple" value="">
-                            <input type="hidden" class="secret" name="secret" value="{$_SESSION['secret']}">
-
-                    </form>
+                <form id="bank_trans" action="includes/ajax/data/upload.php" method="post" enctype="multipart/form-data">
+                    <input name="file" id="ImageBrowse" type="file" class="file" id="baffnk_trans" title="Upload Image" accept=".png, .gif, .jpeg, .jpg">
+                    <input type="hidden" name="type" value="photos">
+                    <input type="hidden" name="handle" value="publisher">
+                        <input type="hidden" name="multiple" value="">
+                    <input type="hidden" class="secret" name="secret" value="{$_SESSION['secret']}">
+                </form>
 
 {/if}
 <!-- Bank Transfer -->
@@ -1986,7 +1985,8 @@ $(document).ready(function (e) {
      $('#bank_trans').on('submit',(function(e) {
         e.preventDefault();
         var formData = new FormData(this);
-        console.log(formData);
+        var _this = $('#send_bank_transfer_form');
+        button_status(_this, "loading");
         $.ajax({
             type:'POST',
             url: $(this).attr('action'),
@@ -1995,13 +1995,11 @@ $(document).ready(function (e) {
             contentType: false,
             processData: false,
             success:function(data){
-                console.log("success");
-                console.log(data.file);
                 $('.cusclass').val(data.file);
+                button_status(_this, "reset");
             },
             error: function(data){
-                console.log("error");
-                console.log(data);
+                button_status(_this, "reset");
             }
         });
     }));
