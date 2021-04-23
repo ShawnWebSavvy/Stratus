@@ -1947,24 +1947,6 @@
                             <label class="col-md-3 form-control-label">
                                 {__("Bank Receipt")}
                             </label>
-                            {* <div class="col-md-9">
-                                <div class="x-image">
-                                    <button type="button" class="close x-hidden js_x-image-remover" title='{__("Remove")}'>
-                                        <span>×</span>
-                                    </button>
-                                    <div class="x-image-loader">
-                                        <div class="progress x-progress">
-                                            <div class="progress-bar" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100"></div>
-                                        </div>
-                                    </div>
-                                    <i class="fa fa-camera fa-lg js_x-uploader" data-handle="x-image"></i>
-                                    <input type="hidden" class="js_x-image-input" name="bank_receipt" value="">
-
-                                </div>
-                                <span class="form-text">
-                                    {__("Please attach your bank receipt")}
-                                </span>
-                            </div> *}
                         </div>
                          <input type="hidden" class="js_x-image-input" name="bank_receipt" value="">
                         <!-- success -->
