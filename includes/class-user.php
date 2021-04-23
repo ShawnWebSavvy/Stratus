@@ -233,7 +233,7 @@ class User
         $friends = [];
         //$get_friends = $db->query(sprintf('SELECT users.user_id FROM friends INNER JOIN users ON (friends.user_one_id = users.user_id AND friends.user_one_id != %1$s) OR (friends.user_two_id = users.user_id AND friends.user_two_id != %1$s) WHERE status = 1 AND (user_one_id = %1$s OR user_two_id = %1$s)', secure($user_id, 'int'))) or _error("SQL_ERROR_THROWEN");
         /*optimise Query by Vishal */
-        $get_friends = $db->query(sprintf('SELECT users.user_id FROM friends FORCE INDEX(friends_id_one, friends_id_two) INNER JOIN users ON (friends.user_one_id = users.user_id AND friends.user_one_id != %1$s) OR (friends.user_two_id = users.user_id AND friends.user_two_id != %1$s) WHERE status = 1 AND (user_one_id = %1$s OR user_two_id = %1$s)', secure($user_id, 'int'))) or _error("SQL_ERROR_THROWEN");
+        $get_friends = $db->query(sprintf('SELECT users.user_id FROM `friends` FORCE INDEX(friends_id_one, friends_id_two) INNER JOIN `users` ON friends.user_two_id = users.user_id WHERE (friends.status = 1 AND friends.user_two_id != %1$s AND friends.user_one_id = %1$s ) UNION ALL ( SELECT users.user_id FROM `friends` FORCE INDEX(friends_id_one, friends_id_two) INNER JOIN `users` ON friends.user_one_id = users.user_id WHERE (friends.status = 1 AND friends.user_one_id != %1$s AND friends.user_two_id = %1$s))', secure($user_id, 'int'))) or _error("SQL_ERROR_THROWEN");
         if ($get_friends->num_rows > 0) {
             while ($friend = $get_friends->fetch_assoc()) {
                 $friends[] = $friend['user_id'];
@@ -251,7 +251,7 @@ class User
     public function get_friends_count($user_id)
     {
         global $db;
-        $get_friends = $db->query(sprintf('SELECT users.user_id FROM friends INNER JOIN users ON (friends.user_one_id = users.user_id AND friends.user_one_id != %1$s) OR (friends.user_two_id = users.user_id AND friends.user_two_id != %1$s) WHERE status = 1 AND (user_one_id = %1$s OR user_two_id = %1$s)', secure($user_id, 'int'))) or _error("SQL_ERROR_THROWEN");
+        $get_friends = $db->query(sprintf('SELECT users.user_id FROM `friends` FORCE INDEX(friends_id_one, friends_id_two) INNER JOIN `users` ON friends.user_two_id = users.user_id WHERE (friends.status = 1 AND friends.user_two_id != %1$s AND friends.user_one_id = %1$s ) UNION ALL ( SELECT users.user_id FROM `friends` FORCE INDEX(friends_id_one, friends_id_two) INNER JOIN `users` ON friends.user_one_id = users.user_id WHERE (friends.status = 1 AND friends.user_one_id != %1$s AND friends.user_two_id = %1$s))', secure($user_id, 'int'))) or _error("SQL_ERROR_THROWEN");
 
         return $get_friends->num_rows;
     }
