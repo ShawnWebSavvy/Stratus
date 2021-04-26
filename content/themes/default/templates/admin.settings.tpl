@@ -380,16 +380,24 @@
                             <div class="col-md-9">
                                 <select class="form-control selectpicker" name="pages_permission">
                                     <option value="admins" {if $system['pages_permission'] == "admins"}selected{/if}
-                                        data-content="<div class='option'><div class='icon'><i class='fa fa-lock fa-lg fa-fw'></i></div><div class='text'><b>{__("Admins")}</b><br>{__("Only Admins and Moderators")}</div></div>">
+                                        data-content="
+                                        <div class='option'>
+                                            <div class='icon'>
+                                                <i class='fa fa-lock fa-lg fa-fw ml0' style='height: 21px;width: 21px;'></i>
+                                            </div>
+                                            <div class='text'>
+                                                <b>{__("Admins")}</b><br>{__("Only Admins and Moderators")}
+                                            </div>
+                                        </div>">
                                         {__("Admins")}</option>
                                     <option value="pro" {if $system['pages_permission'] == "pro"}selected{/if}
-                                        data-content="<div class='option'><div class='icon'><i class='fa fa-rocket fa-lg fa-fw'></i></div><div class='text'><b>{__("Pro Users")}</b><br>{__("Only Admins, Moderators and Pro Users")}</div></div>">
+                                        data-content="<div class='option'><div class='icon'><i class='fa fa-rocket fa-lg fa-fw ml0' style='height: 21px;width: 21px;'></i></div><div class='text'><b>{__("Pro Users")}</b><br>{__("Only Admins, Moderators and Pro Users")}</div></div>">
                                         {__("Pro Users")}</option>
                                     <option value="verified" {if $system['pages_permission'] == "verified"}selected{/if}
-                                        data-content="<div class='option'><div class='icon'><i class='fa fa-check-circle fa-lg fa-fw'></i></div><div class='text'><b>{__("Verified Users")}</b><br>{__("Only Admins, Moderators, Pro and Verified Users")}</div></div>">
+                                        data-content="<div class='option'><div class='icon'><i class='fa fa-check-circle fa-lg fa-fw ml0' style='height: 21px;width: 21px;'></i></div><div class='text'><b>{__("Verified Users")}</b><br>{__("Only Admins, Moderators, Pro and Verified Users")}</div></div>">
                                         {__("Verified Users")}</option>
                                     <option value="everyone" {if $system['pages_permission'] == "everyone"}selected{/if}
-                                        data-content="<div class='option'><div class='icon'><i class='fa fa-globe fa-lg fa-fw'></i></div><div class='text'><b>{__("Everyone")}</b><br>{__("Any user in the system can")}</div></div>">
+                                        data-content="<div class='option'><div class='icon'><i class='fa fa-globe fa-lg fa-fw ml0' style='height: 21px;width: 21px;'></i></div><div class='text'><b>{__("Everyone")}</b><br>{__("Any user in the system can")}</div></div>">
                                         {__("Everyone")}</option>
                                 </select>
                             </div>
@@ -421,16 +429,16 @@
                             <div class="col-md-9">
                                 <select class="form-control selectpicker" name="groups_permission">
                                     <option value="admins" {if $system['groups_permission'] == "admins"}selected{/if}
-                                        data-content="<div class='option'><div class='icon'><i class='fa fa-lock fa-lg fa-fw'></i></div><div class='text'><b>{__("Admins")}</b><br>{__("Only Admins and Moderators")}</div></div>">
+                                        data-content="<div class='option'><div class='icon'><i class='fa fa-lock fa-lg fa-fw ml0' style='height: 21px;width: 21px;'></i></div><div class='text'><b>{__("Admins")}</b><br>{__("Only Admins and Moderators")}</div></div>">
                                         {__("Admins")}</option>
                                     <option value="pro" {if $system['groups_permission'] == "pro"}selected{/if}
-                                        data-content="<div class='option'><div class='icon'><i class='fa fa-rocket fa-lg fa-fw'></i></div><div class='text'><b>{__("Pro Users")}</b><br>{__("Only Admins, Moderators and Pro Users")}</div></div>">
+                                        data-content="<div class='option'><div class='icon'><i class='fa fa-rocket fa-lg fa-fw ml0' style='height: 21px;width: 21px;'></i></div><div class='text'><b>{__("Pro Users")}</b><br>{__("Only Admins, Moderators and Pro Users")}</div></div>">
                                         {__("Pro Users")}</option>
                                     <option value="verified" {if $system['groups_permission'] == "verified"}selected{/if}
-                                        data-content="<div class='option'><div class='icon'><i class='fa fa-check-circle fa-lg fa-fw'></i></div><div class='text'><b>{__("Verified Users")}</b><br>{__("Only Admins, Moderators, Pro and Verified Users")}</div></div>">
+                                        data-content="<div class='option'><div class='icon'><i class='fa fa-check-circle fa-lg fa-fw ml0' style='height: 21px;width: 21px;'></i></div><div class='text'><b>{__("Verified Users")}</b><br>{__("Only Admins, Moderators, Pro and Verified Users")}</div></div>">
                                         {__("Verified Users")}</option>
                                     <option value="everyone" {if $system['groups_permission'] == "everyone"}selected{/if}
-                                        data-content="<div class='option'><div class='icon'><i class='fa fa-globe fa-lg fa-fw'></i></div><div class='text'><b>{__("Everyone")}</b><br>{__("Any user in the system can")}</div></div>">
+                                        data-content="<div class='option'><div class='icon'><i class='fa fa-globe fa-lg fa-fw ml0' style='height: 21px;width: 21px;'></i></div><div class='text'><b>{__("Everyone")}</b><br>{__("Any user in the system can")}</div></div>">
                                         {__("Everyone")}</option>
                                 </select>
                             </div>
@@ -462,16 +470,16 @@
                             <div class="col-md-9">
                                 <select class="form-control selectpicker" name="events_permission">
                                     <option value="admins" {if $system['events_permission'] == "admins"}selected{/if}
-                                        data-content="<div class='option'><div class='icon'><i class='fa fa-lock fa-lg fa-fw'></i></div><div class='text'><b>{__("Admins")}</b><br>{__("Only Admins and Moderators")}</div></div>">
+                                        data-content="<div class='option'><div class='icon'><i class='fa fa-lock fa-lg fa-fw ml0' style='height: 21px;width: 21px;'></i></div><div class='text'><b>{__("Admins")}</b><br>{__("Only Admins and Moderators")}</div></div>">
                                         {__("Admins")}</option>
                                     <option value="pro" {if $system['events_permission'] == "pro"}selected{/if}
-                                        data-content="<div class='option'><div class='icon'><i class='fa fa-rocket fa-lg fa-fw'></i></div><div class='text'><b>{__("Pro Users")}</b><br>{__("Only Admins, Moderators and Pro Users")}</div></div>">
+                                        data-content="<div class='option'><div class='icon'><i class='fa fa-rocket fa-lg fa-fw ml0' style='height: 21px;width: 21px;'></i></div><div class='text'><b>{__("Pro Users")}</b><br>{__("Only Admins, Moderators and Pro Users")}</div></div>">
                                         {__("Pro Users")}</option>
                                     <option value="verified" {if $system['events_permission'] == "verified"}selected{/if}
-                                        data-content="<div class='option'><div class='icon'><i class='fa fa-check-circle fa-lg fa-fw'></i></div><div class='text'><b>{__("Verified Users")}</b><br>{__("Only Admins, Moderators, Pro and Verified Users")}</div></div>">
+                                        data-content="<div class='option'><div class='icon'><i class='fa fa-check-circle fa-lg fa-fw ml0' style='height: 21px;width: 21px;'></i></div><div class='text'><b>{__("Verified Users")}</b><br>{__("Only Admins, Moderators, Pro and Verified Users")}</div></div>">
                                         {__("Verified Users")}</option>
                                     <option value="everyone" {if $system['events_permission'] == "everyone"}selected{/if}
-                                        data-content="<div class='option'><div class='icon'><i class='fa fa-globe fa-lg fa-fw'></i></div><div class='text'><b>{__("Everyone")}</b><br>{__("Any user in the system can")}</div></div>">
+                                        data-content="<div class='option'><div class='icon'><i class='fa fa-globe fa-lg fa-fw ml0' style='height: 21px;width: 21px;'></i></div><div class='text'><b>{__("Everyone")}</b><br>{__("Any user in the system can")}</div></div>">
                                         {__("Everyone")}</option>
                                 </select>
                             </div>
@@ -503,16 +511,16 @@
                             <div class="col-md-9">
                                 <select class="form-control selectpicker" name="blogs_permission">
                                     <option value="admins" {if $system['blogs_permission'] == "admins"}selected{/if}
-                                        data-content="<div class='option'><div class='icon'><i class='fa fa-lock fa-lg fa-fw'></i></div><div class='text'><b>{__("Admins")}</b><br>{__("Only Admins and Moderators")}</div></div>">
+                                        data-content="<div class='option'><div class='icon'><i class='fa fa-lock fa-lg fa-fw ml0' style='height: 21px;width: 21px;'></i></div><div class='text'><b>{__("Admins")}</b><br>{__("Only Admins and Moderators")}</div></div>">
                                         {__("Admins")}</option>
                                     <option value="pro" {if $system['blogs_permission'] == "pro"}selected{/if}
-                                        data-content="<div class='option'><div class='icon'><i class='fa fa-rocket fa-lg fa-fw'></i></div><div class='text'><b>{__("Pro Users")}</b><br>{__("Only Admins, Moderators and Pro Users")}</div></div>">
+                                        data-content="<div class='option'><div class='icon'><i class='fa fa-rocket fa-lg fa-fw ml0' style='height: 21px;width: 21px;'></i></div><div class='text'><b>{__("Pro Users")}</b><br>{__("Only Admins, Moderators and Pro Users")}</div></div>">
                                         {__("Pro Users")}</option>
                                     <option value="verified" {if $system['blogs_permission'] == "verified"}selected{/if}
-                                        data-content="<div class='option'><div class='icon'><i class='fa fa-check-circle fa-lg fa-fw'></i></div><div class='text'><b>{__("Verified Users")}</b><br>{__("Only Admins, Moderators, Pro and Verified Users")}</div></div>">
+                                        data-content="<div class='option'><div class='icon'><i class='fa fa-check-circle fa-lg fa-fw ml0' style='height: 21px;width: 21px;'></i></div><div class='text'><b>{__("Verified Users")}</b><br>{__("Only Admins, Moderators, Pro and Verified Users")}</div></div>">
                                         {__("Verified Users")}</option>
                                     <option value="everyone" {if $system['blogs_permission'] == "everyone"}selected{/if}
-                                        data-content="<div class='option'><div class='icon'><i class='fa fa-globe fa-lg fa-fw'></i></div><div class='text'><b>{__("Everyone")}</b><br>{__("Any user in the system can")}</div></div>">
+                                        data-content="<div class='option'><div class='icon'><i class='fa fa-globe fa-lg fa-fw ml0' style='height: 21px;width: 21px;'></i></div><div class='text'><b>{__("Everyone")}</b><br>{__("Any user in the system can")}</div></div>">
                                         {__("Everyone")}</option>
                                 </select>
                             </div>
@@ -544,16 +552,16 @@
                             <div class="col-md-9">
                                 <select class="form-control selectpicker" name="market_permission">
                                     <option value="admins" {if $system['market_permission'] == "admins"}selected{/if}
-                                        data-content="<div class='option'><div class='icon'><i class='fa fa-lock fa-lg fa-fw'></i></div><div class='text'><b>{__("Admins")}</b><br>{__("Only Admins and Moderators")}</div></div>">
+                                        data-content="<div class='option'><div class='icon'><i class='fa fa-lock fa-lg fa-fw ml0' style='height: 21px;width: 21px;'></i></div><div class='text'><b>{__("Admins")}</b><br>{__("Only Admins and Moderators")}</div></div>">
                                         {__("Admins")}</option>
                                     <option value="pro" {if $system['market_permission'] == "pro"}selected{/if}
-                                        data-content="<div class='option'><div class='icon'><i class='fa fa-rocket fa-lg fa-fw'></i></div><div class='text'><b>{__("Pro Users")}</b><br>{__("Only Admins, Moderators and Pro Users")}</div></div>">
+                                        data-content="<div class='option'><div class='icon'><i class='fa fa-rocket fa-lg fa-fw ml0' style='height: 21px;width: 21px;'></i></div><div class='text'><b>{__("Pro Users")}</b><br>{__("Only Admins, Moderators and Pro Users")}</div></div>">
                                         {__("Pro Users")}</option>
                                     <option value="verified" {if $system['market_permission'] == "verified"}selected{/if}
-                                        data-content="<div class='option'><div class='icon'><i class='fa fa-check-circle fa-lg fa-fw'></i></div><div class='text'><b>{__("Verified Users")}</b><br>{__("Only Admins, Moderators, Pro and Verified Users")}</div></div>">
+                                        data-content="<div class='option'><div class='icon'><i class='fa fa-check-circle fa-lg fa-fw ml0' style='height: 21px;width: 21px;'></i></div><div class='text'><b>{__("Verified Users")}</b><br>{__("Only Admins, Moderators, Pro and Verified Users")}</div></div>">
                                         {__("Verified Users")}</option>
                                     <option value="everyone" {if $system['market_permission'] == "everyone"}selected{/if}
-                                        data-content="<div class='option'><div class='icon'><i class='fa fa-globe fa-lg fa-fw'></i></div><div class='text'><b>{__("Everyone")}</b><br>{__("Any user in the system can")}</div></div>">
+                                        data-content="<div class='option'><div class='icon'><i class='fa fa-globe fa-lg fa-fw ml0' style='height: 21px;width: 21px;'></i></div><div class='text'><b>{__("Everyone")}</b><br>{__("Any user in the system can")}</div></div>">
                                         {__("Everyone")}</option>
                                 </select>
                             </div>
@@ -619,16 +627,16 @@
                             <div class="col-md-9">
                                 <select class="form-control selectpicker" name="forums_permission">
                                     <option value="admins" {if $system['forums_permission'] == "admins"}selected{/if}
-                                        data-content="<div class='option'><div class='icon'><i class='fa fa-lock fa-lg fa-fw'></i></div><div class='text'><b>{__("Admins")}</b><br>{__("Only Admins and Moderators")}</div></div>">
+                                        data-content="<div class='option'><div class='icon'><i class='fa fa-lock fa-lg fa-fw ml0' style='height: 21px;width: 21px;'></i></div><div class='text'><b>{__("Admins")}</b><br>{__("Only Admins and Moderators")}</div></div>">
                                         {__("Admins")}</option>
                                     <option value="pro" {if $system['forums_permission'] == "pro"}selected{/if}
-                                        data-content="<div class='option'><div class='icon'><i class='fa fa-rocket fa-lg fa-fw'></i></div><div class='text'><b>{__("Pro Users")}</b><br>{__("Only Admins, Moderators and Pro Users")}</div></div>">
+                                        data-content="<div class='option'><div class='icon'><i class='fa fa-rocket fa-lg fa-fw ml0' style='height: 21px;width: 21px;'></i></div><div class='text'><b>{__("Pro Users")}</b><br>{__("Only Admins, Moderators and Pro Users")}</div></div>">
                                         {__("Pro Users")}</option>
                                     <option value="verified" {if $system['forums_permission'] == "verified"}selected{/if}
-                                        data-content="<div class='option'><div class='icon'><i class='fa fa-check-circle fa-lg fa-fw'></i></div><div class='text'><b>{__("Verified Users")}</b><br>{__("Only Admins, Moderators, Pro and Verified Users")}</div></div>">
+                                        data-content="<div class='option'><div class='icon'><i class='fa fa-check-circle fa-lg fa-fw ml0' style='height: 21px;width: 21px;'></i></div><div class='text'><b>{__("Verified Users")}</b><br>{__("Only Admins, Moderators, Pro and Verified Users")}</div></div>">
                                         {__("Verified Users")}</option>
                                     <option value="everyone" {if $system['forums_permission'] == "everyone"}selected{/if}
-                                        data-content="<div class='option'><div class='icon'><i class='fa fa-globe fa-lg fa-fw'></i></div><div class='text'><b>{__("Everyone")}</b><br>{__("Any user in the system can")}</div></div>">
+                                        data-content="<div class='option'><div class='icon'><i class='fa fa-globe fa-lg fa-fw ml0' style='height: 21px;width: 21px;'></i></div><div class='text'><b>{__("Everyone")}</b><br>{__("Any user in the system can")}</div></div>">
                                         {__("Everyone")}</option>
                                 </select>
                             </div>
@@ -660,16 +668,16 @@
                             <div class="col-md-9">
                                 <select class="form-control selectpicker" name="movies_permission">
                                     <option value="admins" {if $system['movies_permission'] == "admins"}selected{/if}
-                                        data-content="<div class='option'><div class='icon'><i class='fa fa-lock fa-lg fa-fw'></i></div><div class='text'><b>{__("Admins")}</b><br>{__("Only Admins and Moderators")}</div></div>">
+                                        data-content="<div class='option'><div class='icon'><i class='fa fa-lock fa-lg fa-fw ml0' style='height: 21px;width: 21px;'></i></div><div class='text'><b>{__("Admins")}</b><br>{__("Only Admins and Moderators")}</div></div>">
                                         {__("Admins")}</option>
                                     <option value="pro" {if $system['movies_permission'] == "pro"}selected{/if}
-                                        data-content="<div class='option'><div class='icon'><i class='fa fa-rocket fa-lg fa-fw'></i></div><div class='text'><b>{__("Pro Users")}</b><br>{__("Only Admins, Moderators and Pro Users")}</div></div>">
+                                        data-content="<div class='option'><div class='icon'><i class='fa fa-rocket fa-lg fa-fw ml0' style='height: 21px;width: 21px;'></i></div><div class='text'><b>{__("Pro Users")}</b><br>{__("Only Admins, Moderators and Pro Users")}</div></div>">
                                         {__("Pro Users")}</option>
                                     <option value="verified" {if $system['movies_permission'] == "verified"}selected{/if}
-                                        data-content="<div class='option'><div class='icon'><i class='fa fa-check-circle fa-lg fa-fw'></i></div><div class='text'><b>{__("Verified Users")}</b><br>{__("Only Admins, Moderators, Pro and Verified Users")}</div></div>">
+                                        data-content="<div class='option'><div class='icon'><i class='fa fa-check-circle fa-lg fa-fw ml0' style='height: 21px;width: 21px;'></i></div><div class='text'><b>{__("Verified Users")}</b><br>{__("Only Admins, Moderators, Pro and Verified Users")}</div></div>">
                                         {__("Verified Users")}</option>
                                     <option value="everyone" {if $system['movies_permission'] == "everyone"}selected{/if}
-                                        data-content="<div class='option'><div class='icon'><i class='fa fa-globe fa-lg fa-fw'></i></div><div class='text'><b>{__("Everyone")}</b><br>{__("Any user in the system can")}</div></div>">
+                                        data-content="<div class='option'><div class='icon'><i class='fa fa-globe fa-lg fa-fw ml0' style='height: 21px;width: 21px;'></i></div><div class='text'><b>{__("Everyone")}</b><br>{__("Any user in the system can")}</div></div>">
                                         {__("Everyone")}</option>
                                 </select>
                             </div>
@@ -701,16 +709,16 @@
                             <div class="col-md-9">
                                 <select class="form-control selectpicker" name="games_permission">
                                     <option value="admins" {if $system['games_permission'] == "admins"}selected{/if}
-                                        data-content="<div class='option'><div class='icon'><i class='fa fa-lock fa-lg fa-fw'></i></div><div class='text'><b>{__("Admins")}</b><br>{__("Only Admins and Moderators")}</div></div>">
+                                        data-content="<div class='option'><div class='icon'><i class='fa fa-lock fa-lg fa-fw ml0' style='height: 21px;width: 21px;'></i></div><div class='text'><b>{__("Admins")}</b><br>{__("Only Admins and Moderators")}</div></div>">
                                         {__("Admins")}</option>
                                     <option value="pro" {if $system['games_permission'] == "pro"}selected{/if}
-                                        data-content="<div class='option'><div class='icon'><i class='fa fa-rocket fa-lg fa-fw'></i></div><div class='text'><b>{__("Pro Users")}</b><br>{__("Only Admins, Moderators and Pro Users")}</div></div>">
+                                        data-content="<div class='option'><div class='icon'><i class='fa fa-rocket fa-lg fa-fw ml0' style='height: 21px;width: 21px;'></i></div><div class='text'><b>{__("Pro Users")}</b><br>{__("Only Admins, Moderators and Pro Users")}</div></div>">
                                         {__("Pro Users")}</option>
                                     <option value="verified" {if $system['games_permission'] == "verified"}selected{/if}
-                                        data-content="<div class='option'><div class='icon'><i class='fa fa-check-circle fa-lg fa-fw'></i></div><div class='text'><b>{__("Verified Users")}</b><br>{__("Only Admins, Moderators, Pro and Verified Users")}</div></div>">
+                                        data-content="<div class='option'><div class='icon'><i class='fa fa-check-circle fa-lg fa-fw ml0' style='height: 21px;width: 21px;'></i></div><div class='text'><b>{__("Verified Users")}</b><br>{__("Only Admins, Moderators, Pro and Verified Users")}</div></div>">
                                         {__("Verified Users")}</option>
                                     <option value="everyone" {if $system['games_permission'] == "everyone"}selected{/if}
-                                        data-content="<div class='option'><div class='icon'><i class='fa fa-globe fa-lg fa-fw'></i></div><div class='text'><b>{__("Everyone")}</b><br>{__("Any user in the system can")}</div></div>">
+                                        data-content="<div class='option'><div class='icon'><i class='fa fa-globe fa-lg fa-fw ml0' style='height: 21px;width: 21px;'></i></div><div class='text'><b>{__("Everyone")}</b><br>{__("Any user in the system can")}</div></div>">
                                         {__("Everyone")}</option>
                                 </select>
                             </div>
@@ -1147,13 +1155,13 @@
                     <div class="col-md-9">
                         <select class="form-control selectpicker" name="default_privacy">
                             <option value="public" {if $system['default_privacy'] == "public"}selected{/if}
-                                data-content="<div class='option'><div class='icon'><i class='fa fa-globe fa-lg fa-fw'></i></div><div class='text'><b>{__("Public")}</b><br>{__("Anyone one can see the post")}</div></div>">
+                                data-content="<div class='option'><div class='icon'><i class='fa fa-globe fa-lg fa-fw ml0' style='height: 21px;width: 21px;'></i></div><div class='text'><b>{__("Public")}</b><br>{__("Anyone one can see the post")}</div></div>">
                                 {__("Public")}</option>
                             <option value="friends" {if $system['default_privacy'] == "friends"}selected{/if}
-                                data-content="<div class='option'><div class='icon'><i class='fa fa-users fa-lg fa-fw'></i></div><div class='text'><b>{__("Friends")}</b><br>{__("Only post author friends can see the post")}</div></div>">
+                                data-content="<div class='option'><div class='icon'><i class='fa fa-users fa-lg fa-fw ml0' style='height: 21px;width: 21px;'></i></div><div class='text'><b>{__("Friends")}</b><br>{__("Only post author friends can see the post")}</div></div>">
                                 {__("Friends")}</option>
                             <option value="me" {if $system['default_privacy'] == "me"}selected{/if}
-                                data-content="<div class='option'><div class='icon'><i class='fa fa-lock fa-lg fa-fw'></i></div><div class='text'><b>{__("Only Me")}</b><br>{__("Only post author can see the post")}</div></div>">
+                                data-content="<div class='option'><div class='icon'><i class='fa fa-lock fa-lg fa-fw ml0' style='height: 21px;width: 21px;'></i></div><div class='text'><b>{__("Only Me")}</b><br>{__("Only post author can see the post")}</div></div>">
                                 {__("Only Me")}</option>
                         </select>
                     </div>
