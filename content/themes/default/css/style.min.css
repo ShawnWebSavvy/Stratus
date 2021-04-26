@@ -547,6 +547,10 @@
  .side-nav .static,.side-nav a{display:block;font-weight:500;padding:15px 25px;color:#1e1f20;}
  .settingleftWrap .side-nav a{font-size:14px;color:#a7b4cb;display:flex;align-items:center;padding:5px 0 0px 0;}
  .adminBlockSideBar .side-nav a{color:#16161f;}
+ .adminBlockSideBar {position: fixed;top: 113px;left: 65px;z-index: 2;}
+ .fixadmin {
+    margin-left: 25%;
+ }
  .adminBlockSideBar.settingleftWrap .side-nav a .svg-container{margin-right: 10px;}
  .settingleftWrap .side-nav a i,.settingleftWrap .side-nav a .svg-container{font-size:16px;height:45px;width:45px;display:flex;align-items:center;justify-content:center;border-radius:10px;box-shadow:0px 0px 5px 0px rgba(0, 0, 0, 0);background-color:transparent;color:#1e1f20 !important;fill:#1e1f20 !important;background-size: unset;}
  .settingleftWrap .side-nav a .svg-container svg{width:24px;height:24px;}

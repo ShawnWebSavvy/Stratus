@@ -11,7 +11,8 @@
 
         <!-- left panel -->
         <div class="col-lg-3 left-offcanvas-sidebar-inner adminBlockSideBar settingleftWrap">
-            <div class="chat-conversations js_scroller" data-slimScroll-height="87vh">
+            <div class="js_scroller showScrollBar" data-slimScroll-height="87vh">
+            {*  *}
                 <!-- System -->
                 <div class="card mb0">
                     <div class="card-body with-nav side_manu_icon">
