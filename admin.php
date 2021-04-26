@@ -316,19 +316,19 @@ try {
 						$tnx_type = ($_GET['tnx_type'] == '') ? 'buy' : $_GET['tnx_type'];
 						$search  = $_GET['query'];
 						// die($search);
-						$get_transactions = $db->query("SELECT COUNT(*) as count FROM investment_transactions WHERE tnx_type = '$tnx_type' and order_id = '$search'") or _error("SQL_ERROR");
+						$get_transactions = $db->query("SELECT COUNT(*) as count FROM investment_transactions INNER JOIN users ON users.user_id=investment_transactions.user_id WHERE tnx_type = '$tnx_type' and order_id = '$search'") or _error("SQL_ERROR");
 						$insights['transactions'] = $get_transactions->fetch_assoc()['count'];
 						// echo '<pre>'; print_r($insights);die;
 						require('includes/class-pager.php');
 						// die($tnx_type);
 						$params['selected_page'] = ((int) $_GET['page'] == 0) ? 1 : $_GET['page'];
-						$total = $db->query("SELECT COUNT(*) as count FROM investment_transactions WHERE tnx_type = '$tnx_type' and order_id ='$search'") or _error("SQL_ERROR");
+						$total = $db->query("SELECT COUNT(*) as count FROM investment_transactions INNER JOIN users ON users.user_id=investment_transactions.user_id WHERE tnx_type = '$tnx_type' and order_id ='$search'") or _error("SQL_ERROR");
 						$params['total_items'] = $insights['transactions'];
 						$params['items_per_page'] = $system['max_results'];
 						$params['url'] = $system['system_url'] . '/' . $control_panel['url'] . '/investment/transactions?page=%s&tnx_type='.$tnx_type;
 						$pager = new Pager($params);
 						$limit_query = $pager->getLimitSql();
-						$get_rows = $db->query("SELECT * FROM investment_transactions WHERE tnx_type = '$tnx_type' and order_id ='$search' ORDER BY id DESC " . $limit_query) or _error("SQL_ERROR");
+						$get_rows = $db->query("SELECT * FROM investment_transactions INNER JOIN users ON users.user_id=investment_transactions.user_id WHERE tnx_type = '$tnx_type' and order_id ='$search' ORDER BY id DESC " . $limit_query) or _error("SQL_ERROR");
 						
 						// $rows = [];
 						if ($get_rows->num_rows > 0) {

@@ -316,11 +316,32 @@ try {
 				throw new Exception(__("This account not exist"));
 			}
 			/* valid inputs */
-			if (is_empty($_POST['user_wallet_balance']) || !is_numeric($_POST['user_wallet_balance']) || $_POST['user_wallet_balance'] < 0) {
+			if (!is_numeric($_POST['user_wallet_balance']) || $_POST['user_wallet_balance'] < 0) {
 				throw new Exception(__("You must enter valid amount of money"));
 			}
+
+			$_POST['gsx_wallet_balance'] = $_POST['gsx_wallet_balance']>0?$_POST['gsx_wallet_balance']:0;
+			if (!is_numeric($_POST['gsx_wallet_balance']) || $_POST['gsx_wallet_balance'] < 0) {
+				throw new Exception(__("You must enter valid GSX coin balance"));
+			}
+
+			$_POST['btc_wallet_balance'] = $_POST['btc_wallet_balance']>0?$_POST['btc_wallet_balance']:0;
+			if (!is_numeric($_POST['btc_wallet_balance']) || $_POST['btc_wallet_balance'] < 0) {
+				throw new Exception(__("You must enter valid BTC coin balance"));
+			}
+
+			$_POST['eth_wallet_balance'] = $_POST['eth_wallet_balance']>0?$_POST['eth_wallet_balance']:0;
+			if (!is_numeric($_POST['eth_wallet_balance']) || $_POST['eth_wallet_balance'] < 0) {
+				throw new Exception(__("You must enter valid ETH coin balance"));
+			}
+
+			$_POST['apl_wallet_balance'] = $_POST['apl_wallet_balance']>0?$_POST['apl_wallet_balance']:0;
+			if (!is_numeric($_POST['apl_wallet_balance']) || $_POST['apl_wallet_balance'] < 0) {
+				throw new Exception(__("You must enter valid APL coin balance"));
+			}
+
 			/* update */
-			$db->query(sprintf("UPDATE users SET user_wallet_balance = %s WHERE user_id = %s", secure($_POST['user_wallet_balance']), secure($_GET['id'], 'int'))) or _error("SQL_ERROR_THROWEN");
+			$db->query(sprintf("UPDATE users SET user_wallet_balance = %s, gsx_wallet = %s, btc_wallet = %s, eth_wallet = %s, apl_wallet = %s WHERE user_id = %s", secure($_POST['user_wallet_balance']), secure($_POST['gsx_wallet_balance']), secure($_POST['btc_wallet_balance']), secure($_POST['eth_wallet_balance']), secure($_POST['apl_wallet_balance']), secure($_GET['id'], 'int'))) or _error("SQL_ERROR_THROWEN");
 			/* return */
 			return_json(array('success' => true, 'message' => __("User info have been updated")));
 			break;
