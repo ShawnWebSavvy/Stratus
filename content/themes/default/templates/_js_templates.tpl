@@ -1712,8 +1712,8 @@
         </button>
                 <div class="row justify-content-center" style="margin-left: -5px; margin-right: -5px;">
                     {if $system['paypal_enabled']}
-                        <div class="col-12 col-sm-4 plr5">
-                        <button class="js_payment-paypal btn btn-block btn-payment plr20 mb10" 
+                        <div class="col-12 col-sm-6 plr5">
+                        <button class="js_payment-paypal btn btn-block btn-payment plr20 mb10 d-flex align-items-center" 
                         data-handle="{literal}{{handle}}{/literal}" 
                         {literal}{{#id}}{/literal} data-id="{literal}{{id}}{/literal}" {literal}{{/id}}{/literal} 
                         {literal}{{#price}}{/literal} data-price="{literal}{{price}}{/literal}" {literal}{{/price}}{/literal} 
@@ -1726,8 +1726,8 @@
                     {/if}
                     {if $system['creditcard_enabled']}
                         
-                        <div class="col-12 col-sm-4 plr5">
-                            <button class="js_payment-stripe btn btn-block btn-payment plr20 mb10" 
+                        <div class="col-12 col-sm-6 plr5">
+                            <button class="js_payment-stripe btn btn-block btn-payment plr20 mb10 d-flex align-items-center" 
                             data-handle="{literal}{{handle}}{/literal}" 
                             {literal}{{#id}}{/literal} data-id="{literal}{{id}}{/literal}" {literal}{{/id}}{/literal} 
                             {literal}{{#new_amount}}{/literal} data-price="{literal}{{new_amount}}{/literal}" {literal}{{/new_amount}}{/literal} 
@@ -1743,16 +1743,16 @@
                             </span>
                         </div>
                     {/if}
-                    {if $system['authorize_enabled']}
-                        <div class="col-12 col-sm-4 plr5">
-                            <button class="btn btn-block btn-payment plr20 mb10" data-toggle="modal" data-url="#authorize-transfer" data-options='{literal}{{/literal} "handle": "{literal}{{handle}}{/literal}", "price": "{literal}{{price}}{/literal}", "id": "{literal}{{id}}{/literal}" {literal}}{/literal}' data-size="large">
+                    {* {if $system['authorize_enabled']} *}
+                        <div class="col-12 col-sm-6 plr5">
+                            <button class="btn btn-block btn-payment plr20 mb10 d-flex align-items-center" data-toggle="modal" data-url="#authorize-transfer" data-options='{literal}{{/literal} "handle": "{literal}{{handle}}{/literal}", "price": "{literal}{{price}}{/literal}", "id": "{literal}{{id}}{/literal}" {literal}}{/literal}' data-size="large">
                                 <i class="fa fa-university fa-lg fa-fw mr5" style="color: #4CAF50;"></i>{__("Pay through Aurhorise.net")}
                             </button>
                         </div>
-                    {/if}
+                    {* {/if} *}
                     {if $system['alipay_enabled']}
-                        <div class="col-12 col-sm-4 plr5">
-                            <button class="js_payment-stripe btn btn-block btn-payment plr20 mb10" 
+                        <div class="col-12 col-sm-6 plr5">
+                            <button class="js_payment-stripe btn btn-block btn-payment plr20 mb10 d-flex align-items-center" 
                             data-handle="{literal}{{handle}}{/literal}" 
                             {literal}{{#id}}{/literal} data-id="{literal}{{id}}{/literal}" {literal}{{/id}}{/literal} 
                             {literal}{{#price}}{/literal} data-price="{literal}{{price}}{/literal}" {literal}{{/price}}{/literal} 
@@ -1764,8 +1764,8 @@
                         </div>
                     {/if}
                     {if $system['coinpayments_enabled']}
-                        <div class="col-12 col-sm-4 plr5">
-                            <button class="js_payment-coinpayments btn btn-block btn-payment plr20 mb10" 
+                        <div class="col-12 col-sm-6 plr5">
+                            <button class="js_payment-coinpayments btn btn-block btn-payment plr20 mb10 d-flex align-items-center" 
                             data-handle="{literal}{{handle}}{/literal}" 
                             {literal}{{#id}}{/literal} data-id="{literal}{{id}}{/literal}" {literal}{{/id}}{/literal} 
                             {literal}{{#price}}{/literal} data-price="{literal}{{price}}{/literal}" {literal}{{/price}}{/literal} 
@@ -1777,22 +1777,22 @@
                         </div>
                     {/if}
                     {if $system['2checkout_enabled']}
-                        <div class="col-12 col-sm-4 plr5">
-                            <button class="btn btn-block btn-payment plr20 mb10" data-toggle="modal" data-url="#twocheckout" data-options='{literal}{{/literal} "handle": "{literal}{{handle}}{/literal}", "price": "{literal}{{price}}{/literal}", "id": "{literal}{{id}}{/literal}" {literal}}{/literal}'>
+                        <div class="col-12 col-sm-6 plr5">
+                            <button class="btn btn-block btn-payment plr20 mb10 d-flex align-items-center" data-toggle="modal" data-url="#twocheckout" data-options='{literal}{{/literal} "handle": "{literal}{{handle}}{/literal}", "price": "{literal}{{price}}{/literal}", "id": "{literal}{{id}}{/literal}" {literal}}{/literal}'>
                                 {include file='__svg_icons.tpl' icon="2co" width="20px" height="20px" class="mr5"}{__("2Checkout")}
                             </button>
                         </div>
                     {/if}
                     {if $system['bank_transfers_enabled']}
-                        <div class="col-12 col-sm-4 plr5">
-                            <button class="btn btn-block btn-payment plr20 mb10" data-toggle="modal" data-url="#bank-transfer" data-options='{literal}{{/literal} "handle": "{literal}{{handle}}{/literal}", "price": "{literal}{{price}}{/literal}", "id": "{literal}{{id}}{/literal}" {literal}}{/literal}' data-size="large">
+                        <div class="col-12 col-sm-6 plr5">
+                            <button class="btn btn-block btn-payment plr20 mb10 d-flex align-items-center" data-toggle="modal" data-url="#bank-transfer" data-options='{literal}{{/literal} "handle": "{literal}{{handle}}{/literal}", "price": "{literal}{{price}}{/literal}", "id": "{literal}{{id}}{/literal}" {literal}}{/literal}' data-size="large">
                                 <i class="fa fa-university fa-lg fa-fw mr5" style="color: #4CAF50;"></i>{__("Bank Transfer")}
                             </button>
                         </div>
                     {/if}
                     {if $page == "packages" && $system['ads_enabled'] &&  $system['packages_wallet_payment_enabled']}
-                        <div class="col-12 col-sm-4 plr5">
-                            <button class="js_payment-wallet-package btn btn-block btn-payment plr20" data-id="{literal}{{id}}{/literal}">
+                        <div class="col-12 col-sm-6 plr5">
+                            <button class="js_payment-wallet-package btn btn-block btn-payment plr20 d-flex align-items-center" data-id="{literal}{{id}}{/literal}">
                                 <i class="fa fa-wallet fa-lg fa-fw mr5" style="color: #007bff;"></i>{__("Wallet Credit")}
                             </button>
                         </div>
@@ -2003,7 +2003,7 @@
     </div>
     <form id="authorizePayment">
         <div class="modal-body">
-            <div class="form-group form-row">
+            {* <div class="form-group form-row">
                 <div class="field-row">
                     <label>Card Number</label> <span id="card-number-info" class="info"></span><br />
                     <input type="text" id="card-number" name="card-number" class="cardNumber" />
@@ -2013,6 +2013,25 @@
                         <label>Expiry Month / Year</label> <span id="userEmail-info" class="info"></span><br />
                         {html_select_date prefix='expire_' month_format='%m' display_years=false display_days=false}
                         {html_select_date prefix='expire_' end_year='+15' display_months=false display_days=false}
+                    </div>
+                </div>
+            </div> *}
+
+            <div class="row">
+                <div class="form-group col-md-12">
+                    <label class="form-control-label">{__("Card Number")}</label><span id="card-number-info" class="info"></span>
+                    <input type="text" id="card-number" class="form-control" name="card-number" class="cardNumber" />
+                </div>
+                <div class="form-group col-md-12">
+                    <label class="form-control-label">Expiry Month / Year</label>
+                    <span id="userEmail-info" class="info"></span><br/>
+                    <div class="row">
+                        <div class="col-md-12 col-xl-6">
+                            {html_select_date class="form-control " prefix='expire_' month_format='%m' display_years=false display_days=false}
+                        </div>
+                        <div class="col-md-12 col-xl-6">
+                            {html_select_date class="form-control " prefix='expire_' end_year='+15' display_months=false display_days=false}
+                        </div>
                     </div>
                 </div>
             </div>
@@ -2029,8 +2048,8 @@
             <input type="hidden" name="handle" value="{literal}{{handle}}{/literal}">
             <input type="hidden" name="package_id" value="{literal}{{id}}{/literal}">
             <input type="hidden" name="price" value="{literal}{{price}}{/literal}">
-            <button type="button" class="btn btn-light" data-dismiss="modal">{__("Cancel")}</button>
-            <button id="btnSubmitModal" type="button" class="btn btn-success btn-antier-green"><i class="fa fa-check-circle mr10"></i>{__("Pay Now")}</button>
+            <button type="button" class="btn btn-light dltButton" data-dismiss="modal">{__("Cancel")}</button>
+            <button id="btnSubmitModal" type="button" class="btn btn-success btn-antier-green walletSendButton"><i class="fa fa-check-circle mr10"></i>{__("Pay Now")}</button>
         </div>
     </form>
 </script>
