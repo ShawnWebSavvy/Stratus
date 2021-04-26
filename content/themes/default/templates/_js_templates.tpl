@@ -176,7 +176,7 @@
                     <div class="live-counter" id="js_live-counter">
                         <span class="status offline" id=js_live-counter-status>{__("Offline")}</span>
                         <span class="number">
-                            <i class="fas fa-eye mr5"></i><strong id="js_live-counter-number">0</strong>    
+                            <i class="fas fa-eye mr5"></i><strong id="js_live-counter-number">0</strong>
                         </span>
                     </div>
 
@@ -349,7 +349,7 @@
                 <div class="form-group">
                     <label class="form-control-label mb10">{__("Current Email")}</label><br>
                     <span class="badge badge-lg badge-info">{$user->_data['user_email']}</span>
-                    
+
                 </div>
                 <div class="form-group">
                     <label class="form-control-label" for="email">{__("New Email")}</label>
@@ -423,7 +423,7 @@
                     <div class="form-group">
                         <label class="form-control-label">{__("Current Phone")}</label>
                         <p class="form-control-plaintext">{$user->_data['user_phone']}</p>
-                        
+
                     </div>
                 {/if}
                 <div class="form-group">
@@ -702,7 +702,7 @@
     </script>
 
 <script id="chat-box" type="text/template">
-        <div class="chat-widget chat-box opened" id="{literal}{{chat_key_value}}{/literal}" 
+        <div class="chat-widget chat-box opened" id="{literal}{{chat_key_value}}{/literal}"
         {literal}{{#conversation_id}}{/literal}data-cid="{literal}{{conversation_id}}{/literal}"{literal}{{/conversation_id}}{/literal}
         {literal}{{#user_id}}{/literal}data-uid="{literal}{{user_id}}{/literal}"{literal}{{/user_id}}{/literal}>
             <!-- head -->
@@ -816,14 +816,14 @@
             <div class="conversation clearfix right">
                 <div class="conversation-body chat-message-user-section1">
                     <div class="text js_chat-color-me" {literal}{{#color}}{/literal}style="background-color: {literal}{{color}}{/literal}"{literal}{{/color}}{/literal}>
-                        <div class="chat-message-user-section"> 
-                            <img src="{literal}{{senderUserImage}}{/literal}"> 
+                        <div class="chat-message-user-section">
+                            <img src="{literal}{{senderUserImage}}{/literal}">
                             <p>{literal}{{name_list}}{/literal}</p>
                             <div class="time js_moment" data-time="{literal}{{time}}{/literal}">
                                 {literal}{{time}}{/literal}
                             </div>
-                        </div> 
-                        
+                        </div>
+
                          <div class="chat-message-section">
                         {literal}{{{message}}}{/literal}
                         {literal}{{#image}}{/literal}
@@ -842,7 +842,7 @@
                             </audio>
                         {literal}{{/voice_note}}{/literal}
                     </div>
-                    
+
                 </div>
             </div>
         </li-->
@@ -862,7 +862,7 @@
         </button>
             <h3>{literal}{{name}}{/literal}</h3>
             <p class="text-lg js_chat-calling-message">{__("Connecting")}<span class="loading-dots"></span></p>
-            
+
             <div class="twilio-stream-wrapper">
                 <div class="twilio-stream"></div>
                 <video class="twilio-stream-local" autoplay=""></video>
@@ -900,7 +900,7 @@
             <h3>{literal}{{name}}{/literal}</h3>
             {literal}{{#is_video}}{/literal}<p class="text-lg js_chat-ringing-message">{__("Wants to have video call with you")}</p>{literal}{{/is_video}}{/literal}
             {literal}{{#is_audio}}{/literal}<p class="text-lg js_chat-ringing-message">{__("Wants to have audio call with you")}</p>{literal}{{/is_audio}}{/literal}
-            
+
             <div class="twilio-stream-wrapper">
                 <div class="twilio-stream"></div>
                 <video class="twilio-stream-local" autoplay=""></video>
@@ -1713,27 +1713,27 @@
                 <div class="row justify-content-center" style="margin-left: -5px; margin-right: -5px;">
                     {if $system['paypal_enabled']}
                         <div class="col-12 col-sm-4 plr5">
-                        <button class="js_payment-paypal btn btn-block btn-payment plr20 mb10" 
-                        data-handle="{literal}{{handle}}{/literal}" 
-                        {literal}{{#id}}{/literal} data-id="{literal}{{id}}{/literal}" {literal}{{/id}}{/literal} 
-                        {literal}{{#price}}{/literal} data-price="{literal}{{price}}{/literal}" {literal}{{/price}}{/literal} 
-                        {literal}{{#name}}{/literal} data-name="{literal}{{name}}{/literal}" {literal}{{/name}}{/literal} 
-                        {literal}{{#img}}{/literal} data-img="{literal}{{img}}{/literal}" {literal}{{/img}}{/literal} 
+                        <button class="js_payment-paypal btn btn-block btn-payment plr20 mb10"
+                        data-handle="{literal}{{handle}}{/literal}"
+                        {literal}{{#id}}{/literal} data-id="{literal}{{id}}{/literal}" {literal}{{/id}}{/literal}
+                        {literal}{{#price}}{/literal} data-price="{literal}{{price}}{/literal}" {literal}{{/price}}{/literal}
+                        {literal}{{#name}}{/literal} data-name="{literal}{{name}}{/literal}" {literal}{{/name}}{/literal}
+                        {literal}{{#img}}{/literal} data-img="{literal}{{img}}{/literal}" {literal}{{/img}}{/literal}
                         >
                             <i class="fab fa-paypal fa-lg fa-fw mr5" style="color: #00186A;"></i>{__("PayPal")}
                         </button>
                         </div>
                     {/if}
                     {if $system['creditcard_enabled']}
-                        
+
                         <div class="col-12 col-sm-4 plr5">
-                            <button class="js_payment-stripe btn btn-block btn-payment plr20 mb10" 
-                            data-handle="{literal}{{handle}}{/literal}" 
-                            {literal}{{#id}}{/literal} data-id="{literal}{{id}}{/literal}" {literal}{{/id}}{/literal} 
-                            {literal}{{#new_amount}}{/literal} data-price="{literal}{{new_amount}}{/literal}" {literal}{{/new_amount}}{/literal} 
-                            {literal}{{#name}}{/literal} data-name="{literal}{{name}}{/literal}" {literal}{{/name}}{/literal} 
-                            {literal}{{#img}}{/literal} data-img="{literal}{{img}}{/literal}" {literal}{{/img}}{/literal} 
-                            data-method="credit"> 
+                            <button class="js_payment-stripe btn btn-block btn-payment plr20 mb10"
+                            data-handle="{literal}{{handle}}{/literal}"
+                            {literal}{{#id}}{/literal} data-id="{literal}{{id}}{/literal}" {literal}{{/id}}{/literal}
+                            {literal}{{#new_amount}}{/literal} data-price="{literal}{{new_amount}}{/literal}" {literal}{{/new_amount}}{/literal}
+                            {literal}{{#name}}{/literal} data-name="{literal}{{name}}{/literal}" {literal}{{/name}}{/literal}
+                            {literal}{{#img}}{/literal} data-img="{literal}{{img}}{/literal}" {literal}{{/img}}{/literal}
+                            data-method="credit">
                                 <i class="fa fa-credit-card fa-lg fa-fw mr5" style="color: #8798CC;"></i>{__("Credit Card")}
                             </button>
                             <span>
@@ -1752,12 +1752,12 @@
                     {/if}
                     {if $system['alipay_enabled']}
                         <div class="col-12 col-sm-4 plr5">
-                            <button class="js_payment-stripe btn btn-block btn-payment plr20 mb10" 
-                            data-handle="{literal}{{handle}}{/literal}" 
-                            {literal}{{#id}}{/literal} data-id="{literal}{{id}}{/literal}" {literal}{{/id}}{/literal} 
-                            {literal}{{#price}}{/literal} data-price="{literal}{{price}}{/literal}" {literal}{{/price}}{/literal} 
-                            {literal}{{#name}}{/literal} data-name="{literal}{{name}}{/literal}" {literal}{{/name}}{/literal} 
-                            {literal}{{#img}}{/literal} data-img="{literal}{{img}}{/literal}" {literal}{{/img}}{/literal} 
+                            <button class="js_payment-stripe btn btn-block btn-payment plr20 mb10"
+                            data-handle="{literal}{{handle}}{/literal}"
+                            {literal}{{#id}}{/literal} data-id="{literal}{{id}}{/literal}" {literal}{{/id}}{/literal}
+                            {literal}{{#price}}{/literal} data-price="{literal}{{price}}{/literal}" {literal}{{/price}}{/literal}
+                            {literal}{{#name}}{/literal} data-name="{literal}{{name}}{/literal}" {literal}{{/name}}{/literal}
+                            {literal}{{#img}}{/literal} data-img="{literal}{{img}}{/literal}" {literal}{{/img}}{/literal}
                             data-method="alipay">
                                 <i class="fab fa-alipay fa-lg fa-fw mr5" style="color: #5B9EDD;"></i>{__("Alipay")}
                             </button>
@@ -1765,12 +1765,12 @@
                     {/if}
                     {if $system['coinpayments_enabled']}
                         <div class="col-12 col-sm-4 plr5">
-                            <button class="js_payment-coinpayments btn btn-block btn-payment plr20 mb10" 
-                            data-handle="{literal}{{handle}}{/literal}" 
-                            {literal}{{#id}}{/literal} data-id="{literal}{{id}}{/literal}" {literal}{{/id}}{/literal} 
-                            {literal}{{#price}}{/literal} data-price="{literal}{{price}}{/literal}" {literal}{{/price}}{/literal} 
-                            {literal}{{#name}}{/literal} data-name="{literal}{{name}}{/literal}" {literal}{{/name}}{/literal} 
-                            {literal}{{#img}}{/literal} data-img="{literal}{{img}}{/literal}" {literal}{{/img}}{/literal} 
+                            <button class="js_payment-coinpayments btn btn-block btn-payment plr20 mb10"
+                            data-handle="{literal}{{handle}}{/literal}"
+                            {literal}{{#id}}{/literal} data-id="{literal}{{id}}{/literal}" {literal}{{/id}}{/literal}
+                            {literal}{{#price}}{/literal} data-price="{literal}{{price}}{/literal}" {literal}{{/price}}{/literal}
+                            {literal}{{#name}}{/literal} data-name="{literal}{{name}}{/literal}" {literal}{{/name}}{/literal}
+                            {literal}{{#img}}{/literal} data-img="{literal}{{img}}{/literal}" {literal}{{/img}}{/literal}
                             >
                                 <i class="fab fa-bitcoin fa-lg fa-fw mr5" style="color: #FFC107;"></i>{__("CoinPayments")}
                             </button>
@@ -1953,26 +1953,8 @@
                             <label class="col-md-3 form-control-label">
                                 {__("Bank Receipt")}
                             </label>
-                            <div class="col-md-9">
-                                <div class="x-image">
-                                    <button type="button" class="close x-hidden js_x-image-remover" title='{__("Remove")}'>
-                                        <span>×</span>
-                                    </button>
-                                    <div class="x-image-loader">
-                                        <div class="progress x-progress">
-                                            <div class="progress-bar" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100"></div>
-                                        </div>
-                                    </div>
-                                    <i class="fa fa-camera fa-lg js_x-uploader" data-handle="x-image"></i>
-                                    <input type="hidden" class="js_x-image-input" name="bank_receipt" value="">
-
-                                </div>
-                                <span class="form-text">
-                                    {__("Please attach your bank receipt")}
-                                </span>
-                            </div>
                         </div>
-
+                         <input type="hidden" class="js_x-image-input cusclass" name="bank_receipt" value="">
                         <!-- success -->
                         <div class="alert alert-success mb0 x-hidden"></div>
                         <!-- success -->
@@ -1986,10 +1968,17 @@
                         <input type="hidden" name="package_id" value="{literal}{{id}}{/literal}">
                         <input type="hidden" name="price" value="{literal}{{price}}{/literal}">
                         <button type="button" class="btn btn-light" data-dismiss="modal">{__("Cancel")}</button>
-                        <button type="submit" class="btn btn-success btn-antier-green"><i class="fa fa-check-circle mr10"></i>{__("Send")}</button>
+                        <button type="submit" id="send_bank_transfer_form" class="btn btn-success btn-antier-green"><i class="fa fa-check-circle mr10"></i>{__("Send")}</button>
                     </div>
                 </form>
-            </script>
+                <form id="bank_trans" action="includes/ajax/data/upload.php" method="post" enctype="multipart/form-data">
+                    <input name="file" id="ImageBrowse" type="file" class="file" id="baffnk_trans" title="Upload Image" accept=".png, .gif, .jpeg, .jpg">
+                    <input type="hidden" name="type" value="photos">
+                    <input type="hidden" name="handle" value="publisher">
+                        <input type="hidden" name="multiple" value="">
+                    <input type="hidden" class="secret" name="secret" value="{$_SESSION['secret']}">
+                </form>
+
 {/if}
 <!-- Bank Transfer -->
 <!-- Bank Transfer -->
@@ -2040,5 +2029,39 @@
 <!-- Payments -->
 
 {/if}
+
+<script>
+$(document).ready(function (e) {
+     $('#bank_trans').on('submit',(function(e) {
+        e.preventDefault();
+        var formData = new FormData(this);
+        var _this = $('#send_bank_transfer_form');
+        button_status(_this, "loading");
+        $.ajax({
+            type:'POST',
+            url: $(this).attr('action'),
+            data:formData,
+            cache:false,
+            contentType: false,
+            processData: false,
+            success:function(data){
+                $('.cusclass').val(data.file);
+                button_status(_this, "reset");
+            },
+            error: function(data){
+                button_status(_this, "reset");
+            }
+        });
+    }));
+
+    $("#ImageBrowse").change( function() {
+      //  alert('here');
+
+        $('.secret').val(secret);
+        $("#bank_trans").submit();
+    });
+});
+</script>
+
 
 {/strip}

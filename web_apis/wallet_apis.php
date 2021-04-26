@@ -17,12 +17,17 @@ function getWalletBalance($token){
       }else{
       //  print_r($_POST); die;
         if(isset($_POST['email'])){
+<<<<<<< HEAD
+
+          $check_user = $db->query(sprintf("SELECT user_id as id, COUNT(*) as count FROM users WHERE user_email = %s", secure($_POST['email']))) or _error("SQL_ERROR_THROWEN");
+=======
             //  $apiResponseNew  =  (new User())->httpGetCurl('/users/whitelabel/get-user-info/' . $_POST['email']);
             //      $apiResponse = $apiResponseNew;
             // print_r($apiResponse); die;
           // $check_user = $db->query(sprintf("SELECT COUNT(*) as count FROM users WHERE user_id = %s", secure($_POST['id'], 'int'))) or _error("SQL_ERROR_THROWEN");
           // $check_user = $db->query(sprintf("SELECT COUNT(*) as count FROM users WHERE user_id = %s", secure($_POST['id'], 'int'))) or _error("SQL_ERROR_THROWEN");
             $check_user = $db->query(sprintf("SELECT COUNT(*) as count FROM users WHERE user_email = %s", secure($_POST['email']))) or _error("SQL_ERROR_THROWEN");
+>>>>>>> e86798abcbc7c073bd7ed98603a8d629caef44ac
           $check_user= $check_user->fetch_assoc();
           if($check_user['count'] < 1){
 
@@ -68,9 +73,27 @@ function getWalletBalance($token){
             //check if user exist on knox END
 
           }else{
+            $transcation_result= array();            
+            $user_id = $check_user['id'];
+            mysqli_report(MYSQLI_REPORT_ALL ^ MYSQLI_REPORT_INDEX);
             // $wallet_query = $db->query(sprintf("SELECT  * FROM users WHERE user_id = %s", secure($_POST['id'], 'int'))) or _error("SQL_ERROR_THROWEN");
             $wallet_query = $db->query(sprintf("SELECT  * FROM users WHERE user_email = %s", secure(  $_POST['email']))) or _error("SQL_ERROR_THROWEN");
-
+            $get_transactions = $db->query(sprintf("SELECT  amount as amount, node_type as node_type, date as transdate  FROM ads_users_wallet_transactions LEFT JOIN users ON ads_users_wallet_transactions.node_type='user' AND ads_users_wallet_transactions.node_id = users.user_id WHERE ads_users_wallet_transactions.user_id = %s ORDER BY ads_users_wallet_transactions.transaction_id DESC", secure($user_id, 'int')));
+         
+            if ($get_transactions->num_rows > 0) {
+              $transcation_result= $get_transactions->fetch_all();
+              $details= array();
+              for($t=0;$t<count($transcation_result);$t++)
+              {
+                $details[]= array(
+                  'amount'=>$transcation_result[$t][0],
+                  'date'=>$transcation_result[$t][2],
+                  'status'=>'Done',
+                  'payment_method'=>'stripe'
+                );    
+              }
+           }
+           
             $result= $wallet_query->fetch_assoc();
             if(!empty($result)){
               $user_details = array(
@@ -80,8 +103,10 @@ function getWalletBalance($token){
                 "user_affiliate_balance"=> $result['user_affiliate_balance'],
                 "user_wallet_balance"=> $result['user_wallet_balance'],
                 "user_points"=> $result['user_points'],
+                "transactions"=> $details,
 
               );
+             
               returnResponse(true,200,"Success",$user_details);
             }else{
               returnResponse(false,300,"Something went wrong");
