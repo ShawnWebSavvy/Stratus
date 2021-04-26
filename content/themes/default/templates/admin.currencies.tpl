@@ -2,13 +2,13 @@
     <div class="card-header with-icon">
         {if $sub_view == ""}
             <div class="float-right">
-                <a href="{$system['system_url']}/{$control_panel['url']}/currencies/add" class="btn btn-sm btn-primary">
+                <a href="{$system['system_url']}/{$control_panel['url']}/currencies/add" class="btn cmn_btn">
                     <i class="fa fa-plus mr5"></i>{__("Add New Currency")}
                 </a>
             </div>
         {elseif $sub_view == "add" || $sub_view == "edit"}
             <div class="float-right">
-                <a href="{$system['system_url']}/{$control_panel['url']}/currencies" class="btn btn-sm btn-light">
+                <a href="{$system['system_url']}/{$control_panel['url']}/currencies" class="btn cmn_btn">
                     <i class="fa fa-arrow-circle-left mr5"></i>{__("Go Back")}
                 </a>
             </div>

@@ -2,20 +2,25 @@
     <div class="card-header with-icon">
         {if $sub_view == ""}
             <div class="float-right">
-                <a href="{$system['system_url']}/{$control_panel['url']}/emojis/add" class="btn btn-sm btn-primary">
+                <a href="{$system['system_url']}/{$control_panel['url']}/emojis/add" class="btn cmn_btn">
                     <i class="fa fa-plus mr5"></i>{__("Add New Emoji")}
                 </a>
             </div>
         {else}
             <div class="float-right">
-                <a href="{$system['system_url']}/{$control_panel['url']}/emojis" class="btn btn-sm btn-light">
+                <a href="{$system['system_url']}/{$control_panel['url']}/emojis" class="btn cmn_btn">
                     <i class="fa fa-arrow-circle-left mr5"></i>{__("Go Back")}
                 </a>
             </div>
         {/if}
-        <i class="fa fa-smile mr10"></i>{__("Emojis")}
-        {if $sub_view == "add"} &rsaquo; {__("Add New Emoji")}{/if}
-        {if $sub_view == "edit"} &rsaquo; {__("Edit Emoji")}{/if}
+        <div class="d-flex align-items-center">
+            <div class="svg-container mr10">
+                <img style="width: 22px;" src="{$system['system_uploads_assets']}/content/themes/default/images/svg/svgImg/feelingsHover.svg" class="">
+            </div>
+            {__("Emojis")}
+            {if $sub_view == "add"} &rsaquo; {__("Add New Emoji")}{/if}
+            {if $sub_view == "edit"} &rsaquo; {__("Edit Emoji")}{/if}
+        </div>
     </div>
 
     {if $sub_view == ""}

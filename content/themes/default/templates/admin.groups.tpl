@@ -2,41 +2,47 @@
     <div class="card-header with-icon">
         {if $sub_view == "find"}
             <div class="float-right">
-                <a href="{$system['system_url']}/{$control_panel['url']}/groups" class="btn btn-sm btn-light">
+                <a href="{$system['system_url']}/{$control_panel['url']}/groups" class="btn cmn_btn">
                     <i class="fa fa-arrow-circle-left mr5"></i>{__("Go Back")}
                 </a>
             </div>
         {elseif $sub_view == "edit_group"}
             <div class="float-right">
-                <a href="{$system['system_url']}/{$control_panel['url']}/groups" class="btn btn-sm btn-light">
+                <a href="{$system['system_url']}/{$control_panel['url']}/groups" class="btn cmn_btn">
                     <i class="fa fa-arrow-circle-left"></i><span class="ml5 d-none d-lg-inline-block">{__("Go Back")}</span>
                 </a>
-                <a target="_blank" href="{$system['system_url']}/groups/{$data['group_name']}" class="btn btn-sm btn-info">
+                <a target="_blank" href="{$system['system_url']}/groups/{$data['group_name']}" class="btn cmn_btn">
                     <i class="fa fa-tv"></i><span class="ml5 d-none d-lg-inline-block">{__("View Group")}</span>
                 </a>
-                <button type="button" class="btn btn-sm btn-danger js_admin-deleter" data-handle="group_posts" data-id="{$data['group_id']}">
+                <button type="button" class="btn cmn_btn js_admin-deleter" data-handle="group_posts" data-id="{$data['group_id']}">
                     <i class="fa fa-trash-alt"></i><span class="ml5 d-none d-lg-inline-block">{__("Delete All Posts")}</span>
                 </button>
             </div>
         {elseif $sub_view == "categories"}
             <div class="float-right">
-                <a href="{$system['system_url']}/{$control_panel['url']}/groups/add_category" class="btn btn-sm btn-primary">
+                <a href="{$system['system_url']}/{$control_panel['url']}/groups/add_category" class="btn cmn_btn">
                     <i class="fa fa-plus"></i><span class="ml5 d-none d-lg-inline-block">{__("Add New Category")}</span>
                 </a>
             </div>
         {elseif $sub_view == "add_category" || $sub_view == "edit_category"}
             <div class="float-right">
-                <a href="{$system['system_url']}/{$control_panel['url']}/groups/categories" class="btn btn-sm btn-light">
+                <a href="{$system['system_url']}/{$control_panel['url']}/groups/categories" class="btn cmn_btn">
                     <i class="fa fa-arrow-circle-left"></i><span class="ml5 d-none d-lg-inline-block">{__("Go Back")}</span>
                 </a>
             </div>
         {/if}
-        <i class="fa fa-users mr10"></i>{__("Groups")}
-        {if $sub_view == "find"} &rsaquo; {__("Find")}{/if}
-        {if $sub_view == "edit_group"} &rsaquo; {$data['group_title']}{/if}
-        {if $sub_view == "categories"} &rsaquo; {__("Categories")}{/if}
-        {if $sub_view == "add_category"} &rsaquo; {__("Categories")} &rsaquo; {__("Add New Category")}{/if}
-        {if $sub_view == "edit_category"} &rsaquo; {__("Categories")} &rsaquo; {$data['category_name']}{/if}
+
+        <div class="d-flex align-items-center">
+            <div class="svg-container mr10">
+                <img style="width: 22px;" src="{$system['system_uploads_assets']}/content/themes/default/images/svg/svgImg/group_icon.svg" class="">
+            </div>
+             {__("Groups")}
+            {if $sub_view == "find"} &rsaquo; {__("Find")}{/if}
+            {if $sub_view == "edit_group"} &rsaquo; {$data['group_title']}{/if}
+            {if $sub_view == "categories"} &rsaquo; {__("Categories")}{/if}
+            {if $sub_view == "add_category"} &rsaquo; {__("Categories")} &rsaquo; {__("Add New Category")}{/if}
+            {if $sub_view == "edit_category"} &rsaquo; {__("Categories")} &rsaquo; {$data['category_name']}{/if}
+        </div>
     </div>
 
     {if $sub_view == "" || $sub_view == "find"}
@@ -128,7 +134,7 @@
     {elseif $sub_view == "edit_group"}
 
         <form class="js_ajax-forms " data-url="admin/groups.php?do=edit_group&id={$data['group_id']}">
-            <div class="card-body">
+            <div class="card-body custom-tabs">
                 <div class="row">
                     <div class="col-12 col-md-2 text-center mb20">
                         <img class="img-fluid img-thumbnail rounded-circle" src="{$data['group_picture']}">
@@ -160,10 +166,10 @@
                 </div>
 
                 <!-- tabs nav -->
-                <ul class="nav nav-tabs custom-tabs mb20">
+                <ul class="nav nav-tabs mb20">
                     <li class="nav-item">
                         <a class="nav-link active" href="#group_settings" data-toggle="tab">
-                            <i class="fa fa-cog fa-fw mr5"></i><strong>{__("Group Settings")}</strong>
+                            {* <i class="fa fa-cog fa-fw mr5"></i> *}{__("Group Settings")}
                         </a>
                     </li>
                 </ul>

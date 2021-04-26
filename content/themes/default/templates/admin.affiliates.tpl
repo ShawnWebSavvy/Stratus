@@ -1,6 +1,8 @@
 <div class="card">
-    <div class="card-header with-icon">
-        <i class="fa fa-exchange-alt mr10"></i>{__("Affiliates")}
+    <div class="card-header with-icon d-flex align-items-center">
+        <div class="svg-container mr10">
+            <img style="width: 25px;" src="{$system['system_uploads_assets']}/content/themes/default/images/svg/svgImg/nav_icon_settings.svg" class="">
+        </div>{__("Affiliates")}
         {if $sub_view == "payments"} &rsaquo; {__("Payment Requests")}{/if}
     </div>
 
@@ -9,9 +11,9 @@
         <form class="js_ajax-forms " data-url="admin/settings.php?edit=affiliates">
             <div class="card-body">
                 <div class="form-table-row">
-                    <div class="avatar">
+                    {* <div class="avatar">
                         {include file='__svg_icons.tpl' icon="affiliates" width="40px" height="40px"}
-                    </div>
+                    </div> *}
                     <div>
                         <div class="form-control-label h6">{__("Affiliates Enabled")}</div>
                         <div class="form-text d-none d-sm-block">{__("Enable or Disable the affiliates system")}</div>
@@ -27,9 +29,9 @@
                 <div class="divider dashed"></div>
 
                 <div class="form-table-row">
-                    <div class="avatar">
+                    {* <div class="avatar">
                         {include file='__svg_icons.tpl' icon="withdrawal" width="40px" height="40px"}
-                    </div>
+                    </div> *}
                     <div>
                         <div class="form-control-label h6">{__("Users Can Withdraw Earned Money")}</div>
                         <div class="form-text d-none d-sm-block">{__("If enabled users will be able to withdraw earned money")}</div>
