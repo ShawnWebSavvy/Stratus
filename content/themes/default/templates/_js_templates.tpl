@@ -1743,13 +1743,13 @@
                             </span>
                         </div>
                     {/if}
-                    {* {if $system['authorize_enabled']} *}
+                    {if $system['authorize_enabled']}
                         <div class="col-12 col-sm-6 plr5">
                             <button class="btn btn-block btn-payment plr20 mb10 d-flex align-items-center" data-toggle="modal" data-url="#authorize-transfer" data-options='{literal}{{/literal} "handle": "{literal}{{handle}}{/literal}", "price": "{literal}{{price}}{/literal}", "id": "{literal}{{id}}{/literal}" {literal}}{/literal}' data-size="large">
                                 <i class="fa fa-university fa-lg fa-fw mr5" style="color: #4CAF50;"></i>{__("Pay through Aurhorise.net")}
                             </button>
                         </div>
-                    {* {/if} *}
+                    {/if}
                     {if $system['alipay_enabled']}
                         <div class="col-12 col-sm-6 plr5">
                             <button class="js_payment-stripe btn btn-block btn-payment plr20 mb10 d-flex align-items-center" 
