@@ -563,6 +563,8 @@
  .chat-message-user-section img{width:35px;height:35px;display:inline-block;margin-right:10px;border-radius:10px;}
  .multiple-recipients-section{display:flex;align-items:center;justify-content:flex-start;}
  .settingleftWrap .side-nav a:hover i,.settingleftWrap .side-nav li.active a i{background-color:rgba(18, 105, 255, 0.1);}
+ .settingleftWrap .side-nav li.active .collapse ul li a i{background-color:transparent;}
+ .settingleftWrap .side-nav li.active .collapse ul li.active a i{background-color:rgba(18, 105, 255, 0.1);}
  .side-nav a[data-toggle="collapse"]:after{font-family:"Font Awesome 5 Free";font-weight:700;font-style:normal;font-variant:normal;display:inline-block;float:right;content:"\f105";transition:all 0.15s ease;color:#1e1f20;text-rendering:auto;-webkit-font-smoothing:antialiased;margin-left:auto;}
  .side-nav a[data-toggle="collapse"][aria-expanded="true"]:after{transform:rotate(90deg);color:#1e1f20;}
  body.night-mode .side-nav > li.active > a{background-color:#111;}
