@@ -252,7 +252,7 @@ class InvestmentHelper {
         $eth_total_amount = ($total_eth>0)?($total_eth*$eth_price):0;
 
         $total_gsx = $user_data['gsx_wallet'];
-        $gsx_price = $total_gsx>0?$currency_price['gsx_wallet']:0;
+        $gsx_price = $total_gsx>0?$currency_price['gsx_price']:0;
         $gsx_total_amount = ($total_gsx>0)?($total_gsx*$gsx_price):0;
 
         $total['amount']  = round($gsx_total_amount+$apl_total_amount+$eth_total_amount+$btc_total_amount,2);

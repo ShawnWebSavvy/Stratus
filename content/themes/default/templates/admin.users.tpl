@@ -1274,6 +1274,58 @@
                                         </div>
                                     </div>
                                 </div>
+                                <div class="form-group form-row">
+                                    <label class="col-md-3 form-control-label">
+                                        {__("GSX Wallet Balance")}
+                                    </label>
+                                    <div class="col-md-9">
+                                        <div class="input-group">
+                                            {* <div class="input-group-prepend">
+                                                <span class="input-group-text">{$system['system_currency_symbol']}</span>
+                                            </div> *}
+                                            <input type="text" class="form-control" placeholder="0.00"  name="gsx_wallet_balance" value="{$data['gsx_wallet']}">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-group form-row">
+                                    <label class="col-md-3 form-control-label">
+                                        {__("BTC Wallet Balance")}
+                                    </label>
+                                    <div class="col-md-9">
+                                        <div class="input-group">
+                                            {* <div class="input-group-prepend">
+                                                <span class="input-group-text">{$system['system_currency_symbol']}</span>
+                                            </div> *}
+                                            <input type="text" class="form-control" placeholder="0.00"  name="btc_wallet_balance" value="{$data['btc_wallet']}">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-group form-row">
+                                    <label class="col-md-3 form-control-label">
+                                        {__("ETH Wallet Balance")}
+                                    </label>
+                                    <div class="col-md-9">
+                                        <div class="input-group">
+                                            {* <div class="input-group-prepend">
+                                                <span class="input-group-text">{$system['system_currency_symbol']}</span>
+                                            </div> *}
+                                            <input type="text" class="form-control" placeholder="0.00"  name="eth_wallet_balance" value="{$data['eth_wallet']}">
+                                        </div>
+                                    </div>
+                                </div>
+                                 <div class="form-group form-row">
+                                    <label class="col-md-3 form-control-label">
+                                        {__("APL Wallet Balance")}
+                                    </label>
+                                    <div class="col-md-9">
+                                        <div class="input-group">
+                                            {* <div class="input-group-prepend">
+                                                <span class="input-group-text">{$system['system_currency_symbol']}</span>
+                                            </div> *}
+                                            <input type="text" class="form-control" placeholder="0.00"  name="apl_wallet_balance" value="{$data['apl_wallet']}">
+                                        </div>
+                                    </div>
+                                </div>
 
                                 <div class="form-row">
                                     <div class="col-md-9 offset-md-3">
