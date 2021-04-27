@@ -343,6 +343,7 @@ body.publisher-focus .custom_modal_style .card.daytime_message{display:none !imp
 .globalDropdown .dropdown-menu.show .dropdown-item{padding: 7px 15px;}
 .global-profile-share .globalDropdown .dropdown-menu.show{left:auto !important;min-width:181px;}
  .chat-conversations.js_scroller{-ms-overflow-style:none;scrollbar-width:none;}
+ .chat-conversations.js_scroller.showScrollBar{-ms-overflow-style:unset;scrollbar-width:unset;}
  .userNameWrap._user_details .mt5{display:flex;align-items:center;}
 .right-sidebar .js_friend-add img{padding-right:0;}
 .right-sidebar .data-content.usernamesWrapBlock{justify-content:flex-end;}

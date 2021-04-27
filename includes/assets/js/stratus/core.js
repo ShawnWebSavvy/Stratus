@@ -780,6 +780,9 @@ function button_status(e, t) {
                         $("body #error-message").addClass("x-hidden");
                         $("body #success-message").removeClass("x-hidden");
                         $("body #success-message").html(res.message).show();
+                        setTimeout(function(){
+                            $( "body #btnCancel" ).trigger( "click" );
+                        }, 2500);
                     }else{
                         $("body #success-message").addClass("x-hidden");
                         $("body #error-message").removeClass("x-hidden");
@@ -819,24 +822,30 @@ function cardValidation () {
     $("body #error-message").addClass("x-hidden");
     $("body #error-message").html("").hide();
 
+    var msg = "";
     if (cardNumber == "") {
         valid = false;
+        msg = "Card Field is Empty!";
     }
 
     if(!is_creditCard(cardNumber)){
         valid = false;
+        msg = "Card is Invalid";
     }
 
     if (month == "") {
         valid = false;
+        msg = "Select Expire Month";
     }
+
     if (year == "") {
         valid = false;
+        msg = "Select Expire Year"
     }
 
     if(valid == false) {
         $("body #error-message").removeClass("x-hidden");
-        $("body #error-message").html("All Fields are required").show();
+        $("body #error-message").html(msg).show();
     }else{
         $("body #error-message").addClass("x-hidden");
     }

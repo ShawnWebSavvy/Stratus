@@ -17,17 +17,12 @@ function getWalletBalance($token){
       }else{
       //  print_r($_POST); die;
         if(isset($_POST['email'])){
-<<<<<<< HEAD
-
-          $check_user = $db->query(sprintf("SELECT user_id as id, COUNT(*) as count FROM users WHERE user_email = %s", secure($_POST['email']))) or _error("SQL_ERROR_THROWEN");
-=======
             //  $apiResponseNew  =  (new User())->httpGetCurl('/users/whitelabel/get-user-info/' . $_POST['email']);
             //      $apiResponse = $apiResponseNew;
             // print_r($apiResponse); die;
           // $check_user = $db->query(sprintf("SELECT COUNT(*) as count FROM users WHERE user_id = %s", secure($_POST['id'], 'int'))) or _error("SQL_ERROR_THROWEN");
           // $check_user = $db->query(sprintf("SELECT COUNT(*) as count FROM users WHERE user_id = %s", secure($_POST['id'], 'int'))) or _error("SQL_ERROR_THROWEN");
             $check_user = $db->query(sprintf("SELECT COUNT(*) as count FROM users WHERE user_email = %s", secure($_POST['email']))) or _error("SQL_ERROR_THROWEN");
->>>>>>> e86798abcbc7c073bd7ed98603a8d629caef44ac
           $check_user= $check_user->fetch_assoc();
           if($check_user['count'] < 1){
 
