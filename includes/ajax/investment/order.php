@@ -90,7 +90,7 @@ try {
                 if($_POST['amount']==$_SESSION['amount'] &&
                     $_POST['token_name']==$_SESSION['token_name']
                     && $_POST['action'] == $_SESSION['action']&&
-                    $secondsInactive <= 60
+                    $secondsInactive <= 20
                     ){
                     // $_POST['do']          = $_SESSION['action'];
                     $redisObject = new RedisClass();
@@ -130,7 +130,7 @@ try {
                 if($_POST['amount']==$_SESSION['amount'] &&
                 $_POST['token_name']==$_SESSION['token_name']
                 && $_POST['action'] == $_SESSION['action']&&
-                $secondsInactive <= 60
+                $secondsInactive <= 20
                 ){
                     $redisObject = new RedisClass();
                     $lockKey    = 'lock:user:wallet:uid:'.$user->_data['user_id'];
