@@ -22,7 +22,7 @@ function getWalletBalance($token){
             // print_r($apiResponse); die;
           // $check_user = $db->query(sprintf("SELECT COUNT(*) as count FROM users WHERE user_id = %s", secure($_POST['id'], 'int'))) or _error("SQL_ERROR_THROWEN");
           // $check_user = $db->query(sprintf("SELECT COUNT(*) as count FROM users WHERE user_id = %s", secure($_POST['id'], 'int'))) or _error("SQL_ERROR_THROWEN");
-            $check_user = $db->query(sprintf("SELECT COUNT(*) as count FROM users WHERE user_email = %s", secure($_POST['email']))) or _error("SQL_ERROR_THROWEN");
+            $check_user = $db->query(sprintf("SELECT COUNT(*) as count,user_id FROM users WHERE user_email = %s", secure($_POST['email']))) or _error("SQL_ERROR_THROWEN");
           $check_user= $check_user->fetch_assoc();
           if($check_user['count'] < 1){
 
@@ -68,8 +68,9 @@ function getWalletBalance($token){
             //check if user exist on knox END
 
           }else{
+            $details = array();
             $transcation_result= array();            
-            $user_id = $check_user['id'];
+            $user_id = $check_user['user_id'];
             mysqli_report(MYSQLI_REPORT_ALL ^ MYSQLI_REPORT_INDEX);
             // $wallet_query = $db->query(sprintf("SELECT  * FROM users WHERE user_id = %s", secure($_POST['id'], 'int'))) or _error("SQL_ERROR_THROWEN");
             $wallet_query = $db->query(sprintf("SELECT  * FROM users WHERE user_email = %s", secure(  $_POST['email']))) or _error("SQL_ERROR_THROWEN");
