@@ -90,7 +90,7 @@ try {
                 if($_POST['amount']==$_SESSION['amount'] &&
                     $_POST['token_name']==$_SESSION['token_name']
                     && $_POST['action'] == $_SESSION['action']&&
-                    $secondsInactive <= 60
+                    $secondsInactive <= 20
                     ){
                         // $_POST['do']          = $_SESSION['action'];
 
@@ -125,7 +125,7 @@ try {
                 if($_POST['amount']==$_SESSION['amount'] &&
                 $_POST['token_name']==$_SESSION['token_name']
                 && $_POST['action'] == $_SESSION['action']&&
-                $secondsInactive <= 60
+                $secondsInactive <= 20
                 ){
 
                     if((double)$_POST['token_value']<=(double)$user->_data[$_POST['token_name'].'_wallet']){
