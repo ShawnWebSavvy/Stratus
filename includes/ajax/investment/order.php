@@ -156,6 +156,8 @@ try {
                     }else{
                         _error(404);
                     }
+                }else{
+                    $return['status'] = 'session_expired';
                 }
             }else{
                 _error(400);
