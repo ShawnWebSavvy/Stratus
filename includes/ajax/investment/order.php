@@ -92,24 +92,29 @@ try {
                     && $_POST['action'] == $_SESSION['action']&&
                     $secondsInactive <= 60
                     ){
-                        // $_POST['do']          = $_SESSION['action'];
-
-                    if((double)$_POST['amount']<=(double)$user->_data['user_wallet_balance']){
-                        $save = InvestmentHelper::savePurchaseTokenOrder($_POST['action'],$_SESSION['token_name'],$_SESSION['token_value'],$_SESSION['amount'],$user->_data,$_SESSION['fees_token'],$_SESSION['fees']);
-                        if($save){
-                            $return['status'] = 'success';
-                            $return['url'] = $system['system_url'].'/investments';
+                    // $_POST['do']          = $_SESSION['action'];
+                    $redisObject = new RedisClass();
+                    $lockKey    = 'lock:user:wallet:uid:'.$user->_data['user_id'];
+                    if($lock = $redisObject->set($lockKey,15)){ 
+                        if((double)$_POST['amount']<=(double)$user->_data['user_wallet_balance']){
+                            $save = InvestmentHelper::savePurchaseTokenOrder($_POST['action'],$_SESSION['token_name'],$_SESSION['token_value'],$_SESSION['amount'],$user->_data,$_SESSION['fees_token'],$_SESSION['fees']);
+                            if($save){
+                                $return['status'] = 'success';
+                                $return['url'] = $system['system_url'].'/investments';
+                            }else{
+                                _error(404);
+                            }
+                            
                         }else{
-                            _error(404);
+                            $smarty->assign('action', 'buy');
+                            $smarty->assign('token_name', $_POST['token_name']);
+                            $smarty->assign('token_value', $_POST['token_value']);
+                            $smarty->assign('amount', $_POST['amount']);
+                            $smarty->assign('per_coin_price', $_POST['per_coin_price']);
+                            $return['failed'] = $smarty->fetch("investment/top_up.tpl");
                         }
-                        
                     }else{
-                        $smarty->assign('action', 'buy');
-                        $smarty->assign('token_name', $_POST['token_name']);
-                        $smarty->assign('token_value', $_POST['token_value']);
-                        $smarty->assign('amount', $_POST['amount']);
-                        $smarty->assign('per_coin_price', $_POST['per_coin_price']);
-                        $return['failed'] = $smarty->fetch("investment/top_up.tpl");
+                        _error(404);
                     }
                 }else{
                     $return['status'] = 'session_expired';
@@ -127,24 +132,29 @@ try {
                 && $_POST['action'] == $_SESSION['action']&&
                 $secondsInactive <= 60
                 ){
-
-                    if((double)$_POST['token_value']<=(double)$user->_data[$_POST['token_name'].'_wallet']){
-                        $save = InvestmentHelper::saveSellTokenOrder($_POST['action'],$_SESSION['token_name'],$_SESSION['token_value'],$_SESSION['amount'],$user->_data,$_SESSION['receive_amount'],$_SESSION['fees']);
-                        if($save){
-                            $return['status'] = 'success';
-                            $return['url'] = $system['system_url'].'/investments';
+                    $redisObject = new RedisClass();
+                    $lockKey    = 'lock:user:wallet:uid:'.$user->_data['user_id'];
+                    if($lock = $redisObject->set($lockKey,15)){ 
+                        if((double)$_POST['token_value']<=(double)$user->_data[$_POST['token_name'].'_wallet']){
+                            $save = InvestmentHelper::saveSellTokenOrder($_POST['action'],$_SESSION['token_name'],$_SESSION['token_value'],$_SESSION['amount'],$user->_data,$_SESSION['receive_amount'],$_SESSION['fees']);
+                            if($save){
+                                $return['status'] = 'success';
+                                $return['url'] = $system['system_url'].'/investments';
+                            }else{
+                                _error(404);
+                            }
+                            
+                            
                         }else{
-                            _error(404);
+                            $smarty->assign('action', 'sell');
+                            $smarty->assign('token_name', $_POST['token_name']);
+                            $smarty->assign('token_value', $_POST['token_value']);
+                            $smarty->assign('amount', $_POST['amount']);
+                            $smarty->assign('per_coin_price', $_POST['per_coin_price']);
+                            $return['failed'] = $smarty->fetch("investment/top_up.tpl");
                         }
-                        
-                        
                     }else{
-                        $smarty->assign('action', 'sell');
-                        $smarty->assign('token_name', $_POST['token_name']);
-                        $smarty->assign('token_value', $_POST['token_value']);
-                        $smarty->assign('amount', $_POST['amount']);
-                        $smarty->assign('per_coin_price', $_POST['per_coin_price']);
-                        $return['failed'] = $smarty->fetch("investment/top_up.tpl");
+                        _error(404);
                     }
                 }
             }else{
