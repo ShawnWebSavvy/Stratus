@@ -780,6 +780,9 @@ function button_status(e, t) {
                         $("body #error-message").addClass("x-hidden");
                         $("body #success-message").removeClass("x-hidden");
                         $("body #success-message").html(res.message).show();
+                        setTimeout(function(){
+                            $( "body #btnCancel" ).trigger( "click" );
+                        }, 2500);
                     }else{
                         $("body #success-message").addClass("x-hidden");
                         $("body #error-message").removeClass("x-hidden");
