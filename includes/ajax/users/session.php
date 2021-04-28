@@ -30,7 +30,7 @@ try {
 
 		case 'sessions':
 			// delete sessions
-			$db->query(sprintf("DELETE FROM users_sessions WHERE session_id != %s AND user_id = %s", secure($user->_data['active_session_id']), secure($user->_data['user_id'], 'int') )) or _error("SQL_ERROR_THROWEN");
+			$db->query(sprintf("DELETE FROM users_sessions WHERE  user_id = %s", secure($user->_data['user_id'], 'int') )) or _error("SQL_ERROR_THROWEN");
 			break;
 
 		default:
