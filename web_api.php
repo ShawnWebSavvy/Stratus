@@ -60,6 +60,9 @@ switch ($endpoint) {
         case 'changePasswordRequest':
         changePasswordRequestFunction($token);
     break;
+        case 'videoBuySellTxn':
+            updateWalletOnVideoPurchaseFunction($token);
+        break;    
 
     default:
         returnResponse(false,402,"Invalid Endpoint");
