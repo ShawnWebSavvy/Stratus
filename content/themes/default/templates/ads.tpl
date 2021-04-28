@@ -855,8 +855,7 @@
                                     <button class="btn btn-block mb10" data-toggle="modal"
                                         data-url="#wallet-withdraw-points">
                                         <img width="15px" class="mr20"
-                                            src="{$system['system_url']}/content/themes/{$system['theme']}/images/svg/svgImg/walletPaperPlane.svg">{__("Points
-                                        Credit")}
+                                            src="{$system['system_url']}/content/themes/{$system['theme']}/images/svg/svgImg/walletPaperPlane.svg">{__("Points Credit")}
                                     </button>
                                     {elseif $system['affiliates_enabled']}
                                     <button class="btn btn-block mb10" data-toggle="modal" data-url="#wallet-replenish">
@@ -867,8 +866,7 @@
                                     <button class="btn btn-block mb10" data-toggle="modal"
                                         data-url="#wallet-withdraw-affiliates">
                                         <img width="15px" class="mr20"
-                                            src="{$system['system_url']}/content/themes/{$system['theme']}/images/svg/svgImg/sendMoney.svg">{__("Withdraw
-                                        Affiliates Credit")}
+                                            src="{$system['system_url']}/content/themes/{$system['theme']}/images/svg/svgImg/sendMoney.svg">{__("Withdraw Affiliates Credit")}
                                     </button>
                                     {elseif ($system['points_enabled'] && $system['points_money_transfer_enabled'])}
                                     <button class="btn btn-block mb10" data-toggle="modal" data-url="#wallet-replenish">
@@ -887,6 +885,13 @@
                                         <img width="15px" class="mr20"
                                             src="{$system['system_url']}/content/themes/{$system['theme']}/images/svg/svgImg/walletHeart.svg">
                                         {__("Replenish Credit")}
+                                    </button>
+                                    {/if}
+                                    {if ($system['points_money_transfer_enabled'])}
+                                    <button class="btn btn-block mb10" data-toggle="modal" data-url="#bank-withdrawl">
+                                        <img width="15px" class="mr20"
+                                            src="{$system['system_url']}/content/themes/{$system['theme']}/images/svg/svgImg/walletHeart.svg">
+                                        {__("Withdrawl to Bank")}
                                     </button>
                                     {/if}
                                 </div>

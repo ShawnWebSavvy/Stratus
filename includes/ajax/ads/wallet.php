@@ -24,7 +24,17 @@ try {
 			
 			// return
 			return_json( array('callback' => 'window.location = site_path + "/wallet?transfer_succeed"') );
-			break;
+		break;
+
+		case 'bank_withdrawl':
+			// valid inputs 
+			if(!isset($_POST['amount']) || !is_numeric($_POST['amount'])) {
+				throw new Exception(__("Enter valid amount of money for example '50'"));
+			}
+
+			// return
+			modal("#bankPayment", "{'price': '".$_POST['amount']."'}");
+		break;
 
 		case 'wallet_replenish':
 			// valid inputs 
@@ -38,7 +48,7 @@ try {
 			$_SESSION['wallet_pay_to_user'] = $_POST['amount'];
 			// return
 			modal("#payment", "{'handle': 'wallet', 'new_amount':'".number_format((float)$new_amount, 2, '.', '')."', 'fee_amount':'".number_format((float)$fee_amount, 2, '.', '')."', 'price': '".$_POST['amount']."'}");
-			break;
+		break;
 
 		case 'wallet_withdraw_affiliates':
 			// process
@@ -46,7 +56,7 @@ try {
 			
 			// return
 			return_json( array('callback' => 'window.location = site_path + "/wallet?withdraw_affiliates_succeed"') );
-			break;
+		break;
 
 		case 'wallet_withdraw_points':
 			// process
@@ -54,7 +64,7 @@ try {
 			
 			// return
 			return_json( array('callback' => 'window.location = site_path + "/wallet?withdraw_points_succeed"') );
-			break;
+		break;
 
 		case 'wallet_package_payment':
 			// process
@@ -62,7 +72,7 @@ try {
 			
 			// return
 			return_json( array('callback' => 'window.location = site_path + "/wallet?package_payment_succeed"') );
-			break;
+		break;
 
 		default:
 			_error(400);

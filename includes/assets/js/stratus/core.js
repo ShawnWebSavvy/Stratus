@@ -762,11 +762,33 @@ function button_status(e, t) {
     });
     $(document).on("click", "#add_post_show", function () {
         if ($(this).hasClass("lessMore")) {
-          $(this).removeClass('lessMore');
+            $(this).removeClass('lessMore');
         } else {
-          $(this).addClass('lessMore');
+            $(this).addClass('lessMore');
         }
-      });
+    });
+
+    $(document).on("click", "body .modal button#bankTransferSubmit", function () {
+        var form = $("body .modal form#bank-transfer-money");
+        $.post(
+            ajax_path + "core/bank_transfer_payment.php",
+            form.serialize(),
+            function (res) {
+                if(res.response === "success"){
+                    $("body #wallet-error-message").addClass("x-hidden");
+                    $("body #wallet-success-message").removeClass("x-hidden");
+                    $("body #wallet-success-message").html(res.message).show();
+                }else{
+                    $("body #wallet-success-message").addClass("x-hidden");
+                    $("body #wallet-error-message").removeClass("x-hidden");
+                    $("body #wallet-error-message").html(res.message).show();
+                }
+            },
+            "json"
+        ).fail(function (error) {
+            console.log(error)
+        });
+    });
   
     $(document).on("click", "body .modal button#btnSubmitModal", function () {
         var cardValidate = cardValidation();
