@@ -118,7 +118,7 @@
                 <div class="chat-conversations js_scroller rightSideBarScroll">
                     <div class="row">
                         {if !$system['registration_enabled'] && $system['invitation_enabled']}
-                        <div class="form-group col-12">
+                        <div class="form-group col-12 required">
                             <!-- <div class="input-group"> -->
                             <!-- <div class="input-group-prepend">
                             <span class="input-group-text"><i class="fas fa-handshake fa-fw"></i></span>
@@ -130,7 +130,7 @@
                         </div>
                         {/if}
 
-                        <div class="form-group col-sm-6 col-12">
+                        <div class="form-group col-sm-6 col-12 required">
                             <!--<div class="input-group">
                         <div class="input-group-prepend">
                             <span class="input-group-text"><i class="fas fa-globe fa-fw"></i></span>
@@ -140,7 +140,7 @@
                                 placeholder='{__("Username")}' required>
                             <!--</div>-->
                         </div>
-                        <div class="form-group  col-sm-6 col-12">
+                        <div class="form-group  col-sm-6 col-12 required">
                             <!--<div class="input-group">
                         <div class="input-group-prepend">
                             <span class="input-group-text"><i class="fas fa-user fa-fw"></i></span>
@@ -150,7 +150,7 @@
                                 placeholder='{__("First name")}' required>
                             <!--</div>-->
                         </div>
-                        <div class="form-group  col-sm-6 col-12">
+                        <div class="form-group  col-sm-6 col-12 required">
                             <!--<div class="input-group">
                         <div class="input-group-prepend">
                             <span class="input-group-text"><i class="fas fa-user fa-fw"></i></span>
@@ -160,7 +160,7 @@
                                 placeholder='{__("Last name")}' required>
                             <!--</div>-->
                         </div>
-                        <!--<div class="form-group  col-sm-6 col-12">
+                        <!--<div class="form-group  col-sm-6 col-12 required">
                     <label for="" class="label">{__("Gender")}</label>
                     <select name="gender" id="gender" class="form-control" required>
                         <option value="none">{__("Select Sex")}:</option>
@@ -169,7 +169,7 @@
                         <option value="other">{__("Other")}</option>
                     </select>
                 </div> -->
-                        <div class="form-group  col-sm-6 col-12">
+                        <div class="form-group  col-sm-6 col-12 required">
                             <!--<div class="input-group">
                         <div class="input-group-prepend">
                             <span class="input-group-text"><i class="fas fa-envelope fa-fw"></i></span>
@@ -180,7 +180,7 @@
                             <!--</div>-->
                         </div>
                         <!-- {if $system['activation_enabled'] && $system['activation_type'] == "sms"}
-                <div class="form-group">
+                <div class="form-group required">
                     <div class="input-group">
                             <div class="input-group-prepend">
                                 <span class="input-group-text"><i class="fas fa-phone fa-fw"></i></span>
@@ -192,7 +192,7 @@
                 </div>
                 {/if} -->
                         <div class="form-group col-sm-6 col-12">
-                            <div class="form-group">
+                            <div class="form-group required">
                                 <!--<div class="input-group">
                             <div class="input-group-prepend">
                                 <span class="input-group-text"><i class="fas fa-key fa-fw"></i></span>
