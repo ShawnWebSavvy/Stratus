@@ -244,9 +244,23 @@ function button_status(e, t) {
                 ajax_path + url,
                 data,
                 function (response) {
+                    if(response.messages){
+                        if(response.responseType == "success"){
+                            element.find("#paymentFailed").hide();
+                            element.find("#paymentSuccess").show();
+                            element.find("#paymentSuccess").html(response.messages);
+                            setTimeout(function(){
+                                window.location.reload();
+                            }, 2500);
+                        }else{
+                            element.find("#paymentSuccess").hide();
+                            element.find("#paymentFailed").show();
+                            element.find("#paymentFailed").html(response.messages);
+                        }
+                    }
                     if(response.success&&systemUrl&&username){
                         $("#sidebarHiddSwip .profile-link").attr("href", `${systemUrl}/${username}`);
-                     } 
+                    } 
                     button_status(submit, "reset"),
                         response.error
                             ? (success.is(":visible") && success.hide(), error.html(response.message).slideDown())
@@ -762,11 +776,40 @@ function button_status(e, t) {
     });
     $(document).on("click", "#add_post_show", function () {
         if ($(this).hasClass("lessMore")) {
-          $(this).removeClass('lessMore');
+            $(this).removeClass('lessMore');
         } else {
-          $(this).addClass('lessMore');
+            $(this).addClass('lessMore');
         }
-      });
+    });
+    $(document).ready( function () {
+        $('.js_dataTables').DataTable( {
+            "order": []
+        } );
+    } );
+    $(document).on("click", "body .modal button#bankTransferSubmit", function () {
+        var form = $("body .modal form#bank-transfer-money");
+        $.post(
+            ajax_path + "core/bank_transfer_payment.php",
+            form.serialize(),
+            function (res) {
+                if(res.response === "success"){
+                    $("body #wallet-error-message").addClass("x-hidden");
+                    $("body #wallet-success-message").removeClass("x-hidden");
+                    $("body #wallet-success-message").html(res.message).show();
+                    setTimeout(function(){
+                        $( "body #btnCancelbankTransfer" ).trigger( "click" );
+                    }, 2500);
+                }else{
+                    $("body #wallet-success-message").addClass("x-hidden");
+                    $("body #wallet-error-message").removeClass("x-hidden");
+                    $("body #wallet-error-message").html(res.message).show();
+                }
+            },
+            "json"
+        ).fail(function (error) {
+            console.log(error)
+        });
+    });
   
     $(document).on("click", "body .modal button#btnSubmitModal", function () {
         var cardValidate = cardValidation();

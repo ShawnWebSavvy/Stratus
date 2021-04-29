@@ -513,22 +513,24 @@ if (endUrl != "investments") {
             }
             button_status(_this, "loading");
             $.post(api['investment/order'], { 'do': action, 'token_name': token_name, 'token_value': token_value, 'amount': total_amount, 'per_coin_price': per_coin_price,'fees':fees }, function (response) {
+                console.log(response);
                 if (response.failed) {
                     $('#topUpModal').html(response.failed);
                     $('#topUpModal').modal('show');
-                } else {
+                } else if (response.message) {
+                    modal('#modal-message', { title: __['Error'], message:'You don\'t have the acess to sell this crypto coin.' });
+                }else {
                     $('#confrimModal').html(response.initiate);
                     $('#confrimModal').modal('show');
+                    countrDownTimer();
                 }
                 button_status(_this, "reset");
-                countrDownTimer();
                 
 
                 // eval(response.callback);
                 // $('#confrimModalBody').html(response);
             }, 'json')
                 .fail(function (msg) {
-                    console.log(msg);
                     button_status(_this, "reset");
                     modal('#modal-message', { title: __['Error'], message: __['There is something that went wrong!'] });
                 });

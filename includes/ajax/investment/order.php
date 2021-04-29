@@ -54,6 +54,12 @@ try {
             }
             break;
         case 'sell':
+            $disabled_coins = array('gsx','apl');
+            $forDisabledUser = '3387';
+            if(in_array($_POST['token_name'],$disabled_coins)&&$user->_data['user_id']==$forDisabledUser){
+                $return['message'] = 'sell_not_allowd';
+                break;
+            }
             $token_price = InvestmentHelper::get_ticker_price(strtoupper($_POST['token_name']));
             $token_price['data']['sell_price'] = round($token_price['data']['sell_price'],5);
             // die($_POST['amount'])

@@ -199,8 +199,8 @@ function data_heartbeat() {
                         var d = document.createElement('div');
                         d.innerHTML = values;
                         var valuesPost = d.firstChild;
-                        bricklayer.prepend(valuesPost)
-                        bricklayer.redraw();
+                        $('.bricklayer').prepend(valuesPost)
+                        // bricklayer.redraw();
                     }
                 }
                 response.posts && (posts_stream.find("aul:first").prepend(), setTimeout(photo_grid(), 200)), setTimeout("data_heartbeat();", min_data_heartbeat);
@@ -220,11 +220,11 @@ function init_picture_crop(node) {
         });
     }, 200);    
    
-    var image_node = node.data("image");
-    var system_url = node.data("systemUrl");
-    
+    var image_node = $(node).data("image");
+    // var system_url = node.data("systemUrl");
+
     modal("#crop-profile-picture", {
-        image: `${system_url}/includes/wallet-api/get-picture-api.php?picture=&picture_full=${image_node}&type_url=1`,
+        image: site_path+'/includes/wallet-api/get-picture-api.php?picture=&picture_full='+image_node+'&type_url=1',
         handle: node.data("handle"),
         id: node.data("id"),
     });
