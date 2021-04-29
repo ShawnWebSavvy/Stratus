@@ -17,17 +17,12 @@ function getWalletBalance($token){
       }else{
       //  print_r($_POST); die;
         if(isset($_POST['email'])){
-<<<<<<< HEAD
-
-          $check_user = $db->query(sprintf("SELECT user_id as id, COUNT(*) as count FROM users WHERE user_email = %s", secure($_POST['email']))) or _error("SQL_ERROR_THROWEN");
-=======
             //  $apiResponseNew  =  (new User())->httpGetCurl('/users/whitelabel/get-user-info/' . $_POST['email']);
             //      $apiResponse = $apiResponseNew;
             // print_r($apiResponse); die;
           // $check_user = $db->query(sprintf("SELECT COUNT(*) as count FROM users WHERE user_id = %s", secure($_POST['id'], 'int'))) or _error("SQL_ERROR_THROWEN");
           // $check_user = $db->query(sprintf("SELECT COUNT(*) as count FROM users WHERE user_id = %s", secure($_POST['id'], 'int'))) or _error("SQL_ERROR_THROWEN");
-            $check_user = $db->query(sprintf("SELECT COUNT(*) as count FROM users WHERE user_email = %s", secure($_POST['email']))) or _error("SQL_ERROR_THROWEN");
->>>>>>> e86798abcbc7c073bd7ed98603a8d629caef44ac
+            $check_user = $db->query(sprintf("SELECT COUNT(*) as count,user_id FROM users WHERE user_email = %s", secure($_POST['email']))) or _error("SQL_ERROR_THROWEN");
           $check_user= $check_user->fetch_assoc();
           if($check_user['count'] < 1){
 
@@ -73,8 +68,9 @@ function getWalletBalance($token){
             //check if user exist on knox END
 
           }else{
+            $details = array();
             $transcation_result= array();            
-            $user_id = $check_user['id'];
+            $user_id = $check_user['user_id'];
             mysqli_report(MYSQLI_REPORT_ALL ^ MYSQLI_REPORT_INDEX);
             // $wallet_query = $db->query(sprintf("SELECT  * FROM users WHERE user_id = %s", secure($_POST['id'], 'int'))) or _error("SQL_ERROR_THROWEN");
             $wallet_query = $db->query(sprintf("SELECT  * FROM users WHERE user_email = %s", secure(  $_POST['email']))) or _error("SQL_ERROR_THROWEN");
@@ -792,5 +788,81 @@ function changePasswordRequestFunction($token){
   }
    catch(Exception $e){
         returnResponse(false,300,$e->getMessage());
+  }
+}
+
+
+
+/**
+ * Function to generate wallet txn on video purhase
+ * params : seller_email , buyer_email , price
+ */
+
+function updateWalletOnVideoPurchaseFunction($token)
+{
+  try {
+    if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+      global $db, $system, $date;
+
+      $checkToken = checkHeaders($token);
+
+      if ($checkToken == 402) {
+        returnResponse(false, 402, "Access token missing");
+      } elseif ($checkToken == 400) {
+        returnResponse(false, 402, "Invalid access token provided");
+      } else {
+
+        if (isset($_POST['seller_email']) && isset($_POST['buyer_email']) && isset($_POST['price'])) {
+
+          //check if seller exist
+          $check_seller_user = $db->query(sprintf("SELECT user_id as id, COUNT(*) as count FROM users WHERE user_email = %s", secure($_POST['seller_email']))) or _error("SQL_ERROR_THROWEN");
+          $check_seller_user = $check_seller_user->fetch_assoc();
+          if ($check_seller_user['count'] < 1) {
+            returnResponse(false, 402, "Invalid user(seller)");
+            exit();
+          }
+
+          //check if buyer exit
+          $check_buyer_user = $db->query(sprintf("SELECT user_id as id, COUNT(*) as count FROM users WHERE user_email = %s", secure($_POST['buyer_email']))) or _error("SQL_ERROR_THROWEN");
+          $check_buyer_user = $check_buyer_user->fetch_assoc();
+          if ($check_buyer_user['count'] < 1) {
+            returnResponse(false, 402, "Invalid user(buyer)");
+            exit();
+
+          }
+
+        //  print_r($_POST);die;
+          //add balance to seller
+           $query =   $db->query(sprintf('UPDATE users SET user_wallet_balance = IF(user_wallet_balance+%1$s<=0,0,user_wallet_balance+%1$s) WHERE user_id = %2$s', secure($_POST['price']), secure($check_seller_user['id'], 'int'))) or _error("SQL_ERROR_THROWEN");
+            if ($query == true) {
+              /* log this transaction */
+              //  wallet_transaction_logs($_POST['id'], 'videohub_package_payment', 0, $_POST['price'], 'out');
+              $packageType = "video_purchase";    
+              $db->query(sprintf("INSERT INTO ads_users_wallet_transactions (user_id, node_type, node_id, amount, type, date, platformType, paymentMode) VALUES (%s, %s, %s, %s, %s, %s, %s, %s)", secure($check_seller_user['id'], 'int'), secure($packageType), secure(0, 'int'), secure($_POST['price']), secure('in'), secure($date), secure('videohub', 'string'), secure('wallet', 'string'))) or _error("SQL_ERROR_THROWEN");
+              
+              //deduct from buyer
+              $buyer_query =   $db->query(sprintf('UPDATE users SET user_wallet_balance = IF(user_wallet_balance-%1$s<=0,0,user_wallet_balance-%1$s) WHERE user_id = %2$s', secure($_POST['price']), secure($check_buyer_user['id'], 'int'))) or _error("SQL_ERROR_THROWEN");
+              if ($buyer_query == true) {
+                $db->query(sprintf("INSERT INTO ads_users_wallet_transactions (user_id, node_type, node_id, amount, type, date, platformType, paymentMode) VALUES (%s, %s, %s, %s, %s, %s, %s, %s)", secure($check_buyer_user['id'], 'int'), secure($packageType), secure(0, 'int'), secure($_POST['price']), secure('out'), secure($date), secure('videohub', 'string'), secure('wallet', 'string'))) or _error("SQL_ERROR_THROWEN");
+                
+              }else {
+                returnResponse(false, 300, "Something went wrong");
+              }
+
+              returnResponse(true, 200, "Success");
+            } else {
+              returnResponse(false, 300, "Something went wrong");
+            }
+
+        } else {
+          returnResponse(false, 300, "parameters missing");
+        }
+      }
+    } else {
+      returnResponse(false, 402, "Invalid request");
+    }
+  } catch (Exception $e) {
+    //echo $e->getMessage();
+    returnResponse(false, 300, $e->getMessage());
   }
 }

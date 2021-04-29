@@ -388,7 +388,7 @@
                     </div>
                 </form>
                 <div class="form-text small">
-                    {__('Search by TNX ID')}
+                    {__('Search by TNX ID, Email ID, Username')}
                 </div>
             </div>
             <!-- search form -->

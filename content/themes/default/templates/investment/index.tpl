@@ -45,7 +45,7 @@
                                                                 0
                                                             {/if} {$detail['short_name']|upper}
                                                             <br/>
-                                                            $ {$detail['total_wallet_quote_amount']}
+                                                            $ <span class="dashboard_coin_amount">{$detail['total_wallet_quote_amount']}</span>
                                                         </span>
                                                 </p>
                                             </div>
@@ -101,7 +101,7 @@
                                                                         {/if} {$detailMobile['short_name']|upper}
                                                                     
                                                                         <br/>
-                                                                            $ {$detail['total_wallet_quote_amount']}
+                                                                            $ <span class="dashboard_coin_amount">{$detail['total_wallet_quote_amount']}</span>
                                                                         </span>
 
 
