@@ -1302,21 +1302,10 @@
         li.setAttribute("data-id", get(data, "id"));
 
         li.innerHTML =
-          '<a href="' +
-          get(data, "src") +
-          '" data-link="' +
-          get(data, "link") +
-          '" data-linkText="' +
-          get(data, "linkText") +
-          '" data-time="' +
-          get(data, "time") +
-          '" data-type="' +
-          get(data, "type") +
-          '" data-length="' +
-          get(data, "length") +
-          '"><img src="' +
-          get(data, "preview") +
-          '"></a>';
+        `<a href='${get(data, "src")}' data-link='${get(data, "link")}'  data-linkText='${get(data, "linkText")}' 
+          data-time='${get(data, "time")}' data-type='${get(data, "type")}' data-length='${get(data, "length")}'>
+             <img src='${get(data, "preview")}'>
+         </a>`;
 
         var el = story.querySelectorAll(".items")[0];
         if (append) {

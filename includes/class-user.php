@@ -5329,7 +5329,7 @@ class User
                     $story_item['type'] = ($media_item['is_photo']) ? 'photo' : 'video';
                     $story_item['src'] = $system['system_uploads'] . '/' . $media_item['source'];
                     $story_item['link'] = '#';
-                    $story_item['linkText'] = $media_item['text'];
+                    $story_item['linkText'] = $this->decode_emoji($media_item['text']);
                     $story_item['time'] = strtotime($media_item['time']);
                     $story_item['thumbnail'] =  $media_item['thumbnail'] ? $system['system_uploads'] . '/' . $media_item['thumbnail'] : null;
                     $story['items'][] = $story_item;
