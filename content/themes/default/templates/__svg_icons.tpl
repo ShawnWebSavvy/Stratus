@@ -188,7 +188,7 @@
 
     {elseif $icon == "bulksms"}
     
-        {include file='../images/svg/bulksms.png'}
+        {include file='../images/svg/bulksms.svg'}
 
     {elseif $icon == "email_notifications"}
     
