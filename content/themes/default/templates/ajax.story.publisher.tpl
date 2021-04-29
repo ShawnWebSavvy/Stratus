@@ -12,7 +12,7 @@
             <div class="custom_upload_stratus">
                 <div class="form-group">
                     <label class="form-control-label">{__("Photos")}</label>
-                    <div class="attachments clearfix" data-type="photos">
+                    <div class="attachments clearfix imageUplodeLodingTime" data-type="photos">
                         <ul>
                             <li class="add">
                                 <img class="js_x-uploader" data-handle="publisher-mini" data-multiple="true"
@@ -26,7 +26,7 @@
             <div class="">
                 <div class="form-group">
                     <label class="form-control-label">{__("Videos")}</label>
-                    <div class="attachments clearfix" data-type="videos">
+                    <div class="attachments clearfix imageUplodeLodingTime" data-type="videos">
                         <ul>
                             <li class="add">
                                 <img class=" js_x-uploader" data-type="video" data-handle="publisher-mini"

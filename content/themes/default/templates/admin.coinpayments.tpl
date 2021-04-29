@@ -1,5 +1,5 @@
 <div class="card">
-    <div class="card-header with-icon">
+    <div class="card-header with-icon d-flex align-items-center">
         <i class="fab fa-bitcoin mr10"></i>{__("CoinPayments Transactions")}
     </div>
 

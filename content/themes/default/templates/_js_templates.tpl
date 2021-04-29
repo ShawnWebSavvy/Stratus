@@ -1,5 +1,4 @@
 {strip}
-
 <!-- Modals -->
 <div id="modal" class="modal fade">
     <div class="modal-dialog">
@@ -1744,6 +1743,13 @@
                             </span>
                         </div>
                     {/if}
+                    {if $system['authorize_enabled']}
+                        <div class="col-12 col-sm-4 plr5">
+                            <button class="btn btn-block btn-payment plr20 mb10" data-toggle="modal" data-url="#authorize-transfer" data-options='{literal}{{/literal} "handle": "{literal}{{handle}}{/literal}", "price": "{literal}{{price}}{/literal}", "id": "{literal}{{id}}{/literal}" {literal}}{/literal}' data-size="large">
+                                <i class="fa fa-university fa-lg fa-fw mr5" style="color: #4CAF50;"></i>{__("Pay through Aurhorise.net")}
+                            </button>
+                        </div>
+                    {/if}
                     {if $system['alipay_enabled']}
                         <div class="col-12 col-sm-4 plr5">
                             <button class="js_payment-stripe btn btn-block btn-payment plr20 mb10"
@@ -1962,18 +1968,61 @@
                         <input type="hidden" name="package_id" value="{literal}{{id}}{/literal}">
                         <input type="hidden" name="price" value="{literal}{{price}}{/literal}">
                         <button type="button" class="btn btn-light" data-dismiss="modal">{__("Cancel")}</button>
-                        <button type="submit" class="btn btn-success btn-antier-green"><i class="fa fa-check-circle mr10"></i>{__("Send")}</button>
+                        <button type="submit" id="send_bank_transfer_form" class="btn btn-success btn-antier-green"><i class="fa fa-check-circle mr10"></i>{__("Send")}</button>
                     </div>
                 </form>
-                 <form id="bank_trans" action="includes/ajax/data/upload.php" method="post" enctype="multipart/form-data">
-                            <input name="file" id="ImageBrowse" type="file" class="file" id="baffnk_trans" title="Upload Image" accept=".png, .gif, .jpeg, .jpg">
-                            <input type="hidden" name="type" value="photos">
-                            <input type="hidden" name="handle" value="publisher">
-                              <input type="hidden" name="multiple" value="">
-                            <input type="hidden" class="secret" name="secret" value="{$_SESSION['secret']}">
+                <form id="bank_trans" action="includes/ajax/data/upload.php" method="post" enctype="multipart/form-data">
+                    <input name="file" id="ImageBrowse" type="file" class="file" id="baffnk_trans" title="Upload Image" accept=".png, .gif, .jpeg, .jpg">
+                    <input type="hidden" name="type" value="photos">
+                    <input type="hidden" name="handle" value="publisher">
+                        <input type="hidden" name="multiple" value="">
+                    <input type="hidden" class="secret" name="secret" value="{$_SESSION['secret']}">
+                </form>
 
-                    </form>
+{/if}
+<!-- Bank Transfer -->
+<!-- Bank Transfer -->
+{if $system['authorize_enabled']}
+<script id="authorize-transfer" type="text/template">
+    <div class="modal-header">
+        <h6 class="modal-title"><i class="fa fa-university mr5"></i>{__("Authorize.net Transfer")}</h6>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+    <form id="authorizePayment">
+        <div class="modal-body">
+            <div class="form-group form-row">
+                <div class="field-row">
+                    <label>Card Number</label> <span id="card-number-info" class="info"></span><br />
+                    <input type="text" id="card-number" name="card-number" class="cardNumber" />
+                </div>
+                <div class="field-row">
+                    <div class="contact-row column-right">
+                        <label>Expiry Month / Year</label> <span id="userEmail-info" class="info"></span><br />
+                        {html_select_date prefix='expire_' month_format='%m' display_years=false display_days=false}
+                        {html_select_date prefix='expire_' end_year='+15' display_months=false display_days=false}
+                    </div>
+                </div>
+            </div>
 
+            <!-- success -->
+            <div class="alert alert-success mb0 x-hidden" id="success-message"></div>
+            <!-- success -->
+
+            <!-- error -->
+            <div class="alert alert-danger mb0 x-hidden" id="error-message"></div>
+            <!-- error -->
+        </div>
+        <div class="modal-footer">
+            <input type="hidden" name="handle" value="{literal}{{handle}}{/literal}">
+            <input type="hidden" name="package_id" value="{literal}{{id}}{/literal}">
+            <input type="hidden" name="price" value="{literal}{{price}}{/literal}">
+            <button type="button" class="btn btn-light" data-dismiss="modal">{__("Cancel")}</button>
+            <button id="btnSubmitModal" type="button" class="btn btn-success btn-antier-green"><i class="fa fa-check-circle mr10"></i>{__("Pay Now")}</button>
+        </div>
+    </form>
+</script>
 {/if}
 <!-- Bank Transfer -->
 {/if}
@@ -1986,7 +2035,8 @@ $(document).ready(function (e) {
      $('#bank_trans').on('submit',(function(e) {
         e.preventDefault();
         var formData = new FormData(this);
-        console.log(formData);
+        var _this = $('#send_bank_transfer_form');
+        button_status(_this, "loading");
         $.ajax({
             type:'POST',
             url: $(this).attr('action'),
@@ -1995,13 +2045,11 @@ $(document).ready(function (e) {
             contentType: false,
             processData: false,
             success:function(data){
-                console.log("success");
-                console.log(data.file);
                 $('.cusclass').val(data.file);
+                button_status(_this, "reset");
             },
             error: function(data){
-                console.log("error");
-                console.log(data);
+                button_status(_this, "reset");
             }
         });
     }));

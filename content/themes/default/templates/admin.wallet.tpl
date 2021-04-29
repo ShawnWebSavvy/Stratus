@@ -1,6 +1,9 @@
 <div class="card">
-    <div class="card-header with-icon">
-        <i class="fa fa-wallet mr10"></i>{__("Wallet")}
+    <div class="card-header with-icon d-flex align-items-center">
+        <div class="svg-container mr10">
+            <img style="width: 20px;" src="{$system['system_url']}/content/themes/default/images/svg/svgImg/walletHub.svg" class="">
+        </div>
+        {__("Wallet")}
     </div>
 
     <!-- Wallet -->

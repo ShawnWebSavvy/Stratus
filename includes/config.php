@@ -18,4 +18,3 @@ define("SYSTEM_UPLOADS", "https://cdn.stratus-stage.xyz/uploads");
 define("SYSTEM_UPLOADS_URL", "https://cdn.stratus-stage.xyz/uploads");
 define("SYSTEM_UPLOADS_ASSETS", "https://cdn.stratus-stage.xyz");
 ?>
-

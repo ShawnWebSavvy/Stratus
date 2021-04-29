@@ -2,36 +2,42 @@
     <div class="card-header with-icon">
         {if $sub_view == ""}
             <div class="float-right">
-                <a href="{$system['system_url']}/{$control_panel['url']}/forums/add_forum" class="btn btn-sm btn-primary">
+                <a href="{$system['system_url']}/{$control_panel['url']}/forums/add_forum" class="btn cmn_btn">
                     <i class="fa fa-plus mr5"></i>{__("Add New Forum")}
                 </a>
             </div>
         {elseif $sub_view == "add_forum" || $sub_view == "edit_forum"}
             <div class="float-right">
-                <a href="{$system['system_url']}/{$control_panel['url']}/forums" class="btn btn-sm btn-light">
+                <a href="{$system['system_url']}/{$control_panel['url']}/forums" class="btn cmn_btn">
                     <i class="fa fa-arrow-circle-left mr5"></i>{__("Go Back")}
                 </a>
             </div>
         {elseif $sub_view == "find_threads"}
             <div class="float-right">
-                <a href="{$system['system_url']}/{$control_panel['url']}/forums/threads" class="btn btn-sm btn-light">
+                <a href="{$system['system_url']}/{$control_panel['url']}/forums/threads" class="btn cmn_btn">
                     <i class="fa fa-arrow-circle-left mr5"></i>{__("Go Back")}
                 </a>
             </div>
         {elseif $sub_view == "find_replies"}
             <div class="float-right">
-                <a href="{$system['system_url']}/{$control_panel['url']}/forums/replies" class="btn btn-sm btn-light">
+                <a href="{$system['system_url']}/{$control_panel['url']}/forums/replies" class="btn cmn_btn">
                     <i class="fa fa-arrow-circle-left mr5"></i>{__("Go Back")}
                 </a>
             </div>
         {/if}
-        <i class="fa fa-comments mr10"></i>{__("Forums")}
-        {if $sub_view == "add_forum"} &rsaquo; {__("Add New Forum")}{/if}
-        {if $sub_view == "edit_forum"} &rsaquo; {$data['forum_name']}{/if}
-        {if $sub_view == "threads"} &rsaquo; {__("Threads")}{/if}
-        {if $sub_view == "find_threads"} &rsaquo; {__("Threads")} &rsaquo; {__("Find")}{/if}
-        {if $sub_view == "replies"} &rsaquo; {__("Replies")}{/if}
-        {if $sub_view == "find_replies"} &rsaquo; {__("Replies")} &rsaquo; {__("Find")}{/if}
+
+        <div class='d-flex align-items-center'>
+            <div class="svg-container mr10">
+                <img src="{$system['system_uploads_assets']}/content/themes/default/images/svg/svgImg/messages_iconN.svg" class="">
+            </div>
+            {__("Forums")}
+            {if $sub_view == "add_forum"} &rsaquo; {__("Add New Forum")}{/if}
+            {if $sub_view == "edit_forum"} &rsaquo; {$data['forum_name']}{/if}
+            {if $sub_view == "threads"} &rsaquo; {__("Threads")}{/if}
+            {if $sub_view == "find_threads"} &rsaquo; {__("Threads")} &rsaquo; {__("Find")}{/if}
+            {if $sub_view == "replies"} &rsaquo; {__("Replies")}{/if}
+            {if $sub_view == "find_replies"} &rsaquo; {__("Replies")} &rsaquo; {__("Find")}{/if}
+        </div>
     </div>
 
     {if $sub_view == ""}

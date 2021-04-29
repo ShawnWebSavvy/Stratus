@@ -134,7 +134,7 @@ try {
 			}
 
 			// change settings
-			$userGlobal->settings($_GET['edit'], $_POST);
+			$user->settings($_GET['edit'], $_POST);
 
 			// return
 			return_json(array('success' => true, 'message' => __("Your password has been updated")));

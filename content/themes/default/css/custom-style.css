@@ -527,3 +527,8 @@ video.stratus-customvideo {height: 350px !important;width: 1000px !important;}
 .child-post-ul.secoundPostHidd > .bricklayer {
 	display: none !important;
 }
+#bank_trans {
+	position: absolute;
+	bottom: 80px;
+	left: 20px;
+}

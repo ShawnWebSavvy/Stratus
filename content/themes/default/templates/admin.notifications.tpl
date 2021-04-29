@@ -1,6 +1,9 @@
 <div class="card">
-    <div class="card-header with-icon">
-        <i class="fa fa-bell mr10"></i>{__("Mass Notifications")}
+    <div class="card-header with-icon d-flex align-items-center">
+        <div class="svg-container">
+            <img style="width: 30px;" src="{$system['system_uploads_assets']}/content/themes/default/images/svg/svgImg/notifications_icon_hover.svg" class="">
+        </div>
+        {__("Mass Notifications")}
     </div>
 
     <!-- Mass Notifications -->
@@ -8,7 +11,7 @@
         <div class="card-body">
             <div class="alert alert-primary">
                 <div class="icon">
-                    <i class="fa fa-bell fa-2x"></i>
+                    <i class="fa fa-bell fa-2x" style='width:25px'></i>
                 </div>
                 <div class="text">
                     <strong>{__("Mass Notifications")}</strong><br>
