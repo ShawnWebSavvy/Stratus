@@ -1032,7 +1032,7 @@ class User
         global $db, $system;
         $results = [];
         /* search users */
-        $searchUsers = sprintf('SELECT user_id, user_name, user_firstname, user_lastname, user_gender, user_picture, picture_photo.source as user_picture_full, user_subscribed, user_verified FROM users LEFT JOIN posts_photos as picture_photo ON users.user_picture_id = picture_photo.photo_id WHERE user_firstname != "" AND user_name LIKE %1$s OR user_firstname LIKE %1$s OR user_lastname LIKE %1$s OR CONCAT(user_firstname,  " ", user_lastname) LIKE %1$s LIMIT %2$s', secure($query, 'search'), secure($system['min_results'], 'int', false));
+        $searchUsers = sprintf('SELECT user_id, user_name, user_firstname, user_lastname, user_gender, user_picture, picture_photo.source as user_picture_full, user_subscribed, user_verified FROM users LEFT JOIN posts_photos as picture_photo ON users.user_picture_id = picture_photo.photo_id WHERE user_firstname != "" AND user_name LIKE %1$s OR user_firstname LIKE %1$s OR user_lastname LIKE %1$s OR user_country LIKE %1$s OR user_current_city LIKE %1$s OR user_hometown LIKE %1$s OR CONCAT(user_firstname,  " ", user_lastname) LIKE %1$s LIMIT %2$s', secure($query, 'search'), secure($system['min_results'], 'int', false));
         $get_users = $db->query($searchUsers) or _error("SQL_ERROR_THROWEN");
         if ($get_users->num_rows > 0) {
             while ($user = $get_users->fetch_assoc()) {
@@ -1050,7 +1050,7 @@ class User
         }
         /* search pages */
         if ($system['pages_enabled']) {
-            $get_pages = $db->query(sprintf('SELECT * FROM pages WHERE page_name LIKE %1$s OR page_title LIKE %1$s LIMIT %2$s', secure($query, 'search'), secure($system['min_results'], 'int', false))) or _error("SQL_ERROR_THROWEN");
+            $get_pages = $db->query(sprintf('SELECT * FROM pages WHERE page_name LIKE %1$s OR page_title LIKE %1$s OR page_location LIKE %1$s LIMIT %2$s', secure($query, 'search'), secure($system['min_results'], 'int', false))) or _error("SQL_ERROR_THROWEN");
             if ($get_pages->num_rows > 0) {
                 while ($page = $get_pages->fetch_assoc()) {
                     $page['page_picture'] = get_picture($page['page_picture'], 'page');
@@ -1078,7 +1078,7 @@ class User
         }
         /* search events */
         if ($system['events_enabled']) {
-            $get_events = $db->query(sprintf('SELECT * FROM `events` WHERE event_privacy != "secret" AND event_title LIKE %1$s LIMIT %2$s', secure($query, 'search'), secure($system['min_results'], 'int', false))) or _error("SQL_ERROR_THROWEN");
+            $get_events = $db->query(sprintf('SELECT * FROM `events` WHERE event_privacy != "secret" AND event_title LIKE %1$s OR  event_location LIKE %1$s  LIMIT %2$s', secure($query, 'search'), secure($system['min_results'], 'int', false))) or _error("SQL_ERROR_THROWEN");
             if ($get_events->num_rows > 0) {
                 while ($event = $get_events->fetch_assoc()) {
                     $event['event_picture'] = get_picture($event['event_cover'], 'event');
