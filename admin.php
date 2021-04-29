@@ -3033,7 +3033,25 @@ try {
 
 			// page header
 			page_header($control_panel['title'] . " &rsaquo; " . __("Changelog"));
-			break;
+		break;
+
+		case 'bank-withdrawal':
+			// check admin|moderator permission
+			if ($user->_is_moderator) {
+				_error(__('System Message'), __("You don't have the right permission to access this"));
+			}
+
+			$bank_withdrawl_transactions = $db->query("SELECT users.user_firstname, users.user_lastname, users.user_wallet_balance, bank_withdrawl_transactions.* FROM `bank_withdrawl_transactions` INNER JOIN users ON bank_withdrawl_transactions.user_id = users.user_id ORDER BY `bank_withdrawl_transactions`.`id` DESC") or _error("SQL_ERROR_THROWEN");
+			$bank_withdrawl = [];
+			if ($bank_withdrawl_transactions->num_rows > 0) {
+				while ($row = $bank_withdrawl_transactions->fetch_assoc()) {
+					$bank_withdrawl[] = $row;
+				}
+			}
+			$smarty->assign('user_requested', $bank_withdrawl);
+			// page header
+			page_header($control_panel['title'] . " &rsaquo; " . __("Bank Withdrawal"));
+		break;
 
 		default:
 			// check admin|moderator permission
