@@ -1794,7 +1794,6 @@
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
             <span aria-hidden="true">&times;</span>
         </button>
-<<<<<<< HEAD
                 <div class="row justify-content-center" style="margin-left: -5px; margin-right: -5px;">
                     {if $system['paypal_enabled']}
                         <div class="col-12 col-sm-6 plr5">
@@ -1883,69 +1882,6 @@
                                 <br>
                                 <b>Total Amount</b> : {literal}{{new_amount}}{/literal}
                             </span>
-=======
-    </div>
-    <div class="modal-body text-center">
-        <div class="row justify-content-center" style="margin-left: -5px; margin-right: -5px;">
-            <div class="row">
-                <form class="bank-transfer-money" id="bank-transfer-money">
-                    <div class="modal-body">
-                        <div class="row">
-                            <div class="form-group col-md-4">
-                                <label class="form-control-label">Bank Name</label>
-                            </div>
-                            <div class="form-group col-md-8">
-                                <input name="bank_name" id="bank_name" type="text" placeholder="JP Morgan Chase" autocomplete="off" class="form-control">
-                                <label class="bank_label">Your Bank Name</label>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="form-group col-md-4">
-                                <label class="form-control-label">Bank Account Number</label>
-                            </div>
-                            <div class="form-group col-md-8">
-                                <input name="acc_number" id="acc_number" type="text" placeholder="662339818" autocomplete="off" class="form-control">
-                                <label class="bank_label">Your Bank Account Number</label>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="form-group col-md-4">
-                                <label class="form-control-label">Bank Account Name</label>
-                            </div>
-                            <div class="form-group col-md-8">
-                                <input name="acc_name" type="text" id="acc_name" placeholder="Add Your Bank Account Name" autocomplete="off" class="form-control">
-                                <label class="bank_label">Your Bank Account Name</label>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="form-group col-md-4">
-                                <label class="form-control-label">Bank Account Routing Code</label>
-                            </div>
-                            <div class="form-group col-md-8">
-                                <input name="swift_code" id="swift_code" type="text" placeholder="103000648" autocomplete="off" class="form-control">
-                                <label class="bank_label">Your Bank Account Routing Code or SWIFT Code</label>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="form-group col-md-4">
-                                <label class="form-control-label">Bank Account Country</label>
-                            </div>
-                            <div class="form-group col-md-8">
-                                <input name="country" type="text" autocomplete="off" placeholder="United States" id="country" class="form-control">
-                                <label class="bank_label">Your Bank Account Country</label>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="text-left">
-                                <label class="switch" for="save_bank_details">
-                                    <input type="checkbox" name="saveBank" id="save_bank_details">
-                                    <span class="slider round"></span>
-                                </label>
-                            </div>
-                            <div>
-                                <div class="form-text d-none d-sm-block">{__("Save Details for Future Withdrawls")}</div>
-                            </div>
->>>>>>> 6db4b22395691a1e0efea5f5021ba031388b066b
                         </div>
                         <!-- success -->
                         <div class="alert alert-success mb0 x-hidden" id="wallet-success-message"></div>
