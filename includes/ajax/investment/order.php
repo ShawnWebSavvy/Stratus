@@ -98,10 +98,10 @@ try {
                     && $_POST['action'] == $_SESSION['action']&&
                     $secondsInactive <= 20
                     ){
-
+                    // $_POST['do']          = $_SESSION['action'];
                     $redisObject = new RedisClass();
                     $lockKey    = 'lock:user:wallet:uid:'.$user->_data['user_id'];
-                    if($lock = $redisObject->set($lockKey,10)){ 
+                    if($lock = $redisObject->set($lockKey,15)){ 
                         if((double)$_POST['amount']<=(double)$user->_data['user_wallet_balance']){
                             $save = InvestmentHelper::savePurchaseTokenOrder($_POST['action'],$_SESSION['token_name'],$_SESSION['token_value'],$_SESSION['amount'],$user->_data,$_SESSION['fees_token'],$_SESSION['fees']);
                             if($save){
@@ -137,7 +137,7 @@ try {
                 ){
                     $redisObject = new RedisClass();
                     $lockKey    = 'lock:user:wallet:uid:'.$user->_data['user_id'];
-                    if($lock = $redisObject->set($lockKey,10)){ 
+                    if($lock = $redisObject->set($lockKey,15)){ 
                         if((double)$_POST['token_value']<=(double)$user->_data[$_POST['token_name'].'_wallet']){
                             $save = InvestmentHelper::saveSellTokenOrder($_POST['action'],$_SESSION['token_name'],$_SESSION['token_value'],$_SESSION['amount'],$user->_data,$_SESSION['receive_amount'],$_SESSION['fees']);
                             if($save){
@@ -146,6 +146,7 @@ try {
                             }else{
                                 _error(404);
                             }
+                            
                             
                         }else{
                             $smarty->assign('action', 'sell');
