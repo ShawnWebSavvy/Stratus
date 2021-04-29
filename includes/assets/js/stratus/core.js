@@ -1,4 +1,55 @@
 var api = [];
+var search_selected = 0;
+
+$(document).ready( function(){
+   
+    $("body").on('keydown', function(e){
+
+         var search_nodes = document.querySelectorAll('#search-results ul > li');
+        // up
+         if (e.which === 38) { 
+              search_select(search_nodes[search_selected - 1],search_nodes);
+         }
+         // down
+         if (e.which === 40) { 
+              search_select(search_nodes[search_selected + 1],search_nodes)
+            }
+    });
+
+    function search_select(el,nodes) {
+        var search_ul = document.querySelector('#search-results .custom-scrollbar');
+        var search_index = [].indexOf.call(nodes, el);
+        if (search_index === -1) return;
+        search_selected = search_index;
+        var search_elHeight = $(el).height();
+        var search_scrollTop = $(search_ul).scrollTop();
+        var search_viewport = search_scrollTop + $(search_ul).height();
+        var search_elOffset = search_elHeight * search_selected;
+        
+        if (search_elOffset < search_scrollTop || (search_elOffset + search_elHeight) > search_viewport){
+            $(search_ul).scrollTop(search_elOffset);
+        }
+      
+        $('#search-results ul > li.bg-secondary').removeClass('bg-secondary');
+        $(el).addClass('bg-secondary');
+    }
+
+
+
+})
+
+
+
+
+
+
+
+
+
+
+
+
+
 function guid() {
     function e() {
         return Math.floor(65536 * (1 + Math.random()))
@@ -372,7 +423,10 @@ function button_status(e, t) {
                 $(".js_see-more-infinite").bind("inview", function (e, t) {
                     1 == t && (mobile_infinite_scroll || $(window).width() >= 970) && load_more($(this));
                 }),
-                $("body").on("keyup", "#search-input", function () {
+                $("body").on("keyup", "#search-input", function (e) {
+
+                  if (e.which !== 38 && e.which !== 40){
+
                     var query = $(this).val();
                     if (!is_empty(query)) {
                         $("#search-history").hide(), $("#search-results").show();
@@ -380,7 +434,7 @@ function button_status(e, t) {
                         if (null !== hashtags && hashtags.length > 0) {
                             var query = hashtags[0].replace("#", "");
                             $("#search-results .dropdown-widget-header").hide(), $("#search-results-all").hide(), $("#search-results .dropdown-widget-body").html(render_template("#search-for", { query: query, hashtag: !0 }));
-                        } else
+                        } else 
                             $.post(
                                 api["data/search"],
                                 { query: query },
@@ -391,12 +445,15 @@ function button_status(e, t) {
                                             ? ($("#search-results .dropdown-widget-header").show(),
                                                 $("#search-results-all").show(),
                                                 $("#search-results .dropdown-widget-body").html(response.results),
-                                                $("#search-results-all").attr("href", site_path + "/search/" + query))
+                                                $("#search-results-all").attr("href", site_path + "/search/" + query), search_selected = 0 )
                                             : ($("#search-results .dropdown-widget-header").hide(), $("#search-results-all").hide(), $("#search-results .dropdown-widget-body").html(render_template("#search-for", { query: query })));
                                 },
                                 "json"
                             );
                     }
+
+
+                }
                 }),
                 $("body").on("keydown", "#search-input", function (e) {
                     if (13 == e.keyCode) {
