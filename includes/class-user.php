@@ -14500,6 +14500,47 @@ class User
     /* ------------------------------- */
 
     /**
+     * bank_transfer
+     *
+     * @param array $_POST
+     * @return void
+     */
+    public function bank_transfer($data, $status)
+    {
+        global $db, $date;
+        if (is_empty($data['request_id']) || !is_numeric($data['request_id'])) {
+            return "Data is not Valid for transfer";
+        }
+        if($status !== 'approve' && $data['comments'] == ""){
+            return "Please Add Comments.";
+        }
+        $statusCode = 2;
+        if($status === "approve"){
+            $statusCode = 1;
+        }
+
+        $chargeQuery = sprintf("UPDATE bank_withdrawl_transactions SET transaction_id = %s, status = %s, approved_by = %s, reason = %s, status_updated = %s WHERE id = %s", secure($data['transaction_id']), secure($statusCode, 'int'), secure($this->_data['user_id'], 'int'), secure($data['comments']), secure($date), secure($data['request_id'], int));
+        $db->query($chargeQuery) or _error("SQL_ERROR_THROWEN");
+
+        if($status == "disapprove"){
+            $bank_withdrawl = sprintf("SELECT * FROM bank_withdrawl_transactions WHERE id = %s", secure($data['request_id'], 'int'));
+            $get_rows = $db->query($bank_withdrawl) or _error("SQL_ERROR_THROWEN");
+            if ($get_rows->num_rows > 0) {
+                $row = $get_rows->fetch_assoc();
+                $chargeQuery = sprintf("UPDATE users SET user_wallet_balance = user_wallet_balance + %s WHERE user_id = %s", secure($row['amount']), secure($row['user_id'], 'int'));
+                $db->query($chargeQuery) or _error("SQL_ERROR_THROWEN");
+
+                $this->wallet_set_transaction($row['user_id'], 'bank_withdrawal_cancel', 0, $row['amount'], 'in');
+            }
+        }
+
+        return "Success";
+    }
+/* ------------------------------- */
+    /* Wallet */
+    /* ------------------------------- */
+
+    /**
      * wallet_transfer
      *
      * @param integer $user_id
@@ -14697,6 +14738,7 @@ class User
                 $transactions[] = $transaction;
             }
         }
+       //echo "<pre>";print_r($transactions);die;
         return $transactions;
     }
 
