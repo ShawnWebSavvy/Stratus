@@ -143,6 +143,16 @@
                                         </ul>
                                     </div>
                                 </li>
+                                <!-- Bank Withdrawl -->
+                                <li {if $view=="bank-withdrawal" }class="active" {/if}>
+                                    <a href="{$system['system_url']}/{$control_panel['url']}/bank-withdrawal">
+                                        <div class="svg-container">
+                                            <img style="width: 20px;" src="{$system['system_url']}/content/themes/default/images/svg/admin/theme.svg" class="">
+                                        </div>
+                                        {__("Bank Withdrawl")}
+                                    </a>
+                                </li>
+                                <!-- Bank Withdrawl -->
                                 <!-- Themes -->
                                 <li {if $view=="themes" }class="active" {/if}>
                                     <a href="{$system['system_url']}/{$control_panel['url']}/themes">

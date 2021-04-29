@@ -244,9 +244,20 @@ function button_status(e, t) {
                 ajax_path + url,
                 data,
                 function (response) {
+                    if(response.messages){
+                        if(response.responseType == "success"){
+                            element.find("#paymentFailed").hide();
+                            element.find("#paymentSuccess").show();
+                            element.find("#paymentSuccess").html(response.messages);
+                        }else{
+                            element.find("#paymentSuccess").hide();
+                            element.find("#paymentFailed").show();
+                            element.find("#paymentFailed").html(response.messages);
+                        }
+                    }
                     if(response.success&&systemUrl&&username){
                         $("#sidebarHiddSwip .profile-link").attr("href", `${systemUrl}/${username}`);
-                     } 
+                    } 
                     button_status(submit, "reset"),
                         response.error
                             ? (success.is(":visible") && success.hide(), error.html(response.message).slideDown())
@@ -767,7 +778,41 @@ function button_status(e, t) {
             $(this).addClass('lessMore');
         }
     });
-
+    $(document).ready( function () {
+        $('.js_dataTables').DataTable( {
+            "order": []
+        } );
+        // $('form').validate({
+        //     rules: {
+        //         bank_name: {required:true, minlength:2},
+        //         acc_number: {required:true, minlength:2},
+        //     },      
+        //     messages: {
+        //         bank_name: {required: "Enter Your Bank Name!"},
+        //         acc_number: {required: "Enter Your Bank Account Number"}                        
+        //     },
+    
+        //     errorPlacement: function(error, element) {
+        //     if(element.attr('name') == 'bank_name'){
+        //         $('#bank_name').html(error);                
+        //      }
+        //      if(element.attr('name') == 'acc_number'){
+        //         $('#acc_number').html(error);                
+        //      }
+        //     },
+        //     success: function(label){
+        //         label.addClass("valid").text("Ok!");      
+        //     },
+        //     debug:true
+        // });
+        // $('body .modal form#bank-transfer-money input').blur(function(){
+        //     console.log("Asfff")
+        //     var thisform = $('form#bank-transfer-money');
+        //     if (thisform.valid()) {
+        //         thisform.find("body .modal button#bankTransferSubmit").prop("disabled", false)
+        //     }
+        // });
+    } );
     $(document).on("click", "body .modal button#bankTransferSubmit", function () {
         var form = $("body .modal form#bank-transfer-money");
         $.post(

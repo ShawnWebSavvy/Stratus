@@ -14500,6 +14500,24 @@ class User
     /* ------------------------------- */
 
     /**
+     * bank_transfer
+     *
+     * @param array $_POST
+     * @return void
+     */
+    public function bank_transfer($data)
+    {
+        global $db, $system;
+        if (is_empty($data['request_id']) || !is_numeric($data['request_id'])) {
+            return "Data is not Valid for transfer";
+        }
+        return $data['request_id'];
+    }
+/* ------------------------------- */
+    /* Wallet */
+    /* ------------------------------- */
+
+    /**
      * wallet_transfer
      *
      * @param integer $user_id

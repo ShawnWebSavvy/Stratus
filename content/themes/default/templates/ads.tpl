@@ -905,10 +905,10 @@
                                 <span>{__("Wallet Transactions")}</span>
                             </div>
                             {if $transactions}
+
                             <div class="tableWrapTransactions">
                                 <div class="wallet_page_tabledata">
-                                    <table class="table table-basic transactionTable js_dataTable" data-order="[[3, 'desc']]"
->
+                                    <table class="table table-basic transactionTable js_dataTables">
                                         <thead>
                                             <tr>
                                                 <th>{__("Amount")}</th>

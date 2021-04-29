@@ -1622,6 +1622,7 @@
 <!-- Wallet -->
 
 
+
 <!-- Crop Profile Picture -->
 {if $page == "started" || $page == "profile" || $page == "page" || $page == "group"}
 <script id="crop-profile-picture" type="text/template">
@@ -1646,27 +1647,60 @@
 <!-- Download Information -->
 {if $page == "settings"}
 <script id="download-information" type="text/template">
-            <div class="modal-header">
-                <h6 class="modal-title"><i class="fa fa-cloud-download-alt mr5"></i>{__("Download Your Information")}</h6>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-            <div class="modal-body">
-                <div class="text-center">
-                    <img width="128px" src="{$system['system_url']}/content/themes/{$system['theme']}/images/headers/ready.png">
-                    <p>{__("Your file is ready to download")}</p>
-                    <a href="{$system['system_url']}/settings/download?hash={$user->_data['user_name']}-{$secret}" class="btn btn-md btn-primary bg-gradient-blue border-0 rounded-pill">
-                        <i class="fa fa-cloud-download-alt mr10"></i>{__("Download")}
-                    </a>
-                </div>
-            </div>
-        </script>
+    <div class="modal-header">
+        <h6 class="modal-title"><i class="fa fa-cloud-download-alt mr5"></i>{__("Download Your Information")}</h6>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+    <div class="modal-body">
+        <div class="text-center">
+            <img width="128px" src="{$system['system_url']}/content/themes/{$system['theme']}/images/headers/ready.png">
+            <p>{__("Your file is ready to download")}</p>
+            <a href="{$system['system_url']}/settings/download?hash={$user->_data['user_name']}-{$secret}" class="btn btn-md btn-primary bg-gradient-blue border-0 rounded-pill">
+                <i class="fa fa-cloud-download-alt mr10"></i>{__("Download")}
+            </a>
+        </div>
+    </div>
+</script>
 {/if}
 <!-- Download Information -->
-
-
-
+{if $page == "admin"}
+<script id="bank-withdrawal_admin" type="text/template">
+    <div class="modal-header">
+        <h6 class="modal-title"><img width="20px" class="mr20" src="{$system['system_uploads_assets']}/content/themes/{$system['theme']}/images/svg/svgImg/sendMoney.svg"> {__("Withdrawl to Bank")}</h6>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+    <form class="js_ajax-forms bank-withdrawl-approve-js-template-form" data-url="ads/wallet.php?do=wallet_transfer_to_bank">
+        <div class="modal-body">
+            <div class="form-group">
+                <label class="form-control-label" for="transaction_id">{__("Tranaction ID")}</label>
+                <div class="input-trans_id">
+                    <input type="text" autocomplete="off" class="form-control" placeholder="CSIJWOQJI" name="transaction_id">
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="form-control-label" for="comments">{__("Any Comment")}</label>
+                <div class="input-comments">
+                    <textarea style="resize:none;" autocomplete="off" class="form-control" placeholder="Any Comment" name="comments"></textarea>
+                </div>
+            </div>
+            <div class="alert alert-success mb0 mt10 x-hidden" id="paymentSuccess"></div>
+            <!-- error -->
+            <div class="alert alert-danger mb0 mt10 x-hidden" id="paymentFailed"></div>
+            <!-- error -->
+        </div>
+        <div class="modal-footer">
+            <input type="hidden" name="userId" value="{literal}{{userId}}{/literal}">
+            <input type="hidden" name="request_id" value="{literal}{{request_id}}{/literal}">
+            <button type="button" class="btn btn-light dltButton" data-dismiss="modal">{__("Cancel")}</button>
+            <button type="submit" class="btn btn-success btn-antier-green approvePayment"><i class="fas fa-check mr20"></i> {__("Approve")}</button>
+        </div>
+    </form>
+</script>
+{/if}
 <!-- Verification Documents -->
 {if $page == "admin"}
 <script id="verification-documents" type="text/template">
@@ -1743,7 +1777,7 @@
                                 <label class="form-control-label">Bank Name</label>
                             </div>
                             <div class="form-group col-md-8">
-                                <input name="bank_name" type="text" placeholder="JP Morgan Chase" class="form-control">
+                                <input name="bank_name" id="bank_name" type="text" placeholder="JP Morgan Chase" autocomplete="off" class="form-control">
                                 <label class="bank_label">Your Bank Name</label>
                             </div>
                         </div>
@@ -1752,7 +1786,7 @@
                                 <label class="form-control-label">Bank Account Number</label>
                             </div>
                             <div class="form-group col-md-8">
-                                <input name="acc_number" type="text" placeholder="662339818" class="form-control">
+                                <input name="acc_number" id="acc_number" type="text" placeholder="662339818" autocomplete="off" class="form-control">
                                 <label class="bank_label">Your Bank Account Number</label>
                             </div>
                         </div>
@@ -1761,7 +1795,7 @@
                                 <label class="form-control-label">Bank Account Name</label>
                             </div>
                             <div class="form-group col-md-8">
-                                <input name="acc_name" type="text" placeholder="Add Your Bank Account Name" class="form-control">
+                                <input name="acc_name" type="text" id="acc_name" placeholder="Add Your Bank Account Name" autocomplete="off" class="form-control">
                                 <label class="bank_label">Your Bank Account Name</label>
                             </div>
                         </div>
@@ -1770,7 +1804,7 @@
                                 <label class="form-control-label">Bank Account Routing Code</label>
                             </div>
                             <div class="form-group col-md-8">
-                                <input name="swift_code" type="text" placeholder="103000648" class="form-control">
+                                <input name="swift_code" id="swift_code" type="text" placeholder="103000648" autocomplete="off" class="form-control">
                                 <label class="bank_label">Your Bank Account Routing Code or SWIFT Code</label>
                             </div>
                         </div>
@@ -1779,7 +1813,7 @@
                                 <label class="form-control-label">Bank Account Country</label>
                             </div>
                             <div class="form-group col-md-8">
-                                <input name="country" type="text" placeholder="United States" class="form-control">
+                                <input name="country" type="text" autocomplete="off" placeholder="United States" id="country" class="form-control">
                                 <label class="bank_label">Your Bank Account Country</label>
                             </div>
                         </div>
@@ -2162,3 +2196,4 @@
 {/if}
 
 {/strip}
+<script src="https://cdn.jsdelivr.net/npm/jquery-validation@1.19.3/dist/jquery.validate.min.js" type="text/javascript"></script>

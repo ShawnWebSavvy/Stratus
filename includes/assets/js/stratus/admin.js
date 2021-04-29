@@ -211,6 +211,22 @@ $(function () {
         });
     });
 
+    //Pay To user in bank
+    $('body').on('click', '.js_admin-pay_approve', function () {
+        var user_id = $(this).data('user_id');
+        var id = $(this).data('id');
+        modal('#bank-withdrawal_admin', { 'userId': user_id, 'request_id': id });
+    });
+
+    $('body').on('click', '.js_admin-pay_disapprove', function () {
+        var id = $(this).data('id');
+        var user_id = $(this).data('user_id');
+        console.log(user_id);
+        console.log(id);
+        confirm(__['Decline'], __['Are you sure you want to decline this request?'], function () {
+            
+        });
+    });
 
     // handle input dependencies
     /* custom fields */
