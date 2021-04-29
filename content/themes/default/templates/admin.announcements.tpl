@@ -1,6 +1,6 @@
 <div class="card">
     <div class="card-header with-icon ">
-       <i class="fa fa-bullhorn mr10"></i>{__("Announcements")}
+       <i class="fa fa-bullhorn mr10"  style="color: #5271f2 !important;"></i>{__("Announcements")}
         {if $sub_view == "edit"} &rsaquo; {$data['name']}{/if}
         {if $sub_view == "add"} &rsaquo; {__("Add New Announcement")}{/if}
         {if $sub_view == ""}

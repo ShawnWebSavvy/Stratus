@@ -20,7 +20,7 @@
                             <li {if $view=="dashboard" }class="active" {/if}>
                                 <a href="{$system['system_url']}/{$control_panel['url']}">
                                     <div class="svg-container">
-                                        <img src="{$system['system_url']}/content/themes/default/images/svg/admin/apps_icon.svg" class="">
+                                        <img src="{$system['system_uploads_assets']}/content/themes/default/images/svg/admin/apps_icon.svg" class="">
                                     </div>
                                     {__("Dashboard")}
                                 </a>
@@ -31,7 +31,7 @@
                                 <li {if $view=="settings" }class="active" {/if}>
                                     <a href="#settings" data-toggle="collapse" {if $view=="settings" }aria-expanded="true" {/if}>
                                         <div class="svg-container">
-                                            <img src="{$system['system_url']}/content/themes/default/images/svg/svgImg/settings_icon_hover.svg" class="">
+                                            <img src="{$system['system_uploads_assets']}/content/themes/default/images/svg/svgImg/settings_icon_hover.svg" class="">
                                         </div>
                                         {__("Settings")}
                                     </a>
@@ -119,7 +119,7 @@
                                 <li>
                                     <a href="#investment" data-toggle="collapse">
                                         <div class="svg-container">
-                                            <img style="width: 25px;" src="{$system['system_url']}/content/themes/default/images/svg/admin/curancy.svg" class="">
+                                            <img style="width: 25px;" src="{$system['system_uploads_assets']}/content/themes/default/images/svg/admin/curancy.svg" class="">
                                         </div>
                                         Investment
                                     </a>
@@ -147,7 +147,7 @@
                                 <li {if $view=="themes" }class="active" {/if}>
                                     <a href="{$system['system_url']}/{$control_panel['url']}/themes">
                                         <div class="svg-container">
-                                            <img style="width: 20px;" src="{$system['system_url']}/content/themes/default/images/svg/admin/theme.svg" class="">
+                                            <img style="width: 20px;" src="{$system['system_uploads_assets']}/content/themes/default/images/svg/admin/theme.svg" class="">
                                         </div>
                                         {__("Themes")}
                                     </a>
@@ -157,7 +157,7 @@
                                 <li {if $view=="design" }class="active" {/if}>
                                     <a href="{$system['system_url']}/{$control_panel['url']}/design">
                                         <div class="svg-container">
-                                            <img style="width: 20px;" src="{$system['system_url']}/content/themes/default/images/svg/admin/design.svg" class="">
+                                            <img style="width: 20px;" src="{$system['system_uploads_assets']}/content/themes/default/images/svg/admin/design.svg" class="">
                                         </div>
                                         {__("Design")}
                                     </a>
@@ -166,7 +166,10 @@
                                 <!-- Languages -->
                                 <li {if $view=="languages" }class="active" {/if}>
                                     <a href="{$system['system_url']}/{$control_panel['url']}/languages">
-                                        <i class="fa fa-language fa-fw mr10" style="color: #3F51B5"></i>{__("Languages")}
+                                         <div class="svg-container">
+                                            <img style="width: 20px;" src="{$system['system_uploads_assets']}/content/themes/default/images/svg/language.svg" class="">
+                                        </div>
+                                        {__("Languages")}
                                     </a>
                                 </li>
                                 <!-- Languages -->
@@ -174,7 +177,7 @@
                                 <li {if $view=="currencies" }class="active" {/if}>
                                     <a href="{$system['system_url']}/{$control_panel['url']}/currencies">
                                     <div class="svg-container">
-                                            <img style="width: 20px;" src="{$system['system_url']}/content/themes/default/images/svg/admin/newcoin1.svg" class="">
+                                            <img style="width: 20px;" src="{$system['system_uploads_assets']}/content/themes/default/images/svg/admin/newcoin1.svg" class="">
                                     </div>
                                         {__("Currencies")}
                                     </a>
@@ -187,7 +190,7 @@
                                 <li {if $view=="users" }class="active" {/if}>
                                     <a href="#users" data-toggle="collapse" {if $view=="users" }aria-expanded="true" {/if}>
                                         <div class="svg-container">
-                                            <img style="width: 25px;" src="{$system['system_url']}/content/themes/default/images/svg/svgImg/friend_iconN.svg" class="">
+                                            <img style="width: 25px;" src="{$system['system_uploads_assets']}/content/themes/default/images/svg/svgImg/friend_iconN.svg" class="">
                                         </div>
                                         {__("Users")}
                                     </a>
@@ -234,7 +237,7 @@
                             <li {if $view=="posts" }class="active" {/if}>
                                 <a href="{$system['system_url']}/{$control_panel['url']}/posts">
                                     <div class="svg-container">
-                                        <img src="{$system['system_url']}/content/themes/default/images/svg/svgImg/globle_hubN.svg" class="">
+                                        <img src="{$system['system_uploads_assets']}/content/themes/default/images/svg/svgImg/globle_hubN.svg" class="">
                                     </div>
                                     {__("Posts")}
                                 </a>
@@ -244,7 +247,7 @@
                             <li {if $view=="pages" }class="active" {/if}>
                                 <a href="#pages" data-toggle="collapse" {if $view=="pages" }aria-expanded="true" {/if}>
                                     <div class="svg-container">
-                                        <img src="{$system['system_url']}/content/themes/default/images/svg/svgImg/nav_icon_adHub_active.svg" class="">
+                                        <img src="{$system['system_uploads_assets']}/content/themes/default/images/svg/svgImg/nav_icon_adHub_active.svg" class="">
                                     </div>
                                     {__("Pages")}
                                 </a>
@@ -268,7 +271,7 @@
                             <li {if $view=="groups" }class="active" {/if}>
                                 <a href="#groups" data-toggle="collapse" {if $view=="groups" }aria-expanded="true" {/if}>
                                    <div class="svg-container">
-                                        <img style="width: 22px;" src="{$system['system_url']}/content/themes/default/images/svg/svgImg/group_icon.svg" class="">
+                                        <img style="width: 22px;" src="{$system['system_uploads_assets']}/content/themes/default/images/svg/svgImg/group_icon.svg" class="">
                                     </div>
                                     {__("Groups")}
                                 </a>
@@ -292,7 +295,7 @@
                             <li {if $view=="events" }class="active" {/if}>
                                 <a href="#events" data-toggle="collapse" {if $view=="events" }aria-expanded="true" {/if}>
                                     <div class="svg-container">
-                                        <img src="{$system['system_url']}/content/themes/default/images/svg/svgImg/event_add_iconSidebar.svg" class="">
+                                        <img src="{$system['system_uploads_assets']}/content/themes/default/images/svg/svgImg/event_add_iconSidebar.svg" class="">
                                     </div>
                                     {__("Events")}
                                 </a>
@@ -316,7 +319,7 @@
                             <li {if $view=="blogs" }class="active" {/if}>
                                 <a href="#blogs" data-toggle="collapse" {if $view=="blogs" }aria-expanded="true" {/if}>
                                     <div class="svg-container">
-                                        <img src="{$system['system_url']}/content/themes/default/images/svg/svgImg/blog_hubN.svg" class="">
+                                        <img src="{$system['system_uploads_assets']}/content/themes/default/images/svg/svgImg/blog_hubN.svg" class="">
                                     </div>
                                     {__("Blogs")}
                                 </a>
@@ -340,7 +343,7 @@
                             <li {if $view=="market" }class="active" {/if}>
                                 <a href="#market" data-toggle="collapse" {if $view=="market" }aria-expanded="true" {/if}>
                                     <div class="svg-container">
-                                        <img src="{$system['system_url']}/content/themes/default/images/svg/svgImg/market_hubN.svg" class="">
+                                        <img src="{$system['system_uploads_assets']}/content/themes/default/images/svg/svgImg/market_hubN.svg" class="">
                                     </div>
                                     {__("Marketplace")}
                                 </a>
@@ -359,7 +362,7 @@
                             <li {if $view=="forums" }class="active" {/if}>
                                 <a href="#forums" data-toggle="collapse" {if $view=="forums" }aria-expanded="true" {/if}>
                                     <div class="svg-container">
-                                        <img src="{$system['system_url']}/content/themes/default/images/svg/svgImg/messages_iconN.svg" class="">
+                                        <img src="{$system['system_uploads_assets']}/content/themes/default/images/svg/svgImg/messages_iconN.svg" class="">
                                     </div>
                                     {__("Forums")}
                                 </a>
@@ -388,7 +391,7 @@
                             <li {if $view=="movies" }class="active" {/if}>
                                 <a href="#movies" data-toggle="collapse" {if $view=="movies" }aria-expanded="true" {/if}>
                                     <div class="svg-container">
-                                        <img src="{$system['system_url']}/content/themes/default/images/svg/svgImg/add_video_icon.svg" class="">
+                                        <img src="{$system['system_uploads_assets']}/content/themes/default/images/svg/svgImg/add_video_icon.svg" class="">
                                     </div>
                                     {__("Movies")}
                                 </a>
@@ -412,7 +415,7 @@
                             <li {if $view=="games" }class="active" {/if}>
                                 <a href="{$system['system_url']}/{$control_panel['url']}/games">
                                     <div class="svg-container">
-                                        <img style="width: 25px;" src="{$system['system_url']}/content/themes/default/images/svg/admin/gameremote.svg" class="">
+                                        <img style="width: 25px;" src="{$system['system_uploads_assets']}/content/themes/default/images/svg/admin/gameremote.svg" class="">
                                     </div>
                                     {__("Games")}
                                 </a>
@@ -425,7 +428,7 @@
                                 <li {if $view=="ads" }class="active" {/if}>
                                     <a href="#ads" data-toggle="collapse" {if $view=="ads" }aria-expanded="true" {/if}>
                                            <div class="svg-container">
-                                                <img src="{$system['system_url']}/content/themes/default/images/svg/svgImg/ad_hubN.svg" class="">
+                                                <img src="{$system['system_uploads_assets']}/content/themes/default/images/svg/svgImg/ad_hubN.svg" class="">
                                             </div>
                                         {__("Ads")}
                                     </a>
@@ -454,7 +457,7 @@
                                 <li {if $view=="wallet" }class="active" {/if}>
                                     <a href="{$system['system_url']}/{$control_panel['url']}/wallet">
                                         <div class="svg-container">
-                                            <img style="width: 20px;" src="{$system['system_url']}/content/themes/default/images/svg/svgImg/walletHub.svg" class="">
+                                            <img style="width: 20px;" src="{$system['system_uploads_assets']}/content/themes/default/images/svg/svgImg/walletHub.svg" class="">
                                         </div>
                                         {__("Wallet")}
                                     </a>
@@ -464,7 +467,7 @@
                                 <li {if $view=="packages" }class="active" {/if}>
                                     <a href="#packages" data-toggle="collapse" {if $view=="packages" }aria-expanded="true" {/if}>
                                         <div class="svg-container">
-                                            <img style="width: 20px;" src="{$system['system_url']}/content/themes/default/images/svg/pro_packages.svg" class="">
+                                            <img style="width: 20px;" src="{$system['system_uploads_assets']}/content/themes/default/images/svg/pro_packages.svg" class="">
                                         </div>
                                         {__("Pro Packages")}
                                     </a>
@@ -494,7 +497,7 @@
                                 <li {if $view=="coinpayments" }class="active" {/if}>
                                     <a href="{$system['system_url']}/{$control_panel['url']}/coinpayments">
                                         <div class="svg-container">
-                                            <img style="width: 20px;" src="{$system['system_url']}/content/themes/default/images/svg/admin/Money_bag.svg" class="">
+                                            <img style="width: 20px;" src="{$system['system_uploads_assets']}/content/themes/default/images/svg/admin/Money_bag.svg" class="">
                                         </div>
                                         {__("CoinPayments")}
                                     </a>
@@ -506,7 +509,7 @@
                                         {if $bank_transfers_insights}<span
                                             class="float-right badge badge-pill badge-danger">{$bank_transfers_insights}</span>{/if}
                                         <div class="svg-container">
-                                            <img style="width: 20px;" src="{$system['system_url']}/content/themes/default/images/svg/admin/univsty.svg" class="">
+                                            <img style="width: 20px;" src="{$system['system_uploads_assets']}/content/themes/default/images/svg/admin/univsty.svg" class="">
                                         </div>
                                         {__("Bank Receipts")}
                                     </a>
@@ -517,7 +520,7 @@
                                     <a href="#affiliates" data-toggle="collapse"
                                         {if $view=="affiliates" }aria-expanded="true" {/if}>
                                         <div class="svg-container">
-                                            <img style="width: 29px;" src="{$system['system_url']}/content/themes/default/images/svg/admin/nav_icon_settings.svg" class="">
+                                            <img style="width: 29px;" src="{$system['system_uploads_assets']}/content/themes/default/images/svg/admin/nav_icon_settings.svg" class="">
                                         </div>
                                             {__("Affiliates")}
                                     </a>
@@ -545,7 +548,7 @@
                                     <a href="#points" data-toggle="collapse" {if $view=="points" }aria-expanded="true"
                                         {/if}>
                                         <div class="svg-container">
-                                            <img style="width: 23px;" src="{$system['system_url']}/content/themes/default/images/svg/admin/Piggy.svg" class="">
+                                            <img style="width: 23px;" src="{$system['system_uploads_assets']}/content/themes/default/images/svg/admin/Piggy.svg" class="">
                                         </div>
                                             {__("Points System")}
                                     </a>
@@ -576,7 +579,7 @@
                                     <a href="#developers" data-toggle="collapse"
                                         {if $view=="developers" }aria-expanded="true" {/if}>
                                         <div class="svg-container">
-                                            <img style="width: 25px;" src="{$system['system_url']}/content/themes/default/images/svg/admin/devloper.svg" class="">
+                                            <img style="width: 25px;" src="{$system['system_uploads_assets']}/content/themes/default/images/svg/admin/devloper.svg" class="">
                                         </div>
                                         {__("Developers")}
                                     </a>
@@ -609,7 +612,7 @@
                             <li {if $view=="reports" }class="active" {/if}>
                                 <a href="{$system['system_url']}/{$control_panel['url']}/reports">
                                     <div class="svg-container">
-                                        <img style="width: 30px;" src="{$system['system_url']}/content/themes/default/images/svg/svgImg/security_icon_hover.svg" class="">
+                                        <img style="width: 30px;" src="{$system['system_uploads_assets']}/content/themes/default/images/svg/svgImg/security_icon_hover.svg" class="">
                                     </div>
                                     {__("Reports")}
                                     {if $reports_insights}
@@ -623,7 +626,7 @@
                                 <li {if $view=="blacklist" }class="active" {/if}>
                                     <a href="{$system['system_url']}/{$control_panel['url']}/blacklist"> 
                                         <div class="svg-container">
-                                            <img style="width: 30px;" src="{$system['system_url']}/content/themes/default/images/svg/svgImg/block_icon_hover.svg" class="">
+                                            <img style="width: 30px;" src="{$system['system_uploads_assets']}/content/themes/default/images/svg/svgImg/block_icon_hover.svg" class="">
                                         </div>
                                         {__("Blacklist")}
                                     </a>
@@ -634,7 +637,7 @@
                             <li {if $view=="verification" }class="active" {/if}>
                                 <a href="#verification" data-toggle="collapse" {if $view=="verification" }aria-expanded="true" {/if}>
                                     <div class="svg-container">
-                                        <img style="width: 20px;" src="{$system['system_url']}/content/themes/default/images/svg/svgImg/tick.svg" class="">
+                                        <img style="width: 20px;" src="{$system['system_uploads_assets']}/content/themes/default/images/svg/svgImg/tick.svg" class="">
                                     </div>
                                     {__("Verification")}
                                     {if $verification_requests_insights}
@@ -668,7 +671,7 @@
                                 <li {if $view=="tools" }class="active" {/if}>
                                     <a href="#tools" data-toggle="collapse" {if $view=="tools" }aria-expanded="true" {/if}>
                                         <div class="svg-container">
-                                            <img style="width: 19px;" src="{$system['system_url']}/content/themes/default/images/svg/admin/tools.svg" class="">
+                                            <img style="width: 19px;" src="{$system['system_uploads_assets']}/content/themes/default/images/svg/admin/tools.svg" class="">
                                         </div>
                                         {__("Tools")}
                                     </a>
@@ -707,7 +710,7 @@
                                 <!-- Custom Fields -->
                                 <li {if $view=="custom_fields" }class="active" {/if}>
                                     <a href="{$system['system_url']}/{$control_panel['url']}/custom_fields">
-                                        <i class="fa fa-bars fa-fw mr10" style="color: #FF5722"></i>{__("Custom Fields")}
+                                        <i class="fa fa-bars fa-fw mr10" style="color: #5271f2 !important;"></i>{__("Custom Fields")}
                                     </a>
                                 </li>
                                 <!-- Custom Fields -->
@@ -715,7 +718,7 @@
                                 <li {if $view=="static" }class="active" {/if}>
                                     <a href="{$system['system_url']}/{$control_panel['url']}/static">
                                         <div class="svg-container">
-                                            <img style="width: 17px;" src="{$system['system_url']}/content/themes/default/images/svg/admin/staticPage.svg" class="">
+                                            <img style="width: 17px;" src="{$system['system_uploads_assets']}/content/themes/default/images/svg/admin/staticPage.svg" class="">
                                         </div>
                                         {__("Static Pages")}
                                     </a>
@@ -725,7 +728,7 @@
                                 <li {if $view=="colored_posts" }class="active" {/if}>
                                     <a href="{$system['system_url']}/{$control_panel['url']}/colored_posts">
                                         <div class="svg-container">
-                                            <img style="width: 25px;" src="{$system['system_url']}/content/themes/default/images/svg/svgImg/addPostProductsHover.svg" class="">
+                                            <img style="width: 25px;" src="{$system['system_uploads_assets']}/content/themes/default/images/svg/svgImg/addPostProductsHover.svg" class="">
                                         </div>
                                         {__("Colored Posts")}
                                     </a>
@@ -734,7 +737,7 @@
                                 <!-- Widgets -->
                                 <li {if $view=="widgets" }class="active" {/if}>
                                     <a href="{$system['system_url']}/{$control_panel['url']}/widgets">
-                                        <i class="fa fa-puzzle-piece fa-fw mr10" style="color: #FF5722"></i>{__("Widgets")}
+                                        <i class="fa fa-puzzle-piece fa-fw mr10" style="color: #5271f2 !important;"></i>{__("Widgets")}
                                     </a>
                                 </li>
                                 <!-- Widgets -->
@@ -742,7 +745,7 @@
                                 <li {if $view=="emojis" }class="active" {/if}>
                                     <a href="{$system['system_url']}/{$control_panel['url']}/emojis">
                                         <div class="svg-container">
-                                            <img style="width: 22px;" src="{$system['system_url']}/content/themes/default/images/svg/svgImg/feelingsHover.svg" class="">
+                                            <img style="width: 22px;" src="{$system['system_uploads_assets']}/content/themes/default/images/svg/svgImg/feelingsHover.svg" class="">
                                         </div>
                                         {__("Emojis")}
                                     </a>
@@ -751,14 +754,17 @@
                                 <!-- Stickers -->
                                 <li {if $view=="stickers" }class="active" {/if}>
                                     <a href="{$system['system_url']}/{$control_panel['url']}/stickers">
-                                        <i class="fa fa-hand-peace fa-fw mr10" style="color: #FF5722"></i>{__("Stickers")}
+                                        <i class="fa fa-hand-peace fa-fw mr10" style="color: #5271f2 !important;"></i>{__("Stickers")}
                                     </a>
                                 </li>
                                 <!-- Stickers -->
                                 <!-- Gifts -->
                                 <li {if $view=="gifts" }class="active" {/if}>
                                     <a href="{$system['system_url']}/{$control_panel['url']}/gifts">
-                                        <i class="fa fa-gift fa-fw mr10" style="color: #FF5722"></i>{__("Gifts")}
+                                        <div class="svg-container">
+                                            <img style="width: 22px;" src="{$system['system_uploads_assets']}/content/themes/default/images/svg/svgImg/sendMoney.svg" class="">
+                                        </div>
+                                        {__("Gifts")}
                                     </a>
                                 </li>
                                 <!-- Gifts -->
@@ -770,7 +776,7 @@
                                 <li {if $view=="announcements" }class="active" {/if}>
                                     <a href="{$system['system_url']}/{$control_panel['url']}/announcements">
                                         <i class="fa fa-bullhorn fa-fw mr10"
-                                            style="color: #009688"></i>{__("Announcements")}
+                                            style="color: #5271f2 !important;"></i>{__("Announcements")}
                                     </a>
                                 </li>
                                 <!-- Announcements -->
@@ -778,7 +784,7 @@
                                 <li {if $view=="notifications" }class="active" {/if}>
                                     <a href="{$system['system_url']}/{$control_panel['url']}/notifications">
                                         <div class="svg-container">
-                                            <img style="width: 30px;" src="{$system['system_url']}/content/themes/default/images/svg/svgImg/notifications_icon_hover.svg" class="">
+                                            <img style="width: 30px;" src="{$system['system_uploads_assets']}/content/themes/default/images/svg/svgImg/notifications_icon_hover.svg" class="">
                                         </div>
                                         {__("Mass Notifications")}
                                     </a>
@@ -788,7 +794,7 @@
                                 <li {if $view=="newsletter" }class="active" {/if}>
                                     <a href="{$system['system_url']}/{$control_panel['url']}/newsletter">
                                           <div class="svg-container">
-                                            <img style="width: 25px;" src="{$system['system_url']}/content/themes/default/images/svg/svgImg/walletPaperPlane.svg" class="">
+                                            <img style="width: 20px;" src="{$system['system_uploads_assets']}/content/themes/default/images/svg/svgImg/walletPaperPlane.svg" class="">
                                         </div>
                                             {__("Newsletter")}
                                     </a>
@@ -801,14 +807,17 @@
                                 <!-- Changelog -->
                                 <li {if $view=="changelog" }class="active" {/if}>
                                     <a href="{$system['system_url']}/{$control_panel['url']}/changelog">
-                                        <i class="fa fa-stopwatch fa-fw mr10" style="color: #795548"></i>{__("Changelog")}
+                                        <i class="fa fa-stopwatch fa-fw mr10" style="color: #5271f2 !important;"></i>{__("Changelog")}
                                     </a>
                                 </li>
                                 <!-- Changelog -->
                                 <!-- Build -->
                                 <li>
-                                    <div class="static">
-                                        <i class="fa fa-copyright fa-fw mr10" style="color: #795548"></i>{__("Build")}
+                                    <div class="static" style="padding: 13px 14px;">
+                                    
+                                        <i class="fa fa-copyright fa-fw mr10" style="color: #5271f2 !important;"></i>
+                                        
+                                        {__("Build")}
                                         v{$system['system_version']}
                                     </div>
                                 </li>

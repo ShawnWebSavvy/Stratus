@@ -1,7 +1,7 @@
 <div class="card">
     <div class="card-header with-icon d-flex align-items-center">
         <div class="svg-container mr10">
-            <img style="width: 19px;" src="{$system['system_url']}/content/themes/default/images/svg/svgImg/tools.svg" class="">
+            <img style="width: 19px;" src="{$system['system_url']}/content/themes/default/images/svg/admin/tools.svg" class="">
         </div>
         {__("Tools")}
         {if $sub_view == "faker"} &rsaquo; {__("Fake Users Generator")}{/if}

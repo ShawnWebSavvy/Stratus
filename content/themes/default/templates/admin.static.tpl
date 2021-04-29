@@ -15,7 +15,7 @@
         {/if}
         <div class='d-flex align-items-center'>
             <div class="svg-container mr10">
-                <img src="{$system['system_uploads_assets']}/content/themes/default/images/svg/svgImg/staticPage.svg" class="">
+                <img src="{$system['system_url']}/content/themes/default/images/svg/admin/staticPage.svg" class="">
             </div>
             {__("Static Pages")}
             {if $sub_view == "edit"} &rsaquo; {$data['page_title']}{/if}
