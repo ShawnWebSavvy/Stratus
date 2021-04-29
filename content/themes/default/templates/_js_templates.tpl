@@ -1724,32 +1724,6 @@
                         </button>
                         </div>
                     {/if}
-                    {if $system['creditcard_enabled']}
-                        
-                        <div class="col-12 col-sm-6 plr5">
-                            <button class="js_payment-stripe btn btn-block btn-payment plr20 mb10 d-flex align-items-center" 
-                            data-handle="{literal}{{handle}}{/literal}" 
-                            {literal}{{#id}}{/literal} data-id="{literal}{{id}}{/literal}" {literal}{{/id}}{/literal} 
-                            {literal}{{#new_amount}}{/literal} data-price="{literal}{{new_amount}}{/literal}" {literal}{{/new_amount}}{/literal} 
-                            {literal}{{#name}}{/literal} data-name="{literal}{{name}}{/literal}" {literal}{{/name}}{/literal} 
-                            {literal}{{#img}}{/literal} data-img="{literal}{{img}}{/literal}" {literal}{{/img}}{/literal} 
-                            data-method="credit"> 
-                                <i class="fa fa-credit-card fa-lg fa-fw mr5" style="color: #8798CC;"></i>{__("Credit Card")}
-                            </button>
-                            <span>
-                                <b>Credit Card Fee </b> : {literal}{{fee_amount}}{/literal}
-                                <br>
-                                <b>Total Amount</b> : {literal}{{new_amount}}{/literal}
-                            </span>
-                        </div>
-                    {/if}
-                    {if $system['authorize_enabled']}
-                        <div class="col-12 col-sm-6 plr5">
-                            <button class="btn btn-block btn-payment plr20 mb10 d-flex align-items-center" data-toggle="modal" data-url="#authorize-transfer" data-options='{literal}{{/literal} "handle": "{literal}{{handle}}{/literal}", "price": "{literal}{{price}}{/literal}", "id": "{literal}{{id}}{/literal}" {literal}}{/literal}' data-size="large">
-                                <i class="fa fa-university fa-lg fa-fw mr5" style="color: #4CAF50;"></i>{__("Pay through Aurhorise.net")}
-                            </button>
-                        </div>
-                    {/if}
                     {if $system['alipay_enabled']}
                         <div class="col-12 col-sm-6 plr5">
                             <button class="js_payment-stripe btn btn-block btn-payment plr20 mb10 d-flex align-items-center" 
@@ -1797,6 +1771,32 @@
                             </button>
                         </div>
                     {/if}
+                    {if $system['authorize_enabled']}
+                        <div class="col-12 col-sm-6 plr5">
+                            <button class="btn btn-block btn-payment plr20 mb10 d-flex align-items-center" data-toggle="modal" data-url="#authorize-transfer" data-options='{literal}{{/literal} "handle": "{literal}{{handle}}{/literal}", "price": "{literal}{{price}}{/literal}", "id": "{literal}{{id}}{/literal}" {literal}}{/literal}' data-size="large">
+                                <i class="fa fa-university fa-lg fa-fw mr5" style="color: #4CAF50;"></i>{__("Pay through Aurhorise.net")}
+                            </button>
+                        </div>
+                    {/if}
+                    {if $system['creditcard_enabled']}
+                        
+                        <div class="col-12 col-sm-6 plr5">
+                            <button class="js_payment-stripe btn btn-block btn-payment plr20 mb10 d-flex align-items-center" 
+                            data-handle="{literal}{{handle}}{/literal}" 
+                            {literal}{{#id}}{/literal} data-id="{literal}{{id}}{/literal}" {literal}{{/id}}{/literal} 
+                            {literal}{{#new_amount}}{/literal} data-price="{literal}{{new_amount}}{/literal}" {literal}{{/new_amount}}{/literal} 
+                            {literal}{{#name}}{/literal} data-name="{literal}{{name}}{/literal}" {literal}{{/name}}{/literal} 
+                            {literal}{{#img}}{/literal} data-img="{literal}{{img}}{/literal}" {literal}{{/img}}{/literal} 
+                            data-method="credit"> 
+                                <i class="fa fa-credit-card fa-lg fa-fw mr5" style="color: #8798CC;"></i>{__("Credit Card")}
+                            </button>
+                            <span>
+                                <b>Credit Card Fee </b> : {literal}{{fee_amount}}{/literal}
+                                <br>
+                                <b>Total Amount</b> : {literal}{{new_amount}}{/literal}
+                            </span>
+                        </div>
+                    {/if}
                 </div>
             </div>
         </script>
@@ -1804,104 +1804,104 @@
 <!-- 2Checkout -->
 {if $system['2checkout_enabled']}
 <script id="twocheckout" type="text/template">
-                <div class="modal-header">
-                    <h6 class="modal-title">{include file='__svg_icons.tpl' icon="2co" width="20px" height="20px" class="mr5"}{__("2Checkout")}</h6>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
+    <div class="modal-header">
+        <h6 class="modal-title">{include file='__svg_icons.tpl' icon="2co" width="20px" height="20px" class="mr5"}{__("2Checkout")}</h6>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+    <form id="twocheckout_form">
+        <div class="modal-body">
+            <div class="heading-small mb20">
+                {__("Card Info")}
+            </div>
+            <div class="pl-md-4 pr-md-4">
+                <div class="row">
+                    <div class="form-group col-md-12">
+                        <label class="form-control-label">{__("Card Number")}</label>
+                        <input name="card_number" type="text" class="form-control" required autocomplete="off">
+                    </div>
+                    <div class="form-group col-md-4">
+                        <label class="form-control-label">{__("Exp Month")}</label>
+                        <select name="card_exp_month" class="form-control" required>
+                            {for $i=1 to 12}
+                                <option value="{if $i < 10}0{/if}{$i}">{if $i < 10}0{/if}{$i}</option>
+                            {/for}
+                        </select>
+                    </div>
+                    <div class="form-group col-md-4">
+                        <label class="form-control-label">{__("Exp Year")}</label>
+                        <select name="card_exp_year" class="form-control" required>
+                            {for $i=2020 to 2035}
+                                <option value="{$i}">{$i}</option>
+                            {/for}
+                        </select>
+                    </div>
+                    <div class="form-group col-md-4">
+                        <label class="form-control-label">{__("CVC")}</label>
+                        <input name="card_cvv" type="text" class="form-control" required autocomplete="off">
+                    </div>
                 </div>
-                <form id="twocheckout_form">
-                    <div class="modal-body">
-                        <div class="heading-small mb20">
-                            {__("Card Info")}
-                        </div>
-                        <div class="pl-md-4 pr-md-4">
-                            <div class="row">
-                                <div class="form-group col-md-12">
-                                    <label class="form-control-label">{__("Card Number")}</label>
-                                    <input name="card_number" type="text" class="form-control" required autocomplete="off">
-                                </div>
-                                <div class="form-group col-md-4">
-                                    <label class="form-control-label">{__("Exp Month")}</label>
-                                    <select name="card_exp_month" class="form-control" required>
-                                        {for $i=1 to 12}
-                                            <option value="{if $i < 10}0{/if}{$i}">{if $i < 10}0{/if}{$i}</option>
-                                        {/for}
-                                    </select>
-                                </div>
-                                <div class="form-group col-md-4">
-                                    <label class="form-control-label">{__("Exp Year")}</label>
-                                    <select name="card_exp_year" class="form-control" required>
-                                        {for $i=2020 to 2035}
-                                            <option value="{$i}">{$i}</option>
-                                        {/for}
-                                    </select>
-                                </div>
-                                <div class="form-group col-md-4">
-                                    <label class="form-control-label">{__("CVC")}</label>
-                                    <input name="card_cvv" type="text" class="form-control" required autocomplete="off">
-                                </div>
-                            </div>
-                        </div>
-                        <div class="heading-small mb20">
-                            {__("Billing Information")}
-                        </div>
-                        <div class="pl-md-4 pr-md-4">
-                            <div class="row">
-                                <div class="form-group col-md-6">
-                                    <label class="form-control-label">{__("Name")}</label>
-                                    <input name="billing_name" type="text" class="form-control" required value="{$user->_data['user_firstname']} {$user->_data['user_lastname']}">
-                                </div>
-                                <div class="form-group col-md-6">
-                                    <label class="form-control-label">{__("Email")}</label>
-                                    <input name="billing_email" type="email" class="form-control" required value="{$user->_data['user_email']}">
-                                </div>
-                                <div class="form-group col-md-6">
-                                    <label class="form-control-label">{__("Phone")}</label>
-                                    <input name="billing_phone" type="text" class="form-control" required value="{$user->_data['user_phone']}">
-                                </div>
-                                <div class="form-group col-md-6">
-                                    <label class="form-control-label">{__("Address")}</label>
-                                    <input name="billing_address" type="text" class="form-control required">
-                                </div>
-                                <div class="form-group col-md-6">
-                                    <label class="form-control-label">{__("City")}</label>
-                                    <input name="billing_city" type="text" class="form-control" required>
-                                </div>
-                                <div class="form-group col-md-6">
-                                    <label class="form-control-label">{__("State")}</label>
-                                    <input name="billing_state" type="text" class="form-control" required>
-                                </div>
-                                <div class="form-group col-md-6">
-                                    <label class="form-control-label">{__("Country")}</label>
-                                    <select name="billing_country" class="form-control" required>
-                                        <option value="none">{__("Select Country")}</option>
-                                        {foreach $countries as $country}
-                                            <option {if $user->_data['user_country'] == $country['country_id']}selected{/if} value="{$country['country_name']}">{$country['country_name']}</option>
-                                        {/foreach}
-                                    </select>
-                                </div>
-                                <div class="form-group col-md-6">
-                                    <label class="form-control-label">{__("Zip Code")}</label>
-                                    <input name="billing_zip_code" type="text" class="form-control" required>
-                                </div>
-                            </div>
-                        </div>
+            </div>
+            <div class="heading-small mb20">
+                {__("Billing Information")}
+            </div>
+            <div class="pl-md-4 pr-md-4">
+                <div class="row">
+                    <div class="form-group col-md-6">
+                        <label class="form-control-label">{__("Name")}</label>
+                        <input name="billing_name" type="text" class="form-control" required value="{$user->_data['user_firstname']} {$user->_data['user_lastname']}">
+                    </div>
+                    <div class="form-group col-md-6">
+                        <label class="form-control-label">{__("Email")}</label>
+                        <input name="billing_email" type="email" class="form-control" required value="{$user->_data['user_email']}">
+                    </div>
+                    <div class="form-group col-md-6">
+                        <label class="form-control-label">{__("Phone")}</label>
+                        <input name="billing_phone" type="text" class="form-control" required value="{$user->_data['user_phone']}">
+                    </div>
+                    <div class="form-group col-md-6">
+                        <label class="form-control-label">{__("Address")}</label>
+                        <input name="billing_address" type="text" class="form-control required">
+                    </div>
+                    <div class="form-group col-md-6">
+                        <label class="form-control-label">{__("City")}</label>
+                        <input name="billing_city" type="text" class="form-control" required>
+                    </div>
+                    <div class="form-group col-md-6">
+                        <label class="form-control-label">{__("State")}</label>
+                        <input name="billing_state" type="text" class="form-control" required>
+                    </div>
+                    <div class="form-group col-md-6">
+                        <label class="form-control-label">{__("Country")}</label>
+                        <select name="billing_country" class="form-control" required>
+                            <option value="none">{__("Select Country")}</option>
+                            {foreach $countries as $country}
+                                <option {if $user->_data['user_country'] == $country['country_id']}selected{/if} value="{$country['country_name']}">{$country['country_name']}</option>
+                            {/foreach}
+                        </select>
+                    </div>
+                    <div class="form-group col-md-6">
+                        <label class="form-control-label">{__("Zip Code")}</label>
+                        <input name="billing_zip_code" type="text" class="form-control" required>
+                    </div>
+                </div>
+            </div>
 
-                        <!-- error -->
-                        <div class="alert alert-danger mb0 x-hidden"></div>
-                        <!-- error -->
-                    </div>
-                    <div class="modal-footer">
-                        <input type="hidden" name="token" value="" />
-                        <input type="hidden" name="handle" value="{literal}{{handle}}{/literal}">
-                        <input type="hidden" name="package_id" value="{literal}{{id}}{/literal}">
-                        <input type="hidden" name="price" value="{literal}{{price}}{/literal}">
-                        <button type="button" class="btn btn-light" data-dismiss="modal">{__("Cancel")}</button>
-                        <button type="submit" class="btn btn-success btn-antier-green"><i class="fa fa-check-circle mr10"></i>{__("Pay")}</button>
-                    </div>
-                </form>
-            </script>
+            <!-- error -->
+            <div class="alert alert-danger mb0 x-hidden"></div>
+            <!-- error -->
+        </div>
+        <div class="modal-footer">
+            <input type="hidden" name="token" value="" />
+            <input type="hidden" name="handle" value="{literal}{{handle}}{/literal}">
+            <input type="hidden" name="package_id" value="{literal}{{id}}{/literal}">
+            <input type="hidden" name="price" value="{literal}{{price}}{/literal}">
+            <button type="button" class="btn btn-light" data-dismiss="modal">{__("Cancel")}</button>
+            <button type="submit" class="btn btn-success btn-antier-green"><i class="fa fa-check-circle mr10"></i>{__("Pay")}</button>
+        </div>
+    </form>
+</script>
 {/if}
 <!-- 2Checkout -->
 
