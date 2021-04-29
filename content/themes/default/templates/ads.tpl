@@ -970,6 +970,8 @@
                                                     {__("Buy Pro Package")}
                                                     {elseif $transaction['node_type'] == "bank_withdrawal"}
                                                         {__("Withdrawal to Bank ")}
+                                                    {elseif $transaction['node_type'] == "bank_withdrawal_cancel"}
+                                                        {__("Withdrawal Cancel")}
                                                     {/if}
                                                 </td>
                                                 <td><span class="js_moment"
