@@ -15,7 +15,7 @@
         {/if}
         <div class="d-flex align-items-center">
             <div class="svg-container mr10">
-                <img style="width: 25px;" src="{$system['system_url']}/content/themes/default/images/svg/svgImg/devloper.svg" class="">
+                <img style="width: 25px;" src="{$system['system_url']}/content/themes/default/images/svg/admin/devloper.svg" class="">
             </div>
             {__("Developers")}
             {if $sub_view == ""} &rsaquo; {__("Settings")}{/if}

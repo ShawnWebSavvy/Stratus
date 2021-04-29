@@ -1,6 +1,6 @@
 <div class="card">
     <div class="card-header with-icon">
-        <i class="fa fa-stopwatch mr10"></i>{__("Changelog")}
+        <i class="fa fa-stopwatch mr10"  style="color: #5271f2 !important;"></i>{__("Changelog")}
     </div>
     <div class="card-body">
 

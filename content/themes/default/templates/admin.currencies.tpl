@@ -13,7 +13,12 @@
                 </a>
             </div>
         {/if}
-        <i class="fa fa-money-bill-alt mr10"></i>{__("Currencies")}
+        <div class="d-flex align-items-center">
+            <div class="svg-container mr10">
+                <img style="width: 20px;" src="{$system['system_url']}/content/themes/default/images/svg/admin/newcoin1.svg" class="">
+            </div>
+            {__("Currencies")}
+        </div>
         {if $sub_view == "edit"} &rsaquo; {$data['name']}{/if}
         {if $sub_view == "add"} &rsaquo; {__("Add New Currency")}{/if}
     </div>

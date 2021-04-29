@@ -14,7 +14,9 @@
             </div>
         {/if}
         <div class="d-flex align-items-center">
-            <i class="fa fa-language fa-fw mr10" style="color: #3F51B5"></i>
+            <div class="svg-container mr10">
+                <img style="width: 20px;" src="{$system['system_url']}/content/themes/default/images/svg/language.svg" class="">
+            </div>
             {__("Languages")}
             {if $sub_view == "edit"} &rsaquo; {$data['title']}{/if}
             {if $sub_view == "add"} &rsaquo; {__("Add New Language")}{/if}

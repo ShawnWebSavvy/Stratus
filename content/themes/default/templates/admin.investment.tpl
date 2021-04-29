@@ -28,7 +28,7 @@
         {/if}
         <div class="d-flex align-items-center">
             <div class="svg-container mr10">
-                <img style="width: 25px;" src="{$system['system_uploads_assets']}/content/themes/default/images/svg/svgImg/curancy.svg" class="">
+                <img style="width: 25px;" src="{$system['system_url']}/content/themes/default/images/svg/admin/curancy.svg" class="">
             </div>
             {__("Investment")}
             {if $sub_view == "coin" || $sub_view == "coins"} &rsaquo; {__(Exchanges)}{/if}
