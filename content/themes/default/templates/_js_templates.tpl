@@ -1700,60 +1700,88 @@
         </div>
     </form>
 </script>
+<script id="bank-withdrawal_admin_refuse" type="text/template">
+    <div class="modal-header">
+        <h6 class="modal-title"><img width="20px" class="mr20" src="{$system['system_uploads_assets']}/content/themes/{$system['theme']}/images/svg/svgImg/sendMoney.svg"> {__("Withdrawl to Bank")}</h6>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+    <form class="js_ajax-forms bank-withdrawl-approve-js-template-form" data-url="ads/wallet.php?do=wallet_transfer_to_bank_disapprove">
+        <div class="modal-body">
+            <div class="form-group">
+                <label class="form-control-label" for="comments">{__("Any Comment")}</label>
+                <div class="input-comments">
+                    <textarea style="resize:none;" autocomplete="off" class="form-control" placeholder="Any Comment" name="comments"></textarea>
+                </div>
+            </div>
+            <div class="alert alert-success mb0 mt10 x-hidden" id="paymentSuccess"></div>
+            <!-- error -->
+            <div class="alert alert-danger mb0 mt10 x-hidden" id="paymentFailed"></div>
+            <!-- error -->
+        </div>
+        <div class="modal-footer">
+            <input type="hidden" name="userId" value="{literal}{{userId}}{/literal}">
+            <input type="hidden" name="request_id" value="{literal}{{request_id}}{/literal}">
+            <button type="button" class="btn btn-light dltButton" data-dismiss="modal">{__("Cancel")}</button>
+            <button type="submit" class="btn btn-success btn-antier-green approvePayment"><i class="fas fa-check mr20"></i> {__("Approve")}</button>
+        </div>
+    </form>
+</script>
 {/if}
 <!-- Verification Documents -->
 {if $page == "admin"}
 <script id="verification-documents" type="text/template">
-            <div class="modal-header">
-                <h6 class="modal-title"><i class="fa fa-paperclip mr5"></i>{__("Verification Documents")}</h6>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-            <div class="modal-body">
-                <div class="form-group form-row">
-                    <label class="col-md-3 form-control-label">
-                        {__("Documents")}
-                    </label>
-                    <div class="col-sm-9">
-                        <div class="row">
-                            <div class="col-sm-6">
-                                <div class="section-title mb20">
-                                    <i class="fas fa-passport mr10"></i>{__("Personal Photo")}
-                                </div>
-                                <a target="_blank" href="{literal}{{photo}}{/literal}">
-                                    <img class="img-fluid" src="{literal}{{photo}}{/literal}">
-                                </a>
-                            </div>
-                            <div class="col-sm-6">
-                                <div class="section-title mb20">
-                                    <i class="fas fa-passport mr10"></i>{__("Passport or National ID")}
-                                </div>
-                                <a target="_blank" href="{literal}{{passport}}{/literal}">
-                                    <img class="img-fluid" src="{literal}{{passport}}{/literal}">
-                                </a>
-                            </div>
+    <div class="modal-header">
+        <h6 class="modal-title"><i class="fa fa-paperclip mr5"></i>{__("Verification Documents")}</h6>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+    <div class="modal-body">
+        <div class="form-group form-row">
+            <label class="col-md-3 form-control-label">
+                {__("Documents")}
+            </label>
+            <div class="col-sm-9">
+                <div class="row">
+                    <div class="col-sm-6">
+                        <div class="section-title mb20">
+                            <i class="fas fa-passport mr10"></i>{__("Personal Photo")}
                         </div>
+                        <a target="_blank" href="{literal}{{photo}}{/literal}">
+                            <img class="img-fluid" src="{literal}{{photo}}{/literal}">
+                        </a>
                     </div>
-                </div>
-                <div class="form-group form-row">
-                    <label class="col-md-3 form-control-label">
-                        {__("Message")}
-                    </label>
-                    <div class="col-sm-9">
-                        <p class="pt5 pb0">{literal}{{message}}{/literal}</p>
+                    <div class="col-sm-6">
+                        <div class="section-title mb20">
+                            <i class="fas fa-passport mr10"></i>{__("Passport or National ID")}
+                        </div>
+                        <a target="_blank" href="{literal}{{passport}}{/literal}">
+                            <img class="img-fluid" src="{literal}{{passport}}{/literal}">
+                        </a>
                     </div>
                 </div>
             </div>
-            <div class="modal-footer">
-                <button class="btn btn-danger js_admin-unverify" data-id="{literal}{{request-id}}{/literal}">
-                    <i class="fa fa-times mr5"></i>{__("Decline")}
-                </button>
-                <button class="btn btn-success js_admin-verify" data-handle="{literal}{{handle}}{/literal}" data-id="{literal}{{node-id}}{/literal}">
-                    <i class="fa fa-check mr5"></i>{__("Verify")}
-                </button>
+        </div>
+        <div class="form-group form-row">
+            <label class="col-md-3 form-control-label">
+                {__("Message")}
+            </label>
+            <div class="col-sm-9">
+                <p class="pt5 pb0">{literal}{{message}}{/literal}</p>
             </div>
-        </script>
+        </div>
+    </div>
+    <div class="modal-footer">
+        <button class="btn btn-danger js_admin-unverify" data-id="{literal}{{request-id}}{/literal}">
+            <i class="fa fa-times mr5"></i>{__("Decline")}
+        </button>
+        <button class="btn btn-success js_admin-verify" data-handle="{literal}{{handle}}{/literal}" data-id="{literal}{{node-id}}{/literal}">
+            <i class="fa fa-check mr5"></i>{__("Verify")}
+        </button>
+    </div>
+</script>
 {/if}
 <!-- Verification Documents -->
 
@@ -1837,11 +1865,10 @@
                         <!-- error -->
                     </div>
                     <div class="modal-footer">
-                        <button type="button" class="btn btn-light dltButton" data-dismiss="modal">{__("Cancel")}</button>
+                        <button type="button" id="btnCancelbankTransfer" class="btn btn-light dltButton" data-dismiss="modal">{__("Cancel")}</button>
                         <button type="button" id="bankTransferSubmit" class="btn btn-success">{__("Continue")}</button>
                     </div>
                 </form>
-                
             </div>
         </div>
     </div>
@@ -1857,8 +1884,8 @@
     </div>
     <div class="modal-body text-center">
     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-    <span aria-hidden="true">&times;</span>
-</button>
+        <span aria-hidden="true">&times;</span>
+    </button>
         <div class="row justify-content-center" style="margin-left: -5px; margin-right: -5px;">
             {if $system['paypal_enabled']}
                 <div class="col-12 col-sm-4 plr5">
@@ -1953,192 +1980,192 @@
 <!-- 2Checkout -->
 {if $system['2checkout_enabled']}
 <script id="twocheckout" type="text/template">
-                <div class="modal-header">
-                    <h6 class="modal-title">{include file='__svg_icons.tpl' icon="2co" width="20px" height="20px" class="mr5"}{__("2Checkout")}</h6>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
+    <div class="modal-header">
+        <h6 class="modal-title">{include file='__svg_icons.tpl' icon="2co" width="20px" height="20px" class="mr5"}{__("2Checkout")}</h6>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+    <form id="twocheckout_form">
+        <div class="modal-body">
+            <div class="heading-small mb20">
+                {__("Card Info")}
+            </div>
+            <div class="pl-md-4 pr-md-4">
+                <div class="row">
+                    <div class="form-group col-md-12">
+                        <label class="form-control-label">{__("Card Number")}</label>
+                        <input name="card_number" type="text" class="form-control" required autocomplete="off">
+                    </div>
+                    <div class="form-group col-md-4">
+                        <label class="form-control-label">{__("Exp Month")}</label>
+                        <select name="card_exp_month" class="form-control" required>
+                            {for $i=1 to 12}
+                                <option value="{if $i < 10}0{/if}{$i}">{if $i < 10}0{/if}{$i}</option>
+                            {/for}
+                        </select>
+                    </div>
+                    <div class="form-group col-md-4">
+                        <label class="form-control-label">{__("Exp Year")}</label>
+                        <select name="card_exp_year" class="form-control" required>
+                            {for $i=2020 to 2035}
+                                <option value="{$i}">{$i}</option>
+                            {/for}
+                        </select>
+                    </div>
+                    <div class="form-group col-md-4">
+                        <label class="form-control-label">{__("CVC")}</label>
+                        <input name="card_cvv" type="text" class="form-control" required autocomplete="off">
+                    </div>
                 </div>
-                <form id="twocheckout_form">
-                    <div class="modal-body">
-                        <div class="heading-small mb20">
-                            {__("Card Info")}
-                        </div>
-                        <div class="pl-md-4 pr-md-4">
-                            <div class="row">
-                                <div class="form-group col-md-12">
-                                    <label class="form-control-label">{__("Card Number")}</label>
-                                    <input name="card_number" type="text" class="form-control" required autocomplete="off">
-                                </div>
-                                <div class="form-group col-md-4">
-                                    <label class="form-control-label">{__("Exp Month")}</label>
-                                    <select name="card_exp_month" class="form-control" required>
-                                        {for $i=1 to 12}
-                                            <option value="{if $i < 10}0{/if}{$i}">{if $i < 10}0{/if}{$i}</option>
-                                        {/for}
-                                    </select>
-                                </div>
-                                <div class="form-group col-md-4">
-                                    <label class="form-control-label">{__("Exp Year")}</label>
-                                    <select name="card_exp_year" class="form-control" required>
-                                        {for $i=2020 to 2035}
-                                            <option value="{$i}">{$i}</option>
-                                        {/for}
-                                    </select>
-                                </div>
-                                <div class="form-group col-md-4">
-                                    <label class="form-control-label">{__("CVC")}</label>
-                                    <input name="card_cvv" type="text" class="form-control" required autocomplete="off">
-                                </div>
-                            </div>
-                        </div>
-                        <div class="heading-small mb20">
-                            {__("Billing Information")}
-                        </div>
-                        <div class="pl-md-4 pr-md-4">
-                            <div class="row">
-                                <div class="form-group col-md-6">
-                                    <label class="form-control-label">{__("Name")}</label>
-                                    <input name="billing_name" type="text" class="form-control" required value="{$user->_data['user_firstname']} {$user->_data['user_lastname']}">
-                                </div>
-                                <div class="form-group col-md-6">
-                                    <label class="form-control-label">{__("Email")}</label>
-                                    <input name="billing_email" type="email" class="form-control" required value="{$user->_data['user_email']}">
-                                </div>
-                                <div class="form-group col-md-6">
-                                    <label class="form-control-label">{__("Phone")}</label>
-                                    <input name="billing_phone" type="text" class="form-control" required value="{$user->_data['user_phone']}">
-                                </div>
-                                <div class="form-group col-md-6">
-                                    <label class="form-control-label">{__("Address")}</label>
-                                    <input name="billing_address" type="text" class="form-control required">
-                                </div>
-                                <div class="form-group col-md-6">
-                                    <label class="form-control-label">{__("City")}</label>
-                                    <input name="billing_city" type="text" class="form-control" required>
-                                </div>
-                                <div class="form-group col-md-6">
-                                    <label class="form-control-label">{__("State")}</label>
-                                    <input name="billing_state" type="text" class="form-control" required>
-                                </div>
-                                <div class="form-group col-md-6">
-                                    <label class="form-control-label">{__("Country")}</label>
-                                    <select name="billing_country" class="form-control" required>
-                                        <option value="none">{__("Select Country")}</option>
-                                        {foreach $countries as $country}
-                                            <option {if $user->_data['user_country'] == $country['country_id']}selected{/if} value="{$country['country_name']}">{$country['country_name']}</option>
-                                        {/foreach}
-                                    </select>
-                                </div>
-                                <div class="form-group col-md-6">
-                                    <label class="form-control-label">{__("Zip Code")}</label>
-                                    <input name="billing_zip_code" type="text" class="form-control" required>
-                                </div>
-                            </div>
-                        </div>
+            </div>
+            <div class="heading-small mb20">
+                {__("Billing Information")}
+            </div>
+            <div class="pl-md-4 pr-md-4">
+                <div class="row">
+                    <div class="form-group col-md-6">
+                        <label class="form-control-label">{__("Name")}</label>
+                        <input name="billing_name" type="text" class="form-control" required value="{$user->_data['user_firstname']} {$user->_data['user_lastname']}">
+                    </div>
+                    <div class="form-group col-md-6">
+                        <label class="form-control-label">{__("Email")}</label>
+                        <input name="billing_email" type="email" class="form-control" required value="{$user->_data['user_email']}">
+                    </div>
+                    <div class="form-group col-md-6">
+                        <label class="form-control-label">{__("Phone")}</label>
+                        <input name="billing_phone" type="text" class="form-control" required value="{$user->_data['user_phone']}">
+                    </div>
+                    <div class="form-group col-md-6">
+                        <label class="form-control-label">{__("Address")}</label>
+                        <input name="billing_address" type="text" class="form-control required">
+                    </div>
+                    <div class="form-group col-md-6">
+                        <label class="form-control-label">{__("City")}</label>
+                        <input name="billing_city" type="text" class="form-control" required>
+                    </div>
+                    <div class="form-group col-md-6">
+                        <label class="form-control-label">{__("State")}</label>
+                        <input name="billing_state" type="text" class="form-control" required>
+                    </div>
+                    <div class="form-group col-md-6">
+                        <label class="form-control-label">{__("Country")}</label>
+                        <select name="billing_country" class="form-control" required>
+                            <option value="none">{__("Select Country")}</option>
+                            {foreach $countries as $country}
+                                <option {if $user->_data['user_country'] == $country['country_id']}selected{/if} value="{$country['country_name']}">{$country['country_name']}</option>
+                            {/foreach}
+                        </select>
+                    </div>
+                    <div class="form-group col-md-6">
+                        <label class="form-control-label">{__("Zip Code")}</label>
+                        <input name="billing_zip_code" type="text" class="form-control" required>
+                    </div>
+                </div>
+            </div>
 
-                        <!-- error -->
-                        <div class="alert alert-danger mb0 x-hidden"></div>
-                        <!-- error -->
-                    </div>
-                    <div class="modal-footer">
-                        <input type="hidden" name="token" value="" />
-                        <input type="hidden" name="handle" value="{literal}{{handle}}{/literal}">
-                        <input type="hidden" name="package_id" value="{literal}{{id}}{/literal}">
-                        <input type="hidden" name="price" value="{literal}{{price}}{/literal}">
-                        <button type="button" class="btn btn-light" data-dismiss="modal">{__("Cancel")}</button>
-                        <button type="submit" class="btn btn-success btn-antier-green"><i class="fa fa-check-circle mr10"></i>{__("Pay")}</button>
-                    </div>
-                </form>
-            </script>
+            <!-- error -->
+            <div class="alert alert-danger mb0 x-hidden"></div>
+            <!-- error -->
+        </div>
+        <div class="modal-footer">
+            <input type="hidden" name="token" value="" />
+            <input type="hidden" name="handle" value="{literal}{{handle}}{/literal}">
+            <input type="hidden" name="package_id" value="{literal}{{id}}{/literal}">
+            <input type="hidden" name="price" value="{literal}{{price}}{/literal}">
+            <button type="button" class="btn btn-light" data-dismiss="modal">{__("Cancel")}</button>
+            <button type="submit" class="btn btn-success btn-antier-green"><i class="fa fa-check-circle mr10"></i>{__("Pay")}</button>
+        </div>
+    </form>
+</script>
 {/if}
 <!-- 2Checkout -->
 
 <!-- Bank Transfer -->
 {if $system['bank_transfers_enabled']}
 <script id="bank-transfer" type="text/template">
-                <div class="modal-header">
-                    <h6 class="modal-title"><i class="fa fa-university mr5"></i>{__("Bank Transfer")}</h6>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
+    <div class="modal-header">
+        <h6 class="modal-title"><i class="fa fa-university mr5"></i>{__("Bank Transfer")}</h6>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+    <form class="js_ajax-forms bank_transfers_enabled-js-template-form" data-url="payments/bank.php">
+        <div class="modal-body">
+            <div class="page-header rounded bank-transfer mb30">
+                <div class="circle-1"></div>
+                <div class="circle-2"></div>
+                <div class="inner text-left">
+                    <h2 class="mb20"><i class="fa fa-university mr5"></i>{$system['bank_name']}</h2>
+                    <div class="mb10">
+                        <div class="bank-info-meta">{$system['bank_account_number']}</div>
+                        <span class="bank-info-help">{__("Account Number / IBAN")}</span>
+                    </div>
+                    <div class="mb10">
+                        <div class="bank-info-meta">{$system['bank_account_name']}</div>
+                        <span class="bank-info-help">{__("Account Name")}</span>
+                    </div>
+                    <div class="row mb10">
+                        <div class="col-md-6">
+                            <div class="bank-info-meta">{$system['bank_account_routing']}</div>
+                            <span class="bank-info-help">{__("Routing Code")}</span>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="bank-info-meta">{$system['bank_account_country']}</div>
+                            <span class="bank-info-help">{__("Country")}</span>
+                        </div>
+                    </div>
                 </div>
-                <form class="js_ajax-forms bank_transfers_enabled-js-template-form" data-url="payments/bank.php">
-                    <div class="modal-body">
-                        <div class="page-header rounded bank-transfer mb30">
-                            <div class="circle-1"></div>
-                            <div class="circle-2"></div>
-                            <div class="inner text-left">
-                                <h2 class="mb20"><i class="fa fa-university mr5"></i>{$system['bank_name']}</h2>
-                                <div class="mb10">
-                                    <div class="bank-info-meta">{$system['bank_account_number']}</div>
-                                    <span class="bank-info-help">{__("Account Number / IBAN")}</span>
-                                </div>
-                                <div class="mb10">
-                                    <div class="bank-info-meta">{$system['bank_account_name']}</div>
-                                    <span class="bank-info-help">{__("Account Name")}</span>
-                                </div>
-                                <div class="row mb10">
-                                    <div class="col-md-6">
-                                        <div class="bank-info-meta">{$system['bank_account_routing']}</div>
-                                        <span class="bank-info-help">{__("Routing Code")}</span>
-                                    </div>
-                                    <div class="col-md-6">
-                                        <div class="bank-info-meta">{$system['bank_account_country']}</div>
-                                        <span class="bank-info-help">{__("Country")}</span>
-                                    </div>
-                                </div>
+            </div>
+            <div class="alert alert-warning">
+                <div class="icon">
+                    <i class="fa fa-exclamation-triangle fa-2x"></i>
+                </div>
+                <div class="text">
+                    {$system['bank_transfer_note']}
+                </div>
+            </div>
+            <div class="form-group form-row">
+                <label class="col-md-3 form-control-label">
+                    {__("Bank Receipt")}
+                </label>
+                <div class="col-md-9">
+                    <div class="x-image">
+                        <button type="button" class="close x-hidden js_x-image-remover" title='{__("Remove")}'>
+                            <span>×</span>
+                        </button>
+                        <div class="x-image-loader">
+                            <div class="progress x-progress">
+                                <div class="progress-bar" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100"></div>
                             </div>
                         </div>
-                        <div class="alert alert-warning">
-                            <div class="icon">
-                                <i class="fa fa-exclamation-triangle fa-2x"></i>
-                            </div>
-                            <div class="text">
-                                {$system['bank_transfer_note']}
-                            </div>
-                        </div>
-                        <div class="form-group form-row">
-                            <label class="col-md-3 form-control-label">
-                                {__("Bank Receipt")}
-                            </label>
-                            <div class="col-md-9">
-                                <div class="x-image">
-                                    <button type="button" class="close x-hidden js_x-image-remover" title='{__("Remove")}'>
-                                        <span>×</span>
-                                    </button>
-                                    <div class="x-image-loader">
-                                        <div class="progress x-progress">
-                                            <div class="progress-bar" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100"></div>
-                                        </div>
-                                    </div>
-                                    <i class="fa fa-camera fa-lg js_x-uploader" data-handle="x-image"></i>
-                                    <input type="hidden" class="js_x-image-input" name="bank_receipt" value="">
+                        <i class="fa fa-camera fa-lg js_x-uploader" data-handle="x-image"></i>
+                        <input type="hidden" class="js_x-image-input" name="bank_receipt" value="">
 
-                                </div>
-                                <span class="form-text">
-                                    {__("Please attach your bank receipt")}
-                                </span>
-                            </div>
-                        </div>
-
-                        <!-- success -->
-                        <div class="alert alert-success mb0 x-hidden"></div>
-                        <!-- success -->
-
-                        <!-- error -->
-                        <div class="alert alert-danger mb0 x-hidden"></div>
-                        <!-- error -->
                     </div>
-                    <div class="modal-footer">
-                        <input type="hidden" name="handle" value="{literal}{{handle}}{/literal}">
-                        <input type="hidden" name="package_id" value="{literal}{{id}}{/literal}">
-                        <input type="hidden" name="price" value="{literal}{{price}}{/literal}">
-                        <button type="button" class="btn btn-light" data-dismiss="modal">{__("Cancel")}</button>
-                        <button type="submit" class="btn btn-success btn-antier-green"><i class="fa fa-check-circle mr10"></i>{__("Send")}</button>
-                    </div>
-                </form>
-            </script>
+                    <span class="form-text">
+                        {__("Please attach your bank receipt")}
+                    </span>
+                </div>
+            </div>
+
+            <!-- success -->
+            <div class="alert alert-success mb0 x-hidden"></div>
+            <!-- success -->
+
+            <!-- error -->
+            <div class="alert alert-danger mb0 x-hidden"></div>
+            <!-- error -->
+        </div>
+        <div class="modal-footer">
+            <input type="hidden" name="handle" value="{literal}{{handle}}{/literal}">
+            <input type="hidden" name="package_id" value="{literal}{{id}}{/literal}">
+            <input type="hidden" name="price" value="{literal}{{price}}{/literal}">
+            <button type="button" class="btn btn-light" data-dismiss="modal">{__("Cancel")}</button>
+            <button type="submit" class="btn btn-success btn-antier-green"><i class="fa fa-check-circle mr10"></i>{__("Send")}</button>
+        </div>
+    </form>
+</script>
 {/if}
 <!-- Bank Transfer -->
 <!-- Bank Transfer -->

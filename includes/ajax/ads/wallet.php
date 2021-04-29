@@ -25,9 +25,12 @@ try {
 			// return
 			return_json( array('callback' => 'window.location = site_path + "/wallet?transfer_succeed"') );
 		break;
-
+		
 		case 'wallet_transfer_to_bank':
 			// process
+			if(!isset($_POST['transaction_id']) || empty($_POST['transaction_id'])){
+				return_json( array('messages' => "Transaction Id is Required", 'responseType' => "error") );
+			}
 			if(isset($_POST['request_id']) && $_POST['request_id'] > 0){
 				$message = $user->bank_transfer($_POST, 'approve');
 
@@ -38,6 +41,19 @@ try {
 
 		break;
 
+		case 'wallet_transfer_to_bank_disapprove':
+			// process
+			if(!isset($_POST['comments']) || empty($_POST['comments'])){
+				return_json( array('messages' => "Please add Some Comments", 'responseType' => "error") );
+			}
+			if(isset($_POST['request_id']) && $_POST['request_id'] > 0){
+				$message = $user->bank_transfer($_POST, 'disapprove');
+				return_json( array('messages' => $message, 'responseType' => "success") );
+			}else{
+				return_json( array('messages' => "Something went Wrong!", 'responseType' => "error") );
+			}
+
+		break;
 		case 'bank_withdrawl':
 			// valid inputs 
 			if(!isset($_POST['amount']) || !is_numeric($_POST['amount'])) {

@@ -249,6 +249,9 @@ function button_status(e, t) {
                             element.find("#paymentFailed").hide();
                             element.find("#paymentSuccess").show();
                             element.find("#paymentSuccess").html(response.messages);
+                            setTimeout(function(){
+                                element.find(".dltButton").trigger( "click" );
+                            }, 2500);
                         }else{
                             element.find("#paymentSuccess").hide();
                             element.find("#paymentFailed").show();
@@ -782,36 +785,6 @@ function button_status(e, t) {
         $('.js_dataTables').DataTable( {
             "order": []
         } );
-        // $('form').validate({
-        //     rules: {
-        //         bank_name: {required:true, minlength:2},
-        //         acc_number: {required:true, minlength:2},
-        //     },      
-        //     messages: {
-        //         bank_name: {required: "Enter Your Bank Name!"},
-        //         acc_number: {required: "Enter Your Bank Account Number"}                        
-        //     },
-    
-        //     errorPlacement: function(error, element) {
-        //     if(element.attr('name') == 'bank_name'){
-        //         $('#bank_name').html(error);                
-        //      }
-        //      if(element.attr('name') == 'acc_number'){
-        //         $('#acc_number').html(error);                
-        //      }
-        //     },
-        //     success: function(label){
-        //         label.addClass("valid").text("Ok!");      
-        //     },
-        //     debug:true
-        // });
-        // $('body .modal form#bank-transfer-money input').blur(function(){
-        //     console.log("Asfff")
-        //     var thisform = $('form#bank-transfer-money');
-        //     if (thisform.valid()) {
-        //         thisform.find("body .modal button#bankTransferSubmit").prop("disabled", false)
-        //     }
-        // });
     } );
     $(document).on("click", "body .modal button#bankTransferSubmit", function () {
         var form = $("body .modal form#bank-transfer-money");
@@ -823,6 +796,9 @@ function button_status(e, t) {
                     $("body #wallet-error-message").addClass("x-hidden");
                     $("body #wallet-success-message").removeClass("x-hidden");
                     $("body #wallet-success-message").html(res.message).show();
+                    setTimeout(function(){
+                        $( "body #btnCancelbankTransfer" ).trigger( "click" );
+                    }, 2500);
                 }else{
                     $("body #wallet-success-message").addClass("x-hidden");
                     $("body #wallet-error-message").removeClass("x-hidden");

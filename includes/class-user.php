@@ -14505,13 +14505,24 @@ class User
      * @param array $_POST
      * @return void
      */
-    public function bank_transfer($data)
+    public function bank_transfer($data, $status)
     {
-        global $db, $system;
+        global $db, $date;
         if (is_empty($data['request_id']) || !is_numeric($data['request_id'])) {
             return "Data is not Valid for transfer";
         }
-        return $data['request_id'];
+        if($status !== 'approve' && $data['comments'] == ""){
+            return "Please Add Comments.";
+        }
+        $statusCode = 2;
+        if($status === "approve"){
+            $statusCode = 1;
+        }
+
+        $chargeQuery = sprintf("UPDATE bank_withdrawl_transactions SET transaction_id = %s, status = %s, approved_by = %s, reason = %s, status_updated = %s WHERE id = %s", secure($data['transaction_id']), secure($statusCode, 'int'), secure($this->_data['user_id'], 'int'), secure($data['comments']), secure($date), secure($data['request_id'], int));
+        $db->query($chargeQuery) or _error("SQL_ERROR_THROWEN");
+
+        return "Success";
     }
 /* ------------------------------- */
     /* Wallet */
@@ -14715,6 +14726,7 @@ class User
                 $transactions[] = $transaction;
             }
         }
+       //echo "<pre>";print_r($transactions);die;
         return $transactions;
     }
 

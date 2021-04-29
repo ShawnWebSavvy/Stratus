@@ -26,9 +26,14 @@ if (!empty($_POST["bank_name"])) {
                 $db->query(sprintf("INSERT INTO bank_withdrawl (`user_id`, `bank_name`, `acc_number`, `acc_name`, `swift_code`, `country`, `saved`) VALUES (%s, %s, %s, %s, %s, %s, %s)", secure($user->_data['user_id'], 'int'), secure($_POST["bank_name"]), secure($_POST["acc_number"]), secure($_POST["acc_name"]), secure($_POST["swift_code"]), secure($_POST["country"]), secure($_POST["saveBank"], 'int'))) or _error("SQL_ERROR_THROWEN");
             }
         }
-
+ 
         $addTrans = sprintf("INSERT INTO `bank_withdrawl_transactions`( `user_id`, `bank_name`, `acc_number`, `acc_name`, `swift_code`, `country`, `amount`) VALUES (%s, %s, %s, %s, %s, %s, %s)", secure($user->_data['user_id'], 'int'), secure($_POST["bank_name"]), secure($_POST["acc_number"]), secure($_POST["acc_name"]), secure($_POST["swift_code"]), secure($_POST["country"]), secure($_SESSION['bank_withdrawl']));
         $db->query($addTrans) or _error("SQL_ERROR_THROWEN");
+
+        $chargeQuery = sprintf("UPDATE users SET user_wallet_balance = user_wallet_balance - %s WHERE user_id = %s", secure($_SESSION['bank_withdrawl']), secure($user->_data['user_id'], 'int'));
+        $db->query($chargeQuery) or _error("SQL_ERROR_THROWEN");
+
+        $user->wallet_set_transaction($user->_data['user_id'], 'bank_withdrawal', 0, $_SESSION['bank_withdrawl'], 'out');
 
         echo json_encode(array("message"=>"Your Request is submit and under review", "response"=>"success"));
         exit;

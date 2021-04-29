@@ -221,10 +221,8 @@ $(function () {
     $('body').on('click', '.js_admin-pay_disapprove', function () {
         var id = $(this).data('id');
         var user_id = $(this).data('user_id');
-        console.log(user_id);
-        console.log(id);
         confirm(__['Decline'], __['Are you sure you want to decline this request?'], function () {
-            
+            modal('#bank-withdrawal_admin_refuse', { 'userId': user_id, 'request_id': id });
         });
     });
 

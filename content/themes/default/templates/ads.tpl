@@ -968,6 +968,8 @@
                                                     {__("Buy Video Hub Package")}
                                                     {elseif $transaction['node_type'] == "package_payment"}
                                                     {__("Buy Pro Package")}
+                                                    {elseif $transaction['node_type'] == "bank_withdrawal"}
+                                                        {__("Withdrawal to Bank ")}
                                                     {/if}
                                                 </td>
                                                 <td><span class="js_moment"

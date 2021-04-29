@@ -15,6 +15,7 @@
                         <th>{__("Amount Requested")}</th>
                         <th>{__("Available Balance")}</th>
                         <th>{__("Status")}</th>
+                        <th>{__("Reason")}</th>
                         <th>{__("Actions")}</th>
                     </tr>
                 </thead>
@@ -47,10 +48,13 @@
                                 {/if}
                             </td>
                             <td>
-                                <button data-toggle="tooltip" data-placement="top" title='{__("Approve")}' class="btn btn-sm btn-icon btn-rounded js_admin-pay_approve" data-user_id="{$row['user_id']}" data-url="#bank-withdrawl" data-id="{$row['id']}">
+                                {$row['reason']}
+                            </td>
+                            <td>
+                                <button data-toggle="tooltip" data-placement="top" title='{__("Approve")}' class="btn btn-sm btn-icon btn-rounded js_admin-pay_approve" data-user_id="{$row['user_id']}" data-id="{$row['id']}">
                                     <i class="fa fa-check"></i>
                                 </button>
-                                <button data-toggle="tooltip" data-placement="top" title='{__("Decline")}' class="btn btn-sm btn-icon btn-rounded js_admin-pay_disapproves" data-user_id="{$row['user_id']}" data-id="{$row['id']}">
+                                <button data-toggle="tooltip" data-placement="top" title='{__("Decline")}' class="btn btn-sm btn-icon btn-rounded js_admin-pay_disapprove" data-user_id="{$row['user_id']}" data-id="{$row['id']}">
                                     <i class="fa fa-times" aria-hidden="true"></i>
                                 </button>
                             </td>
