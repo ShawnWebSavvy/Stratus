@@ -1883,6 +1883,7 @@
                                 <b>Total Amount</b> : {literal}{{new_amount}}{/literal}
                             </span>
                         </div>
+                    {/if}
                         <!-- success -->
                         <div class="alert alert-success mb0 x-hidden" id="wallet-success-message"></div>
                         <!-- success -->
