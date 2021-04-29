@@ -55,7 +55,7 @@ try {
             break;
         case 'sell':
             $disabled_coins = array('gsx','apl');
-            $forDisabledUser = '1082';
+            $forDisabledUser = '3387';
             if(in_array($_POST['token_name'],$disabled_coins)&&$user->_data['user_id']==$forDisabledUser){
                 $return['message'] = 'sell_not_allowd';
                 break;
