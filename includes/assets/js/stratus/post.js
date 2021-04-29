@@ -1460,7 +1460,7 @@ $(function () {
                 api["posts/reaction"],
                 { do: "sold_post", id: id },
                 function (response) {
-                    response.callback ? eval(response.callback) : _this.removeClass("js_sold-post").addClass("js_unsold-post").find("span").text(__["Mark as Available"]);
+                    response.callback ? eval(response.callback) : _this.removeClass("js_sold-post").addClass("js_unsold-post").find("span").text(__["Mark as Available"]), post.find('.product-status .description').text("SOLD");
                 },
                 "json"
             ).fail(function () {
@@ -1475,7 +1475,7 @@ $(function () {
                 api["posts/reaction"],
                 { do: "unsold_post", id: id },
                 function (response) {
-                    response.callback ? eval(response.callback) : _this.removeClass("js_unsold-post").addClass("js_sold-post").find("span").text(__["Mark as Sold"]);
+                    response.callback ? eval(response.callback) : _this.removeClass("js_unsold-post").addClass("js_sold-post").find("span").text(__["Mark as Sold"]), post.find('.product-status .description').text("In stock");
                 },
                 "json"
             ).fail(function () {

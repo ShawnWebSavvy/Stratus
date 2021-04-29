@@ -994,7 +994,7 @@
                         {/if}
                     </div>
                 </div>
-                <div class="post-product-details">
+                <div class="post-product-details product-status">
                     <div class="title">
                         <i class="fa fa-box fa-fw mr5" style="color: #a038b2;"></i>{__("Status")}
                     </div>
