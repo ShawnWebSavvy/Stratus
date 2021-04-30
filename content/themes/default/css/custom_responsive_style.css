@@ -536,7 +536,6 @@ div.dataTables_wrapper div.dataTables_paginate ul.pagination{justify-content:cen
 .profile_name_sec .profile-buttons-wrapper{justify-content:center}
 .walletIconMoneyText{width:auto;height:250px}
 .walletIconMoneyAmount{bottom: 76px;}
-
 }
 @media (max-width:576px){.mainloginBlock .custom-control{padding-left:15px!important;display:flex;justify-content:flex-start}
 .mainloginBlock .custom-control .custom-control-input{min-width:16px}
