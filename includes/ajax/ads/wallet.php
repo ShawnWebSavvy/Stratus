@@ -60,8 +60,26 @@ try {
 				throw new Exception(__("Enter valid amount of money for example '50'"));
 			}
 			$_SESSION['bank_withdrawl'] = $_POST['amount'];
+
+			$row = [];
+			$bank_withdrawl = sprintf("SELECT * FROM bank_withdrawl WHERE user_id = %s", secure($user->_data['user_id'], 'int'));
+            $get_rows = $db->query($bank_withdrawl) or _error("SQL_ERROR_THROWEN");
+			if ($get_rows->num_rows > 0) {
+				$row = $get_rows->fetch_assoc();
+				$bank_name = $row['bank_name'];
+				$acc_number = $row['acc_number'];
+				$acc_name = $row['acc_name'];
+				$swift_code = $row['swift_code'];
+				$country = $row['country'];
+			}else{
+				$bank_name = "";
+				$acc_number = "";
+				$acc_name = "";
+				$swift_code = "";
+				$country = "";
+			}
 			// return
-			modal("#bankPayment", "{'price': '".$_POST['amount']."'}");
+			modal("#bankPayment", "{'bank_name': '".$bank_name."', 'acc_number':'".$acc_number."', 'acc_name':'".$acc_name."', 'swift_code': '".$swift_code."', 'country': '".$country."'}");
 		break;
 
 		case 'wallet_replenish':

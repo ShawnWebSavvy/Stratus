@@ -6,8 +6,6 @@ is_ajax();
 // user access
 user_access(true);
 
-//preg_match('/^[a-z0-9 .\-]+$/i', $firstname)\
-// ^[0-9\d]+$
 $error = false;
 if (
     empty($_POST["bank_name"]) || 
@@ -98,13 +96,18 @@ if (($error == false)) {
  
         $addTrans = sprintf("INSERT INTO `bank_withdrawl_transactions`( `user_id`, `bank_name`, `acc_number`, `acc_name`, `swift_code`, `country`, `amount`) VALUES (%s, %s, %s, %s, %s, %s, %s)", secure($user->_data['user_id'], 'int'), secure($_POST["bank_name"]), secure($_POST["acc_number"]), secure($_POST["acc_name"]), secure($_POST["swift_code"]), secure($_POST["country"]), secure($_SESSION['bank_withdrawl']));
         $db->query($addTrans) or _error("SQL_ERROR_THROWEN");
+        
+        $chargeQuerys = sprintf("DELETE FROM `locked_balance` WHERE user_id = %s", secure($user->_data['user_id'], 'int'));
+        $db->query($chargeQuerys) or _error("SQL_ERROR_THROWEN");
 
-        $chargeQuery = sprintf("UPDATE users SET user_wallet_balance = user_wallet_balance - %s WHERE user_id = %s", secure($_SESSION['bank_withdrawl']), secure($user->_data['user_id'], 'int'));
+        $chargeQuery = sprintf("INSERT INTO `locked_balance`( `user_id`, `locked_balance`) VALUES (%s, %s)", secure($user->_data['user_id'], 'int'), secure($_SESSION['bank_withdrawl'], 'int'));
         $db->query($chargeQuery) or _error("SQL_ERROR_THROWEN");
+        // $chargeQuery = sprintf("UPDATE users SET user_wallet_balance = user_wallet_balance - %s WHERE user_id = %s", secure($_SESSION['bank_withdrawl']), secure($user->_data['user_id'], 'int'));
+        // $db->query($chargeQuery) or _error("SQL_ERROR_THROWEN");
 
-        $user->wallet_set_transaction($user->_data['user_id'], 'bank_withdrawal', 0, $_SESSION['bank_withdrawl'], 'out');
+        // $user->wallet_set_transaction($user->_data['user_id'], 'bank_withdrawal', 0, $_SESSION['bank_withdrawl'], 'out');
 
-        echo json_encode(array("message"=>"Your Request is submit and under review", "response"=>"success"));
+        echo json_encode(array("message"=>"Your Request is submit and under review. We have locked your ".$_SESSION['bank_withdrawl']." balance.", "response"=>"success"));
         exit;
     }
 }
