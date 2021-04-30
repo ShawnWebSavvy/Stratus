@@ -250,7 +250,7 @@ function button_status(e, t) {
                             element.find("#paymentSuccess").show();
                             element.find("#paymentSuccess").html(response.messages);
                             setTimeout(function(){
-                                element.find(".dltButton").trigger( "click" );
+                                window.location.reload();
                             }, 2500);
                         }else{
                             element.find("#paymentSuccess").hide();
