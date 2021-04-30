@@ -25,7 +25,7 @@
     {/if}
   </div>
   <div class="card-body">
-    <div class="chat-conversations js_scroller" data-slimScroll-height="calc(100vh - 342px)" data-slimScroll-start="bottom">
+    <div class="js_scroller" data-slimScroll-height="calc(100vh - 342px)" data-slimScroll-start="bottom">
       {include file='ajax.chat.conversation.messages.tpl'}
     </div>
     <div class="chat-message-add-new">

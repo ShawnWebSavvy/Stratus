@@ -157,6 +157,7 @@ body.publisher-focus .custom_modal_style.customModalAddPhoto {top: 50%;transform
 .mobileCloseButton .close{opacity: 1;line-height: normal;font-size: 0;padding: 0;}
 .profile_name_sec .eventBtnActions .profile-buttons-wrapper button:last-child{max-width: unset;}
 .blogActionButton {display: flex;align-items: center;}
+.blogActionButton a{margin-right: 5px;}
 
 @media(min-width:1680px){.home-page-middel-block .desk_chg{flex:0 0 calc(100% / 6)!important;max-width:calc(100% / 6)!important}
 }
