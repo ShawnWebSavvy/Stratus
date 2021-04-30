@@ -14494,8 +14494,18 @@ class User
         return $results;
     }
 
-
-/* ------------------------------- */
+    public function getLockedBalance($userId){
+        global $db, $date;
+        $bank_withdrawl_transactions = "SELECT locked_balance.*, users.user_wallet_balance FROM `locked_balance` JOIN users On locked_balance.user_id = users.user_id WHERE locked_balance.user_id = ".$userId;
+        $get_rows = $db->query($bank_withdrawl_transactions) or _error("SQL_ERROR_THROWEN");
+        if ($get_rows->num_rows > 0) {
+            $result = $get_rows->fetch_assoc();
+            return $result['locked_balance'];
+        }else{
+            return 0;
+        }
+    }
+    /* ------------------------------- */
     /* Wallet */
     /* ------------------------------- */
 
