@@ -14788,7 +14788,7 @@ class User
         global $db;
         $transactions = [];
         $coin_full_name = array('btc'=>'Bitcoin','eth'=>'Ethereum','apl'=>'Apollo','gsx'=>'Gold Secure Currency');
-        $get_transactions = $db->query(sprintf("SELECT ads_users_wallet_transactions.*,investment_transactions.currency,investment_transactions.tnx_type, users.user_name, users.user_firstname, users.user_lastname, users.user_gender, users.user_picture FROM ads_users_wallet_transactions LEFT JOIN investment_transactions ON ads_users_wallet_transactions.investment_id = investment_transactions.id LEFT JOIN users ON ads_users_wallet_transactions.node_type='user' AND ads_users_wallet_transactions.node_id = users.user_id  WHERE ads_users_wallet_transactions.user_id = %s ORDER BY ads_users_wallet_transactions.transaction_id DESC", secure($this->_data['user_id'], 'int'))) or _error("SQL_ERROR_THROWEN");
+        $get_transactions = $db->query(sprintf("SELECT ads_users_wallet_transactions.*,investment_transactions.currency,investment_transactions.tnx_type, users.user_name, users.user_firstname, users.user_lastname, users.user_picture_id, users.user_gender, users.user_picture, posts_photos.source as user_picture_full FROM ads_users_wallet_transactions LEFT JOIN investment_transactions ON ads_users_wallet_transactions.investment_id = investment_transactions.id LEFT JOIN users ON ads_users_wallet_transactions.node_type='user' AND ads_users_wallet_transactions.node_id = users.user_id LEFT JOIN posts_photos ON users.user_picture_id = posts_photos.photo_id   WHERE ads_users_wallet_transactions.user_id = %s ORDER BY ads_users_wallet_transactions.transaction_id DESC", secure($this->_data['user_id'], 'int'))) or _error("SQL_ERROR_THROWEN");
         if ($get_transactions->num_rows > 0) {
             while ($transaction = $get_transactions->fetch_assoc()) {
                 // print_r($transaction); die;
@@ -14796,7 +14796,8 @@ class User
                     $transaction['currency_detail'] = (($transaction['tnx_type']=='buy')?'Buy ':'Sell ').$coin_full_name[$transaction['currency']];
                 }
                 if ($transaction['node_type'] == "user") {
-                    $transaction['user_picture'] = get_picture($transaction['user_picture'], $transaction['user_gender']);
+                   // $transaction['user_picture'] = get_picture($transaction['user_picture'], $transaction['user_gender']);
+                   $transaction['user_picture'] = $system['system_url'] . '/includes/wallet-api/image-exist-api.php?userPicture=' . $transaction['user_picture'] . '&userPictureFull=' . $system['system_uploads'] . '/' . $transaction['user_picture_full'];
                 }
                 $transactions[] = $transaction;
             }
