@@ -14526,15 +14526,15 @@ class User
         if($status === "approve"){
             $statusCode = 1;
             $db->query(sprintf('UPDATE users SET user_wallet_balance = IF(user_wallet_balance-%1$s<=0,0,user_wallet_balance-%1$s) WHERE user_id = %2$s', secure($row['amount']), secure($row['user_id'], 'int'))) or _error("SQL_ERROR_THROWEN");
-            $user->wallet_set_transaction($row['user_id'], 'bank_withdrawal', 0, $row['amount'], 'out');
+            $this->wallet_set_transaction($row['user_id'], 'bank_withdrawal', 0, $row['amount'], 'out');
         }
        
         if(isset($row['user_id'])){
             $chargeQuerys = sprintf("DELETE FROM `locked_balance` WHERE user_id = %s", secure($row['user_id'], 'int'));
+            $db->query($chargeQuerys) or _error("SQL_ERROR_THROWEN");
         }
         
-        $db->query($chargeQuerys) or _error("SQL_ERROR_THROWEN");
-        $chargeQuery = sprintf("UPDATE bank_withdrawl_transactions SET transaction_id = %s, status = %s, approved_by = %s, reason = %s, status_updated = %s WHERE id = %s", secure($data['transaction_id']), secure($statusCode, 'int'), secure($this->_data['user_id'], 'int'), secure($data['comments']), secure($date), secure($data['request_id'], int));
+        $chargeQuery = sprintf("UPDATE bank_withdrawl_transactions SET `transaction_id` = %s, `status` = %s, `approved_by` = %s, `reason` = %s, `status_updated` = %s WHERE id = %s", secure($data['transaction_id']), secure($statusCode), secure($this->_data['user_id']), secure($data['comments']), secure($date), secure($data['request_id']));
         $db->query($chargeQuery) or _error("SQL_ERROR_THROWEN");
 
         // if($status == "disapprove"){
