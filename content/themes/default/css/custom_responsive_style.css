@@ -209,6 +209,8 @@ body.group-localhub .button-profile-option .btn-light i{font-size:14px}
 .profile_top_sec+.col-lg-3{-ms-flex:0 0 30%;flex:0 0 30%;max-width:30%}
 ._friend_list_items .feeds-item{max-width:calc(100% / 1);flex:0 0 calc(100% / 1)}
 .main-header .search-wrapper{margin-right:10px}
+.walletIconMoneyAmount.lockedBalance{font-size: 17px;padding: 0 6%;}
+.lockedNumbers{font-size: 12px;}
 }
 @media (max-width:1199px){.profileUpdatesDesign{padding:20px}
 .row.right-side-content-ant.mobileMessageWrap.users{flex-wrap:wrap}
@@ -363,7 +365,7 @@ body .btn._toggle_btn{position:relative!important;top:0;left:0}
 .ads_page_tables #DataTables_Table_0_wrapper .row:nth-child(3) .col-sm-12{max-width:50%;flex:0 0 50%}
 .adsWalletSidebar{width:100%;max-width:290px;padding:20px}
 .addNewCampaign{width:calc(100% - 310px)}
-.walletIconMoneyAmount{bottom:60px;left:12px}
+.walletIconMoneyAmount{bottom:69px;left:12px}
 .people-friend-list-section ._search_sec+._toggle_btn{display:none}
 ._toggle_ .right-side-content-ant .settingleftWrap{opacity:1;left:0}
 .side-nav{padding:0 10px}
@@ -465,7 +467,8 @@ body.index-localhub .post-actions .action-btn{position:static}
 ._findfriendsdiv_ .col-lg-6.col-xl-4 ul li.feeds-item{flex:0 0 calc(100% / 2);max-width:calc(100% / 2);margin-bottom:30px}
 li.open_right_sidebar_btn .open_right_sidebar.backBtn{background-color:#dbe1eb;left:-50px;top:-10px;box-shadow:none;border-color:#dbe1eb;color:#000!important}
 .btnSectionWallet button{padding:10px 30px}
-.walletIconMoneyText{width:auto;height:150px}
+.walletIconMoneyText{width:auto;height:209px}
+.walletIconMoneyAmount.lockedBalance .lockedNumbers{font-size: 12px;}
 .pagination li:first-child{width:auto!important;border:1px solid #dee2e6!important;padding-left:.75rem!important}
 #DataTables_Table_0_filter::before{z-index:9}
 #DataTables_Table_0_wrapper .col-sm-12.col-md-6{max-width:25%;flex:25%}
@@ -538,6 +541,8 @@ div.dataTables_wrapper div.dataTables_paginate ul.pagination{justify-content:cen
 .profile_name_sec{flex:0 0 100%;max-width:100%}
 .profile-name-wrapper+.profile-buttons-wrapper{margin:0 auto}
 .profile_name_sec .profile-buttons-wrapper{justify-content:center}
+.walletIconMoneyText{width:auto;height:250px}
+.walletIconMoneyAmount{bottom: 76px;}
 
 }
 @media (max-width:576px){.mainloginBlock .custom-control{padding-left:15px!important;display:flex;justify-content:flex-start}
