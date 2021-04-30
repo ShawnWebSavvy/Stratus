@@ -214,6 +214,11 @@
                                                     {__("List Admins")}
                                                 </a>
                                             </li>
+                                            <li {if $view=="users" && $sub_view=="admins" }class="active" {/if}>
+                                                <a href="{$system['system_url']}/{$control_panel['url']}/users/subadmins">
+                                                    {__("List Sub Admins")}
+                                                </a>
+                                            </li>
                                             {/if}
                                             <li {if $view=="users" && $sub_view=="moderators" }class="active" {/if}>
                                                 <a href="{$system['system_url']}/{$control_panel['url']}/users/moderators">

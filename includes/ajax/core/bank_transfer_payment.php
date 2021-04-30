@@ -5,7 +5,76 @@ is_ajax();
 
 // user access
 user_access(true);
+
+//preg_match('/^[a-z0-9 .\-]+$/i', $firstname)\
+// ^[0-9\d]+$
+$error = false;
+if (
+    empty($_POST["bank_name"]) || 
+    empty($_POST["acc_number"]) || 
+    empty($_POST["acc_name"]) || 
+    empty($_POST["swift_code"]) || 
+    empty($_POST["country"])
+) {
+    $error = true;
+    $reponseType = "error";
+    $message = "All fields are mandatory.";
+    echo json_encode(array("message"=>$message, "response"=>$reponseType));
+    exit;
+
+}
 if (!empty($_POST["bank_name"])) {
+    if(strlen($_POST['bank_name']) < 3 ){
+        $error = true;
+        echo json_encode(array("message"=>"Bank name should have at least 3 characters.", "response"=>"error"));
+        exit;
+    }
+    if(!preg_match('/^[a-z0-9 ]+$/i', trim($_POST["bank_name"]))){
+        $error = 1;
+        echo json_encode(array("message"=>"Bank name can only have alphabets and numbers.", "response"=>"error"));
+        exit;
+    }
+}
+
+if(!empty($_POST['acc_number'])){
+    if(preg_match('/^[0-9]+$', trim($_POST["acc_number"])) ) {
+        $error = true;
+        echo json_encode(array("message"=>"Account number should contain numbers only.", "response"=>"error"));
+        exit;
+    }if(strlen($_POST['acc_number']) < 8){
+        $error = true;
+        echo json_encode(array("message"=>"Account number should have at least 8 digits.", "response"=>"error"));
+        exit;
+    }
+}
+
+if (!empty($_POST["acc_name"])) {
+    if(strlen($_POST['acc_name']) < 3 ){
+        $error = true;
+        echo json_encode(array("message"=>"Account name should have at least 3 characters.", "response"=>"error"));
+        exit;
+    }
+    if(!preg_match('/^[a-z0-9 ]+$/i', trim($_POST["acc_name"]))){
+        $error = true;
+        echo json_encode(array("message"=>"Account name can only have alphabets and numbers.", "response"=>"error"));
+        exit;
+    }
+}
+
+if(!empty($_POST['swift_code'])){
+    if(preg_match('/^[0-9]+$', trim($_POST["swift_code"])) ) {
+        $error = true;
+        echo json_encode(array("message"=>"Swift Code should contain numbers only.", "response"=>"error"));
+        exit;
+    }if(strlen($_POST['swift_code']) != 9 ){
+        $error = true;
+        echo json_encode(array("message"=>"Swift Code should have only 9 digits.", "response"=>"error"));
+        exit;
+    }
+}
+
+if (($error == false)) {
+
     $bank_withdrawl_transactions = sprintf("SELECT * FROM bank_withdrawl_transactions WHERE user_id = %s and status = %s", secure($user->_data['user_id'], 'int'), secure(0, 'int'));
     $get_rows = $db->query($bank_withdrawl_transactions) or _error("SQL_ERROR_THROWEN");
     if ($get_rows->num_rows > 0) {
@@ -38,10 +107,5 @@ if (!empty($_POST["bank_name"])) {
         echo json_encode(array("message"=>"Your Request is submit and under review", "response"=>"success"));
         exit;
     }
-}else{
-    $reponseType = "error";
-    $message = "Bank Details are invalid!";
-    echo json_encode(array("message"=>$message, "response"=>$reponseType));
-    exit;
 }
 ?>

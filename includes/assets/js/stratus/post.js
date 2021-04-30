@@ -1129,7 +1129,9 @@ $(function () {
                     api["posts/filter"],
                     data,
                     function (response) {
-                        var datatta = response.data;
+                        console.log("datais");
+                        console.log(response.posts);
+                        var datatta = response.posts;
                         var ArrayVal = datatta.split('<div class="carsds"');
                         var loopArray = [];
                         if (ArrayVal.length > 0) {
@@ -1143,8 +1145,8 @@ $(function () {
                             var d = document.createElement('div');
                             d.innerHTML = values;
                             var valuesPost = d.firstChild;
-                            bricklayer.append(valuesPost);
-                            bricklayer.redraw();
+                            $('.bricklayer').append(valuesPost);
+                            // $('.bricklayer').redraw();
                         }
 
                         if ((data.offset++, response.append ? posts_stream.append(response.data) : posts_stream.prepend(response.data), $(window).width() > 1024)) {
