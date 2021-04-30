@@ -287,6 +287,7 @@ RewriteRule ^wallet/?$ ads.php?view=wallet [L,QSA]
 RewriteRule ^investments/?$ investment.php [L,QSA]
 
 RewriteRule ^investment-cron/?$ investment-referral-cron.php [L,QSA]
+RewriteRule ^investment/import/coins?$ investment-coin-import.php [L,QSA]
 
 RewriteRule ^investment/activities?$ investment.php?view=investment_activities [L,QSA]
 RewriteRule ^investment/buy-sell/?$ investment.php?view=coin_buy_sell [L,QSA]

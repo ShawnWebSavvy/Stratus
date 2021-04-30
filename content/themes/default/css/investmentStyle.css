@@ -1568,3 +1568,12 @@ select.flat-select:hover {
 @media (max-width: 460px) {
 .graph0,.graph1,.graph2,.graph3{min-height: 200px;}
 }
+.coinDetailSection {
+	position: relative;
+	padding-bottom: 50px;
+}
+.coinBaseButtonSection.btn-group {
+	position: absolute;
+	bottom: 0;
+	width: 100%;
+}
