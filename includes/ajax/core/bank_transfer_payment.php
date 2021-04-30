@@ -100,7 +100,7 @@ if (($error == false)) {
         $chargeQuerys = sprintf("DELETE FROM `locked_balance` WHERE user_id = %s", secure($user->_data['user_id'], 'int'));
         $db->query($chargeQuerys) or _error("SQL_ERROR_THROWEN");
 
-        $chargeQuery = sprintf("INSERT INTO `locked_balance`( `user_id`, `locked_balance`) VALUES (%s, %s)", secure($user->_data['user_id'], 'int'), secure($_SESSION['bank_withdrawl'], 'int'));
+        $chargeQuery = sprintf("INSERT INTO `locked_balance`( `user_id`, `locked_balance`) VALUES (%s, %s)", secure($user->_data['user_id'], 'int'), secure($_SESSION['bank_withdrawl']));
         $db->query($chargeQuery) or _error("SQL_ERROR_THROWEN");
         // $chargeQuery = sprintf("UPDATE users SET user_wallet_balance = user_wallet_balance - %s WHERE user_id = %s", secure($_SESSION['bank_withdrawl']), secure($user->_data['user_id'], 'int'));
         // $db->query($chargeQuery) or _error("SQL_ERROR_THROWEN");

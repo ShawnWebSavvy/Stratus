@@ -14494,8 +14494,18 @@ class User
         return $results;
     }
 
-
-/* ------------------------------- */
+    public function getLockedBalance($userId){
+        global $db;
+        $bank_withdrawl_transactions = "SELECT locked_balance.*, users.user_wallet_balance FROM `locked_balance` JOIN users On locked_balance.user_id = users.user_id WHERE locked_balance.user_id = ".$userId;
+        $get_rows = $db->query($bank_withdrawl_transactions) or _error("SQL_ERROR_THROWEN");
+        if ($get_rows->num_rows > 0) {
+            $result = $get_rows->fetch_assoc();
+            return $result['locked_balance'];
+        }else{
+            return 0;
+        }
+    }
+    /* ------------------------------- */
     /* Wallet */
     /* ------------------------------- */
 
@@ -14526,14 +14536,15 @@ class User
         if($status === "approve"){
             $statusCode = 1;
             $db->query(sprintf('UPDATE users SET user_wallet_balance = IF(user_wallet_balance-%1$s<=0,0,user_wallet_balance-%1$s) WHERE user_id = %2$s', secure($row['amount']), secure($row['user_id'], 'int'))) or _error("SQL_ERROR_THROWEN");
+            $this->wallet_set_transaction($row['user_id'], 'bank_withdrawal', 0, $row['amount'], 'out');
         }
        
         if(isset($row['user_id'])){
             $chargeQuerys = sprintf("DELETE FROM `locked_balance` WHERE user_id = %s", secure($row['user_id'], 'int'));
+            $db->query($chargeQuerys) or _error("SQL_ERROR_THROWEN");
         }
         
-        $db->query($chargeQuerys) or _error("SQL_ERROR_THROWEN");
-        $chargeQuery = sprintf("UPDATE bank_withdrawl_transactions SET transaction_id = %s, status = %s, approved_by = %s, reason = %s, status_updated = %s WHERE id = %s", secure($data['transaction_id']), secure($statusCode, 'int'), secure($this->_data['user_id'], 'int'), secure($data['comments']), secure($date), secure($data['request_id'], int));
+        $chargeQuery = sprintf("UPDATE bank_withdrawl_transactions SET `transaction_id` = %s, `status` = %s, `approved_by` = %s, `reason` = %s, `status_updated` = %s WHERE id = %s", secure($data['transaction_id']), secure($statusCode), secure($this->_data['user_id']), secure($data['comments']), secure($date), secure($data['request_id']));
         $db->query($chargeQuery) or _error("SQL_ERROR_THROWEN");
 
         // if($status == "disapprove"){
@@ -14777,7 +14788,7 @@ class User
         global $db;
         $transactions = [];
         $coin_full_name = array('btc'=>'Bitcoin','eth'=>'Ethereum','apl'=>'Apollo','gsx'=>'Gold Secure Currency');
-        $get_transactions = $db->query(sprintf("SELECT ads_users_wallet_transactions.*,investment_transactions.currency,investment_transactions.tnx_type, users.user_name, users.user_firstname, users.user_lastname, users.user_gender, users.user_picture FROM ads_users_wallet_transactions LEFT JOIN investment_transactions ON ads_users_wallet_transactions.investment_id = investment_transactions.id LEFT JOIN users ON ads_users_wallet_transactions.node_type='user' AND ads_users_wallet_transactions.node_id = users.user_id  WHERE ads_users_wallet_transactions.user_id = %s ORDER BY ads_users_wallet_transactions.transaction_id DESC", secure($this->_data['user_id'], 'int'))) or _error("SQL_ERROR_THROWEN");
+        $get_transactions = $db->query(sprintf("SELECT ads_users_wallet_transactions.*,investment_transactions.currency,investment_transactions.tnx_type, users.user_name, users.user_firstname, users.user_lastname, users.user_picture_id, users.user_gender, users.user_picture, posts_photos.source as user_picture_full FROM ads_users_wallet_transactions LEFT JOIN investment_transactions ON ads_users_wallet_transactions.investment_id = investment_transactions.id LEFT JOIN users ON ads_users_wallet_transactions.node_type='user' AND ads_users_wallet_transactions.node_id = users.user_id LEFT JOIN posts_photos ON users.user_picture_id = posts_photos.photo_id   WHERE ads_users_wallet_transactions.user_id = %s ORDER BY ads_users_wallet_transactions.transaction_id DESC", secure($this->_data['user_id'], 'int'))) or _error("SQL_ERROR_THROWEN");
         if ($get_transactions->num_rows > 0) {
             while ($transaction = $get_transactions->fetch_assoc()) {
                 // print_r($transaction); die;
@@ -14785,7 +14796,8 @@ class User
                     $transaction['currency_detail'] = (($transaction['tnx_type']=='buy')?'Buy ':'Sell ').$coin_full_name[$transaction['currency']];
                 }
                 if ($transaction['node_type'] == "user") {
-                    $transaction['user_picture'] = get_picture($transaction['user_picture'], $transaction['user_gender']);
+                   // $transaction['user_picture'] = get_picture($transaction['user_picture'], $transaction['user_gender']);
+                   $transaction['user_picture'] = $system['system_url'] . '/includes/wallet-api/image-exist-api.php?userPicture=' . $transaction['user_picture'] . '&userPictureFull=' . $system['system_uploads'] . '/' . $transaction['user_picture_full'];
                 }
                 $transactions[] = $transaction;
             }
