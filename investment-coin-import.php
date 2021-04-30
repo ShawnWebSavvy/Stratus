@@ -29,14 +29,14 @@ if ($data->num_rows > 0) {
 
         // echo '<pre>'; print_r($data1);die;
         
-        $id = "gsx_distribution_".$data1['user_id'].$data1['user_id'].time(); //
+        $id = $data1['user_id'].$data1['user_id'].time(); //
         
         $db->query(sprintf("INSERT INTO investment_transactions (user_id, order_id, base_currency, tokens, currency, tnx_type ,amount, receive_amount, recieve_token, status) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s)", secure($data1['user_id'], 'int'),secure($id),secure('usd'), secure($data1['gsx_coins']), secure('gsx'), secure('buy'),secure(0),secure(0), secure($data1['gsx_coins']), secure('completed') )) or _error("SQL_ERROR_THROWEN");
         $investment_id = $db->insert_id;
           
         if($investment_id){
 
-            $db->query(sprintf("INSERT INTO ads_users_wallet_transactions (user_id, investment_id, node_type, node_id, amount, type, date,paymentMode) VALUES (%s, %s, %s, %s, %s, %s, %s, %s)", secure($data1['user_id'], 'int'), secure($investment_id), secure('purchase_coin'), secure(0, 'int'), secure(0), secure('out'), secure(date('Y-m-d h:i:m')), secure('usd_wallet_balance'))) or _error("SQL_ERROR_THROWEN");
+            $db->query(sprintf("INSERT INTO ads_users_wallet_transactions (user_id, investment_id, node_type, node_id, amount, type, date,paymentMode) VALUES (%s, %s, %s, %s, %s, %s, %s, %s)", secure($data1['user_id'], 'int'), secure($investment_id), secure('bonous_payout_receive'), secure(0, 'int'), secure(0), secure('out'), secure(date('Y-m-d h:i:m')), secure('usd_wallet_balance'))) or _error("SQL_ERROR_THROWEN");
      
             $db->query(sprintf("UPDATE users SET gsx_wallet = gsx_wallet + %s WHERE user_id = %s", secure($data1['gsx_coins']), secure($data1['user_id'], 'int'))) or _error("SQL_ERROR_THROWEN");
 

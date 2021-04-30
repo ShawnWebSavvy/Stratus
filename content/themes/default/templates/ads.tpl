@@ -960,6 +960,8 @@
                                                     {__("Affiliates Credit")}
                                                     {elseif $transaction['node_type'] == "withdraw_points"}
                                                     {__("Points Credit")}
+                                                    {elseif $transaction['node_type'] == "bonous_payout_receive"}
+                                                        {__("Bonous Payout Receive")}
                                                     {elseif $transaction['tnx_type'] == "buy"}
                                                       {$transaction['currency_detail']}
                                                     {elseif $transaction['tnx_type'] == "sell"}
