@@ -222,7 +222,7 @@ class InvestmentHelper {
 
         $return = [];
         $currency_price = [];
-        if(!empty($tokens)&&!empty($tokens['data'])){
+        if(!empty($tokens)){
             foreach($tokens['data'] as $key=>$token){
             
                 $return['token_data'][$key]['wallet_name'] = $token['short_name'].'_wallet';
