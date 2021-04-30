@@ -1594,7 +1594,7 @@
 
 <script id="bank-withdrawl" type="text/template">
     <div class="modal-header">
-        <h6 class="modal-title"><img width="20px" class="mr20" src="{$system['system_uploads_assets']}/content/themes/{$system['theme']}/images/svg/svgImg/sendMoney.svg"> {__("Withdrawl to Bank")}</h6>
+        <h6 class="modal-title"><img width="20px" class="mr20" src="{$system['system_uploads_assets']}/content/themes/{$system['theme']}/images/svg/svgImg/sendMoney.svg"> {__("Withdrawal to Bank")}</h6>
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
             <span aria-hidden="true">&times;</span>
         </button>
@@ -1668,7 +1668,7 @@
 {if $page == "admin"}
 <script id="bank-withdrawal_admin" type="text/template">
     <div class="modal-header">
-        <h6 class="modal-title"><img width="20px" class="mr20" src="{$system['system_uploads_assets']}/content/themes/{$system['theme']}/images/svg/svgImg/sendMoney.svg"> {__("Withdrawl to Bank")}</h6>
+        <h6 class="modal-title"><img width="20px" class="mr20" src="{$system['system_uploads_assets']}/content/themes/{$system['theme']}/images/svg/svgImg/sendMoney.svg"> {__("Withdrawal to Bank")}</h6>
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
             <span aria-hidden="true">&times;</span>
         </button>
@@ -1790,7 +1790,7 @@
 {if $page == "packages" || $page == "ads"}
 <script id="bankPayment" type="text/template">
     <div class="modal-header">
-        <h6 class="modal-title">{__("Withdrawl to Bank")}</h6>
+        <h6 class="modal-title">{__("Withdrawal to Bank")}</h6>
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
             <span aria-hidden="true">&times;</span>
         </button>
