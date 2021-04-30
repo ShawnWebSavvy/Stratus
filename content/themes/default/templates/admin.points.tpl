@@ -7,8 +7,13 @@
                 </button>
             </div>
         {/if}
-        <i class="fa fa-piggy-bank mr10"></i>{__("Points System")}
-        {if $sub_view == "payments"} &rsaquo; {__("Payment Requests")}{/if}
+        <div class="d-flex align-items-centers">
+            <div class="svg-container mr10">
+                <img style="width: 23px;" src="{$system['system_url']}/content/themes/default/images/svg/admin/Piggy.svg" class="">
+            </div>
+            {__("Points System")}
+            {if $sub_view == "payments"} &rsaquo; {__("Payment Requests")}{/if}
+        </div>
     </div>
 
     {if $sub_view == ""}

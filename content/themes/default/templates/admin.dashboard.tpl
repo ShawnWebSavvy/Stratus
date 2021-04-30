@@ -1,7 +1,7 @@
 <div class="card">
     <div class="card-header with-icon d-flex align-items-center">
         <div class="svg-container mr10">
-            <img src="{$system['system_uploads_assets']}/content/themes/default/images/svg/svgImg/apps_icon.svg" class="">
+            <img src="{$system['system_uploads_assets']}/content/themes/default/images/svg/admin/apps_icon.svg" class="">
         </div>
         {__("Dashboard")}
     </div>

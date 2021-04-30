@@ -14,7 +14,9 @@
             </div>
         {/if}
         <div class="d-flex align-items-center">
-            <i class="fa fa-gift mr10"></i>
+            <div class="svg-container mr10">
+                <img style="width: 22px;" src="{$system['system_url']}/content/themes/default/images/svg/svgImg/sendMoney.svg" class="">
+            </div>
             {__("Gifts")}
             {if $sub_view == "add"} &rsaquo; {__("Add New Gift")}{/if}
             {if $sub_view == "edit"} &rsaquo; {__("Edit Gift")}{/if}

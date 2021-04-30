@@ -15,7 +15,7 @@
         {/if}
 
         <div class='d-flex align-items-center'>
-            <i class="fa fa-hand-peace mr10"></i>
+            <i class="fa fa-hand-peace mr10"  style="color: #5271f2 !important;"></i>
             {__("Stickers")}
         {if $sub_view == "add"} &rsaquo; {__("Add New Sticker")}{/if}
         {if $sub_view == "edit"} &rsaquo; {__("Edit Sticker")}{/if}

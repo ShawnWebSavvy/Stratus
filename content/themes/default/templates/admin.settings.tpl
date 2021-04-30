@@ -6,7 +6,10 @@
         <div class="card-header with-icon with-nav custom-tabs">
             <!-- panel title -->
             <div class="mb20 d-flex align-items-center">
-                <i class="fa fa-cog mr10"></i>{__("Settings")}
+                <div class="svg-container mr10">
+                    <img src="{$system['system_url']}/content/themes/default/images/svg/svgImg/settings_icon_hover.svg" class="">
+                </div>
+                {__("Settings")}
             </div>
             <!-- panel title -->
 
@@ -746,7 +749,10 @@
         <!-- card-header -->
         <div class="card-header with-icon d-flex align-items-center">
             <!-- panel title -->
-            <i class="fa fa-cog mr10"></i>{__("Settings")} &rsaquo; {__("Posts")}
+            <div class="svg-container mr10">
+                <img src="{$system['system_url']}/content/themes/default/images/svg/svgImg/settings_icon_hover.svg" class="">
+            </div>
+            {__("Settings")} &rsaquo; {__("Posts")}
             <!-- panel title -->
         </div>
         <!-- card-header -->
@@ -1302,7 +1308,10 @@
         <div class="card-header with-icon with-nav custom-tabs">
             <!-- panel title -->
             <div class="mb20 d-flex align-items-center">
-                <i class="fa fa-cog mr10"></i>{__("Settings")} &rsaquo; {__("Registration")}
+                <div class="svg-container mr10">
+                    <img src="{$system['system_url']}/content/themes/default/images/svg/svgImg/settings_icon_hover.svg" class="">
+                </div>
+                {__("Settings")} &rsaquo; {__("Registration")}
             </div>
             <!-- panel title -->
 
@@ -2058,7 +2067,10 @@
         <!-- card-header -->
         <div class="card-header with-icon d-flex align-items-center">
             <!-- panel title -->
-            <i class="fa fa-cog mr10"></i>{__("Settings")} &rsaquo; {__("Email")}
+            <div class="svg-container mr10">
+                <img src="{$system['system_url']}/content/themes/default/images/svg/svgImg/settings_icon_hover.svg" class="">
+            </div>
+            {__("Settings")} &rsaquo; {__("Email")}
             <!-- panel title -->
         </div>
         <!-- card-header -->
@@ -2195,7 +2207,10 @@
         <!-- card-header -->
         <div class="card-header with-icon d-flex align-items-center">
             <!-- panel title -->
-            <i class="fa fa-cog mr10"></i>{__("Settings")} &rsaquo; {__("SMS")}
+            <div class="svg-container mr10">
+                <img src="{$system['system_url']}/content/themes/default/images/svg/svgImg/settings_icon_hover.svg" class="">
+            </div>
+            {__("Settings")} &rsaquo; {__("SMS")}
             <!-- panel title -->
         </div>
         <!-- card-header -->
@@ -2642,7 +2657,10 @@
         <!-- card-header -->
         <div class="card-header with-icon d-flex align-items-center">
             <!-- panel title -->
-            <i class="fa fa-cog mr10"></i>{__("Settings")} &rsaquo; {__("Chat")}
+            <div class="svg-container mr10">
+                <img src="{$system['system_url']}/content/themes/default/images/svg/svgImg/settings_icon_hover.svg" class="">
+            </div>
+            {__("Settings")} &rsaquo; {__("Chat")}
             <!-- panel title -->
         </div>
         <!-- card-header -->
@@ -2822,7 +2840,10 @@
         <!-- card-header -->
         <div class="card-header with-icon d-flex align-items-center">
             <!-- panel title -->
-            <i class="fa fa-cog mr10"></i>{__("Settings")} &rsaquo; {__("Live Stream")}
+            <div class="svg-container mr10">
+                <img src="{$system['system_url']}/content/themes/default/images/svg/svgImg/settings_icon_hover.svg" class="">
+            </div>
+            {__("Settings")} &rsaquo; {__("Live Stream")}
             <!-- panel title -->
         </div>
         <!-- card-header -->
@@ -3030,7 +3051,10 @@
         <div class="card-header with-icon with-nav custom-tabs">
             <!-- panel title -->
             <div class="mb20 d-flex align-items-center">
-                <i class="fa fa-cog mr10"></i>{__("Settings")} &rsaquo; {__("Uploads")}
+                <div class="svg-container mr10">
+                    <img src="{$system['system_url']}/content/themes/default/images/svg/svgImg/settings_icon_hover.svg" class="">
+                </div>
+                {__("Settings")} &rsaquo; {__("Uploads")}
             </div>
             <!-- panel title -->
 
@@ -3982,7 +4006,10 @@
         <!-- card-header -->
         <div class="card-header with-icon d-flex align-items-center">
             <!-- panel title -->
-            <i class="fa fa-cog mr10"></i>{__("Settings")} &rsaquo; {__("Security")}
+            <div class="svg-container mr10">
+                <img src="{$system['system_url']}/content/themes/default/images/svg/svgImg/settings_icon_hover.svg" class="">
+            </div>
+            {__("Settings")} &rsaquo; {__("Security")}
             <!-- panel title -->
         </div>
         <!-- card-header -->
@@ -4195,7 +4222,10 @@
         <div class="card-header with-icon with-nav custom-tabs">
             <!-- panel title -->
             <div class="mb20 d-flex align-items-center">
-                <i class="fa fa-cog mr10"></i>{__("Settings")} &rsaquo; {__("Payments")}
+                <div class="svg-container mr10">
+                    <img src="{$system['system_url']}/content/themes/default/images/svg/svgImg/settings_icon_hover.svg" class="">
+                </div>
+                {__("Settings")} &rsaquo; {__("Payments")}
             </div>
             <!-- panel title -->
 
@@ -4829,7 +4859,10 @@
         <!-- card-header -->
         <div class="card-header with-icon d-flex align-items-center">
             <!-- panel title -->
-            <i class="fa fa-cog mr10"></i>{__("Settings")} &rsaquo; {__("Limits")}
+            <div class="svg-container mr10">
+                <img src="{$system['system_url']}/content/themes/default/images/svg/svgImg/settings_icon_hover.svg" class="">
+            </div>
+            {__("Settings")} &rsaquo; {__("Limits")}
             <!-- panel title -->
         </div>
         <!-- card-header -->
@@ -4945,7 +4978,10 @@
         <!-- card-header -->
         <div class="card-header with-icon d-flex align-items-center">
             <!-- panel title -->
-            <i class="fa fa-cog mr10"></i>{__("Settings")} &rsaquo; {__("Analytics")}
+              <div class="svg-container mr10">
+                    <img src="{$system['system_url']}/content/themes/default/images/svg/svgImg/settings_icon_hover.svg" class="">
+                </div>
+            {__("Settings")} &rsaquo; {__("Analytics")}
             <!-- panel title -->
         </div>
         <!-- card-header -->
@@ -4983,7 +5019,10 @@
         <!-- card-header -->
         <div class="card-header with-icon d-flex align-items-center">
             <!-- panel title -->
-            <i class="fa fa-cog mr10"></i>{__("Settings")} &rsaquo; {__("Investment")}
+            <div class="svg-container mr10">
+                <img src="{$system['system_url']}/content/themes/default/images/svg/svgImg/settings_icon_hover.svg" class="">
+            </div>
+            {__("Settings")} &rsaquo; {__("Investment")}
             <!-- panel title -->
         </div>
         <!-- card-header -->
@@ -5025,7 +5064,10 @@
         <!-- card-header -->
         <div class="card-header with-icon d-flex align-items-center">
             <!-- panel title -->
-            <i class="fa fa-cog mr10"></i>{__("Settings")} &rsaquo; {__("Investment Referral")}
+            <div class="svg-container mr10">
+                <img src="{$system['system_url']}/content/themes/default/images/svg/svgImg/settings_icon_hover.svg" class="">
+            </div>
+            {__("Settings")} &rsaquo; {__("Investment Referral")}
             <!-- panel title -->
         </div>
         <!-- card-header -->

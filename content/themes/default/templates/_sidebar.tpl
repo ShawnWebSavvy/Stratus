@@ -88,21 +88,27 @@
                 {if $user->_is_admin}
                 <li class="{if ($page=='admin')}active{/if}">
                     <a href="{$system['system_url']}/admincp">
-                        {include file='__svg_icons.tpl' icon="dashboard" class="" width="24px" height="24px"}
+                        <div class="svg-container">
+                            <img width="30px" src="{$system['system_url']}/content/themes/default/images/svg/dashboard.svg" class="">
+                        </div>
                         <span class="nav-text">{__("Admin Panel")}</span>
                     </a>
                 </li>
                 {elseif $user->_is_moderator}
                 <li>
                     <a href="{$system['system_url']}/modcp">
-                        {include file='__svg_icons.tpl' icon="dashboard" class="" width="24px" height="24px"}
+                         <div class="svg-container">
+                            <img width="30px" src="{$system['system_url']}/content/themes/default/images/svg/dashboard.svg" class="">
+                        </div>
                         <span class="nav-text">{__("Moderator Panel")}</span>
                     </a>
                 </li>
                 {elseif $user->_is_subAdmin}
                 <li>
                     <a href="{$system['system_url']}/admincp">
-                        {include file='__svg_icons.tpl' icon="dashboard" class="" width="24px" height="24px"}
+                         <div class="svg-container">
+                            <img width="30px" src="{$system['system_url']}/content/themes/default/images/svg/dashboard.svg" class="">
+                        </div>
                         <span class="nav-text">{__("Sub Admin Panel")}</span>
                     </a>
                 </li>
