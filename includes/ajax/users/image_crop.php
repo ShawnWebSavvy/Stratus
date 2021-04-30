@@ -235,7 +235,7 @@ try {
     $image_name = save_picture_from_url($image_url, true);
 
     // update profile picture
-    $db->query(sprintf("UPDATE %s SET %s = %s WHERE %s = %s", $table_name, $table_picture_field, secure($image_name), $table_id_field, secure($_POST['id'], 'int') )) or _error("SQL_ERROR_THROWEN");
+    $db->query(sprintf("UPDATE `%s` SET %s = %s WHERE %s = %s", $table_name, $table_picture_field, secure($image_name), $table_id_field, secure($_POST['id'], 'int') )) or _error("SQL_ERROR_THROWEN");
 
 	// return & exit
     return_json();

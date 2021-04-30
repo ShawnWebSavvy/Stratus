@@ -29,9 +29,9 @@ if (!empty($_POST["bank_name"])) {
         echo json_encode(array("message"=>"Bank name should have at least 3 characters.", "response"=>"error"));
         exit;
     }
-    if(!preg_match('/^[a-z0-9 ]+$/i', trim($_POST["bank_name"]))){
+    if(!preg_match('/^[a-zA-Z ]+$/i', trim($_POST["bank_name"]))){
         $error = 1;
-        echo json_encode(array("message"=>"Bank name can only have alphabets and numbers.", "response"=>"error"));
+        echo json_encode(array("message"=>"Bank name can only have alphabets", "response"=>"error"));
         exit;
     }
 }
@@ -54,7 +54,7 @@ if (!empty($_POST["acc_name"])) {
         echo json_encode(array("message"=>"Account name should have at least 3 characters.", "response"=>"error"));
         exit;
     }
-    if(!preg_match('/^[a-z0-9 ]+$/i', trim($_POST["acc_name"]))){
+    if(!preg_match('/^[a-zA-Z ]+$/i', trim($_POST["acc_name"]))){
         $error = true;
         echo json_encode(array("message"=>"Account name can only have alphabets and numbers.", "response"=>"error"));
         exit;
@@ -69,6 +69,14 @@ if(!empty($_POST['swift_code'])){
     }if(strlen($_POST['swift_code']) != 9 ){
         $error = true;
         echo json_encode(array("message"=>"Swift Code should have only 9 digits.", "response"=>"error"));
+        exit;
+    }
+}
+
+if(!empty($_POST['country'])){
+    if(preg_match('/^[a-zA-Z ]+$/i', trim($_POST["swift_code"])) ) {
+        $error = true;
+        echo json_encode(array("message"=>"Swift Code should contain numbers only.", "response"=>"error"));
         exit;
     }
 }

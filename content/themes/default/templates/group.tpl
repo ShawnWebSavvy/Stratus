@@ -92,7 +92,7 @@
                                 </div>
                                 {if !$profile['user_picture_default']}
                                     <div class="profile-avatar-delete {if $group['group_picture_default']}x-hidden{/if}">
-                                        <i class="fa fa-trash js_delete-picture" data-handle="picture-group"></i>
+                                        <i class="fa fa-trash js_delete-picture" data-handle="picture-group" data-id="{$group['group_id']}"></i>
                                     </div>
                                 {/if}
                                 <!-- buttons -->
