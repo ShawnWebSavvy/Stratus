@@ -754,8 +754,8 @@ if (endUrl != "investments") {
                                 color = "#ff7979";
                             }
                             
-                            $(this).closest('.coinDetailSection').find('.dashboard_coin_amount').html(response['token_data'][index]['total_wallet_quote_amount']);
-                            
+                            $('.'+$(this).attr('data-element')+'_dashboard_coin_amount').html(response['token_data'][index]['total_wallet_quote_amount']);
+
                             $(this).closest('.GraphSection').find('.coin_price').html(response['token_data'][index]['buy_price']);
                             $(this).closest('.GraphSection').find('p').html((parseFloat(response['token_data'][index]['fluctuation'])*100).toFixed(2)+'%');
                             $('.' + class_element).closest('.GraphSection').find('.coin_price').html(response['token_data'][index]['buy_price']);
