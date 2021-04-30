@@ -92,6 +92,9 @@ function modal() {
         case "extra-large":
             $(".modal-dialog").addClass("modal-xl");
     }
+    if(arguments[0] === "#bankPayment"){
+        $("#modal").addClass("withdrawltoBank");
+    }
     $(".modal-content:last").html(render_template(arguments[0], arguments[1])), "function" == typeof initialize_modal && initialize_modal();
 }
 function confirm(e, t, a) {
@@ -250,7 +253,7 @@ function button_status(e, t) {
                             element.find("#paymentSuccess").show();
                             element.find("#paymentSuccess").html(response.messages);
                             setTimeout(function(){
-                                element.find(".dltButton").trigger( "click" );
+                                window.location.reload();
                             }, 2500);
                         }else{
                             element.find("#paymentSuccess").hide();

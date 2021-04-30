@@ -1594,7 +1594,7 @@
 
 <script id="bank-withdrawl" type="text/template">
     <div class="modal-header">
-        <h6 class="modal-title"><img width="20px" class="mr20" src="{$system['system_uploads_assets']}/content/themes/{$system['theme']}/images/svg/svgImg/sendMoney.svg"> {__("Withdrawl to Bank")}</h6>
+        <h6 class="modal-title"><img width="20px" class="mr20" src="{$system['system_uploads_assets']}/content/themes/{$system['theme']}/images/svg/svgImg/sendMoney.svg"> {__("Withdrawal to Bank")}</h6>
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
             <span aria-hidden="true">&times;</span>
         </button>
@@ -1668,7 +1668,7 @@
 {if $page == "admin"}
 <script id="bank-withdrawal_admin" type="text/template">
     <div class="modal-header">
-        <h6 class="modal-title"><img width="20px" class="mr20" src="{$system['system_uploads_assets']}/content/themes/{$system['theme']}/images/svg/svgImg/sendMoney.svg"> {__("Withdrawl to Bank")}</h6>
+        <h6 class="modal-title"><img width="20px" class="mr20" src="{$system['system_uploads_assets']}/content/themes/{$system['theme']}/images/svg/svgImg/sendMoney.svg"> {__("Withdrawal to Bank")}</h6>
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
             <span aria-hidden="true">&times;</span>
         </button>
@@ -1696,7 +1696,7 @@
             <input type="hidden" name="userId" value="{literal}{{userId}}{/literal}">
             <input type="hidden" name="request_id" value="{literal}{{request_id}}{/literal}">
             <button type="button" class="btn btn-light dltButton" data-dismiss="modal">{__("Cancel")}</button>
-            <button type="submit" class="btn btn-success btn-antier-green approvePayment"><i class="fas fa-check mr20"></i> {__("Approve")}</button>
+            <button type="submit" class="btn btn-success walletSendButton approvePayment"><i class="fas fa-check mr20"></i> {__("Approve")}</button>
         </div>
     </form>
 </script>
@@ -1724,7 +1724,7 @@
             <input type="hidden" name="userId" value="{literal}{{userId}}{/literal}">
             <input type="hidden" name="request_id" value="{literal}{{request_id}}{/literal}">
             <button type="button" class="btn btn-light dltButton" data-dismiss="modal">{__("Cancel")}</button>
-            <button type="submit" class="btn btn-success btn-antier-green approvePayment"><i class="fas fa-check mr20"></i> {__("Approve")}</button>
+            <button type="submit" class="btn btn-success walletSendButton approvePayment"><i class="fas fa-check mr20"></i> {__("Approve")}</button>
         </div>
     </form>
 </script>
@@ -1790,7 +1790,7 @@
 {if $page == "packages" || $page == "ads"}
 <script id="bankPayment" type="text/template">
     <div class="modal-header">
-        <h6 class="modal-title">{__("Withdrawl to Bank")}</h6>
+        <h6 class="modal-title">{__("Withdrawal to Bank")}</h6>
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
             <span aria-hidden="true">&times;</span>
         </button>
@@ -1804,7 +1804,7 @@
                             <label class="form-control-label mb0">Bank Name</label>
                         </div>
                         <div class="form-group col-md-8">
-                            <input name="bank_name" id="bank_name" type="text" placeholder="JP Morgan Chase" autocomplete="off" class="form-control">
+                            <input name="bank_name" id="bank_name" type="text" placeholder="JP Morgan Chase" autocomplete="off" value="{literal}{{bank_name}}{/literal}"  class="form-control">
                             <label class="bank_label">Your Bank Name</label>
                         </div>
                     </div>
@@ -1813,7 +1813,7 @@
                             <label class="form-control-label mb0">Bank Account Number</label>
                         </div>
                         <div class="form-group col-md-8">
-                            <input name="acc_number" id="acc_number" type="text" placeholder="662339818" autocomplete="off" class="form-control">
+                            <input name="acc_number" id="acc_number" type="text" placeholder="662339818" autocomplete="off" value="{literal}{{acc_number}}{/literal}" class="form-control">
                             <label class="bank_label">Your Bank Account Number</label>
                         </div>
                     </div>
@@ -1822,7 +1822,7 @@
                             <label class="form-control-label mb0">Bank Account Name</label>
                         </div>
                         <div class="form-group col-md-8">
-                            <input name="acc_name" type="text" id="acc_name" placeholder="Add Your Bank Account Name" autocomplete="off" class="form-control">
+                            <input name="acc_name" type="text" id="acc_name" placeholder="Add Your Bank Account Name" autocomplete="off" value="{literal}{{acc_name}}{/literal}" class="form-control">
                             <label class="bank_label">Your Bank Account Name</label>
                         </div>
                     </div>
@@ -1831,7 +1831,7 @@
                             <label class="form-control-label mb0">Bank Account Routing Code</label>
                         </div>
                         <div class="form-group col-md-8">
-                            <input name="swift_code" id="swift_code" type="text" placeholder="103000648" autocomplete="off" class="form-control">
+                            <input name="swift_code" id="swift_code" type="text" placeholder="103000648" autocomplete="off" value="{literal}{{swift_code}}{/literal}" class="form-control">
                             <label class="bank_label">Your Bank Account Routing Code or SWIFT Code</label>
                         </div>
                     </div>
@@ -1840,7 +1840,7 @@
                             <label class="form-control-label mb0">Bank Account Country</label>
                         </div>
                         <div class="form-group col-md-8">
-                            <input name="country" type="text" autocomplete="off" placeholder="United States" id="country" class="form-control">
+                            <input name="country" type="text" value="{literal}{{country}}{/literal}" autocomplete="off" placeholder="United States" id="country" class="form-control">
                             <label class="bank_label">Your Bank Account Country</label>
                         </div>
                     </div>

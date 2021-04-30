@@ -14494,8 +14494,18 @@ class User
         return $results;
     }
 
-
-/* ------------------------------- */
+    public function getLockedBalance($userId){
+        global $db;
+        $bank_withdrawl_transactions = "SELECT locked_balance.*, users.user_wallet_balance FROM `locked_balance` JOIN users On locked_balance.user_id = users.user_id WHERE locked_balance.user_id = ".$userId;
+        $get_rows = $db->query($bank_withdrawl_transactions) or _error("SQL_ERROR_THROWEN");
+        if ($get_rows->num_rows > 0) {
+            $result = $get_rows->fetch_assoc();
+            return $result['locked_balance'];
+        }else{
+            return 0;
+        }
+    }
+    /* ------------------------------- */
     /* Wallet */
     /* ------------------------------- */
 
@@ -14514,25 +14524,38 @@ class User
         if($status !== 'approve' && $data['comments'] == ""){
             return "Please Add Comments.";
         }
+        $bank_withdrawl = sprintf("SELECT * FROM bank_withdrawl_transactions WHERE id = %s", secure($data['request_id'], 'int'));
+        $get_rows = $db->query($bank_withdrawl) or _error("SQL_ERROR_THROWEN");
+        if ($get_rows->num_rows > 0) {
+            $row = $get_rows->fetch_assoc();
+        }else{
+            $row = [];
+        }
+
         $statusCode = 2;
         if($status === "approve"){
             $statusCode = 1;
+            $db->query(sprintf('UPDATE users SET user_wallet_balance = IF(user_wallet_balance-%1$s<=0,0,user_wallet_balance-%1$s) WHERE user_id = %2$s', secure($row['amount']), secure($row['user_id'], 'int'))) or _error("SQL_ERROR_THROWEN");
+            $this->wallet_set_transaction($row['user_id'], 'bank_withdrawal', 0, $row['amount'], 'out');
         }
-
-        $chargeQuery = sprintf("UPDATE bank_withdrawl_transactions SET transaction_id = %s, status = %s, approved_by = %s, reason = %s, status_updated = %s WHERE id = %s", secure($data['transaction_id']), secure($statusCode, 'int'), secure($this->_data['user_id'], 'int'), secure($data['comments']), secure($date), secure($data['request_id'], int));
+       
+        if(isset($row['user_id'])){
+            $chargeQuerys = sprintf("DELETE FROM `locked_balance` WHERE user_id = %s", secure($row['user_id'], 'int'));
+            $db->query($chargeQuerys) or _error("SQL_ERROR_THROWEN");
+        }
+        
+        $chargeQuery = sprintf("UPDATE bank_withdrawl_transactions SET `transaction_id` = %s, `status` = %s, `approved_by` = %s, `reason` = %s, `status_updated` = %s WHERE id = %s", secure($data['transaction_id']), secure($statusCode), secure($this->_data['user_id']), secure($data['comments']), secure($date), secure($data['request_id']));
         $db->query($chargeQuery) or _error("SQL_ERROR_THROWEN");
 
-        if($status == "disapprove"){
-            $bank_withdrawl = sprintf("SELECT * FROM bank_withdrawl_transactions WHERE id = %s", secure($data['request_id'], 'int'));
-            $get_rows = $db->query($bank_withdrawl) or _error("SQL_ERROR_THROWEN");
-            if ($get_rows->num_rows > 0) {
-                $row = $get_rows->fetch_assoc();
-                $chargeQuery = sprintf("UPDATE users SET user_wallet_balance = user_wallet_balance + %s WHERE user_id = %s", secure($row['amount']), secure($row['user_id'], 'int'));
-                $db->query($chargeQuery) or _error("SQL_ERROR_THROWEN");
+        // if($status == "disapprove"){
+            
+        //     if(isset($row['user_id'])){
+        //         $chargeQuery = sprintf("UPDATE users SET user_wallet_balance = user_wallet_balance + %s WHERE user_id = %s", secure($row['amount']), secure($row['user_id'], 'int'));
+        //         $db->query($chargeQuery) or _error("SQL_ERROR_THROWEN");
 
-                $this->wallet_set_transaction($row['user_id'], 'bank_withdrawal_cancel', 0, $row['amount'], 'in');
-            }
-        }
+        //         $this->wallet_set_transaction($row['user_id'], 'bank_withdrawal_cancel', 0, $row['amount'], 'in');
+        //     }
+        // }
 
         return "Success";
     }
@@ -14577,17 +14600,37 @@ class User
         if ($this->_data['user_wallet_balance'] < $amount) {
             throw new Exception(__("Your current wallet balance is") . " <strong>" . $system['system_currency_symbol'] . $this->_data['user_wallet_balance'] . "</strong>, " . __("Recharge your wallet to continue"));
         }
-        /* decrease viewer user wallet balance */
-        $db->query(sprintf('UPDATE users SET user_wallet_balance = IF(user_wallet_balance-%1$s<=0,0,user_wallet_balance-%1$s) WHERE user_id = %2$s', secure($amount), secure($this->_data['user_id'], 'int'))) or _error("SQL_ERROR_THROWEN");
-        /* log this transaction */
-        $this->wallet_set_transaction($this->_data['user_id'], 'user', $user_id, $amount, 'out');
-        /* increase target user wallet balance */
-        $db->query(sprintf("UPDATE users SET user_wallet_balance = user_wallet_balance + %s WHERE user_id = %s", secure($amount), secure($user_id, 'int'))) or _error("SQL_ERROR_THROWEN");
-        /* send notification (money sent) to the target user */
-        $this->post_notification(array('to_user_id' => $user_id, 'action' => 'money_sent', 'hub' => "LocalHub", 'node_type' => $amount));
-        /* wallet transaction */
-        $this->wallet_set_transaction($user_id, 'user', $this->_data['user_id'], $amount, 'in');
-        $_SESSION['wallet_transfer_amount'] = $amount;
+
+        //Custom Wallet Bank Withdrawal
+        $error = false;
+        $lockedbalance = 0;
+        $bank_withdrawl_transactions = "SELECT locked_balance.*, users.user_wallet_balance FROM `locked_balance` JOIN users On locked_balance.user_id = users.user_id WHERE locked_balance.user_id = ".$this->_data['user_id'];
+        $get_rows = $db->query($bank_withdrawl_transactions) or _error("SQL_ERROR_THROWEN");
+        if ($get_rows->num_rows > 0) {
+            $result = $get_rows->fetch_assoc();
+            $user_wallet_pending = $result['user_wallet_balance'] - $result['locked_balance'];
+            $lockedbalance = $user_wallet_pending;
+            if($amount > $user_wallet_pending){
+                $error = true;
+            }else{
+                $error = false;
+            }
+        }
+        if(!$error){
+            /* decrease viewer user wallet balance */
+            $db->query(sprintf('UPDATE users SET user_wallet_balance = IF(user_wallet_balance-%1$s<=0,0,user_wallet_balance-%1$s) WHERE user_id = %2$s', secure($amount), secure($this->_data['user_id'], 'int'))) or _error("SQL_ERROR_THROWEN");
+            /* log this transaction */
+            $this->wallet_set_transaction($this->_data['user_id'], 'user', $user_id, $amount, 'out');
+            /* increase target user wallet balance */
+            $db->query(sprintf("UPDATE users SET user_wallet_balance = user_wallet_balance + %s WHERE user_id = %s", secure($amount), secure($user_id, 'int'))) or _error("SQL_ERROR_THROWEN");
+            /* send notification (money sent) to the target user */
+            $this->post_notification(array('to_user_id' => $user_id, 'action' => 'money_sent', 'hub' => "LocalHub", 'node_type' => $amount));
+            /* wallet transaction */
+            $this->wallet_set_transaction($user_id, 'user', $this->_data['user_id'], $amount, 'in');
+            $_SESSION['wallet_transfer_amount'] = $amount;
+        }else{
+            throw new Exception(__("There is some amount is locked for bank transfer you can send money below or equal to ".number_format((float)$lockedbalance, 2, '.', '')));
+        }
     }
 
     /* ------------------------------- */
@@ -14631,16 +14674,36 @@ class User
         if ($userData['user_wallet_balance'] < $amount) {
             throw new Exception(__("Your current wallet balance is") . " <strong>" . $system['system_currency_symbol'] . $userData['user_wallet_balance'] . "</strong>, " . __("Recharge your wallet to continue"));
         }
-        /* decrease viewer user wallet balance */
-        $db->query(sprintf('UPDATE users SET user_wallet_balance = IF(user_wallet_balance-%1$s<=0,0,user_wallet_balance-%1$s) WHERE user_id = %2$s', secure($amount), secure($userData['user_id'], 'int'))) or _error("SQL_ERROR_THROWEN");
-        /* log this transaction */
-        $this->wallet_set_transaction($userData['user_id'], 'user', $user_id, $amount, 'out');
-        /* increase target user wallet balance */
-        $db->query(sprintf("UPDATE users SET user_wallet_balance = user_wallet_balance + %s WHERE user_id = %s", secure($amount), secure($user_id, 'int'))) or _error("SQL_ERROR_THROWEN");
-        /* send notification (money sent) to the target user */
-        $this->post_notification_api(array('to_user_id' => $user_id,'from_user_id'=>$userData['user_id'], 'action' => 'money_sent', 'hub' => "LocalHub", 'node_type' => $amount));
-        /* wallet transaction */
-        $this->wallet_set_transaction($user_id, 'user', $userData['user_id'], $amount, 'in');
+        //Custom Wallet Bank Withdrawal
+        $error = false;
+        $lockedbalance = 0;
+        $bank_withdrawl_transactions = "SELECT locked_balance.*, users.user_wallet_balance FROM `locked_balance` JOIN users On locked_balance.user_id = users.user_id WHERE locked_balance.user_id = ".$this->_data['user_id'];
+        $get_rows = $db->query($bank_withdrawl_transactions) or _error("SQL_ERROR_THROWEN");
+        if ($get_rows->num_rows > 0) {
+            $result = $get_rows->fetch_assoc();
+            $user_wallet_pending = $result['user_wallet_balance'] - $result['locked_balance'];
+            $lockedbalance = $user_wallet_pending;
+            if($amount > $user_wallet_pending){
+                $error = true;
+            }else{
+                $error = false;
+            }
+        }
+
+        if(!$error){
+            /* decrease viewer user wallet balance */
+            $db->query(sprintf('UPDATE users SET user_wallet_balance = IF(user_wallet_balance-%1$s<=0,0,user_wallet_balance-%1$s) WHERE user_id = %2$s', secure($amount), secure($userData['user_id'], 'int'))) or _error("SQL_ERROR_THROWEN");
+            /* log this transaction */
+            $this->wallet_set_transaction($userData['user_id'], 'user', $user_id, $amount, 'out');
+            /* increase target user wallet balance */
+            $db->query(sprintf("UPDATE users SET user_wallet_balance = user_wallet_balance + %s WHERE user_id = %s", secure($amount), secure($user_id, 'int'))) or _error("SQL_ERROR_THROWEN");
+            /* send notification (money sent) to the target user */
+            $this->post_notification_api(array('to_user_id' => $user_id,'from_user_id'=>$userData['user_id'], 'action' => 'money_sent', 'hub' => "LocalHub", 'node_type' => $amount));
+            /* wallet transaction */
+            $this->wallet_set_transaction($user_id, 'user', $userData['user_id'], $amount, 'in');
+        }else{
+            throw new Exception(__("There is some amount is locked for bank transfer you can send money below or equal to ".number_format((float)$lockedbalance, 2, '.', '')));
+        }
     }
 
 
@@ -14725,7 +14788,7 @@ class User
         global $db;
         $transactions = [];
         $coin_full_name = array('btc'=>'Bitcoin','eth'=>'Ethereum','apl'=>'Apollo','gsx'=>'Gold Secure Currency');
-        $get_transactions = $db->query(sprintf("SELECT ads_users_wallet_transactions.*,investment_transactions.currency,investment_transactions.tnx_type, users.user_name, users.user_firstname, users.user_lastname, users.user_gender, users.user_picture FROM ads_users_wallet_transactions LEFT JOIN investment_transactions ON ads_users_wallet_transactions.investment_id = investment_transactions.id LEFT JOIN users ON ads_users_wallet_transactions.node_type='user' AND ads_users_wallet_transactions.node_id = users.user_id  WHERE ads_users_wallet_transactions.user_id = %s ORDER BY ads_users_wallet_transactions.transaction_id DESC", secure($this->_data['user_id'], 'int'))) or _error("SQL_ERROR_THROWEN");
+        $get_transactions = $db->query(sprintf("SELECT ads_users_wallet_transactions.*,investment_transactions.currency,investment_transactions.tnx_type, users.user_name, users.user_firstname, users.user_lastname, users.user_picture_id, users.user_gender, users.user_picture, posts_photos.source as user_picture_full FROM ads_users_wallet_transactions LEFT JOIN investment_transactions ON ads_users_wallet_transactions.investment_id = investment_transactions.id LEFT JOIN users ON ads_users_wallet_transactions.node_type='user' AND ads_users_wallet_transactions.node_id = users.user_id LEFT JOIN posts_photos ON users.user_picture_id = posts_photos.photo_id   WHERE ads_users_wallet_transactions.user_id = %s ORDER BY ads_users_wallet_transactions.transaction_id DESC", secure($this->_data['user_id'], 'int'))) or _error("SQL_ERROR_THROWEN");
         if ($get_transactions->num_rows > 0) {
             while ($transaction = $get_transactions->fetch_assoc()) {
                 // print_r($transaction); die;
@@ -14733,7 +14796,8 @@ class User
                     $transaction['currency_detail'] = (($transaction['tnx_type']=='buy')?'Buy ':'Sell ').$coin_full_name[$transaction['currency']];
                 }
                 if ($transaction['node_type'] == "user") {
-                    $transaction['user_picture'] = get_picture($transaction['user_picture'], $transaction['user_gender']);
+                   // $transaction['user_picture'] = get_picture($transaction['user_picture'], $transaction['user_gender']);
+                   $transaction['user_picture'] = $system['system_url'] . '/includes/wallet-api/image-exist-api.php?userPicture=' . $transaction['user_picture'] . '&userPictureFull=' . $system['system_uploads'] . '/' . $transaction['user_picture_full'];
                 }
                 $transactions[] = $transaction;
             }
@@ -14842,13 +14906,33 @@ class User
         if ($this->_data['user_wallet_balance'] < $package['price']) {
             modal("ERROR", __("Sorry"), __("There is no enough credit in your wallet to buy this") . ", " . __("Recharge your wallet to continue"));
         }
-        /* decrease viewer user wallet balance */
-        $db->query(sprintf('UPDATE users SET user_wallet_balance = IF(user_wallet_balance-%1$s<=0,0,user_wallet_balance-%1$s) WHERE user_id = %2$s', secure($package['price']), secure($this->_data['user_id'], 'int'))) or _error("SQL_ERROR_THROWEN");
-        /* log this transaction */
-        $this->wallet_set_transaction($this->_data['user_id'], 'package_payment', $package['package_id'], $package['price'], 'out');
-        /* update user package */
-        $this->update_user_package($package['package_id'], $package['name'], $package['price'], $package['verification_badge_enabled']);
-        $_SESSION['wallet_package_payment_amount'] = $package['price'];
+        //Custom Wallet Bank Withdrawal
+        $error = false;
+        $lockedbalance = 0;
+        $bank_withdrawl_transactions = "SELECT locked_balance.*, users.user_wallet_balance FROM `locked_balance` JOIN users On locked_balance.user_id = users.user_id WHERE locked_balance.user_id = ".$this->_data['user_id'];
+        $get_rows = $db->query($bank_withdrawl_transactions) or _error("SQL_ERROR_THROWEN");
+        if ($get_rows->num_rows > 0) {
+            $result = $get_rows->fetch_assoc();
+            $user_wallet_pending = $result['user_wallet_balance'] - $result['locked_balance'];
+            $lockedbalance = $user_wallet_pending;
+            if($package['price'] > $user_wallet_pending){
+                $error = true;
+            }else{
+                $error = false;
+            }
+        }
+
+        if(!$error){
+            /* decrease viewer user wallet balance */
+            $db->query(sprintf('UPDATE users SET user_wallet_balance = IF(user_wallet_balance-%1$s<=0,0,user_wallet_balance-%1$s) WHERE user_id = %2$s', secure($package['price']), secure($this->_data['user_id'], 'int'))) or _error("SQL_ERROR_THROWEN");
+            /* log this transaction */
+            $this->wallet_set_transaction($this->_data['user_id'], 'package_payment', $package['package_id'], $package['price'], 'out');
+            /* update user package */
+            $this->update_user_package($package['package_id'], $package['name'], $package['price'], $package['verification_badge_enabled']);
+            $_SESSION['wallet_package_payment_amount'] = $package['price'];
+        }else{
+            throw new Exception(__("There is some amount is locked for bank transfer you can send money below or equal to ".number_format((float)$lockedbalance, 2, '.', '')));
+        }
     }
 
 
@@ -18835,6 +18919,32 @@ class User
            return  'thumbnails/'.$result_['thumb'] ;
 
          }
+    }
+
+     /**
+     * Encode/Decode url strings
+     */
+    function convert_string($action, $string){
+        $output = '';
+        $encrypt_method = "AES-256-CBC";
+        $secret_key = 'eaiYYkYTysia2lnHiw0N0vx7t7a3kEJVLfbTKoQIx5o=';
+        $secret_iv = 'eaiYYkYTysia2lnHiw0N0';
+        // hash
+        $key = hash('sha256', $secret_key);
+        $initialization_vector = substr(hash('sha256', $secret_iv), 0, 16);
+        if($string != '')
+        {
+            if($action == 'encrypt')
+            {
+                $output = openssl_encrypt($string, $encrypt_method, $key, 0, $initialization_vector);
+                $output = base64_encode($output);
+            }
+            if($action == 'decrypt')
+            {
+                $output = openssl_decrypt(base64_decode($string), $encrypt_method, $key, 0, $initialization_vector);
+            }
+        }
+        return $output;
     }
 
 }

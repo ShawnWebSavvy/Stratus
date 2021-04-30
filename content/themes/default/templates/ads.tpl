@@ -816,8 +816,12 @@
                                     Credit
                                 </div>
                                 <div class="stat-panel walletIconMoneyText">
-                                    <div class="walletIconMoneyAmount">
+                                    <div class="walletIconMoneyAmount lockedBalance">
                                         {$system['system_currency_symbol']}{$user->_data['user_wallet_balance']|number_format:2}
+                                        <span class="lockedNumbers text-right">
+                                            Locked balance <br/>
+                                            {$system['system_currency_symbol']}{$lockedBalance|number_format:2}
+                                        </span>
                                     </div>
                                 </div>
                                 <button class="btn btn-block mb20" style="width: auto;padding: 13px 30px;"
@@ -891,7 +895,7 @@
                                     <button class="btn btn-block mb10" data-toggle="modal" data-url="#bank-withdrawl">
                                         <img width="15px" class="mr20"
                                             src="{$system['system_url']}/content/themes/{$system['theme']}/images/svg/svgImg/walletHeart.svg">
-                                        {__("Withdrawl to Bank")}
+                                        {__("Withdrawal to Bank")}
                                     </button>
                                     {/if}
                                 </div>
