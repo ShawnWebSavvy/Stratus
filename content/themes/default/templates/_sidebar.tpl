@@ -11,10 +11,6 @@
                         <div class="svg-container">
                             <img src="{$system['system_uploads_assets']}/content/themes/default/images/svg/svgImg/favoritesN.svg"
                                 class="">
-                            <!-- <img src="{$system['system_url']}/content/themes/default/images/svg/svgImg/nav_icon_favourite.svg"
-                                class="blackicon">
-                            <img src="{$system['system_url']}/content/themes/default/images/svg/svgImg/nav_icon_favourits_active.svg"
-                                class="whiteicon"> -->
                         </div>
                         <span class="nav-text">{__("Latest Posts")}</span>
                     </a>
@@ -26,9 +22,6 @@
                     <a href="{$system['system_url']}">
                         <div class="svg-container">
                             <img src="{$system['system_uploads_assets']}/content/themes/default/images/svg/svgImg/local_hubN.svg" class="">
-                            <!-- <img src="{$system['system_url']}/content/themes/default/images/svg/svgImg/nav_icon_localhub.svg" class="blackicon">
-                            <img src="{$system['system_url']}/content/themes/default/images/svg/svgImg/nav_icon_localhub_active.svg"
-                                class="whiteicon"> -->
                         </div>
                         <span class="nav-text">Circle</span>
                     </a>
@@ -38,10 +31,6 @@
                     <a page="{$page}" class="profile-link" href="{$system['system_url']}/{$user->_data['user_name']}">
                         <div class="svg-container">
                             <img src="{$system['system_uploads_assets']}/content/themes/default/images/svg/svgImg/profile_iconN.svg" class="">
-                            <!-- <img src="{$system['system_url']}/content/themes/default/images/svg/svgImg/nav_icon_friends.svg"
-                                class="blackicon">
-                            <img src="{$system['system_url']}/content/themes/default/images/svg/svgImg/nav_icon_friends-active.svg"
-                                class="whiteicon"> -->
                         </div>
                         <span class="nav-text">Profile</span>
                     </a>
@@ -50,10 +39,6 @@
                     <a href="{$system['system_url']}/people/friend_requests">
                         <div class="svg-container">
                             <img src="{$system['system_uploads_assets']}/content/themes/default/images/svg/svgImg/friend_iconN.svg" class="">
-                            <!-- <img src="{$system['system_url']}/content/themes/default/images/svg/friendsIcon.svg"
-                                class="blackicon">
-                            <img src="{$system['system_uploads_assets']}/content/themes/default/images/svg/friendsIconHover.svg"
-                                class="whiteicon"> -->
                         </div><span class="nav-text">Friends</span>
                         <span class="counter friendsCount blue {if count($user->_data['all_friends']) == 0}x-hidden{/if}">
                             {count($user->_data['all_friends'])}
@@ -64,10 +49,6 @@
                     <a href="{$system['system_url']}/messages" class="{$page}">
                         <div class="svg-container">
                             <img src="{$system['system_uploads_assets']}/content/themes/default/images/svg/svgImg/messages_iconN.svg" class="">
-                            <!-- <img src="{$system['system_url']}/content/themes/default/images/svg/svgImg/nav_icon_messages.svg"
-                                class="blackicon">
-                            <img src="{$system['system_url']}/content/themes/default/images/svg/svgImg/nav_icon_nav_icon_messages_hover.svg"
-                                class="whiteicon"> -->
                         </div>
                         <!--  con="chat"  -->
                         <span class="nav-text">{__("Messages")}</span>
@@ -77,10 +58,6 @@
                     <a href="{$system['system_url']}/settings">
                         <div class="svg-container">
                             <img src="{$system['system_uploads_assets']}/content/themes/default/images/svg/svgImg/setting_iconN.svg" class="">
-                            <!-- <img src="{$system['system_url']}/content/themes/default/images/svg/svgImg/nav_icon_settings.svg"
-                                class="blackicon">
-                            <img src="{$system['system_url']}/content/themes/default/images/svg/svgImg/nav_icon_settings_hover.svg"
-                                class="whiteicon"> -->
                         </div>
                         <span class="nav-text">{__("Settings")}</span>
                     </a>
@@ -118,10 +95,6 @@
                     <a href="{$system['system_url']}/memories">
                         <div class="svg-container">
                             <img src="{$system['system_uploads_assets']}/content/themes/default/images/svg/svgImg/memories_iconN.svg" class="">
-                            <!-- <img src="{$system['system_url']}/content/themes/default/images/svg/svgImg/nav_icon_nav_icon_memories.svg"
-                                class="blackicon">
-                            <img src="{$system['system_url']}/content/themes/default/images/svg/svgImg/nav_icon_nav_icon_memories_hover.svg"
-                                class="whiteicon"> -->
                         </div>
                         <span class="nav-text">{__("Memories")}</span>
                     </a>
@@ -188,10 +161,6 @@
                     <a href="{$system['system_url']}/global-profile.php?username={$user->_data['user_name']}&view=followers">
                         <div class="svg-container">
                             <img src="{$system['system_uploads_assets']}/content/themes/default/images/svg/svgImg/friend_iconN.svg" class="">
-                            <!-- <img src="{$system['system_url']}/content/themes/default/images/svg/friendsIcon.svg"
-                                class="blackicon">
-                            <img src="{$system['system_url']}/content/themes/default/images/svg/friendsIconHover.svg"
-                                class="whiteicon"> -->
                         </div><span class="nav-text">Followers</span>
                         <span class="counter blue {if count($user->_data['followers']) == 0}x-hidden{/if}">
                             <!-- {count($user->_data['followers'])} -->
@@ -203,8 +172,6 @@
                     <a href="{$system['system_url']}/globalMessages">
                         <div class="svg-container">
                             <img src="{$system['system_uploads_assets']}/content/themes/default/images/svg/svgImg/messages_iconN.svg" class="">
-                            <!-- <img src="{$system['system_url']}/content/themes/default/images/svg/svgImg/nav_icon_messages.svg" class="blackicon">
-                            <img src="{$system['system_url']}/content/themes/default/images/svg/svgImg/nav_icon_nav_icon_messages_hover.svg"class="whiteicon"> -->
                         </div>
                         <span class="nav-text">Messages</span>
                     </a>
@@ -242,10 +209,6 @@
                         <div class="svg-container">
                             <img src="{$system['system_url']}/content/themes/default/images/svg/svgImg/video_hub_icon.svg"
                                 class="">
-                            <!-- <img src="{$system['system_url']}/content/themes/default/images/svg/svgImg/nav_icon_favourite.svg"
-                            class="blackicon">
-                            <img src="{$system['system_url']}/content/themes/default/images/svg/svgImg/nav_icon_favourits_active.svg"
-                            class="whiteicon"> -->
                         </div>
                         <span class="nav-text">{__("Video Hub")}</span>
                     </a>
@@ -261,8 +224,6 @@
                     <a href="{$system['system_url']}/blogs">
                         <div class="svg-container">
                             <img src="{$system['system_uploads_assets']}/content/themes/default/images/svg/svgImg/blog_hubN.svg" class="">
-                            <!-- <img src="{$system['system_url']}/content/themes/default/images/svg/svgImg/nav_icon_blogHub.svg" class="blackicon">
-                            <img src="{$system['system_url']}/content/themes/default/images/svg/svgImg/nav_icon_blogHub_active.svg" class="whiteicon"> -->
                         </div>
                         <span class="nav-text"> {__("Blog Hub")}</span>
                     </a>
@@ -273,12 +234,10 @@
             <!-- Blog hub ends here -->
             <!-- Ads HUB Starts -->
             <ul class="main-side-nav main-left-side-nav left-sidebar-first-ul {if $page== " people" || $page=="ads" && $view!="wallet" } active{/if} {$page}" ">
-                <li {if $page==" ads" && $view!="wallet" }class="active" {/if}>
+                <li {if $page=="ads"}class="active" {/if}>
                 <a href=" {$system['system_url']}/ads">
                     <div class="svg-container">
                         <img src="{$system['system_uploads_assets']}/content/themes/default/images/svg/svgImg/ad_hubN.svg" class="">
-                        <!-- <img src="{$system['system_url']}/content/themes/default/images/svg/svgImg/nav_icon_adHub.svg" class="blackicon">
-                            <img src="{$system['system_url']}/content/themes/default/images/svg/svgImg/nav_icon_adHub_active.svg" class="whiteicon"> -->
                     </div>
                     <span class="nav-text">{__("Ads Hub")}</span>
                 </a>
@@ -309,8 +268,6 @@
                     <a href="{$system['system_url']}/market">
                         <div class="svg-container {$page}">
                             <img src="{$system['system_uploads_assets']}/content/themes/default/images/svg/svgImg/market_hubN.svg" class="">
-                            <!-- <img src="{$system['system_url']}/content/themes/default/images/svg/svgImg/nav_icon_marketHub.svg" class="blackicon">
-                              <img src="{$system['system_url']}/content/themes/default/images/svg/svgImg/nav_icon_marketHub_active.svg" class="whiteicon"> -->
                         </div>
                         <span class="nav-text">{__("Market Hub")}</span>
                     </a>
@@ -319,8 +276,7 @@
             {/if}
             <!-- Market hub END -->
             <!-- wallet seprate -->
-            <ul class="main-side-nav main-left-side-nav left-sidebar-{if ($page==" ads" && $view=="wallet" )}second-ul
-                active{else}first-ul{/if}">
+            <ul class="main-side-nav main-left-side-nav left-sidebar-{if ($view=="wallet" )}second-ul active{else}first-ul{/if} {$view}">
                 <li {if $page=="ads" && $view=="wallet" }class="active" {/if}>
                     <a href=" {$system['system_url']}/wallet">
                         <div class="svg-container">
