@@ -21,8 +21,8 @@ foreach($csv as $key=>$line){
 }
 */
 
-$data = $db->query(sprintf("SELECT * from  investment_coin_imports Where process='P' LIMIT 10")) or _error("SQL_ERROR_THROWEN");
-$list =  [];
+$data = $db->query(sprintf("SELECT * from  investment_coin_imports Where process='P' LIMIT 3")) or _error("SQL_ERROR_THROWEN");
+
 if ($data->num_rows > 0) {
     while ($data1 = $data->fetch_assoc()) {
         // $list[] = $data1;
@@ -39,6 +39,8 @@ if ($data->num_rows > 0) {
             $db->query(sprintf("INSERT INTO ads_users_wallet_transactions (user_id, investment_id, node_type, node_id, amount, type, date,paymentMode) VALUES (%s, %s, %s, %s, %s, %s, %s, %s)", secure($data1['user_id'], 'int'), secure($investment_id), secure('purchase_coin'), secure(0, 'int'), secure(0), secure('out'), secure(date('Y-m-d h:i:m')), secure('usd_wallet_balance'))) or _error("SQL_ERROR_THROWEN");
      
             $db->query(sprintf("UPDATE users SET gsx_wallet = gsx_wallet + %s WHERE user_id = %s", secure($data1['gsx_coins']), secure($data1['user_id'], 'int'))) or _error("SQL_ERROR_THROWEN");
+
+            $db->query(sprintf("UPDATE investment_coin_imports SET process='C' WHERE id = %s", secure($data1['id'], 'int'))) or _error("SQL_ERROR_THROWEN");
         }
         exit;
         
