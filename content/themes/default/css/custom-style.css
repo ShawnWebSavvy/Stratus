@@ -527,3 +527,9 @@ video.stratus-customvideo {height: 350px !important;width: 1000px !important;}
 .child-post-ul.secoundPostHidd > .bricklayer {
 	display: none !important;
 }
+.search-el-bg{
+	background-color:rgba(18, 105, 255, 0.07);
+}
+.searchSection .feeds-item:hover{
+	background-color: rgba(18, 105, 255, 0.07);
+}

@@ -1,52 +1,106 @@
 var api = [];
 var search_selected = 0;
+var search_selected_el;
 
 $(document).ready( function(){
    
     $("body").on('keydown', function(e){
 
-         var search_nodes = document.querySelectorAll('#search-results ul > li');
-        // up
-         if (e.which === 38) { 
-              search_select(search_nodes[search_selected - 1],search_nodes);
+        var search_results_display = $('#search-results').css('display');
+        var search_history_display = $('#search-history').css('display');
+        if(search_results_display !== 'none'){
+            search_results_display  = true;
+            search_history_display  = false;
+            var search_nodes = document.querySelectorAll('#search-results ul > li');
+        } else if(search_history_display !== 'none'){
+            search_results_display  = false;
+            search_history_display  = true;
+            var search_nodes = document.querySelectorAll('#search-history ul > li');
+        } else {
+            search_results_display  = false;
+            search_history_display  = false;
+        }
+
+         
+         // up
+         if (e.keyCode === 38) { 
+            if(!search_selected_el){
+                search_select(search_nodes[search_selected],search_nodes, search_results_display);
+            } else {
+                search_select(search_nodes[search_selected - 1],search_nodes, search_results_display);
+            }  
+            e.preventDefault();
          }
          // down
-         if (e.which === 40) { 
-              search_select(search_nodes[search_selected + 1],search_nodes)
+         if (e.keyCode === 40) {
+              
+            if(!search_selected_el){
+              search_select(search_nodes[search_selected],search_nodes, search_results_display);
+            } else {
+              search_select(search_nodes[search_selected + 1],search_nodes,search_results_display );
             }
+            e.preventDefault();
+         }
+         
+         // enter
+         if(e.keyCode === 13 && search_selected_el && (search_results_display || search_history_display )) {
+            var enter_el = $(search_selected_el).find('.name a');
+            var enter_el_href = enter_el.attr('href');
+            if(enter_el_href){
+              window.location = enter_el_href;
+            }
+            e.preventDefault();
+         }
+
+
     });
 
-    function search_select(el,nodes) {
-        var search_ul = document.querySelector('#search-results .custom-scrollbar');
+    function search_select(el,nodes,search_results_display) {
+       
+       
+        if(search_results_display){
+          var scroll_box_js = $('#search-results .js_scroller').css('overflowY');  
+           if(scroll_box_js == 'auto'){
+             var search_ul = document.querySelector('#search-results .js_scroller');
+           } else {
+             var search_ul = document.querySelector('#search-results .custom-scrollbar');
+           }
+         } else {
+
+            var scroll_box_js = $('#search-history .js_scroller').css('overflowY');  
+            if(scroll_box_js == 'auto'){
+              var search_ul = document.querySelector('#search-history .js_scroller');
+            } else {
+              var search_ul = document.querySelector('#search-history .custom-scrollbar');
+            }
+         }
         var search_index = [].indexOf.call(nodes, el);
         if (search_index === -1) return;
         search_selected = search_index;
+
         var search_elHeight = $(el).height();
         var search_scrollTop = $(search_ul).scrollTop();
         var search_viewport = search_scrollTop + $(search_ul).height();
         var search_elOffset = search_elHeight * search_selected;
-        
+
         if (search_elOffset < search_scrollTop || (search_elOffset + search_elHeight) > search_viewport){
             $(search_ul).scrollTop(search_elOffset);
         }
-      
-        $('#search-results ul > li.bg-secondary').removeClass('bg-secondary');
-        $(el).addClass('bg-secondary');
+        if(search_results_display){
+         $('#search-results ul > li.search-el-bg').removeClass('search-el-bg');
+        } else {
+         $('#search-history ul > li.search-el-bg').removeClass('search-el-bg');   
+        }
+        $(el).addClass('search-el-bg');
+        $(el).focus();
+        $('#search-input').blur();
+        search_selected_el = el;
+        
     }
 
 
 
 })
-
-
-
-
-
-
-
-
-
-
 
 
 
@@ -425,7 +479,7 @@ function button_status(e, t) {
                 }),
                 $("body").on("keyup", "#search-input", function (e) {
 
-                  if (e.which !== 38 && e.which !== 40){
+                  if (e.keyCode !== 38 && e.keyCode !== 40 && e.keyCode !== 13){
 
                     var query = $(this).val();
                     if (!is_empty(query)) {
@@ -445,7 +499,7 @@ function button_status(e, t) {
                                             ? ($("#search-results .dropdown-widget-header").show(),
                                                 $("#search-results-all").show(),
                                                 $("#search-results .dropdown-widget-body").html(response.results),
-                                                $("#search-results-all").attr("href", site_path + "/search/" + query), search_selected = 0 )
+                                                $("#search-results-all").attr("href", site_path + "/search/" + query), search_selected = 0, search_selected_el = null )
                                             : ($("#search-results .dropdown-widget-header").hide(), $("#search-results-all").hide(), $("#search-results .dropdown-widget-body").html(render_template("#search-for", { query: query })));
                                 },
                                 "json"
@@ -456,7 +510,7 @@ function button_status(e, t) {
                 }
                 }),
                 $("body").on("keydown", "#search-input", function (e) {
-                    if (13 == e.keyCode) {
+                    if (13 == e.keyCode && !search_selected_el) {
                         if ((e.preventDefault, !is_empty((a = $(this).val())))) {
                             var t = a.match(/#(\w+)/gi);
                             if (null !== t && t.length > 0) {
