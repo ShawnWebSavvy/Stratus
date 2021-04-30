@@ -817,7 +817,7 @@
                                 </div>
                                 <div class="stat-panel walletIconMoneyText">
                                     <div class="walletIconMoneyAmount lockedBalance">
-                                        {$system['system_currency_symbol']}{$lockedBalance|number_format:2}
+                                        {$system['system_currency_symbol']}{$user->_data['user_wallet_balance']|number_format:2}
                                         <span class="lockedNumbers text-right">
                                             Locked balance <br/>
                                             {$system['system_currency_symbol']}{$lockedBalance|number_format:2}
