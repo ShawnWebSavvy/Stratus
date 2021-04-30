@@ -1696,7 +1696,7 @@
             <input type="hidden" name="userId" value="{literal}{{userId}}{/literal}">
             <input type="hidden" name="request_id" value="{literal}{{request_id}}{/literal}">
             <button type="button" class="btn btn-light dltButton" data-dismiss="modal">{__("Cancel")}</button>
-            <button type="submit" class="btn btn-success btn-antier-green approvePayment"><i class="fas fa-check mr20"></i> {__("Approve")}</button>
+            <button type="submit" class="btn btn-success walletSendButton approvePayment"><i class="fas fa-check mr20"></i> {__("Approve")}</button>
         </div>
     </form>
 </script>
@@ -1724,7 +1724,7 @@
             <input type="hidden" name="userId" value="{literal}{{userId}}{/literal}">
             <input type="hidden" name="request_id" value="{literal}{{request_id}}{/literal}">
             <button type="button" class="btn btn-light dltButton" data-dismiss="modal">{__("Cancel")}</button>
-            <button type="submit" class="btn btn-success btn-antier-green approvePayment"><i class="fas fa-check mr20"></i> {__("Approve")}</button>
+            <button type="submit" class="btn btn-success walletSendButton approvePayment"><i class="fas fa-check mr20"></i> {__("Approve")}</button>
         </div>
     </form>
 </script>
