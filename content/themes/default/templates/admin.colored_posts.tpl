@@ -13,9 +13,14 @@
                 </a>
             </div>
         {/if}
-        <i class="fa fa-palette mr10"></i>{__("Colored Posts")}
-        {if $sub_view == "add"} &rsaquo; {__("Add New Pattern")}{/if}
-        {if $sub_view == "edit"} &rsaquo; {__("Edit Pattern")}{/if}
+        <div class="d-flex align-items-center">
+            <div class="svg-container mr10">
+                <img style="width: 25px;" src="{$system['system_url']}/content/themes/default/images/svg/svgImg/addPostProductsHover.svg" class="">
+            </div>
+            {__("Colored Posts")}
+            {if $sub_view == "add"} &rsaquo; {__("Add New Pattern")}{/if}
+            {if $sub_view == "edit"} &rsaquo; {__("Edit Pattern")}{/if}
+        </div>
     </div>
 
     {if $sub_view == ""}

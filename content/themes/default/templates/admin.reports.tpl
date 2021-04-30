@@ -7,7 +7,7 @@
         </div>
         <div class="d-flex align-items-center">
             <div class="svg-container mr10">
-                <img src="{$system['system_uploads_assets']}/content/themes/default/images/svg/svgImg/Flag.svg" class="">
+                <img src="{$system['system_uploads_assets']}/content/themes/default/images/svg/svgImg/security_icon_hover.svg" class="">
             </div>
             {__("Reports")}
         </div>

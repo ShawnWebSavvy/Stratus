@@ -150,21 +150,41 @@ function updateWAlletBalanceFunction($token)
           if ($check_user['count'] < 1) {
             returnResponse(false, 402, "Invalid user");
           } else {
-            $query =   $db->query(sprintf('UPDATE users SET user_wallet_balance = IF(user_wallet_balance-%1$s<=0,0,user_wallet_balance-%1$s) WHERE user_id = %2$s', secure($_POST['price']), secure($check_user['id'], 'int'))) or _error("SQL_ERROR_THROWEN");
-            if ($query == true) {
-              /* log this transaction */
-              //  wallet_transaction_logs($_POST['id'], 'videohub_package_payment', 0, $_POST['price'], 'out');
-              if(isset($_POST['type']) && $_POST['type'] == "video_purchase"){
-                $packageType = "video_purchase";
-              }else{
-                $packageType = "videohub_package_payment";
-              }
-              $db->query(sprintf("INSERT INTO ads_users_wallet_transactions (user_id, node_type, node_id, amount, type, date, platformType, paymentMode) VALUES (%s, %s, %s, %s, %s, %s, %s, %s)", secure($check_user['id'], 'int'), secure($packageType), secure(0, 'int'), secure($_POST['price']), secure('out'), secure($date), secure('videohub', 'string'), secure('wallet', 'string'))) or _error("SQL_ERROR_THROWEN");
-
-              returnResponse(true, 200, "Success");
-            } else {
-              returnResponse(false, 300, "Something went wrong");
+            //Custom Wallet Bank Withdrawal
+            $error = false;
+            $lockedbalance = 0;
+            $bank_withdrawl_transactions = "SELECT locked_balance.*, users.user_wallet_balance FROM `locked_balance` JOIN users On locked_balance.user_id = users.user_id WHERE locked_balance.user_id = ".$check_user['user_id'];
+            $get_rows = $db->query($bank_withdrawl_transactions) or _error("SQL_ERROR_THROWEN");
+            if ($get_rows->num_rows > 0) {
+                $result = $get_rows->fetch_assoc();
+                $user_wallet_pending = $result['user_wallet_balance'] - $result['locked_balance'];
+                $lockedbalance = $user_wallet_pending;
+                if($_POST['price'] > $user_wallet_pending){
+                  $error = true;
+                }else{
+                  $error = false;
+                }
             }
+            if(!$error){
+              $query =   $db->query(sprintf('UPDATE users SET user_wallet_balance = IF(user_wallet_balance-%1$s<=0,0,user_wallet_balance-%1$s) WHERE user_id = %2$s', secure($_POST['price']), secure($check_user['id'], 'int'))) or _error("SQL_ERROR_THROWEN");
+              if ($query == true) {
+                /* log this transaction */
+                //  wallet_transaction_logs($_POST['id'], 'videohub_package_payment', 0, $_POST['price'], 'out');
+                if(isset($_POST['type']) && $_POST['type'] == "video_purchase"){
+                  $packageType = "video_purchase";
+                }else{
+                  $packageType = "videohub_package_payment";
+                }
+                $db->query(sprintf("INSERT INTO ads_users_wallet_transactions (user_id, node_type, node_id, amount, type, date, platformType, paymentMode) VALUES (%s, %s, %s, %s, %s, %s, %s, %s)", secure($check_user['id'], 'int'), secure($packageType), secure(0, 'int'), secure($_POST['price']), secure('out'), secure($date), secure('videohub', 'string'), secure('wallet', 'string'))) or _error("SQL_ERROR_THROWEN");
+  
+                returnResponse(true, 200, "Success");
+              } else {
+                returnResponse(false, 300, "Something went wrong");
+              }
+            }else{
+              returnResponse(false, 402, "There is some amount is locked for bank transfer you can send money below or equal to ".number_format((float)$lockedbalance, 2, '.', ''));
+            }
+            
           }
         } else {
           returnResponse(false, 300, "parameters missing");
@@ -351,16 +371,35 @@ function updatesendmoneyWAlletBalanceFunction()
 
           returnResponse(false, 400, "Your current wallet balance is " . $system['system_currency_symbol'] . "" . $check_user['user_wallet_balance'] . " Recharge your wallet to continue");
         } else {
-          $db->query(sprintf('UPDATE users SET user_wallet_balance = IF(user_wallet_balance-%1$s<=0,0,user_wallet_balance-%1$s) WHERE user_id = %2$s', secure($amount), secure($user_id, 'int'))) or _error("SQL_ERROR_THROWEN");
+          //Custom Wallet Bank Withdrawal
+          $error = false;
+          $lockedbalance = 0;
+          $bank_withdrawl_transactions = "SELECT locked_balance.*, users.user_wallet_balance FROM `locked_balance` JOIN users On locked_balance.user_id = users.user_id WHERE locked_balance.user_id = ".$check_user['user_id'];
+          $get_rows = $db->query($bank_withdrawl_transactions) or _error("SQL_ERROR_THROWEN");
+          if ($get_rows->num_rows > 0) {
+              $result = $get_rows->fetch_assoc();
+              $user_wallet_pending = $result['user_wallet_balance'] - $result['locked_balance'];
+              $lockedbalance = $user_wallet_pending;
+              if($_POST['price'] > $user_wallet_pending){
+                $error = true;
+              }else{
+                $error = false;
+              }
+          }
+          if(!$error){
+            $db->query(sprintf('UPDATE users SET user_wallet_balance = IF(user_wallet_balance-%1$s<=0,0,user_wallet_balance-%1$s) WHERE user_id = %2$s', secure($amount), secure($user_id, 'int'))) or _error("SQL_ERROR_THROWEN");
 
-          $db->query(sprintf("UPDATE users SET user_wallet_balance = user_wallet_balance + %s WHERE user_id = %s", secure($amount), secure($reciver_id, 'int'))) or _error("SQL_ERROR_THROWEN");
+            $db->query(sprintf("UPDATE users SET user_wallet_balance = user_wallet_balance + %s WHERE user_id = %s", secure($amount), secure($reciver_id, 'int'))) or _error("SQL_ERROR_THROWEN");
 
-          $db->query(sprintf("INSERT INTO ads_users_wallet_transactions (user_id, node_type, node_id, amount, type, paymentMode, date) VALUES (%s, %s, %s, %s, %s, %s, %s)", secure($user_id, 'int'), secure('user'), secure($reciver_id, 'int'), secure($amount), secure('out'), secure('wallet'), secure($date))) or _error("SQL_ERROR_THROWEN");
+            $db->query(sprintf("INSERT INTO ads_users_wallet_transactions (user_id, node_type, node_id, amount, type, paymentMode, date) VALUES (%s, %s, %s, %s, %s, %s, %s)", secure($user_id, 'int'), secure('user'), secure($reciver_id, 'int'), secure($amount), secure('out'), secure('wallet'), secure($date))) or _error("SQL_ERROR_THROWEN");
 
 
-          $db->query(sprintf("INSERT INTO ads_users_wallet_transactions (user_id, node_type, node_id, amount, type, paymentMode, date) VALUES (%s, %s, %s, %s, %s, %s, %s)", secure($reciver_id, 'int'), secure('user'), secure($user_id, 'int'), secure($amount), secure('in'), secure('wallet'), secure($date))) or _error("SQL_ERROR_THROWEN");
+            $db->query(sprintf("INSERT INTO ads_users_wallet_transactions (user_id, node_type, node_id, amount, type, paymentMode, date) VALUES (%s, %s, %s, %s, %s, %s, %s)", secure($reciver_id, 'int'), secure('user'), secure($user_id, 'int'), secure($amount), secure('in'), secure('wallet'), secure($date))) or _error("SQL_ERROR_THROWEN");
 
-          returnResponse(true, 200, "Success");
+            returnResponse(true, 200, "Success");
+          }else{
+            returnResponse(false, 402, "There is some amount is locked for bank transfer you can use money below or equal to ".number_format((float)$lockedbalance, 2, '.', ''));
+          }
         }
       } else {
         returnResponse(false, 300, "parameters missing");
@@ -556,17 +595,36 @@ function withdrawAffiliatesFunction()
       if ($check_user['count'] < 1) {
         returnResponse(false, 402, "Invalid user");
       } else {
-        $user = new User();
-        $amount = $_POST['amount'];
-        $check_query = $db->query(sprintf("SELECT * FROM users WHERE user_email = %s", secure($_POST['email']))) or _error("SQL_ERROR_THROWEN");
-        $result = $check_query->fetch_assoc();
-        $user_id = $result['user_id'];
-        /* increase target user wallet balance */
-        $queryS = sprintf("UPDATE users SET user_wallet_balance = user_wallet_balance + %s WHERE user_id = %s", secure($amount), secure($user_id, 'int'));
-        $db->query($queryS) or _error("SQL_ERROR_THROWEN");
-        /* wallet transaction */
-        $user->wallet_set_transaction($user_id, 'user', $user_id, $amount, 'in' ,'TubeNow');
-        returnResponse(true, 200, "Success", true);
+        //Custom Wallet Bank Withdrawal
+        $error = false;
+        $lockedbalance = 0;
+        $bank_withdrawl_transactions = "SELECT locked_balance.*, users.user_wallet_balance FROM `locked_balance` JOIN users On locked_balance.user_id = users.user_id WHERE locked_balance.user_id = ".$this->_data['user_id'];
+        $get_rows = $db->query($bank_withdrawl_transactions) or _error("SQL_ERROR_THROWEN");
+        if ($get_rows->num_rows > 0) {
+            $result = $get_rows->fetch_assoc();
+            $user_wallet_pending = $result['user_wallet_balance'] - $result['locked_balance'];
+            $lockedbalance = $user_wallet_pending;
+            if($amount > $user_wallet_pending){
+                $error = true;
+            }else{
+                $error = false;
+            }
+        }
+        if(!$error){
+          $user = new User();
+          $amount = $_POST['amount'];
+          $check_query = $db->query(sprintf("SELECT * FROM users WHERE user_email = %s", secure($_POST['email']))) or _error("SQL_ERROR_THROWEN");
+          $result = $check_query->fetch_assoc();
+          $user_id = $result['user_id'];
+          /* increase target user wallet balance */
+          $queryS = sprintf("UPDATE users SET user_wallet_balance = user_wallet_balance + %s WHERE user_id = %s", secure($amount), secure($user_id, 'int'));
+          $db->query($queryS) or _error("SQL_ERROR_THROWEN");
+          /* wallet transaction */
+          $user->wallet_set_transaction($user_id, 'user', $user_id, $amount, 'in' ,'TubeNow');
+          returnResponse(true, 200, "Success", true);
+        }else{
+          returnResponse(false, 402, "There is some amount is locked for bank transfer you can use money below or equal to ".number_format((float)$lockedbalance, 2, '.', ''));
+        }
       }
       }
 
@@ -830,7 +888,22 @@ function updateWalletOnVideoPurchaseFunction($token)
             exit();
 
           }
-
+//Custom Wallet Bank Withdrawal
+$error = false;
+$lockedbalance = 0;
+$bank_withdrawl_transactions = "SELECT locked_balance.*, users.user_wallet_balance FROM `locked_balance` JOIN users On locked_balance.user_id = users.user_id WHERE locked_balance.user_id = ".$check_seller_user['id'];
+$get_rows = $db->query($bank_withdrawl_transactions) or _error("SQL_ERROR_THROWEN");
+if ($get_rows->num_rows > 0) {
+    $result = $get_rows->fetch_assoc();
+    $user_wallet_pending = $result['user_wallet_balance'] - $result['locked_balance'];
+    $lockedbalance = $user_wallet_pending;
+    if($_POST['price'] > $user_wallet_pending){
+        $error = true;
+    }else{
+        $error = false;
+    }
+}
+if(!$error){
         //  print_r($_POST);die;
           //add balance to seller
            $query =   $db->query(sprintf('UPDATE users SET user_wallet_balance = IF(user_wallet_balance+%1$s<=0,0,user_wallet_balance+%1$s) WHERE user_id = %2$s', secure($_POST['price']), secure($check_seller_user['id'], 'int'))) or _error("SQL_ERROR_THROWEN");
@@ -853,7 +926,9 @@ function updateWalletOnVideoPurchaseFunction($token)
             } else {
               returnResponse(false, 300, "Something went wrong");
             }
-
+          }else{
+            returnResponse(false, 402, "There is some amount is locked for bank transfer you can use money below or equal to ".number_format((float)$lockedbalance, 2, '.', ''));
+          }
         } else {
           returnResponse(false, 300, "parameters missing");
         }

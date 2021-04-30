@@ -15,7 +15,7 @@
         {/if}
         <div class='d-flex align-items-center'>
             <div class="svg-container mr10">
-                <img style="width: 20px;" src="{$system['system_url']}/content/themes/default/images/svg/svgImg/theme.svg" class="">
+                <img style="width: 20px;" src="{$system['system_url']}/content/themes/default/images/svg/admin/theme.svg" class="">
             </div>
             {__("Themes")}
             {if $sub_view == "edit"} &rsaquo; {$data['name']}{/if}

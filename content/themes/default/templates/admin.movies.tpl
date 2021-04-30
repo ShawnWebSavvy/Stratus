@@ -27,7 +27,7 @@
         {/if}
         <div class="d-flex align-items-center">
             <div class="svg-container mr10">
-                <img src="{$system['system_uploads_assets']}/content/themes/default/images/svg/svgImg/add_video_iconHover.svg" class="">
+                <img src="{$system['system_uploads_assets']}/content/themes/default/images/svg/svgImg/add_video_icon.svg" class="">
             </div>
             {__("Movies")}
             {if $sub_view == "add_movie"} &rsaquo; {__("Add New Movie")}{/if}

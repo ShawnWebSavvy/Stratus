@@ -82,37 +82,57 @@ class InvestmentHelper {
     public static function savePurchaseTokenOrder($action,$token_name,$token_value,$amount,$user_data,$fees_token,$fees){
         global $db,$system;   
         try{
-            $params['symbol'] = strtoupper($token_name).'_USDT';
-            $params['side'] = 'buy'; 
-            // $token_price = self::get_ticker_price(strtoupper($token_name));
-            // $token_value=round($amount/$token_price['data']['buy_price'], 5);
-            // $fees        = $token_price['data']['buy_fees'];
-            // $fees_token = round($token_value*$fees/100,5);
-            $receive_token = $token_value-$fees_token;;
-            $params['size'] = $token_value;
-            $result = InvestmentHelper::buySellOrder($params);
-            if(isset($result['data']['data']['order_id'])){
-                $order_id = $result['data']['data']['order_id'];
-
-                $db->query(sprintf("INSERT INTO investment_transactions (user_id, order_id, base_currency, tokens, currency, tnx_type ,amount, receive_amount, recieve_token, fees, status) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)", secure($user_data['user_id'], 'int'),secure($order_id),secure('usd'), secure($token_value), secure($token_name), secure($action),secure($amount),secure($amount), secure($receive_token), secure($fees), secure('completed') )) or _error("SQL_ERROR_THROWEN");
-                $investment_id = $db->insert_id;
-          
-                if($investment_id){
-                   
-                    $db->query(sprintf("INSERT INTO ads_users_wallet_transactions (user_id, investment_id, node_type, node_id, amount, type, date,paymentMode) VALUES (%s, %s, %s, %s, %s, %s, %s, %s)", secure($user_data['user_id'], 'int'), secure($investment_id), secure('purchase_coin'), secure(0, 'int'), secure($amount), secure('out'), secure(date('Y-m-d h:i:m')), secure('usd_wallet_balance'))) or _error("SQL_ERROR_THROWEN");
-                    $db->query(sprintf('UPDATE users SET user_wallet_balance = IF(user_wallet_balance-%1$s<=0,0,user_wallet_balance-%1$s) WHERE user_id = %2$s', secure($amount), secure($user_data['user_id'], 'int'))) or _error("SQL_ERROR_THROWEN");
-                    $wallet_name =$token_name.'_wallet';
-             
-                    $db->query(sprintf("UPDATE users SET $wallet_name = $wallet_name + %s WHERE user_id = %s", secure($receive_token), secure($user_data['user_id'], 'int'))) or _error("SQL_ERROR_THROWEN");
-                    $db->query(sprintf("INSERT INTO crons (user_id, item_id) VALUES (%s, %s)", secure($user_data['user_id'], 'int'), secure($investment_id))) or _error("SQL_ERROR_THROWEN");
-
-                    $redisObject = new RedisClass();
-                    $redisPostKey = 'user-' . $user_data['user_id'];
-                    $redisObject->deleteValueFromKey($redisPostKey);
-                    // cachedUserData($db, $system, $user_data['user_id'],$user_data['active_session_token']);
-                
+            
+            //Custom Wallet Bank Withdrawal
+            $error = false;
+            $lockedbalance = 0;
+            $bank_withdrawl_transactions = "SELECT locked_balance.*, users.user_wallet_balance FROM `locked_balance` JOIN users On locked_balance.user_id = users.user_id WHERE locked_balance.user_id = ".$user_data['user_id'];
+            $get_rows = $db->query($bank_withdrawl_transactions) or _error("SQL_ERROR_THROWEN");
+            if ($get_rows->num_rows > 0) {
+                $result = $get_rows->fetch_assoc();
+                $user_wallet_pending = $result['user_wallet_balance'] - $result['locked_balance'];
+                $lockedbalance = $user_wallet_pending;
+                if($amount > $user_wallet_pending){
+                    $error = true;
+                }else{
+                    $error = false;
                 }
-                return true;
+            }
+            if(!$error){
+                $params['symbol'] = strtoupper($token_name).'_USDT';
+                $params['side'] = 'buy'; 
+                // $token_price = self::get_ticker_price(strtoupper($token_name));
+                // $token_value=round($amount/$token_price['data']['buy_price'], 5);
+                // $fees        = $token_price['data']['buy_fees'];
+                // $fees_token = round($token_value*$fees/100,5);
+                $receive_token = $token_value-$fees_token;;
+                $params['size'] = $token_value;
+                $result = InvestmentHelper::buySellOrder($params);
+                if(isset($result['data']['data']['order_id'])){
+                    $order_id = $result['data']['data']['order_id'];
+
+                    $db->query(sprintf("INSERT INTO investment_transactions (user_id, order_id, base_currency, tokens, currency, tnx_type ,amount, receive_amount, recieve_token, fees, status) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)", secure($user_data['user_id'], 'int'),secure($order_id),secure('usd'), secure($token_value), secure($token_name), secure($action),secure($amount),secure($amount), secure($receive_token), secure($fees), secure('completed') )) or _error("SQL_ERROR_THROWEN");
+                    $investment_id = $db->insert_id;
+            
+                    if($investment_id){
+                    
+                        $db->query(sprintf("INSERT INTO ads_users_wallet_transactions (user_id, investment_id, node_type, node_id, amount, type, date,paymentMode) VALUES (%s, %s, %s, %s, %s, %s, %s, %s)", secure($user_data['user_id'], 'int'), secure($investment_id), secure('purchase_coin'), secure(0, 'int'), secure($amount), secure('out'), secure(date('Y-m-d h:i:m')), secure('usd_wallet_balance'))) or _error("SQL_ERROR_THROWEN");
+                        $db->query(sprintf('UPDATE users SET user_wallet_balance = IF(user_wallet_balance-%1$s<=0,0,user_wallet_balance-%1$s) WHERE user_id = %2$s', secure($amount), secure($user_data['user_id'], 'int'))) or _error("SQL_ERROR_THROWEN");
+                        $wallet_name =$token_name.'_wallet';
+                
+                        $db->query(sprintf("UPDATE users SET $wallet_name = $wallet_name + %s WHERE user_id = %s", secure($receive_token), secure($user_data['user_id'], 'int'))) or _error("SQL_ERROR_THROWEN");
+                        $db->query(sprintf("INSERT INTO crons (user_id, item_id) VALUES (%s, %s)", secure($user_data['user_id'], 'int'), secure($investment_id))) or _error("SQL_ERROR_THROWEN");
+
+                        $redisObject = new RedisClass();
+                        $redisPostKey = 'user-' . $user_data['user_id'];
+                        $redisObject->deleteValueFromKey($redisPostKey);
+                        // cachedUserData($db, $system, $user_data['user_id'],$user_data['active_session_token']);
+                    
+                    }
+                    return true;
+                }else{
+                    return false;
+                }
             }else{
                 return false;
             }

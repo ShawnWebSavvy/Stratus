@@ -1,6 +1,9 @@
 <div class="card">
     <div class="card-header with-icon d-flex align-items-center">
-        <i class="fab fa-bitcoin mr10"></i>{__("CoinPayments Transactions")}
+        <div class="svg-container mr10">
+            <img style="width: 20px;" src="{$system['system_url']}/content/themes/default/images/svg/admin/Money_bag.svg" class="">
+        </div>
+        {__("CoinPayments Transactions")}
     </div>
 
     <div class="card-body">

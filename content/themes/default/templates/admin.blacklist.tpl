@@ -14,7 +14,10 @@
             </div>
         {/if}
         <div class="d-flex align-items-center">
-            <i class="fa fa-minus-circle mr5"></i>{__("Blacklist")}
+            <div class="svg-container mr10">
+                <img style="width: 30px;" src="{$system['system_url']}/content/themes/default/images/svg/svgImg/block_icon_hover.svg" class="">
+            </div>
+            {__("Blacklist")}
         </div>
         {if $sub_view == "add"} &rsaquo; {__("Add New")}{/if}
     </div>
