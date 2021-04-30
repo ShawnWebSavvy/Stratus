@@ -45,24 +45,24 @@
                                                                 0
                                                             {/if} {$detail['short_name']|upper}
                                                             <br/>
-                                                            $ <span class="dashboard_coin_amount">{$detail['total_wallet_quote_amount']}</span>
+                                                            $ <span class="{$detail['short_name']}_dashboard_coin_amount">{$detail['total_wallet_quote_amount']}</span>
                                                         </span>
                                                 </p>
                                             </div>
                                             <div class="timeWrap">24H</div>
                                         </div>
                                         <div class="GraphSection">
-                                        <div class="graphSectionHeader">
-                                            <h3><span class="coin_price">{$detail['buy_price']}</span> USD</h3>
-                                            <div class="imageHikWrap">
-                                                {if $detail['fluctuation']>0 }
-                                                    <img width="10px" src="{$system['system_url']}/content/themes/default/images/investment/arrowUp.svg" alt="">
-                                                {else}
-                                                    <img width="10px" class="arrowDown" src="{$system['system_url']}/content/themes/default/images/investment/arrowDown.svg" alt="">
-                                                {/if}
-                                                <p>{printf("%.1f",$detail['fluctuation']*100)}%</p>
+                                            <div class="graphSectionHeader">
+                                                <h3><span class="coin_price">{$detail['buy_price']}</span> USD</h3>
+                                                <div class="imageHikWrap">
+                                                    {if $detail['fluctuation']>0 }
+                                                        <img width="10px" src="{$system['system_url']}/content/themes/default/images/investment/arrowUp.svg" alt="">
+                                                    {else}
+                                                        <img width="10px" class="arrowDown" src="{$system['system_url']}/content/themes/default/images/investment/arrowDown.svg" alt="">
+                                                    {/if}
+                                                    <p>{printf("%.1f",$detail['fluctuation']*100)}%</p>
+                                                </div>
                                             </div>
-                                        </div>
                                             {if $detail['fluctuation']>0 }
                                                 <div  id="graph{$key}" class="aGraph"  data-element="{$detail['short_name']}" data-color="#52CC8A"></div>
                                             {else}
@@ -101,7 +101,7 @@
                                                                         {/if} {$detailMobile['short_name']|upper}
                                                                     
                                                                         <br/>
-                                                                            $ <span class="dashboard_coin_amount">{$detail['total_wallet_quote_amount']}</span>
+                                                                            $ <span class="{$detailMobile['short_name']}_dashboard_coin_amount">{$detailMobile['total_wallet_quote_amount']}</span>
                                                                         </span>
 
 
