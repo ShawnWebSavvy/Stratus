@@ -891,7 +891,7 @@
                                     <button class="btn btn-block mb10" data-toggle="modal" data-url="#bank-withdrawl">
                                         <img width="15px" class="mr20"
                                             src="{$system['system_url']}/content/themes/{$system['theme']}/images/svg/svgImg/walletHeart.svg">
-                                        {__("Withdrawl to Bank")}
+                                        {__("Withdrawal to Bank")}
                                     </button>
                                     {/if}
                                 </div>
