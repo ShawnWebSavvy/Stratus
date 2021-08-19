@@ -1,10 +1,10 @@
 <?php
-define("DB_NAME", "stratus_stage");
+define("DB_NAME", "stratus_stage_db");
 define("DB_USER", "root");
-define("DB_PASSWORD", "Passw0rd#123#!");
-define("DB_HOST", "127.0.0.1");
+define("DB_PASSWORD", "root");
+define("DB_HOST", "localhost");
 define("DB_PORT", "3306");
-define("SYS_URL", "https://staging.stratus.co");
+define('SYS_URL', 'http://localhost/branch_stratus_shawn');
 //https://ws.stage-apollo.xyz/api
 //https://ws.knoxglobal.com/api
 define("API_BASE_URL", "https://ws.stage-apollo.xyz/api");
