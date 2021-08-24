@@ -1,3 +1,6 @@
+var save_file_name ='';
+var image_blured = 0;
+var image_full_original='';
 var count = parseInt($('.unread').length) ? parseInt($('.unread').length) : "";
 if (count != "") {
     $(".js_live-notifications").find("span.counterlive").text(count).show();
@@ -190,17 +193,17 @@ function data_heartbeat() {
                             loopArray.push('<div class="carsds"' + ArrayVal[i])
                         }
                     }
-
+                    loopArray.reverse();
                     for (var ik = 0; ik < loopArray.length; ik++) {
                         var values = loopArray[ik];
                         var d = document.createElement('div');
                         d.innerHTML = values;
                         var valuesPost = d.firstChild;
-                        bricklayer.prepend(valuesPost)
-                        bricklayer.redraw();
+                        $('.bricklayer').prepend(valuesPost)
+                        // bricklayer.redraw();
                     }
                 }
-                response.posts && (posts_stream.find("ul:first").prepend(), setTimeout(photo_grid(), 200)), setTimeout("data_heartbeat();", min_data_heartbeat);
+                response.posts && (posts_stream.find("aul:first").prepend(), setTimeout(photo_grid(), 200)), setTimeout("data_heartbeat();", min_data_heartbeat);
             }
         },
         "json"
@@ -217,11 +220,11 @@ function init_picture_crop(node) {
         });
     }, 200);    
    
-    var image_node = node.data("image");
-    var system_url = node.data("systemUrl") ;
-    
+    var image_node = $(node).data("image");
+    // var system_url = node.data("systemUrl");
+
     modal("#crop-profile-picture", {
-        image: `${system_url}/includes/wallet-api/get-picture-api.php?picture=${image_node}&pictureFull=&type_url=1`,
+        image: site_path+'/includes/wallet-api/get-picture-api.php?picture=&picture_full='+image_node+'&type_url=1',
         handle: node.data("handle"),
         id: node.data("id"),
     });
@@ -501,8 +504,17 @@ function init_picture_position() {
                         !1
                     );
                 }),
+              
                 $("body").on("focus", ".js_mention", function () {
+                    $(".ui-menu.ui-autocomplete").css({'overflow': 'hidden', 'max-height':'none','padding-top':'0px'});
+
                     $(this).triggeredAutocomplete({ hidden: "#hidden_inputbox", source: api["users/mention"], trigger: "@", maxLength: 20 });
+                    var height_comment = $(this).closest('.post-comments').find('.js_comments ').outerHeight();
+                    if($('.light-commentModal').length){
+                        height_comment = height_comment > 15 ? height_comment+30 : 45;
+                        $(".ui-menu.ui-autocomplete").css({'overflow': 'auto', 'max-height': height_comment+'px','padding-top':'0px'});
+                    }
+
                 }),
                 $("body").on("mouseenter", ".js_user-popover", function () {
                     if (!($(window).width() < 751)) {
@@ -576,6 +588,7 @@ function init_picture_position() {
                 }),
                 $("body").on("submit", ".x-uploader", function (e) {
                     e.preventDefault, $("body .js_publisher").prop("disabled", !0);
+                    save_file_name = '';
                     var options = { dataType: "json", uploadProgress: _handle_progress, success: _handle_success, error: _handle_error, resetForm: !0, data: {} },
                         uploader = $(this).find('input[type="file"]'),
                         type = $(this).find(".js_x-uploader").data("type") || "photos";
@@ -699,9 +712,15 @@ function init_picture_position() {
                                         init_picture_position();
                                     }, 1e3);
                             } else if ("picture-user" == handle || "picture-page" == handle || "picture-group" == handle) {
+                                save_file_name = response.file;
+                                image_blured = response.image_blured;
                                 /* update (user|page|group) picture */
                                 var image_path = uploads_path + "/" + response.file;
-                                $(".profile-avatar-wrapper img").attr("src", image_path);
+                               
+                                //    $(".profile-avatar-wrapper img").attr("src", image_path);
+                                if(!image_full_original){
+                                   image_full_original =  $(".js_init-crop-picture").data("image");
+                                }
                                 /* update crop image source */
                                 $(".js_init-crop-picture").data("image", image_path);
                                 init_picture_crop($(".js_init-crop-picture"));
@@ -817,6 +836,9 @@ function init_picture_position() {
                     });
                 }),
                 $("body").on("click", ".js_init-crop-picture", function () {
+                    if(image_full_original){
+                      $(".js_init-crop-picture").data("image", image_full_original);
+                    }
                     init_picture_crop($(this));
                 }),
                 $("body").on("click", ".js_crop-picture", function () {
@@ -825,9 +847,9 @@ function init_picture_position() {
                         values = $("#cropped-profile-picture").rcrop("getValues");
                     $.post(
                         api["users/image_crop"],
-                        { handle: handle, id: id, x: values.x, y: values.y, height: values.height, width: values.width },
+                        { handle: handle, id: id, x: values.x, y: values.y, height: values.height, width: values.width, save_file_name:save_file_name, image_blured: image_blured },
                         function (response) {
-                            response.callback ? eval(response.callback) : ($("#modal").modal("hide"), window.location.reload());
+                            response.callback ? eval(response.callback) : ($("#modal").modal("hide"), window.location.reload()); 
                         },
                         "json"
                     ).fail(function () {
@@ -943,7 +965,17 @@ function init_picture_position() {
                                     }
 
                                     if (_do == "friend-decline") {
-                                        _this.closest('.feeds-item').remove();
+                                        // _this.closest('.feeds-item').remove();
+                                        _this.after(
+                                            '<button type"button" class="btn btn-success js_friend-add" data-uid="' +
+                                            id +
+                                            '"><img class="btn_image_" src="' +
+                                            locationPage +
+                                            '/content/themes/default/images/svg/svgImg/add_friend_icon.svg"><img class="btn_image_hover" src="' +
+                                            locationPage +
+                                            '/content/themes/default/images/svg/svgImg/add_friend-hover.svg">' +
+                                            __["Add Friend"] +
+                                            "</button>");
                                     }
 
 
@@ -1152,6 +1184,7 @@ function init_picture_position() {
                                     : _this.hasClass("js_page-admin-addation")
                                         ? _this.replaceWith('<button type="button" class="btn btn-sm btn-danger js_page-admin-remove" data-id="' + id + '" data-uid="' + uid + '"><i class="fa fa-trash mr5"></i>' + __["Remove Admin"] + "</button>")
                                         : _this.replaceWith('<button type="button" class="btn btn-sm btn-primary js_page-admin-addation" data-id="' + id + '" data-uid="' + uid + '"><i class="fa fa-check mr5"></i>' + __["Make Admin"] + "</button>");
+                                        location.reload();
                             },
                             "json"
                         ).fail(function () {
@@ -1445,7 +1478,8 @@ function init_picture_position() {
                 $("body").on("click", ".js_ads-stop-campaign, .js_ads-resume-campaign", function () {
                     var id = $(this).data("id"),
                         _do = $(this).hasClass("js_ads-stop-campaign") ? "stop" : "resume";
-                    confirm(__.Delete, __["Are you sure you want to do this?"], function () {
+                    var ads_modal_name = _do == "stop" ? "Stop" : "Resume"  
+                    confirm( ads_modal_name, __["Are you sure you want to do this?"], function () {
                         $.post(
                             api["ads/campaign"],
                             { do: _do, id: id },

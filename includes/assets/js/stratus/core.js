@@ -59,7 +59,7 @@ function initialize() {
         }),
         $(".js_readmore").each(function () {
             var e = $(this),
-                t = e.attr("data-height") || 110;
+                t = e.attr("data-height") || 140;
             void 0 === e.attr("data-readmore") &&
                 ($(this).closest(".feeds_post").data("id"), window.location.origin, e.readmore({ collapsedHeight: t, moreLink: '<a href="#">' + __["Read more"] + "</a>", lessLink: '<a href="#">' + __["Read less"] + "</a>" }));
         }),
@@ -91,6 +91,9 @@ function modal() {
             break;
         case "extra-large":
             $(".modal-dialog").addClass("modal-xl");
+    }
+    if(arguments[0] === "#bankPayment"){
+        $("#modal").addClass("withdrawltoBank");
     }
     $(".modal-content:last").html(render_template(arguments[0], arguments[1])), "function" == typeof initialize_modal && initialize_modal();
 }
@@ -148,7 +151,7 @@ function load_more(element) {
                     }
 
                     if(!stream.hasClass('-list_items wq')){
-                        if ((data.offset++, response.append ? stream.append(response.data) : stream.prepend(response.data), $(window).width() > 1024)) {
+                        if ((response.append ? stream.append(response.data) : stream.prepend(response.data), $(window).width() > 1024)) {
                             if ($("body #landing_feeds_post_ul").length > 0) var macyInstance = Macy({ container: ".feeds_post_ul", trueOrder: !0, columns: 2, waitForImages: !0 });
                             if ($("body #feeds_post_ul").length > 0) var macyInstance = Macy({ container: ".feeds_post_ul", trueOrder: !0, columns: 2, waitForImages: !0 }); //macyInstance.recalculate();
                         }
@@ -236,10 +239,31 @@ function button_status(e, t) {
             if (element.find(".js_hidden-section").length > 0 && !element.find(".js_hidden-section").is(":visible")) return element.find(".js_hidden-section").slideDown(), !1;
             button_status(submit, "loading"), "undefined" != typeof tinyMCE && tinyMCE.triggerSave();
             var data = element.hasClass("js_ajax-forms") ? element.serialize() : element.find("select, textarea, input").serialize();
+            var systemUrl = element.data('systemUrl');
+            if(systemUrl){
+              var username = element.find("input[name='username']").val();
+             }
             $.post(
                 ajax_path + url,
                 data,
                 function (response) {
+                    if(response.messages){
+                        if(response.responseType == "success"){
+                            element.find("#paymentFailed").hide();
+                            element.find("#paymentSuccess").show();
+                            element.find("#paymentSuccess").html(response.messages);
+                            setTimeout(function(){
+                                window.location.reload();
+                            }, 2500);
+                        }else{
+                            element.find("#paymentSuccess").hide();
+                            element.find("#paymentFailed").show();
+                            element.find("#paymentFailed").html(response.messages);
+                        }
+                    }
+                    if(response.success&&systemUrl&&username){
+                        $("#sidebarHiddSwip .profile-link").attr("href", `${systemUrl}/${username}`);
+                    } 
                     button_status(submit, "reset"),
                         response.error
                             ? (success.is(":visible") && success.hide(), error.html(response.message).slideDown())
@@ -250,6 +274,7 @@ function button_status(e, t) {
                         $("#getInTouch").get(0).reset(),
                         // $(".learn-btn").text("Submit");
                         $(".cnt_btn").text("Submit");
+                        
                 },
                 "json"
             ).fail(function () {
@@ -394,8 +419,8 @@ function button_status(e, t) {
                             var t = a.match(/#(\w+)/gi);
                             if (null !== t && t.length > 0) {
                                 var a = t[0].replace("#", "");
-                                window.location = site_path + "/search/hashtag/" + a;
-                            } else window.location = site_path + "/search/" + a;
+                                window.location = encodeURI(site_path + "/search/hashtag/" + a);
+                            } else window.location = encodeURI(site_path + "/search/" + a);
                         }
                         return !1;
                     }
@@ -411,10 +436,10 @@ function button_status(e, t) {
                     var t = this.query.value,
                         a = $(this).data("handle");
                     if (!is_empty(t))
-                        if (void 0 !== a) window.location = site_path + "/" + a + "/search/" + t;
+                        if (void 0 !== a) window.location = encodeURI(site_path + "/" + a + "/search/" + t);
                         else {
                             var s = t.match(/#(\w+)/gi);
-                            null !== s && s.length > 0 ? ((t = s[0].replace("#", "")), (window.location = site_path + "/search/hashtag/" + t)) : (window.location = site_path + "/search/" + t);
+                            null !== s && s.length > 0 ? ((t = s[0].replace("#", "")), (window.location = encodeURI(site_path + "/search/hashtag/" + t))) : (window.location = encodeURI(site_path + "/search/" + t));
                         }
                     return !1;
                 }),
@@ -439,6 +464,9 @@ function button_status(e, t) {
                         ).fail(function () {
                             button_status(_this, "reset"), modal("#modal-message", { title: __.Error, message: __["There is something that went wrong!"] });
                         });
+                }),
+                $("body").on("click", ".js_payment-authorise", function () {
+                    alert("Thanks for choosing us");
                 }),
                 $("body").on("click", ".js_payment-stripe", function () {
                     var _this = $(this),
@@ -751,8 +779,133 @@ function button_status(e, t) {
     });
     $(document).on("click", "#add_post_show", function () {
         if ($(this).hasClass("lessMore")) {
-          $(this).removeClass('lessMore');
+            $(this).removeClass('lessMore');
         } else {
-          $(this).addClass('lessMore');
+            $(this).addClass('lessMore');
         }
-      });
+    });
+    $(document).ready( function () {
+        $('.js_dataTables').DataTable( {
+            "order": []
+        } );
+    } );
+    $(document).on("click", "body .modal button#bankTransferSubmit", function () {
+        var form = $("body .modal form#bank-transfer-money");
+        $.post(
+            ajax_path + "core/bank_transfer_payment.php",
+            form.serialize(),
+            function (res) {
+                if(res.response === "success"){
+                    $("body #wallet-error-message").addClass("x-hidden");
+                    $("body #wallet-success-message").removeClass("x-hidden");
+                    $("body #wallet-success-message").html(res.message).show();
+                    setTimeout(function(){
+                        $( "body #btnCancelbankTransfer" ).trigger( "click" );
+                    }, 2500);
+                }else{
+                    $("body #wallet-success-message").addClass("x-hidden");
+                    $("body #wallet-error-message").removeClass("x-hidden");
+                    $("body #wallet-error-message").html(res.message).show();
+                }
+            },
+            "json"
+        ).fail(function (error) {
+            console.log(error)
+        });
+    });
+  
+    $(document).on("click", "body .modal button#btnSubmitModal", function () {
+        var cardValidate = cardValidation();
+        if(cardValidate){
+            var form = $("body .modal form#authorizePayment")
+            $.post(
+                ajax_path + "core/authorize_payment.php",
+                form.serialize(),
+                function (res) {
+                    if(res.response === "success"){
+                        $("body #error-message").addClass("x-hidden");
+                        $("body #success-message").removeClass("x-hidden");
+                        $("body #success-message").html(res.message).show();
+                        setTimeout(function(){
+                            $( "body #btnCancel" ).trigger( "click" );
+                        }, 2500);
+                    }else{
+                        $("body #success-message").addClass("x-hidden");
+                        $("body #error-message").removeClass("x-hidden");
+                        $("body #error-message").html(res.message).show();
+                    }
+                },
+                "json"
+            ).fail(function (error) {
+                console.log(error)
+            });
+        }
+    });
+
+    var max_chars = 16;
+    jQuery(document).on('keydown', 'body .modal #card-number', function(e) {
+        $(this).val(function (index, value) {
+            return value.replace(/\D/g, "");
+        });
+        if (jQuery(this).val().length >= max_chars) { 
+            jQuery(this).val(jQuery(this).val().substr(0, max_chars));
+        }
+    });
+
+    jQuery(document).on('keyup', 'body .modal #card-number', function(e) {
+        $(this).val(function (index, value) {
+            return value.replace(/\D/g, "");
+        });
+        if (jQuery(this).val().length >= max_chars) { 
+            jQuery(this).val(jQuery(this).val().substr(0, max_chars));
+        }
+    });
+function cardValidation () {
+    var valid = true;
+    var cardNumber = $('body #card-number').val();
+    var month = $('body #month').val();
+    var year = $('body #year').val();
+    $("body #error-message").addClass("x-hidden");
+    $("body #error-message").html("").hide();
+
+    var msg = "";
+    if (cardNumber == "") {
+        valid = false;
+        msg = "Card Field is Empty!";
+    }
+
+    if(!is_creditCard(cardNumber)){
+        valid = false;
+        msg = "Card is Invalid";
+    }
+
+    if (month == "") {
+        valid = false;
+        msg = "Select Expire Month";
+    }
+
+    if (year == "") {
+        valid = false;
+        msg = "Select Expire Year"
+    }
+
+    if(valid == false) {
+        $("body #error-message").removeClass("x-hidden");
+        $("body #error-message").html(msg).show();
+    }else{
+        $("body #error-message").addClass("x-hidden");
+    }
+
+    return valid;
+}
+function is_creditCard(str)
+{
+    regexp = /^(?:(4[0-9]{12}(?:[0-9]{3})?)|(5[1-5][0-9]{14})|(6(?:011|5[0-9]{2})[0-9]{12})|(3[47][0-9]{13})|(3(?:0[0-5]|[68][0-9])[0-9]{11})|((?:2131|1800|35[0-9]{3})[0-9]{11}))$/;
+
+    if (regexp.test(str)){
+        return true;
+    }
+    else{
+        return false;
+    }
+}

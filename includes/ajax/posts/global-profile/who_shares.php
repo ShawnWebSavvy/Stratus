@@ -1,4 +1,6 @@
 <?php
+
+// echo "<pre>";print_r($_REQUEST);die;
 /**
  * ajax -> posts -> who shares
  * 
@@ -23,12 +25,13 @@ if(!isset($_GET['post_id']) || !is_numeric($_GET['post_id'])) {
 
 try {
 
-    $userGlobal = new UserGlobal();
 	// initialize the return array
+	$userGlobal = new UserGlobal();
 	$return = array();
 
 	// get shares
 	$posts = $userGlobal->who_shares($_GET['post_id']);
+	// print_r($posts);die;
 	/* assign variables */
 	$smarty->assign('posts', $posts);
 	$smarty->assign('id', $_GET['post_id']);
@@ -40,6 +43,7 @@ try {
 	return_json($return);
 
 } catch (Exception $e) {
+	die('incncna');
 	modal("ERROR", __("Error"), $e->getMessage());
 }
 

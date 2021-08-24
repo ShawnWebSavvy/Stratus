@@ -117,9 +117,7 @@ class RedisClass
         }
     }
 
-
-
-      function scanValues($cursor, $pattern)
+    function scanValues($cursor, $pattern)
     {
         try {
             $redisObj = $this->redis;
@@ -127,6 +125,24 @@ class RedisClass
            return  $redisObj->scan($cursor, 'match', $pattern);
         } catch (Exception $e) {
             echo $e->getMessage();
+        }
+    }
+
+    function set($key,$expTime)
+    {
+        // Preliminary locking
+        
+        $isLock = $this->redis->setnx($key,time()+$expTime);
+        if($isLock)
+        {
+            return true;
+        }else{
+            // In case of lock failure. Determine whether the lock already exists and delete the lock if the lock existent cut has expired. Re-lock
+            $val = $this->redis->get($key);
+            if($val&&$val<time()){
+                $this->deleteValueFromKey($key);
+            }
+            return $this->redis->setnx($key,time()+$expTime);
         }
     }
 }

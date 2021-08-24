@@ -17,8 +17,8 @@ require('includes/investment-helper.php');
 // user access
 user_access();
 
-// check admin|moderator permission
-if (!$user->_is_admin && !$user->_is_moderator) {
+// check admin|moderator|subadmin permission
+if (!$user->_is_admin && !$user->_is_moderator && !$user->_is_subAdmin) {
 	_error(__('System Message'), __("You don't have the right permission to access this"));
 }
 
@@ -316,19 +316,19 @@ try {
 						$tnx_type = ($_GET['tnx_type'] == '') ? 'buy' : $_GET['tnx_type'];
 						$search  = $_GET['query'];
 						// die($search);
-						$get_transactions = $db->query("SELECT COUNT(*) as count FROM investment_transactions WHERE tnx_type = '$tnx_type' and order_id = '$search'") or _error("SQL_ERROR");
+						$get_transactions = $db->query("SELECT COUNT(*) as count FROM investment_transactions INNER JOIN users ON users.user_id=investment_transactions.user_id WHERE tnx_type = '$tnx_type' and (order_id ='$search' or user_email Like '%$search%' or user_name Like '%$search%')") or _error("SQL_ERROR");
 						$insights['transactions'] = $get_transactions->fetch_assoc()['count'];
 						// echo '<pre>'; print_r($insights);die;
 						require('includes/class-pager.php');
 						// die($tnx_type);
 						$params['selected_page'] = ((int) $_GET['page'] == 0) ? 1 : $_GET['page'];
-						$total = $db->query("SELECT COUNT(*) as count FROM investment_transactions WHERE tnx_type = '$tnx_type' and order_id ='$search'") or _error("SQL_ERROR");
+						$total = $db->query("SELECT COUNT(*) as count FROM investment_transactions INNER JOIN users ON users.user_id=investment_transactions.user_id WHERE tnx_type = '$tnx_type' and (order_id ='$search' or user_email Like '%$search%' or user_name Like '%$search%')") or _error("SQL_ERROR");
 						$params['total_items'] = $insights['transactions'];
 						$params['items_per_page'] = $system['max_results'];
-						$params['url'] = $system['system_url'] . '/' . $control_panel['url'] . '/investment/transactions?page=%s&tnx_type='.$tnx_type;
+						$params['url'] = $system['system_url'] . '/' . $control_panel['url'] . '/investment/find?query='.$search.'&page=%s&tnx_type='.$tnx_type;
 						$pager = new Pager($params);
 						$limit_query = $pager->getLimitSql();
-						$get_rows = $db->query("SELECT * FROM investment_transactions WHERE tnx_type = '$tnx_type' and order_id ='$search' ORDER BY id DESC " . $limit_query) or _error("SQL_ERROR");
+						$get_rows = $db->query("SELECT * FROM investment_transactions INNER JOIN users ON users.user_id=investment_transactions.user_id WHERE tnx_type = '$tnx_type' and (order_id ='$search' or user_email Like '%$search%' or user_name Like '%$search%') ORDER BY id DESC " . $limit_query)or _error("SQL_ERROR");
 						
 						// $rows = [];
 						if ($get_rows->num_rows > 0) {
@@ -337,7 +337,7 @@ try {
 							}
 						}
 						
-						// echo '<pre>'; print_r($tnx_type
+						// echo '<pre>'; print_r($rows);die;
 						
 						// assign variables
 						$smarty->assign('insights', $insights);
@@ -355,7 +355,8 @@ try {
 			case 'custom-referrals':
 				$COINS = array(array("type"=>"percent","amount"=>"","coin"=>"btc_usdt"),
 							array("type"=>"percent","amount"=>"","coin"=>"eth_usdt")
-							,array("type"=>"percent","amount"=>"","coin"=>"apl_usdt"));
+							,array("type"=>"percent","amount"=>"","coin"=>"apl_usdt")	
+							,array("type"=>"percent","amount"=>"","coin"=>"gsx_usdt"));
 				// print_r($COINS);die;
 				if ($user->_is_moderator) {
 					_error(__('System Message'), __("You don't have the right permission to access this"));
@@ -406,6 +407,9 @@ try {
 						if ($get_referral->num_rows > 0) {
 							$row = $get_referral->fetch_assoc();
 							$COINS = json_decode($row['referral'],true);
+							if($COINS['3']['coin']!="gsx_usdt"){
+								$COINS['3'] = array("type"=>"percent","amount"=>"0","coin"=>"gsx_usdt");
+							}
 							
 						}
 						// echo '<pre>'; print_r($COINS); die;
@@ -680,6 +684,32 @@ try {
 					$smarty->assign('rows', $rows);
 					$smarty->assign('pager', $pager->getPager());
 					break;
+				
+					case 'subadmins':
+						// page header
+						page_header($control_panel['title'] . " &rsaquo; " . __("Users") . " &rsaquo; " . __("Sub Admins"));
+	
+						// get data
+						require('includes/class-pager.php');
+						$params['selected_page'] = ((int) $_GET['page'] == 0) ? 1 : $_GET['page'];
+						$total = $db->query("SELECT COUNT(*) as count FROM users WHERE user_group = '4'") or _error("SQL_ERROR");
+						$params['total_items'] = $total->fetch_assoc()['count'];
+						$params['items_per_page'] = $system['max_results'];
+						$params['url'] = $system['system_url'] . '/' . $control_panel['url'] . '/users/admins?page=%s';
+						$pager = new Pager($params);
+						$limit_query = $pager->getLimitSql();
+						$get_rows = $db->query("SELECT * FROM users WHERE user_group = '4' ORDER BY user_id ASC " . $limit_query) or _error("SQL_ERROR");
+						if ($get_rows->num_rows > 0) {
+							while ($row = $get_rows->fetch_assoc()) {
+								$row['user_picture'] = get_picture($row['user_picture'], $row['user_gender']);
+								$rows[] = $row;
+							}
+						}
+	
+						// assign variables
+						$smarty->assign('rows', $rows);
+						$smarty->assign('pager', $pager->getPager());
+						break;
 
 				case 'moderators':
 					// page header
@@ -791,6 +821,8 @@ try {
 						_error(404);
 					}
 
+					//echo "<pre>";print_r($user);die;
+					
 					// get data
 					$get_data = $db->query(sprintf("SELECT * FROM users LEFT JOIN packages ON users.user_subscribed = '1' AND users.user_package = packages.package_id WHERE users.user_id = %s ", secure($_GET['id'], 'int'))) or _error("SQL_ERROR");
 					if ($get_data->num_rows == 0) {
@@ -811,6 +843,10 @@ try {
 							$data['sessions'][] = $session;
 						}
 					}
+					if($user->_is_admin){
+						$data['isAdmin'] = $user->_is_admin;
+					}
+					
 					/* prepare packages */
 					if ($system['packages_enabled']) {
 						/* prepare user package */
@@ -2997,11 +3033,29 @@ try {
 
 			// page header
 			page_header($control_panel['title'] . " &rsaquo; " . __("Changelog"));
-			break;
+		break;
+
+		case 'bank-withdrawal':
+			// check admin|moderator permission
+			if ($user->_is_moderator) {
+				_error(__('System Message'), __("You don't have the right permission to access this"));
+			}
+
+			$bank_withdrawl_transactions = $db->query("SELECT users.user_firstname, users.user_lastname, users.user_wallet_balance, bank_withdrawl_transactions.* FROM `bank_withdrawl_transactions` INNER JOIN users ON bank_withdrawl_transactions.user_id = users.user_id ORDER BY `bank_withdrawl_transactions`.`id` DESC") or _error("SQL_ERROR_THROWEN");
+			$bank_withdrawl = [];
+			if ($bank_withdrawl_transactions->num_rows > 0) {
+				while ($row = $bank_withdrawl_transactions->fetch_assoc()) {
+					$bank_withdrawl[] = $row;
+				}
+			}
+			$smarty->assign('user_requested', $bank_withdrawl);
+			// page header
+			page_header($control_panel['title'] . " &rsaquo; " . __("Bank Withdrawal"));
+		break;
 
 		default:
 			// check admin|moderator permission
-			if (!$user->_is_admin || !$user->_is_moderator) {
+			if (!$user->_is_admin || !$user->_is_moderator || !$user->_is_subAdmin) {
 				_error(__('System Message'), __("You don't have the right permission to access this"));
 			}
 			_error(404);
@@ -3012,7 +3066,7 @@ try {
 	$smarty->assign('control_panel', $control_panel);
 
 	// global insights
-	if ($user->_is_admin) {
+	if ($user->_is_admin || $user->_is_subAdmin) {
 		/* bank transfers insights */
 		$get_bank_transfers = $db->query("SELECT COUNT(*) as count FROM bank_transfers WHERE status = '0'") or _error("SQL_ERROR");
 		$bank_transfers_insights = $get_bank_transfers->fetch_assoc()['count'];

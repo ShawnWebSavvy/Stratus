@@ -61,13 +61,17 @@
                                 <li class="smallList">
                                     <div class="feeTotalInfo">
                                         <h5>Subtotal</h5>
-                                        <h5>$<span id="sub_total">0</span></h5>
+                                        <h5                                                       <span id="sub_total">0
+                                            </span>
+                                        </h5>
                                     </div>
                                 </li>
                                 <li class="smallList">
                                     <div class="feeTotalInfo">
                                         <h5>Total</h5>
-                                        <h5>$<span id="order_total">0</span></h5>
+                                        <h5>
+                                            <span id="order_total">0</span>
+                                        </h5>
                                     </div>
                                 </li>
                             </ul>
@@ -86,7 +90,7 @@
                             {if $get_balance['total_token_btc']==0}
                                 0
                             {else}
-                                {$get_balance['total_token_btc']|number_format:8}
+                                {$get_balance['total_token_btc']}
                             {/if}
                         </h5>
                         <h6><span id="total_amount">{$get_balance['amount']}</span> USD</h6>

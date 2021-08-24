@@ -32,7 +32,7 @@
           </form>
           <!-- search form -->
           <!-- left panel -->
-          <div class="col-lg-12">
+          <div class="col-lg-12 searchPageButtons">
             <div class="row custom-tabs">
               <!-- panel nav -->
               <ul class="nav nav-tabs mb10">

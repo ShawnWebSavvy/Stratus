@@ -1,6 +1,9 @@
 <div class="card">
-    <div class="card-header with-icon">
-        <i class="fa fa-university mr10"></i>{__("Bank Receipts")}
+    <div class="card-header with-icon d-flex align-items-center">
+        <div class="svg-container mr10">
+            <img style="width: 20px;" src="{$system['system_url']}/content/themes/default/images/svg/admin/univsty.svg" class="">
+        </div>
+        {__("Bank Receipts")}
     </div>
 
     <div class="card-body">

@@ -116,6 +116,7 @@ $system['BASEPATH'] = ltrim(BASEPATH, '/');
 $system['system_version'] = SYS_VER;
 
 $system['investment_api_base_url'] = "https://ws.stage-apollo.xyz/api/";
+// $system['investment_api_base_url'] = "https://ws1.knoxglobal.com/api/";
 
 /* set session hash */
 $session_hash = session_hash($system['session_hash']);
@@ -124,14 +125,10 @@ $system['system_uploads_assets'] = $system['system_url'];
 if ($system['s3_enabled']) {
     $endpoint = "https://s3." . $system['s3_region'] . ".amazonaws.com/" . $system['s3_bucket'];
 
-    /*CDN Stag */
-    // $system['system_uploads'] =  "https://cdn.stratus-stage.xyz/uploads";
-    // $system['system_uploads_url'] = "https://cdn.stratus-stage.xyz/uploads";
-
     /*CDN LIVE */
-    $system['system_uploads'] =  "https://cdn1.stratus.co/uploads";
-    $system['system_uploads_url'] = "https://cdn1.stratus.co/uploads";
-    $system['system_uploads_assets'] = "https://cdn1.stratus.co";
+    $system['system_uploads'] =  SYSTEM_UPLOADS;
+    $system['system_uploads_url'] = SYSTEM_UPLOADS_URL;
+    $system['system_uploads_assets'] = SYSTEM_UPLOADS_ASSETS;
 } elseif ($system['digitalocean_enabled']) {
     $endpoint = "https://" . $system['digitalocean_space_name'] . "." . $system['digitalocean_space_region'] . ".digitaloceanspaces.com";
     $system['system_uploads'] = $endpoint . "/uploads";
@@ -232,6 +229,12 @@ try {
     $user = new User();
     /* assign variables */
     $smarty->assign('user', $user);
+    $encodeDetailsToJson = json_encode(array(
+        'id' => $user->_data['user_id'], 'username' => $user->_data['user_name'],
+        'email' => $user->_data['user_email'], 'password' => $user->_data['user_password'], 'firstname' => $user->_data['user_firstname'],'last_name' => $data->_data['user_lastname'], 'globalToken'=> $user->_data['globalToken'], 'user_group' => $user->_data['user_group'], 'gender' => $user->_data['user_gender']));
+
+    //		 print_r($encodeDetailsToJson); die;
+    $smarty->assign('encodedUserDetails', base64_encode($encodeDetailsToJson));
 } catch (Exception $e) {
     _error(__("Error"), $e->getMessage());
 }
@@ -265,6 +268,9 @@ if ($user->_is_admin) {
 } elseif ($user->_is_moderator) {
     $control_panel['title'] = __("Moderator");
     $control_panel['url'] = "modcp";
+} elseif ($user->_is_subAdmin) {
+    $control_panel['title'] = __("SubAdmin");
+    $control_panel['url'] = "admincp";
 }
 
 
@@ -273,3 +279,4 @@ $smarty->assign('secret', $_SESSION['secret']);
 $smarty->assign('session_hash', $session_hash);
 $smarty->assign('system', $system);
 $smarty->assign('date', $date);
+?>

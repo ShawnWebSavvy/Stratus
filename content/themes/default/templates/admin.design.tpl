@@ -1,13 +1,16 @@
 <div class="card">
-    <div class="card-header with-icon">
-        <i class="fa fa-paint-brush mr10"></i>{__("Design")}
+    <div class="card-header with-icon d-flex align-items-center">
+           <div class="svg-container mr10">
+                <img style="width: 20px;" src="{$system['system_url']}/content/themes/default/images/svg/admin/design.svg" class="">
+            </div>
+        {__("Design")}
     </div>
     <form class="js_ajax-forms " data-url="admin/design.php">
         <div class="card-body">
             <div class="form-table-row">
-                <div class="avatar">
+                {* <div class="avatar">
                     {include file='__svg_icons.tpl' icon="night_mode" width="40px" height="40px"}
-                </div>
+                </div> *}
                 <div>
                     <div class="form-control-label h6">{__("Night Mode is Default")}</div>
                     <div class="form-text d-none d-sm-block">

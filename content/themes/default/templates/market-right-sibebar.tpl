@@ -7,21 +7,23 @@
                     <li {if $view=="" || $view=="search" }class="active " {/if}>
                         <span class="countNumber">#1</span>
                         <a class="all" href="{$system['system_url']}/market">
+                            <span class="marketIconHover">
+                                <img src="{$system['system_url']}/content/themes/default/images/svg/marketSvg/all.svg" class="blackicon">
+                            </span>
                             {__("All")}
                         </a>
                     </li>
                     {assign var=incrementVal value=1}
                     {foreach $market_categories as $category}
                     <li {if $view=="category" && $category_id==$category['category_id']}class="active" {/if}>
-
                         {assign var= incrementVal value=$incrementVal+1}
-
                         <span class="countNumber">#{$incrementVal}</span>
-                        <a class="{$category['category_url']}"
-                            href="{$system['system_url']}/market/category/{$category['category_id']}/{$category['category_url']}">
+                        <a class="{$category['category_url']}" href="{$system['system_url']}/market/category/{$category['category_id']}/{$category['category_url']}">
+                            <span class="marketIconHover">
+                                <img src="{$system['system_url']}/content/themes/default/images/svg/marketSvg/{__($category['category_url'])}.svg" class="blackicon">
+                            </span>
                             {__($category['category_name'])}
                         </a>
-
                     </li>
                     {/foreach}
                 </ul>

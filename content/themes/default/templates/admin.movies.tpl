@@ -2,35 +2,40 @@
     <div class="card-header with-icon">
         {if $sub_view == ""}
             <div class="float-right">
-                <a href="{$system['system_url']}/{$control_panel['url']}/movies/add_movie" class="btn btn-sm btn-primary btn-antier-skyblue btn-antier-no-border-skyblue">
+                <a href="{$system['system_url']}/{$control_panel['url']}/movies/add_movie" class="btn cmn_btn">
                     <i class="fa fa-plus mr5"></i>{__("Add New Movie")}
                 </a>
             </div>
         {elseif $sub_view == "genres"}
             <div class="float-right">
-                <a href="{$system['system_url']}/{$control_panel['url']}/movies/add_genre" class="btn btn-sm btn-primary btn-antier-skyblue btn-antier-no-border-skyblue">
+                <a href="{$system['system_url']}/{$control_panel['url']}/movies/add_genre" class="btn cmn_btn">
                     <i class="fa fa-plus mr5"></i>{__("Add New Genre")}
                 </a>
             </div>
         {elseif $sub_view == "add_movie" || $sub_view == "edit_movie"}
             <div class="float-right">
-                <a href="{$system['system_url']}/{$control_panel['url']}/movies" class="btn btn-sm btn-light btn-antier-skyblue btn-antier-no-border-skyblue">
+                <a href="{$system['system_url']}/{$control_panel['url']}/movies" class="btn cmn_btn">
                     <i class="fa fa-arrow-circle-left mr5"></i>{__("Go Back")}
                 </a>
             </div>
         {elseif $sub_view == "add_genre" || $sub_view == "edit_genre"}
             <div class="float-right">
-                <a href="{$system['system_url']}/{$control_panel['url']}/movies/genres" class="btn btn-sm btn-light btn-antier-skyblue btn-antier-no-border-skyblue">
+                <a href="{$system['system_url']}/{$control_panel['url']}/movies/genres" class="btn cmn_btn">
                     <i class="fa fa-arrow-circle-left mr5"></i>{__("Go Back")}
                 </a>
             </div>
         {/if}
-        <i class="fa fa-film mr10"></i>{__("Movies")}
-        {if $sub_view == "add_movie"} &rsaquo; {__("Add New Movie")}{/if}
-        {if $sub_view == "edit_movie"} &rsaquo; {$data['title']}{/if}
-        {if $sub_view == "genres"} &rsaquo; {__("Genres")}{/if}
-        {if $sub_view == "add_genre"} &rsaquo; {__("Genres")} &rsaquo; {__("Add New Genre")}{/if}
-        {if $sub_view == "edit_genre"} &rsaquo; {__("Genres")} &rsaquo; {$data['genre_name']}{/if}
+        <div class="d-flex align-items-center">
+            <div class="svg-container mr10">
+                <img src="{$system['system_uploads_assets']}/content/themes/default/images/svg/svgImg/add_video_icon.svg" class="">
+            </div>
+            {__("Movies")}
+            {if $sub_view == "add_movie"} &rsaquo; {__("Add New Movie")}{/if}
+            {if $sub_view == "edit_movie"} &rsaquo; {$data['title']}{/if}
+            {if $sub_view == "genres"} &rsaquo; {__("Genres")}{/if}
+            {if $sub_view == "add_genre"} &rsaquo; {__("Genres")} &rsaquo; {__("Add New Genre")}{/if}
+            {if $sub_view == "edit_genre"} &rsaquo; {__("Genres")} &rsaquo; {$data['genre_name']}{/if}
+        </div>
     </div>
 
     {if $sub_view == ""}

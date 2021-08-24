@@ -1,6 +1,6 @@
 <div class="modal-header">
     <h6 class="modal-title">
-        <i class="fa fa-images mr5" style="width: 25px;height: 25px;"></i>{__("Create New Story ")}
+        <i class="fa fa-images mr5"></i>{__("Create New Story ")}
     </h6>
     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
         <span aria-hidden="true">&times;</span>

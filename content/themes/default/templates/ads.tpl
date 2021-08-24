@@ -816,8 +816,12 @@
                                     Credit
                                 </div>
                                 <div class="stat-panel walletIconMoneyText">
-                                    <div class="walletIconMoneyAmount">
+                                    <div class="walletIconMoneyAmount lockedBalance">
                                         {$system['system_currency_symbol']}{$user->_data['user_wallet_balance']|number_format:2}
+                                        <span class="lockedNumbers text-right">
+                                            Locked balance <br/>
+                                            {$system['system_currency_symbol']}{$lockedBalance|number_format:2}
+                                        </span>
                                     </div>
                                 </div>
                                 <button class="btn btn-block mb20" style="width: auto;padding: 13px 30px;"
@@ -855,8 +859,7 @@
                                     <button class="btn btn-block mb10" data-toggle="modal"
                                         data-url="#wallet-withdraw-points">
                                         <img width="15px" class="mr20"
-                                            src="{$system['system_url']}/content/themes/{$system['theme']}/images/svg/svgImg/walletPaperPlane.svg">{__("Points
-                                        Credit")}
+                                            src="{$system['system_url']}/content/themes/{$system['theme']}/images/svg/svgImg/walletPaperPlane.svg">{__("Points Credit")}
                                     </button>
                                     {elseif $system['affiliates_enabled']}
                                     <button class="btn btn-block mb10" data-toggle="modal" data-url="#wallet-replenish">
@@ -867,8 +870,7 @@
                                     <button class="btn btn-block mb10" data-toggle="modal"
                                         data-url="#wallet-withdraw-affiliates">
                                         <img width="15px" class="mr20"
-                                            src="{$system['system_url']}/content/themes/{$system['theme']}/images/svg/svgImg/sendMoney.svg">{__("Withdraw
-                                        Affiliates Credit")}
+                                            src="{$system['system_url']}/content/themes/{$system['theme']}/images/svg/svgImg/sendMoney.svg">{__("Withdraw Affiliates Credit")}
                                     </button>
                                     {elseif ($system['points_enabled'] && $system['points_money_transfer_enabled'])}
                                     <button class="btn btn-block mb10" data-toggle="modal" data-url="#wallet-replenish">
@@ -889,6 +891,13 @@
                                         {__("Replenish Credit")}
                                     </button>
                                     {/if}
+                                    {if ($system['points_money_transfer_enabled'])}
+                                    <button class="btn btn-block mb10" data-toggle="modal" data-url="#bank-withdrawl">
+                                        <img width="15px" class="mr20"
+                                            src="{$system['system_url']}/content/themes/{$system['theme']}/images/svg/svgImg/walletHeart.svg">
+                                        {__("Withdrawal to Bank")}
+                                    </button>
+                                    {/if}
                                 </div>
                             </div>
                         </div>
@@ -900,10 +909,10 @@
                                 <span>{__("Wallet Transactions")}</span>
                             </div>
                             {if $transactions}
+
                             <div class="tableWrapTransactions">
                                 <div class="wallet_page_tabledata">
-                                    <table class="table table-basic transactionTable js_dataTable" data-order="[[3, 'desc']]"
->
+                                    <table class="table table-basic transactionTable js_dataTables">
                                         <thead>
                                             <tr>
                                                 <th>{__("Amount")}</th>
@@ -951,16 +960,24 @@
                                                     {__("Affiliates Credit")}
                                                     {elseif $transaction['node_type'] == "withdraw_points"}
                                                     {__("Points Credit")}
+                                                    {elseif $transaction['node_type'] == "bonous_payout_receive"}
+                                                        {__("Bonous Payout Receive")}
                                                     {elseif $transaction['tnx_type'] == "buy"}
                                                       {$transaction['currency_detail']}
                                                     {elseif $transaction['tnx_type'] == "sell"}
                                                         {$transaction['currency_detail']}
                                                     {elseif $transaction['tnx_type'] == "referral"}
                                                         {__("Referral Bonus")}
+                                                    {elseif $transaction['node_type'] == "video_purchase"}
+                                                    {__("Purchased Video")}
                                                     {elseif $transaction['node_type'] == "videohub_package_payment"}
                                                     {__("Buy Video Hub Package")}
                                                     {elseif $transaction['node_type'] == "package_payment"}
                                                     {__("Buy Pro Package")}
+                                                    {elseif $transaction['node_type'] == "bank_withdrawal"}
+                                                        {__("Withdrawal to Bank ")}
+                                                    {elseif $transaction['node_type'] == "bank_withdrawal_cancel"}
+                                                        {__("Withdrawal Cancel")}
                                                     {/if}
                                                 </td>
                                                 <td><span class="js_moment"

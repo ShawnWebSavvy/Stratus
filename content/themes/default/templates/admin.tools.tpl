@@ -1,6 +1,9 @@
 <div class="card">
-    <div class="card-header with-icon">
-        <i class="fa fa-toolbox mr10"></i>{__("Tools")}
+    <div class="card-header with-icon d-flex align-items-center">
+        <div class="svg-container mr10">
+            <img style="width: 19px;" src="{$system['system_url']}/content/themes/default/images/svg/admin/tools.svg" class="">
+        </div>
+        {__("Tools")}
         {if $sub_view == "faker"} &rsaquo; {__("Fake Users Generator")}{/if}
         {if $sub_view == "auto-connect"} &rsaquo; {__("Auto Connect")}{/if}
         {if $sub_view == "garbage-collector"} &rsaquo; {__("Garbage Collector")}{/if}
@@ -12,9 +15,9 @@
         <form class="js_ajax-forms " data-url="admin/tools.php?do=faker">
             <div class="card-body">
                 <div class="form-table-row">
-                    <div class="avatar">
+                    {* <div class="avatar">
                         {include file='__svg_icons.tpl' icon="profile" width="40px" height="40px"}
-                    </div>
+                    </div> *}
                     <div>
                         <div class="form-control-label h6">{__("Random Pictures")}</div>
                         <div class="form-text d-none d-sm-block">{__("Profile pictures will be generated randomly and may be dublicated")}</div>
@@ -90,9 +93,9 @@
                 </div>
                 <div class="pl-md-4">
                     <div class="form-table-row">
-                        <div class="avatar">
+                        {* <div class="avatar">
                             {include file='__svg_icons.tpl' icon="friends" width="40px" height="40px"}
-                        </div>
+                        </div> *}
                         <div>
                             <div class="form-control-label h6">{__("Auto Friend")}</div>
                             <div class="form-text d-none d-sm-block">{__("When a user creates a new account, select which users you want to auto friend (following included)")}</div>
@@ -124,9 +127,9 @@
                 </div>
                 <div class="pl-md-4">
                     <div class="form-table-row">
-                        <div class="avatar">
+                        {* <div class="avatar">
                             {include file='__svg_icons.tpl' icon="followers" width="40px" height="40px"}
-                        </div>
+                        </div> *}
                         <div>
                             <div class="form-control-label h6">{__("Auto Follow")}</div>
                             <div class="form-text d-none d-sm-block">{__("When a user creates a new account, select which users you want to auto follow")}</div>
@@ -158,9 +161,9 @@
                 </div>
                 <div class="pl-md-4">
                     <div class="form-table-row">
-                        <div class="avatar">
+                        {* <div class="avatar">
                             {include file='__svg_icons.tpl' icon="pages" width="40px" height="40px"}
-                        </div>
+                        </div> *}
                         <div>
                             <div class="form-control-label h6">{__("Auto Like")}</div>
                             <div class="form-text d-none d-sm-block">{__("When a user creates a new account, select which pages you want to auto like")}</div>
@@ -192,9 +195,9 @@
                 </div>
                 <div class="pl-md-4">
                     <div class="form-table-row">
-                        <div class="avatar">
+                        {* <div class="avatar">
                             {include file='__svg_icons.tpl' icon="groups" width="40px" height="40px"}
-                        </div>
+                        </div> *}
                         <div>
                             <div class="form-control-label h6">{__("Auto Join")}</div>
                             <div class="form-text d-none d-sm-block">{__("When a user creates a new account, select which groups you want to auto join")}</div>

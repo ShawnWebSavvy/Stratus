@@ -21,6 +21,9 @@ try {
     if(!valid_email($_POST['email'])) {
         throw new Exception(__("Please enter a valid email address"));
     }
+    if (!valid_names($_POST['name'])) {
+        throw new Exception(__("Name must contain alphabets only"));
+    }
     /* check reCAPTCHA */
     if($system['reCAPTCHA_enabled']) {
     	require_once(ABSPATH.'includes/libs/ReCaptcha/autoload.php');

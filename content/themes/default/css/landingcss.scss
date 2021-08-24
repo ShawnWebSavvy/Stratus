@@ -1382,6 +1382,13 @@ header .navbar {
       margin-top: 16px;
       text-align: center;
     }
+    .footer-copy-right-Position {
+      display: none;
+      height: 0px;
+      @media (max-width: 1300px) {
+       display: block;
+      }
+    }
   }
   .social-links {
     -webkit-box-pack: end;

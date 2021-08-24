@@ -1,3 +1,4 @@
+
 <?php
 /**
  * ads
@@ -152,7 +153,7 @@ try {
 			// get wallet transactions
 			$transactions = $user->wallet_get_transactions();
 			/* assign variables */
-			// echo'<pre>';print_r($transactions); die;
+			//echo'<pre>';print_r($transactions); die;
 			$smarty->assign('transactions', $transactions);
 
 			// get countries (for 2checkout billing address)
@@ -167,15 +168,19 @@ try {
 			_error(404);
 			break;
 	}
+	
+
+	$lockedBalance = $user->getLockedBalance($user->_data['user_id']);
+	$smarty->assign('lockedBalance', $lockedBalance);
 	/* assign variables */
 	$smarty->assign('view', $_GET['view']);
 
 	/* assign variables */
 	$smarty->assign('view', $_GET['view']);
 	// get suggested peopel
-		$new_people = $user->get_new_people(0, true);
-		/* assign variables */
-		$smarty->assign('new_people', $new_people);
+	$new_people = $user->get_new_people(0, true);
+	/* assign variables */
+	$smarty->assign('new_people', $new_people);
 	
 } catch (Exception $e) {
 	_error(__("Error"), $e->getMessage());

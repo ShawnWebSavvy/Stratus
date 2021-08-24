@@ -8,28 +8,33 @@
             </div> -->
         {elseif $sub_view == "find"}
             <div class="float-right">
-                <a href="{$system['system_url']}/{$control_panel['url']}/users" class="btn btn-sm btn-light">
+                <a href="{$system['system_url']}/{$control_panel['url']}/users" class="btn cmn_btn">
                     <i class="fa fa-arrow-circle-left mr5"></i>{__("Go Back")}
                 </a>
             </div>
         {elseif $sub_view == "edit"}
             <div class="float-right">
-                <a href="{$system['system_url']}/{$control_panel['url']}/users" class="btn btn-sm btn-light">
+                <a href="{$system['system_url']}/{$control_panel['url']}/users" class="btn cmn_btn">
                     <i class="fa fa-arrow-circle-left"></i><span class="ml5 d-none d-lg-inline-block">{__("Go Back")}</span>
                 </a>
-                <a target="_blank" href="{$system['system_url']}/{$data['user_name']}" class="btn btn-sm btn-info">
+                <a target="_blank" href="{$system['system_url']}/{$data['user_name']}" class="btn cmn_btn">
                         <img  width="30px" height="30px" src="{$system['system_url']}/content/themes/default/images/svg/svgImg/eye-icon.svg"/>
                     <span class="ml5 d-none d-lg-inline-block">{__("View Profile")}</span>
                 </a>
-                <button type="button" class="btn btn-sm btn-danger js_admin-deleter" data-handle="user_posts" data-id="{$data['user_id']}">
+                <button type="button" class="btn cmn_btn js_admin-deleter" data-handle="user_posts" data-id="{$data['user_id']}">
                     <i class="fa fa-trash-alt"></i><span class="ml5 d-none d-lg-inline-block">{__("Delete All Posts")}</span>
                 </button>
             </div>
         {/if}
-        <i class="fa fa-user mr10"></i>Investment
-        {if $sub_view == "coin" || $sub_view == "coins"} &rsaquo; {__(Exchanges)}{/if}
-        {if $sub_view != "" && $sub_view != "edit"} &rsaquo; {__($sub_view|capitalize)}{/if}
-        {if $sub_view == "coin"} &rsaquo; Edit{/if}
+        <div class="d-flex align-items-center">
+            <div class="svg-container mr10">
+                <img style="width: 25px;" src="{$system['system_url']}/content/themes/default/images/svg/admin/curancy.svg" class="">
+            </div>
+            {__("Investment")}
+            {if $sub_view == "coin" || $sub_view == "coins"} &rsaquo; {__(Exchanges)}{/if}
+            {if $sub_view != "" && $sub_view != "edit"} &rsaquo; {__($sub_view|capitalize)}{/if}
+            {if $sub_view == "coin"} &rsaquo; Edit{/if}
+        </div>
     </div>
 
     {if $sub_view == "" || $sub_view == "exchanges"}
@@ -160,7 +165,7 @@
                             </label>
                             <div class="col-md-9">
                                 <div class="input-group">
-                                   <label class="col-md-3 form-control-label">{$detail['trade_pair']|upper}</label>
+                                   <label class="col-md-3 form-control-label" id="trade_pair">{$detail['trade_pair']|upper}</label>
                                 </div>
                             </div>
                         </div>
@@ -172,7 +177,7 @@
                             </label>
                             <div class="col-md-9">
                                 <div class="input-group">
-                                    <label class="col-md-3 form-control-label">${$price}</label>
+                                    <label class="col-md-3 form-control-label">$<span id="bitmart_buy_price">{$price}</span></label>
                                 </div>
                             </div>
                         </div>
@@ -192,7 +197,7 @@
                             </label>
                             <div class="col-md-9">
                                 <div class="input-group">
-                                    <label class="col-md-3 form-control-label" id="buy_price">${$price+($price*$detail['markup_price']/100)}</label>
+                                    <label class="col-md-3 form-control-label" id="buy_price">$<span id="stratus_buy_price">{$price+($price*$detail['markup_price']/100)}</span></label>
                                 </div>
                             </div>
                         </div>
@@ -202,7 +207,7 @@
                             </label>
                             <div class="col-md-9">
                                 <div class="input-group">
-                                    <label class="col-md-3 form-control-label">${$price}</label>
+                                    <label class="col-md-3 form-control-label">$<span id="bitmart_sell_price">{$price}</span></label>
                                 </div>
                             </div>
                         </div>
@@ -222,7 +227,7 @@
                             </label>
                             <div class="col-md-9">
                                 <div class="input-group">
-                                    <label class="col-md-3 form-control-label">${$price-($price*$detail['markdown_price']/100)}</label>
+                                    <label class="col-md-3 form-control-label" >$<span id="stratus_sell_price">{$price-($price*$detail['markdown_price']/100)}</span></label>
                                 </div>
                             </div>
                         </div>
@@ -383,7 +388,7 @@
                     </div>
                 </form>
                 <div class="form-text small">
-                    {__('Search by TNX ID')}
+                    {__('Search by TNX ID, Email ID, Username')}
                 </div>
             </div>
             <!-- search form -->
@@ -405,6 +410,7 @@
                 <table class="table table-striped table-bordered table-hover">
                     <thead>
                         <tr>
+                            <th>{__("Date")}</th>
                             <th>{__("TRANX ID")}</th>
                             <th>{__("Order Type")}</th>
                             {if $tnx_type == 'buy'}
@@ -437,6 +443,9 @@
                         {if $rows}
                             {foreach $rows as $key=>$row}
                                 <tr>
+                                    <td><span class=" "
+                                        data-time="{$row['created_at']|date_format}">{$row['created_at']|date_format}</span>
+                                    </td>
                                     <td>
                                         {$row['order_id']}
                                     </td>
@@ -448,7 +457,14 @@
                                         <td>{$row['currency']|strtoupper}/USDT</td>
                                         <td><a href="{$system['system_url']}/{$row['user_name']}" target="_blank">{$row['user_name']}</a></td>
                                         <td>{$row['tokens']}</td>
-                                        <td>{$row['fees']}</td>
+                                        <td>
+                                            {if $row['recieve_token']!=$row['tokens']}
+                                                {$row['fees']}
+                                            {else}
+                                                -
+                                            {/if}
+
+                                        </td>
                                         <td>{$row['recieve_token']}</td>
                                         <td>{$row['amount']}</td>
                                     {else if $tnx_type == 'sell'}
@@ -456,7 +472,13 @@
                                         <td><a href="{$system['system_url']}/{$row['user_name']}" target="_blank">{$row['user_name']}</a></td>
                                         <td>{$row['tokens']}</td>
                                         <td>{$row['amount']}</td>
-                                        <td>{$row['fees']}</td>
+                                        <td>
+                                            {if $row['amount']!=$row['receive_amount']}
+                                                {$row['fees']}
+                                            {else}
+                                                -
+                                            {/if}
+                                        </td>
                                         <td>{$row['receive_amount']}</td>
                                     {else}
                                         <td><a href="{$system['system_url']}/{$row['user_name']}" target="_blank">{$row['user_name']}</a></td>

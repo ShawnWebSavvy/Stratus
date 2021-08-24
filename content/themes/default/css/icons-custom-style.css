@@ -1,4 +1,15 @@
 a,span{display: inline-block;}
-button.btn span.share_sign_img img { width: auto;height: auto;}
+/* button.btn span.share_sign_img img { width: auto;height: auto;} */
 span.pages_icons img {margin-right: 5px; }
 .card.main-side-nav-card .svg-container {flex: 0 0 70px;max-width: 70px;}
+.publisher-tools-tabs-ulDropDown{position:absolute;bottom:51px;right:21px;width:220px;border-radius:4px;background:#fff;padding:10px;box-shadow:0px 10px 20px 0px rgba(28, 41, 90, 0.1);} 
+.publisher-tools-tabs-ul .uplodfileTags {margin: 0;}
+.publisher-tools-tabs-ul .uplodfileTags .publisher-tools-tab{padding: 0px;min-width: 20px;position: relative;margin: 0 10px;}
+.publisher-tools-tabs-ul.publisher-tools-tabs-ulDropDown .uplodfileTags .publisher-tools-tab{margin: 10px;}
+.publisher-tools-tabs-ul .uplodfileTags:hover .publisher-tools-tab::before{content: '';background-color: rgba(18, 105, 255, 0.1);width: 40px;height: 40px;position: absolute;
+    left: 50%;transform: translate(-50% , -50%);top: 50%;border-radius: 10px;}
+.publisher-tools-tabs-ul .uplodfileTags .publisher-tools-tab img{margin-right: 0;}
+.uplodfileTags .BlueIcon{display:none;width:20px;height:20px;} 
+.uplodfileTags .blackIcon{width:20px;height:20px;min-width:20px;} 
+.uplodfileTags:hover .BlueIcon{display:block;} 
+.uplodfileTags:hover .blackIcon{display:none;width:20px;height:20px;} 

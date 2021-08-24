@@ -13,12 +13,18 @@
                 </a>
             </div>
         {/if}
-        <i class="fa fa-dollar-sign mr10"></i>{__("Ads")}
-        {if $sub_view == ""} &rsaquo; {__("Settings")}{/if}
-        {if $sub_view == "system_ads"} &rsaquo; {__("System Ads")}{/if}
-        {if $sub_view == "users_ads"} &rsaquo; {__("Users Ads")}{/if}
-        {if $sub_view == "edit"} &rsaquo; {$data['title']}{/if}
-        {if $sub_view == "add"} &rsaquo; {__("Add New Ads")}{/if}
+
+         <div class="d-flex align-items-center">
+            <div class="svg-container mr10">
+                <img src="{$system['system_url']}/content/themes/default/images/svg/svgImg/ad_hubN.svg" class="">
+            </div>
+            {__("Ads")}
+            {if $sub_view == ""} &rsaquo; {__("Settings")}{/if}
+            {if $sub_view == "system_ads"} &rsaquo; {__("System Ads")}{/if}
+            {if $sub_view == "users_ads"} &rsaquo; {__("Users Ads")}{/if}
+            {if $sub_view == "edit"} &rsaquo; {$data['title']}{/if}
+            {if $sub_view == "add"} &rsaquo; {__("Add New Ads")}{/if}
+        </div>
     </div>
 
     {if $sub_view == ""}

@@ -52,8 +52,15 @@
 				</div>
 				{if $system['live_enabled'] && $_get != "posts_page" && $_get != "posts_group" && $_get !=
 				"posts_event"}
-				<div class="dropdown-item pointer" data-title='{__("Live")}' data-value="live"><i
-						class="fa fa-signal fa-fw mr10"></i>{__("Live")}</div>
+					<div class="dropdown-item pointer" data-title='{__("Live")}' data-value="Live">
+						<div class="imgHover">
+							<img alt="Live" title="Live"
+								src="{$system['system_url']}/content/themes/default/images/svg/svgImg/liveVideo.svg">
+							<img alt="Live" class="hoverIcon" title="Live"
+								src="{$system['system_url']}/content/themes/default/images/svg/svgImg/liveVideoHover.svg">
+						</div>
+						{__("Live")}
+					</div>
 				{/if}
 				<div class="dropdown-item pointer" data-title='{__("Photos")}' data-value="photos">
 					<div class="imgHover">
@@ -217,15 +224,17 @@
 {/if}
 <div class="js_posts_stream" id="posts_all" data-get="{$_get}" data-filter="{if $_filter}{$_filter}{else}all{/if}" {if
 	$_id}data-id="{$_id}" {/if}>
-	{if $posts}
+	
 	<div class="bricklayer">
+	{if $posts}
 		<!-- posts -->
 		{foreach $posts as $post}
 		{include file='__feeds_posts.tpl'}
 		{/foreach}
 		<!-- posts -->
+    {/if}		
 	</div>
-
+    {if $posts}
 	<!-- see-more -->
 	<div class="alert alert-post see-more js_see-more {if $user->_logged_in}js_see-more-infinite{/if}"
 		data-get="{$_get}" data-filter="{if $_filter}{$_filter}{else}all{/if}" {if $_id}data-id="{$_id}" {/if}>

@@ -495,6 +495,7 @@ try {
 				'creditcard_enabled' => secure($_POST['creditcard_enabled']), 
 				'alipay_enabled' => secure($_POST['alipay_enabled']), 
 				'stripe_mode' => secure($_POST['stripe_mode']),
+				'stripe_commision' => secure($_POST['stripe_commision']),
 				'stripe_test_secret' => secure($_POST['stripe_test_secret']),
 				'stripe_test_publishable' => secure($_POST['stripe_test_publishable']),
 				'stripe_live_secret' => secure($_POST['stripe_live_secret']),
@@ -513,6 +514,18 @@ try {
 			]);
 			break;
 
+		case 'authorizepayments':
+			/* prepare */
+			$_POST['authorize_enabled'] = (isset($_POST['authorize_enabled']))? '1' : '0';
+			/* update */
+			update_system_options([
+				'authorize_mode' => secure($_POST['authorize_mode']),
+				'authorize_enabled' => secure($_POST['authorize_enabled']), 
+				'authorize_login_id' => secure($_POST['authorize_login_id']), 
+				'authorize_trans_key' => secure($_POST['authorize_trans_key']) 
+			]);
+			break;
+	
 		case '2checkout':
 			/* prepare */
 			$_POST['2checkout_enabled'] = (isset($_POST['2checkout_enabled']))? '1' : '0';

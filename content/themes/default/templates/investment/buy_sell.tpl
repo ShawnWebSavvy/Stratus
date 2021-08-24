@@ -1,6 +1,13 @@
 {include file='_head.tpl'}
 {include file='_header.tpl'}
+<style>
 
+@media (max-width: 460px) {
+ .buySellSection .MobileCrousle.mob_style .flickity-enabled.is-draggable .flickity-viewport {
+    height: 334.5px !important;
+  }
+}
+</style>
 <!-- page content -->
 <div class="container mt20 offcanvas">
     <div class="row">
@@ -21,23 +28,11 @@
                             <div class="heading">
                                 <h3>Currency</h3>
                             </div>
-                            <!-- <div class="dropdown">
-                                <button class="btn dropdown-toggle" type="button" id="dropdownMenu2"
-                                    data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                    More Info
-                                </button>
-                                <div class="dropdown-menu" aria-labelledby="dropdownMenu2">
-                                    <p>At vero eos censes tantas res gessisse sine dubio praeclara sunt, explicabo nemo
-                                        enim maxime placeat, facere possimus, omnis voluptas nulla pariatur? at vero eos
-                                        censes tantas res gessisse sine causa? quae fuerit causa, mox videro; interea
-                                        hoc epicurus in bonis sit sentiri haec putat.</p>
-                                </div>
-                            </div> -->
                         </div>
                         <div class="coinSelection">
                             <ul>
-                                <div class="MobileCrousle">
-                                    <div class="gallery js-flickity" data-flickity-options='{ "cellAlign": "left", "wrapAround": false, "contain": true, "prevNextButtons": false, "pageDots": false }'>
+                                <div class="MobileCrousle mob_style">
+                                    <div class="gallery js-flickity" data-flickity-options='{ "cellAlign": "left", "wrapAround": false, "contain": true, "prevNextButtons": true, "pageDots": false }'>
                                         {foreach $token_details as $tkn_detail}
                                         <div class="gallery-cell">
                                             <li>
@@ -84,42 +79,7 @@
                                             </li>
                                         </div>
                                         {/foreach}
-                                        <div class="gallery-cell" disabled>
-                                            <li>
-                                                <a href="javascript:;" class="coinDetailPrice"  data-coin="gsx">
-                                                    <div class="coinDetailHeader">
-                                                        <img src="{$system['system_url']}/content/themes/default/images/investment/gsx.svg"
-                                                            alt="bit coin">
-                                                        <div class="textSection">
-                                                            <h5>Gold Secured Currency</h5>
-                                                            <p>GSX</p>
-                                                            <p class="comingSoon comingSoon1">Coming Soon</p>
-                                                        </div>
-                                                          <div class="priceCount priceCountDetail">
-                                                            <p>
-                                                                <span>
-                                                                    0.1
-                                                                </span>
-                                                                USD
-                                                            </p>
-                                                        </div>
-                                                    </div>
-                                                     <div class="buySellBox">
-                                                            <p class="d-flex align-items-start ">
-                                                                <img src="{$system['system_url']}/content/themes/default/images/svg/svgImg/Wallet_icon_header.svg"
-                                                                    alt="wallet">
-                                                                    <span>
-                                                                        0 GSX
-                                                                        <br/>
-                                                                        $0
-                                                                    </span>
-                                                            </p>
-                                                        </div>
-                                                  
-                                                </a>
-                                            </li>
-                                        </div>
-                                     
+                                    
                                     </div>
                                 </div>
                             </ul>
@@ -131,7 +91,7 @@
                         </div>
                         <div class="coinSelection">
                             <ul>
-                                <div class="MobileCrousle">
+                                <div class="MobileCrousle mob_style>
                                     <div class="gallery js-flickity" data-flickity-options='{ "cellAlign": "left", "wrapAround": false, "contain": true, "prevNextButtons": false, "pageDots": false }'>
                                         <div class="gallery-cell">
                                             <li>

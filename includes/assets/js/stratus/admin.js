@@ -7,6 +7,7 @@
 
 // initialize API URLs
 api['admin/delete'] = ajax_path + "admin/delete.php";
+api['admin/investment'] = ajax_path + "admin/investment.php?do=updateCoin";
 api['admin/test'] = ajax_path + "admin/test.php";
 api['admin/verify'] = ajax_path + "admin/verify.php";
 api['admin/bank'] = ajax_path + "admin/bank.php";
@@ -210,6 +211,20 @@ $(function () {
         });
     });
 
+    //Pay To user in bank
+    $('body').on('click', '.js_admin-pay_approve', function () {
+        var user_id = $(this).data('user_id');
+        var id = $(this).data('id');
+        modal('#bank-withdrawal_admin', { 'userId': user_id, 'request_id': id });
+    });
+
+    $('body').on('click', '.js_admin-pay_disapprove', function () {
+        var id = $(this).data('id');
+        var user_id = $(this).data('user_id');
+        confirm(__['Decline'], __['Are you sure you want to decline this request?'], function () {
+            modal('#bank-withdrawal_admin_refuse', { 'userId': user_id, 'request_id': id });
+        });
+    });
 
     // handle input dependencies
     /* custom fields */
@@ -268,4 +283,36 @@ $(function () {
         eAjaxSuccess: function (data) { return data },
         pagination: true
     });
+
 });
+let page = window.location.pathname;
+let urlParts = page.split("/");
+let firstSection = urlParts[urlParts.length - 2];
+let endUrl = urlParts[urlParts.length - 1];
+
+if ((firstSection+endUrl)&&firstSection+endUrl == "coinedit") {
+    $(document).ready(function () {
+    
+        updateCoin();
+        setInterval(updateCoin, 10000);
+        function updateCoin() {
+            let markup_price = $("input[name=markup_price]").val();
+            let markdown_price = $("input[name=markdown_price]").val();
+            let trade_pair = $("input[name=trade]").val();
+            let exchange_id = $("input[name=exchange_id]").val();
+            $.post(api['admin/investment'], { 'markup_price': markup_price, 'markdown_price': markdown_price, 'trade_pair': trade_pair, 'exchange_id': exchange_id }, 'json')
+                .done(function (response) {
+                    if (response.data) {
+                        console.log(response);
+                        $('#bitmart_buy_price').html(response.data.bitmart_price);
+                        $('#stratus_buy_price').html(response.data.stratus_buy_price);
+                        $('#bitmart_sell_price').html(response.data.bitmart_price);
+                        $('#stratus_sell_price').html(response.data.stratus_sell_price);
+                    }
+                })
+                .fail(function () {
+                    // modal('#modal-message', { title: __['Error'], message: __['There is something that went wrong!'] });
+                });
+        }
+    })
+}

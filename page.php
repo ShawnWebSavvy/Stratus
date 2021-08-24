@@ -37,14 +37,7 @@ try {
 	/* get page picture */
 	$spage['page_picture_default'] = ($spage['page_picture']) ? false : true;
 	$spage['page_picture'] = get_picture($spage['page_picture'], 'page');
-
-
 	$spage['page_picture_full'] = ($spage['page_picture_full']) ? $system['system_uploads'] . '/' . $spage['page_picture_full'] : $spage['page_picture_full'];
-
-
-	$spage['page_picture'] = $system['system_url'] . '/includes/wallet-api/get-picture-api.php?picture=' . $spage['page_picture'] .'&picture_full='.$spage['page_picture_full']. '&type=page&type_url=1';
-
-
 	/* get page cover */
 	$spage['page_cover'] = ($spage['page_cover']) ? $system['system_uploads'] . '/' . $spage['page_cover'] : $spage['page_cover'];
 	$spage['page_cover_full'] = ($spage['page_cover_full']) ? $system['system_uploads'] . '/' . $spage['page_cover_full'] : $spage['page_cover_full'];
@@ -77,28 +70,15 @@ try {
 				$smarty->assign('colored_patterns', $user->get_posts_colored_patterns());
 			}
 
-			/* get pages */
-			if ($system['pages_enabled']) {
-				$pages = $user->get_pages(array('user_id' => $profile['user_id'], 'results' => $system['min_results_even']));
-				$smarty->assign('pages', $pages);
-			}
-
-			/* get groups */
-			if ($system['groups_enabled']) {
-				$groups = $user->get_groups(array('user_id' => $profile['user_id'], 'results' => $system['min_results_even']));
-				$smarty->assign('groups', $groups);
-			}
-
-			/* get events */
-			if ($system['events_enabled']) {
-				$events = $user->get_events(array('user_id' => $profile['user_id'], 'results' => $system['min_results_even']));
-				$smarty->assign('events', $events);
-			}
-
 			/* get posts */
 			$posts = $user->get_posts(array('get' => 'posts_page', 'id' => $spage['page_id']));
 			/* assign variables */
 			$smarty->assign('posts', $posts);
+		 
+			if($spage['i_admin']){
+			   $smarty->assign('addPost', true);
+			}
+
 			break;
 
 		case 'photos':
@@ -195,8 +175,10 @@ try {
 					$spage['page_admins'] = $user->get_page_admins($spage['page_id']);
 
 					/* get members */
+					$spage['members_count'] = 0;
 					if ($spage['page_likes'] > 0) {
-						$spage['members'] = $user->get_page_members($spage['page_id']);
+						$spage['members'] = $user->get_page_members_without_admins($spage['page_id']);
+						$spage['members_count'] = count($spage['members']);
 					}
 					break;
 

@@ -1,21 +1,21 @@
 <div class="card">
-    <div class="card-header with-icon">
+    <div class="card-header with-icon ">
+       <i class="fa fa-bullhorn mr10"  style="color: #5271f2 !important;"></i>{__("Announcements")}
+        {if $sub_view == "edit"} &rsaquo; {$data['name']}{/if}
+        {if $sub_view == "add"} &rsaquo; {__("Add New Announcement")}{/if}
         {if $sub_view == ""}
             <div class="float-right">
-                <a href="{$system['system_url']}/{$control_panel['url']}/announcements/add" class="btn btn-sm btn-primary">
+                <a href="{$system['system_url']}/{$control_panel['url']}/announcements/add" class="btn  cmn_btn">
                     <i class="fa fa-plus mr5"></i>{__("Add New Announcement")}
                 </a>
             </div>
         {else}
             <div class="float-right">
-                <a href="{$system['system_url']}/{$control_panel['url']}/announcements" class="btn btn-sm btn-light">
+                <a href="{$system['system_url']}/{$control_panel['url']}/announcements" class="btn  cmn_btn">
                     <i class="fa fa-arrow-circle-left mr5"></i>{__("Go Back")}
                 </a>
             </div>
         {/if}
-        <i class="fa fa-bullhorn mr10"></i>{__("Announcements")}
-        {if $sub_view == "edit"} &rsaquo; {$data['name']}{/if}
-        {if $sub_view == "add"} &rsaquo; {__("Add New Announcement")}{/if}
     </div>
 
     {if $sub_view == ""}

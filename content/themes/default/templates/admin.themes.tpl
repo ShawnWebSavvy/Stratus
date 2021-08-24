@@ -2,20 +2,25 @@
     <div class="card-header with-icon">
         {if $sub_view == ""}
             <div class="float-right">
-                <a href="{$system['system_url']}/{$control_panel['url']}/themes/add" class="btn btn-sm btn-primary">
+                <a href="{$system['system_url']}/{$control_panel['url']}/themes/add" class="btn cmn_btn">
                     <i class="fa fa-plus mr5"></i>{__("Add New Theme")}
                 </a>
             </div>
         {elseif $sub_view == "add" || $sub_view == "edit"}
             <div class="float-right">
-                <a href="{$system['system_url']}/{$control_panel['url']}/themes" class="btn btn-sm btn-light">
+                <a href="{$system['system_url']}/{$control_panel['url']}/themes" class="btn cmn_btn">
                     <i class="fa fa-arrow-circle-left mr5"></i>{__("Go Back")}
                 </a>
             </div>
         {/if}
-        <i class="fa fa-desktop mr10"></i>{__("Themes")}
-        {if $sub_view == "edit"} &rsaquo; {$data['name']}{/if}
-        {if $sub_view == "add"} &rsaquo; {__("Add New Theme")}{/if}
+        <div class='d-flex align-items-center'>
+            <div class="svg-container mr10">
+                <img style="width: 20px;" src="{$system['system_url']}/content/themes/default/images/svg/admin/theme.svg" class="">
+            </div>
+            {__("Themes")}
+            {if $sub_view == "edit"} &rsaquo; {$data['name']}{/if}
+            {if $sub_view == "add"} &rsaquo; {__("Add New Theme")}{/if}
+        </div>
     </div>
     
     {if $sub_view == ""}

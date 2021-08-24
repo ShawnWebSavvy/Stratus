@@ -1,9 +1,12 @@
 <div class="card">
-    <div class="card-header with-icon">
-        <i class="fa fa-tachometer-alt mr10"></i>{__("Dashboard")}
+    <div class="card-header with-icon d-flex align-items-center">
+        <div class="svg-container mr10">
+            <img src="{$system['system_uploads_assets']}/content/themes/default/images/svg/admin/apps_icon.svg" class="">
+        </div>
+        {__("Dashboard")}
     </div>
     <div class="card-body">
-        {if $user->_is_admin}
+        {if $user->_is_admin || $user->_is_subAdmin}
             <div id="admin-chart-dashboard" class="admin-chart mb20"></div>
             <div class="form-row">
                 <div class="col-sm-3">

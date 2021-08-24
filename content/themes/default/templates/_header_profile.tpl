@@ -5,7 +5,8 @@
   {if ($page=='index' || $page=='sign' ) && !$system['system_wallpaper_default'] && $system['system_wallpaper']}
   style="background-image:url('{$system['system_uploads']}/{$system['system_wallpaper']}');background-size:cover;" {/if}
   {if $page=='profile' && $system['system_profile_background_enabled'] &&
-  $profile['user_profile_background']}style="background:url({$profile['user_profile_background']}) fixed !important; background-size:100% auto;"
+  $profile['user_profile_background']}style="background-image:url({$profile['user_profile_background']}) !important;background-size: cover;background-repeat: no-repeat;
+  background-attachment: fixed;"
   {/if}>
   {else}
 
@@ -13,7 +14,9 @@
     data-chat-enabled="{$user->_data['user_chat_enabled']}"
     class="{if $page=='global-profile/landingpage'}landingpage-localhub {elseif $page=='global-profile/global-profile-timeline'}global-profile-timeline-localhub index-localhub {elseif $page=='global-profile/global-profile-post'}global-profile-post-localhub{elseif $page=='global-profile/global-profile-photo'}global-profile-photo-localhub{elseif $page=='global-profile/global-profile'} global-profile-localhub{elseif $view=='wallet' && $page=='ads'}{$view}-localhub {elseif $page=='ads'} {$page}-localhub{elseif $page=='blogs'} index-localhub {$page}-localhub {elseif $page=='notifications'} index-localhub {$page}-localhub {elseif $page=='market'} index-localhub {$page}-localhub {elseif $page=='global-profile/search'} search-localhub global-search-localhub {elseif $page == 'events' || $page == 'developers' || $page == 'forums' || $page == 'pages' || $page == 'groups' } explore_page_cmn {else} {$page}-localhub group-localhub {/if} {if $system['theme_mode_night']}night-mode{/if} {if !$system['chat_enabled']}n_chat{/if}{if $system['activation_enabled'] && !$user->_data['user_activated']} n_activated{/if}{if !$system['system_live']} n_live{/if} {if $page == 'index' || $page == 'pages' || $page == 'global-profile' || $page == 'messages' || $page == 'events' || $page == 'groups' || $page == 'people' || $page == 'settings'|| $page == 'admin' } lgtBg {$page}{/if} {if $page=='started'}body-started{/if} "
     {if $page=='profile' && $system['system_profile_background_enabled'] && $profile['user_profile_background']}
-    style="background:url({$profile['user_profile_background']}) fixed !important; background-size:100% auto;" {/if} {if
+    style="background-image:url({$profile['user_profile_background']}) !important;background-size: cover;
+    background-repeat: no-repeat;
+    background-attachment: fixed;" {/if} {if
     $page=="share" && $url}onload="initialize_scraper()" {/if}>
     {/if}
 
@@ -96,9 +99,9 @@
                         xlink:href="data:img/png;base64,iVBORw0KGgoAAAANSUhEUgAAAQAAAAEACAQAAAD2e2DtAAAABGdBTUEAALGPC/xhBQAAACBjSFJNAAB6JgAAgIQAAPoAAACA6AAAdTAAAOpgAAA6mAAAF3CculE8AAAAAmJLR0QAAKqNIzIAAAAJcEhZcwAAB2IAAAdiATh6mdsAAAAHdElNRQfkCxoLMCTmZUgdAAAEJUlEQVR42u3dy2tcZRiA8ed8Y2rUtLZqmU1JKxMXVYj1QkHUbqpN02iLtDS4cONCEAUvWET/AUW7cOVO60LQ2IVN0ZqoEcFbL1aaZlGthoDEtlErjebWaBIX4zQmVnCRnFdmnt9s5pyZxQPfewaG78ABSZIkSZIkSZIkSZIkSZIkSZIkSZIkSZIkSdL/VDbvuMRmShSpiw7TgvudIfrpov/fvrCZL5nxVfWvI7TMLnrlF+AKXmNH9IgqN2/xIKNQGYAV9HBTdJNy9RUbOQcJKPC6y19zbqaDS6AAPM6j0TUKUOJnDmcso59rolsU4idKiftc/pq1km2Je6MrFGhrojm6QYGaM36jIbpCYUYSM9ENCjSdOB3doEA/JI5HNyhQX2J/dIMCdWYspZ+V0R0K8SOlApNM0BpdohBP81kGFOikLbpFueumjanydvByPnI/sMYcZSPD5e1gOMed7I0uUo7eZAPDUBkAGGUnLRyO7lIODrGJ+xkrH8y/KfRaWilRZEl0pRbcJGfop4uB6BBJkiRJkiRJkiRJkiRJkiRJkiRJkiRJkiRJkiRJkiRJkiRJkiRJkiRJkiRJkqrZ3IdHL6eNVtZQvPBUcVWPaYYY4D0OcG725OwANLCLJ2mIrtSiG2E3uxktH1QGoIn9rI0uU26+ZStfQ2UA1vIpV0U3KVdnuZ1vygOwgsM0RfcodydZz3ABeI4t0S0KcDV1vJ+xiu+4NLpFISYoJXa4/DWrnu2JtugKBboncV10gwI1ZYxTH12hMOOJsegGBRpNnIpuUKBTiS+iGxTo80RndIMC7c8o0MsN0R0KcYLmxBTPRHcoyFP8UQBOsozboluUuxd5GQoA9LCaddE9ytUeHmOmMgAz7ONX7mBJdJVyMcIunmUGKgMAcJA91NHI0ug6LarTvEo7PZXDbN7HiXWsYRWXRXdqwY0zyADHyle+JEmSJEmSJEmSJEmSJEmSJEmSJEmSJEmSJEmSJEmSJEmSJEmSJEmSJEmSJGnRZBc5lyj67OAqNM4Q0/NPzh2ADbTTSuPfnimuajLF9xygg09mT80OwPW8xN3RhcpFN09wovy2MgBbeINl0V3KzQgPsA8qA9DCu/7s15hptvFOeQCaOOrVX4OGuYX+BLzg8tekK3keMpo5dtE/g6p+MzQndrj8NStje+Ku6AoF2pRYHd2gQI0Z51kSXaEw5xO/RDco0NnEYHSDAg0meqIbFOjDxNvRDQq0L3GID6IrFKSLIxlwIwepj25R7iZYT18CenkoukUBHqGPvzaBj3OGFjeEa8gkD/MKcGHRj/Ixt1KM7lIuemkv3w4y957AxE7a2cTl0X1aNGN008He2ZtD/7kTWKBIkRRdqgU3zRBDTEVnSJIkSZIkSZIkSZIkSZIkSZIkSZIkSZIkSZL+oz8BLkedNfIIF1wAAAAASUVORK5CYII=" />
                     </svg>
                   </button>
+                  {if $addPost }
                   {if $active_page =="GlobalHub"}
-
-                  <a href="javascript:initialize_scraper()" id="openPost"></a>
+                  <a href="javascript:initialize_scraper()" id="openPost">
                   <div class="svg-container">
                     <img
                       data-src="{$system['system_uploads_assets']}/content/themes/default/images/svg/footer-icon/Icon.svg"
@@ -124,6 +127,7 @@
                     </div>
                   </a>
                   {/if}
+                 {/if}
                 </li>
               </ul>
               <div class="logo-wrapper for_desktop">
