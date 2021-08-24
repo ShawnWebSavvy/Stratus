@@ -1855,55 +1855,73 @@ $(function () {
           eval(response.callback);
         } else {
           if (response.posts) {
+            var datatta = response.posts;
+            var ArrayVal = datatta.split('<div class="carsds"');
+            var loopArray = [];
+            if (ArrayVal.length > 0) {
+              for (var i = 1; i < ArrayVal.length; i++) {
+                loopArray.push('<div class="carsds"' + ArrayVal[i])
+              }
+            }
+
+            for (var ik = 0; ik < loopArray.length; ik++) {
+              var values = loopArray[ik];
+              var d = document.createElement('div');
+              d.innerHTML = values;
+              var valuesPost = d.firstChild;
+              bricklayer.append(valuesPost);
+              // bricklayer.redraw();
+            }
+          }
             posts_loader.hide();
             posts_stream.removeData("loading");
             posts_stream.html(response.posts);
             setTimeout(photo_grid(), 200);
-            console.log("Af")
-            if ($(window).width() > 1024) {
-              if ($('body #landing_feeds_post_ul').length > 0) {
-                var msnry = new Masonry(".feeds_post_ul", {
-                  horizontalOrder: true, // new!
-                  //percentPosition: true,
-                });
-              }
-              if ($('body .global-profile-ul-post').length > 0) {
-                var macyInstance = Macy({
-                  // See below for all available options.
-                  container: '.feeds_post_ul',
-                  trueOrder: true,
-                  columns: 2,
-                  waitForImages: true
-                });
-                //macyInstance.recalculate(false);
-              }
-              if ($('body #timeline_profile').length > 0) {
-                var macyInstance = Macy({
-                  // See below for all available options.
-                  container: '.feeds_post_ul',
-                  trueOrder: true,
-                  columns: 2,
-                  waitForImages: true
-                });
-                //macyInstance.recalculate(false);
-              }
-              if ($('body #feeds_post_ul').length > 0) {
-                var macyInstance = Macy({
-                  // See below for all available options.
-                  container: '.feeds_post_ul',
-                  trueOrder: true,
-                  columns: 2,
-                  waitForImages: true
-                });
-                //macyInstance.recalculate(false);
-              }
-              // var msnry = new Masonry(".feeds_post_ul", {
-              //   //horizontalOrder: false, // new!
-              //   //percentPosition: true,
-              // });
-            }
-          }
+            // console.log("Af")
+            // if ($(window).width() > 1024) {
+            //   if ($('body #landing_feeds_post_ul').length > 0) {
+            //     var msnry = new Masonry(".feeds_post_ul", {
+            //       horizontalOrder: true, // new!
+            //       //percentPosition: true,
+            //     });
+            //   }
+            //   if ($('body .global-profile-ul-post').length > 0) {
+            //     var macyInstance = Macy({
+            //       // See below for all available options.
+            //       container: '.feeds_post_ul',
+            //       trueOrder: true,
+            //       columns: 2,
+            //       waitForImages: true
+            //     });
+            //     //macyInstance.recalculate(false);
+            //   }
+            //   if ($('body #timeline_profile').length > 0) {
+            //     var macyInstance = Macy({
+            //       // See below for all available options.
+            //       container: '.feeds_post_ul',
+            //       trueOrder: true,
+            //       columns: 2,
+            //       waitForImages: true
+            //     });
+            //     //macyInstance.recalculate(false);
+            //   }
+            //   if ($('body #feeds_post_ul').length > 0) {
+            //     var macyInstance = Macy({
+            //       // See below for all available options.
+            //       container: '.feeds_post_ul',
+            //       trueOrder: true,
+            //       columns: 2,
+            //       waitForImages: true
+            //     });
+            //     //macyInstance.recalculate(false);
+            //   }
+            //   // var msnry = new Masonry(".feeds_post_ul", {
+            //   //   //horizontalOrder: false, // new!
+            //   //   //percentPosition: true,
+            //   // });
+            // }
         }
+        
       },
       "json"
     );
@@ -2195,20 +2213,9 @@ $(function () {
           function (response) {
             /* check the response */
             $("#modal").modal("hide");
-            if (
-              response.refresh &&
-              (current_page == "profile" ||
-                current_page == "page" ||
-                current_page == "global-profile/global-profile-timeline" ||
-                current_page == "group" ||
-                current_page == "event")
-            ) {
-              location.reload();
-            } else if (response.refresh = "delete_single_post") {
-              $('.child-post-ul').html("");
-              window.location.replace(document.referrer)
-            }
-            else if (response.callback) {
+            bricklayer.redraw();
+           
+            if (response.callback) {
               eval(response.callback);
             }
           },

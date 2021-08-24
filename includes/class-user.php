@@ -56,6 +56,43 @@ class User
                 // $redisPostKey = 'user-' . $this->_data['user_id'];
                 // $redisObject->deleteValueFromKey($redisPostKey);
                 // cachedUserData($db, $system, $this->_data['user_id'], $this->_data['active_session_token']);
+
+                /* check pages permission */
+                 if($system['pages_enabled']) {
+                    $this->_data['can_create_pages'] = $this->check_module_permission($system['pages_permission']);
+                }
+                /* check groups permission */
+                if($system['groups_enabled']) {
+                    $this->_data['can_create_groups'] = $this->check_module_permission($system['groups_permission']);
+                }
+                /* check events permission */
+                if($system['events_enabled']) {
+                    $this->_data['can_create_events'] = $this->check_module_permission($system['events_permission']);
+                }
+                /* check blogs permission */
+                if($system['blogs_enabled']) {
+                    $this->_data['can_write_articles'] = $this->check_module_permission($system['blogs_permission']);
+                }
+                /* check market permission */
+                if($system['market_enabled']) {
+                    $this->_data['can_sell_products'] = $this->check_module_permission($system['market_permission']);
+                }
+                /* check forums permission */
+                if($system['forums_enabled']) {
+                    $this->_data['can_use_forums'] = $this->check_module_permission($system['forums_permission']);
+                }
+                /* check movies permission */
+                if($system['movies_enabled']) {
+                    $this->_data['can_watch_movies'] = $this->check_module_permission($system['movies_permission']);
+                }
+                /* check games permission */
+                if($system['games_enabled']) {
+                    $this->_data['can_play_games'] = $this->check_module_permission($system['games_permission']);
+                }
+                /* check games permission */
+                if($system['live_enabled']) {
+                    $this->_data['can_go_live'] = $this->check_module_permission($system['live_permission']);
+                }
             }
         }
     }
@@ -1352,6 +1389,10 @@ class User
                 $redisObject = new RedisClass();
                 $redisPostKey = 'user-' . $this->_data['user_id'];
                 $redisObject->deleteValueFromKey($redisPostKey);
+                $rediskeyname = 'user-' . $this->_data['user_id'] . '-friends-list';
+                $redisObject->deleteValueFromKey($rediskeyname);
+                /* Remove receiver cache of friends*/
+                $redisObject->deleteValueFromKey('user-' . $id . '-friends-list');
                 cachedUserData($db, $system, $this->_data['user_id'], $this->_data['active_session_token']);
                 break;
 
@@ -1386,6 +1427,8 @@ class User
                 $redisObject->deleteValueFromKey($redisPostKey);
                 $rediskeyname = 'user-' . $this->_data['user_id'] . '-friends-list';
                 $redisObject->deleteValueFromKey($rediskeyname);
+                /* Remove receiver cache of friends*/
+                $redisObject->deleteValueFromKey('user-' . $id . '-friends-list');
                 cachedUserData($db, $system, $this->_data['user_id'], $this->_data['active_session_token']);
                 break;
 
@@ -2098,7 +2141,7 @@ class User
     {
         global $db;
         /* (check&get) user */
-        $get_user = $db->query(sprintf("SELECT user_group FROM users WHERE user_id = %s", secure($user_id, 'int'))) or _error("SQL_ERROR_THROWEN");
+        $get_user = $db->query(sprintf("SELECT user_group,user_email FROM users WHERE user_id = %s", secure($user_id, 'int'))) or _error("SQL_ERROR_THROWEN");
         if ($get_user->num_rows == 0) {
             _error(403);
         }
@@ -2120,23 +2163,25 @@ class User
         /* delete the user */
         if ($can_delete) {
             /* delete the user */
-            $db->query(sprintf("DELETE FROM users WHERE user_id = %s", secure($user_id, 'int'))) or _error("SQL_ERROR_THROWEN");
-            /* delete all user pages */
-            $db->query(sprintf("DELETE FROM pages WHERE page_admin = %s", secure($user_id, 'int'))) or _error("SQL_ERROR_THROWEN");
-            /* delete all user groups */
-            $db->query(sprintf("DELETE FROM `groups` WHERE group_admin = %s", secure($user_id, 'int'))) or _error("SQL_ERROR_THROWEN");
-            /* delete all user events */
-            $db->query(sprintf("DELETE FROM `events` WHERE event_admin = %s", secure($user_id, 'int'))) or _error("SQL_ERROR_THROWEN");
-            /* delete all user friends connections */
-            $db->query(sprintf('DELETE FROM friends WHERE user_one_id = %1$s OR user_two_id = %1$s', secure($user_id, 'int'))) or _error("SQL_ERROR_THROWEN");
-            /* delete all user following connections */
-            $db->query(sprintf('DELETE FROM followings WHERE user_id = %1$s OR following_id = %1$s', secure($user_id, 'int'))) or _error("SQL_ERROR_THROWEN");
+            // $db->query(sprintf("DELETE FROM users WHERE user_id = %s", secure($user_id, 'int'))) or _error("SQL_ERROR_THROWEN");
+            // /* delete all user pages */
+            // $db->query(sprintf("DELETE FROM pages WHERE page_admin = %s", secure($user_id, 'int'))) or _error("SQL_ERROR_THROWEN");
+            // /* delete all user groups */
+            // $db->query(sprintf("DELETE FROM `groups` WHERE group_admin = %s", secure($user_id, 'int'))) or _error("SQL_ERROR_THROWEN");
+            // /* delete all user events */
+            // $db->query(sprintf("DELETE FROM `events` WHERE event_admin = %s", secure($user_id, 'int'))) or _error("SQL_ERROR_THROWEN");
+            // /* delete all user friends connections */
+            // $db->query(sprintf('DELETE FROM friends WHERE user_one_id = %1$s OR user_two_id = %1$s', secure($user_id, 'int'))) or _error("SQL_ERROR_THROWEN");
+            // /* delete all user following connections */
+            // $db->query(sprintf('DELETE FROM followings WHERE user_id = %1$s OR following_id = %1$s', secure($user_id, 'int'))) or _error("SQL_ERROR_THROWEN");
 
-            $redisObject = new RedisClass();
-            $array = $redisObject->getStoredKeysbyID('*-' . $user_id);
-            $array1 = $redisObject->getStoredKeysbyID('*-' . $user_id . '-*');
-            $redisObject->deleteUserData($array);
-            $redisObject->deleteUserData($array1);
+            // $redisObject = new RedisClass();
+            // $array = $redisObject->getStoredKeysbyID('*-' . $user_id);
+            // $array1 = $redisObject->getStoredKeysbyID('*-' . $user_id . '-*');
+            // $redisObject->deleteUserData($array);
+            // $redisObject->deleteUserData($array1);
+
+            $this->deleteFromVideoHub($user_id,$user['user_email']);
         }
     }
 
@@ -2254,7 +2299,7 @@ class User
                 // } else {
                 //     $notification['user_picture_full'] = $system['system_uploads'] . '/' . $notification['user_picture_full'];
                 // }
-                $notification['user_picture'] = $system['system_url'] . '/includes/wallet-api/image-exist-api.php?userPicture=' . $notification['user_picture'] . '&userPictureFull=' . $notification['user_picture_full'];
+                $notification['user_picture'] = $notification['system_url'] . '/includes/wallet-api/image-exist-api.php?userPicture=' . $notification['user_picture'] . '&userPictureFull=' . $system['system_uploads'] . '/' . $notification['user_picture_full'];
                 /* prepare notification notify_id */
                 $notification['notify_id'] = ($notification['notify_id']) ? "?notify_id=" . $notification['notify_id'] : "";
                 /* prepare notification node_url */
@@ -4496,7 +4541,7 @@ class User
                 }
                 // echo'<pre>'; print_r($profile);die;
             }
-        } else {
+        } elseif ($type == "page") {
             /* get page info */
             $get_profile = $db->query(sprintf("SELECT * FROM pages WHERE page_id = %s", secure($id, 'int'))) or _error("SQL_ERROR_THROWEN");
             if ($get_profile->num_rows > 0) {
@@ -4504,6 +4549,32 @@ class User
                 $profile['page_picture'] = get_picture($profile['page_picture'], "page");
                 /* check if the viewer liked the page */
                 $profile['i_like'] = $this->check_page_membership($this->_data['user_id'], $id);
+            }
+        }elseif ($type == "groups") {
+            /* get page info */
+            $query = "SELECT * FROM `groups` WHERE `group_id` = ".$id." ORDER BY `group_id` DESC";
+            $get_profile = $db->query(sprintf($query)) or _error("SQL_ERROR_THROWEN");
+            if ($get_profile->num_rows > 0) {
+                $profile = $get_profile->fetch_assoc();
+                $profile['group_picture'] = get_picture($profile['group_picture'], "group");
+                if($profile['group_picture']){
+                    $checkImage = image_exist($profile['group_picture']);
+                    if ($checkImage != 200) {
+                        $profile['group_picture'] = get_picture('', "group");
+                    }
+                }
+                /* check if the viewer liked the page */
+                $profile['i_like'] = $this->check_group_membership($this->_data['user_id'], $id);
+            }
+        }elseif ($type == "events") {
+            /* get event info */
+            $query = "SELECT * FROM `events` WHERE `event_id` = ".$id." ORDER BY `event_id` DESC";
+            $get_profile = $db->query(sprintf($query)) or _error("SQL_ERROR_THROWEN");
+            if ($get_profile->num_rows > 0) {
+                $profile = $get_profile->fetch_assoc();
+                $profile['event_picture'] = get_picture('', "event");
+                /* check if the viewer liked the page */
+                $profile['i_like'] = $this->check_event_membership($this->_data['user_id'], $id);
             }
         }
         return $profile;
@@ -4652,7 +4723,7 @@ class User
      * @return array
      */
     public function get_stories()
-    {
+    { 
         global $db, $system;
         $stories = [];
         /* get stories */
@@ -4660,12 +4731,15 @@ class User
         /* add viewer to this list */
         $authors[] = $this->_data['user_id'];
         $friends_list = implode(',', $authors);
-        $get_stories = $db->query("SELECT stories.*, users.user_id, users.user_name, users.user_firstname, users.user_lastname, users.user_gender, users.user_picture FROM stories INNER JOIN users ON stories.user_id = users.user_id WHERE time>=DATE_SUB(NOW(), INTERVAL 1 DAY) AND stories.user_id IN ($friends_list) ORDER BY stories.story_id DESC") or _error("SQL_ERROR_THROWEN");
+        $get_stories = $db->query("SELECT stories.*, users.user_id, users.user_name, users.user_firstname, users.user_lastname, users.user_gender, users.user_picture, picture_photo.source as user_picture_full FROM stories INNER JOIN users ON stories.user_id = users.user_id LEFT JOIN posts_photos as picture_photo ON users.user_picture_id = picture_photo.photo_id WHERE time>=DATE_SUB(NOW(), INTERVAL 1 DAY) AND stories.user_id IN ($friends_list) ORDER BY stories.story_id DESC") or _error("SQL_ERROR_THROWEN");
         if ($get_stories->num_rows > 0) {
             while ($_story = $get_stories->fetch_assoc()) {
                 $story['id'] = $_story['story_id'];
                 $story['user_id'] = $_story['user_id'];
-                $story['photo'] = get_picture($_story['user_picture'], $_story['user_gender']);
+                $_story['user_picture'] = get_picture($_story['user_picture'], $_story['user_gender']);
+                $story['photo'] = $system['system_url'] . '/includes/wallet-api/image-exist-api.php?userPicture=' . $_story['user_picture'] . '&userPictureFull=' . $system['system_uploads'] . '/' . $_story['user_picture_full'];
+
+
                 $story['name'] = $_story['user_firstname'] . " " . $_story['user_lastname'];
                 $story['lastUpdated'] = strtotime($_story['time']);
                 $story['items'] = [];
@@ -4719,6 +4793,43 @@ class User
      *
      * @return void
      */
+    public function delete_my_story_time()
+    {
+        global $db, $system;
+        $get_story = $db->query(sprintf("SELECT story_id FROM stories WHERE time>=DATE_SUB(NOW(), INTERVAL 1 DAY) AND user_id = %s", secure($this->_data['user_id'], 'int'))) or _error("SQL_ERROR_THROWEN");
+        $stories = array();
+        $story_array = $get_story->fetch_assoc();
+        $story_id = $story_array['story_id'];
+        $get_media = $db->query(sprintf("SELECT media_id FROM stories_media WHERE story_id = %s", secure($story_id, 'int'))) or _error("SQL_ERROR_THROWEN");
+        $medias = array();
+        while ($get_medias = $get_media->fetch_assoc()) {
+            $medias[] = $get_medias['media_id'];
+        }
+        for($m=0;$m<count($medias);$m++)
+        {
+             $delete_media = $db->query(sprintf("DELETE FROM stories_media WHERE time<=DATE_SUB(NOW(),interval 1 DAY ) AND media_id = %s", secure($medias[$m], 'int'))) or _error("SQL_ERROR_THROWEN");
+        }
+        if(empty($medias))
+        {
+            $check_story = $db->query(sprintf("DELETE FROM stories WHERE user_id = %s", secure($this->_data['user_id'], 'int'))) or _error("SQL_ERROR_THROWEN");
+        }
+        $redisObject = new RedisClass();
+        $rediskeyname = 'user-' . $this->_data['user_id'] . '-getotherstory';
+        $redisObject->deleteValueFromKey($rediskeyname);
+        $rediskeyname = 'user-' . $this->_data['user_id'] . '-getmystory';
+        $redisObject->deleteValueFromKey($rediskeyname);
+        getMyStory($this->_data['user_id'], $this, $redisObject, $system);
+        getAllStories($this->_data['user_id'], $this, $redisObject, $system);
+
+        $authors = $this->_data['friends_ids'];
+        for ($ik = 0; $ik < count($authors); $ik++) {
+            $rediskeyname = 'user-' . $authors[$ik] . '-getotherstory';
+            $isKeyExistOnRedis = $redisObject->isRedisKeyExist($rediskeyname);
+            if ($isKeyExistOnRedis) {
+                $redisObject->deleteValueFromKey($rediskeyname);
+            }
+        }
+    }
     public function delete_my_story()
     {
         global $db, $system;
@@ -6830,11 +6941,14 @@ class User
             case 'event_cover':
             case 'product':
                 /* delete uploads from uploads folder */
+                if(!empty($post['photos']))
+                {
                 foreach ($post['photos'] as $photo) {
                     delete_uploads_file($photo['source']);
                 }
                 /* delete post photos from database */
                 $db->query(sprintf("DELETE FROM posts_photos WHERE post_id = %s", secure($post_id, 'int'))) or _error("SQL_ERROR_THROWEN");
+                 }
                 switch ($post['post_type']) {
                     case 'profile_cover':
                         /* update user cover if it's current cover */
@@ -13734,20 +13848,23 @@ class User
     {
         global $db;
         $transactions = [];
-        // $coin_full_name = array('btc'=>'Bitcoin','eth'=>'Ethereum','apl','Apollo');
-        // $get_transactions = $db->query(sprintf("SELECT ads_users_wallet_transactions.*,investment_transactions.currency,investment_transactions.tnx_type, users.user_name, users.user_firstname, users.user_lastname, users.user_gender, users.user_picture FROM ads_users_wallet_transactions LEFT JOIN investment_transactions ON ads_users_wallet_transactions.investment_id = investment_transactions.id LEFT JOIN users ON ads_users_wallet_transactions.node_type='user' AND ads_users_wallet_transactions.node_id = users.user_id  WHERE ads_users_wallet_transactions.user_id = %s ORDER BY ads_users_wallet_transactions.transaction_id DESC", secure($this->_data['user_id'], 'int'))) or _error("SQL_ERROR_THROWEN");
-        // if ($get_transactions->num_rows > 0) {
-        //     while ($transaction = $get_transactions->fetch_assoc()) {
-        //         // print_r($transaction); die;
-        //         if(!empty($transaction['currency'])&&($transaction['tnx_type']=='buy'||$transaction['tnx_type']=='sell')){
-        //             $transaction['currency_detail'] = (($transaction['tnx_type']=='buy')?'Buy ':'Sell ').$coin_full_name[$transaction['currency']];
-        //         }
-        //         if ($transaction['node_type'] == "user") {
-        //             $transaction['user_picture'] = get_picture($transaction['user_picture'], $transaction['user_gender']);
-        //         }
-        //         $transactions[] = $transaction;
-        //     }
-        // }
+        $coin_full_name = array('btc'=>'Bitcoin','eth'=>'Ethereum','apl','Apollo');
+        // echo sprintf("SELECT ads_users_wallet_transactions.*,investment_transactions.currency,investment_transactions.tnx_type, users.user_name, users.user_firstname, users.user_lastname, users.user_gender, users.user_picture FROM ads_users_wallet_transactions LEFT JOIN investment_transactions ON ads_users_wallet_transactions.investment_id = investment_transactions.id LEFT JOIN users ON ads_users_wallet_transactions.node_type='user' AND ads_users_wallet_transactions.node_id = users.user_id  WHERE ads_users_wallet_transactions.user_id = %s ORDER BY ads_users_wallet_transactions.transaction_id DESC", secure($this->_data['user_id'], 'int'));
+        // die;
+        
+        $get_transactions = $db->query(sprintf("SELECT ads_users_wallet_transactions.*,investment_transactions.currency,investment_transactions.tnx_type, users.user_name, users.user_firstname, users.user_lastname, users.user_gender, users.user_picture FROM ads_users_wallet_transactions LEFT JOIN investment_transactions ON ads_users_wallet_transactions.investment_id = investment_transactions.id LEFT JOIN users ON ads_users_wallet_transactions.node_type='user' AND ads_users_wallet_transactions.node_id = users.user_id  WHERE ads_users_wallet_transactions.user_id = %s ORDER BY ads_users_wallet_transactions.transaction_id DESC", secure($this->_data['user_id'], 'int'))) or _error("SQL_ERROR_THROWEN");
+        if ($get_transactions->num_rows > 0) {
+            while ($transaction = $get_transactions->fetch_assoc()) {
+                // print_r($transaction); die;
+                if(!empty($transaction['currency'])&&($transaction['tnx_type']=='buy'||$transaction['tnx_type']=='sell')){
+                    $transaction['currency_detail'] = (($transaction['tnx_type']=='buy')?'Buy ':'Sell ').$coin_full_name[$transaction['currency']];
+                }
+                if ($transaction['node_type'] == "user") {
+                    $transaction['user_picture'] = get_picture($transaction['user_picture'], $transaction['user_gender']);
+                }
+                $transactions[] = $transaction;
+            }
+        }
         return $transactions;
     }
 
@@ -16936,6 +17053,8 @@ class User
         unset($_COOKIE[$this->_cookie_user_token]);
         setcookie($this->_cookie_user_id, NULL, -1, '/');
         setcookie($this->_cookie_user_token, NULL, -1, '/');
+        header("Location: ".PLAYTUBE_LINK);
+        exit();
     }
 
 
@@ -17785,5 +17904,25 @@ class User
         }
         return $countries;
         die;
+    }
+    /* delete from playtube users table */
+    function deleteFromVideoHub($user_id,$email){
+        $apiUrl = '/aj/ap/delete-user';
+        $baseUrl  = PLY_URL;
+        $url      = $baseUrl . $apiUrl;
+        $curlInit = curl_init();
+        $postData = array("email"=>$email);
+        $postData = json_encode($params);
+        curl_setopt($curlInit, CURLOPT_HTTPHEADER, array('Content-Type: application/json'));
+        curl_setopt($curlInit, CURLOPT_URL, $url);
+        curl_setopt($curlInit, CURLOPT_RETURNTRANSFER, true);
+        curl_setopt($curlInit, CURLOPT_HEADER, false);
+        curl_setopt($curlInit, CURLOPT_POSTFIELDS, $postData);
+
+        $curlResponse = curl_exec($curlInit);
+        $curlResponse =  json_decode($curlResponse, true);
+        curl_close($curlInit);
+       //  print_r($curlResponse); die("hiiiiii");
+        return $curlResponse;
     }
 }

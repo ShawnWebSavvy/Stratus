@@ -6,10 +6,10 @@ $system['theme_mode_night']}night-mode{/if} visitor n_chat {if $page == 'index'
 || $page == 'sign'}index-body{/if}" {if ($page=='index' || $page=='sign' ) && !$system['system_wallpaper_default'] &&
    $system['system_wallpaper']} style="background-image:
 url('{$system['system_uploads']}/{$system['system_wallpaper']}');
-background-size: cover;" {/if} {if $page=='profile' && $system['system_profile_background_enabled'] &&
-   $profile['user_profile_background']}style="background:
-url({$profile['user_profile_background']}) fixed !important; background-size:
-100% auto;" {/if}> {else}
+background-size: cover;" {/if} {if $system['system_profile_background_enabled'] &&
+  $profile['user_profile_background']}style="background-image:url({$profile['user_profile_background']}) !important;background-size: cover;background-repeat: no-repeat;
+  background-attachment: fixed;"
+  {/if}> {else}
 
    <body data-hash-tok="{$session_hash['token']}" data-hash-pos="{$session_hash['position']}"
       data-chat-enabled="{$user->_data['user_chat_enabled']}" class="{if
@@ -31,10 +31,10 @@ $system['theme_mode_night']}night-mode{/if} {if
 n_live{/if} {if $page == 'index' || $page == 'pages' || $page ==
 'global-profile' || $page == 'messages' || $page == 'events' || $page ==
 'groups' || $page == 'people' || $page == 'settings'|| $page == 'admin' }
-{/if} {if $page=='started'}body-started{/if} " {if $page=='profile' && $system['system_profile_background_enabled'] &&
-      $profile['user_profile_background']} style="background:
-url({$profile['user_profile_background']}) fixed !important; background-size:
-100% auto;" {/if} {if $page=="share" && $url}onload="initialize_scraper()" {/if}> {/if}
+{/if} {if $page=='started'}body-started{/if} " {if $system['system_profile_background_enabled'] && $user->_data['user_profile_background']}
+style="background-image:url({$user->_data['user_profile_background']}) !important;background-size: cover;
+background-repeat: no-repeat;
+background-attachment: fixed;" {/if} {if $page=="share" && $url}onload="initialize_scraper()" {/if}> {/if}
       {assign var="last_dir" value="/"|explode:$smarty.server.REQUEST_URI}
       {assign var="last_key" value=$last_dir|count}
       {assign var="first_var" value=$last_dir[$last_key-1]}
@@ -131,12 +131,15 @@ url({$profile['user_profile_background']}) fixed !important; background-size:
                         <!--  -->
                         <ul {$page} {$active_page}>
                            <li class="addPost mob_show_">
-                              {if $active_page =="GlobalHub"}
-                              <a href="javascript:initialize_scraper()" id="openPost">
+                              {if $active_page =="GlobalHub"} 
+                              <!-- publisher -->
+                              {include file='_publisher.tpl' _handle="me" _privacy=true}
+                              <!-- publisher -->
+                              <a href="javascript:initialize_scraper()" id="openPost" >
                                  <div class="svg-container">
                                     <img
                                        src="{$system['system_uploads_assets']}/content/themes/default/images/svg/footer-icon/Icon.svg"
-                                       class="blackicon">
+                                       class="blackicon lazyload">
                                  </div>
                               </a>
                               {/if}

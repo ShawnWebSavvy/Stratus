@@ -21,7 +21,7 @@ try {
 	// search
 	if (isset($_GET['query'])) {
 		/* get results */
-		$results = $userGlobal->global_search($_GET['query']);
+		$results = $userGlobal->global_search($_GET['query'],0);
 		/* assign variables */
 		$smarty->assign('query', $_GET['query']);
 		$smarty->assign('results', $results);

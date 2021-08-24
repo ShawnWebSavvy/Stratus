@@ -58,13 +58,13 @@
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.13.0/css/all.css"  {if !$user->_logged_in}defer{/if}>
     <link rel="stylesheet" href="{$system['system_uploads_assets']}/content/themes/default/css/bootstrap.min.css"  {if !$user->_logged_in}defer{/if}>
     <link rel="stylesheet" type='text/css'
-        href="{$system['system_url']}/content/themes/default/css/style.min.css"  {if !$user->_logged_in}defer{/if}>
+        href="{$system['system_uploads_assets']}/content/themes/default/css/style.min.css"  {if !$user->_logged_in}defer{/if}>
     <link rel="stylesheet" type='text/css'
         href="{$system['system_uploads_assets']}/content/themes/default/css/custom.css"  {if !$user->_logged_in}defer{/if}>
     <link rel="stylesheet" type='text/css'
         href="{$system['system_uploads_assets']}/content/themes/default/css/setting_nav.css"  {if !$user->_logged_in}defer{/if}>
     <link rel="stylesheet" type='text/css'
-        href="{$system['system_url']}/content/themes/default/css/custom-style.css"  {if !$user->_logged_in}defer{/if}>
+        href="{$system['system_uploads_assets']}/content/themes/default/css/custom-style.css"  {if !$user->_logged_in}defer{/if}>
     {else}
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.13.0/css/all.css"  {if !$user->_logged_in}defer{/if}>
     <link rel="stylesheet" href="https://cdn.rtlcss.com/bootstrap/v4.2.1/css/bootstrap.min.css"
@@ -72,11 +72,11 @@
     <link rel="stylesheet" type='text/css'
         href="{$system['system_uploads_assets']}/content/themes/default/css/style.rtl.min.css"  {if !$user->_logged_in}defer{/if}>
     {/if}
-    <script src="https://cdn1.stratus.co/includes/assets/js/stratus/lazysizes.min.js"></script>
+    <script src="{$system['system_uploads_assets']}/includes/assets/js/stratus/lazysizes.min.js"></script>
     <link rel="stylesheet" type='text/css'
         href="{$system['system_uploads_assets']}/content/themes/default/css/live_video_style.css"  {if !$user->_logged_in}defer{/if}>
     <link rel="stylesheet" type='text/css'
-        href="{$system['system_url']}/content/themes/default/css/style-responsive.css"  {if !$user->_logged_in}defer{/if}>
+        href="{$system['system_uploads_assets']}/content/themes/default/css/style-responsive.css"  {if !$user->_logged_in}defer{/if}>
     <link rel="stylesheet" type='text/css'
         href="{$system['system_uploads_assets']}/content/themes/default/css/style-custom-light.css"  {if !$user->_logged_in}defer{/if}>
     <link rel="stylesheet" type='text/css'

@@ -5128,15 +5128,16 @@ class UserGlobal
      * @param string $query
      * @return array
      */
-    public function global_search($query)
+    public function global_search($query,$offset)
     {
         global $db, $system;
         $results = [];
-        $offset *= $system['max_results'];
         /* search posts */
-        $posts = $this->global_profile_get_posts(array('query' => $query));
+        $posts = $this->global_profile_get_posts(array('query' => $query, 'offset' => $offset));
+        $offset *= $system['max_results'];
         if (count($posts) > 0) {
             $results['posts'] = $posts;
+            // $results['posts'] = array_slice ( $posts , $offset , $system['max_results']);
         }
 
         /* search articles */
@@ -5199,6 +5200,8 @@ class UserGlobal
                 }
             }
         }
+
+
         //echo "<pre>";print_r($results); exit;
         return $results;
     }
@@ -9082,13 +9085,13 @@ class UserGlobal
         } else {
             $selectQuery = sprintf("SELECT hashtags.hashtag, hashtags_posts.id as hash_post, COUNT(hashtags_posts.id) AS frequency,hashtags_posts.postHubType FROM hashtags INNER JOIN hashtags_posts as hashtags_posts ON hashtags.hashtag_id = hashtags_posts.hashtag_id WHERE hashtags_posts.created_at > DATE_SUB(CURDATE(), INTERVAL 1 %s) GROUP BY hashtags_posts.hashtag_id,hashtags_posts.postHubType ORDER BY frequency DESC LIMIT %s", secure($system['trending_hashtags_interval'], "", false), secure($system['trending_hashtags_limit'], 'int', false));
         }
-        // $get_trending_hashtags = $db->query($selectQuery) or _error("SQL_ERROR_THROWEN");
-        // if ($get_trending_hashtags->num_rows > 0) {
-        //     while ($hashtag = $get_trending_hashtags->fetch_assoc()) {
-        //         $hashtag['hashtag'] = html_entity_decode($hashtag['hashtag'], ENT_QUOTES);
-        //         $hashtags[] = $hashtag;
-        //     }
-        // }
+        $get_trending_hashtags = $db->query($selectQuery) or _error("SQL_ERROR_THROWEN");
+        if ($get_trending_hashtags->num_rows > 0) {
+            while ($hashtag = $get_trending_hashtags->fetch_assoc()) {
+                $hashtag['hashtag'] = html_entity_decode($hashtag['hashtag'], ENT_QUOTES);
+                $hashtags[] = $hashtag;
+            }
+        }
 
         return $hashtags;
     }
@@ -9098,10 +9101,12 @@ class UserGlobal
      * 
      * @return array
      */
-    public function get_trending_hashtags_posts($postType = null)
+    public function get_trending_hashtags_posts($postType = null,$get_all=true)
     {
         global $system, $db;
         $hashtags = [];
+        $offset = 0;
+       
         if ($postType == 'LocalHub') {
             $selectQuery = sprintf("SELECT hashtags.hashtag, hashtags.hashtag_id as hash_id, hashtags_posts.id as hash_post, COUNT(hashtags_posts.id) AS frequency,hashtags_posts.postHubType FROM hashtags INNER JOIN hashtags_posts as hashtags_posts ON hashtags.hashtag_id = hashtags_posts.hashtag_id WHERE hashtags_posts.created_at > DATE_SUB(CURDATE(), INTERVAL 1 %s) and hashtags_posts.postHubType = 'LocalHub'  GROUP BY hashtags_posts.hashtag_id,hashtags_posts.postHubType ORDER BY frequency DESC LIMIT %s", secure($system['trending_hashtags_interval'], "", false), secure($system['trending_hashtags_limit'], 'int', false));
         } elseif ($postType == 'GlobalHub') {
@@ -9118,7 +9123,7 @@ class UserGlobal
             }
             $hashTagLists = implode(', ', $hashtags);
             if (count($hashtags) > 0) {
-                $gethashposts = $db->query(sprintf("SELECT DISTINCT(post_id) from hashtags_posts where hashtag_id IN (" . $hashTagLists . ") order by post_id DESC")) or _error("SQL_ERROR_THROWEN");
+                  $gethashposts = $db->query(sprintf("SELECT DISTINCT(post_id) from hashtags_posts where hashtag_id IN (" . $hashTagLists . ") order by post_id DESC")) or _error("SQL_ERROR_THROWEN");
                 if ($gethashposts->num_rows > 0) {
                     while ($hashtagValues = $gethashposts->fetch_assoc()) {
                         $detailedPosts = $this->global_profile_get_post($hashtagValues['post_id']);
@@ -9129,7 +9134,12 @@ class UserGlobal
                 }
             }
         }
+        
 
+        if(!$get_all){
+          $detailed_posts = array_slice ( $detailed_posts , $offset , $system['max_results']);
+        }
+        
         return $detailed_posts;
     }
 
@@ -9780,6 +9790,56 @@ class UserGlobal
       return $detailed_posts;
     
     
+    }
+
+
+     /**
+     * get_trending_hashtags_posts
+     * 
+     * @return array
+     */
+    public function global_profile_trending_hashtags_posts($postType = null,$offset=true)
+    {
+        global $system, $db;
+        $hashtags = [];
+        $offset = !isset($offset) ? 1 : $offset;
+        $offset *= $system['max_results'];
+       
+        if ($postType == 'LocalHub') {
+            $selectQuery = sprintf("SELECT hashtags.hashtag, hashtags.hashtag_id as hash_id, hashtags_posts.id as hash_post, COUNT(hashtags_posts.id) AS frequency,hashtags_posts.postHubType FROM hashtags INNER JOIN hashtags_posts as hashtags_posts ON hashtags.hashtag_id = hashtags_posts.hashtag_id WHERE hashtags_posts.created_at > DATE_SUB(CURDATE(), INTERVAL 1 %s) and hashtags_posts.postHubType = 'LocalHub'  GROUP BY hashtags_posts.hashtag_id,hashtags_posts.postHubType ORDER BY frequency DESC LIMIT %s", secure($system['trending_hashtags_interval'], "", false), secure($system['trending_hashtags_limit'], 'int', false));
+        } elseif ($postType == 'GlobalHub') {
+            $selectQuery = sprintf("SELECT hashtags.hashtag, hashtags.hashtag_id as hash_id, hashtags_posts.id as hash_post, COUNT(hashtags_posts.id) AS frequency,hashtags_posts.postHubType FROM hashtags INNER JOIN hashtags_posts as hashtags_posts ON hashtags.hashtag_id = hashtags_posts.hashtag_id WHERE hashtags_posts.created_at > DATE_SUB(CURDATE(), INTERVAL 1 %s) and hashtags_posts.postHubType = 'GlobalHub'  GROUP BY hashtags_posts.hashtag_id,hashtags_posts.postHubType ORDER BY frequency DESC LIMIT %s", secure($system['trending_hashtags_interval'], "", false), secure($system['trending_hashtags_limit'], 'int', false));
+        } else {
+            $selectQuery = sprintf("SELECT hashtags.hashtag, hashtags.hashtag_id as hash_id, hashtags_posts.id as hash_post, COUNT(hashtags_posts.id) AS frequency,hashtags_posts.postHubType FROM hashtags INNER JOIN hashtags_posts as hashtags_posts ON hashtags.hashtag_id = hashtags_posts.hashtag_id WHERE hashtags_posts.created_at > DATE_SUB(CURDATE(), INTERVAL 1 %s) GROUP BY hashtags_posts.hashtag_id,hashtags_posts.postHubType ORDER BY frequency DESC LIMIT %s", secure($system['trending_hashtags_interval'], "", false), secure($system['trending_hashtags_limit'], 'int', false));
+        }
+        $get_trending_hashtags = $db->query($selectQuery); 
+        // or _error("SQL_ERROR_THROWEN");
+        $detailed_posts = array();
+        if ($get_trending_hashtags->num_rows > 0) {
+            while ($hashtag = $get_trending_hashtags->fetch_assoc()) {
+                //$hashtag['hashtag'] = html_entity_decode($hashtag['hashtag'], ENT_QUOTES);
+                $hashtags[] = $hashtag['hash_id'];
+            }
+            $hashTagLists = implode(', ', $hashtags);
+            if (count($hashtags) > 0) {
+                  $gethashposts = $db->query(sprintf("SELECT DISTINCT(post_id) from hashtags_posts where hashtag_id IN (" . $hashTagLists . ") order by post_id DESC")) or _error("SQL_ERROR_THROWEN");
+                if ($gethashposts->num_rows > 0) {
+                    while ($hashtagValues = $gethashposts->fetch_assoc()) {
+                        $detailedPosts = $this->global_profile_get_post($hashtagValues['post_id']);
+                        if (!empty($detailedPosts)) {
+                            $detailed_posts[] = $detailedPosts;
+                        }
+                    }
+                }
+            }
+        }
+        
+
+       
+          $detailed_posts = array_slice ( $detailed_posts , $offset , $system['max_results']);
+        
+        
+        return $detailed_posts;
     }
 
 

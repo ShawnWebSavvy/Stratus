@@ -41,7 +41,7 @@
 
                 {if ($active_page=='LocalHub')}
                 <li {if $subactive_page=="profile" }class="active" {/if}>
-                    <a page="{$page}" href="{$system['system_url']}/{$user->_data['user_name']}">
+                    <a page="{$page}" class="profile-link" href="{$system['system_url']}/{$user->_data['user_name']}">
                         <div class="svg-container">
                             <img src="{$system['system_uploads_assets']}/content/themes/default/images/svg/svgImg/profile_iconN.svg"
                                 class="">
@@ -256,7 +256,8 @@
                 <!-- sub of global end -->
             <!-- Global Hub End here -->
             <!-- playtube -->
-            {* <ul class="main-side-nav main-left-side-nav left-sidebar first-ul">
+             <ul
+            class="main-side-nav main-left-side-nav left-sidebar first-ul">
                 <li>
                     <a href="{PLY_URL}?dtl={$encodedUserDetails}" class="{$page}">
                         <div class="svg-container">
@@ -270,7 +271,7 @@
                         <span class="nav-text">{__("Video Hub")}</span>
                     </a>
                 </li>
-            </ul> *}
+            </ul> 
             <!-- playtube -->
 
             <!-- Blog Hub starts-->
