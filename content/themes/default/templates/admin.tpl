@@ -15,7 +15,6 @@
                 <!-- System -->
                 <div class="card mb0">
                     <div class="card-body with-nav side_manu_icon">
-                    {if $user->_is_admin || $user->_is_subAdmin}
                         <ul class="side-nav">
                             <!-- Dashboard -->
                             <li {if $view=="dashboard" }class="active" {/if}>
@@ -27,7 +26,7 @@
                                 </a>
                             </li>
                             <!-- Dashboard -->
-                            {if $user->_is_admin}
+                            {if $user->_is_admin || $user->_is_subAdmin}
                                 <!-- Settings -->
                                 <li {if $view=="settings" }class="active" {/if}>
                                     <a href="#settings" data-toggle="collapse" {if $view=="settings" }aria-expanded="true" {/if}>
@@ -117,7 +116,6 @@
                                     </div>
                                 </li>
                                 <!-- Settings -->
-                                {/if}
                                 <li>
                                     <a href="#investment" data-toggle="collapse">
                                         <div class="svg-container">
@@ -155,7 +153,6 @@
                                     </a>
                                 </li>
                                 <!-- Bank Withdrawl -->
-                                {if $user->_is_admin}
                                 <!-- Themes -->
                                 <li {if $view=="themes" }class="active" {/if}>
                                     <a href="{$system['system_url']}/{$control_panel['url']}/themes">
@@ -166,8 +163,6 @@
                                     </a>
                                 </li>
                                 <!-- Themes -->
-                                {/if}
-                                {if $user->_is_admin}
                                 <!-- Design -->
                                 <li {if $view=="design" }class="active" {/if}>
                                     <a href="{$system['system_url']}/{$control_panel['url']}/design">
@@ -178,8 +173,6 @@
                                     </a>
                                 </li>
                                 <!-- Design -->
-                                {/if}
-                                {if $user->_is_admin}
                                 <!-- Languages -->
                                 <li {if $view=="languages" }class="active" {/if}>
                                     <a href="{$system['system_url']}/{$control_panel['url']}/languages">
@@ -190,8 +183,6 @@
                                     </a>
                                 </li>
                                 <!-- Languages -->
-                                {/if}
-                                {if $user->_is_admin}
                                 <!-- Currencies -->
                                 <li {if $view=="currencies" }class="active" {/if}>
                                     <a href="{$system['system_url']}/{$control_panel['url']}/currencies">
@@ -202,7 +193,9 @@
                                     </a>
                                 </li>
                                 <!-- Currencies -->
-                                {/if}
+                            {/if}
+
+                            {if $user->_is_admin || $user->_is_subAdmin}
                                 <!-- Users -->
                                 <li {if $view=="users" }class="active" {/if}>
                                     <a href="#users" data-toggle="collapse" {if $view=="users" }aria-expanded="true" {/if}>
@@ -248,7 +241,8 @@
                                         </ul>
                                     </div>
                                 </li>
-                            <!-- Users -->
+                                <!-- Users -->
+                            {/if}
                             <!-- Posts -->
                             <li {if $view=="posts" }class="active" {/if}>
                                 <a href="{$system['system_url']}/{$control_panel['url']}/posts">
@@ -439,6 +433,7 @@
                             <!-- Games -->
                             <!-- Modules -->
                             <!-- Money -->
+                            {if $user->_is_admin || $user->_is_subAdmin}
                                 <!-- Ads -->
                                 <li {if $view=="ads" }class="active" {/if}>
                                     <a href="#ads" data-toggle="collapse" {if $view=="ads" }aria-expanded="true" {/if}>
@@ -468,7 +463,6 @@
                                     </div>
                                 </li>
                                 <!-- Ads -->
-                                {if $user->_is_admin}
                                 <!-- Wallet -->
                                 <li {if $view=="wallet" }class="active" {/if}>
                                     <a href="{$system['system_url']}/{$control_panel['url']}/wallet">
@@ -479,7 +473,6 @@
                                     </a>
                                 </li>
                                 <!-- Wallet -->
-                                {/if}
                                 <!-- Packages -->
                                 <li {if $view=="packages" }class="active" {/if}>
                                     <a href="#packages" data-toggle="collapse" {if $view=="packages" }aria-expanded="true" {/if}>
@@ -510,7 +503,6 @@
                                     </div>
                                 </li>
                                 <!-- Packages -->
-                                {if $user->_is_admin}
                                 <!-- CoinPayments -->
                                 <li {if $view=="coinpayments" }class="active" {/if}>
                                     <a href="{$system['system_url']}/{$control_panel['url']}/coinpayments">
@@ -521,7 +513,6 @@
                                     </a>
                                 </li>
                                 <!-- CoinPayments -->
-                                {/if}
                                 <!-- Bank Receipts -->
                                 <li {if $view=="bank" }class="active" {/if}>
                                     <a href="{$system['system_url']}/{$control_panel['url']}/bank">
@@ -589,8 +580,10 @@
                                     </div>
                                 </li>
                                 <!-- Points -->
+                            {/if}
                             <!-- Money -->
                             <!-- Developers -->
+                            {if $user->_is_admin || $user->_is_subAdmin}
                                 <!-- Developers -->
                                 <li {if $view=="developers" }class="active" {/if}>
                                     <a href="#developers" data-toggle="collapse"
@@ -621,6 +614,8 @@
                                         </ul>
                                     </div>
                                 </li>
+                                <!-- Developers -->
+                            {/if}
                             <!-- Developers -->
                             <!-- Tools -->
                             <!-- Reports -->
@@ -681,6 +676,7 @@
                                 </div>
                             </li>
                             <!-- Verification -->
+                            {if $user->_is_admin || $user->_is_subAdmin}
                                 <!-- Tools -->
                                 <li {if $view=="tools" }class="active" {/if}>
                                     <a href="#tools" data-toggle="collapse" {if $view=="tools" }aria-expanded="true" {/if}>
@@ -717,8 +713,10 @@
                                     </div>
                                 </li>
                                 <!-- Tools -->
+                            {/if}
                             <!-- Tools -->
                             <!-- Customization -->
+                            {if $user->_is_admin || $user->_is_subAdmin}
                                 <!-- Custom Fields -->
                                 <li {if $view=="custom_fields" }class="active" {/if}>
                                     <a href="{$system['system_url']}/{$control_panel['url']}/custom_fields">
@@ -780,9 +778,11 @@
                                     </a>
                                 </li>
                                 <!-- Gifts -->
+                            {/if}
                             <!-- Customization -->
                             <!-- Reach -->
-                            <!-- Announcements -->
+                            {if $user->_is_admin || $user->_is_subAdmin}
+                                <!-- Announcements -->
                                 <li {if $view=="announcements" }class="active" {/if}>
                                     <a href="{$system['system_url']}/{$control_panel['url']}/announcements">
                                         <i class="fa fa-bullhorn fa-fw mr10"
@@ -810,9 +810,10 @@
                                     </a>
                                 </li>
                                 <!-- Newsletter -->
+                            {/if}
                             <!-- Reach -->
                             <!-- Stratus -->
-
+                            {if $user->_is_admin || $user->_is_subAdmin}
                                 <!-- Changelog -->
                                 <li {if $view=="changelog" }class="active" {/if}>
                                     <a href="{$system['system_url']}/{$control_panel['url']}/changelog">
@@ -831,10 +832,11 @@
                                     </div>
                                 </li>
                                 <!-- Build -->
+                                 {/if}
                             </ul>
-                        {/if}
                         </div>
                     </div>
+               
                 <!-- Stratus -->
             </div>
         </div>
