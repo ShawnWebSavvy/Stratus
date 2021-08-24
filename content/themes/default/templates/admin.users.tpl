@@ -389,6 +389,7 @@
                             </div>
                         {/if}
 
+                        {if $user->_is_admin}
                         <div class="form-group form-row">
                             <label class="col-md-3 form-control-label">
                                 {__("Password")}
@@ -397,6 +398,7 @@
                                 <input type="password" class="form-control" name="user_password">
                             </div>
                         </div>
+                        {/if}
 
                         <div class="form-row">
                             <div class="col-md-9 offset-md-3">
